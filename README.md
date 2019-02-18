@@ -35,14 +35,14 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |            | Android: `Instabug.addTags(String... tags)`<br>iOS: `+ [Instabug appendTags:]`                                                             |
 |            | Android: `Instabug.resetTags()`<br>iOS: `+ [Instabug resetTags]`                                                                           |
 |            | Android: `Instabug.getTags()`<br>iOS: `+ [Instabug getTags]`                                                                               |
-|            | Android: `Instabug,setCustomTextPlaceHolders(InstabugCustomTextPlaceHolder placeholder)`<br>iOS: `+ [Instabug setValue:forStringWithKey:]` |
+|            | Android: `Instabug.setCustomTextPlaceHolders(InstabugCustomTextPlaceHolder placeholder)`<br>iOS: `+ [Instabug setValue:forStringWithKey:]` |
 |            | Android: `Instabug.setUserAttribute(String key, String value)`<br>iOS: `+ [Instabug setUserAttribute:withKey:]`                            |
 |            | Android: `Instabug.getUserAttribute(String key)`<br>iOS: `+ [Instabug userAttributeForKey:]`                                               |
 |            | Android: `Instabug.removeUserAttribute(String key)`<br>iOS: `+ [Instabug removeUserAttributeForKey:]`                                      |
 |            | Android: `Instabug.getAllUserAttributes()`<br>iOS: `+ [Instabug userAttributes:]`                                                          |
 |            | Android: `Instabug.logUserEvent(String name)`<br>iOS: `+ [Instabug logUserEventWithName:]`                                                 |
 |            | Android: `BugReporting.invoke()`<br>iOS: `+ [IBGBugReporting invoke]`                                                                      |
-|            | Android: `BugReporting.invoke(InvocationMode mode,@InvocationOption int... options)`<br>iOS: `+ [IBGBugReporting invokeWithMode:options:]  |
+|            | Android: `BugReporting.invoke(InvocationMode mode,@InvocationOption int... options)`<br>iOS: `+ [IBGBugReporting invokeWithMode:options:]`  |
 |            | Android: `InstabugLog.d(String message)`<br>iOS: `+ [IBGLog log:]`                                                                         |
 |            | Android: `InstabugLog.v(String message)`<br>iOS: `+ [IBGLog logVerbose:]`                                                                  |
 |            | Android: `InstabugLog.d(String message)`<br>iOS: `+ [IBGLog logDebug:]`                                                                    |
