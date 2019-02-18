@@ -29,6 +29,7 @@
     }
 
     [Instabug startWithToken:token invocationEvents:invocationEvents];
+    result(nil);
   } else {
     result(FlutterMethodNotImplemented);
   }

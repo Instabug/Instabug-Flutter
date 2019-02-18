@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      InstabugFlutter.start('8a52509d71f01e44a35926ef86b8d6a1', [InvocationEvent.floatingButton, InvocationEvent.shake]);
+      InstabugFlutter.start('9582e6cfe34e2b8897f48cfa3b617adb', [InvocationEvent.floatingButton, InvocationEvent.shake]);
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
