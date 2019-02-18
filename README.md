@@ -50,3 +50,7 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |            | `InstabugLog.w(String message)`<br>`+ [IBGLog logWarn:]`                                                                     |
 |            | `InstabugLog.e(String message)`<br>`+ [IBGLog logError:]`                                                                    |
 |            | `Instabug.clearLogs()`<br>`+ [IBGLog clearAllLogs:]`                                                                         |
+
+## Integration
+
+Creating a Flutter app on the Instabug dashboard isn't possible yet. Create a React Native app instead.
