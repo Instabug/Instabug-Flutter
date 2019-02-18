@@ -42,7 +42,7 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |            | Android: `Instabug.getAllUserAttributes()`<br>iOS: `+ [Instabug userAttributes:]`                                                          |
 |            | Android: `Instabug.logUserEvent(String name)`<br>iOS: `+ [Instabug logUserEventWithName:]`                                                 |
 |            | Android: `BugReporting.invoke()`<br>iOS: `+ [IBGBugReporting invoke]`                                                                      |
-|            | Android: `BugReporting.invoke(InvocationMode mode,@InvocationOption int... options)`<br>iOS: `+ [IBGBugReporting invokeWithMode:options:]`  |
+|            | Android: `BugReporting.invoke(InvocationMode mode, @InvocationOption int... options)`<br>iOS: `+ [IBGBugReporting invokeWithMode:options:]`  |
 |            | Android: `InstabugLog.d(String message)`<br>iOS: `+ [IBGLog log:]`                                                                         |
 |            | Android: `InstabugLog.v(String message)`<br>iOS: `+ [IBGLog logVerbose:]`                                                                  |
 |            | Android: `InstabugLog.d(String message)`<br>iOS: `+ [IBGLog logDebug:]`                                                                    |
