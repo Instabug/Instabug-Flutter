@@ -24,7 +24,7 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 
 
 
-| API Method | Native Equivalent                                                                                                                       |
+| API Method | Native Equivalent (Android/iOS)                                                                                                                       |
 |------------|-----------------------------------------------------------------------------------------------------------------------------------------|
 |            | `new Instabug.Builder(this, "APP_TOKEN").build()`<br>`+ [Instabug startWithToken:invocationEvents:]`                         |
 |            | `Instabug.showWelcomeMessage(WelcomeMessage.State state)`<br>`+ [Instabug showWelcomeMessageWithMode:]`                      |
