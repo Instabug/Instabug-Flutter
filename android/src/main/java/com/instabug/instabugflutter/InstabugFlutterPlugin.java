@@ -34,9 +34,30 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
 
   @Override
   public void onMethodCall(MethodCall call, Result result) {
-    if (call.method.equals("start")) {
-      result.success(null);
-    } else {
+    Method[] methods = this.getClass().getMethods();
+    boolean isImplemented = false;
+    for(Method method : methods){
+      if (call.method.equals(method.getName())) {
+        isImplemented = true;
+        ArrayList<Object> tempParamValues = new ArrayList<>();
+        HashMap map = (HashMap<String, String>)call.arguments;
+        Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+          Map.Entry pair = (Map.Entry)it.next();
+          tempParamValues.add(pair.getValue());
+          it.remove();
+        }
+        Object[] paramValues = tempParamValues.toArray();
+        try {
+          method.invoke(this, paramValues);
+        } catch (Exception e) {
+          e.printStackTrace();
+        } 
+        result.success(null);
+        break;
+      }
+    }
+    if (!isImplemented) {
       result.notImplemented();
     }
   }
