@@ -11,10 +11,21 @@ import android.app.Application;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 
 // import com.instabug.library.InstabugColorTheme;
 // import com.instabug.library.InstabugCustomTextPlaceHolder;
@@ -23,8 +34,9 @@ import java.util.List;
 
 /** InstabugFlutterPlugin */
 public class InstabugFlutterPlugin implements MethodCallHandler {
-    
-  private ArrayList<InstabugInvocationEvent> invocationEvents = new ArrayList<>();
+
+
+  private Map<String, Object> constants = getConstants();
 
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
@@ -65,4 +77,13 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     new Instabug.Builder(application, token).build();
   }
 
+  public Map<String, Object> getConstants() {
+    final Map<String, Object> constants = new HashMap<>();
+    constants.put("InvocationEvent.none", InstabugInvocationEvent.NONE);
+    constants.put("InvocationEvent.screenshot", InstabugInvocationEvent.SCREENSHOT);
+    constants.put("InvocationEvent.twoFingersSwipeLeft", InstabugInvocationEvent.TWO_FINGER_SWIPE_LEFT);
+    constants.put("InvocationEvent.floatingButton", InstabugInvocationEvent.FLOATING_BUTTON);
+    constants.put("InvocationEvent.shake", InstabugInvocationEvent.SHAKE);
+    return constants;
+  }
 }
