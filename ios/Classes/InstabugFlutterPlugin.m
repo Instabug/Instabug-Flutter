@@ -2,6 +2,17 @@
 #import "Instabug.h"
 
 @implementation InstabugFlutterPlugin
+
++ (NSDictionary *) constants {
+  return @{
+      @"InvocationEvent.shake": @(IBGInvocationEventShake),
+      @"InvocationEvent.screenshot": @(IBGInvocationEventScreenshot),
+      @"InvocationEvent.twoFingersSwipeLeft": @(IBGInvocationEventTwoFingersSwipeLeft),
+      @"InvocationEvent.floatingButton": @(IBGInvocationEventFloatingButton),
+      @"InvocationEvent.none": @(IBGInvocationEventNone),
+  };
+};
+
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
       methodChannelWithName:@"instabug_flutter"
