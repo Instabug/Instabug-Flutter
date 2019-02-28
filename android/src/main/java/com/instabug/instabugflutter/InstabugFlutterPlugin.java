@@ -35,6 +35,11 @@ import android.util.Log;
 /** InstabugFlutterPlugin */
 public class InstabugFlutterPlugin implements MethodCallHandler {
 
+  final public static String INVOCATION_EVENT_NONE = "InvocationEvent.none";
+  final public static String INVOCATION_EVENT_SCREENSHOT = "InvocationEvent.screenshot";
+  final public static String INVOCATION_EVENT_TWO_FINGER_SWIPE_LEFT = "InvocationEvent.twoFingersSwipeLeft";
+  final public static String INVOCATION_EVENT_FLOATING_BUTTON = "InvocationEvent.floatingButton";
+  final public static String INVOCATION_EVENT_SHAKE = "InvocationEvent.shake";
 
   private Map<String, Object> constants = getConstants();
 
@@ -73,8 +78,13 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
       result.notImplemented();
     }
   }
-  public void start(Application application, String token) {
-    new Instabug.Builder(application, token).build();
+  
+  public void start(Application application, String token, ArrayList<String> invocationEvents) {
+    InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
+    for (int i = 0; i < invocationEvents.size(); i++) {
+      invocationEventsArray[i] = (InstabugInvocationEvent)constants.get(invocationEvents.get(i));
+    }
+    new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).build();
   }
 
   public Map<String, Object> getConstants() {
