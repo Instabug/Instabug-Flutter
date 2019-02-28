@@ -11,15 +11,26 @@
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-  if ([@"startWithToken:invocationEvents" isEqualToString:call.method]) {
-    NSDictionary *invocationEventsMap = @{
-      @"InvocationEvent.shake": @(IBGInvocationEventShake),
-      @"InvocationEvent.screenshot": @(IBGInvocationEventScreenshot),
-      @"InvocationEvent.twoFingersSwipeLeft": @(IBGInvocationEventTwoFingersSwipeLeft),
-      @"InvocationEvent.rightEdgePan": @(IBGInvocationEventRightEdgePan),
-      @"InvocationEvent.floatingButton": @(IBGInvocationEventFloatingButton),
-      @"InvocationEvent.none": @(IBGInvocationEventNone),
-    };
+    BOOL isImplemented = NO;
+      SEL method = NSSelectorFromString(call.method);
+      if([[InstabugFlutterPlugin class] respondsToSelector:method]) {
+        isImplemented = YES;
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[InstabugFlutterPlugin class] methodSignatureForSelector:method]];
+        [inv setSelector:method];
+        [inv setTarget:[InstabugFlutterPlugin class]];
+        int index = 2;
+        NSDictionary *myDict = call.arguments;
+        for(id key in myDict) {
+          NSObject *arg = [myDict objectForKey:key];
+          [inv setArgument:&(arg) atIndex:index];
+          index++;
+        }        
+        [inv invoke];
+      }
+    if (!isImplemented) {
+      result(FlutterMethodNotImplemented);
+    }
+}
 
     NSString *token = call.arguments[@"token"];
   
