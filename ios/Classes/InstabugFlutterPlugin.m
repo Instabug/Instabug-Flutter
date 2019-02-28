@@ -43,18 +43,14 @@
     }
 }
 
-    NSString *token = call.arguments[@"token"];
-  
+
++ (void)startWithToken:(NSString *)token invocationEvents:(NSArray*)invocationEventsArray {
+    NSDictionary *invocationEventsMap = [self constants];
     NSInteger invocationEvents = IBGInvocationEventNone;
-    for (NSString * invocationEvent in call.arguments[@"invocationEvents"]) {
+    for (NSString * invocationEvent in invocationEventsArray) {
         invocationEvents |= ((NSNumber *) invocationEventsMap[invocationEvent]).integerValue;
     }
-
     [Instabug startWithToken:token invocationEvents:invocationEvents];
-    result(nil);
-  } else {
-    result(FlutterMethodNotImplemented);
-  }
 }
 
 @end
