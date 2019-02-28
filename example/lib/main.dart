@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
+import 'dart:io' show Platform;
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 
@@ -25,11 +25,12 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      InstabugFlutter.start('9582e6cfe34e2b8897f48cfa3b617adb', [InvocationEvent.floatingButton, InvocationEvent.shake]);
+      if (Platform.isIOS) {
+        InstabugFlutter.start('9582e6cfe34e2b8897f48cfa3b617adb', [InvocationEvent.floatingButton, InvocationEvent.shake]);
+      }
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
-
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
