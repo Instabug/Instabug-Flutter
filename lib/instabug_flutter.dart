@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-enum InvocationEvent { shake, screenshot, twoFingersSwipeLeft, rightEdgePan, floatingButton, none }
+enum InvocationEvent { shake, screenshot, twoFingersSwipeLeft, floatingButton, none }
 
 class InstabugFlutter {
   static const MethodChannel _channel =
@@ -19,6 +19,7 @@ class InstabugFlutter {
       invocationEventsStrings.add(e.toString());
     });
     Map params = {'token': token, 'invocationEvents': invocationEventsStrings};
-    await _channel.invokeMethod('startWithToken:invocationEvents', params);
+    await _channel.invokeMethod('startWithToken:invocationEvents:', params);
   }
+  
 }
