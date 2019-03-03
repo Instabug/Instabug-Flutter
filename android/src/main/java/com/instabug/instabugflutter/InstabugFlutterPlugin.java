@@ -58,7 +58,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         isImplemented = true;
         ArrayList<Object> tempParamValues = new ArrayList<>();
         HashMap map = (HashMap<String, String>)call.arguments;
-        Iterator it = map.entrySet().iterator();
+        Iterator iterator = map.entrySet().iterator();
         while (it.hasNext()) {
           Map.Entry pair = (Map.Entry)it.next();
           tempParamValues.add(pair.getValue());
