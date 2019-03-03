@@ -59,4 +59,37 @@
     [Instabug startWithToken:token invocationEvents:invocationEvents];
 }
 
++ (NSDictionary *)constants {
+  return @{
+      @"InvocationEvent.shake": @(IBGInvocationEventShake),
+      @"InvocationEvent.screenshot": @(IBGInvocationEventScreenshot),
+      @"InvocationEvent.twoFingersSwipeLeft": @(IBGInvocationEventTwoFingersSwipeLeft),
+      @"InvocationEvent.floatingButton": @(IBGInvocationEventFloatingButton),
+      @"InvocationEvent.none": @(IBGInvocationEventNone),
+
+      @"WelcomeMessageMode.live": @(IBGWelcomeMessageModeLive),
+      @"WelcomeMessageMode.beta": @(IBGWelcomeMessageModeBeta),
+      @"WelcomeMessageMode.disabled": @(IBGWelcomeMessageModeDisabled),
+
+      @"Locale.Arabic": @(IBGLocaleArabic),
+      @"Locale.ChineseSimplified": @(IBGLocaleChineseSimplified),
+      @"Locale.ChineseTraditional": @(IBGLocaleChineseTraditional),
+      @"Locale.Czech": @(IBGLocaleCzech),
+      @"Locale.Danish": @(IBGLocaleDanish),
+      @"Locale.Dutch": @(IBGLocaleDutch),
+      @"Locale.English": @(IBGLocaleEnglish),
+      @"Locale.French": @(IBGLocaleFrench),
+      @"Locale.German": @(IBGLocaleGerman),
+      @"Locale.Italian": @(IBGLocaleItalian),
+      @"Locale.Japanese": @(IBGLocaleJapanese),
+      @"Locale.Korean": @(IBGLocaleKorean),
+      @"Locale.Polish": @(IBGLocalePolish),
+      @"Locale.PortugueseBrazil": @(IBGLocalePortugueseBrazil),
+      @"Locale.Russian": @(IBGLocaleRussian),
+      @"Locale.Spanish": @(IBGLocaleSpanish),
+      @"Locale.Swedish": @(IBGLocaleSwedish),
+      @"Locale.Turkish": @(IBGLocaleTurkish),
+  };
+};
+
 @end
