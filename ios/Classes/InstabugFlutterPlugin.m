@@ -31,7 +31,7 @@
         [inv setTarget:[InstabugFlutterPlugin class]];
         int index = 2;
         NSDictionary *argumentsDictionary = call.arguments;
-        for(id key in myDict) {
+        for (id key in myDict) {
           NSObject *arg = [myDict objectForKey:key];
           [inv setArgument:&(arg) atIndex:index];
           index++;
