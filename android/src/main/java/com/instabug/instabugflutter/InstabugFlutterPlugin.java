@@ -69,6 +69,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
           method.invoke(this, paramValues);
         } catch (Exception e) {
           e.printStackTrace();
+          result.notImplemented();
         } 
         result.success(null);
         break;
