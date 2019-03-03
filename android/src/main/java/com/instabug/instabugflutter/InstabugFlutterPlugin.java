@@ -107,48 +107,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     constants.put("InvocationEvent.twoFingersSwipeLeft", InstabugInvocationEvent.TWO_FINGER_SWIPE_LEFT);
     constants.put("InvocationEvent.floatingButton", InstabugInvocationEvent.FLOATING_BUTTON);
     constants.put("InvocationEvent.shake", InstabugInvocationEvent.SHAKE);
-
-    constants.put("WelcomeMessageMode.live", WelcomeMessage.State.LIVE);
-    constants.put("WelcomeMessageMode.beta", WelcomeMessage.State.BETA);
-    constants.put("WelcomeMessageMode.disabled", WelcomeMessage.State.DISABLED);
-
-    constants.put("Locale.Arabic",
-            new Locale(InstabugLocale.ARABIC.getCode(), InstabugLocale.ARABIC.getCountry()));
-    constants.put("Locale.ChineseSimplified",
-            new Locale(InstabugLocale.SIMPLIFIED_CHINESE.getCode(), InstabugLocale.SIMPLIFIED_CHINESE.getCountry()));
-    constants.put("Locale.ChineseTraditional",
-            new Locale(InstabugLocale.TRADITIONAL_CHINESE.getCode(), InstabugLocale.TRADITIONAL_CHINESE.getCountry()));
-    constants.put("Locale.Czech",
-            new Locale(InstabugLocale.CZECH.getCode(), InstabugLocale.CZECH.getCountry()));
-    constants.put("Locale.Danish",
-            new Locale(InstabugLocale.DANISH.getCode(), InstabugLocale.DANISH.getCountry()));
-    constants.put("Locale.Dutch",
-            new Locale(InstabugLocale.NETHERLANDS.getCode(), InstabugLocale.NETHERLANDS.getCountry()));
-    constants.put("Locale.English",
-            new Locale(InstabugLocale.ENGLISH.getCode(), InstabugLocale.ENGLISH.getCountry()));
-    constants.put("Locale.French",
-            new Locale(InstabugLocale.FRENCH.getCode(), InstabugLocale.FRENCH.getCountry()));
-    constants.put("Locale.German",
-            new Locale(InstabugLocale.GERMAN.getCode(), InstabugLocale.GERMAN.getCountry()));
-    constants.put("Locale.Italian",
-            new Locale(InstabugLocale.ITALIAN.getCode(), InstabugLocale.ITALIAN.getCountry()));
-    constants.put("Locale.Japanese",
-            new Locale(InstabugLocale.JAPANESE.getCode(), InstabugLocale.JAPANESE.getCountry()));
-    constants.put("Locale.Korean",
-            new Locale(InstabugLocale.KOREAN.getCode(), InstabugLocale.KOREAN.getCountry()));
-    constants.put("Locale.Polish",
-            new Locale(InstabugLocale.POLISH.getCode(), InstabugLocale.POLISH.getCountry()));
-    constants.put("Locale.PortugueseBrazil",
-            new Locale(InstabugLocale.PORTUGUESE_BRAZIL.getCode(), InstabugLocale.PORTUGUESE_BRAZIL.getCountry()));
-    constants.put("Locale.Russian",
-            new Locale(InstabugLocale.RUSSIAN.getCode(), InstabugLocale.RUSSIAN.getCountry()));
-    constants.put("Locale.Spanish",
-            new Locale(InstabugLocale.SPANISH.getCode(), InstabugLocale.SPANISH.getCountry()));
-    constants.put("Locale.Swedish",
-            new Locale(InstabugLocale.SWEDISH.getCode(), InstabugLocale.SWEDISH.getCountry()));
-    constants.put("Locale.Turkish",
-            new Locale(InstabugLocale.TURKISH.getCode(), InstabugLocale.TURKISH.getCountry()));
-
     return constants;
   }
 }
