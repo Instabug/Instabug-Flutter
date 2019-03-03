@@ -49,9 +49,8 @@
 }
 
 /**
-  * starts the SDK with the desired
-  * @param {token} token The token that identifies the app, you can find
-  * it on your dashboard.
+  * starts the SDK
+  * @param {token} token The token that identifies the app
   * @param {invocationEvents} invocationEvents The events that invoke
   * the SDK's UI.
   */
