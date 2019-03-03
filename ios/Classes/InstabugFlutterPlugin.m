@@ -29,10 +29,15 @@
         NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[InstabugFlutterPlugin class] methodSignatureForSelector:method]];
         [inv setSelector:method];
         [inv setTarget:[InstabugFlutterPlugin class]];
-        int index = 2;
-        NSDictionary *myDict = call.arguments;
-        for(id key in myDict) {
-          NSObject *arg = [myDict objectForKey:key];
+        /*
+         * Indices 0 and 1 indicate the hidden arguments self and _cmd,
+         * respectively; you should set these values directly with the target and selector properties. 
+         * Use indices 2 and greater for the arguments normally passed in a message.
+         */
+        NSInteger index = 2;
+        NSDictionary *argumentsDictionary = call.arguments;
+        for (id key in argumentsDictionary) {
+          NSObject *arg = [argumentsDictionary objectForKey:key];
           [inv setArgument:&(arg) atIndex:index];
           index++;
         }        
