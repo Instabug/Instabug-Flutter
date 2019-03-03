@@ -53,7 +53,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
   public void onMethodCall(MethodCall call, Result result) {
     Method[] methods = this.getClass().getMethods();
     boolean isImplemented = false;
-    for(Method method : methods){
+    for (Method method : methods) {
       if (call.method.equals(method.getName())) {
         isImplemented = true;
         ArrayList<Object> tempParamValues = new ArrayList<>();
