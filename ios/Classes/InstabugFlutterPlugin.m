@@ -43,7 +43,13 @@
     }
 }
 
-
+/**
+  * starts the SDK with the desired
+  * @param {token} token The token that identifies the app, you can find
+  * it on your dashboard.
+  * @param {invocationEvents} invocationEvents The events that invoke
+  * the SDK's UI.
+  */
 + (void)startWithToken:(NSString *)token invocationEvents:(NSArray*)invocationEventsArray {
     NSDictionary *invocationEventsMap = [self constants];
     NSInteger invocationEvents = IBGInvocationEventNone;
