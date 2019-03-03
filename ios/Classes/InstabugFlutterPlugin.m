@@ -56,10 +56,10 @@
   * the SDK's UI.
   */
 + (void)startWithToken:(NSString *)token invocationEvents:(NSArray*)invocationEventsArray {
-    NSDictionary *invocationEventsMap = [self constants];
+    NSDictionary *constants = [self constants];
     NSInteger invocationEvents = IBGInvocationEventNone;
     for (NSString * invocationEvent in invocationEventsArray) {
-        invocationEvents |= ((NSNumber *) invocationEventsMap[invocationEvent]).integerValue;
+        invocationEvents |= ((NSNumber *) constants[invocationEvent]).integerValue;
     }
     [Instabug startWithToken:token invocationEvents:invocationEvents];
 }
