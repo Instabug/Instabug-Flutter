@@ -30,7 +30,7 @@
         [inv setSelector:method];
         [inv setTarget:[InstabugFlutterPlugin class]];
         int index = 2;
-        NSDictionary *myDict = call.arguments;
+        NSDictionary *argumentsDictionary = call.arguments;
         for(id key in myDict) {
           NSObject *arg = [myDict objectForKey:key];
           [inv setArgument:&(arg) atIndex:index];
