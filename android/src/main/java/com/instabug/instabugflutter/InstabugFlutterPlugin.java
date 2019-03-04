@@ -154,7 +154,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    */
     public void setLocale(String instabugLocale) {
         try {
-          Log.e("Setting Locale" , "...");
             Instabug.changeLocale((Locale) constants.get(instabugLocale));
         } catch (Exception e) {
             e.printStackTrace();
