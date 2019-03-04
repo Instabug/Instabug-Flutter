@@ -123,6 +123,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     constants.put("InvocationEvent.twoFingersSwipeLeft", InstabugInvocationEvent.TWO_FINGER_SWIPE_LEFT);
     constants.put("InvocationEvent.floatingButton", InstabugInvocationEvent.FLOATING_BUTTON);
     constants.put("InvocationEvent.shake", InstabugInvocationEvent.SHAKE);
+    constants.put("WelcomeMessageMode.live", WelcomeMessage.State.LIVE);
+    constants.put("WelcomeMessageMode.beta", WelcomeMessage.State.BETA);
+    constants.put("WelcomeMessageMode.disabled", WelcomeMessage.State.DISABLED);
     return constants;
   }
 }
