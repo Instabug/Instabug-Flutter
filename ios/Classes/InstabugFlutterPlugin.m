@@ -66,6 +66,16 @@
     [Instabug showWelcomeMessageWithMode:welcomeMode];
 }
 
+/**
+  * Set the user identity.
+  * Instabug will pre-fill the user email in reports.
+  *
+  * @param name  Username.
+  * @param email User's default email
+  */
++ (void)identifyUserWithEmail:(NSString *)email name:(NSString *) name {
+    [Instabug identifyUserWithEmail:email name:name];
+}
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
