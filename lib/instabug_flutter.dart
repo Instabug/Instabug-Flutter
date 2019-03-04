@@ -54,5 +54,15 @@ class InstabugFlutter {
     Map params = {'email': email, 'name': name };
     await _channel.invokeMethod('identifyUserWithEmail:name:', params);
   }
+
+  /*
+   * Sets the default value of the user's email to nil and show email field and remove user name
+   * from all reports
+   * It also reset the chats on device and removes user attributes, user data and completed surveys.
+   */
+  static void logOut() async {
+    Map params = { };
+    await _channel.invokeMethod('logOut', params);
+  }
   
 }
