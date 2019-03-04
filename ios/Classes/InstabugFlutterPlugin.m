@@ -3,15 +3,6 @@
 
 @implementation InstabugFlutterPlugin
 
-+ (NSDictionary *) constants {
-  return @{
-      @"InvocationEvent.shake": @(IBGInvocationEventShake),
-      @"InvocationEvent.screenshot": @(IBGInvocationEventScreenshot),
-      @"InvocationEvent.twoFingersSwipeLeft": @(IBGInvocationEventTwoFingersSwipeLeft),
-      @"InvocationEvent.floatingButton": @(IBGInvocationEventFloatingButton),
-      @"InvocationEvent.none": @(IBGInvocationEventNone),
-  };
-};
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
@@ -75,4 +66,18 @@
     [Instabug showWelcomeMessageWithMode:welcomeMode];
 }
 
++ (NSDictionary *)constants {
+  return @{
+      @"InvocationEvent.shake": @(IBGInvocationEventShake),
+      @"InvocationEvent.screenshot": @(IBGInvocationEventScreenshot),
+      @"InvocationEvent.twoFingersSwipeLeft": @(IBGInvocationEventTwoFingersSwipeLeft),
+      @"InvocationEvent.floatingButton": @(IBGInvocationEventFloatingButton),
+      @"InvocationEvent.none": @(IBGInvocationEventNone),
+
+      @"WelcomeMessageMode.live": @(IBGWelcomeMessageModeLive),
+      @"WelcomeMessageMode.beta": @(IBGWelcomeMessageModeBeta),
+      @"WelcomeMessageMode.disabled": @(IBGWelcomeMessageModeDisabled),
+
+  };
+};
 @end
