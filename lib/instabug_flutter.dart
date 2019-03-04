@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 enum InvocationEvent { shake, screenshot, twoFingersSwipeLeft, floatingButton, none }
 
+enum WelcomeMessageMode { live, beta, disabled }
 class InstabugFlutter {
   static const MethodChannel _channel =
       const MethodChannel('instabug_flutter');
