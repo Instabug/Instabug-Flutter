@@ -86,6 +86,18 @@
 + (void)logOut {
   [Instabug logOut];
 }
+
+/**
+  * Change Locale of Instabug UI elements(defaults to English)
+  *
+  * @param locale
+  */
++ (void)setLocale:(NSString *)locale {
+    NSDictionary *constants = [self constants];
+    NSInteger localeInt = ((NSNumber *) constants[locale]).integerValue;
+    [Instabug setLocale:localeInt];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
