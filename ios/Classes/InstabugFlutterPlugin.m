@@ -76,6 +76,16 @@
 + (void)identifyUserWithEmail:(NSString *)email name:(NSString *) name {
     [Instabug identifyUserWithEmail:email name:name];
 }
+
+/**
+  * Sets the default value of the user's email to null and show email field and remove user
+  * name from all reports
+  * It also reset the chats on device and removes user attributes, user data and completed
+  * surveys.
+  */
++ (void)logOut {
+  [Instabug logOut];
+}
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
