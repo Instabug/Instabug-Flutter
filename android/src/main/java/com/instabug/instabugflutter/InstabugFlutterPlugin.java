@@ -143,6 +143,23 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             exception.printStackTrace();
         }
     }
+
+  /**
+   * Change Locale of Instabug UI elements(defaults to English)
+   *
+   * @param instabugLocale
+   */
+    public void setLocale(String instabugLocale) {
+        try {
+          Log.e("Setting Locale" , "...");
+            Instabug.changeLocale((Locale) constants.get(instabugLocale));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
     constants.put("InvocationEvent.none", InstabugInvocationEvent.NONE);
