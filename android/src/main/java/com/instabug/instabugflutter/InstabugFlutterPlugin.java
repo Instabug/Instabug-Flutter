@@ -10,6 +10,7 @@ import android.app.Application;
 
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
+import com.instabug.library.ui.onboarding.WelcomeMessage;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -98,6 +99,21 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
       invocationEventsArray[i] = (InstabugInvocationEvent)constants.get(invocationEvents.get(i));
     }
     new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).build();
+  }
+
+
+  /**
+   * Shows the welcome message in a specific mode.
+   *
+   * @param welcomeMessageMode An enum to set the welcome message mode to
+   *                          live, or beta.
+  */
+  public void showWelcomeMessageWithMode(String welcomeMessageMode) {
+    try {
+      Instabug.showWelcomeMessage((WelcomeMessage.State) constants.get(welcomeMessageMode));
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
   }
 
   public Map<String, Object> getConstants() {
