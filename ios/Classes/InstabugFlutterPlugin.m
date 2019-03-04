@@ -63,4 +63,16 @@
     [Instabug startWithToken:token invocationEvents:invocationEvents];
 }
 
+/**
+  * Shows the welcome message in a specific mode.
+  *
+  * @param welcomeMessageMode An enum to set the welcome message mode to
+  *                          live, or beta.
+  */
++ (void)showWelcomeMessageWithMode:(NSString *)welcomeMessageMode {
+    NSDictionary *constants = [self constants];
+    NSInteger welcomeMode = ((NSNumber *) constants[welcomeMessageMode]).integerValue;
+    [Instabug showWelcomeMessageWithMode:welcomeMode];
+}
+
 @end
