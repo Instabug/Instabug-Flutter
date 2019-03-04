@@ -116,6 +116,19 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
   }
 
+  /**
+   * Set the user identity.
+   *
+   * @param userName  Username.
+   * @param userEmail User's default email
+   */
+  public void identifyUserWithEmail(String userEmail, String userName) {
+    try {
+        Instabug.identifyUser(userEmail, userName);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+  }
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
     constants.put("InvocationEvent.none", InstabugInvocationEvent.NONE);
