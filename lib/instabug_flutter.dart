@@ -5,6 +5,10 @@ import 'package:flutter/services.dart';
 enum InvocationEvent { shake, screenshot, twoFingersSwipeLeft, floatingButton, none }
 
 enum WelcomeMessageMode { live, beta, disabled }
+
+enum Locale { Arabic, ChineseSimplified, ChineseTraditional, Czech, Danish, Dutch, English, French,
+              German, Italian, Japanese, Korean, Polish, PortugueseBrazil, Russian, Spanish, Swedish, Turkish}
+
 class InstabugFlutter {
   static const MethodChannel _channel =
       const MethodChannel('instabug_flutter');
@@ -42,6 +46,7 @@ class InstabugFlutter {
     Map params = {'welcomeMessageMode': welcomeMessageMode.toString() };
     await _channel.invokeMethod('showWelcomeMessageWithMode:', params);
   }
+
   /*
    * Sets the default value of the user's email and hides the email field from the reporting UI
    * and set the user's name to be included with all reports.
