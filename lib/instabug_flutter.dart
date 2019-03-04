@@ -31,5 +31,15 @@ class InstabugFlutter {
     Map params = {'token': token, 'invocationEvents': invocationEventsStrings};
     await _channel.invokeMethod('startWithToken:invocationEvents:', params);
   }
+   /*
+   * Shows the welcome message in a specific mode.
+   * @param welcomeMessageMode An enum to set the welcome message mode to
+   *                           live, or beta.
+   *
+   */
+  static void showWelcomeMessageWithMode(WelcomeMessageMode welcomeMessageMode) async {
+    Map params = {'welcomeMessageMode': welcomeMessageMode.toString() };
+    await _channel.invokeMethod('showWelcomeMessageWithMode:', params);
+  }
   
 }
