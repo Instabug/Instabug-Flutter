@@ -64,5 +64,16 @@ class InstabugFlutter {
     Map params = { };
     await _channel.invokeMethod('logOut', params);
   }
+
+  /*
+   * Sets the SDK's locale.
+   * Use to change the SDK's UI to different language.
+   * Defaults to the device's current locale.
+   * @param {locale} locale A locale to set the SDK to.
+   */
+  static void setLocale(Locale locale) async {
+    Map params = {'locale': locale.toString() };
+    await _channel.invokeMethod('setLocale:', params);
+  }
   
 }
