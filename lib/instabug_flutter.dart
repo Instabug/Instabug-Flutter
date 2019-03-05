@@ -50,9 +50,30 @@ class InstabugFlutter {
    * @param {string} email Email address to be set as the user's email.
    * @param {string} name Name of the user to be set.
    */
-  static void identifyUserWithEmail(String email, String name) async {
+  static void identifyUserWithEmail(String email, [String name = ""]) async {
     Map params = {'email': email, 'name': name };
     await _channel.invokeMethod('identifyUserWithEmail:name:', params);
+  }
+
+  /*
+   * Sets the default value of the user's email to nil and show email field and remove user name
+   * from all reports
+   * It also reset the chats on device and removes user attributes, user data and completed surveys.
+   */
+  static void logOut() async {
+    Map params = { };
+    await _channel.invokeMethod('logOut', params);
+  }
+
+  /*
+   * Sets the SDK's locale.
+   * Use to change the SDK's UI to different language.
+   * Defaults to the device's current locale.
+   * @param {locale} locale A locale to set the SDK to.
+   */
+  static void setLocale(Locale locale) async {
+    Map params = {'locale': locale.toString() };
+    await _channel.invokeMethod('setLocale:', params);
   }
   
 }
