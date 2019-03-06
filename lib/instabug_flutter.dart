@@ -50,7 +50,7 @@ class InstabugFlutter {
    * @param {string} email Email address to be set as the user's email.
    * @param {string} name Name of the user to be set.
    */
-  static void identifyUserWithEmail(String email, [String name = ""]) async {
+  static void identifyUserWithEmail(String email, [String name]) async {
     Map params = {'email': email, 'name': name };
     await _channel.invokeMethod('identifyUserWithEmail:name:', params);
   }
