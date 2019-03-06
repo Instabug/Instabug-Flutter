@@ -109,11 +109,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    *                          live, or beta.
   */
   public void showWelcomeMessageWithMode(String welcomeMessageMode) {
-    try {
       Instabug.showWelcomeMessage((WelcomeMessage.State) constants.get(welcomeMessageMode));
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
   }
 
   /**
@@ -123,11 +119,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    * @param userEmail User's default email
    */
   public void identifyUserWithEmail(String userEmail, String userName) {
-    try {
-        Instabug.identifyUser(userEmail, userName);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+      Instabug.identifyUser(userEmail, userName);
   }
 
   /**
