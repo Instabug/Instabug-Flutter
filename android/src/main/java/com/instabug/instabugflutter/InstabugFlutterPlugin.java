@@ -109,11 +109,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    *                          live, or beta.
   */
   public void showWelcomeMessageWithMode(String welcomeMessageMode) {
-    try {
       Instabug.showWelcomeMessage((WelcomeMessage.State) constants.get(welcomeMessageMode));
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
   }
 
   public Map<String, Object> getConstants() {
