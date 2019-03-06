@@ -112,6 +112,15 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
       Instabug.showWelcomeMessage((WelcomeMessage.State) constants.get(welcomeMessageMode));
   }
 
+  /**
+   * Set the user identity.
+   *
+   * @param userName  Username.
+   * @param userEmail User's default email
+   */
+  public void identifyUserWithEmail(String userEmail, String userName) {
+      Instabug.identifyUser(userEmail, userName);
+  }
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
     constants.put("InvocationEvent.none", InstabugInvocationEvent.NONE);
