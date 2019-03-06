@@ -137,11 +137,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    * surveys.
    */
     public void logOut() {
-        try {
-            Instabug.logoutUser();
-        } catch (java.lang.Exception exception) {
-            exception.printStackTrace();
-        }
+        Instabug.logoutUser();
     }
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
