@@ -145,7 +145,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
 
-
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
     constants.put("InvocationEvent.none", InstabugInvocationEvent.NONE);
