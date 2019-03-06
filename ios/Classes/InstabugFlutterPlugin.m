@@ -74,7 +74,11 @@
   * @param email User's default email
   */
 + (void)identifyUserWithEmail:(NSString *)email name:(NSString *) name {
-    [Instabug identifyUserWithEmail:email name:name];
+    if ([name isKindOfClass:[NSNull class]]) {
+      [Instabug identifyUserWithEmail:email name:nil];
+    } else {
+      [Instabug identifyUserWithEmail:email name:name];
+    }
 }
 + (NSDictionary *)constants {
   return @{
