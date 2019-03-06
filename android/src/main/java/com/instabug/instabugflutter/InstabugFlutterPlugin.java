@@ -112,11 +112,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    *                          live, or beta.
   */
   public void showWelcomeMessageWithMode(String welcomeMessageMode) {
-    try {
       Instabug.showWelcomeMessage((WelcomeMessage.State) constants.get(welcomeMessageMode));
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
   }
 
   /**
@@ -126,11 +122,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    * @param userEmail User's default email
    */
   public void identifyUserWithEmail(String userEmail, String userName) {
-    try {
-        Instabug.identifyUser(userEmail, userName);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+      Instabug.identifyUser(userEmail, userName);
   }
 
   /**
@@ -140,11 +132,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    * surveys.
    */
     public void logOut() {
-        try {
-            Instabug.logoutUser();
-        } catch (java.lang.Exception exception) {
-            exception.printStackTrace();
-        }
+        Instabug.logoutUser();
     }
 
   /**
@@ -153,11 +141,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    * @param instabugLocale
    */
     public void setLocale(String instabugLocale) {
-        try {
-            Instabug.changeLocale((Locale) constants.get(instabugLocale));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+         Instabug.changeLocale((Locale) constants.get(instabugLocale));
     }
 
 
