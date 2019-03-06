@@ -30,6 +30,9 @@ class _MyAppState extends State<MyApp> {
       }
       InstabugFlutter.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
       InstabugFlutter.identifyUserWithEmail("aezz@instabug.com", "Aly Ezz");
+      InstabugFlutter.logOut();
+      InstabugFlutter.setLocale(Locale.German);
+
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }

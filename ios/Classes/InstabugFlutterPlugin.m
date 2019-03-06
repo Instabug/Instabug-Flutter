@@ -80,6 +80,28 @@
       [Instabug identifyUserWithEmail:email name:name];
     }
 }
+
+/**
+  * Sets the default value of the user's email to null and show email field and remove user
+  * name from all reports
+  * It also reset the chats on device and removes user attributes, user data and completed
+  * surveys.
+  */
++ (void)logOut {
+  [Instabug logOut];
+}
+
+/**
+  * Change Locale of Instabug UI elements(defaults to English)
+  *
+  * @param locale
+  */
++ (void)setLocale:(NSString *)locale {
+    NSDictionary *constants = [self constants];
+    NSInteger localeInt = ((NSNumber *) constants[locale]).integerValue;
+    [Instabug setLocale:localeInt];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
@@ -92,6 +114,25 @@
       @"WelcomeMessageMode.beta": @(IBGWelcomeMessageModeBeta),
       @"WelcomeMessageMode.disabled": @(IBGWelcomeMessageModeDisabled),
 
+      @"Locale.Arabic": @(IBGLocaleArabic),
+      @"Locale.ChineseSimplified": @(IBGLocaleChineseSimplified),
+      @"Locale.ChineseTraditional": @(IBGLocaleChineseTraditional),
+      @"Locale.Czech": @(IBGLocaleCzech),
+      @"Locale.Danish": @(IBGLocaleDanish),
+      @"Locale.Dutch": @(IBGLocaleDutch),
+      @"Locale.English": @(IBGLocaleEnglish),
+      @"Locale.French": @(IBGLocaleFrench),
+      @"Locale.German": @(IBGLocaleGerman),
+      @"Locale.Italian": @(IBGLocaleItalian),
+      @"Locale.Japanese": @(IBGLocaleJapanese),
+      @"Locale.Korean": @(IBGLocaleKorean),
+      @"Locale.Polish": @(IBGLocalePolish),
+      @"Locale.PortugueseBrazil": @(IBGLocalePortugueseBrazil),
+      @"Locale.Russian": @(IBGLocaleRussian),
+      @"Locale.Spanish": @(IBGLocaleSpanish),
+      @"Locale.Swedish": @(IBGLocaleSwedish),
+      @"Locale.Turkish": @(IBGLocaleTurkish),
   };
 };
+
 @end
