@@ -119,11 +119,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    * @param userEmail User's default email
    */
   public void identifyUserWithEmail(String userEmail, String userName) {
-    try {
-        Instabug.identifyUser(userEmail, userName);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+      Instabug.identifyUser(userEmail, userName);
   }
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
