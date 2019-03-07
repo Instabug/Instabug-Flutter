@@ -7,4 +7,5 @@ jobs:
     steps:
       - checkout
       - run: flutter doctor
+      - run: pub get
       - run: dartanalyzer --options analysis_options.yaml lib
