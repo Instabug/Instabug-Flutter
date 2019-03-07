@@ -7,7 +7,7 @@ description: >-
   your user's device including all console logs, server-side network requests 
   and bug reproduction steps compiling all these details in one organised dashboard
   to help you debug and fix bugs faster.
-author: Natalie Weizenbaum <nweiz@google.com>
+author: Instabug <support@instabug.com>
 homepage: https://github.com/Instabug/Instabug-Flutter#readme
 documentation: https://github.com/Instabug/Instabug-Flutter#readme
 
