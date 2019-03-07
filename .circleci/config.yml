@@ -6,12 +6,7 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - run:
-        name: Bundle install
-        command: bundle check || sudo bundle install
-        environment:
-          BUNDLE_JOBS: 4
-          BUNDLE_RETRY: 3
+      - run: bundle check || sudo bundle install        
       - run: bundle exec Danger
       - run: flutter doctor
       - run: pub get
