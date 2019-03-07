@@ -6,6 +6,8 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
+      - run: bundle install
+      - run: bundle exec Danger
       - run: flutter doctor
       - run: pub get
       - run: dartanalyzer --options analysis_options.yaml lib
