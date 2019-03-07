@@ -28,6 +28,11 @@ class _MyAppState extends State<MyApp> {
       if (Platform.isIOS) {
         InstabugFlutter.start('9582e6cfe34e2b8897f48cfa3b617adb', [InvocationEvent.floatingButton, InvocationEvent.shake]);
       }
+      InstabugFlutter.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
+      InstabugFlutter.identifyUserWithEmail("aezz@instabug.com", "Aly Ezz");
+      InstabugFlutter.logOut();
+      InstabugFlutter.setLocale(Locale.German);
+
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }

@@ -9,7 +9,9 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 import android.app.Application;
 
 import com.instabug.library.Instabug;
+import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
+import com.instabug.library.ui.onboarding.WelcomeMessage;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -21,11 +23,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+
 
 // import com.instabug.library.InstabugColorTheme;
 // import com.instabug.library.InstabugCustomTextPlaceHolder;
@@ -100,6 +104,47 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).build();
   }
 
+
+  /**
+   * Shows the welcome message in a specific mode.
+   *
+   * @param welcomeMessageMode An enum to set the welcome message mode to
+   *                          live, or beta.
+  */
+  public void showWelcomeMessageWithMode(String welcomeMessageMode) {
+      Instabug.showWelcomeMessage((WelcomeMessage.State) constants.get(welcomeMessageMode));
+  }
+
+  /**
+   * Set the user identity.
+   *
+   * @param userName  Username.
+   * @param userEmail User's default email
+   */
+  public void identifyUserWithEmail(String userEmail, String userName) {
+      Instabug.identifyUser(userEmail, userName);
+  }
+
+  /**
+   * Sets the default value of the user's email to null and show email field and remove user
+   * name from all reports
+   * It also reset the chats on device and removes user attributes, user data and completed
+   * surveys.
+   */
+    public void logOut() {
+        Instabug.logoutUser();
+    }
+
+  /**
+   * Change Locale of Instabug UI elements(defaults to English)
+   *
+   * @param instabugLocale
+   */
+    public void setLocale(String instabugLocale) {
+         Instabug.changeLocale((Locale) constants.get(instabugLocale));
+    }
+
+
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
     constants.put("InvocationEvent.none", InstabugInvocationEvent.NONE);
@@ -107,6 +152,48 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     constants.put("InvocationEvent.twoFingersSwipeLeft", InstabugInvocationEvent.TWO_FINGER_SWIPE_LEFT);
     constants.put("InvocationEvent.floatingButton", InstabugInvocationEvent.FLOATING_BUTTON);
     constants.put("InvocationEvent.shake", InstabugInvocationEvent.SHAKE);
+
+    constants.put("WelcomeMessageMode.live", WelcomeMessage.State.LIVE);
+    constants.put("WelcomeMessageMode.beta", WelcomeMessage.State.BETA);
+    constants.put("WelcomeMessageMode.disabled", WelcomeMessage.State.DISABLED);
+
+    constants.put("Locale.Arabic",
+            new Locale(InstabugLocale.ARABIC.getCode(), InstabugLocale.ARABIC.getCountry()));
+    constants.put("Locale.ChineseSimplified",
+            new Locale(InstabugLocale.SIMPLIFIED_CHINESE.getCode(), InstabugLocale.SIMPLIFIED_CHINESE.getCountry()));
+    constants.put("Locale.ChineseTraditional",
+            new Locale(InstabugLocale.TRADITIONAL_CHINESE.getCode(), InstabugLocale.TRADITIONAL_CHINESE.getCountry()));
+    constants.put("Locale.Czech",
+            new Locale(InstabugLocale.CZECH.getCode(), InstabugLocale.CZECH.getCountry()));
+    constants.put("Locale.Danish",
+            new Locale(InstabugLocale.DANISH.getCode(), InstabugLocale.DANISH.getCountry()));
+    constants.put("Locale.Dutch",
+            new Locale(InstabugLocale.NETHERLANDS.getCode(), InstabugLocale.NETHERLANDS.getCountry()));
+    constants.put("Locale.English",
+            new Locale(InstabugLocale.ENGLISH.getCode(), InstabugLocale.ENGLISH.getCountry()));
+    constants.put("Locale.French",
+            new Locale(InstabugLocale.FRENCH.getCode(), InstabugLocale.FRENCH.getCountry()));
+    constants.put("Locale.German",
+            new Locale(InstabugLocale.GERMAN.getCode(), InstabugLocale.GERMAN.getCountry()));
+    constants.put("Locale.Italian",
+            new Locale(InstabugLocale.ITALIAN.getCode(), InstabugLocale.ITALIAN.getCountry()));
+    constants.put("Locale.Japanese",
+            new Locale(InstabugLocale.JAPANESE.getCode(), InstabugLocale.JAPANESE.getCountry()));
+    constants.put("Locale.Korean",
+            new Locale(InstabugLocale.KOREAN.getCode(), InstabugLocale.KOREAN.getCountry()));
+    constants.put("Locale.Polish",
+            new Locale(InstabugLocale.POLISH.getCode(), InstabugLocale.POLISH.getCountry()));
+    constants.put("Locale.PortugueseBrazil",
+            new Locale(InstabugLocale.PORTUGUESE_BRAZIL.getCode(), InstabugLocale.PORTUGUESE_BRAZIL.getCountry()));
+    constants.put("Locale.Russian",
+            new Locale(InstabugLocale.RUSSIAN.getCode(), InstabugLocale.RUSSIAN.getCountry()));
+    constants.put("Locale.Spanish",
+            new Locale(InstabugLocale.SPANISH.getCode(), InstabugLocale.SPANISH.getCountry()));
+    constants.put("Locale.Swedish",
+            new Locale(InstabugLocale.SWEDISH.getCode(), InstabugLocale.SWEDISH.getCountry()));
+    constants.put("Locale.Turkish",
+            new Locale(InstabugLocale.TURKISH.getCode(), InstabugLocale.TURKISH.getCountry()));
+
     return constants;
   }
 }
