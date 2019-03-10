@@ -11,6 +11,7 @@ void main() {
   final invocationEvents = [InvocationEvent.floatingButton];
   final email = "s@nta.com";
   final name = "santa";
+  String message = "Test Message";
 
   setUpAll(() async {
     MethodChannel('instabug_flutter')
@@ -27,6 +28,8 @@ void main() {
           return null;
         case 'setLocale:':
           return null;  
+        case 'logVerbose:':
+          return null;
         default:
           return null;
       }
@@ -36,6 +39,7 @@ void main() {
   tearDown(() async {
       log.clear();
     });
+
 test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.start(appToken, invocationEvents);
     expect(log, <Matcher>[
@@ -103,4 +107,15 @@ test('startWithToken:invocationEvents: Test', () async {
       )
     ]);
   });
+  
+  test('logVerbose: Test', () async {
+    InstabugFlutter.logVerbose(message);
+    expect(log, <Matcher>[
+      isMethodCall('logVerbose:',
+        arguments: <String, dynamic>{
+          'message': message
+        },
+      )
+    ]);
+  }); 
 }
