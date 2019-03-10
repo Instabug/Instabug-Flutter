@@ -122,8 +122,14 @@ class InstabugFlutter {
 /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.
 /// It should be of type [ColorTheme].
   static void setColorTheme(ColorTheme colorTheme) async {
-    Map <String, Object> params = {'colorTheme': colorTheme.toString() };
+    Map <String, Object> params = { 'colorTheme': colorTheme.toString() };
     await _channel.invokeMethod<Object>('setColorTheme:', params);
+  }
+
+/// Appends a set of [tags] to previously added tags of reported feedback, bug or crash.
+  static void appendTags(List<String> tags) async {
+    Map <String, Object> params = { 'tags': tags };
+    await _channel.invokeMethod<Object>('appendTags:', params);
   }
 
 }
