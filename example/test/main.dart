@@ -14,7 +14,7 @@ void main() {
         .setMockMethodCallHandler((MethodCall methodCall) async {
       log.add(methodCall);
       switch (methodCall.method) {
-        case 'startWithToken:invocationEvents:':
+        case 'logVerbose:':
           return null;
         default:
           return null;
