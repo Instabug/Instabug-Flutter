@@ -9,6 +9,8 @@ enum WelcomeMessageMode { live, beta, disabled }
 enum Locale { Arabic, ChineseSimplified, ChineseTraditional, Czech, Danish, Dutch, English, French,
               German, Italian, Japanese, Korean, Polish, PortugueseBrazil, Russian, Spanish, Swedish, Turkish}
 
+enum ColorTheme { dark, light }
+
 class InstabugFlutter {
   static const MethodChannel _channel =
       const MethodChannel('instabug_flutter');
@@ -115,6 +117,13 @@ class InstabugFlutter {
   static void logInfo(String message) async {
     Map <String, Object> params = {'message': message };
     await _channel.invokeMethod<Object>('logInfo:', params);
+  }
+
+/// Sets the color theme of the SDK's whole UI to the [colorTheme] given.
+/// It should be of type [ColorTheme].
+  static void setColorTheme(ColorTheme colorTheme) async {
+    Map <String, Object> params = {'colorTheme': colorTheme.toString() };
+    await _channel.invokeMethod<Object>('setColorTheme:', params);
   }
 
 }
