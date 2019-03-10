@@ -23,6 +23,8 @@ void main() {
           return null;
         case 'identifyUserWithEmail:':
           return null;
+        case 'logOut':
+          return null;
         default:
           return null;
       }
@@ -63,6 +65,28 @@ test('startWithToken:invocationEvents: Test', () async {
         arguments: <String, dynamic>{
           'email': email,
           'name': name
+        },
+      )
+    ]);
+  });
+  
+  test('identifyUserWithEmail:name: Test Optional Parameter', () async {
+    InstabugFlutter.identifyUserWithEmail(email);
+    expect(log, <Matcher>[
+      isMethodCall('identifyUserWithEmail:name:',
+        arguments: <String, dynamic>{
+          'email': email,
+          'name': null
+        },
+      )
+    ]);
+  });
+
+  test('logOut Test', () async {
+    InstabugFlutter.logOut();
+    expect(log, <Matcher>[
+      isMethodCall('logOut',
+        arguments: <String, dynamic>{
         },
       )
     ]);
