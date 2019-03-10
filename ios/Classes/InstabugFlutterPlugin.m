@@ -132,6 +132,16 @@
   [IBGLog logInfo:log];
 }
 
+/**
+ * Sets the color theme of the SDK's whole UI.
+ * @param colorTheme An `IBGColorTheme` to set the SDK's UI to.
+ */
++ (void)setColorTheme:(NSString*) colorTheme {
+    NSDictionary *constants = [self constants];
+    NSInteger intColorTheme = ((NSNumber *) constants[colorTheme]).integerValue;
+    [Instabug setColorTheme:intColorTheme];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
@@ -143,6 +153,9 @@
       @"WelcomeMessageMode.live": @(IBGWelcomeMessageModeLive),
       @"WelcomeMessageMode.beta": @(IBGWelcomeMessageModeBeta),
       @"WelcomeMessageMode.disabled": @(IBGWelcomeMessageModeDisabled),
+      
+      @"ColorTheme.dark": @(IBGColorThemeDark),
+      @"ColorTheme.light": @(IBGColorThemeLight),
 
       @"Locale.Arabic": @(IBGLocaleArabic),
       @"Locale.ChineseSimplified": @(IBGLocaleChineseSimplified),
