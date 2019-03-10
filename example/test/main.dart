@@ -17,6 +17,10 @@ void main() {
         .setMockMethodCallHandler((MethodCall methodCall) async {
       log.add(methodCall);
       switch (methodCall.method) {
+        case 'startWithToken:invocationEvents:':
+          return null;
+        case 'showWelcomeMessageWithMode:':
+          return null;
         case 'identifyUserWithEmail:':
           return null;
         default:
@@ -29,6 +33,29 @@ void main() {
       log.clear();
     });
 
+test('startWithToken:invocationEvents: Test', () async {
+    InstabugFlutter.start(appToken, invocationEvents);
+    expect(log, <Matcher>[
+      isMethodCall('startWithToken:invocationEvents:',
+        arguments: <String, dynamic>{
+          'token': appToken,
+          'invocationEvents': [InvocationEvent.floatingButton.toString()]
+        },
+      )
+    ]);
+  });
+  
+  test('showWelcomeMessageWithMode: Test', () async {
+    InstabugFlutter.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
+    expect(log, <Matcher>[
+      isMethodCall('showWelcomeMessageWithMode:',
+        arguments: <String, dynamic>{
+          'welcomeMessageMode': WelcomeMessageMode.beta.toString()
+        },
+      )
+    ]);
+  });
+
   test('identifyUserWithEmail:name: Test', () async {
     InstabugFlutter.identifyUserWithEmail(email, name);
     expect(log, <Matcher>[
@@ -36,18 +63,6 @@ void main() {
         arguments: <String, dynamic>{
           'email': email,
           'name': name
-        },
-      )
-    ]);
-  });
-
-  test('identifyUserWithEmail:name: Test Optional Parameter', () async {
-    InstabugFlutter.identifyUserWithEmail(email);
-    expect(log, <Matcher>[
-      isMethodCall('identifyUserWithEmail:name:',
-        arguments: <String, dynamic>{
-          'email': email,
-          'name': null
         },
       )
     ]);
