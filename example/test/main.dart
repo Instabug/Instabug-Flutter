@@ -110,7 +110,7 @@ test('startWithToken:invocationEvents: Test', () async {
   test('logDebug: Test', () async {
     InstabugFlutter.logDebug(message);
     expect(log, <Matcher>[
-      isMethodCall('logVerbose:',
+      isMethodCall('logDebug:',
         arguments: <String, dynamic>{
           'message': message
         },
