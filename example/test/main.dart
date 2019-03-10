@@ -21,6 +21,8 @@ void main() {
           return null;
         case 'showWelcomeMessageWithMode:':
           return null;
+        case 'identifyUserWithEmail:':
+          return null;
         default:
           return null;
       }
@@ -31,8 +33,7 @@ void main() {
       log.clear();
     });
 
-
-  test('startWithToken:invocationEvents: Test', () async {
+test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.start(appToken, invocationEvents);
     expect(log, <Matcher>[
       isMethodCall('startWithToken:invocationEvents:',
@@ -50,6 +51,18 @@ void main() {
       isMethodCall('showWelcomeMessageWithMode:',
         arguments: <String, dynamic>{
           'welcomeMessageMode': WelcomeMessageMode.beta.toString()
+        },
+      )
+    ]);
+  });
+
+  test('identifyUserWithEmail:name: Test', () async {
+    InstabugFlutter.identifyUserWithEmail(email, name);
+    expect(log, <Matcher>[
+      isMethodCall('identifyUserWithEmail:name:',
+        arguments: <String, dynamic>{
+          'email': email,
+          'name': name
         },
       )
     ]);
