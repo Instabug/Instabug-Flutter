@@ -32,8 +32,8 @@ class InstabugFlutter {
     invocationEvents.forEach((e) {
       invocationEventsStrings.add(e.toString());
     });
-    Map params = {'token': token, 'invocationEvents': invocationEventsStrings};
-    await _channel.invokeMethod('startWithToken:invocationEvents:', params);
+    Map <String, Object> params = { 'token': token, 'invocationEvents': invocationEventsStrings };
+    await _channel.invokeMethod<Object>('startWithToken:invocationEvents:', params);
   }
 
    /*
@@ -43,8 +43,8 @@ class InstabugFlutter {
    *
    */
   static void showWelcomeMessageWithMode(WelcomeMessageMode welcomeMessageMode) async {
-    Map params = {'welcomeMessageMode': welcomeMessageMode.toString() };
-    await _channel.invokeMethod('showWelcomeMessageWithMode:', params);
+    Map <String, Object> params = {'welcomeMessageMode': welcomeMessageMode.toString() };
+    await _channel.invokeMethod<Object>('showWelcomeMessageWithMode:', params);
   }
 
   /*
@@ -56,8 +56,8 @@ class InstabugFlutter {
    * @param {string} name Name of the user to be set.
    */
   static void identifyUserWithEmail(String email, [String name]) async {
-    Map params = {'email': email, 'name': name };
-    await _channel.invokeMethod('identifyUserWithEmail:name:', params);
+    Map <String, Object> params = {'email': email, 'name': name };
+    await _channel.invokeMethod<Object>('identifyUserWithEmail:name:', params);
   }
 
   /*
@@ -66,8 +66,8 @@ class InstabugFlutter {
    * It also reset the chats on device and removes user attributes, user data and completed surveys.
    */
   static void logOut() async {
-    Map params = { };
-    await _channel.invokeMethod('logOut', params);
+    Map <String, Object> params = { };
+    await _channel.invokeMethod<Object>('logOut', params);
   }
 
   /*
@@ -77,8 +77,8 @@ class InstabugFlutter {
    * @param {locale} locale A locale to set the SDK to.
    */
   static void setLocale(Locale locale) async {
-    Map params = {'locale': locale.toString() };
-    await _channel.invokeMethod('setLocale:', params);
+    Map <String, Object> params = {'locale': locale.toString() };
+    await _channel.invokeMethod<Object>('setLocale:', params);
   }
 
   /*
