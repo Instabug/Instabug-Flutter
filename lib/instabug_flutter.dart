@@ -80,5 +80,17 @@ class InstabugFlutter {
     Map <String, Object> params = {'locale': locale.toString() };
     await _channel.invokeMethod<Object>('setLocale:', params);
   }
+
+  /*
+   * Appends a log message to Instabug internal log
+   * These logs are then sent along the next uploaded report.
+   * All log messages are timestamped
+   * Note: logs passed to this method are NOT printed to console
+   * @param {message} the message
+   */
+  static void logInfo(String message) async {
+    Map <String, Object> params = {'message': message };
+    await _channel.invokeMethod<Object>('logInfo:', params);
+  }
   
 }
