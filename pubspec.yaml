@@ -1,8 +1,15 @@
 name: instabug_flutter
-description: A new flutter plugin project.
-version: 0.0.1
-author:
-homepage:
+version: 0.0.1-alpha.1
+description: >-
+  Instabug is an in-app feedback and bug reporting tool for mobile apps. 
+  With just a simple shake, your users or beta testers can report bugs or 
+  send in-app feedback and the SDK will capture an environment snapshot of 
+  your user's device including all console logs, server-side network requests 
+  and bug reproduction steps compiling all these details in one organised dashboard
+  to help you debug and fix bugs faster.
+author: Instabug <support@instabug.com>
+homepage: https://github.com/Instabug/Instabug-Flutter#readme
+documentation: https://github.com/Instabug/Instabug-Flutter#readme
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
