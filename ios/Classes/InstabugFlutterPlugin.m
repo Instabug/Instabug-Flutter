@@ -104,12 +104,8 @@
 
 /**
   * Appends a log message to Instabug internal log
-  * <p>
   * These logs are then sent along the next uploaded report.
-  * All log messages are timestamped <br/>
-  * Logs aren't cleared per single application run. 
-  * </p>
-  *
+  * All log messages are timestamped 
   * @param log the message
   */
 + (void)logVerbose:(NSString *)log {

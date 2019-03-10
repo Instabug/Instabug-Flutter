@@ -147,14 +147,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
 
   /**
     * Appends a log message to Instabug internal log
-    * <p>
     * These logs are then sent along the next uploaded report.
-    * All log messages are timestamped <br/>
-    * Logs aren't cleared per single application run. If you wish to reset the logs,
-    * use {@link #clearLogs()} ()}
-    * </p>
-    * Note: logs passed to this method are <b>NOT</b> printed to Logcat
-    *
+    * All log messages are timestamped
+    * Note: logs passed to this method are NOT printed to Logcat
     * @param message the message
     */
     public void logVerbose(String message) {
