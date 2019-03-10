@@ -32,6 +32,8 @@ void main() {
           return null;
         case 'logDebug:':
           return null; 
+        case 'logInfo:':
+          return null;    
         default:
           return null;
       }
@@ -110,6 +112,7 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+
   test('logVerbose: Test', () async {
     InstabugFlutter.logVerbose(message);
     expect(log, <Matcher>[
@@ -125,6 +128,17 @@ test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.logDebug(message);
     expect(log, <Matcher>[
       isMethodCall('logDebug:',
+        arguments: <String, dynamic>{
+          'message': message
+        },
+      )
+    ]);
+  });
+  
+  test('logInfo: Test', () async {
+    InstabugFlutter.logInfo(message);
+    expect(log, <Matcher>[
+      isMethodCall('logInfo:',
         arguments: <String, dynamic>{
           'message': message
         },

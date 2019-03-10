@@ -145,6 +145,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
          Instabug.changeLocale((Locale) constants.get(instabugLocale));
     }
 
+
    /**
     * Appends a log message to Instabug internal log
     * These logs are then sent along the next uploaded report.
@@ -166,9 +167,18 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     public void logDebug(String message) {
         InstabugLog.d(message);
    }
+  
+  /**
+    * Appends a log message to Instabug internal log
+    * These logs are then sent along the next uploaded report.
+    * All log messages are timestamped
+    * Note: logs passed to this method are NOT printed to Logcat
+    * @param message the message
+    */
+     public void logInfo(String message) {
+        InstabugLog.i(message);
+   }
     
-  
-  
 
 
   public Map<String, Object> getConstants() {
