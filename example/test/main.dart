@@ -19,6 +19,8 @@ void main() {
       switch (methodCall.method) {
         case 'startWithToken:invocationEvents:':
           return null;
+        case 'showWelcomeMessageWithMode:':
+          return null;
         default:
           return null;
       }
@@ -29,6 +31,7 @@ void main() {
       log.clear();
     });
 
+
   test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.start(appToken, invocationEvents);
     expect(log, <Matcher>[
@@ -36,6 +39,17 @@ void main() {
         arguments: <String, dynamic>{
           'token': appToken,
           'invocationEvents': [InvocationEvent.floatingButton.toString()]
+        },
+      )
+    ]);
+  });
+  
+  test('showWelcomeMessageWithMode: Test', () async {
+    InstabugFlutter.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
+    expect(log, <Matcher>[
+      isMethodCall('showWelcomeMessageWithMode:',
+        arguments: <String, dynamic>{
+          'welcomeMessageMode': WelcomeMessageMode.beta.toString()
         },
       )
     ]);
