@@ -142,6 +142,14 @@
     [Instabug setColorTheme:intColorTheme];
 }
 
+/**
+ * Appends a set of tags to previously added tags of reported feedback, bug or crash.
+ * @param tags An array of tags to append to current tags.
+ */
++ (void)appendTags:(NSArray*) tags {
+    [Instabug appendTags:tags];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
