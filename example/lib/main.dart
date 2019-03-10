@@ -33,6 +33,7 @@ class _MyAppState extends State<MyApp> {
       InstabugFlutter.logDebug("Test Debug Message from Flutter");
       InstabugFlutter.logOut();
       InstabugFlutter.setLocale(Locale.German);
+      InstabugFlutter.logVerbose("Test Message from Flutter!");
 
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
