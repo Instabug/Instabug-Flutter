@@ -11,6 +11,7 @@ void main() {
   final invocationEvents = [InvocationEvent.floatingButton];
   final email = "s@nta.com";
   final name = "santa";
+  String message = "Test Message";
 
   setUpAll(() async {
     MethodChannel('instabug_flutter')
@@ -26,6 +27,8 @@ void main() {
         case 'logOut':
           return null;
         case 'setLocale:':
+          return null;  
+        case 'logInfo:':
           return null;  
         default:
           return null;
@@ -99,6 +102,17 @@ test('startWithToken:invocationEvents: Test', () async {
       isMethodCall('setLocale:',
         arguments: <String, dynamic>{
             'locale': Locale.German.toString()
+        },
+      )
+    ]);
+  });
+
+  test('logInfo: Test', () async {
+    InstabugFlutter.logInfo(message);
+    expect(log, <Matcher>[
+      isMethodCall('logInfo:',
+        arguments: <String, dynamic>{
+          'message': message
         },
       )
     ]);
