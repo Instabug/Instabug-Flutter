@@ -27,9 +27,13 @@ void main() {
         case 'logOut':
           return null;
         case 'setLocale:':
-          return null;  
+          return null;
+        case 'logVerbose:':
+          return null;
+        case 'logDebug:':
+          return null; 
         case 'logInfo:':
-          return null;  
+          return null;    
         default:
           return null;
       }
@@ -39,6 +43,7 @@ void main() {
   tearDown(() async {
       log.clear();
     });
+
 test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.start(appToken, invocationEvents);
     expect(log, <Matcher>[
@@ -107,6 +112,29 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+
+  test('logVerbose: Test', () async {
+    InstabugFlutter.logVerbose(message);
+    expect(log, <Matcher>[
+      isMethodCall('logVerbose:',
+        arguments: <String, dynamic>{
+          'message': message
+        },
+      )
+    ]);
+  });
+  
+  test('logDebug: Test', () async {
+    InstabugFlutter.logDebug(message);
+    expect(log, <Matcher>[
+      isMethodCall('logDebug:',
+        arguments: <String, dynamic>{
+          'message': message
+        },
+      )
+    ]);
+  });
+  
   test('logInfo: Test', () async {
     InstabugFlutter.logInfo(message);
     expect(log, <Matcher>[
