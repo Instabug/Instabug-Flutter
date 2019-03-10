@@ -9,6 +9,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 import android.app.Application;
 
 import com.instabug.library.Instabug;
+import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
@@ -143,6 +144,17 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     public void setLocale(String instabugLocale) {
          Instabug.changeLocale((Locale) constants.get(instabugLocale));
     }
+
+    /**
+    * Appends a log message to Instabug internal log
+    * These logs are then sent along the next uploaded report.
+    * All log messages are timestamped
+    * Note: logs passed to this method are NOT printed to Logcat
+    * @param message the message
+    */
+    public void logDebug(String message) {
+        InstabugLog.d(message);
+   }
 
 
   public Map<String, Object> getConstants() {
