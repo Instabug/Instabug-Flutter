@@ -17,6 +17,8 @@ void main() {
         .setMockMethodCallHandler((MethodCall methodCall) async {
       log.add(methodCall);
       switch (methodCall.method) {
+        case 'startWithToken:invocationEvents:':
+          return null;
         case 'showWelcomeMessageWithMode:':
           return null;
         default:
@@ -29,6 +31,19 @@ void main() {
       log.clear();
     });
 
+
+  test('startWithToken:invocationEvents: Test', () async {
+    InstabugFlutter.start(appToken, invocationEvents);
+    expect(log, <Matcher>[
+      isMethodCall('startWithToken:invocationEvents:',
+        arguments: <String, dynamic>{
+          'token': appToken,
+          'invocationEvents': [InvocationEvent.floatingButton.toString()]
+        },
+      )
+    ]);
+  });
+  
   test('showWelcomeMessageWithMode: Test', () async {
     InstabugFlutter.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
     expect(log, <Matcher>[
