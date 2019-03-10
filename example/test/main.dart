@@ -25,6 +25,8 @@ void main() {
           return null;
         case 'logOut':
           return null;
+        case 'setLocale:':
+          return null;  
         default:
           return null;
       }
@@ -34,7 +36,6 @@ void main() {
   tearDown(() async {
       log.clear();
     });
-
 test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.start(appToken, invocationEvents);
     expect(log, <Matcher>[
@@ -87,6 +88,17 @@ test('startWithToken:invocationEvents: Test', () async {
     expect(log, <Matcher>[
       isMethodCall('logOut',
         arguments: <String, dynamic>{
+        },
+      )
+    ]);
+  });
+  
+  test('setLocale:', () async {
+    InstabugFlutter.setLocale(Locale.German);
+    expect(log, <Matcher>[
+      isMethodCall('setLocale:',
+        arguments: <String, dynamic>{
+            'locale': Locale.German.toString()
         },
       )
     ]);
