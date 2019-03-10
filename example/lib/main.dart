@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
       }
       InstabugFlutter.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
       InstabugFlutter.identifyUserWithEmail("aezz@instabug.com", "Aly Ezz");
+      InstabugFlutter.logInfo("Test Log Info Message");
       InstabugFlutter.logOut();
       InstabugFlutter.setLocale(Locale.German);
 
