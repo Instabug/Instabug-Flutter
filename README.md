@@ -82,4 +82,9 @@ ArrayList<String> invocationEvents = new ArrayList<>();
 invocationEvents.add(InstabugFlutterPlugin.INVOCATION_EVENT_SHAKE);
 new InstabugFlutterPlugin().start(YOUR_CREATED_CLASS.this, "APP_TOKEN", invocationEvents);
 ```
+
+5) To prevent your app from being rejected, you’ll need to add the following two keys to your app’s info.plist file with text that explains to your app users why those permissions are needed (IOS only).
+`NSMicrophoneUsageDescription`
+`NSPhotoLibraryUsageDescription`
+
 You can find your app token by selecting the SDK tab from your [**Instabug dashboard**](https://dashboard.instabug.com/app/sdk/).
