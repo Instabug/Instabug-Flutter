@@ -45,7 +45,7 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |            | `BugReporting.invoke(InvocationMode mode, @InvocationOption int... options)`<br>`+ [IBGBugReporting invokeWithMode:options:]`  |
 |            | `InstabugLog.d(String message)`<br>`+ [IBGLog log:]`                                                                         |
 |            | `InstabugLog.v(String message)`<br>`+ [IBGLog logVerbose:]`                                                                  |
-|            | `InstabugLog.d(String message)`<br>`+ [IBGLog logDebug:]`                                                                    |
+|`logDebug(String message)`| `InstabugLog.d(String message)`<br>`+ [IBGLog logDebug:]`                                                                    |
 |            | `InstabugLog.i(String message)`<br>`+ [IBGLog logInfo:]`                                                                     |
 |            | `InstabugLog.w(String message)`<br>`+ [IBGLog logWarn:]`                                                                     |
 |            | `InstabugLog.e(String message)`<br>`+ [IBGLog logError:]`                                                                    |
