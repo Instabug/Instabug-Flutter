@@ -102,6 +102,20 @@
     [Instabug setLocale:localeInt];
 }
 
+/**
+  * Appends a log message to Instabug internal log
+  * <p>
+  * These logs are then sent along the next uploaded report.
+  * All log messages are timestamped <br/>
+  * Logs aren't cleared per single application run. 
+  * </p>
+  *
+  * @param log the message
+  */
++ (void)logVerbose:(NSString *)log {
+  [IBGLog logVerbose:log];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
