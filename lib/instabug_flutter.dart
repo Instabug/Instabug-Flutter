@@ -89,8 +89,8 @@ class InstabugFlutter {
    * @param {message} the message
    */
   static void logVerbose(String message) async {
-    Map params = {'message': message };
-    await _channel.invokeMethod('logVerbose:', params);
+    Map <String, Object> params = {'message': message };
+    await _channel.invokeMethod<Object>('logVerbose:', params);
   }
 
 }
