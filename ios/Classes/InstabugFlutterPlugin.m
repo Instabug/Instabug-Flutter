@@ -3,15 +3,6 @@
 
 @implementation InstabugFlutterPlugin
 
-+ (NSDictionary *) constants {
-  return @{
-      @"InvocationEvent.shake": @(IBGInvocationEventShake),
-      @"InvocationEvent.screenshot": @(IBGInvocationEventScreenshot),
-      @"InvocationEvent.twoFingersSwipeLeft": @(IBGInvocationEventTwoFingersSwipeLeft),
-      @"InvocationEvent.floatingButton": @(IBGInvocationEventFloatingButton),
-      @"InvocationEvent.none": @(IBGInvocationEventNone),
-  };
-};
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
@@ -62,5 +53,86 @@
     }
     [Instabug startWithToken:token invocationEvents:invocationEvents];
 }
+
+/**
+  * Shows the welcome message in a specific mode.
+  *
+  * @param welcomeMessageMode An enum to set the welcome message mode to
+  *                          live, or beta.
+  */
++ (void)showWelcomeMessageWithMode:(NSString *)welcomeMessageMode {
+    NSDictionary *constants = [self constants];
+    NSInteger welcomeMode = ((NSNumber *) constants[welcomeMessageMode]).integerValue;
+    [Instabug showWelcomeMessageWithMode:welcomeMode];
+}
+
+/**
+  * Set the user identity.
+  * Instabug will pre-fill the user email in reports.
+  *
+  * @param name  Username.
+  * @param email User's default email
+  */
++ (void)identifyUserWithEmail:(NSString *)email name:(NSString *) name {
+    if ([name isKindOfClass:[NSNull class]]) {
+      [Instabug identifyUserWithEmail:email name:nil];
+    } else {
+      [Instabug identifyUserWithEmail:email name:name];
+    }
+}
+
+/**
+  * Sets the default value of the user's email to null and show email field and remove user
+  * name from all reports
+  * It also reset the chats on device and removes user attributes, user data and completed
+  * surveys.
+  */
++ (void)logOut {
+  [Instabug logOut];
+}
+
+/**
+  * Change Locale of Instabug UI elements(defaults to English)
+  *
+  * @param locale
+  */
++ (void)setLocale:(NSString *)locale {
+    NSDictionary *constants = [self constants];
+    NSInteger localeInt = ((NSNumber *) constants[locale]).integerValue;
+    [Instabug setLocale:localeInt];
+}
+
++ (NSDictionary *)constants {
+  return @{
+      @"InvocationEvent.shake": @(IBGInvocationEventShake),
+      @"InvocationEvent.screenshot": @(IBGInvocationEventScreenshot),
+      @"InvocationEvent.twoFingersSwipeLeft": @(IBGInvocationEventTwoFingersSwipeLeft),
+      @"InvocationEvent.floatingButton": @(IBGInvocationEventFloatingButton),
+      @"InvocationEvent.none": @(IBGInvocationEventNone),
+
+      @"WelcomeMessageMode.live": @(IBGWelcomeMessageModeLive),
+      @"WelcomeMessageMode.beta": @(IBGWelcomeMessageModeBeta),
+      @"WelcomeMessageMode.disabled": @(IBGWelcomeMessageModeDisabled),
+
+      @"Locale.Arabic": @(IBGLocaleArabic),
+      @"Locale.ChineseSimplified": @(IBGLocaleChineseSimplified),
+      @"Locale.ChineseTraditional": @(IBGLocaleChineseTraditional),
+      @"Locale.Czech": @(IBGLocaleCzech),
+      @"Locale.Danish": @(IBGLocaleDanish),
+      @"Locale.Dutch": @(IBGLocaleDutch),
+      @"Locale.English": @(IBGLocaleEnglish),
+      @"Locale.French": @(IBGLocaleFrench),
+      @"Locale.German": @(IBGLocaleGerman),
+      @"Locale.Italian": @(IBGLocaleItalian),
+      @"Locale.Japanese": @(IBGLocaleJapanese),
+      @"Locale.Korean": @(IBGLocaleKorean),
+      @"Locale.Polish": @(IBGLocalePolish),
+      @"Locale.PortugueseBrazil": @(IBGLocalePortugueseBrazil),
+      @"Locale.Russian": @(IBGLocaleRussian),
+      @"Locale.Spanish": @(IBGLocaleSpanish),
+      @"Locale.Swedish": @(IBGLocaleSwedish),
+      @"Locale.Turkish": @(IBGLocaleTurkish),
+  };
+};
 
 @end
