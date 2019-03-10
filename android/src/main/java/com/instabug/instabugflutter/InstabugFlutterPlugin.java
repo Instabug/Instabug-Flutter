@@ -9,6 +9,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 import android.app.Application;
 
 import com.instabug.library.Instabug;
+import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
@@ -126,12 +127,12 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
       Instabug.identifyUser(userEmail, userName);
   }
 
-  /**
-   * Sets the default value of the user's email to null and show email field and remove user
-   * name from all reports
-   * It also reset the chats on device and removes user attributes, user data and completed
-   * surveys.
-   */
+    /**
+    * Sets the default value of the user's email to null and show email field and remove user
+    * name from all reports
+    * It also reset the chats on device and removes user attributes, user data and completed
+    * surveys.
+    */
     public void logOut() {
         Instabug.logoutUser();
     }
@@ -178,6 +179,14 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      public void logInfo(String message) {
         InstabugLog.i(message);
    }
+
+    /**
+     * Sets the color theme of the SDK's whole UI.
+     * @param colorTheme an InstabugColorTheme to set the SDK's UI to.
+     */
+   public void setColorTheme(String colorTheme) {
+         Instabug.setColorTheme((InstabugColorTheme) constants.get(colorTheme));
+   }
     
 
 
@@ -192,6 +201,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     constants.put("WelcomeMessageMode.live", WelcomeMessage.State.LIVE);
     constants.put("WelcomeMessageMode.beta", WelcomeMessage.State.BETA);
     constants.put("WelcomeMessageMode.disabled", WelcomeMessage.State.DISABLED);
+
+    constants.put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
+    constants.put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
 
     constants.put("Locale.Arabic",
             new Locale(InstabugLocale.ARABIC.getCode(), InstabugLocale.ARABIC.getCountry()));
