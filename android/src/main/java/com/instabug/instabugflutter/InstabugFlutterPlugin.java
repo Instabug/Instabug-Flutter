@@ -195,6 +195,13 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    public void appendTags(ArrayList<String> tags) {
        Instabug.addTags(tags.toArray(new String[0]));
    }
+
+  /**
+   * Manually removes all tags of reported feedback, bug or crash.
+   */
+  public void resetTags() {
+     Instabug.resetTags();
+   }
     
 
 
