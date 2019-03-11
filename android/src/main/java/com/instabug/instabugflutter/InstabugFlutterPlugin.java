@@ -178,8 +178,14 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      public void logInfo(String message) {
         InstabugLog.i(message);
    }
+   
+   /**
+    * Clears Instabug internal log
+    */
+    public void clearAllLogs() {
+        InstabugLog.clearLogs();
+   }
     
-
 
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
