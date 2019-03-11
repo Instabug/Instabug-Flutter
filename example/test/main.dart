@@ -33,6 +33,8 @@ void main() {
         case 'logDebug:':
           return null; 
         case 'logInfo:':
+          return null; 
+        case 'clearAllLogs:':
           return null;    
         default:
           return null;
@@ -141,6 +143,16 @@ test('startWithToken:invocationEvents: Test', () async {
       isMethodCall('logInfo:',
         arguments: <String, dynamic>{
           'message': message
+        },
+      )
+    ]);
+  });
+
+  test('clearAllLogs: Test', () async {
+    InstabugFlutter.clearAllLogs();
+    expect(log, <Matcher>[
+      isMethodCall('clearAllLogs',
+        arguments: <String, dynamic>{
         },
       )
     ]);
