@@ -139,4 +139,9 @@ class InstabugFlutter {
     Map<String, Object> params = {'tags': tags};
     await _channel.invokeMethod<Object>('appendTags:', params);
   }
+
+  /// Manually removes all tags of reported feedback, bug or crash.
+  static void resetTags() async {
+    await _channel.invokeMethod('resetTags');
+  }
 }
