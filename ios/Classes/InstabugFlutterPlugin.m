@@ -132,6 +132,17 @@
   [IBGLog logInfo:log];
 }
 
+/**
+  * Appends a log message to Instabug internal log
+  * These logs are then sent along the next uploaded report.
+  * All log messages are timestamped 
+  * @param log the message
+  */
++ (void)logWarn:(NSString *)log {
+  [IBGLog logWarn:log];
+}
+
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
