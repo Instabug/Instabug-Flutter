@@ -33,6 +33,8 @@ void main() {
         case 'logDebug:':
           return null; 
         case 'logInfo:':
+          return null; 
+        case 'logWarn:':
           return null;    
         default:
           return null;
@@ -139,6 +141,17 @@ test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.logInfo(message);
     expect(log, <Matcher>[
       isMethodCall('logInfo:',
+        arguments: <String, dynamic>{
+          'message': message
+        },
+      )
+    ]);
+  });
+
+  test('logWarn: Test', () async {
+    InstabugFlutter.logWarn(message);
+    expect(log, <Matcher>[
+      isMethodCall('logWarn:',
         arguments: <String, dynamic>{
           'message': message
         },
