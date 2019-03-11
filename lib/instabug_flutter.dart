@@ -117,4 +117,10 @@ class InstabugFlutter {
     await _channel.invokeMethod<Object>('logInfo:', params);
   }
 
+  /// Clears Instabug internal log
+  static void clearAllLogs() async {
+    Map<String, Object> params = {};
+    await _channel.invokeMethod<Object>('clearAllLogs', params);
+  }
+
 }
