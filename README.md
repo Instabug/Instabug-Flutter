@@ -52,6 +52,7 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |            | `InstabugLog.w(String message)`<br>`+ [IBGLog logWarn:]`                                                                     |
 |            | `InstabugLog.e(String message)`<br>`+ [IBGLog logError:]`                                                                    |
 |            | `Instabug.clearLogs()`<br>`+ [IBGLog clearAllLogs:]`                                                                         |
+|`clearAllLogs(String message)`| `Instabug.clearLogs()`<br>`+ [IBGLog clearAllLogs:]`                                                                         |
 
 ## Integration
 
