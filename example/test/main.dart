@@ -171,4 +171,13 @@ test('startWithToken:invocationEvents: Test', () async {
       )
     ]);
   });
+
+  test('test resetTags should be called with no arguments', () async {
+    InstabugFlutter.resetTags();
+    expect(log, <Matcher>[
+      isMethodCall('resetTags',
+        arguments: null
+      )
+    ]);
+  });
 }
