@@ -132,6 +132,14 @@
   [IBGLog logInfo:log];
 }
 
+/**
+  * Clears Instabug internal log
+  */
++ (void)clearAllLogs {
+  [IBGLog clearAllLogs];
+}
+
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
