@@ -31,9 +31,9 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |`identifyUserWithEmail(String email, [String name])`| `Instabug.identifyUser(String username, String email)`<br>`+ [Instabug identifyUserWithEmail:name:]`                         |
 |`logOut()`| `Instabug.logoutUser()`<br>`+ [Instabug logOut]`                                                                             |
 |`setLocale(Locale locale)`| `Instabug.setLocale(Locale locale)`<br>`+ [Instabug setLocale:]`                                                             |
-|            |  `Instabug.setColorTheme(InstabugColorTheme theme)`<br>`+ [Instabug setColorTheme:]`                                         |
-|            | `Instabug.addTags(String... tags)`<br>`+ [Instabug appendTags:]`                                                             |
-|            | `Instabug.resetTags()`<br>`+ [Instabug resetTags]`                                                                           |
+|`InstabugFlutter.setColorTheme(ColorTheme colorTheme)`|  `Instabug.setColorTheme(InstabugColorTheme theme)`<br>`+ [Instabug setColorTheme:]`                                         |
+|`InstabugFlutter.appendTags(List<String> tags)`| `Instabug.addTags(String... tags)`<br>`+ [Instabug appendTags:]`                                                             |
+|`InstabugFlutter.resetTags()`| `Instabug.resetTags()`<br>`+ [Instabug resetTags]`                                                                           |
 |            | `Instabug.getTags()`<br>`+ [Instabug getTags]`                                                                               |
 |            | `Instabug.setCustomTextPlaceHolders(InstabugCustomTextPlaceHolder placeholder)`<br>`+ [Instabug setValue:forStringWithKey:]` |
 |            | `Instabug.setUserAttribute(String key, String value)`<br>`+ [Instabug setUserAttribute:withKey:]`                            |
