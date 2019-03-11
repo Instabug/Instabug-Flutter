@@ -117,4 +117,13 @@ class InstabugFlutter {
     await _channel.invokeMethod<Object>('logInfo:', params);
   }
 
+  /// Appends a log [message] to Instabug internal log
+  /// These logs are then sent along the next uploaded report.
+  /// All log messages are timestamped
+  /// Note: logs passed to this method are NOT printed to console
+  static void logWarn(String message) async {
+    Map<String, Object> params = {'message': message};
+    await _channel.invokeMethod<Object>('logWarn:', params);
+  }
+
 }
