@@ -33,6 +33,7 @@ class _MyAppState extends State<MyApp> {
       InstabugFlutter.logInfo("Test Log Info Message from Flutter!");
       InstabugFlutter.logDebug("Test Debug Message from Flutter!");
       InstabugFlutter.logVerbose("Test Verbose Message from Flutter!");
+      InstabugFlutter.logError("Test Error Message from Flutter!");
       InstabugFlutter.logOut();
       InstabugFlutter.setLocale(Locale.German);
       
