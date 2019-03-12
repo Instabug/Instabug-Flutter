@@ -186,4 +186,9 @@ class InstabugFlutter {
     final Map<String, Object> params = {'key': key};
     await _channel.invokeMethod<Object>('removeUserAttributeForKey:', params);
   }
+
+  /// invoke sdk manually
+  static void show() async {
+    await _channel.invokeMethod<Object>('show');
+  }
 }
