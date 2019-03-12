@@ -166,6 +166,10 @@
     [Instabug resetTags];
 }
 
++ (NSArray*)getTags {
+    return [Instabug getTags];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),

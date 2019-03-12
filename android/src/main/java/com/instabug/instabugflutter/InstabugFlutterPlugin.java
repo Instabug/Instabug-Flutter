@@ -205,6 +205,12 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
   public void resetTags() {
      Instabug.resetTags();
    }
+
+   public ArrayList<String> getTags() {
+      return Instabug.getTags();
+   }
+
+
     
 
 
