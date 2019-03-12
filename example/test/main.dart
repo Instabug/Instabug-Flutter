@@ -35,7 +35,9 @@ void main() {
         case 'logInfo:':
           return null;
         case 'setColorTheme:':
-          return null;    
+          return null; 
+        case 'getTags':
+          return ['tag1', 'tag2'];   
         default:
           return null;
       }
@@ -179,5 +181,15 @@ test('startWithToken:invocationEvents: Test', () async {
         arguments: null
       )
     ]);
+  });
+
+  test('test getTags should be called with no arguments and returns list of tags', () async {
+    List<String> tags = await InstabugFlutter.getTags();
+    expect(log, <Matcher>[
+      isMethodCall('getTags',
+        arguments: null
+      )
+    ]);
+    expect(tags, ['tag1','tag2']);
   });
 }
