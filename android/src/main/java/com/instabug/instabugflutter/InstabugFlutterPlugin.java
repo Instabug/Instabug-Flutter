@@ -223,6 +223,15 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
        Instabug.setUserAttribute(key, value);
    }
 
+    /**
+     * Removes a given key and its associated value from user attributes.
+     * Does nothing if a key does not exist.
+     * @param key The key to remove.
+     */
+   public void removeUserAttributeForKey(String key) {
+       Instabug.removeUserAttribute(key);
+   }
+
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
     constants.put("InvocationEvent.none", InstabugInvocationEvent.NONE);
