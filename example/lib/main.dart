@@ -34,8 +34,11 @@ class _MyAppState extends State<MyApp> {
       InstabugFlutter.logDebug("Test Debug Message from Flutter!");
       InstabugFlutter.logVerbose("Test Verbose Message from Flutter!");
       InstabugFlutter.logError("Test Error Message from Flutter!");
+      InstabugFlutter.logWarn("Test Warn Message from Flutter!");
       InstabugFlutter.logOut();
       InstabugFlutter.setLocale(Locale.German);
+      InstabugFlutter.setColorTheme(ColorTheme.dark);
+      InstabugFlutter.appendTags(['tag1', 'tag2']);
       
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
@@ -50,6 +53,10 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void resetTags() {
+    InstabugFlutter.resetTags();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -58,7 +65,13 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Column (
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Running on: $_platformVersion\n'),
+              RaisedButton(onPressed: resetTags, child: Text('reset tags'), color: Colors.lightBlue,)
+            ],
+          )
         ),
       ),
     );
