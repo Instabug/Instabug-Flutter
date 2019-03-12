@@ -95,7 +95,7 @@ Make sure to replace `app_token` with your application token.
 <application
     android:name=".CustomFlutterApplication"
     ...
->
+</application>
 ````
 
 4. In your newly created `CustomFlutterApplication` class, override `onCreate()` and add the following code.
