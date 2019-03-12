@@ -220,6 +220,15 @@
     [Instabug removeUserAttributeForKey:key];
 }
 
+/**
+ * Returns the user attribute associated with a given key.
+ * @param key The key for which to return the corresponding value.
+ * @return The value associated with aKey, or nil if no value is associated with aKey.
+ */
++ (NSString*) getUserAttributeForKey:(NSString*) key {
+     return [Instabug userAttributeForKey:key];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
