@@ -127,6 +127,11 @@ class InstabugFlutter {
     await _channel.invokeMethod<Object>('logInfo:', params);
   }
 
+  /// Clears Instabug internal log
+  static void clearAllLogs() async {
+    await _channel.invokeMethod<Object>('clearAllLogs');
+  }
+  
   /// Appends a log [message] to Instabug internal log
   /// These logs are then sent along the next uploaded report.
   /// All log messages are timestamped
