@@ -89,11 +89,13 @@ InstabugFlutter.start('APP_TOKEN', [InvocationEvent.shake]);
 
 Make sure to replace `app_token` with your application token.
 
-3. If your app supports both iOS and Android, create a new Java class that extends `FlutterApplication` and add it to your `AndroidManifest.xml`.
+3. If your app supports Android, create a new Java class that extends `FlutterApplication` and add it to your `AndroidManifest.xml`.
 
 ```xml
 <application
     android:name=".CustomFlutterApplication"
+    ...
+>
 ````
 
 4. In your newly created `CustomFlutterApplication` class, override `onCreate()` and add the following code.
