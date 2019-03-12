@@ -16,7 +16,7 @@ A Flutter plugin for [Instabug](https://instabug.com/).
 
 * ✅ Stable
 * ⚙️ Under active development
-* ❌ Unavailable
+* ❌ Not available yet
 
 ### APIs
 
