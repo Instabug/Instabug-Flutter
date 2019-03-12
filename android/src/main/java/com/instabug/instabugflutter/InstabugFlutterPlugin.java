@@ -212,6 +212,13 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     public void logWarn(String message) {
         InstabugLog.w(message);
    }
+
+   /**
+    * Clears Instabug internal log
+    */
+    public void clearAllLogs() {
+        InstabugLog.clearLogs();
+    }
     
     /**
      * Sets the color theme of the SDK's whole UI.
