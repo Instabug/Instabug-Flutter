@@ -37,7 +37,9 @@ void main() {
         case 'setColorTheme:':
           return null; 
         case 'getTags':
-          return ['tag1', 'tag2'];   
+          return ['tag1', 'tag2']; 
+        case 'setUserAttribute:withKey:':
+          return null;  
         default:
           return null;
       }
@@ -191,5 +193,19 @@ test('startWithToken:invocationEvents: Test', () async {
       )
     ]);
     expect(tags, ['tag1','tag2']);
+  });
+
+  test('test setUserAttributeWithKey should be called with two string arguments', () async {
+    const String value = '19';
+    const String key = 'Age';
+    InstabugFlutter.setUserAttributeWithKey(value, key);
+    expect(log, <Matcher>[
+      isMethodCall('setUserAttribute:withKey:',
+        arguments: <String, dynamic>{
+          'value': value,
+          'key': key
+        },
+      )
+    ]);
   });
 }
