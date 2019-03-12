@@ -30,9 +30,14 @@ class _MyAppState extends State<MyApp> {
       }
       InstabugFlutter.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
       InstabugFlutter.identifyUserWithEmail("aezz@instabug.com", "Aly Ezz");
+      InstabugFlutter.logInfo("Test Log Info Message from Flutter!");
+      InstabugFlutter.logDebug("Test Debug Message from Flutter!");
+      InstabugFlutter.logVerbose("Test Verbose Message from Flutter!");
       InstabugFlutter.logOut();
       InstabugFlutter.setLocale(Locale.German);
-
+      InstabugFlutter.setColorTheme(ColorTheme.dark);
+      InstabugFlutter.appendTags(['tag1', 'tag2']);
+      
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }

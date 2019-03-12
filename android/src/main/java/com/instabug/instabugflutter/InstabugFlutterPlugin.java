@@ -9,6 +9,8 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 import android.app.Application;
 
 import com.instabug.library.Instabug;
+import com.instabug.library.InstabugColorTheme;
+import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
@@ -125,12 +127,12 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
       Instabug.identifyUser(userEmail, userName);
   }
 
-  /**
-   * Sets the default value of the user's email to null and show email field and remove user
-   * name from all reports
-   * It also reset the chats on device and removes user attributes, user data and completed
-   * surveys.
-   */
+    /**
+    * Sets the default value of the user's email to null and show email field and remove user
+    * name from all reports
+    * It also reset the chats on device and removes user attributes, user data and completed
+    * surveys.
+    */
     public void logOut() {
         Instabug.logoutUser();
     }
@@ -145,6 +147,55 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
 
+   /**
+    * Appends a log message to Instabug internal log
+    * These logs are then sent along the next uploaded report.
+    * All log messages are timestamped
+    * Note: logs passed to this method are NOT printed to Logcat
+    * @param message the message
+    */
+    public void logVerbose(String message) {
+          InstabugLog.v(message);
+     }
+  
+   /**
+    * Appends a log message to Instabug internal log
+    * These logs are then sent along the next uploaded report.
+    * All log messages are timestamped
+    * Note: logs passed to this method are NOT printed to Logcat
+    * @param message the message
+    */
+    public void logDebug(String message) {
+        InstabugLog.d(message);
+   }
+  
+  /**
+    * Appends a log message to Instabug internal log
+    * These logs are then sent along the next uploaded report.
+    * All log messages are timestamped
+    * Note: logs passed to this method are NOT printed to Logcat
+    * @param message the message
+    */
+     public void logInfo(String message) {
+        InstabugLog.i(message);
+   }
+
+    /**
+     * Sets the color theme of the SDK's whole UI.
+     * @param colorTheme an InstabugColorTheme to set the SDK's UI to.
+     */
+   public void setColorTheme(String colorTheme) {
+         Instabug.setColorTheme((InstabugColorTheme) constants.get(colorTheme));
+   }
+
+    /**
+     * Appends a set of tags to previously added tags of reported feedback, bug or crash.
+     * @param tags An array of tags to append to current tags.
+     */
+   public void appendTags(ArrayList<String> tags) {
+       Instabug.addTags(tags.toArray(new String[0]));
+   }
+
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
     constants.put("InvocationEvent.none", InstabugInvocationEvent.NONE);
@@ -156,6 +207,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     constants.put("WelcomeMessageMode.live", WelcomeMessage.State.LIVE);
     constants.put("WelcomeMessageMode.beta", WelcomeMessage.State.BETA);
     constants.put("WelcomeMessageMode.disabled", WelcomeMessage.State.DISABLED);
+
+    constants.put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
+    constants.put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
 
     constants.put("Locale.Arabic",
             new Locale(InstabugLocale.ARABIC.getCode(), InstabugLocale.ARABIC.getCountry()));

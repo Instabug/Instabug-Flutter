@@ -102,6 +102,54 @@
     [Instabug setLocale:localeInt];
 }
 
+/**
+  * Appends a log message to Instabug internal log
+  * These logs are then sent along the next uploaded report.
+  * All log messages are timestamped 
+  * @param log the message
+  */
++ (void)logVerbose:(NSString *)log {
+  [IBGLog logVerbose:log];
+}
+
+/**
+  * Appends a log message to Instabug internal log
+  * These logs are then sent along the next uploaded report.
+  * All log messages are timestamped 
+  * @param log the message
+  */
++ (void)logDebug:(NSString *)log {
+  [IBGLog logDebug:log];
+}
+
+/**
+  * Appends a log message to Instabug internal log
+  * These logs are then sent along the next uploaded report.
+  * All log messages are timestamped 
+  * @param log the message
+  */
++ (void)logInfo:(NSString *)log {
+  [IBGLog logInfo:log];
+}
+
+/**
+ * Sets the color theme of the SDK's whole UI.
+ * @param colorTheme An `IBGColorTheme` to set the SDK's UI to.
+ */
++ (void)setColorTheme:(NSString*) colorTheme {
+    NSDictionary *constants = [self constants];
+    NSInteger intColorTheme = ((NSNumber *) constants[colorTheme]).integerValue;
+    [Instabug setColorTheme:intColorTheme];
+}
+
+/**
+ * Appends a set of tags to previously added tags of reported feedback, bug or crash.
+ * @param tags An array of tags to append to current tags.
+ */
++ (void)appendTags:(NSArray*) tags {
+    [Instabug appendTags:tags];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
@@ -113,6 +161,9 @@
       @"WelcomeMessageMode.live": @(IBGWelcomeMessageModeLive),
       @"WelcomeMessageMode.beta": @(IBGWelcomeMessageModeBeta),
       @"WelcomeMessageMode.disabled": @(IBGWelcomeMessageModeDisabled),
+      
+      @"ColorTheme.dark": @(IBGColorThemeDark),
+      @"ColorTheme.light": @(IBGColorThemeLight),
 
       @"Locale.Arabic": @(IBGLocaleArabic),
       @"Locale.ChineseSimplified": @(IBGLocaleChineseSimplified),
