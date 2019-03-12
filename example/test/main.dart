@@ -40,6 +40,8 @@ void main() {
           return ['tag1', 'tag2']; 
         case 'setUserAttribute:withKey:':
           return null;  
+        case 'removeUserAttributeForKey:':
+          return null;
         default:
           return null;
       }
@@ -203,6 +205,18 @@ test('startWithToken:invocationEvents: Test', () async {
       isMethodCall('setUserAttribute:withKey:',
         arguments: <String, dynamic>{
           'value': value,
+          'key': key
+        },
+      )
+    ]);
+  });
+
+  test('test removeUserAttributeForKey should be called with a string argument', () async {
+    const String key = 'Age';
+    InstabugFlutter.removeUserAttributeForKey(key);
+    expect(log, <Matcher>[
+      isMethodCall('removeUserAttributeForKey:',
+        arguments: <String, dynamic>{
           'key': key
         },
       )
