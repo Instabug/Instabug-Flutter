@@ -156,4 +156,11 @@ class InstabugFlutter {
     final Map<String, Object> params = {'value': value, 'key': key};
     await _channel.invokeMethod<Object>('setUserAttribute:withKey:', params);
   }
+
+  /// Removes a given [key] and its associated value from user attributes.
+  /// Does nothing if a [key] does not exist.
+  static void removeUserAttributeForKey(String key) async {
+    final Map<String, Object> params = {'key': key};
+    await _channel.invokeMethod<Object>('removeUserAttributeForKey:', params);
+  }
 }
