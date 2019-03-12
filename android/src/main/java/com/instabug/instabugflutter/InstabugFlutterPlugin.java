@@ -195,8 +195,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    public void appendTags(ArrayList<String> tags) {
        Instabug.addTags(tags.toArray(new String[0]));
    }
-    
-
 
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
