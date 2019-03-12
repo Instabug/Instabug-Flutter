@@ -41,7 +41,7 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |`InstabugFlutter.removeUserAttributeForKey(String key)`| `Instabug.removeUserAttribute(String key)`<br>`+ [Instabug removeUserAttributeForKey:]`                                      |
 |            | `Instabug.getAllUserAttributes()`<br>`+ [Instabug userAttributes:]`                                                          |
 |            | `Instabug.logUserEvent(String name)`<br>`+ [Instabug logUserEventWithName:]`                                                 |
-|`show()`| `Instabug.show()`<br>`+ [Instabug show]`                                                                      |
+|`show()`| `Instabug.show()`<br>`+ [Instabug show]`                                                                       |
 |            | `BugReporting.invoke(InvocationMode mode, @InvocationOption int... options)`<br>`+ [IBGBugReporting invokeWithMode:options:]`  |
 |`logDebug(String message)`| `InstabugLog.d(String message)`<br>`+ [IBGLog logDebug:]`                                                                    |
 |`logVerbose(String message)`| `InstabugLog.v(String message)`<br>`+ [IBGLog logVerbose:]`                                                                  |
