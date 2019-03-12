@@ -38,7 +38,7 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |            | `Instabug.setCustomTextPlaceHolders(InstabugCustomTextPlaceHolder placeholder)`<br>`+ [Instabug setValue:forStringWithKey:]` |
 |            | `Instabug.setUserAttribute(String key, String value)`<br>`+ [Instabug setUserAttribute:withKey:]`                            |
 |            | `Instabug.getUserAttribute(String key)`<br>`+ [Instabug userAttributeForKey:]`                                               |
-|            | `Instabug.removeUserAttribute(String key)`<br>`+ [Instabug removeUserAttributeForKey:]`                                      |
+|InstabugFlutter.removeUserAttributeForKey(String key)| `Instabug.removeUserAttribute(String key)`<br>`+ [Instabug removeUserAttributeForKey:]`                                      |
 |            | `Instabug.getAllUserAttributes()`<br>`+ [Instabug userAttributes:]`                                                          |
 |            | `Instabug.logUserEvent(String name)`<br>`+ [Instabug logUserEventWithName:]`                                                 |
 |            | `BugReporting.invoke()`<br>`+ [IBGBugReporting invoke]`                                                                      |
