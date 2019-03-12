@@ -163,4 +163,10 @@ class InstabugFlutter {
     await _channel.invokeMethod<Object>('resetTags');
   }
 
+  /// Gets all tags of reported feedback, bug or crash. Returns the list of tags.
+  static Future<List<String>> getTags() async {
+    final List<dynamic> tags = await _channel.invokeMethod<Object>('getTags');
+    return tags != null ? tags.cast<String>() : null;
+  }
+
 }
