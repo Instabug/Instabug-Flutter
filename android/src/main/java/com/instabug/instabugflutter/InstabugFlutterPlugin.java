@@ -67,7 +67,10 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
       if (callMethod.equals(method.getName())) {
         isImplemented = true;
         ArrayList<Object> tempParamValues = new ArrayList<>();
-        HashMap map = (HashMap<String, String>)call.arguments;
+        HashMap<String, String> map = new HashMap<>();
+        if (call.arguments != null) {
+          map = (HashMap<String, String>) call.arguments;
+        }
         Iterator iterator = map.entrySet().iterator();
         while (iterator.hasNext()) {
           Map.Entry pair = (Map.Entry)iterator.next();
@@ -180,6 +183,28 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         InstabugLog.i(message);
    }
 
+   /**
+    * Appends a log message to Instabug internal log
+    * These logs are then sent along the next uploaded report.
+    * All log messages are timestamped
+    * Note: logs passed to this method are NOT printed to Logcat
+    * @param message the message
+    */
+    public void logError(String message) {
+        InstabugLog.e(message);
+    }
+    
+    /**
+    * Appends a log message to Instabug internal log
+    * These logs are then sent along the next uploaded report.
+    * All log messages are timestamped
+    * Note: logs passed to this method are NOT printed to Logcat
+    * @param message the message
+    */
+    public void logWarn(String message) {
+        InstabugLog.w(message);
+   }
+    
     /**
      * Sets the color theme of the SDK's whole UI.
      * @param colorTheme an InstabugColorTheme to set the SDK's UI to.
@@ -194,6 +219,13 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      */
    public void appendTags(ArrayList<String> tags) {
        Instabug.addTags(tags.toArray(new String[0]));
+   }
+
+  /**
+   * Manually removes all tags of reported feedback, bug or crash.
+   */
+  public void resetTags() {
+     Instabug.resetTags();
    }
 
   public Map<String, Object> getConstants() {

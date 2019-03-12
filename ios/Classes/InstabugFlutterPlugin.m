@@ -133,6 +133,27 @@
 }
 
 /**
+  * Appends a log message to Instabug internal log
+  * These logs are then sent along the next uploaded report.
+  * All log messages are timestamped 
+  * @param log the message
+  */
++ (void)logError:(NSString *)log {
+  [IBGLog logError:log];
+}
+
+
+/**
+  * Appends a log message to Instabug internal log
+  * These logs are then sent along the next uploaded report.
+  * All log messages are timestamped 
+  * @param log the message
+  */
++ (void)logWarn:(NSString *)log {
+  [IBGLog logWarn:log];
+}
+
+/**
  * Sets the color theme of the SDK's whole UI.
  * @param colorTheme An `IBGColorTheme` to set the SDK's UI to.
  */
@@ -148,6 +169,13 @@
  */
 + (void)appendTags:(NSArray*) tags {
     [Instabug appendTags:tags];
+}
+
+/**
+ * Manually removes all tags of reported feedback, bug or crash.
+ */
++ (void)resetTags {
+    [Instabug resetTags];
 }
 
 + (NSDictionary *)constants {
