@@ -206,6 +206,10 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      Instabug.resetTags();
    }
 
+    /**
+     * Gets all tags of reported feedback, bug or crash.
+     * @return An array of tags.
+     */
    public ArrayList<String> getTags() {
       return Instabug.getTags();
    }

@@ -166,6 +166,10 @@
     [Instabug resetTags];
 }
 
+/**
+ * Gets all tags of reported feedback, bug or crash.
+ * @return An array of tags.
+ */
 + (NSArray*)getTags {
     return [Instabug getTags];
 }
