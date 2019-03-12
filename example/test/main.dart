@@ -33,6 +33,8 @@ void main() {
         case 'logDebug:':
           return null; 
         case 'logInfo:':
+          return null;
+        case 'setColorTheme:':
           return null;    
         default:
           return null;
@@ -141,6 +143,18 @@ test('startWithToken:invocationEvents: Test', () async {
       isMethodCall('logInfo:',
         arguments: <String, dynamic>{
           'message': message
+        },
+      )
+    ]);
+  });
+
+  test('test setColorTheme should be called with argument colorTheme', () async {
+    const ColorTheme colorTheme = ColorTheme.dark;
+    InstabugFlutter.setColorTheme(colorTheme);
+    expect(log, <Matcher>[
+      isMethodCall('setColorTheme:',
+        arguments: <String, dynamic>{
+          'colorTheme': colorTheme.toString()
         },
       )
     ]);
