@@ -126,7 +126,7 @@ class InstabugFlutter {
     Map<String, Object> params = {'message': message};
     await _channel.invokeMethod<Object>('logInfo:', params);
   }
-
+  
   /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.
   /// It should be of type [ColorTheme].
   static void setColorTheme(ColorTheme colorTheme) async {
@@ -144,4 +144,5 @@ class InstabugFlutter {
   static void resetTags() async {
     await _channel.invokeMethod<Object>('resetTags');
   }
+
 }

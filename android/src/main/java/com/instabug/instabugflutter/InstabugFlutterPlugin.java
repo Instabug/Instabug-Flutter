@@ -205,8 +205,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
   public void resetTags() {
      Instabug.resetTags();
    }
-    
-
 
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
