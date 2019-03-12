@@ -34,6 +34,8 @@ void main() {
           return null; 
         case 'logInfo:':
           return null; 
+        case 'logError:':
+          return null;
         case 'logWarn:':
           return null;
         case 'setColorTheme:':
@@ -150,6 +152,17 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('logError: Test', () async {
+    InstabugFlutter.logError(message);
+    expect(log, <Matcher>[
+      isMethodCall('logError:',
+        arguments: <String, dynamic>{
+          'message': message
+            },
+      )
+    ]);
+  });
+  
   test('logWarn: Test', () async {
     InstabugFlutter.logWarn(message);
     expect(log, <Matcher>[

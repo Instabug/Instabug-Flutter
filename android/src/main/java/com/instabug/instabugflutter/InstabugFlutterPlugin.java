@@ -190,6 +190,17 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     * Note: logs passed to this method are NOT printed to Logcat
     * @param message the message
     */
+    public void logError(String message) {
+        InstabugLog.e(message);
+    }
+    
+    /**
+    * Appends a log message to Instabug internal log
+    * These logs are then sent along the next uploaded report.
+    * All log messages are timestamped
+    * Note: logs passed to this method are NOT printed to Logcat
+    * @param message the message
+    */
     public void logWarn(String message) {
         InstabugLog.w(message);
    }
