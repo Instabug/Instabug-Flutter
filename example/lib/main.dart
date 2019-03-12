@@ -43,6 +43,8 @@ class _MyAppState extends State<MyApp> {
       InstabugFlutter.setUserAttributeWithKey('19', 'Age');
       InstabugFlutter.setUserAttributeWithKey('female', 'gender');
       InstabugFlutter.removeUserAttributeForKey('gender');
+      String value = await InstabugFlutter.getUserAttributeForKey('Age');
+      print('User Attribute ' + value);
       
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
