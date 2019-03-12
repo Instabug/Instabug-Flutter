@@ -142,6 +142,6 @@ class InstabugFlutter {
 
   /// Manually removes all tags of reported feedback, bug or crash.
   static void resetTags() async {
-    await _channel.invokeMethod('resetTags');
+    await _channel.invokeMethod<Object>('resetTags');
   }
 }
