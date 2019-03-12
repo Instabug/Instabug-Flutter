@@ -79,13 +79,13 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         }
         Object[] paramValues = tempParamValues.toArray();
         try {
-          method.invoke(this, paramValues);
+           Object returnVal = method.invoke(this, paramValues);
+           result.success(returnVal);
+           break;
         } catch (Exception e) {
           e.printStackTrace();
           result.notImplemented();
-        } 
-        result.success(null);
-        break;
+        }
       }
     }
     if (!isImplemented) {
