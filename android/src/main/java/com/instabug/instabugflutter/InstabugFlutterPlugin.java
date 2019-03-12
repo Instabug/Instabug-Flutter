@@ -187,8 +187,14 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    public void setColorTheme(String colorTheme) {
          Instabug.setColorTheme((InstabugColorTheme) constants.get(colorTheme));
    }
-    
 
+    /**
+     * Appends a set of tags to previously added tags of reported feedback, bug or crash.
+     * @param tags An array of tags to append to current tags.
+     */
+   public void appendTags(ArrayList<String> tags) {
+       Instabug.addTags(tags.toArray(new String[0]));
+   }
 
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();

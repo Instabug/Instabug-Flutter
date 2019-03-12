@@ -159,4 +159,16 @@ test('startWithToken:invocationEvents: Test', () async {
       )
     ]);
   });
+
+  test('test appendTags should be called with argument List of strings', () async {
+    const List<String> tags = ['tag1', 'tag2'];
+    InstabugFlutter.appendTags(tags);
+    expect(log, <Matcher>[
+      isMethodCall('appendTags:',
+        arguments: <String, dynamic>{
+          'tags': tags
+        },
+      )
+    ]);
+  });
 }
