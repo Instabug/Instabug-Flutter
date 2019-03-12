@@ -16,7 +16,7 @@ A Flutter plugin for [Instabug](https://instabug.com/).
 
 * ✅ Stable
 * ⚙️ Under active development
-* ❌ Unavailable
+* ❌ Not available yet
 
 ### APIs
 
@@ -27,13 +27,13 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 | API Method | Native Equivalent (Android/iOS)                                                                                                                       |
 |------------|-----------------------------------------------------------------------------------------------------------------------------------------|
 | `start(String token, List<InvocationEvent> invocationEvents)` | `new Instabug.Builder(this, "APP_TOKEN").build()`<br>`+ [Instabug startWithToken:invocationEvents:]`                         |
-|            | `Instabug.showWelcomeMessage(WelcomeMessage.State state)`<br>`+ [Instabug showWelcomeMessageWithMode:]`                      |
-|            | `Instabug.identifyUser(String username, String email)`<br>`+ [Instabug identifyUserWithEmail:name:]`                         |
-|            | `Instabug.logoutUser()`<br>`+ [Instabug logOut]`                                                                             |
-|            | `Instabug.setLocale(Locale locale)`<br>`+ [Instabug setLocale:]`                                                             |
-|            |  `Instabug.setColorTheme(InstabugColorTheme theme)`<br>`+ [Instabug setColorTheme:]`                                         |
-|            | `Instabug.addTags(String... tags)`<br>`+ [Instabug appendTags:]`                                                             |
-|            | `Instabug.resetTags()`<br>`+ [Instabug resetTags]`                                                                           |
+|`showWelcomeMessageWithMode(WelcomeMessageMode welcomeMessageMode)`| `Instabug.showWelcomeMessage(WelcomeMessage.State state)`<br>`+ [Instabug showWelcomeMessageWithMode:]`                      |
+|`identifyUserWithEmail(String email, [String name])`| `Instabug.identifyUser(String username, String email)`<br>`+ [Instabug identifyUserWithEmail:name:]`                         |
+|`logOut()`| `Instabug.logoutUser()`<br>`+ [Instabug logOut]`                                                                             |
+|`setLocale(Locale locale)`| `Instabug.setLocale(Locale locale)`<br>`+ [Instabug setLocale:]`                                                             |
+|`InstabugFlutter.setColorTheme(ColorTheme colorTheme)`|  `Instabug.setColorTheme(InstabugColorTheme theme)`<br>`+ [Instabug setColorTheme:]`                                         |
+|`InstabugFlutter.appendTags(List<String> tags)`| `Instabug.addTags(String... tags)`<br>`+ [Instabug appendTags:]`                                                             |
+|`InstabugFlutter.resetTags()`| `Instabug.resetTags()`<br>`+ [Instabug resetTags]`                                                                           |
 |            | `Instabug.getTags()`<br>`+ [Instabug getTags]`                                                                               |
 |            | `Instabug.setCustomTextPlaceHolders(InstabugCustomTextPlaceHolder placeholder)`<br>`+ [Instabug setValue:forStringWithKey:]` |
 |            | `Instabug.setUserAttribute(String key, String value)`<br>`+ [Instabug setUserAttribute:withKey:]`                            |
@@ -43,14 +43,12 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |            | `Instabug.logUserEvent(String name)`<br>`+ [Instabug logUserEventWithName:]`                                                 |
 |            | `BugReporting.invoke()`<br>`+ [IBGBugReporting invoke]`                                                                      |
 |            | `BugReporting.invoke(InvocationMode mode, @InvocationOption int... options)`<br>`+ [IBGBugReporting invokeWithMode:options:]`  |
-|            | `InstabugLog.d(String message)`<br>`+ [IBGLog log:]`                                                                         |
-|            | `InstabugLog.v(String message)`<br>`+ [IBGLog logVerbose:]`                                                                  |
 |`logDebug(String message)`| `InstabugLog.d(String message)`<br>`+ [IBGLog logDebug:]`                                                                    |
 |`logVerbose(String message)`| `InstabugLog.v(String message)`<br>`+ [IBGLog logVerbose:]`                                                                  |
-|            | `InstabugLog.d(String message)`<br>`+ [IBGLog logDebug:]`                                                                    |
 |`logInfo(String message)`| `InstabugLog.i(String message)`<br>`+ [IBGLog logInfo:]`                                                                     |
-|            | `InstabugLog.w(String message)`<br>`+ [IBGLog logWarn:]`                                                                     |
+|`logWarn(String message)`| `InstabugLog.w(String message)`<br>`+ [IBGLog logWarn:]`                                                                     |
 |            | `InstabugLog.e(String message)`<br>`+ [IBGLog logError:]`                                                                    |
+|`logError(String message)`| `InstabugLog.e(String message)`<br>`+ [IBGLog logError:]`                                                                    |
 |            | `Instabug.clearLogs()`<br>`+ [IBGLog clearAllLogs:]`                                                                         |
 |`clearAllLogs(String message)`| `Instabug.clearLogs()`<br>`+ [IBGLog clearAllLogs:]`                                                                         |
 

@@ -35,6 +35,12 @@ void main() {
         case 'logInfo:':
           return null; 
         case 'clearAllLogs:':
+          return null;
+        case 'logError:':
+          return null;
+        case 'logWarn:':
+          return null;
+        case 'setColorTheme:':
           return null;    
         default:
           return null;
@@ -154,6 +160,61 @@ test('startWithToken:invocationEvents: Test', () async {
       isMethodCall('clearAllLogs',
         arguments: <String, dynamic>{
         },
+      )
+    ]);
+  });
+
+  test('logError: Test', () async {
+    InstabugFlutter.logError(message);
+    expect(log, <Matcher>[
+      isMethodCall('logError:',
+        arguments: <String, dynamic>{
+          'message': message
+            },
+      )
+    ]);
+  });
+  
+  test('logWarn: Test', () async {
+    InstabugFlutter.logWarn(message);
+    expect(log, <Matcher>[
+      isMethodCall('logWarn:',
+        arguments: <String, dynamic>{
+          'message': message
+          },
+      )
+    ]);
+  });
+  
+  test('test setColorTheme should be called with argument colorTheme', () async {
+    const ColorTheme colorTheme = ColorTheme.dark;
+    InstabugFlutter.setColorTheme(colorTheme);
+    expect(log, <Matcher>[
+      isMethodCall('setColorTheme:',
+        arguments: <String, dynamic>{
+          'colorTheme': colorTheme.toString()
+        },
+      )
+    ]);
+  });
+
+  test('test appendTags should be called with argument List of strings', () async {
+    const List<String> tags = ['tag1', 'tag2'];
+    InstabugFlutter.appendTags(tags);
+    expect(log, <Matcher>[
+      isMethodCall('appendTags:',
+        arguments: <String, dynamic>{
+          'tags': tags
+        },
+      )
+    ]);
+  });
+
+  test('test resetTags should be called with no arguments', () async {
+    InstabugFlutter.resetTags();
+    expect(log, <Matcher>[
+      isMethodCall('resetTags',
+        arguments: null
       )
     ]);
   });
