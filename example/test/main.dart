@@ -34,12 +34,16 @@ void main() {
           return null; 
         case 'logInfo:':
           return null;
+        case 'logError:':
+          return null;
+        case 'logWarn:':
+          return null;
         case 'setColorTheme:':
           return null; 
         case 'getTags':
-          return ['tag1', 'tag2']; 
+          return ['tag1', 'tag2'];  
         case 'setUserAttribute:withKey:':
-          return null;  
+          return null;   
         default:
           return null;
       }
@@ -148,6 +152,28 @@ test('startWithToken:invocationEvents: Test', () async {
         arguments: <String, dynamic>{
           'message': message
         },
+      )
+    ]);
+  });
+
+  test('logError: Test', () async {
+    InstabugFlutter.logError(message);
+    expect(log, <Matcher>[
+      isMethodCall('logError:',
+        arguments: <String, dynamic>{
+          'message': message
+            },
+      )
+    ]);
+  });
+  
+  test('logWarn: Test', () async {
+    InstabugFlutter.logWarn(message);
+    expect(log, <Matcher>[
+      isMethodCall('logWarn:',
+        arguments: <String, dynamic>{
+          'message': message
+          },
       )
     ]);
   });
