@@ -10,4 +10,4 @@ jobs:
       - run: bundle exec danger
       - run: flutter doctor
       - run: pub get
-      - run: dartanalyzer --options analysis_options.yaml lib
+      - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
