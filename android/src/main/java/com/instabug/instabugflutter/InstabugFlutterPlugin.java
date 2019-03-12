@@ -184,6 +184,25 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    }
 
     /**
+     * Gets all tags of reported feedback, bug or crash.
+     * @return An array of tags.
+     */
+   public ArrayList<String> getTags() {
+      return Instabug.getTags();
+   }
+
+   /**
+    * Appends a log message to Instabug internal log
+    * These logs are then sent along the next uploaded report.
+    * All log messages are timestamped
+    * Note: logs passed to this method are NOT printed to Logcat
+    * @param message the message
+    */
+    public void logWarn(String message) {
+        InstabugLog.w(message);
+   }
+    
+    /**
      * Sets the color theme of the SDK's whole UI.
      * @param colorTheme an InstabugColorTheme to set the SDK's UI to.
      */
@@ -205,18 +224,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
   public void resetTags() {
      Instabug.resetTags();
    }
-
-    /**
-     * Gets all tags of reported feedback, bug or crash.
-     * @return An array of tags.
-     */
-   public ArrayList<String> getTags() {
-      return Instabug.getTags();
-   }
-
-
-    
-
 
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();

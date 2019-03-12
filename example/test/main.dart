@@ -38,6 +38,8 @@ void main() {
           return null; 
         case 'getTags':
           return ['tag1', 'tag2'];   
+        case 'logWarn:':
+          return null;
         default:
           return null;
       }
@@ -150,6 +152,17 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('logWarn: Test', () async {
+    InstabugFlutter.logWarn(message);
+    expect(log, <Matcher>[
+      isMethodCall('logWarn:',
+        arguments: <String, dynamic>{
+          'message': message
+          },
+      )
+    ]);
+  });
+
   test('test setColorTheme should be called with argument colorTheme', () async {
     const ColorTheme colorTheme = ColorTheme.dark;
     InstabugFlutter.setColorTheme(colorTheme);
@@ -192,4 +205,5 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
     expect(tags, ['tag1','tag2']);
   });
+
 }
