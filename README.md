@@ -47,9 +47,7 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |`logVerbose(String message)`| `InstabugLog.v(String message)`<br>`+ [IBGLog logVerbose:]`                                                                  |
 |`logInfo(String message)`| `InstabugLog.i(String message)`<br>`+ [IBGLog logInfo:]`                                                                     |
 |`logWarn(String message)`| `InstabugLog.w(String message)`<br>`+ [IBGLog logWarn:]`                                                                     |
-|            | `InstabugLog.e(String message)`<br>`+ [IBGLog logError:]`                                                                    |
 |`logError(String message)`| `InstabugLog.e(String message)`<br>`+ [IBGLog logError:]`                                                                    |
-|            | `Instabug.clearLogs()`<br>`+ [IBGLog clearAllLogs:]`                                                                         |
 |`clearAllLogs(String message)`| `Instabug.clearLogs()`<br>`+ [IBGLog clearAllLogs:]`                                                                         |
 
 ## Integration
