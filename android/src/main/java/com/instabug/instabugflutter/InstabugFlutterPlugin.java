@@ -183,6 +183,35 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         InstabugLog.i(message);
    }
 
+   /**
+    * Appends a log message to Instabug internal log
+    * These logs are then sent along the next uploaded report.
+    * All log messages are timestamped
+    * Note: logs passed to this method are NOT printed to Logcat
+    * @param message the message
+    */
+    public void logError(String message) {
+        InstabugLog.e(message);
+    }
+    
+    /**
+    * Appends a log message to Instabug internal log
+    * These logs are then sent along the next uploaded report.
+    * All log messages are timestamped
+    * Note: logs passed to this method are NOT printed to Logcat
+    * @param message the message
+    */
+    public void logWarn(String message) {
+        InstabugLog.w(message);
+   }
+
+   /**
+    * Clears Instabug internal log
+    */
+    public void clearAllLogs() {
+        InstabugLog.clearLogs();
+    }
+    
     /**
      * Sets the color theme of the SDK's whole UI.
      * @param colorTheme an InstabugColorTheme to set the SDK's UI to.

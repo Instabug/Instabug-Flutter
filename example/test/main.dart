@@ -33,6 +33,12 @@ void main() {
         case 'logDebug:':
           return null; 
         case 'logInfo:':
+          return null; 
+        case 'clearAllLogs:':
+          return null;
+        case 'logError:':
+          return null;
+        case 'logWarn:':
           return null;
         case 'setColorTheme:':
           return null; 
@@ -150,6 +156,38 @@ test('startWithToken:invocationEvents: Test', () async {
         arguments: <String, dynamic>{
           'message': message
         },
+      )
+    ]);
+  });
+
+  test('clearAllLogs: Test', () async {
+    InstabugFlutter.clearAllLogs();
+    expect(log, <Matcher>[
+      isMethodCall('clearAllLogs',
+        arguments: <String, dynamic>{
+        },
+      )
+    ]);
+  });
+
+  test('logError: Test', () async {
+    InstabugFlutter.logError(message);
+    expect(log, <Matcher>[
+      isMethodCall('logError:',
+        arguments: <String, dynamic>{
+          'message': message
+            },
+      )
+    ]);
+  });
+  
+  test('logWarn: Test', () async {
+    InstabugFlutter.logWarn(message);
+    expect(log, <Matcher>[
+      isMethodCall('logWarn:',
+        arguments: <String, dynamic>{
+          'message': message
+          },
       )
     ]);
   });
