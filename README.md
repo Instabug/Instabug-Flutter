@@ -34,7 +34,7 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |            |  `Instabug.setColorTheme(InstabugColorTheme theme)`<br>`+ [Instabug setColorTheme:]`                                         |
 |            | `Instabug.addTags(String... tags)`<br>`+ [Instabug appendTags:]`                                                             |
 |            | `Instabug.resetTags()`<br>`+ [Instabug resetTags]`                                                                           |
-|            | `Instabug.getTags()`<br>`+ [Instabug getTags]`                                                                               |
+|`InstabugFlutter.getTags()`| `Instabug.getTags()`<br>`+ [Instabug getTags]`                                                                               |
 |            | `Instabug.setCustomTextPlaceHolders(InstabugCustomTextPlaceHolder placeholder)`<br>`+ [Instabug setValue:forStringWithKey:]` |
 |            | `Instabug.setUserAttribute(String key, String value)`<br>`+ [Instabug setUserAttribute:withKey:]`                            |
 |            | `Instabug.getUserAttribute(String key)`<br>`+ [Instabug userAttributeForKey:]`                                               |
