@@ -12,6 +12,7 @@ void main() {
   final email = "s@nta.com";
   final name = "santa";
   String message = "Test Message";
+  const String userAttribute = '19';
 
   setUpAll(() async {
     MethodChannel('instabug_flutter')
@@ -48,6 +49,8 @@ void main() {
           return null;  
         case 'removeUserAttributeForKey:':
           return null;
+        case 'getUserAttributeForKey:':
+          return userAttribute;
         default:
           return null;
       }
@@ -164,8 +167,7 @@ test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.clearAllLogs();
     expect(log, <Matcher>[
       isMethodCall('clearAllLogs',
-        arguments: <String, dynamic>{
-        },
+        arguments: null
       )
     ]);
   });
@@ -260,4 +262,18 @@ test('startWithToken:invocationEvents: Test', () async {
       )
     ]);
   });
+
+  test('test getUserAttributeForKey should be called with a string argument and return a string', () async {
+    const String key = 'Age';
+    final String value = await InstabugFlutter.getUserAttributeForKey(key);
+    expect(log, <Matcher>[
+      isMethodCall('getUserAttributeForKey:',
+        arguments: <String, dynamic>{
+          'key': key
+        },
+      )
+    ]);
+    expect(value, userAttribute);
+  });
+  
 }
