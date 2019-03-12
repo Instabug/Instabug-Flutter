@@ -150,6 +150,13 @@
     [Instabug appendTags:tags];
 }
 
+/**
+ * Manually removes all tags of reported feedback, bug or crash.
+ */
++ (void)resetTags {
+    [Instabug resetTags];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),

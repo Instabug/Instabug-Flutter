@@ -67,7 +67,10 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
       if (callMethod.equals(method.getName())) {
         isImplemented = true;
         ArrayList<Object> tempParamValues = new ArrayList<>();
-        HashMap map = (HashMap<String, String>)call.arguments;
+        HashMap<String, String> map = new HashMap<>();
+        if (call.arguments != null) {
+          map = (HashMap<String, String>) call.arguments;
+        }
         Iterator iterator = map.entrySet().iterator();
         while (iterator.hasNext()) {
           Map.Entry pair = (Map.Entry)iterator.next();
@@ -194,6 +197,13 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      */
    public void appendTags(ArrayList<String> tags) {
        Instabug.addTags(tags.toArray(new String[0]));
+   }
+
+  /**
+   * Manually removes all tags of reported feedback, bug or crash.
+   */
+  public void resetTags() {
+     Instabug.resetTags();
    }
 
   public Map<String, Object> getConstants() {
