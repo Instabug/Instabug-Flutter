@@ -214,9 +214,14 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
       return Instabug.getTags();
    }
 
-
-    
-
+    /**
+     * Set custom user attributes that are going to be sent with each feedback, bug or crash.
+     * @param value User attribute value.
+     * @param key User attribute key.
+     */
+   public void setUserAttribute(String value, String key) {
+       Instabug.setUserAttribute(key, value);
+   }
 
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
