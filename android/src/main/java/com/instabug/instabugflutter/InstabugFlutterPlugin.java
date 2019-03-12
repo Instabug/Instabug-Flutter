@@ -261,6 +261,15 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
        Instabug.removeUserAttribute(key);
    }
 
+    /**
+     * Returns the user attribute associated with a given key.
+     * @param key The key for which to return the corresponding value.
+     * @return The value associated with aKey, or nil if no value is associated with aKey.
+     */
+   public String getUserAttributeForKey(String key) {
+       return Instabug.getUserAttribute(key);
+   }
+
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
     constants.put("InvocationEvent.none", InstabugInvocationEvent.NONE);
