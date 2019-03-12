@@ -35,8 +35,6 @@ enum Locale {
 
 enum ColorTheme { dark, light }
 
-enum ColorTheme { dark, light }
-
 class InstabugFlutter {
   static const MethodChannel _channel = const MethodChannel('instabug_flutter');
 
