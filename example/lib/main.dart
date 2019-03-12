@@ -37,6 +37,7 @@ class _MyAppState extends State<MyApp> {
       InstabugFlutter.setLocale(Locale.German);
       InstabugFlutter.setColorTheme(ColorTheme.dark);
       InstabugFlutter.appendTags(['tag1', 'tag2']);
+      InstabugFlutter.setUserAttributeWithKey('19', 'Age');
       
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
