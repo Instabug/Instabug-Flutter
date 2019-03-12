@@ -150,4 +150,10 @@ class InstabugFlutter {
     final List<dynamic> tags = await _channel.invokeMethod<Object>('getTags');
     return tags != null ? tags.cast<String>() : null;
   }
+
+  /// Add custom user attribute [value] with a [key] that is going to be sent with each feedback, bug or crash.
+  static void setUserAttributeWithKey(String value, String key) async {
+    final Map<String, Object> params = {'value': value, 'key': key};
+    await _channel.invokeMethod<Object>('setUserAttribute:withKey:', params);
+  }
 }
