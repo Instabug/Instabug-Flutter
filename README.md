@@ -55,33 +55,62 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 Creating a Flutter app on the Instabug dashboard isn't possible yet. Create a React Native app instead.
 
 
-## Using Instabug
+### Installation
 
-1. Add Instabug to you pubspec.yaml as follows:
-```
+
+1. Add Instabug to your `pubspec.yaml` file.
+
+```yaml
 instabug_flutter: ^0.0.1-alpha.1
 ```
 
-2. To start using Instabug, import it into your file as follows: 
+2. Get the newly added dependency.
+
+```bash
+pub get
+```
+
+### Using Instabug
+
+1. To start using Instabug, import it into your Flutter app. 
 
 ```dart
 import 'package:instabug_flutter/instabug_flutter.dart';
 ```
-3. Then initialize it in the `initState`. This line will let the Instabug SDK work with the default behavior. The SDK will be invoked when the device is shaken. You can customize this behavior through the APIs (You can skip this step if you are building an Android app only).
+
+2. Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the devices is shaken.
 
 ```dart
 InstabugFlutter.start('APP_TOKEN', [InvocationEvent.shake]);
 ```
-4. Create a class that extends `FlutterApplication` and add it to your `AndroidManifest.xml`.
-   In the `onCreate` initialize the SDK like the following snippet. You just need to add your app token (You can skip this step if you are building an iOS app only). You can change the invocation event simply by replacing the `INVOCATION_EVENT_SHAKE` with any of the following `INVOCATION_EVENT_FLOATING_BUTTON`, `INVOCATION_EVENT_SCREENSHOT`, `INVOCATION_EVENT_TWO_FINGER_SWIPE_LEFT`, or `INVOCATION_EVENT_NONE`.
-```javascript
+
+Make sure to replace `app_token` with your application token.
+
+3. If your app supports Android, create a new Java class that extends `FlutterApplication` and add it to your `AndroidManifest.xml`.
+
+```xml
+<application
+    android:name=".CustomFlutterApplication"
+    ...
+</application>
+````
+
+4. In your newly created `CustomFlutterApplication` class, override `onCreate()` and add the following code.
+
+```java
 ArrayList<String> invocationEvents = new ArrayList<>();
 invocationEvents.add(InstabugFlutterPlugin.INVOCATION_EVENT_SHAKE);
-new InstabugFlutterPlugin().start(YOUR_CREATED_CLASS.this, "APP_TOKEN", invocationEvents);
+new InstabugFlutterPlugin().start(CustomFlutterApplication.this, "APP_TOKEN", invocationEvents);
 ```
 
-5) To prevent your app from being rejected, you’ll need to add the following two keys to your app’s info.plist file with text that explains to your app users why those permissions are needed (IOS only).
-`NSMicrophoneUsageDescription`
-`NSPhotoLibraryUsageDescription`
+5. For iOS apps, Instabug needs access to the microphone and photo library to be able to let users add audio and video attachments. Add the following 2 keys to your app’s `Info.plist` file with text explaining to the user why those permissions are needed:
 
-You can find your app token by selecting the SDK tab from your [**Instabug dashboard**](https://dashboard.instabug.com/app/sdk/).
+* `NSMicrophoneUsageDescription`
+* `NSPhotoLibraryUsageDescription`
+
+If your app doesn’t already access the microphone or photo library, we recommend using a usage description like:
+
+* "`<app name>` needs access to the microphone to be able to attach voice notes."
+* "`<app name>` needs access to your photo library for you to be able to attach images."
+
+**The permission alert for accessing the microphone/photo library will NOT appear unless users attempt to attach a voice note/photo while using Instabug.**
