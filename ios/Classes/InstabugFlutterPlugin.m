@@ -33,6 +33,15 @@
           index++;
         }        
         [inv invoke];
+          NSMethodSignature *signature = [inv methodSignature];
+          const char *type = [signature methodReturnType];
+
+          if (strcmp(type, "v") != 0) {
+              void *returnVal;
+            [inv getReturnValue:&returnVal];
+            NSObject *resultSet = (__bridge NSObject *)returnVal;
+            result(resultSet);
+          }
       }
     if (!isImplemented) {
       result(FlutterMethodNotImplemented);
@@ -133,6 +142,13 @@
 }
 
 /**
+  * Clears Instabug internal log
+  */
++ (void)clearAllLogs {
+  [IBGLog clearAllLogs];
+}
+
+/**
   * Appends a log message to Instabug internal log
   * These logs are then sent along the next uploaded report.
   * All log messages are timestamped 
@@ -176,6 +192,14 @@
  */
 + (void)resetTags {
     [Instabug resetTags];
+}
+
+/**
+ * Gets all tags of reported feedback, bug or crash.
+ * @return An array of tags.
+ */
++ (NSArray*)getTags {
+    return [Instabug getTags];
 }
 
 + (NSDictionary *)constants {

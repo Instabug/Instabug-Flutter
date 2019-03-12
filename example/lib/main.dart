@@ -33,6 +33,7 @@ class _MyAppState extends State<MyApp> {
       InstabugFlutter.logInfo("Test Log Info Message from Flutter!");
       InstabugFlutter.logDebug("Test Debug Message from Flutter!");
       InstabugFlutter.logVerbose("Test Verbose Message from Flutter!");
+      InstabugFlutter.clearAllLogs();
       InstabugFlutter.logError("Test Error Message from Flutter!");
       InstabugFlutter.logWarn("Test Warn Message from Flutter!");
       InstabugFlutter.logOut();
@@ -57,6 +58,11 @@ class _MyAppState extends State<MyApp> {
     InstabugFlutter.resetTags();
   }
 
+  void getTags() async {
+    final List<String> tags = await InstabugFlutter.getTags();
+    print(tags.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -65,14 +71,20 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Column (
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('Running on: $_platformVersion\n'),
-              RaisedButton(onPressed: resetTags, child: Text('reset tags'), color: Colors.lightBlue,)
-            ],
-          )
-        ),
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Running on: $_platformVersion\n'),
+            RaisedButton(
+                onPressed: resetTags,
+                child: Text('reset tags'),
+                color: Colors.lightBlue),
+            RaisedButton(
+                onPressed: getTags,
+                child: Text('get tags'),
+                color: Colors.lightBlue)
+          ],
+        )),
       ),
     );
   }

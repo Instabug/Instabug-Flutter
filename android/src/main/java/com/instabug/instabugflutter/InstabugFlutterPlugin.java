@@ -79,13 +79,13 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         }
         Object[] paramValues = tempParamValues.toArray();
         try {
-          method.invoke(this, paramValues);
+           Object returnVal = method.invoke(this, paramValues);
+           result.success(returnVal);
+           break;
         } catch (Exception e) {
           e.printStackTrace();
           result.notImplemented();
-        } 
-        result.success(null);
-        break;
+        }
       }
     }
     if (!isImplemented) {
@@ -183,6 +183,14 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         InstabugLog.i(message);
    }
 
+    /**
+     * Gets all tags of reported feedback, bug or crash.
+     * @return An array of tags.
+     */
+   public ArrayList<String> getTags() {
+      return Instabug.getTags();
+   }
+
    /**
     * Appends a log message to Instabug internal log
     * These logs are then sent along the next uploaded report.
@@ -204,6 +212,13 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     public void logWarn(String message) {
         InstabugLog.w(message);
    }
+
+   /**
+    * Clears Instabug internal log
+    */
+    public void clearAllLogs() {
+        InstabugLog.clearLogs();
+    }
     
     /**
      * Sets the color theme of the SDK's whole UI.

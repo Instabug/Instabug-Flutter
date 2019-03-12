@@ -34,12 +34,16 @@ void main() {
           return null; 
         case 'logInfo:':
           return null; 
+        case 'clearAllLogs:':
+          return null;
         case 'logError:':
           return null;
         case 'logWarn:':
           return null;
         case 'setColorTheme:':
-          return null;    
+          return null; 
+        case 'getTags':
+          return ['tag1', 'tag2'];   
         default:
           return null;
       }
@@ -152,6 +156,16 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('clearAllLogs: Test', () async {
+    InstabugFlutter.clearAllLogs();
+    expect(log, <Matcher>[
+      isMethodCall('clearAllLogs',
+        arguments: <String, dynamic>{
+        },
+      )
+    ]);
+  });
+
   test('logError: Test', () async {
     InstabugFlutter.logError(message);
     expect(log, <Matcher>[
@@ -173,7 +187,7 @@ test('startWithToken:invocationEvents: Test', () async {
       )
     ]);
   });
-  
+
   test('test setColorTheme should be called with argument colorTheme', () async {
     const ColorTheme colorTheme = ColorTheme.dark;
     InstabugFlutter.setColorTheme(colorTheme);
@@ -206,4 +220,15 @@ test('startWithToken:invocationEvents: Test', () async {
       )
     ]);
   });
+
+  test('test getTags should be called with no arguments and returns list of tags', () async {
+    List<String> tags = await InstabugFlutter.getTags();
+    expect(log, <Matcher>[
+      isMethodCall('getTags',
+        arguments: null
+      )
+    ]);
+    expect(tags, ['tag1','tag2']);
+  });
+
 }

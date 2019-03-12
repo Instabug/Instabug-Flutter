@@ -127,6 +127,11 @@ class InstabugFlutter {
     await _channel.invokeMethod<Object>('logInfo:', params);
   }
 
+  /// Clears Instabug internal log
+  static void clearAllLogs() async {
+    await _channel.invokeMethod<Object>('clearAllLogs');
+  }
+  
   /// Appends a log [message] to Instabug internal log
   /// These logs are then sent along the next uploaded report.
   /// All log messages are timestamped
@@ -161,6 +166,12 @@ class InstabugFlutter {
   /// Manually removes all tags of reported feedback, bug or crash.
   static void resetTags() async {
     await _channel.invokeMethod<Object>('resetTags');
+  }
+
+  /// Gets all tags of reported feedback, bug or crash. Returns the list of tags.
+  static Future<List<String>> getTags() async {
+    final List<dynamic> tags = await _channel.invokeMethod<Object>('getTags');
+    return tags != null ? tags.cast<String>() : null;
   }
 
 }
