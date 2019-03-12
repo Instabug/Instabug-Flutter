@@ -142,6 +142,13 @@
 }
 
 /**
+  * Clears Instabug internal log
+  */
++ (void)clearAllLogs {
+  [IBGLog clearAllLogs];
+}
+
+/**
   * Appends a log message to Instabug internal log
   * These logs are then sent along the next uploaded report.
   * All log messages are timestamped 
