@@ -146,7 +146,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    * @param instabugLocale
    */
     public void setLocale(String instabugLocale) {
-         Instabug.changeLocale((Locale) constants.get(instabugLocale));
+        Instabug.setLocale((Locale) constants.get(instabugLocale));
     }
 
 
@@ -260,6 +260,19 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    public void removeUserAttributeForKey(String key) {
        Instabug.removeUserAttribute(key);
    }
+
+   /**
+     * invoke sdk manually
+     */
+    public void show() {
+      Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                  Instabug.show();
+                }
+            });
+    }
 
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();

@@ -48,6 +48,8 @@ void main() {
           return null;  
         case 'removeUserAttributeForKey:':
           return null;
+        case 'show':
+          return null;
         default:
           return null;
       }
@@ -164,8 +166,7 @@ test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.clearAllLogs();
     expect(log, <Matcher>[
       isMethodCall('clearAllLogs',
-        arguments: <String, dynamic>{
-        },
+        arguments: null,
       )
     ]);
   });
@@ -260,4 +261,16 @@ test('startWithToken:invocationEvents: Test', () async {
       )
     ]);
   });
+
+  test('show Test', () async {
+    InstabugFlutter.show();
+    expect(log, <Matcher>[
+      isMethodCall('show',
+        arguments: null,
+      )
+    ]);
+  });
+
 }
+
+

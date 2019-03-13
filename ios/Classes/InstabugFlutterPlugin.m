@@ -220,6 +220,13 @@
     [Instabug removeUserAttributeForKey:key];
 }
 
+/**
+ * invoke sdk manually
+ */
++ (void) show {
+    [Instabug show];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
