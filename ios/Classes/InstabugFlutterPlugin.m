@@ -227,6 +227,30 @@
     [Instabug show];
 }
 
+/**
+  * invoke sdk manually with desire invocation mode
+  *
+  * @param invocationMode the invocation mode
+  * @param invocationOptions the array of invocation options
+  */
++ (void) invokeWithMode:(NSString *)invocationMode options:(NSArray*)invocationOptionsArray {
+    if ([invocationMode isEqualToString:@"InvocationMode.CHATS"]) {
+         [IBGChats show];
+         return;
+    }
+     if ([invocationMode isEqualToString:@"InvocationMode.REPLIES"]) {
+        [IBGReplies show];
+        return;
+    }
+    NSDictionary *constants = [self constants];
+    NSInteger invocationOptions = 0;
+    for (NSString * invocationOption in invocationOptionsArray) {
+        invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
+    }
+    NSInteger invocation = ((NSNumber *) constants[invocationMode]).integerValue;
+    [IBGBugReporting showWithReportType:invocation options:invocationOptions];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
