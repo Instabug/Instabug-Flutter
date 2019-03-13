@@ -38,6 +38,7 @@ class _MyAppState extends State<MyApp> {
       InstabugFlutter.logWarn("Test Warn Message from Flutter!");
       InstabugFlutter.logOut();
       InstabugFlutter.setLocale(Locale.German);
+      //InstabugFlutter.setLocale(Locale.German);
       InstabugFlutter.setColorTheme(ColorTheme.dark);
       InstabugFlutter.appendTags(['tag1', 'tag2']);
       InstabugFlutter.setUserAttributeWithKey('19', 'Age');
