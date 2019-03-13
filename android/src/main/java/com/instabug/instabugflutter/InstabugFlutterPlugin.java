@@ -289,6 +289,14 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     constants.put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
     constants.put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
 
+    constants.put("InvocationMode.BUG", BugReporting.ReportType.BUG);
+    constants.put("InvocationMode.FEEDBACK", BugReporting.ReportType.FEEDBACK);
+
+    constants.put("InvocationOption.COMMENT_FIELD_REQUIRED", Option.COMMENT_FIELD_REQUIRED);
+    constants.put("InvocationOption.DISABLE_POST_SENDING_DIALOG", Option.DISABLE_POST_SENDING_DIALOG);
+    constants.put("InvocationOption.EMAIL_FIELD_HIDDEN", Option.EMAIL_FIELD_HIDDEN);
+    constants.put("InvocationOption.EMAIL_FIELD_OPTIONAL", Option.EMAIL_FIELD_OPTIONAL);
+
     constants.put("Locale.Arabic",
             new Locale(InstabugLocale.ARABIC.getCode(), InstabugLocale.ARABIC.getCountry()));
     constants.put("Locale.ChineseSimplified",
