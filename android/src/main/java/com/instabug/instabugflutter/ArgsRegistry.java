@@ -15,14 +15,18 @@ import static com.instabug.library.internal.module.InstabugLocale.DANISH;
 import static com.instabug.library.internal.module.InstabugLocale.ENGLISH;
 import static com.instabug.library.internal.module.InstabugLocale.FRENCH;
 import static com.instabug.library.internal.module.InstabugLocale.GERMAN;
+import static com.instabug.library.internal.module.InstabugLocale.INDONESIAN;
 import static com.instabug.library.internal.module.InstabugLocale.ITALIAN;
 import static com.instabug.library.internal.module.InstabugLocale.JAPANESE;
 import static com.instabug.library.internal.module.InstabugLocale.KOREAN;
 import static com.instabug.library.internal.module.InstabugLocale.NETHERLANDS;
+import static com.instabug.library.internal.module.InstabugLocale.NORWEGIAN;
 import static com.instabug.library.internal.module.InstabugLocale.POLISH;
 import static com.instabug.library.internal.module.InstabugLocale.PORTUGUESE_BRAZIL;
+import static com.instabug.library.internal.module.InstabugLocale.PORTUGUESE_PORTUGAL;
 import static com.instabug.library.internal.module.InstabugLocale.RUSSIAN;
 import static com.instabug.library.internal.module.InstabugLocale.SIMPLIFIED_CHINESE;
+import static com.instabug.library.internal.module.InstabugLocale.SLOVAK;
 import static com.instabug.library.internal.module.InstabugLocale.SPANISH;
 import static com.instabug.library.internal.module.InstabugLocale.SWEDISH;
 import static com.instabug.library.internal.module.InstabugLocale.TRADITIONAL_CHINESE;
@@ -123,10 +127,14 @@ final class ArgsRegistry {
         args.put("Locale.Korean", new Locale(KOREAN.getCode(), KOREAN.getCountry()));
         args.put("Locale.Polish", new Locale(POLISH.getCode(), POLISH.getCountry()));
         args.put("Locale.PortugueseBrazil", new Locale(PORTUGUESE_BRAZIL.getCode(), PORTUGUESE_BRAZIL.getCountry()));
+        args.put("Locale.PortuguesePortugal", new Locale(PORTUGUESE_PORTUGAL.getCode(), PORTUGUESE_PORTUGAL.getCountry()));
         args.put("Locale.Russian", new Locale(RUSSIAN.getCode(), RUSSIAN.getCountry()));
         args.put("Locale.Spanish", new Locale(SPANISH.getCode(), SPANISH.getCountry()));
         args.put("Locale.Swedish", new Locale(SWEDISH.getCode(), SWEDISH.getCountry()));
         args.put("Locale.Turkish", new Locale(TURKISH.getCode(), TURKISH.getCountry()));
+        args.put("Locale.Indonesian", new Locale(INDONESIAN.getCode(), INDONESIAN.getCountry()));
+        args.put("Locale.Slovak", new Locale(SLOVAK.getCode(), SLOVAK.getCountry()));
+        args.put("Locale.Norwegian", new Locale(NORWEGIAN.getCode(), NORWEGIAN.getCountry()));
     }
 
     @VisibleForTesting
