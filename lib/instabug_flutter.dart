@@ -192,4 +192,10 @@ class InstabugFlutter {
     final Map<String, Object> params = {'key': key};
     return await _channel.invokeMethod<Object>('getUserAttributeForKey:', params);
   }
+
+  /// A new Map containing all the currently set user attributes, or an empty Map if no user attributes have been set.
+  static Future<Map<String, String>> getUserAttributes() async {
+    final Object userAttributes = await _channel.invokeMethod<Object>('getUserAttributes');
+    return userAttributes != null ? Map<String, String>.from(userAttributes) : <String, String>{};
+  }
 }
