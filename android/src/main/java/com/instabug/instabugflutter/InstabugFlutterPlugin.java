@@ -6,9 +6,8 @@ import android.os.Looper;
 
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
-import com.instabug.library.logging.InstabugLog;
-import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
+import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 
 import java.lang.reflect.Method;
@@ -23,12 +22,6 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
-
-
-// import com.instabug.library.InstabugColorTheme;
-// import com.instabug.library.InstabugCustomTextPlaceHolder;
-// import com.instabug.library.internal.module.InstabugLocale;
-// import com.instabug.library.ui.onboarding.WelcomeMessage;
 
 /** InstabugFlutterPlugin */
 public class InstabugFlutterPlugin implements MethodCallHandler {
@@ -210,8 +203,10 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      * @param colorTheme an InstabugColorTheme to set the SDK's UI to.
      */
     public void setColorTheme(String colorTheme) {
-        // TODO args
-        Instabug.setColorTheme((InstabugColorTheme) constants.get(colorTheme));
+      InstabugColorTheme resolvedTheme = ArgsRegistry.getDeserializedValue(colorTheme, InstabugColorTheme.class);
+      if (resolvedTheme != null) {
+        Instabug.setColorTheme(resolvedTheme);
+      }
     }
 
     /**

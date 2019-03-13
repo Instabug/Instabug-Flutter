@@ -3,6 +3,8 @@ package com.instabug.instabugflutter;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
+import com.instabug.library.InstabugColorTheme;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -44,6 +46,7 @@ final class ArgsRegistry {
         registerInstabugInvocationEventsArgs(ARGS);
         registerWelcomeMessageArgs(ARGS);
         registerLocaleArgs(ARGS);
+        registerColorThemeArgs(ARGS);
     }
 
     /**
@@ -124,5 +127,11 @@ final class ArgsRegistry {
         args.put("Locale.Spanish", new Locale(SPANISH.getCode(), SPANISH.getCountry()));
         args.put("Locale.Swedish", new Locale(SWEDISH.getCode(), SWEDISH.getCountry()));
         args.put("Locale.Turkish", new Locale(TURKISH.getCode(), TURKISH.getCountry()));
+    }
+
+    @VisibleForTesting
+    static void registerColorThemeArgs(Map<String, Object> args) {
+        args.put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
+        args.put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
     }
 }

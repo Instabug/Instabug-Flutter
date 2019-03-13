@@ -1,5 +1,6 @@
 package com.instabug.instabugflutter;
 
+import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 
@@ -21,8 +22,7 @@ public class ArgsRegistryTest {
         // when
         ArgsRegistry.registerInstabugInvocationEventsArgs(map);
         // then
-        Assert.assertEquals(6, map.size());
-        //TODO fix missing invocation mode
+        Assert.assertEquals(5, map.size());
         assertAllInvocationEventsArePresent(map);
     }
 
@@ -55,6 +55,7 @@ public class ArgsRegistryTest {
         assertAllInvocationEventsArePresent(args);
         assertAllWelcomeMessageStatesArePresent(args);
         assertAllSupportedLocalesArePresent(args);
+        assertAllColorThemesArePresent(args);
     }
 
     @Test
@@ -86,12 +87,21 @@ public class ArgsRegistryTest {
         Assert.assertEquals("en", actualLocale.getLanguage());
     }
 
+    @Test
+    public void given$registerColorThemeArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria() {
+        // given
+        Map<String, Object> map = new HashMap<>();
+        // when
+        ArgsRegistry.registerColorThemeArgs(map);
+        // then
+        assertAllColorThemesArePresent(map);
+    }
+
     private void assertAllInvocationEventsArePresent(Map<String, Object> map) {
         Assert.assertTrue(map.containsValue(InstabugInvocationEvent.NONE));
         Assert.assertTrue(map.containsValue(InstabugInvocationEvent.SHAKE));
         Assert.assertTrue(map.containsValue(InstabugInvocationEvent.FLOATING_BUTTON));
         Assert.assertTrue(map.containsValue(InstabugInvocationEvent.SCREENSHOT));
-        Assert.assertTrue(map.containsValue(InstabugInvocationEvent.SCREENSHOT_GESTURE));
         Assert.assertTrue(map.containsValue(InstabugInvocationEvent.TWO_FINGER_SWIPE_LEFT));
     }
 
@@ -123,6 +133,11 @@ public class ArgsRegistryTest {
         if (!missingLangs.isEmpty()) {
             Assert.fail(missingLangs);
         }
+    }
+
+    private void assertAllColorThemesArePresent(Map<String, Object> map) {
+        Assert.assertTrue(map.containsValue(InstabugColorTheme.InstabugColorThemeDark));
+        Assert.assertTrue(map.containsValue(InstabugColorTheme.InstabugColorThemeLight));
     }
 
     private List<Locale> getCurrentlySupportLanguagesByTheSDK() {
