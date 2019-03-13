@@ -33,6 +33,21 @@ enum Locale {
   Turkish
 }
 
+enum InvocationMode {
+  BUG,
+  FEEDBACK,
+  CHATS,
+  REPLIES
+}
+
+enum InvocationOption {
+  COMMENT_FIELD_REQUIRED,
+  DISABLE_POST_SENDING_DIALOG,
+  EMAIL_FIELD_HIDDEN,
+  EMAIL_FIELD_OPTIONAL
+}
+
+
 enum ColorTheme { dark, light }
 
 class InstabugFlutter {
