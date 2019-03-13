@@ -52,7 +52,7 @@ enum InvocationOption {
 enum ColorTheme { dark, light }
 
 class InstabugFlutter {
-  static const MethodChannel _channel = const MethodChannel('instabug_flutter');
+  static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
@@ -66,25 +66,20 @@ class InstabugFlutter {
   /// it on your dashboard.
   /// The [invocationEvents] are the events that invoke
   /// the SDK's UI.
-  static void start(
-      String token, List<InvocationEvent> invocationEvents) async {
-    List<String> invocationEventsStrings = new List<String>();
+  static void start(String token, List<InvocationEvent> invocationEvents) async {
+    final List<String> invocationEventsStrings = <String>[];
     invocationEvents.forEach((e) {
       invocationEventsStrings.add(e.toString());
     });
-    final List<dynamic> params = new List<dynamic>();
-    params.add(token);
-    params.add(invocationEventsStrings);
+    final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
     await _channel.invokeMethod<Object>(
         'startWithToken:invocationEvents:', params);
   }
 
   /// Shows the welcome message in a specific mode.
   /// [welcomeMessageMode] is an enum to set the welcome message mode to live, or beta.
-  static void showWelcomeMessageWithMode(
-      WelcomeMessageMode welcomeMessageMode) async {
-    final List<dynamic> params = new List<dynamic>();
-    params.add(welcomeMessageMode.toString());
+  static void showWelcomeMessageWithMode(WelcomeMessageMode welcomeMessageMode) async {
+    final List<dynamic> params = <dynamic>[welcomeMessageMode.toString()];
     await _channel.invokeMethod<Object>('showWelcomeMessageWithMode:', params);
   }
 
@@ -93,9 +88,7 @@ class InstabugFlutter {
   /// It also reset the chats on device to that email and removes user attributes,
   /// user data and completed surveys.
   static void identifyUserWithEmail(String email, [String name]) async {
-    final List<dynamic> params = new List<dynamic>();
-    params.add(email);
-    params.add(name);
+    final List<dynamic> params = <dynamic>[email, name];
     await _channel.invokeMethod<Object>('identifyUserWithEmail:name:', params);
   }
 
@@ -111,8 +104,7 @@ class InstabugFlutter {
   /// Use to change the SDK's UI to different language.
   /// Defaults to the device's current locale.
   static void setLocale(Locale locale) async {
-    final List<dynamic> params = new List<dynamic>();
-    params.add(locale.toString());
+    final List<dynamic> params = <dynamic>[locale.toString()];
     await _channel.invokeMethod<Object>('setLocale:', params);
   }
 
@@ -121,8 +113,7 @@ class InstabugFlutter {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static void logVerbose(String message) async {
-    final List<dynamic> params = new List<dynamic>();
-    params.add(message);
+    final List<dynamic> params = <dynamic>[message];
     await _channel.invokeMethod<Object>('logVerbose:', params);
   }
 
@@ -131,8 +122,7 @@ class InstabugFlutter {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static void logDebug(String message) async {
-    final List<dynamic> params = new List<dynamic>();
-    params.add(message);
+    final List<dynamic> params = <dynamic>[message];
     await _channel.invokeMethod<Object>('logDebug:', params);
   }
 
@@ -141,8 +131,7 @@ class InstabugFlutter {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static void logInfo(String message) async {
-    final List<dynamic> params = new List<dynamic>();
-    params.add(message);
+    final List<dynamic> params = <dynamic>[message];
     await _channel.invokeMethod<Object>('logInfo:', params);
   }
 
@@ -156,8 +145,7 @@ class InstabugFlutter {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static void logError(String message) async {
-    final List<dynamic> params = new List<dynamic>();
-    params.add(message);
+    final List<dynamic> params = <dynamic>[message];
     await _channel.invokeMethod<Object>('logError:', params);
   }
 
@@ -166,23 +154,20 @@ class InstabugFlutter {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static void logWarn(String message) async {
-    final List<dynamic> params = new List<dynamic>();
-    params.add(message);
+    final List<dynamic> params = <dynamic>[message];
     await _channel.invokeMethod<Object>('logWarn:', params);
   }
   
   /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.
   /// It should be of type [ColorTheme].
   static void setColorTheme(ColorTheme colorTheme) async {
-    final List<dynamic> params = new List<dynamic>();
-    params.add(colorTheme.toString());
+    final List<dynamic> params = <dynamic>[colorTheme.toString()];
     await _channel.invokeMethod<Object>('setColorTheme:', params);
   }
 
   /// Appends a set of [tags] to previously added tags of reported feedback, bug or crash.
   static void appendTags(List<String> tags) async {
-    final List<dynamic> params = new List<dynamic>();
-    params.add(tags);
+    final List<dynamic> params = <dynamic>[tags];
     await _channel.invokeMethod<Object>('appendTags:', params);
   }
 
@@ -199,17 +184,14 @@ class InstabugFlutter {
 
   /// Add custom user attribute [value] with a [key] that is going to be sent with each feedback, bug or crash.
   static void setUserAttributeWithKey(String value, String key) async {
-    final List<dynamic> params = new List<dynamic>();
-    params.add(value);
-    params.add(key);
+    final List<dynamic> params = <dynamic>[value, key];
     await _channel.invokeMethod<Object>('setUserAttribute:withKey:', params);
   }
 
   /// Removes a given [key] and its associated value from user attributes.
   /// Does nothing if a [key] does not exist.
   static void removeUserAttributeForKey(String key) async {
-    final List<dynamic> params = new List<dynamic>();
-    params.add(key);
+    final List<dynamic> params = <dynamic>[key];
     await _channel.invokeMethod<Object>('removeUserAttributeForKey:', params);
   }
 
@@ -223,15 +205,13 @@ class InstabugFlutter {
   /// [invocationMode] the invocation mode
   /// [invocationOptions] the array of invocation options
   static void invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions]) async {
-    List<String> invocationOptionsStrings = new List<String>();
+    List<String> invocationOptionsStrings = <String>[];
     if (invocationOptions != null) {
       invocationOptions.forEach((e) {
         invocationOptionsStrings.add(e.toString());
       });
     }
-    final List<dynamic> params = new List<dynamic>();
-    params.add(invocationMode.toString());
-    params.add(invocationOptionsStrings);
+    final List<dynamic> params = <dynamic>[invocationMode.toString(), invocationOptionsStrings];
     await _channel.invokeMethod<Object>('invokeWithMode:options:',params);
   }
 }

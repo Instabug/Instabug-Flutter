@@ -64,9 +64,7 @@ void main() {
 
 test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.start(appToken, invocationEvents);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(appToken);
-    args.add([InvocationEvent.floatingButton.toString()]);
+    final List<dynamic> args = <dynamic>[appToken, <String>[InvocationEvent.floatingButton.toString()]];
     expect(log, <Matcher>[
       isMethodCall('startWithToken:invocationEvents:',
         arguments: args,
@@ -76,8 +74,7 @@ test('startWithToken:invocationEvents: Test', () async {
   
   test('showWelcomeMessageWithMode: Test', () async {
     InstabugFlutter.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(WelcomeMessageMode.beta.toString());
+    final List<dynamic> args = <dynamic>[WelcomeMessageMode.beta.toString()];
     expect(log, <Matcher>[
       isMethodCall('showWelcomeMessageWithMode:',
         arguments: args,
@@ -87,9 +84,7 @@ test('startWithToken:invocationEvents: Test', () async {
 
   test('identifyUserWithEmail:name: Test', () async {
     InstabugFlutter.identifyUserWithEmail(email, name);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(email);
-    args.add(name);
+    final List<dynamic> args = <dynamic>[email, name];
     expect(log, <Matcher>[
       isMethodCall('identifyUserWithEmail:name:',
         arguments: args,
@@ -99,9 +94,7 @@ test('startWithToken:invocationEvents: Test', () async {
   
   test('identifyUserWithEmail:name: Test Optional Parameter', () async {
     InstabugFlutter.identifyUserWithEmail(email);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(email);
-    args.add(null);
+    final List<dynamic> args = <dynamic>[email, null];
     expect(log, <Matcher>[
       isMethodCall('identifyUserWithEmail:name:',
         arguments:args,
@@ -119,8 +112,7 @@ test('startWithToken:invocationEvents: Test', () async {
   
   test('setLocale:', () async {
     InstabugFlutter.setLocale(Locale.German);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(Locale.German.toString());
+    final List<dynamic> args = <dynamic>[Locale.German.toString()];
     expect(log, <Matcher>[
       isMethodCall('setLocale:',
         arguments: args,
@@ -131,8 +123,7 @@ test('startWithToken:invocationEvents: Test', () async {
 
   test('logVerbose: Test', () async {
     InstabugFlutter.logVerbose(message);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(message);
+    final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logVerbose:',
         arguments: args,
@@ -142,8 +133,7 @@ test('startWithToken:invocationEvents: Test', () async {
   
   test('logDebug: Test', () async {
     InstabugFlutter.logDebug(message);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(message);
+    final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logDebug:',
         arguments: args,
@@ -153,8 +143,7 @@ test('startWithToken:invocationEvents: Test', () async {
   
   test('logInfo: Test', () async {
     InstabugFlutter.logInfo(message);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(message);
+    final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logInfo:',
         arguments: args,
@@ -172,8 +161,7 @@ test('startWithToken:invocationEvents: Test', () async {
 
   test('logError: Test', () async {
     InstabugFlutter.logError(message);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(message);
+    final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logError:',
         arguments: args,
@@ -183,8 +171,7 @@ test('startWithToken:invocationEvents: Test', () async {
   
   test('logWarn: Test', () async {
     InstabugFlutter.logWarn(message);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(message);
+    final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logWarn:',
         arguments: args,
@@ -195,8 +182,7 @@ test('startWithToken:invocationEvents: Test', () async {
   test('test setColorTheme should be called with argument colorTheme', () async {
     const ColorTheme colorTheme = ColorTheme.dark;
     InstabugFlutter.setColorTheme(colorTheme);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(colorTheme.toString());
+    final List<dynamic> args = <dynamic>[colorTheme.toString()];
     expect(log, <Matcher>[
       isMethodCall('setColorTheme:',
         arguments: args,
@@ -207,8 +193,7 @@ test('startWithToken:invocationEvents: Test', () async {
   test('test appendTags should be called with argument List of strings', () async {
     const List<String> tags = ['tag1', 'tag2'];
     InstabugFlutter.appendTags(tags);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(tags);
+    final List<dynamic> args = <dynamic>[tags];
     expect(log, <Matcher>[
       isMethodCall('appendTags:',
         arguments: args,
@@ -239,9 +224,7 @@ test('startWithToken:invocationEvents: Test', () async {
     const String value = '19';
     const String key = 'Age';
     InstabugFlutter.setUserAttributeWithKey(value, key);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(value);
-    args.add(key);
+    final List<dynamic> args = <dynamic>[value, key];
     expect(log, <Matcher>[
       isMethodCall('setUserAttribute:withKey:',
         arguments: args,
@@ -252,8 +235,7 @@ test('startWithToken:invocationEvents: Test', () async {
   test('test removeUserAttributeForKey should be called with a string argument', () async {
     const String key = 'Age';
     InstabugFlutter.removeUserAttributeForKey(key);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(key);
+    final List<dynamic> args = <dynamic>[key];
     expect(log, <Matcher>[
       isMethodCall('removeUserAttributeForKey:',
         arguments: args,
@@ -272,9 +254,7 @@ test('startWithToken:invocationEvents: Test', () async {
 
   test('invokeWithMode:options: Test', () async {
     InstabugFlutter.invokeWithMode(InvocationMode.BUG, [InvocationOption.COMMENT_FIELD_REQUIRED]);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(InvocationMode.BUG.toString());
-    args.add([InvocationOption.COMMENT_FIELD_REQUIRED.toString()]);
+    final List<dynamic> args = <dynamic>[InvocationMode.BUG.toString(), <String>[InvocationOption.COMMENT_FIELD_REQUIRED.toString()]];
     expect(log, <Matcher>[
       isMethodCall('invokeWithMode:options:',
         arguments: args,
