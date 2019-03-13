@@ -49,8 +49,8 @@ final class ArgsRegistry {
     static {
         registerInstabugInvocationEventsArgs(ARGS);
         registerWelcomeMessageArgs(ARGS);
-        registerLocaleArgs(ARGS);
         registerColorThemeArgs(ARGS);
+        registerLocaleArgs(ARGS);
     }
 
     /**
@@ -97,49 +97,49 @@ final class ArgsRegistry {
 
     @VisibleForTesting
     static void registerInstabugInvocationEventsArgs(Map<String, Object> args) {
-        args.put("InvocationEvent.none", NONE);
-        args.put("InvocationEvent.screenshot", SCREENSHOT);
         args.put("InvocationEvent.twoFingersSwipeLeft", TWO_FINGER_SWIPE_LEFT);
         args.put("InvocationEvent.floatingButton", FLOATING_BUTTON);
+        args.put("InvocationEvent.screenshot", SCREENSHOT);
         args.put("InvocationEvent.shake", SHAKE);
+        args.put("InvocationEvent.none", NONE);
     }
 
     @VisibleForTesting
     static void registerWelcomeMessageArgs(Map<String, Object> args) {
+        args.put("WelcomeMessageMode.disabled", DISABLED);
         args.put("WelcomeMessageMode.live", LIVE);
         args.put("WelcomeMessageMode.beta", BETA);
-        args.put("WelcomeMessageMode.disabled", DISABLED);
-    }
-
-    @VisibleForTesting
-    static void registerLocaleArgs(Map<String, Object> args) {
-        args.put("Locale.Arabic", new Locale(ARABIC.getCode(), ARABIC.getCountry()));
-        args.put("Locale.ChineseSimplified", new Locale(SIMPLIFIED_CHINESE.getCode(), SIMPLIFIED_CHINESE.getCountry()));
-        args.put("Locale.ChineseTraditional", new Locale(TRADITIONAL_CHINESE.getCode(), TRADITIONAL_CHINESE.getCountry()));
-        args.put("Locale.Czech", new Locale(CZECH.getCode(), CZECH.getCountry()));
-        args.put("Locale.Danish", new Locale(DANISH.getCode(), DANISH.getCountry()));
-        args.put("Locale.Dutch", new Locale(NETHERLANDS.getCode(), NETHERLANDS.getCountry()));
-        args.put("Locale.English", new Locale(ENGLISH.getCode(), ENGLISH.getCountry()));
-        args.put("Locale.French", new Locale(FRENCH.getCode(), FRENCH.getCountry()));
-        args.put("Locale.German", new Locale(GERMAN.getCode(), GERMAN.getCountry()));
-        args.put("Locale.Italian", new Locale(ITALIAN.getCode(), ITALIAN.getCountry()));
-        args.put("Locale.Japanese", new Locale(JAPANESE.getCode(), JAPANESE.getCountry()));
-        args.put("Locale.Korean", new Locale(KOREAN.getCode(), KOREAN.getCountry()));
-        args.put("Locale.Polish", new Locale(POLISH.getCode(), POLISH.getCountry()));
-        args.put("Locale.PortugueseBrazil", new Locale(PORTUGUESE_BRAZIL.getCode(), PORTUGUESE_BRAZIL.getCountry()));
-        args.put("Locale.PortuguesePortugal", new Locale(PORTUGUESE_PORTUGAL.getCode(), PORTUGUESE_PORTUGAL.getCountry()));
-        args.put("Locale.Russian", new Locale(RUSSIAN.getCode(), RUSSIAN.getCountry()));
-        args.put("Locale.Spanish", new Locale(SPANISH.getCode(), SPANISH.getCountry()));
-        args.put("Locale.Swedish", new Locale(SWEDISH.getCode(), SWEDISH.getCountry()));
-        args.put("Locale.Turkish", new Locale(TURKISH.getCode(), TURKISH.getCountry()));
-        args.put("Locale.Indonesian", new Locale(INDONESIAN.getCode(), INDONESIAN.getCountry()));
-        args.put("Locale.Slovak", new Locale(SLOVAK.getCode(), SLOVAK.getCountry()));
-        args.put("Locale.Norwegian", new Locale(NORWEGIAN.getCode(), NORWEGIAN.getCountry()));
     }
 
     @VisibleForTesting
     static void registerColorThemeArgs(Map<String, Object> args) {
-        args.put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
         args.put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
+        args.put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
+    }
+
+    @VisibleForTesting
+    static void registerLocaleArgs(Map<String, Object> args) {
+        args.put("Locale.ChineseTraditional", new Locale(TRADITIONAL_CHINESE.getCode(), TRADITIONAL_CHINESE.getCountry()));
+        args.put("Locale.PortuguesePortugal", new Locale(PORTUGUESE_PORTUGAL.getCode(), PORTUGUESE_PORTUGAL.getCountry()));
+        args.put("Locale.ChineseSimplified", new Locale(SIMPLIFIED_CHINESE.getCode(), SIMPLIFIED_CHINESE.getCountry()));
+        args.put("Locale.PortugueseBrazil", new Locale(PORTUGUESE_BRAZIL.getCode(), PORTUGUESE_BRAZIL.getCountry()));
+        args.put("Locale.Indonesian", new Locale(INDONESIAN.getCode(), INDONESIAN.getCountry()));
+        args.put("Locale.Dutch", new Locale(NETHERLANDS.getCode(), NETHERLANDS.getCountry()));
+        args.put("Locale.Norwegian", new Locale(NORWEGIAN.getCode(), NORWEGIAN.getCountry()));
+        args.put("Locale.Japanese", new Locale(JAPANESE.getCode(), JAPANESE.getCountry()));
+        args.put("Locale.English", new Locale(ENGLISH.getCode(), ENGLISH.getCountry()));
+        args.put("Locale.Italian", new Locale(ITALIAN.getCode(), ITALIAN.getCountry()));
+        args.put("Locale.Russian", new Locale(RUSSIAN.getCode(), RUSSIAN.getCountry()));
+        args.put("Locale.Spanish", new Locale(SPANISH.getCode(), SPANISH.getCountry()));
+        args.put("Locale.Swedish", new Locale(SWEDISH.getCode(), SWEDISH.getCountry()));
+        args.put("Locale.Turkish", new Locale(TURKISH.getCode(), TURKISH.getCountry()));
+        args.put("Locale.Arabic", new Locale(ARABIC.getCode(), ARABIC.getCountry()));
+        args.put("Locale.Danish", new Locale(DANISH.getCode(), DANISH.getCountry()));
+        args.put("Locale.French", new Locale(FRENCH.getCode(), FRENCH.getCountry()));
+        args.put("Locale.German", new Locale(GERMAN.getCode(), GERMAN.getCountry()));
+        args.put("Locale.Korean", new Locale(KOREAN.getCode(), KOREAN.getCountry()));
+        args.put("Locale.Polish", new Locale(POLISH.getCode(), POLISH.getCountry()));
+        args.put("Locale.Slovak", new Locale(SLOVAK.getCode(), SLOVAK.getCountry()));
+        args.put("Locale.Czech", new Locale(CZECH.getCode(), CZECH.getCountry()));
     }
 }
