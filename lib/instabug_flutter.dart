@@ -206,4 +206,21 @@ class InstabugFlutter {
   static void show() async {
     await _channel.invokeMethod<Object>('show');
   }
+
+
+  /// invoke sdk manually with desire invocation mode
+  /// [invocationMode] the invocation mode
+  /// [invocationOptions] the array of invocation options
+  static void invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions]) async {
+    List<String> invocationOptionsStrings = new List<String>();
+    if (invocationOptions != null) {
+      invocationOptions.forEach((e) {
+        invocationOptionsStrings.add(e.toString());
+      });
+    }
+    final List<dynamic> params = new List<dynamic>();
+    params.add(invocationMode.toString());
+    params.add(invocationOptionsStrings);
+    await _channel.invokeMethod<Object>('invokeWithMode:options:',params);
+  }
 }
