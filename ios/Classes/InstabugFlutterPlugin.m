@@ -26,12 +26,11 @@
          * Use indices 2 and greater for the arguments normally passed in a message.
          */
         NSInteger index = 2;
-        NSDictionary *argumentsDictionary = call.arguments;
-        for (id key in argumentsDictionary) {
-          NSObject *arg = [argumentsDictionary objectForKey:key];
-          [inv setArgument:&(arg) atIndex:index];
+        NSArray* argumentsArray = call.arguments;
+        for (NSObject * argument in argumentsArray) {
+          [inv setArgument:&(argument) atIndex:index];
           index++;
-        }        
+        }      
         [inv invoke];
           NSMethodSignature *signature = [inv methodSignature];
           const char *type = [signature methodReturnType];
