@@ -274,6 +274,27 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             });
     }
 
+    /**
+     * invoke sdk manually with desire invocation mode
+     *
+     * @param invocationMode the invocation mode
+     * @param invocationOptions the array of invocation options
+     */
+   public void invokeWithMode(String invocationMode, List<String> invocationOptions) {
+     switch (invocationMode) {
+         case "InvocationMode.CHATS" : Chats.show();
+             return;
+         case "InvocationMode.REPLIES" : Replies.show();
+             return;
+     }
+     int[] options = new int[invocationOptions.size()];
+     for (int i = 0; i < invocationOptions.size(); i++) {
+        options[i] = (int)constants.get(invocationOptions.get(i));
+     }
+     BugReporting.show((int) constants.get(invocationMode), options);
+  }
+
+
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
     constants.put("InvocationEvent.none", InstabugInvocationEvent.NONE);
