@@ -8,6 +8,10 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import android.app.Application;
 
+import com.instabug.bug.BugReporting;
+import com.instabug.bug.invocation.Option;
+import com.instabug.chat.Chats;
+import com.instabug.chat.Replies;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.logging.InstabugLog;
@@ -67,15 +71,8 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
       if (callMethod.equals(method.getName())) {
         isImplemented = true;
         ArrayList<Object> tempParamValues = new ArrayList<>();
-        HashMap<String, String> map = new HashMap<>();
-        if (call.arguments != null) {
-          map = (HashMap<String, String>) call.arguments;
-        }
-        Iterator iterator = map.entrySet().iterator();
-        while (iterator.hasNext()) {
-          Map.Entry pair = (Map.Entry)iterator.next();
-          tempParamValues.add(pair.getValue());
-          iterator.remove();
+         if (call.arguments != null) {
+          tempParamValues = (ArrayList<Object>) call.arguments;
         }
         Object[] paramValues = tempParamValues.toArray();
         try {
