@@ -264,10 +264,18 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     /**
      * Returns the user attribute associated with a given key.
      * @param key The key for which to return the corresponding value.
-     * @return The value associated with aKey, or nil if no value is associated with aKey.
+     * @return The value associated with aKey, or null if no value is associated with aKey.
      */
    public String getUserAttributeForKey(String key) {
        return Instabug.getUserAttribute(key);
+   }
+
+    /**
+     * Returns all user attributes.
+     * @return A new HashMap containing all the currently set user attributes, or an empty HashMap if no user attributes have been set.
+     */
+   public HashMap<String, String> getUserAttributes() {
+       return Instabug.getAllUserAttributes();
    }
 
   public Map<String, Object> getConstants() {
