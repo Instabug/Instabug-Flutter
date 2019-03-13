@@ -229,6 +229,14 @@
      return [Instabug userAttributeForKey:key];
 }
 
+/**
+ * Returns all user attributes.
+ * @return A new dictionary containing all the currently set user attributes, or an empty dictionary if no user attributes have been set.
+ */
++ (NSDictionary*) getUserAttributes {
+    return Instabug.userAttributes;
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
