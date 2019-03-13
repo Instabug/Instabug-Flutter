@@ -13,6 +13,7 @@ void main() {
   final name = "santa";
   String message = "Test Message";
   const String userAttribute = '19';
+  const Map<String, String> userAttributePair = {'gender': 'female'};
 
   setUpAll(() async {
     MethodChannel('instabug_flutter')
@@ -51,6 +52,8 @@ void main() {
           return null;
         case 'getUserAttributeForKey:':
           return userAttribute;
+        case 'getUserAttributes':
+          return userAttributePair;
         default:
           return null;
       }
@@ -274,6 +277,16 @@ test('startWithToken:invocationEvents: Test', () async {
       )
     ]);
     expect(value, userAttribute);
+  });
+
+  test('test getuserAttributes should be called with no arguments and returns a Map', () async {
+    final Map<String, String> result = await InstabugFlutter.getUserAttributes();
+    expect(log, <Matcher>[
+      isMethodCall('getUserAttributes',
+        arguments: null
+      )
+    ]);
+    expect(result, userAttributePair);
   });
   
 }
