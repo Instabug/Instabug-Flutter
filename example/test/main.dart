@@ -50,6 +50,8 @@ void main() {
           return null;
         case 'show':
           return null;
+        case 'LogUserEventWithName:':
+          return null;
         default:
           return null;
       }
