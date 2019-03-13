@@ -50,6 +50,8 @@ void main() {
           return null;
         case 'show':
           return null;
+        case 'invokeWithMode:options:':
+          return null;
         default:
           return null;
       }
@@ -267,6 +269,18 @@ test('startWithToken:invocationEvents: Test', () async {
     expect(log, <Matcher>[
       isMethodCall('show',
         arguments: null,
+      )
+    ]);
+  });
+
+  test('invokeWithMode:options: Test', () async {
+    InstabugFlutter.invokeWithMode(InvocationMode.BUG, [InvocationOption.COMMENT_FIELD_REQUIRED]);
+    final List<dynamic> args = new List<dynamic>();
+    args.add(InvocationMode.BUG.toString());
+    args.add([InvocationOption.COMMENT_FIELD_REQUIRED.toString()]);
+    expect(log, <Matcher>[
+      isMethodCall('invokeWithMode:options:',
+        arguments: args,
       )
     ]);
   });
