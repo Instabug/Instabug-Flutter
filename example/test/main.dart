@@ -271,6 +271,17 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('logUserEventWithName: Test', () async {
+    InstabugFlutter.logUserEventWithName(name);
+    final List<dynamic> args = new List<dynamic>();
+    args.add(name);
+    expect(log, <Matcher>[
+      isMethodCall('logUserEventWithName:',
+        arguments: args,
+      )
+    ]);
+  });
+
 }
 
 
