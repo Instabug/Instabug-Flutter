@@ -183,14 +183,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         InstabugLog.i(message);
    }
 
-    /**
-     * Gets all tags of reported feedback, bug or crash.
-     * @return An array of tags.
-     */
-   public ArrayList<String> getTags() {
-      return Instabug.getTags();
-   }
-
    /**
     * Appends a log message to Instabug internal log
     * These logs are then sent along the next uploaded report.
@@ -241,6 +233,32 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
    */
   public void resetTags() {
      Instabug.resetTags();
+   }
+
+    /**
+     * Gets all tags of reported feedback, bug or crash.
+     * @return An array of tags.
+     */
+   public ArrayList<String> getTags() {
+      return Instabug.getTags();
+   }
+
+    /**
+     * Set custom user attributes that are going to be sent with each feedback, bug or crash.
+     * @param value User attribute value.
+     * @param key User attribute key.
+     */
+   public void setUserAttribute(String value, String key) {
+       Instabug.setUserAttribute(key, value);
+   }
+
+    /**
+     * Removes a given key and its associated value from user attributes.
+     * Does nothing if a key does not exist.
+     * @param key The key to remove.
+     */
+   public void removeUserAttributeForKey(String key) {
+       Instabug.removeUserAttribute(key);
    }
 
   public Map<String, Object> getConstants() {

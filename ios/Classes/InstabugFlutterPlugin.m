@@ -202,6 +202,24 @@
     return [Instabug getTags];
 }
 
+/**
+ * Set custom user attributes that are going to be sent with each feedback, bug or crash.
+ * @param value User attribute value.
+ * @param key User attribute key.
+ */
++ (void) setUserAttribute:(NSString*) value withKey:(NSString*) key {
+    [Instabug setUserAttribute:value withKey:key];
+}
+
+/**
+ * Removes a given key and its associated value from user attributes.
+ * Does nothing if a key does not exist.
+ * @param key The key to remove.
+ */
++ (void) removeUserAttributeForKey:(NSString*) key {
+    [Instabug removeUserAttributeForKey:key];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
