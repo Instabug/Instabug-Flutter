@@ -44,14 +44,12 @@ public class ArgsRegistryTest {
         // when
         ArgsRegistry.registerLocaleArgs(map);
         // then
-        //TODO fix missing locales
         assertAllSupportedLocalesArePresent(map);
     }
 
     @Test
     public void given$ArgsRegistryIsInitialized_whenQuery_thenShouldMatchCriteria() {
         Map<String, Object> args = ArgsRegistry.ARGS;
-        //TODO fix missing invocation mode and missing locales
         assertAllInvocationEventsArePresent(args);
         assertAllWelcomeMessageStatesArePresent(args);
         assertAllSupportedLocalesArePresent(args);
@@ -117,7 +115,9 @@ public class ArgsRegistryTest {
         // actual
         List<Locale> actualLocales = new ArrayList<>();
         for (Map.Entry m : map.entrySet()) {
-            actualLocales.add((Locale) m.getValue());
+            if (m.getValue() instanceof Locale) {
+                actualLocales.add((Locale) m.getValue());
+            }
         }
         StringBuilder stringBuilder = new StringBuilder();
         for (Locale expectedLocale : expectedLocales) {
@@ -159,7 +159,6 @@ public class ArgsRegistryTest {
         langs.add(new Locale("zh", "CN"));
         langs.add(new Locale("zh", "TW"));
         langs.add(new Locale("cs", ""));
-        langs.add(new Locale("fa", ""));
         langs.add(new Locale("in", ""));
         langs.add(new Locale("da", ""));
         langs.add(new Locale("sk", ""));
