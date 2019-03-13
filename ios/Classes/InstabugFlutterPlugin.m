@@ -242,6 +242,14 @@
       @"ColorTheme.dark": @(IBGColorThemeDark),
       @"ColorTheme.light": @(IBGColorThemeLight),
 
+      @"InvocationMode.BUG": @(IBGBugReportingReportTypeBug),
+      @"InvocationMode.FEEDBACK": @(IBGBugReportingReportTypeFeedback),
+
+      @"InvocationOption.COMMENT_FIELD_REQUIRED": @(IBGBugReportingOptionCommentFieldRequired),
+      @"InvocationOption.DISABLE_POST_SENDING_DIALOG": @(IBGBugReportingOptionDisablePostSendingDialog),
+      @"InvocationOption.EMAIL_FIELD_HIDDEN": @(IBGBugReportingOptionEmailFieldHidden),
+      @"InvocationOption.EMAIL_FIELD_OPTIONAL": @(IBGBugReportingOptionEmailFieldOptional),
+
       @"Locale.Arabic": @(IBGLocaleArabic),
       @"Locale.ChineseSimplified": @(IBGLocaleChineseSimplified),
       @"Locale.ChineseTraditional": @(IBGLocaleChineseTraditional),
