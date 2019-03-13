@@ -274,6 +274,16 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             });
     }
 
+     /**
+     * Logs a user event that happens through the lifecycle of the application.
+     * Logged user events are going to be sent with each report, as well as at the end of a session.
+     *
+     * @param name Event name.
+     */
+    public void logUserEventWithName(String name) {
+      Instabug.logUserEvent(name);
+    }
+
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
     constants.put("InvocationEvent.none", InstabugInvocationEvent.NONE);
