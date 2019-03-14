@@ -218,4 +218,13 @@ class InstabugFlutter {
     final List<dynamic> params = <dynamic>[invocationMode.toString(), invocationOptionsStrings];
     await _channel.invokeMethod<Object>('invokeWithMode:options:',params);
   }
+
+  /// Logs a user event with [name] that happens through the lifecycle of the application.
+  /// Logged user events are going to be sent with each report, as well as at the end of a session.
+  static void logUserEventWithName(String name) async {
+    final List<String> params = <String>[name];
+    await _channel.invokeMethod<Object>('logUserEventWithName:', params);
+  }
 }
+
+

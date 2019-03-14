@@ -250,6 +250,16 @@
     [IBGBugReporting showWithReportType:invocation options:invocationOptions];
 }
 
+ /**
+  * Logs a user event that happens through the lifecycle of the application.
+  * Logged user events are going to be sent with each report, as well as at the end of a session.
+  *
+  * @param name Event name.
+  */
++ (void) logUserEventWithName:(NSString *) name {
+    [Instabug logUserEventWithName:name];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),

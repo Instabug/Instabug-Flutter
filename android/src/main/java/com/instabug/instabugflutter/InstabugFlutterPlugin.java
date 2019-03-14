@@ -299,4 +299,14 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         int invMode = ArgsRegistry.getDeserializedValue(invocationMode, Integer.class);
         BugReporting.show(invMode, options);
      }
+
+    /**
+     * Logs a user event that happens through the lifecycle of the application.
+     * Logged user events are going to be sent with each report, as well as at the end of a session.
+     *
+     * @param name Event name.
+     */
+    public void logUserEventWithName(String name) {
+        Instabug.logUserEvent(name);
+      }
 }
