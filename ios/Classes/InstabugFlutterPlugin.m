@@ -49,8 +49,8 @@
 
 /**
   * starts the SDK
-  * @param {token} token The token that identifies the app
-  * @param {invocationEvents} invocationEvents The events that invoke
+  * @param token token The token that identifies the app
+  * @param invocationEvents invocationEvents The events that invoke
   * the SDK's UI.
   */
 + (void)startWithToken:(NSString *)token invocationEvents:(NSArray*)invocationEventsArray {
@@ -217,6 +217,23 @@
  */
 + (void) removeUserAttributeForKey:(NSString*) key {
     [Instabug removeUserAttributeForKey:key];
+}
+
+/**
+ * Returns the user attribute associated with a given key.
+ * @param key The key for which to return the corresponding value.
+ * @return The value associated with aKey, or nil if no value is associated with aKey.
+ */
++ (NSString*) getUserAttributeForKey:(NSString*) key {
+     return [Instabug userAttributeForKey:key];
+}
+
+/**
+ * Returns all user attributes.
+ * @return A new dictionary containing all the currently set user attributes, or an empty dictionary if no user attributes have been set.
+ */
++ (NSDictionary*) getUserAttributes {
+    return Instabug.userAttributes;
 }
 
 /**

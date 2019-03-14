@@ -199,6 +199,18 @@ class InstabugFlutter {
     await _channel.invokeMethod<Object>('removeUserAttributeForKey:', params);
   }
 
+  /// Returns the user attribute associated with a given [key].
+  static Future<String> getUserAttributeForKey(String key) async {
+    final List<dynamic> params = <dynamic>[key];
+    return await _channel.invokeMethod<Object>('getUserAttributeForKey:', params);
+  }
+
+  /// A new Map containing all the currently set user attributes, or an empty Map if no user attributes have been set.
+  static Future<Map<String, String>> getUserAttributes() async {
+    final Object userAttributes = await _channel.invokeMethod<Object>('getUserAttributes');
+    return userAttributes != null ? Map<String, String>.from(userAttributes) : <String, String>{};
+  }
+  
   /// invoke sdk manually
   static void show() async {
     await _channel.invokeMethod<Object>('show');

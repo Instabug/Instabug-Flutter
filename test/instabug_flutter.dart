@@ -8,10 +8,12 @@ void main() {
 
   final List<MethodCall> log = <MethodCall>[];
   final appToken = '068ba9a8c3615035e163dc5f829c73be';
-  final invocationEvents = [InvocationEvent.floatingButton];
+  final List<InvocationEvent> invocationEvents = <InvocationEvent>[InvocationEvent.floatingButton];
   final email = "s@nta.com";
   final name = "santa";
   String message = "Test Message";
+  const String userAttribute = '19';
+  const Map<String, String> userAttributePair = <String, String>{'gender': 'female'};
 
   setUpAll(() async {
     MethodChannel('instabug_flutter')
@@ -19,7 +21,11 @@ void main() {
       log.add(methodCall);
       switch (methodCall.method) {
         case 'getTags':
-          return ['tag1', 'tag2']; 
+          return <String>['tag1', 'tag2']; 
+        case 'getUserAttributeForKey:':
+          return userAttribute;
+        case 'getUserAttributes':
+          return userAttributePair;
         default:
           return null;
       }
@@ -123,7 +129,8 @@ test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.clearAllLogs();
     expect(log, <Matcher>[
       isMethodCall('clearAllLogs',
-        arguments: null)
+        arguments: null
+      )
     ]);
   });
 
@@ -211,6 +218,27 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('test getUserAttributeForKey should be called with a string argument and return a string', () async {
+    const String key = 'Age';
+    final String value = await InstabugFlutter.getUserAttributeForKey(key);
+    expect(log, <Matcher>[
+      isMethodCall('getUserAttributeForKey:',
+        arguments: <dynamic>[key]
+      )
+    ]);
+    expect(value, userAttribute);
+  });
+
+  test('test getuserAttributes should be called with no arguments and returns a Map', () async {
+    final Map<String, String> result = await InstabugFlutter.getUserAttributes();
+    expect(log, <Matcher>[
+      isMethodCall('getUserAttributes',
+        arguments: null
+      )
+    ]);
+    expect(result, userAttributePair);
+  });
+  
   test('show Test', () async {
     InstabugFlutter.show();
     expect(log, <Matcher>[

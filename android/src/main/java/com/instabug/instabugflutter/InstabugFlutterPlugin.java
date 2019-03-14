@@ -60,8 +60,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             if (callMethod.equals(method.getName())) {
                 isImplemented = true;
                 ArrayList<Object> tempParamValues = new ArrayList<>();
-                Log.e("Method Name", callMethod);
-                Log.e("Method Args", call.arguments().toString());
                 if (call.arguments != null) {
                     tempParamValues = (ArrayList<Object>) call.arguments;
                 }
@@ -265,6 +263,23 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     public void removeUserAttributeForKey(String key) {
         Instabug.removeUserAttribute(key);
     }
+
+    /**
+     * Returns the user attribute associated with a given key.
+     * @param key The key for which to return the corresponding value.
+     * @return The value associated with aKey, or null if no value is associated with aKey.
+     */
+   public String getUserAttributeForKey(String key) {
+       return Instabug.getUserAttribute(key);
+   }
+
+    /**
+     * Returns all user attributes.
+     * @return A new HashMap containing all the currently set user attributes, or an empty HashMap if no user attributes have been set.
+     */
+   public HashMap<String, String> getUserAttributes() {
+       return Instabug.getAllUserAttributes();
+   }
 
     /**
      * invoke sdk manually

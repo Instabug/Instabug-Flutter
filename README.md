@@ -36,10 +36,10 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |`InstabugFlutter.resetTags()`| `Instabug.resetTags()`<br>`+ [Instabug resetTags]`                                                                           |
 |`InstabugFlutter.getTags()`| `Instabug.getTags()`<br>`+ [Instabug getTags]`                                                                               |
 |            | `Instabug.setCustomTextPlaceHolders(InstabugCustomTextPlaceHolder placeholder)`<br>`+ [Instabug setValue:forStringWithKey:]` |
-|            | `Instabug.setUserAttribute(String key, String value)`<br>`+ [Instabug setUserAttribute:withKey:]`                            |
-|`InstabugFlutter.setUserAttributeWithKey(String value, String key)`| `Instabug.getUserAttribute(String key)`<br>`+ [Instabug userAttributeForKey:]`                                               |
+|`InstabugFlutter.setUserAttributeWithKey(String value, String key)`| `Instabug.setUserAttribute(String key, String value)`<br>`+ [Instabug setUserAttribute:withKey:]`                            |
+|`Instabugflutter.getUserAttributeForKey(Sring Key)`| `Instabug.getUserAttribute(String key)`<br>`+ [Instabug userAttributeForKey:]`                                               |
 |`InstabugFlutter.removeUserAttributeForKey(String key)`| `Instabug.removeUserAttribute(String key)`<br>`+ [Instabug removeUserAttributeForKey:]`                                      |
-|            | `Instabug.getAllUserAttributes()`<br>`+ [Instabug userAttributes:]`                                                          |
+|`InstabugFlutter.getUserAttributes()`| `Instabug.getAllUserAttributes()`<br>`+ [Instabug userAttributes:]`                                                          |
 |`logUserEventWithName(String name)`| `Instabug.logUserEvent(String name)`<br>`+ [Instabug logUserEventWithName:]`                                                 |
 |`show()`| `Instabug.show()`<br>`+ [Instabug show]`                                                                       |
 |`invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions])`| `BugReporting.invoke(InvocationMode mode, @InvocationOption int... options)`<br>`+ [IBGBugReporting invokeWithMode:options:]`  |
