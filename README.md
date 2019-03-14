@@ -61,13 +61,14 @@ Creating a Flutter app on the Instabug dashboard isn't possible yet. Create a Re
 1. Add Instabug to your `pubspec.yaml` file.
 
 ```yaml
-instabug_flutter: ^0.0.1-alpha.1
+dependencies:
+    instabug_flutter:
 ```
 
-2. Get the newly added dependency.
+2. Install the package by running the following command.
 
 ```bash
-pub get
+flutter packages get
 ```
 
 ### Using Instabug
