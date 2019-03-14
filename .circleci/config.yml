@@ -1,13 +1,55 @@
 version: 2
 
 jobs:
-  build:
+  flutter:
     docker:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - run: bundle check || sudo bundle install        
+      - run: bundle check || sudo bundle install
       - run: bundle exec danger
       - run: flutter doctor
       - run: pub get
       - run: dartanalyzer --options analysis_options.yaml lib
+
+  android:
+    working_directory: ~/Instabug-Flutter/android
+
+    docker:
+      - image: circleci/android:api-28
+
+    environment:
+      JVM_OPTS: -Xmx3200m
+      ARTIFACTS_DIRECTORY: ~/Instabug-Flutter/artifacts
+
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Downloading Android dependencies...
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Creating artifacts directory
+          command: mkdir $ARTIFACTS_DIRECTORY
+      - run:
+          name: Create artifacts sub-directory
+          command: sudo mkdir -p $ARTIFACTS_DIRECTORY/reports/ && sudo mkdir -p $ARTIFACTS_DIRECTORY/reports/test_results
+      - run:
+          name: Executing Android unit tests...
+          command: ./gradlew clean && ./gradlew build && ./gradlew check && ./gradlew test
+      - store_artifacts:
+          path: ARTIFACTS_DIRECTORY/reports/
+      - store_test_results:
+          path: ARTIFACTS_DIRECTORY/reports/test_results
+
+workflows:
+  version: 2
+  instabug_workflow:
+    jobs:
+      - flutter
+      - android
