@@ -18,42 +18,8 @@ void main() {
         .setMockMethodCallHandler((MethodCall methodCall) async {
       log.add(methodCall);
       switch (methodCall.method) {
-        case 'startWithToken:invocationEvents:':
-          return null;
-        case 'showWelcomeMessageWithMode:':
-          return null;
-        case 'identifyUserWithEmail:':
-          return null;
-        case 'logOut':
-          return null;
-        case 'setLocale:':
-          return null;
-        case 'logVerbose:':
-          return null;
-        case 'logDebug:':
-          return null; 
-        case 'logInfo:':
-          return null; 
-        case 'clearAllLogs:':
-          return null;
-        case 'logError:':
-          return null;
-        case 'logWarn:':
-          return null;
-        case 'setColorTheme:':
-          return null; 
         case 'getTags':
           return ['tag1', 'tag2']; 
-        case 'setUserAttribute:withKey:':
-          return null;  
-        case 'removeUserAttributeForKey:':
-          return null;
-        case 'show':
-          return null;
-        case 'invokeWithMode:options:':
-          return null;
-        case 'LogUserEventWithName:':
-          return null;
         default:
           return null;
       }
