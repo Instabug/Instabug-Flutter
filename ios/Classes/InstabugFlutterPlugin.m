@@ -237,6 +237,13 @@
     return Instabug.userAttributes;
 }
 
+/**
+ * invoke sdk manually
+ */
++ (void) show {
+    [Instabug show];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),

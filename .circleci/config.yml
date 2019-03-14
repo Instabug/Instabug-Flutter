@@ -11,4 +11,4 @@ jobs:
       - run: flutter doctor
       - run: pub get
       - run: flutter test
-      - run: dartanalyzer --options analysis_options.yaml lib
+      - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib

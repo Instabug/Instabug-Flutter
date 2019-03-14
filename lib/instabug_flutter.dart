@@ -27,10 +27,14 @@ enum Locale {
   Korean,
   Polish,
   PortugueseBrazil,
+  PortuguesePortugal,
   Russian,
   Spanish,
   Swedish,
-  Turkish
+  Turkish,
+  Indonesian,
+  Slovak,
+  Norwegian
 }
 
 enum ColorTheme { dark, light }
@@ -197,5 +201,10 @@ class InstabugFlutter {
   static Future<Map<String, String>> getUserAttributes() async {
     final Object userAttributes = await _channel.invokeMethod<Object>('getUserAttributes');
     return userAttributes != null ? Map<String, String>.from(userAttributes) : <String, String>{};
+  }
+  
+  /// invoke sdk manually
+  static void show() async {
+    await _channel.invokeMethod<Object>('show');
   }
 }
