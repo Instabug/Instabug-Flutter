@@ -38,6 +38,7 @@ class _MyAppState extends State<MyApp> {
       InstabugFlutter.logWarn("Test Warn Message from Flutter!");
       InstabugFlutter.logOut();
       InstabugFlutter.setLocale(Locale.German);
+      //InstabugFlutter.setLocale(Locale.German);
       InstabugFlutter.setColorTheme(ColorTheme.dark);
       InstabugFlutter.appendTags(['tag1', 'tag2']);
       InstabugFlutter.setUserAttributeWithKey('19', 'Age');
@@ -65,6 +66,10 @@ class _MyAppState extends State<MyApp> {
     InstabugFlutter.resetTags();
   }
 
+  void show() {
+    InstabugFlutter.show();
+  }
+
   void getTags() async {
     final List<String> tags = await InstabugFlutter.getTags();
     print(tags.toString());
@@ -82,6 +87,10 @@ class _MyAppState extends State<MyApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('Running on: $_platformVersion\n'),
+            RaisedButton(
+                onPressed: show,
+                child: Text('show'),
+                color: Colors.lightBlue),
             RaisedButton(
                 onPressed: resetTags,
                 child: Text('reset tags'),

@@ -45,7 +45,7 @@ void main() {
         case 'setColorTheme:':
           return null; 
         case 'getTags':
-          return ['tag1', 'tag2']; 
+          return <String>['tag1', 'tag2']; 
         case 'setUserAttribute:withKey:':
           return null;  
         case 'removeUserAttributeForKey:':
@@ -54,6 +54,8 @@ void main() {
           return userAttribute;
         case 'getUserAttributes':
           return userAttributePair;
+        case 'show':
+          return null;
         default:
           return null;
       }
@@ -289,4 +291,15 @@ test('startWithToken:invocationEvents: Test', () async {
     expect(result, userAttributePair);
   });
   
+  test('show Test', () async {
+    InstabugFlutter.show();
+    expect(log, <Matcher>[
+      isMethodCall('show',
+        arguments: null,
+      )
+    ]);
+  });
+
 }
+
+
