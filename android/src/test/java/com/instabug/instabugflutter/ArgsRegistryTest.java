@@ -1,5 +1,7 @@
 package com.instabug.instabugflutter;
 
+import com.instabug.bug.BugReporting;
+import com.instabug.bug.invocation.Option;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
@@ -54,6 +56,8 @@ public class ArgsRegistryTest {
         assertAllWelcomeMessageStatesArePresent(args);
         assertAllSupportedLocalesArePresent(args);
         assertAllColorThemesArePresent(args);
+        assertAllInvocationModesArePresent(args);
+        assertAllInvocationOptionsArePresent(args);
     }
 
     @Test
@@ -138,6 +142,18 @@ public class ArgsRegistryTest {
     private void assertAllColorThemesArePresent(Map<String, Object> map) {
         Assert.assertTrue(map.containsValue(InstabugColorTheme.InstabugColorThemeDark));
         Assert.assertTrue(map.containsValue(InstabugColorTheme.InstabugColorThemeLight));
+    }
+
+    private void assertAllInvocationModesArePresent(Map<String, Object> map) {
+        Assert.assertTrue(map.containsValue(BugReporting.ReportType.BUG));
+        Assert.assertTrue(map.containsValue(BugReporting.ReportType.FEEDBACK));
+    }
+
+    private void assertAllInvocationOptionsArePresent(Map<String, Object> map) {
+        Assert.assertTrue(map.containsValue(Option.COMMENT_FIELD_REQUIRED));
+        Assert.assertTrue(map.containsValue(Option.DISABLE_POST_SENDING_DIALOG));
+        Assert.assertTrue(map.containsValue(Option.EMAIL_FIELD_HIDDEN));
+        Assert.assertTrue(map.containsValue(Option.EMAIL_FIELD_OPTIONAL));
     }
 
     private List<Locale> getCurrentlySupportLanguagesByTheSDK() {

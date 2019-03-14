@@ -3,7 +3,12 @@ package com.instabug.instabugflutter;
 import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
+import com.instabug.bug.BugReporting;
+import com.instabug.bug.invocation.Option;
+import com.instabug.chat.Chats;
+import com.instabug.chat.Replies;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.invocation.InstabugInvocationEvent;
@@ -14,6 +19,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -48,21 +54,16 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         boolean isImplemented = false;
         String callMethod = call.method;
         if (callMethod.contains(":")) {
-            callMethod = call.method.substring(0, call.method.indexOf(":"));
+            callMethod = call.method.substring( 0, call.method.indexOf(":"));
         }
         for (Method method : methods) {
             if (callMethod.equals(method.getName())) {
                 isImplemented = true;
                 ArrayList<Object> tempParamValues = new ArrayList<>();
-                HashMap<String, String> map = new HashMap<>();
+                Log.e("Method Name", callMethod);
+                Log.e("Method Args", call.arguments().toString());
                 if (call.arguments != null) {
-                    map = (HashMap<String, String>) call.arguments;
-                }
-                Iterator iterator = map.entrySet().iterator();
-                while (iterator.hasNext()) {
-                    Map.Entry pair = (Map.Entry) iterator.next();
-                    tempParamValues.add(pair.getValue());
-                    iterator.remove();
+                    tempParamValues = (ArrayList<Object>) call.arguments;
                 }
                 Object[] paramValues = tempParamValues.toArray();
                 try {
@@ -277,4 +278,25 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             }
         });
     }
+
+     /**
+     * invoke sdk manually with desire invocation mode
+     *
+     * @param invocationMode the invocation mode
+     * @param invocationOptions the array of invocation options
+     */
+     public void invokeWithMode(String invocationMode, List<String> invocationOptions) {
+        switch (invocationMode) {
+            case "InvocationMode.CHATS" : Chats.show();
+                return;
+            case "InvocationMode.REPLIES" : Replies.show();
+                return;
+        }
+        int[] options = new int[invocationOptions.size()];
+        for (int i = 0; i < invocationOptions.size(); i++) {
+           options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i), Integer.class);
+        }
+        int invMode = ArgsRegistry.getDeserializedValue(invocationMode, Integer.class);
+        BugReporting.show(invMode, options);
+     }
 }

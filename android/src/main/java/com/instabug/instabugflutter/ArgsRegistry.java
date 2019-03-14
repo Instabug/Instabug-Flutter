@@ -3,6 +3,8 @@ package com.instabug.instabugflutter;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
+import com.instabug.bug.BugReporting;
+import com.instabug.bug.invocation.Option;
 import com.instabug.library.InstabugColorTheme;
 
 import java.util.HashMap;
@@ -51,6 +53,8 @@ final class ArgsRegistry {
         registerWelcomeMessageArgs(ARGS);
         registerColorThemeArgs(ARGS);
         registerLocaleArgs(ARGS);
+        registerInvocationModeArgs(ARGS);
+        registerInvocationOptionsArgs(ARGS);
     }
 
     /**
@@ -115,6 +119,20 @@ final class ArgsRegistry {
     static void registerColorThemeArgs(Map<String, Object> args) {
         args.put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
         args.put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
+    }
+
+    @VisibleForTesting
+    static void registerInvocationModeArgs(Map<String, Object> args) {
+        args.put("InvocationMode.BUG", BugReporting.ReportType.BUG);
+        args.put("InvocationMode.FEEDBACK", BugReporting.ReportType.FEEDBACK);
+    }
+
+    @VisibleForTesting
+    static void registerInvocationOptionsArgs(Map<String, Object> args) {
+        args.put("InvocationOption.COMMENT_FIELD_REQUIRED", Option.COMMENT_FIELD_REQUIRED);
+        args.put("InvocationOption.DISABLE_POST_SENDING_DIALOG", Option.DISABLE_POST_SENDING_DIALOG);
+        args.put("InvocationOption.EMAIL_FIELD_HIDDEN", Option.EMAIL_FIELD_HIDDEN);
+        args.put("InvocationOption.EMAIL_FIELD_OPTIONAL", Option.EMAIL_FIELD_OPTIONAL);
     }
 
     @VisibleForTesting

@@ -26,12 +26,11 @@
          * Use indices 2 and greater for the arguments normally passed in a message.
          */
         NSInteger index = 2;
-        NSDictionary *argumentsDictionary = call.arguments;
-        for (id key in argumentsDictionary) {
-          NSObject *arg = [argumentsDictionary objectForKey:key];
-          [inv setArgument:&(arg) atIndex:index];
+        NSArray* argumentsArray = call.arguments;
+        for (NSObject * argument in argumentsArray) {
+          [inv setArgument:&(argument) atIndex:index];
           index++;
-        }        
+        }      
         [inv invoke];
           NSMethodSignature *signature = [inv methodSignature];
           const char *type = [signature methodReturnType];
@@ -227,6 +226,30 @@
     [Instabug show];
 }
 
+/**
+  * invoke sdk manually with desire invocation mode
+  *
+  * @param invocationMode the invocation mode
+  * @param invocationOptions the array of invocation options
+  */
++ (void) invokeWithMode:(NSString *)invocationMode options:(NSArray*)invocationOptionsArray {
+    if ([invocationMode isEqualToString:@"InvocationMode.CHATS"]) {
+         [IBGChats show];
+         return;
+    }
+     if ([invocationMode isEqualToString:@"InvocationMode.REPLIES"]) {
+        [IBGReplies show];
+        return;
+    }
+    NSDictionary *constants = [self constants];
+    NSInteger invocationOptions = 0;
+    for (NSString * invocationOption in invocationOptionsArray) {
+        invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
+    }
+    NSInteger invocation = ((NSNumber *) constants[invocationMode]).integerValue;
+    [IBGBugReporting showWithReportType:invocation options:invocationOptions];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
@@ -241,6 +264,14 @@
       
       @"ColorTheme.dark": @(IBGColorThemeDark),
       @"ColorTheme.light": @(IBGColorThemeLight),
+
+      @"InvocationMode.BUG": @(IBGBugReportingReportTypeBug),
+      @"InvocationMode.FEEDBACK": @(IBGBugReportingReportTypeFeedback),
+
+      @"InvocationOption.COMMENT_FIELD_REQUIRED": @(IBGBugReportingOptionCommentFieldRequired),
+      @"InvocationOption.DISABLE_POST_SENDING_DIALOG": @(IBGBugReportingOptionDisablePostSendingDialog),
+      @"InvocationOption.EMAIL_FIELD_HIDDEN": @(IBGBugReportingOptionEmailFieldHidden),
+      @"InvocationOption.EMAIL_FIELD_OPTIONAL": @(IBGBugReportingOptionEmailFieldOptional),
 
       @"Locale.Arabic": @(IBGLocaleArabic),
       @"Locale.ChineseSimplified": @(IBGLocaleChineseSimplified),

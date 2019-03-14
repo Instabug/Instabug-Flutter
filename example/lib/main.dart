@@ -66,6 +66,10 @@ class _MyAppState extends State<MyApp> {
     InstabugFlutter.show();
   }
 
+  void invokeWithMode() {
+    InstabugFlutter.invokeWithMode(InvocationMode.BUG, [InvocationOption.EMAIL_FIELD_HIDDEN]);
+  }
+
   void getTags() async {
     final List<String> tags = await InstabugFlutter.getTags();
     print(tags.toString());
@@ -86,6 +90,10 @@ class _MyAppState extends State<MyApp> {
             RaisedButton(
                 onPressed: show,
                 child: Text('show'),
+                color: Colors.lightBlue),
+            RaisedButton(
+                onPressed: invokeWithMode,
+                child: Text('invokeWithMode'),
                 color: Colors.lightBlue),
             RaisedButton(
                 onPressed: resetTags,
