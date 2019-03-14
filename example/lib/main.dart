@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void invokeWithMode() {
-    InstabugFlutter.invokeWithMode(InvocationMode.BUG, [InvocationOption.COMMENT_FIELD_REQUIRED]);
+    InstabugFlutter.invokeWithMode(InvocationMode.BUG, [InvocationOption.EMAIL_FIELD_HIDDEN]);
   }
 
   void getTags() async {
