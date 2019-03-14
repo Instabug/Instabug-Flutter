@@ -40,9 +40,9 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 |`InstabugFlutter.setUserAttributeWithKey(String value, String key)`| `Instabug.getUserAttribute(String key)`<br>`+ [Instabug userAttributeForKey:]`                                               |
 |`InstabugFlutter.removeUserAttributeForKey(String key)`| `Instabug.removeUserAttribute(String key)`<br>`+ [Instabug removeUserAttributeForKey:]`                                      |
 |            | `Instabug.getAllUserAttributes()`<br>`+ [Instabug userAttributes:]`                                                          |
-|`ogUserEventWithName(String name)`| `Instabug.logUserEvent(String name)`<br>`+ [Instabug logUserEventWithName:]`                                                 |
+|`logUserEventWithName(String name)`| `Instabug.logUserEvent(String name)`<br>`+ [Instabug logUserEventWithName:]`                                                 |
 |`show()`| `Instabug.show()`<br>`+ [Instabug show]`                                                                       |
-|            | `BugReporting.invoke(InvocationMode mode, @InvocationOption int... options)`<br>`+ [IBGBugReporting invokeWithMode:options:]`  |
+|`invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions])`| `BugReporting.invoke(InvocationMode mode, @InvocationOption int... options)`<br>`+ [IBGBugReporting invokeWithMode:options:]`  |
 |`logDebug(String message)`| `InstabugLog.d(String message)`<br>`+ [IBGLog logDebug:]`                                                                    |
 |`logVerbose(String message)`| `InstabugLog.v(String message)`<br>`+ [IBGLog logVerbose:]`                                                                  |
 |`logInfo(String message)`| `InstabugLog.i(String message)`<br>`+ [IBGLog logInfo:]`                                                                     |

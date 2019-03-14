@@ -50,6 +50,8 @@ void main() {
           return null;
         case 'show':
           return null;
+        case 'invokeWithMode:options:':
+          return null;
         case 'LogUserEventWithName:':
           return null;
         default:
@@ -64,47 +66,40 @@ void main() {
 
 test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.start(appToken, invocationEvents);
+    final List<dynamic> args = <dynamic>[appToken, <String>[InvocationEvent.floatingButton.toString()]];
     expect(log, <Matcher>[
       isMethodCall('startWithToken:invocationEvents:',
-        arguments: <String, dynamic>{
-          'token': appToken,
-          'invocationEvents': [InvocationEvent.floatingButton.toString()]
-        },
+        arguments: args,
       )
     ]);
   });
   
   test('showWelcomeMessageWithMode: Test', () async {
     InstabugFlutter.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
+    final List<dynamic> args = <dynamic>[WelcomeMessageMode.beta.toString()];
     expect(log, <Matcher>[
       isMethodCall('showWelcomeMessageWithMode:',
-        arguments: <String, dynamic>{
-          'welcomeMessageMode': WelcomeMessageMode.beta.toString()
-        },
+        arguments: args,
       )
     ]);
   });
 
   test('identifyUserWithEmail:name: Test', () async {
     InstabugFlutter.identifyUserWithEmail(email, name);
+    final List<dynamic> args = <dynamic>[email, name];
     expect(log, <Matcher>[
       isMethodCall('identifyUserWithEmail:name:',
-        arguments: <String, dynamic>{
-          'email': email,
-          'name': name
-        },
+        arguments: args,
       )
     ]);
   });
   
   test('identifyUserWithEmail:name: Test Optional Parameter', () async {
     InstabugFlutter.identifyUserWithEmail(email);
+    final List<dynamic> args = <dynamic>[email, null];
     expect(log, <Matcher>[
       isMethodCall('identifyUserWithEmail:name:',
-        arguments: <String, dynamic>{
-          'email': email,
-          'name': null
-        },
+        arguments:args,
       )
     ]);
   });
@@ -113,19 +108,16 @@ test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.logOut();
     expect(log, <Matcher>[
       isMethodCall('logOut',
-        arguments: <String, dynamic>{
-        },
-      )
+        arguments: null)
     ]);
   });
   
   test('setLocale:', () async {
     InstabugFlutter.setLocale(Locale.German);
+    final List<dynamic> args = <dynamic>[Locale.German.toString()];
     expect(log, <Matcher>[
       isMethodCall('setLocale:',
-        arguments: <String, dynamic>{
-            'locale': Locale.German.toString()
-        },
+        arguments: args,
       )
     ]);
   });
@@ -133,33 +125,30 @@ test('startWithToken:invocationEvents: Test', () async {
 
   test('logVerbose: Test', () async {
     InstabugFlutter.logVerbose(message);
+    final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logVerbose:',
-        arguments: <String, dynamic>{
-          'message': message
-        },
+        arguments: args,
       )
     ]);
   });
   
   test('logDebug: Test', () async {
     InstabugFlutter.logDebug(message);
+    final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logDebug:',
-        arguments: <String, dynamic>{
-          'message': message
-        },
+        arguments: args,
       )
     ]);
   });
   
   test('logInfo: Test', () async {
     InstabugFlutter.logInfo(message);
+    final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logInfo:',
-        arguments: <String, dynamic>{
-          'message': message
-        },
+        arguments: args,
       )
     ]);
   });
@@ -168,29 +157,26 @@ test('startWithToken:invocationEvents: Test', () async {
     InstabugFlutter.clearAllLogs();
     expect(log, <Matcher>[
       isMethodCall('clearAllLogs',
-        arguments: null,
-      )
+        arguments: null)
     ]);
   });
 
   test('logError: Test', () async {
     InstabugFlutter.logError(message);
+    final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logError:',
-        arguments: <String, dynamic>{
-          'message': message
-            },
+        arguments: args,
       )
     ]);
   });
   
   test('logWarn: Test', () async {
     InstabugFlutter.logWarn(message);
+    final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logWarn:',
-        arguments: <String, dynamic>{
-          'message': message
-          },
+        arguments: args,
       )
     ]);
   });
@@ -198,11 +184,10 @@ test('startWithToken:invocationEvents: Test', () async {
   test('test setColorTheme should be called with argument colorTheme', () async {
     const ColorTheme colorTheme = ColorTheme.dark;
     InstabugFlutter.setColorTheme(colorTheme);
+    final List<dynamic> args = <dynamic>[colorTheme.toString()];
     expect(log, <Matcher>[
       isMethodCall('setColorTheme:',
-        arguments: <String, dynamic>{
-          'colorTheme': colorTheme.toString()
-        },
+        arguments: args,
       )
     ]);
   });
@@ -210,11 +195,10 @@ test('startWithToken:invocationEvents: Test', () async {
   test('test appendTags should be called with argument List of strings', () async {
     const List<String> tags = ['tag1', 'tag2'];
     InstabugFlutter.appendTags(tags);
+    final List<dynamic> args = <dynamic>[tags];
     expect(log, <Matcher>[
       isMethodCall('appendTags:',
-        arguments: <String, dynamic>{
-          'tags': tags
-        },
+        arguments: args,
       )
     ]);
   });
@@ -242,12 +226,10 @@ test('startWithToken:invocationEvents: Test', () async {
     const String value = '19';
     const String key = 'Age';
     InstabugFlutter.setUserAttributeWithKey(value, key);
+    final List<dynamic> args = <dynamic>[value, key];
     expect(log, <Matcher>[
       isMethodCall('setUserAttribute:withKey:',
-        arguments: <String, dynamic>{
-          'value': value,
-          'key': key
-        },
+        arguments: args,
       )
     ]);
   });
@@ -255,11 +237,10 @@ test('startWithToken:invocationEvents: Test', () async {
   test('test removeUserAttributeForKey should be called with a string argument', () async {
     const String key = 'Age';
     InstabugFlutter.removeUserAttributeForKey(key);
+    final List<dynamic> args = <dynamic>[key];
     expect(log, <Matcher>[
       isMethodCall('removeUserAttributeForKey:',
-        arguments: <String, dynamic>{
-          'key': key
-        },
+        arguments: args,
       )
     ]);
   });
@@ -273,10 +254,20 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  
+  test('invokeWithMode:options: Test', () async {
+    InstabugFlutter.invokeWithMode(InvocationMode.BUG, [InvocationOption.COMMENT_FIELD_REQUIRED]);
+    final List<dynamic> args = <dynamic>[InvocationMode.BUG.toString(), <String>[InvocationOption.COMMENT_FIELD_REQUIRED.toString()]];
+    expect(log, <Matcher>[
+      isMethodCall('invokeWithMode:options:',
+        arguments: args,
+      )
+    ]);
+  });
+
   test('logUserEventWithName: Test', () async {
     InstabugFlutter.logUserEventWithName(name);
-    final List<dynamic> args = new List<dynamic>();
-    args.add(name);
+    final List<dynamic> args = <dynamic>[name];
     expect(log, <Matcher>[
       isMethodCall('logUserEventWithName:',
         arguments: args,
