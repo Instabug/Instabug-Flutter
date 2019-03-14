@@ -6,6 +6,7 @@ import android.support.annotation.VisibleForTesting;
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
 import com.instabug.library.InstabugColorTheme;
+import com.instabug.library.InstabugCustomTextPlaceHolder;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -55,6 +56,7 @@ final class ArgsRegistry {
         registerLocaleArgs(ARGS);
         registerInvocationModeArgs(ARGS);
         registerInvocationOptionsArgs(ARGS);
+        registerCustomTextPlaceHolderKeysArgs(ARGS);
     }
 
     /**
@@ -159,5 +161,41 @@ final class ArgsRegistry {
         args.put("Locale.Polish", new Locale(POLISH.getCode(), POLISH.getCountry()));
         args.put("Locale.Slovak", new Locale(SLOVAK.getCode(), SLOVAK.getCountry()));
         args.put("Locale.Czech", new Locale(CZECH.getCode(), CZECH.getCountry()));
+    }
+
+    @VisibleForTesting
+    static void registerCustomTextPlaceHolderKeysArgs(Map<String, Object> args) {
+        args.put("IBGCustomTextPlaceHolderKey.SHAKE_HINT", InstabugCustomTextPlaceHolder.Key.SHAKE_HINT);
+        args.put("IBGCustomTextPlaceHolderKey.SWIPE_HINT", InstabugCustomTextPlaceHolder.Key.SWIPE_HINT);
+        args.put("IBGCustomTextPlaceHolderKey.INVALID_EMAIL_MESSAGE", InstabugCustomTextPlaceHolder.Key.INVALID_EMAIL_MESSAGE);
+        args.put("IBGCustomTextPlaceHolderKey.INVALID_COMMENT_MESSAGE", InstabugCustomTextPlaceHolder.Key.INVALID_COMMENT_MESSAGE);
+        args.put("IBGCustomTextPlaceHolderKey.INVOCATION_HEADER", InstabugCustomTextPlaceHolder.Key.INVOCATION_HEADER);
+        args.put("IBGCustomTextPlaceHolderKey.START_CHATS", InstabugCustomTextPlaceHolder.Key.START_CHATS);
+        args.put("IBGCustomTextPlaceHolderKey.REPORT_BUG", InstabugCustomTextPlaceHolder.Key.REPORT_BUG);
+        args.put("IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK", InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK);
+        args.put("IBGCustomTextPlaceHolderKey.EMAIL_FIELD_HINT", InstabugCustomTextPlaceHolder.Key.EMAIL_FIELD_HINT);
+        args.put("IBGCustomTextPlaceHolderKey.COMMENT_FIELD_HINT_FOR_BUG_REPORT", InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_BUG_REPORT);
+        args.put("IBGCustomTextPlaceHolderKey.COMMENT_FIELD_HINT_FOR_FEEDBACK", InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_FEEDBACK);
+        args.put("IBGCustomTextPlaceHolderKey.ADD_VOICE_MESSAGE", InstabugCustomTextPlaceHolder.Key.ADD_VOICE_MESSAGE);
+        args.put("IBGCustomTextPlaceHolderKey.ADD_IMAGE_FROM_GALLERY", InstabugCustomTextPlaceHolder.Key.ADD_IMAGE_FROM_GALLERY);
+        args.put("IBGCustomTextPlaceHolderKey.ADD_EXTRA_SCREENSHOT", InstabugCustomTextPlaceHolder.Key.ADD_EXTRA_SCREENSHOT);
+        args.put("IBGCustomTextPlaceHolderKey.CONVERSATIONS_LIST_TITLE", InstabugCustomTextPlaceHolder.Key.CONVERSATIONS_LIST_TITLE);
+        args.put("IBGCustomTextPlaceHolderKey.AUDIO_RECORDING_PERMISSION_DENIED", InstabugCustomTextPlaceHolder.Key.AUDIO_RECORDING_PERMISSION_DENIED);
+        args.put("IBGCustomTextPlaceHolderKey.CONVERSATION_TEXT_FIELD_HINT", InstabugCustomTextPlaceHolder.Key.CONVERSATION_TEXT_FIELD_HINT);
+        args.put("IBGCustomTextPlaceHolderKey.BUG_REPORT_HEADER", InstabugCustomTextPlaceHolder.Key.BUG_REPORT_HEADER);
+        args.put("IBGCustomTextPlaceHolderKey.FEEDBACK_REPORT_HEADER", InstabugCustomTextPlaceHolder.Key.FEEDBACK_REPORT_HEADER);
+        args.put("IBGCustomTextPlaceHolderKey.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD", InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD);
+        args.put("IBGCustomTextPlaceHolderKey.VOICE_MESSAGE_RELEASE_TO_ATTACH", InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_RELEASE_TO_ATTACH);
+        args.put("IBGCustomTextPlaceHolderKey.REPORT_SUCCESSFULLY_SENT", InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);
+        args.put("IBGCustomTextPlaceHolderKey.SUCCESS_DIALOG_HEADER", InstabugCustomTextPlaceHolder.Key.SUCCESS_DIALOG_HEADER);
+        args.put("IBGCustomTextPlaceHolderKey.ADD_VIDEO", InstabugCustomTextPlaceHolder.Key.ADD_VIDEO);
+        args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE);
+        args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT);
+        args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE);
+        args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT);
+        args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE);
+        args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT);
+        args.put("IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_TITLE", InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_TITLE);
+        args.put("IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_CONTENT", InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_CONTENT);
     }
 }
