@@ -27,10 +27,14 @@ enum Locale {
   Korean,
   Polish,
   PortugueseBrazil,
+  PortuguesePortugal,
   Russian,
   Spanish,
   Swedish,
-  Turkish
+  Turkish,
+  Indonesian,
+  Slovak,
+  Norwegian
 }
 
 enum ColorTheme { dark, light }
