@@ -272,6 +272,13 @@ class InstabugFlutter {
     final List<String> params = <String>[name];
     await _channel.invokeMethod<Object>('logUserEventWithName:', params);
   }
+
+  /// Overrides any of the strings shown in the SDK with custom ones.
+  /// Allows you to customize a [value] shown to users in the SDK using a predefined [key].
+  static void setValueForStringWithKey(String value, IBGCustomTextPlaceHolderKey key) async {
+    final List<dynamic> params = <dynamic>[value, key.toString()];
+    await _channel.invokeMethod<Object>('setValue:forStringWithKey:', params); 
+  } 
 }
 
 
