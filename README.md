@@ -26,29 +26,29 @@ The table below contains a list of APIs we're planning to implement for our 1.0 
 
 | API Method | Native Equivalent (Android/iOS)                                                                                                                       |
 |------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| `start(String token, List<InvocationEvent> invocationEvents)` | `new Instabug.Builder(this, "APP_TOKEN").build()`<br>`+ [Instabug startWithToken:invocationEvents:]`                         |
-|`showWelcomeMessageWithMode(WelcomeMessageMode welcomeMessageMode)`| `Instabug.showWelcomeMessage(WelcomeMessage.State state)`<br>`+ [Instabug showWelcomeMessageWithMode:]`                      |
-|`identifyUserWithEmail(String email, [String name])`| `Instabug.identifyUser(String username, String email)`<br>`+ [Instabug identifyUserWithEmail:name:]`                         |
-|`logOut()`| `Instabug.logoutUser()`<br>`+ [Instabug logOut]`                                                                             |
-|`setLocale(Locale locale)`| `Instabug.setLocale(Locale locale)`<br>`+ [Instabug setLocale:]`                                                             |
-|`InstabugFlutter.setColorTheme(ColorTheme colorTheme)`|  `Instabug.setColorTheme(InstabugColorTheme theme)`<br>`+ [Instabug setColorTheme:]`                                         |
-|`InstabugFlutter.appendTags(List<String> tags)`| `Instabug.addTags(String... tags)`<br>`+ [Instabug appendTags:]`                                                             |
-|`InstabugFlutter.resetTags()`| `Instabug.resetTags()`<br>`+ [Instabug resetTags]`                                                                           |
-|`InstabugFlutter.getTags()`| `Instabug.getTags()`<br>`+ [Instabug getTags]`                                                                               |
-|            | `Instabug.setCustomTextPlaceHolders(InstabugCustomTextPlaceHolder placeholder)`<br>`+ [Instabug setValue:forStringWithKey:]` |
-|`InstabugFlutter.setUserAttributeWithKey(String value, String key)`| `Instabug.setUserAttribute(String key, String value)`<br>`+ [Instabug setUserAttribute:withKey:]`                            |
-|`Instabugflutter.getUserAttributeForKey(Sring Key)`| `Instabug.getUserAttribute(String key)`<br>`+ [Instabug userAttributeForKey:]`                                               |
-|`InstabugFlutter.removeUserAttributeForKey(String key)`| `Instabug.removeUserAttribute(String key)`<br>`+ [Instabug removeUserAttributeForKey:]`                                      |
-|`InstabugFlutter.getUserAttributes()`| `Instabug.getAllUserAttributes()`<br>`+ [Instabug userAttributes:]`                                                          |
-|`logUserEventWithName(String name)`| `Instabug.logUserEvent(String name)`<br>`+ [Instabug logUserEventWithName:]`                                                 |
-|`show()`| `Instabug.show()`<br>`+ [Instabug show]`                                                                       |
-|`invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions])`| `BugReporting.invoke(InvocationMode mode, @InvocationOption int... options)`<br>`+ [IBGBugReporting invokeWithMode:options:]`  |
-|`logDebug(String message)`| `InstabugLog.d(String message)`<br>`+ [IBGLog logDebug:]`                                                                    |
-|`logVerbose(String message)`| `InstabugLog.v(String message)`<br>`+ [IBGLog logVerbose:]`                                                                  |
-|`logInfo(String message)`| `InstabugLog.i(String message)`<br>`+ [IBGLog logInfo:]`                                                                     |
-|`logWarn(String message)`| `InstabugLog.w(String message)`<br>`+ [IBGLog logWarn:]`                                                                     |
-|`logError(String message)`| `InstabugLog.e(String message)`<br>`+ [IBGLog logError:]`                                                                    |
-|`clearAllLogs(String message)`| `Instabug.clearLogs()`<br>`+ [IBGLog clearAllLogs:]`                                                                         |
+| `Instabug.start(String token, List<InvocationEvent> invocationEvents)` | `new Instabug.Builder(this, "APP_TOKEN").build()`<br>`+ [Instabug startWithToken:invocationEvents:]`                         |
+|`Instabug.showWelcomeMessageWithMode(WelcomeMessageMode welcomeMessageMode)`| `Instabug.showWelcomeMessage(WelcomeMessage.State state)`<br>`+ [Instabug showWelcomeMessageWithMode:]`                      |
+|`Instabug.identifyUserWithEmail(String email, [String name])`| `Instabug.identifyUser(String username, String email)`<br>`+ [Instabug identifyUserWithEmail:name:]`                         |
+|`Instabug.logOut()`| `Instabug.logoutUser()`<br>`+ [Instabug logOut]`                                                                             |
+|`Instabug.setLocale(Locale locale)`| `Instabug.setLocale(Locale locale)`<br>`+ [Instabug setLocale:]`                                                             |
+|`Instabug.setColorTheme(ColorTheme colorTheme)`|  `Instabug.setColorTheme(InstabugColorTheme theme)`<br>`+ [Instabug setColorTheme:]`                                         |
+|`Instabug.appendTags(List<String> tags)`| `Instabug.addTags(String... tags)`<br>`+ [Instabug appendTags:]`                                                             |
+|`Instabug.resetTags()`| `Instabug.resetTags()`<br>`+ [Instabug resetTags]`                                                                           |
+|`Instabug.getTags()`| `Instabug.getTags()`<br>`+ [Instabug getTags]`                                                                               |
+|`Instabug.setStringForKey(String value, String key)`| `Instabug.setCustomTextPlaceHolders(InstabugCustomTextPlaceHolder placeholder)`<br>`+ [Instabug setValue:forStringWithKey:]` |
+|`Instabug.setUserAttributeWithKey(String value, String key)`| `Instabug.setUserAttribute(String key, String value)`<br>`+ [Instabug setUserAttribute:withKey:]`                            |
+|`Instabug.getUserAttributeForKey(Sring Key)`| `Instabug.getUserAttribute(String key)`<br>`+ [Instabug userAttributeForKey:]`                                               |
+|`Instabug.removeUserAttributeForKey(String key)`| `Instabug.removeUserAttribute(String key)`<br>`+ [Instabug removeUserAttributeForKey:]`                                      |
+|`Instabug.getUserAttributes()`| `Instabug.getAllUserAttributes()`<br>`+ [Instabug userAttributes:]`                                                          |
+|`Instabug.logUserEventWithName(String name)`| `Instabug.logUserEvent(String name)`<br>`+ [Instabug logUserEventWithName:]`                                                 |
+|`Instabug.show()`| `Instabug.show()`<br>`+ [Instabug show]`                                                                       |
+|`Instabug.invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions])`| `BugReporting.invoke(InvocationMode mode, @InvocationOption int... options)`<br>`+ [IBGBugReporting invokeWithMode:options:]`  |
+|`Instabug.logDebug(String message)`| `InstabugLog.d(String message)`<br>`+ [IBGLog logDebug:]`                                                                    |
+|`Instabug.logVerbose(String message)`| `InstabugLog.v(String message)`<br>`+ [IBGLog logVerbose:]`                                                                  |
+|`Instabug.logInfo(String message)`| `InstabugLog.i(String message)`<br>`+ [IBGLog logInfo:]`                                                                     |
+|`Instabug.logWarn(String message)`| `InstabugLog.w(String message)`<br>`+ [IBGLog logWarn:]`                                                                     |
+|`Instabug.logError(String message)`| `InstabugLog.e(String message)`<br>`+ [IBGLog logError:]`                                                                    |
+|`Instabug.clearAllLogs(String message)`| `Instabug.clearLogs()`<br>`+ [IBGLog clearAllLogs:]`                                                                         |
 
 ## Integration
 
