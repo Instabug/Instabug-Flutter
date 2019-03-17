@@ -1,14 +1,46 @@
 version: 2
 
 jobs:
-  build:
+  flutter:
     docker:
-      - image: cirrusci/flutter
+    - image: cirrusci/flutter
     steps:
-      - checkout
-      - run: bundle check || sudo bundle install        
-      - run: bundle exec danger
-      - run: flutter doctor
-      - run: pub get
-      - run: flutter test
-      - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
+    - checkout
+    - run: bundle check || sudo bundle install
+    - run: bundle exec danger
+    - run: flutter doctor
+    - run: pub get
+    - run: flutter test
+    - run: dartanalyzer --options analysis_options.yaml lib
+
+  android:
+    docker:
+    - image: circleci/android:api-28
+
+    environment:
+      JVM_OPTS: -Xmx3200m
+
+    steps:
+    - checkout
+    - run:
+        name: Generating Gradle wrapper files ⚙️...
+        command: cd ~/project/android && ./gradlew wrapper
+    - run:
+        name: Cleaning 🧹...
+        command: cd ~/project/android && ./gradlew clean
+    - run:
+        name: Building project 🏗...
+        command: cd ~/project/android && ./gradlew build
+    - run:
+        name: Checking against possible bugs 👀...
+        command: cd ~/project/android && ./gradlew check && ./gradlew assemble
+    - run:
+        name: Running unit tests 🥶...
+        command: cd ~/project/android && ./gradlew test
+
+workflows:
+  version: 2
+  instabug_workflow:
+    jobs:
+    - flutter
+    - android
