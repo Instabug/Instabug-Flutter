@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
-
 import 'package:flutter/services.dart';
 
 enum InvocationEvent {
@@ -134,7 +132,6 @@ class Instabug {
   /// Sets the default value of the user's email to nil and show email field and remove user name
   /// from all reports
   /// It also reset the chats on device and removes user attributes, user data and completed surveys.
-
   static void logOut() async {
     await _channel.invokeMethod<Object>('logOut');
   }

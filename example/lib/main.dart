@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io' show Platform;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 
@@ -26,16 +26,16 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       if (Platform.isIOS) {
-        Instabug.start('9582e6cfe34e2b8897f48cfa3b617adb', [InvocationEvent.floatingButton, InvocationEvent.shake]);
+        Instabug.start('9582e6cfe34e2b8897f48cfa3b617adb', <InvocationEvent>[InvocationEvent.floatingButton, InvocationEvent.shake]);
       }
       Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
-      Instabug.identifyUserWithEmail("aezz@instabug.com", "Aly Ezz");
-      Instabug.logInfo("Test Log Info Message from Flutter!");
-      Instabug.logDebug("Test Debug Message from Flutter!");
-      Instabug.logVerbose("Test Verbose Message from Flutter!");
+      Instabug.identifyUserWithEmail('aezz@instabug.com', 'Aly Ezz');
+      Instabug.logInfo('Test Log Info Message from Flutter!');
+      Instabug.logDebug('Test Debug Message from Flutter!');
+      Instabug.logVerbose('Test Verbose Message from Flutter!');
       Instabug.clearAllLogs();
-      Instabug.logError("Test Error Message from Flutter!");
-      Instabug.logWarn("Test Warn Message from Flutter!");
+      Instabug.logError('Test Error Message from Flutter!');
+      Instabug.logWarn('Test Warn Message from Flutter!');
       Instabug.logOut();
       Instabug.setLocale(Locale.German);
       Instabug.setColorTheme(ColorTheme.dark);
