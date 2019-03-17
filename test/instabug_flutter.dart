@@ -269,6 +269,18 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('test setValueForStringWithKey should be called with two arguments', () async {
+    const String value = 'Some key';
+    const IBGCustomTextPlaceHolderKey key = IBGCustomTextPlaceHolderKey.SHAKE_HINT;
+    InstabugFlutter.setValueForStringWithKey(value, key);
+    final List<dynamic> args = <dynamic>[value, key.toString()];
+    expect(log, <Matcher>[
+      isMethodCall('setValue:forStringWithKey:',
+        arguments: args,
+      )
+    ]);
+  });
+
 }
 
 
