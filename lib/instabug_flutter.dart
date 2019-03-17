@@ -90,7 +90,7 @@ enum IBGCustomTextPlaceHolderKey {
   LIVE_WELCOME_MESSAGE_CONTENT
 }
 
-class InstabugFlutter {
+class Instabug {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
   static Future<String> get platformVersion async {

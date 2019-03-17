@@ -26,30 +26,30 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       if (Platform.isIOS) {
-        InstabugFlutter.start('9582e6cfe34e2b8897f48cfa3b617adb', [InvocationEvent.floatingButton, InvocationEvent.shake]);
+        Instabug.start('9582e6cfe34e2b8897f48cfa3b617adb', [InvocationEvent.floatingButton, InvocationEvent.shake]);
       }
-      InstabugFlutter.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
-      InstabugFlutter.identifyUserWithEmail("aezz@instabug.com", "Aly Ezz");
-      InstabugFlutter.logInfo("Test Log Info Message from Flutter!");
-      InstabugFlutter.logDebug("Test Debug Message from Flutter!");
-      InstabugFlutter.logVerbose("Test Verbose Message from Flutter!");
-      InstabugFlutter.clearAllLogs();
-      InstabugFlutter.logError("Test Error Message from Flutter!");
-      InstabugFlutter.logWarn("Test Warn Message from Flutter!");
-      InstabugFlutter.logOut();
-      InstabugFlutter.setLocale(Locale.German);
-      InstabugFlutter.setColorTheme(ColorTheme.dark);
-      InstabugFlutter.appendTags(<String>['tag1', 'tag2']);
-      InstabugFlutter.setUserAttributeWithKey('19', 'Age');
-      InstabugFlutter.setUserAttributeWithKey('female', 'gender');
-      InstabugFlutter.removeUserAttributeForKey('gender');
-      final String value = await InstabugFlutter.getUserAttributeForKey('Age');
+      Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
+      Instabug.identifyUserWithEmail("aezz@instabug.com", "Aly Ezz");
+      Instabug.logInfo("Test Log Info Message from Flutter!");
+      Instabug.logDebug("Test Debug Message from Flutter!");
+      Instabug.logVerbose("Test Verbose Message from Flutter!");
+      Instabug.clearAllLogs();
+      Instabug.logError("Test Error Message from Flutter!");
+      Instabug.logWarn("Test Warn Message from Flutter!");
+      Instabug.logOut();
+      Instabug.setLocale(Locale.German);
+      Instabug.setColorTheme(ColorTheme.dark);
+      Instabug.appendTags(<String>['tag1', 'tag2']);
+      Instabug.setUserAttributeWithKey('19', 'Age');
+      Instabug.setUserAttributeWithKey('female', 'gender');
+      Instabug.removeUserAttributeForKey('gender');
+      final String value = await Instabug.getUserAttributeForKey('Age');
       print('User Attribute ' + value);
-      final Map<String, String> userAttributes = await InstabugFlutter.getUserAttributes();
+      final Map<String, String> userAttributes = await Instabug.getUserAttributes();
       print(userAttributes.toString()); 
-      InstabugFlutter.logUserEventWithName('Aly Event');
-      InstabugFlutter.setValueForStringWithKey('What\'s the problem', IBGCustomTextPlaceHolderKey.REPORT_BUG);
-      InstabugFlutter.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK);
+      Instabug.logUserEventWithName('Aly Event');
+      Instabug.setValueForStringWithKey('What\'s the problem', IBGCustomTextPlaceHolderKey.REPORT_BUG);
+      Instabug.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK);
       
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
@@ -65,19 +65,19 @@ class _MyAppState extends State<MyApp> {
   }
 
   void resetTags() {
-    InstabugFlutter.resetTags();
+    Instabug.resetTags();
   }
 
   void show() {
-    InstabugFlutter.show();
+    Instabug.show();
   }
 
   void invokeWithMode() {
-    InstabugFlutter.invokeWithMode(InvocationMode.BUG, [InvocationOption.EMAIL_FIELD_HIDDEN]);
+    Instabug.invokeWithMode(InvocationMode.BUG, [InvocationOption.EMAIL_FIELD_HIDDEN]);
   }
 
   void getTags() async {
-    final List<String> tags = await InstabugFlutter.getTags();
+    final List<String> tags = await Instabug.getTags();
     print(tags.toString());
   }
 
