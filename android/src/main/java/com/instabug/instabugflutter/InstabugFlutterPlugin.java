@@ -11,6 +11,7 @@ import com.instabug.chat.Chats;
 import com.instabug.chat.Replies;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
+import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
@@ -39,6 +40,8 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     final public static String INVOCATION_EVENT_TWO_FINGER_SWIPE_LEFT = "InvocationEvent.twoFingersSwipeLeft";
     final public static String INVOCATION_EVENT_FLOATING_BUTTON = "InvocationEvent.floatingButton";
     final public static String INVOCATION_EVENT_SHAKE = "InvocationEvent.shake";
+
+    private InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
 
     /**
      * Plugin registration.
@@ -323,5 +326,17 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      */
     public void logUserEventWithName(String name) {
         Instabug.logUserEvent(name);
-      }
+    }
+
+
+    /**
+     * Overrides any of the strings shown in the SDK with custom ones.
+     * @param value String value to override the default one.
+     * @param forStringWithKey Key of string to override.
+     */
+    public void setValue(String value, String forStringWithKey) {
+        InstabugCustomTextPlaceHolder.Key key = ArgsRegistry.getDeserializedValue(forStringWithKey, InstabugCustomTextPlaceHolder.Key.class);
+        placeHolder.set(key, value);
+        Instabug.setCustomTextPlaceHolders(placeHolder);
+    }
 }
