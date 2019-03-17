@@ -277,6 +277,18 @@
     [Instabug logUserEventWithName:name];
 }
 
+/**
+ * Overrides any of the strings shown in the SDK with custom ones.
+ * Allows you to customize any of the strings shown to users in the SDK.
+ * @param value String value to override the default one.
+ * @param key Key of string to override. Use predefined keys like kIBGShakeStartAlertTextStringName,
+ * kIBGEmailFieldPlaceholderStringName, etc.
+ */
++ (void) setValue: (NSString*) value forStringWithKey: (NSString*) key {
+    NSDictionary *constants = [self constants];
+    [Instabug setValue:value forStringWithKey:constants[key]];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
