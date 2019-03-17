@@ -38,7 +38,6 @@ class _MyAppState extends State<MyApp> {
       InstabugFlutter.logWarn("Test Warn Message from Flutter!");
       InstabugFlutter.logOut();
       InstabugFlutter.setLocale(Locale.German);
-      //InstabugFlutter.setLocale(Locale.German);
       InstabugFlutter.setColorTheme(ColorTheme.dark);
       InstabugFlutter.appendTags(<String>['tag1', 'tag2']);
       InstabugFlutter.setUserAttributeWithKey('19', 'Age');
@@ -49,6 +48,8 @@ class _MyAppState extends State<MyApp> {
       final Map<String, String> userAttributes = await InstabugFlutter.getUserAttributes();
       print(userAttributes.toString()); 
       InstabugFlutter.logUserEventWithName('Aly Event');
+      InstabugFlutter.setValueForStringWithKey('What\'s the problem', IBGCustomTextPlaceHolderKey.REPORT_BUG);
+      InstabugFlutter.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK);
       
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
