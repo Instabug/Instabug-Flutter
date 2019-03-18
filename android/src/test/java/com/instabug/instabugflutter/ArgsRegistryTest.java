@@ -8,6 +8,7 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -122,6 +123,17 @@ public class ArgsRegistryTest {
         assertAllSupportedCustomTextPlaceHolderKeysArePresent(map);
     }
 
+    @Ignore
+    @Test
+    public void duplicate_given$registerPlaceHolderKeysArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria() {
+        // given
+        Map<String, Object> map = new HashMap<>();
+        // when
+        ArgsRegistry.registerCustomTextPlaceHolderKeysArgs(map);
+        // then
+        assertAllSupportedCustomTextPlaceHolderKeysArePresent(map, getAllCustomTextPlaceHolderKeys());
+    }
+
     private void assertAllInvocationEventsArePresent(Map<String, Object> map) {
         Assert.assertTrue(map.containsValue(InstabugInvocationEvent.NONE));
         Assert.assertTrue(map.containsValue(InstabugInvocationEvent.SHAKE));
@@ -135,6 +147,8 @@ public class ArgsRegistryTest {
         Assert.assertTrue(map.containsValue(WelcomeMessage.State.BETA));
         Assert.assertTrue(map.containsValue(WelcomeMessage.State.DISABLED));
     }
+
+
 
     private void assertAllSupportedLocalesArePresent(Map<String, Object> map) {
         // source of truth
@@ -179,9 +193,7 @@ public class ArgsRegistryTest {
         Assert.assertTrue(map.containsValue(Option.EMAIL_FIELD_OPTIONAL));
     }
 
-    private void assertAllSupportedCustomTextPlaceHolderKeysArePresent(Map<String, Object> map) {
-        // source of truth
-        List<InstabugCustomTextPlaceHolder.Key> expectedKeys = getCurrentlySupportedKeysBySDK();
+    private void assertAllSupportedCustomTextPlaceHolderKeysArePresent(Map<String, Object> map, List<InstabugCustomTextPlaceHolder.Key> expectedKeys) {
         // actual
         List<InstabugCustomTextPlaceHolder.Key> actualKeys = new ArrayList<>();
         for (Map.Entry m : map.entrySet()) {
@@ -201,6 +213,12 @@ public class ArgsRegistryTest {
         if (!missingKeys.isEmpty()) {
             Assert.fail(missingKeys);
         }
+    }
+
+    private void assertAllSupportedCustomTextPlaceHolderKeysArePresent(Map<String, Object> map) {
+        // source of truth
+        List<InstabugCustomTextPlaceHolder.Key> expectedKeys = getCurrentlySupportedKeysBySDK();
+        assertAllSupportedCustomTextPlaceHolderKeysArePresent(map, expectedKeys);
     }
 
     private List<Locale> getCurrentlySupportLanguagesByTheSDK() {
@@ -264,6 +282,51 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT);
         keys.add(InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_TITLE);
         keys.add(InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_CONTENT);
+        return keys;
+    }
+
+    private List<InstabugCustomTextPlaceHolder.Key> getAllCustomTextPlaceHolderKeys() {
+        List<InstabugCustomTextPlaceHolder.Key> keys = new ArrayList<>();
+        keys.add(InstabugCustomTextPlaceHolder.Key.SHAKE_HINT);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SWIPE_HINT);
+        keys.add(InstabugCustomTextPlaceHolder.Key.INVALID_EMAIL_MESSAGE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.INVALID_COMMENT_MESSAGE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.INVOCATION_HEADER);
+        keys.add(InstabugCustomTextPlaceHolder.Key.START_CHATS);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_BUG);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK);
+        keys.add(InstabugCustomTextPlaceHolder.Key.EMAIL_FIELD_HINT);
+        keys.add(InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_BUG_REPORT);
+        keys.add(InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_FEEDBACK);
+        keys.add(InstabugCustomTextPlaceHolder.Key.ADD_VOICE_MESSAGE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.ADD_IMAGE_FROM_GALLERY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.ADD_EXTRA_SCREENSHOT);
+        keys.add(InstabugCustomTextPlaceHolder.Key.CONVERSATIONS_LIST_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.AUDIO_RECORDING_PERMISSION_DENIED);
+        keys.add(InstabugCustomTextPlaceHolder.Key.CONVERSATION_TEXT_FIELD_HINT);
+        keys.add(InstabugCustomTextPlaceHolder.Key.BUG_REPORT_HEADER);
+        keys.add(InstabugCustomTextPlaceHolder.Key.FEEDBACK_REPORT_HEADER);
+        keys.add(InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD);
+        keys.add(InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_RELEASE_TO_ATTACH);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SUCCESS_DIALOG_HEADER);
+        keys.add(InstabugCustomTextPlaceHolder.Key.ADD_VIDEO);
+        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT);
+        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT);
+        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT);
+        keys.add(InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_CONTENT);
+        keys.add(InstabugCustomTextPlaceHolder.Key.VIDEO_PLAYER_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.FEATURES_REQUEST);
+        keys.add(InstabugCustomTextPlaceHolder.Key.FEATURES_REQUEST_ADD_FEATURE_TOAST);
+        keys.add(InstabugCustomTextPlaceHolder.Key.FEATURES_REQUEST_ADD_FEATURE_THANKS_MESSAGE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_WELCOME_SCREEN_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_WELCOME_SCREEN_SUBTITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_WELCOME_SCREEN_BUTTON);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REQUEST_FEATURE);
         return keys;
     }
 }
