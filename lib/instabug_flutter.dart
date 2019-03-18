@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
-
 import 'package:flutter/services.dart';
 
 enum InvocationEvent {
@@ -55,7 +53,42 @@ enum InvocationOption {
 
 enum ColorTheme { dark, light }
 
-class InstabugFlutter {
+enum IBGCustomTextPlaceHolderKey {
+  SHAKE_HINT,
+  SWIPE_HINT,
+  INVALID_EMAIL_MESSAGE,
+  INVALID_COMMENT_MESSAGE,
+  INVOCATION_HEADER,
+  START_CHATS,
+  REPORT_BUG,
+  REPORT_FEEDBACK,
+  EMAIL_FIELD_HINT,
+  COMMENT_FIELD_HINT_FOR_BUG_REPORT,
+  COMMENT_FIELD_HINT_FOR_FEEDBACK,
+  ADD_VOICE_MESSAGE,
+  ADD_IMAGE_FROM_GALLERY,
+  ADD_EXTRA_SCREENSHOT,
+  CONVERSATIONS_LIST_TITLE,
+  AUDIO_RECORDING_PERMISSION_DENIED,
+  CONVERSATION_TEXT_FIELD_HINT,
+  BUG_REPORT_HEADER,
+  FEEDBACK_REPORT_HEADER,
+  VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD,
+  VOICE_MESSAGE_RELEASE_TO_ATTACH,
+  REPORT_SUCCESSFULLY_SENT,
+  SUCCESS_DIALOG_HEADER,
+  ADD_VIDEO,
+  BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE,
+  BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT,
+  BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE,
+  BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT,
+  BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE,
+  BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT,
+  LIVE_WELCOME_MESSAGE_TITLE,
+  LIVE_WELCOME_MESSAGE_CONTENT
+}
+
+class Instabug {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
   static Future<String> get platformVersion async {
@@ -99,7 +132,6 @@ class InstabugFlutter {
   /// Sets the default value of the user's email to nil and show email field and remove user name
   /// from all reports
   /// It also reset the chats on device and removes user attributes, user data and completed surveys.
-
   static void logOut() async {
     await _channel.invokeMethod<Object>('logOut');
   }
@@ -237,6 +269,13 @@ class InstabugFlutter {
     final List<String> params = <String>[name];
     await _channel.invokeMethod<Object>('logUserEventWithName:', params);
   }
+
+  /// Overrides any of the strings shown in the SDK with custom ones.
+  /// Allows you to customize a [value] shown to users in the SDK using a predefined [key].
+  static void setValueForStringWithKey(String value, IBGCustomTextPlaceHolderKey key) async {
+    final List<dynamic> params = <dynamic>[value, key.toString()];
+    await _channel.invokeMethod<Object>('setValue:forStringWithKey:', params); 
+  } 
 }
 
 

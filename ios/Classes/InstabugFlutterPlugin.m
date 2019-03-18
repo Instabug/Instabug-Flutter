@@ -277,6 +277,18 @@
     [Instabug logUserEventWithName:name];
 }
 
+/**
+ * Overrides any of the strings shown in the SDK with custom ones.
+ * Allows you to customize any of the strings shown to users in the SDK.
+ * @param value String value to override the default one.
+ * @param key Key of string to override. Use predefined keys like kIBGShakeStartAlertTextStringName,
+ * kIBGEmailFieldPlaceholderStringName, etc.
+ */
++ (void) setValue: (NSString*) value forStringWithKey: (NSString*) key {
+    NSDictionary *constants = [self constants];
+    [Instabug setValue:value forStringWithKey:constants[key]];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
@@ -318,6 +330,39 @@
       @"Locale.Spanish": @(IBGLocaleSpanish),
       @"Locale.Swedish": @(IBGLocaleSwedish),
       @"Locale.Turkish": @(IBGLocaleTurkish),
+      
+      @"IBGCustomTextPlaceHolderKey.SHAKE_HINT": kIBGShakeStartAlertTextStringName,
+      @"IBGCustomTextPlaceHolderKey.SWIPE_HINT": kIBGEdgeSwipeStartAlertTextStringName,
+      @"IBGCustomTextPlaceHolderKey.INVALID_EMAIL_MESSAGE": kIBGInvalidEmailMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.INVALID_COMMENT_MESSAGE": kIBGInvalidCommentMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.INVOCATION_HEADER": kIBGInvocationTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.START_CHATS": kIBGChatsTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.REPORT_BUG": kIBGReportBugStringName,
+      @"IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK": kIBGReportFeedbackStringName,
+      @"IBGCustomTextPlaceHolderKey.EMAIL_FIELD_HINT": kIBGEmailFieldPlaceholderStringName,
+      @"IBGCustomTextPlaceHolderKey.COMMENT_FIELD_HINT_FOR_BUG_REPORT": kIBGCommentFieldPlaceholderForBugReportStringName,
+      @"IBGCustomTextPlaceHolderKey.COMMENT_FIELD_HINT_FOR_FEEDBACK": kIBGCommentFieldPlaceholderForFeedbackStringName,
+      @"IBGCustomTextPlaceHolderKey.ADD_VOICE_MESSAGE": kIBGAddVoiceMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.ADD_IMAGE_FROM_GALLERY": kIBGAddImageFromGalleryStringName,
+      @"IBGCustomTextPlaceHolderKey.ADD_EXTRA_SCREENSHOT": kIBGAddExtraScreenshotStringName,
+      @"IBGCustomTextPlaceHolderKey.CONVERSATIONS_LIST_TITLE": kIBGChatsTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.AUDIO_RECORDING_PERMISSION_DENIED": kIBGAudioRecordingPermissionDeniedTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.CONVERSATION_TEXT_FIELD_HINT": kIBGChatReplyFieldPlaceholderStringName,
+      @"IBGCustomTextPlaceHolderKey.BUG_REPORT_HEADER": kIBGReportBugStringName,
+      @"IBGCustomTextPlaceHolderKey.FEEDBACK_REPORT_HEADER": kIBGReportFeedbackStringName,
+      @"IBGCustomTextPlaceHolderKey.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD": kIBGRecordingMessageToHoldTextStringName,
+      @"IBGCustomTextPlaceHolderKey.VOICE_MESSAGE_RELEASE_TO_ATTACH": kIBGRecordingMessageToReleaseTextStringName,
+      @"IBGCustomTextPlaceHolderKey.REPORT_SUCCESSFULLY_SENT": kIBGThankYouAlertMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.SUCCESS_DIALOG_HEADER": kIBGThankYouAlertTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.ADD_VIDEO": kIBGAddScreenRecordingMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE": kIBGBetaWelcomeMessageWelcomeStepTitle,
+      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT": kIBGBetaWelcomeMessageWelcomeStepContent,
+      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE": kIBGBetaWelcomeMessageHowToReportStepTitle,
+      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT": kIBGBetaWelcomeMessageHowToReportStepContent,
+      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE": kIBGBetaWelcomeMessageFinishStepTitle,
+      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT": kIBGBetaWelcomeMessageFinishStepContent,
+      @"IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_TITLE": kIBGLiveWelcomeMessageTitle,
+      @"IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_CONTENT": kIBGLiveWelcomeMessageContent,
   };
 };
 
