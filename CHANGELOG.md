@@ -1,3 +1,6 @@
-## 0.0.1
+## Version 0.0.1 (2019-03-07)
 
-* TODO: Describe initial release.
+Adds the following APIs:
+
+* start(String token, List<InvocationEvent> invocationEvents)
+* showWelcomeMessageWithMode(WelcomeMessageMode welcomeMessageMode)
