@@ -16,6 +16,7 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,6 +99,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key, InstabugInvocationEvent.class);
         }
         new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).build();
+        enableScreenShotByMediaProjection();
     }
 
 
@@ -328,7 +330,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         Instabug.logUserEvent(name);
     }
 
-
     /**
      * Overrides any of the strings shown in the SDK with custom ones.
      * @param value String value to override the default one.
@@ -338,5 +339,51 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         InstabugCustomTextPlaceHolder.Key key = ArgsRegistry.getDeserializedValue(forStringWithKey, InstabugCustomTextPlaceHolder.Key.class);
         placeHolder.set(key, value);
         Instabug.setCustomTextPlaceHolders(placeHolder);
+      }
+
+    /**
+     * Enables taking screenshots by media projection.
+     */
+    private void enableScreenShotByMediaProjection() {
+        try {
+            Method method = getMethod(Class.forName("com.instabug.bug.BugReporting"), "setScreenshotByMediaProjectionEnabled", boolean.class);
+            if (method != null) {
+                method.invoke(null, true);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Gets the private method that matches the class, method name and parameter types given and making it accessible.
+     * For private use only.
+     * @param clazz the class the method is in
+     * @param methodName the method name
+     * @param parameterType list of the parameter types of the method
+     * @return the method that matches the class, method name and param types given
+     */
+    public static Method getMethod(Class clazz, String methodName, Class... parameterType) {
+        final Method[] methods = clazz.getDeclaredMethods();
+        for (Method method : methods) {
+            if (method.getName().equals(methodName) && method.getParameterTypes().length ==
+                    parameterType.length) {
+                for (int i = 0; i < parameterType.length; i++) {
+                    if (method.getParameterTypes()[i] == parameterType[i]) {
+                        if (i == method.getParameterTypes().length - 1) {
+                            method.setAccessible(true);
+                            return method;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
