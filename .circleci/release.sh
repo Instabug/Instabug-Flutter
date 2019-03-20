@@ -23,3 +23,4 @@
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 pub global activate grinder
 pub get
+grind auto-publish
