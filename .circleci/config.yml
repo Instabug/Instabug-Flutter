@@ -15,11 +15,12 @@ jobs:
 
   hold:
     type: approval 
+    steps:
   release:
     requires:
       - hold
     filters:
       branches:
         only: master
-    commands:
-      - ./.circleci/release.sh
+    steps:
+      - run: ./.circleci/release.sh
