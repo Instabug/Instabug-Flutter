@@ -20,7 +20,16 @@
 #                 "prerelease": false}'  https://api.github.com/repos/$OWNER/$REPOSITORY/releases?access_token=$ACCESS_TOKEN
 #     echo "https://api.github.com/repos/$OWNER/$REPOSITORY/releases?access_token=$ACCESS_TOKEN"
 # fi
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-pub global activate grinder
-pub get
-grind auto-publish
+mkdir -p .pub-cache
+
+cat <<EOF > $HOME/.pub-cache/credentials.json
+{
+  "accessToken":"$accessToken",
+  "refreshToken":"$refreshToken",
+  "tokenEndpoint":"$tokenEndpoint",
+  "scopes":["$scopes"],
+  "expiration":$expiration
+}
+EOF
+
+pub publish -f
