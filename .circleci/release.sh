@@ -20,6 +20,6 @@
 #                 "prerelease": false}'  https://api.github.com/repos/$OWNER/$REPOSITORY/releases?access_token=$ACCESS_TOKEN
 #     echo "https://api.github.com/repos/$OWNER/$REPOSITORY/releases?access_token=$ACCESS_TOKEN"
 # fi
-export PATH="$PATH":"~/.pub-cache/bin"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 pub global activate grinder
 pub get
