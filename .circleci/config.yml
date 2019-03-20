@@ -12,9 +12,8 @@ jobs:
       - run: pub get
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-      - run: export PATH="$PATH":"~/.pub-cache/bin"
-      - run: pub global activate grinder
-      - run: grind auto-publish
+      - run: ./.circleci/release.sh
+
       # - hold:
       #     type: approval 
       # - release:
