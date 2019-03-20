@@ -4,6 +4,7 @@ jobs:
   build:
     docker:
       - image: cirrusci/flutter
+      - image: ruby:2.5
     steps:
       - checkout
       - run: bundle check || sudo bundle install        
@@ -12,7 +13,7 @@ jobs:
       - run: pub get
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-      - run: ./release.sh
+      - run: ./.circleci/release.sh
       # - hold:
       #     type: approval 
       # - release:
