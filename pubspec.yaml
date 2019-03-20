@@ -17,7 +17,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  grind_publish: ^0.0.4
 
 dev_dependencies:
   flutter_test:

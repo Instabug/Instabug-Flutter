@@ -23,13 +23,11 @@
 mkdir -p .pub-cache
 
 cat <<EOF > $HOME/.pub-cache/credentials.json
-{
-  "accessToken":"${ACCESS_TOKEN}",
-  "refreshToken":"${REFRESH_TOKEN}",
-  "tokenEndpoint":"${TOKEN_ENDPOINT}",
-  "scopes":["openid","https://www.googleapis.com/auth/userinfo.email"],
-  "expiration":${EXPIRATION}
-}
+{"accessToken":"${ACCESS_TOKEN}",
+"refreshToken":"${REFRESH_TOKEN}",
+"tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
+"scopes":["https://www.googleapis.com/auth/userinfo.email","openid"],
+"expiration":${EXPIRATION}}
 EOF
 
 pub publish -f
