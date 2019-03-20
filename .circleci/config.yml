@@ -14,6 +14,8 @@ jobs:
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
     type: approval 
   release:
+    docker:
+      - image: cirrusci/flutter
     requires:
       - build
     filters:
