@@ -13,6 +13,7 @@ jobs:
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
     type: approval 
+    
   release:
     docker:
       - image: cirrusci/flutter
@@ -23,3 +24,10 @@ jobs:
         only: master
     steps:
       - run: ./.circleci/release.sh
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build
+    - release
