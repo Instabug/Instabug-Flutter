@@ -20,7 +20,6 @@ EOF
     REPOSITORY="Instabug-Flutter"
     ACCESS_TOKEN=${RELEASE_GITHUB_TOKEN}
     VERSION=$(echo ${VERSION} | sed 's/ //1')
-    echo ${VERSION}
     curl --data '{"tag_name": "'$VERSION'",
                 "target_commitish": "master",
                 "name": "'$VERSION'",
