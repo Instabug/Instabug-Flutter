@@ -12,13 +12,10 @@ jobs:
       - run: pub get
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-
-  hold:
     type: approval 
-    steps: /docker-entrypoint.sh
   release:
     requires:
-      - hold
+      - build
     filters:
       branches:
         only: master
