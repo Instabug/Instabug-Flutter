@@ -17,6 +17,7 @@ jobs:
     docker:
       - image: cirrusci/flutter
     steps:
+      - checkout
       - run: ./.circleci/release.sh
       
 workflows:
@@ -27,3 +28,6 @@ workflows:
       - release:
           requires:
             - build
+          filters:
+            branches:
+              only: master
