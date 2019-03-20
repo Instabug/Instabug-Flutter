@@ -20,7 +20,7 @@ jobs:
       - run: ./release.sh
 workflows:
   version: 2
-  build-test-and-approval-deploy:
+  build:
     jobs:
       - build:
          type: approval # your custom job from your config, that builds your code
