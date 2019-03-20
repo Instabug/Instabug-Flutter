@@ -4,7 +4,6 @@ jobs:
   build:
     docker:
       - image: cirrusci/flutter
-      - image: ruby:2.5
     steps:
       - checkout
       - run: bundle check || sudo bundle install        
