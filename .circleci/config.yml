@@ -15,7 +15,7 @@ jobs:
 
   hold:
     type: approval 
-    steps:
+    steps: /docker-entrypoint.sh
   release:
     requires:
       - hold
