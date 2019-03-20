@@ -1,10 +1,5 @@
 version: 2
 
-before_script:
-- export PATH="$PATH":"~/.pub-cache/bin"
-- pub global activate grinder
-- pub get
-
 jobs:
   build:
     docker:
@@ -17,9 +12,9 @@ jobs:
       - run: pub get
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-    script:
-      - grind auto-publish
-
+      - run: export PATH="$PATH":"~/.pub-cache/bin"
+      - run: pub global activate grinder
+      - run: grind auto-publish
       # - hold:
       #     type: approval 
       # - release:
