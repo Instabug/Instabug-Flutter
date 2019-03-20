@@ -1,5 +1,10 @@
 version: 2
 
+before_script:
+- export PATH="$PATH":"~/.pub-cache/bin"
+- pub global activate grinder
+- pub get
+
 jobs:
   build:
     docker:
@@ -12,7 +17,9 @@ jobs:
       - run: pub get
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-      - run: ./.circleci/release.sh
+    script:
+      - grind auto-publish
+
       # - hold:
       #     type: approval 
       # - release:
