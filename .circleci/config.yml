@@ -13,20 +13,12 @@ jobs:
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
 
-   hold:
-    docker:
-      - image: cirrusci/flutter
-    steps:
-      - checkout
-
    release:
     docker:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - run: ./.circleci/release.sh
-    
-    
+      - run: ./release.sh
       
 workflows:
   version: 2
