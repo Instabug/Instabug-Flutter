@@ -1,5 +1,4 @@
 #!/bin/sh
-cd ..
 pwd
 VERSION=v$(egrep -o "version: ([0-9]-*.*)+[0-9]" pubspec.yaml | cut -d ":" -f 2)
 echo ${VERSION}
