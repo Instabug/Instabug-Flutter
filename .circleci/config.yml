@@ -18,13 +18,12 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - run: ./release.sh
+      
 workflows:
   version: 2
-  build:
+  build-test-and-approval-deploy:
     jobs:
-      - build:
-         type: approval # your custom job from your config, that builds your code
+      - build
       - release:
-          type: approval
           requires:
             - build
