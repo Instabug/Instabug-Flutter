@@ -22,7 +22,8 @@ workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
-      - build  # your custom job from your config, that builds your code
+      - build:
+         type: approval # your custom job from your config, that builds your code
       - release:
           type: approval
           requires:
