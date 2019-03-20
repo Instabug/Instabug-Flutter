@@ -12,13 +12,14 @@ jobs:
       - run: pub get
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-      - hold:
-          type: approval 
-      - release:
-          requires:
-            - hold
-          filters:
-            branches:
-              only: master
-          commands:
-             - ./.circleci/release.sh
+
+  hold:
+    type: approval 
+  release:
+    requires:
+      - hold
+    filters:
+      branches:
+        only: master
+    commands:
+      - ./.circleci/release.sh
