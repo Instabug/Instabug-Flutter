@@ -12,7 +12,7 @@ jobs:
       - run: pub get
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-      
+
    hold:
     docker:
       - image: cirrusci/flutter
@@ -37,9 +37,12 @@ workflows:
           type: approval
           requires:
             - build
+          filters:
+            branches:
+              only: master
       - release:
           requires:
             - hold
-          # filters:
-          #   branches:
-          #     only: master
+          filters:
+            branches:
+              only: master
