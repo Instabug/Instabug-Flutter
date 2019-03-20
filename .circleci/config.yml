@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-  build:
+   build:
     docker:
       - image: cirrusci/flutter
     steps:
@@ -12,22 +12,18 @@ jobs:
       - run: pub get
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-    type: approval 
     
-  release:
+   release:
     docker:
       - image: cirrusci/flutter
-    requires:
-      - build
-    filters:
-      branches:
-        only: master
     steps:
-      - run: ./.circleci/release.sh
-
+      - run: ./release.sh
 workflows:
   version: 2
-  workflow:
+  build-test-and-approval-deploy:
     jobs:
-    - build
-    - release
+      - build  # your custom job from your config, that builds your code
+      - release:
+          type: approval
+          requires:
+            - build
