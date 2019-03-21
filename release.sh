@@ -1,5 +1,5 @@
 #!/bin/sh
-VERSION=v$(egrep -o "version: ([0-9]-*.*)+[0-9]" pubspec.yaml | cut -d ":" -f 2)
+VERSION=$(egrep -o "version: ([0-9]-*.*)+[0-9]" pubspec.yaml | cut -d ":" -f 2)
 if [ ! "${VERSION}" ] || [ -z "${VERSION}" ];then
     echo "Instabug: err: Version Number not found."
     exit 1
