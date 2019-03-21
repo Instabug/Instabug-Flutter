@@ -4,7 +4,7 @@
 
 ## Version 0.0.2 (2019-03-20)
 
-* Adds More API Mappings.
+* Adds more API mappings.
 
 
 ## Version 0.0.1 (2019-03-07)
