@@ -119,7 +119,7 @@ flutter packages get
 1. To start using Instabug, import it into your Flutter app. 
 
 ```dart
-import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/Instabug.dart';
 ```
 
 2. Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the devices is shaken.
