@@ -43,14 +43,6 @@ enum InvocationMode {
   REPLIES
 }
 
-enum InvocationOption {
-  COMMENT_FIELD_REQUIRED,
-  DISABLE_POST_SENDING_DIALOG,
-  EMAIL_FIELD_HIDDEN,
-  EMAIL_FIELD_OPTIONAL
-}
-
-
 enum ColorTheme { dark, light }
 
 enum IBGCustomTextPlaceHolderKey {
@@ -143,56 +135,6 @@ class Instabug {
     final List<dynamic> params = <dynamic>[locale.toString()];
     await _channel.invokeMethod<Object>('setLocale:', params);
   }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logVerbose(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logVerbose:', params);
-  }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logDebug(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logDebug:', params);
-  }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logInfo(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logInfo:', params);
-  }
-
-  /// Clears Instabug internal log
-  static void clearAllLogs() async {
-    await _channel.invokeMethod<Object>('clearAllLogs');
-  }
-  
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logError(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logError:', params);
-  }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logWarn(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logWarn:', params);
-  }
   
   /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.
   /// It should be of type [ColorTheme].
@@ -248,21 +190,6 @@ class Instabug {
     await _channel.invokeMethod<Object>('show');
   }
 
-
-  /// invoke sdk manually with desire invocation mode
-  /// [invocationMode] the invocation mode
-  /// [invocationOptions] the array of invocation options
-  static void invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions]) async {
-    List<String> invocationOptionsStrings = <String>[];
-    if (invocationOptions != null) {
-      invocationOptions.forEach((e) {
-        invocationOptionsStrings.add(e.toString());
-      });
-    }
-    final List<dynamic> params = <dynamic>[invocationMode.toString(), invocationOptionsStrings];
-    await _channel.invokeMethod<Object>('invokeWithMode:options:',params);
-  }
-
   /// Logs a user event with [name] that happens through the lifecycle of the application.
   /// Logged user events are going to be sent with each report, as well as at the end of a session.
   static void logUserEventWithName(String name) async {
@@ -277,5 +204,6 @@ class Instabug {
     await _channel.invokeMethod<Object>('setValue:forStringWithKey:', params); 
   } 
 }
+
 
 

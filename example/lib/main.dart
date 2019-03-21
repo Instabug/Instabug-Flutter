@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/Instabug.dart';
+import 'package:instabug_flutter/BugReporting.dart';
+import 'package:instabug_flutter/InstabugLog.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,12 +32,12 @@ class _MyAppState extends State<MyApp> {
       }
       Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
       Instabug.identifyUserWithEmail('aezz@instabug.com', 'Aly Ezz');
-      Instabug.logInfo('Test Log Info Message from Flutter!');
-      Instabug.logDebug('Test Debug Message from Flutter!');
-      Instabug.logVerbose('Test Verbose Message from Flutter!');
-      Instabug.clearAllLogs();
-      Instabug.logError('Test Error Message from Flutter!');
-      Instabug.logWarn('Test Warn Message from Flutter!');
+      InstabugLog.logInfo('Test Log Info Message from Flutter!');
+      InstabugLog.logDebug('Test Debug Message from Flutter!');
+      InstabugLog.logVerbose('Test Verbose Message from Flutter!');
+      InstabugLog.clearAllLogs();
+      InstabugLog.logError('Test Error Message from Flutter!');
+      InstabugLog.logWarn('Test Warn Message from Flutter!');
       Instabug.logOut();
       Instabug.setLocale(Locale.German);
       Instabug.setColorTheme(ColorTheme.dark);
@@ -73,7 +75,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void invokeWithMode() {
-    Instabug.invokeWithMode(InvocationMode.BUG, [InvocationOption.EMAIL_FIELD_HIDDEN]);
+    BugReporting.invokeWithMode(InvocationMode.BUG, [InvocationOption.EMAIL_FIELD_HIDDEN]);
   }
 
   void getTags() async {
