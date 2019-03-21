@@ -1,6 +1,8 @@
 import 'dart:io';
 
-import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/Instabug.dart';
+import 'package:instabug_flutter/BugReporting.dart';
+import 'package:instabug_flutter/InstabugLog.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -96,7 +98,7 @@ test('startWithToken:invocationEvents: Test', () async {
 
 
   test('logVerbose: Test', () async {
-    Instabug.logVerbose(message);
+    InstabugLog.logVerbose(message);
     final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logVerbose:',
@@ -106,7 +108,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
   
   test('logDebug: Test', () async {
-    Instabug.logDebug(message);
+    InstabugLog.logDebug(message);
     final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logDebug:',
@@ -116,7 +118,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
   
   test('logInfo: Test', () async {
-    Instabug.logInfo(message);
+    InstabugLog.logInfo(message);
     final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logInfo:',
@@ -126,7 +128,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
 
   test('clearAllLogs: Test', () async {
-    Instabug.clearAllLogs();
+    InstabugLog.clearAllLogs();
     expect(log, <Matcher>[
       isMethodCall('clearAllLogs',
         arguments: null
@@ -135,7 +137,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
 
   test('logError: Test', () async {
-    Instabug.logError(message);
+    InstabugLog.logError(message);
     final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logError:',
@@ -145,7 +147,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
   
   test('logWarn: Test', () async {
-    Instabug.logWarn(message);
+    InstabugLog.logWarn(message);
     final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logWarn:',
@@ -250,7 +252,7 @@ test('startWithToken:invocationEvents: Test', () async {
 
   
   test('invokeWithMode:options: Test', () async {
-    Instabug.invokeWithMode(InvocationMode.BUG, [InvocationOption.COMMENT_FIELD_REQUIRED]);
+    BugReporting.invokeWithMode(InvocationMode.BUG, [InvocationOption.COMMENT_FIELD_REQUIRED]);
     final List<dynamic> args = <dynamic>[InvocationMode.BUG.toString(), <String>[InvocationOption.COMMENT_FIELD_REQUIRED.toString()]];
     expect(log, <Matcher>[
       isMethodCall('invokeWithMode:options:',
