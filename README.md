@@ -71,7 +71,7 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 
 | API Method                                    | Native Equivalent (Android/iOS)                              |
 |-----------------------------------------------|--------------------------------------------------------------|
-| `logDebug(String message)                     | `d(String message)`<br>`+ logDebug:`                         |
+| `logDebug(String message)`                     | `d(String message)`<br>`+ logDebug:`                         |
 | `logVerbose(String message)`                  | `v(String message)`<br>`+ logVerbose:`                       |
 | `logInfo(String message)`                     | `i(String message)`<br>`+ logInfo:`                          |
 | `logWarn(String message)`                     | `w(String message)`<br>`+ logWarn:`                          |
