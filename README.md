@@ -8,10 +8,10 @@ A Flutter plugin for [Instabug](https://instabug.com/).
 
 |      Feature                                              | Status  |
 |:---------------------------------------------------------:|:-------:|
-| [Bug Reporting](https://instabug.com/bug-reporting)       |    ⚙️    |
+| [Bug Reporting](https://instabug.com/bug-reporting)       |    ⚙️   |
 | [Crash Reporting](https://instabug.com/crash-reporting)   |    ❌   |
 | [In-App Chat](https://instabug.com/in-app-chat)           |    ❌   |
-| [In-App Surveys](https://instabug.com/in-app-surveys)     |    ⚙️    |
+| [In-App Surveys](https://instabug.com/in-app-surveys)     |    ⚙️   |
 | [Feature Requests](https://instabug.com/feature-requests) |    ❌   |
 
 * ✅ Stable
@@ -42,7 +42,6 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 | `getUserAttributes()`                                                | `getAllUserAttributes()`<br>`+ userAttributes:`                                                           |
 | `logUserEventWithName(String name)`                                  | `logUserEvent(String name)`<br>`+ logUserEventWithName:`                                                  |
 | `show()`                                                             | `show()`<br>`+ show`                                                                                      |
-| `clearAllLogs(String message)`                                       | `clearLogs()`<br>`+ clearAllLogs:`                                                                        |
 |                                                                      | `setSessionProfilerState(Feature.State state)`<br>`sessionProfilerEnabled`                                |
 |                                                                      | `setPrimaryColor(@ColorInt int primaryColorValue)`<br>`tintColor`                                         |
 |                                                                      | `onReportSubmitHandler(Report.OnReportCreatedListener listener)`<br>`willSendReportHandler`.              |
@@ -72,17 +71,18 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 
 | API Method                                    | Native Equivalent (Android/iOS)                              |
 |-----------------------------------------------|--------------------------------------------------------------|
-| `Instabug.logDebug(String message)            | `InstabugLog.d(String message)`<br>`+ [IBGLog logDebug:]`    |
-| `Instabug.logVerbose(String message)`         | `InstabugLog.v(String message)`<br>`+ [IBGLog logVerbose:]`  |
-| `Instabug.logInfo(String message)`            | `InstabugLog.i(String message)`<br>`+ [IBGLog logInfo:]`     |
-| `Instabug.logWarn(String message)`            | `InstabugLog.w(String message)`<br>`+ [IBGLog logWarn:]`     |
-| `Instabug.logError(String message)`           | `InstabugLog.e(String message)`<br>`+ [IBGLog logError:]`    |
+| `logDebug(String message)                     | `d(String message)`<br>`+ logDebug:`                         |
+| `logVerbose(String message)`                  | `v(String message)`<br>`+ logVerbose:`                       |
+| `logInfo(String message)`                     | `i(String message)`<br>`+ logInfo:`                          |
+| `logWarn(String message)`                     | `w(String message)`<br>`+ logWarn:`                          |
+| `logError(String message)`                    | `e(String message)`<br>`+ logError:`                         |
+| `clearAllLogs(String message)`                | `clearLogs()`<br>`+ clearAllLogs:`                           |
 
 #### `Surveys`
 
 | API Method                                    | Native Equivalent (Android/iOS)                                                                                                             |
 |-----------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
-|                                               | `setState(Feature.State state)`<br>``enabled`                                                                                               |
+|                                               | `setState(Feature.State state)`<br>`enabled`                                                                                                |
 |                                               | `setAutoShowingEnabled(boolean isAutoShowingEnabled)`<br>`autoShowingEnabled`                                                               |
 |                                               | `getAvailableSurveys()`<br>`+ availableSurveys`                                                                                             |
 |                                               | `setOnShowCallback(OnShowCallback onShowCallback)`<br>`willShowSurveyHandler`                                                               |
