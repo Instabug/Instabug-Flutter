@@ -1,6 +1,8 @@
 import 'dart:io';
 
-import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/Instabug.dart';
+import 'package:instabug_flutter/BugReporting.dart';
+import 'package:instabug_flutter/InstabugLog.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

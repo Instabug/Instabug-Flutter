@@ -43,14 +43,6 @@ enum InvocationMode {
   REPLIES
 }
 
-enum InvocationOption {
-  COMMENT_FIELD_REQUIRED,
-  DISABLE_POST_SENDING_DIALOG,
-  EMAIL_FIELD_HIDDEN,
-  EMAIL_FIELD_OPTIONAL
-}
-
-
 enum ColorTheme { dark, light }
 
 enum IBGCustomTextPlaceHolderKey {
@@ -213,86 +205,5 @@ class Instabug {
   } 
 }
 
-class BugReporting {
-  static const MethodChannel _channel = MethodChannel('instabug_flutter');
-
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-  /// invoke sdk manually with desire invocation mode
-  /// [invocationMode] the invocation mode
-  /// [invocationOptions] the array of invocation options
-  static void invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions]) async {
-    List<String> invocationOptionsStrings = <String>[];
-    if (invocationOptions != null) {
-      invocationOptions.forEach((e) {
-        invocationOptionsStrings.add(e.toString());
-      });
-    }
-    final List<dynamic> params = <dynamic>[invocationMode.toString(), invocationOptionsStrings];
-    await _channel.invokeMethod<Object>('invokeWithMode:options:',params);
-  }
-}
-
-class InstabugLog {
-  static const MethodChannel _channel = MethodChannel('instabug_flutter');
-
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logError(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logError:', params);
-  }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logWarn(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logWarn:', params);
-  }
-
-   /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logVerbose(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logVerbose:', params);
-  }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logDebug(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logDebug:', params);
-  }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logInfo(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logInfo:', params);
-  }
-
-
-  /// Clears Instabug internal log
-  static void clearAllLogs() async {
-    await _channel.invokeMethod<Object>('clearAllLogs');
-  }
-}
 
 

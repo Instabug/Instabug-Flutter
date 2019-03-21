@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/Instabug.dart';
+import 'package:instabug_flutter/BugReporting.dart';
+import 'package:instabug_flutter/InstabugLog.dart';
 
 void main() => runApp(MyApp());
 
