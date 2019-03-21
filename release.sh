@@ -14,7 +14,7 @@ else
         "expiration":${EXPIRATION}
     }
 EOF
-    pub publish -f
+    flutter packages pub publish -f
 
     OWNER="Instabug"
     REPOSITORY="Instabug-Flutter"
