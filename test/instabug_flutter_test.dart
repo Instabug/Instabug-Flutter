@@ -283,6 +283,17 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('setSessionProfilerEnabled: Test', () async {
+    const bool sessionProfilerEnabled = true;
+    final List<dynamic> args = <dynamic>[sessionProfilerEnabled];
+    Instabug.setSessionProfilerEnabled(sessionProfilerEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setSessionProfilerEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
 }
 
 
