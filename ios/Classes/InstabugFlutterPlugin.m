@@ -289,6 +289,16 @@
     [Instabug setValue:value forStringWithKey:constants[key]];
 }
 
+/**
+  * Enable/disable session profiler
+  *
+  * @param sessionProfilerEnabled desired state of the session profiler feature
+  */
++ (void) setSessionProfilerEnabled:(NSString*) sessionProfilerEnabled {
+   BOOL boolValue = [sessionProfilerEnabled boolValue];
+   [Instabug setSessionProfilerEnabled:boolValue];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
