@@ -42,7 +42,7 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 | `getUserAttributes()`                                                | `getAllUserAttributes()`<br>`+ userAttributes:`                                                           |
 | `logUserEventWithName(String name)`                                  | `logUserEvent(String name)`<br>`+ logUserEventWithName:`                                                  |
 | `show()`                                                             | `show()`<br>`+ show`                                                                                      |
-|                                                                      | `setSessionProfilerState(Feature.State state)`<br>`sessionProfilerEnabled`                                |
+| `setSessionProfilerEnabled(bool sessionProfilerEnabled)`            | `setSessionProfilerState(Feature.State state)`<br>`sessionProfilerEnabled`                                |
 |                                                                      | `setPrimaryColor(@ColorInt int primaryColorValue)`<br>`tintColor`                                         |
 |                                                                      | `onReportSubmitHandler(Report.OnReportCreatedListener listener)`<br>`willSendReportHandler`.              |
 |                                                                      | `setUserData(String userData)`<br>`userData`                                                              |
