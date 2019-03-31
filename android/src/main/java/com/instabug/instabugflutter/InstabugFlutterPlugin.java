@@ -9,6 +9,7 @@ import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
 import com.instabug.chat.Chats;
 import com.instabug.chat.Replies;
+import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
@@ -385,5 +386,22 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             }
         }
         return null;
+    }
+
+    /**
+     * Enable/disable session profiler
+     *
+     * @param sessionProfilerEnabled desired state of the session profiler feature
+     */
+    public void setSessionProfilerEnabled(boolean sessionProfilerEnabled) {
+        try {
+            if (sessionProfilerEnabled) {
+                Instabug.setSessionProfilerState(Feature.State.ENABLED);
+            } else {
+                Instabug.setSessionProfilerState(Feature.State.DISABLED);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
