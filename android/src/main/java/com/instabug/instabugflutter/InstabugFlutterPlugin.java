@@ -394,14 +394,10 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      * @param sessionProfilerEnabled desired state of the session profiler feature
      */
     public void setSessionProfilerEnabled(boolean sessionProfilerEnabled) {
-        try {
-            if (sessionProfilerEnabled) {
-                Instabug.setSessionProfilerState(Feature.State.ENABLED);
-            } else {
-                Instabug.setSessionProfilerState(Feature.State.DISABLED);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (sessionProfilerEnabled) {
+            Instabug.setSessionProfilerState(Feature.State.ENABLED);
+        } else {
+            Instabug.setSessionProfilerState(Feature.State.DISABLED);
         }
     }
 }
