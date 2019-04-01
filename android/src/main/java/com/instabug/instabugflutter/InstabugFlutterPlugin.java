@@ -400,4 +400,18 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             Instabug.setSessionProfilerState(Feature.State.DISABLED);
         }
     }
+
+    /**
+     * Set the primary color that the SDK will use to tint certain UI elements in the SDK
+     *
+     * @param primaryColor The value of the primary color 
+     */
+    public void setPrimaryColor(final long primaryColor) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Instabug.setPrimaryColor((int)primaryColor);
+            }
+        });
+    }
 }
