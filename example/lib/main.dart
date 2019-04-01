@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
       Instabug.logUserEventWithName('Aly Event');
       Instabug.setValueForStringWithKey('What\'s the problem', IBGCustomTextPlaceHolderKey.REPORT_BUG);
       Instabug.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK);
-      
+      Instabug.setSessionProfilerEnabled(false);
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }

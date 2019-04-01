@@ -203,6 +203,13 @@ class Instabug {
     final List<dynamic> params = <dynamic>[value, key.toString()];
     await _channel.invokeMethod<Object>('setValue:forStringWithKey:', params); 
   } 
+
+  /// Enable/disable session profiler
+  /// [sessionProfilerEnabled] desired state of the session profiler feature.
+  static void setSessionProfilerEnabled(bool sessionProfilerEnabled) async {
+    final List<dynamic> params = <dynamic>[sessionProfilerEnabled];
+    await _channel.invokeMethod<Object>('setSessionProfilerEnabled:', params); 
+  } 
 }
 
 

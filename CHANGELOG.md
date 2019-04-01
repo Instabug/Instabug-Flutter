@@ -1,3 +1,7 @@
+## Master
+
+* Adds setSessionProfilerEnabled API mapping.
+
 ## Version 0.0.3 (2019-03-21)
 
 * Divides the library into separate modules: (`Instabug`, `BugReporting`, `InstabugLog`).
