@@ -1,5 +1,6 @@
 ## Master
 
+* Adds setPrimaryColor API mapping.
 * Adds setSessionProfilerEnabled API mapping.
 
 ## Version 0.0.3 (2019-03-21)
