@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 import 'package:flutter/services.dart';
 
 enum InvocationEvent {
@@ -210,6 +211,15 @@ class Instabug {
     final List<dynamic> params = <dynamic>[sessionProfilerEnabled];
     await _channel.invokeMethod<Object>('setSessionProfilerEnabled:', params); 
   } 
+
+  /// Sets the primary color of the SDK's UI.
+  /// Sets the color of UI elements indicating interactivity or call to action.
+  /// [color] primaryColor A color to set the UI elements of the SDK to.
+  static void setPrimaryColor(Color color) async {
+    final List<dynamic> params = <dynamic>[color.value];
+    await _channel.invokeMethod<Object>('setPrimaryColor:', params); 
+  } 
+
 }
 
 
