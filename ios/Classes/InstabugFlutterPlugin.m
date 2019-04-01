@@ -1,6 +1,8 @@
 #import "InstabugFlutterPlugin.h"
 #import "Instabug.h"
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:((float)((rgbValue & 0xFF000000) >> 24))/255.0 ];
+
 @implementation InstabugFlutterPlugin
 
 
@@ -298,6 +300,16 @@
    BOOL boolValue = [sessionProfilerEnabled boolValue];
    [Instabug setSessionProfilerEnabled:boolValue];
 }
+
+/**
+  * Set the primary color that the SDK will use to tint certain UI elements in the SDK
+  *
+  * @param color The value of the primary color 
+  */
++ (void) setPrimaryColor:(NSString*) color {
+  Instabug.tintColor = UIColorFromRGB([color longLongValue]);
+}
+
 
 + (NSDictionary *)constants {
   return @{
