@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:instabug_flutter/Instabug.dart';
 import 'package:instabug_flutter/BugReporting.dart';
@@ -289,6 +290,17 @@ test('startWithToken:invocationEvents: Test', () async {
     Instabug.setSessionProfilerEnabled(sessionProfilerEnabled);
     expect(log, <Matcher>[
       isMethodCall('setSessionProfilerEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setPrimaryColor: Test', () async {
+    Color c = const Color.fromRGBO(255, 0, 255, 1.0);
+    final List<dynamic> args = <dynamic>[c.value];
+    Instabug.setPrimaryColor(c);
+    expect(log, <Matcher>[
+      isMethodCall('setPrimaryColor:',
         arguments: args,
       )
     ]);
