@@ -220,6 +220,13 @@ class Instabug {
     await _channel.invokeMethod<Object>('setPrimaryColor:', params); 
   } 
 
+  /// Adds specific user data that you need to be added to the reports
+  /// [userData] data to be added
+  static void setUserData(String userData) async {
+    final List<dynamic> params = <dynamic>[userData];
+    await _channel.invokeMethod<Object>('setUserData:', params); 
+  } 
+
 }
 
 
