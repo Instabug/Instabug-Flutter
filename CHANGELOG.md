@@ -1,5 +1,6 @@
 ## Master
 
+* Adds setUserData API mapping.
 * Adds setPrimaryColor API mapping.
 * Adds setSessionProfilerEnabled API mapping.
 
