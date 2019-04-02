@@ -56,6 +56,7 @@ class _MyAppState extends State<MyApp> {
       Color c = const Color.fromRGBO(255, 0, 255, 1.0);
       Color c = const Color.fromRGBO(255, 0, 0, 1.0);
       Instabug.setPrimaryColor(c);
+      Instabug.setUserData("This is some useful data");
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
