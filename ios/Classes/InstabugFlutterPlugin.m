@@ -296,7 +296,7 @@
   *
   * @param sessionProfilerEnabled desired state of the session profiler feature
   */
-+ (void) setSessionProfilerEnabled:(NSString*) sessionProfilerEnabled {
++ (void) setSessionProfilerEnabled:(NSNumber*) sessionProfilerEnabled {
    BOOL boolValue = [sessionProfilerEnabled boolValue];
    [Instabug setSessionProfilerEnabled:boolValue];
 }
@@ -306,8 +306,17 @@
   *
   * @param color The value of the primary color 
   */
-+ (void) setPrimaryColor:(NSString*) color {
-  Instabug.tintColor = UIColorFromRGB([color longLongValue]);
++ (void) setPrimaryColor:(NSNumber*) color {
+  Instabug.tintColor = UIColorFromRGB([color longValue]);
+}
+
+ /**
+  * Adds specific user data that you need to be added to the reports
+  *
+  * @param userData
+  */
++ (void) setUserData:(NSString *)userData {
+  [Instabug setUserData:userData];
 }
 
 
