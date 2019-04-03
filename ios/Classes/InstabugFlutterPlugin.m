@@ -306,7 +306,7 @@
   *
   * @param color The value of the primary color 
   */
-+ (void) setPrimaryColor:(NSNumber*) color {
++ (void)setPrimaryColor:(NSNumber *)color {
   Instabug.tintColor = UIColorFromRGB([color longValue]);
 }
 
