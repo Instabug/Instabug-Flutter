@@ -296,7 +296,7 @@
   *
   * @param sessionProfilerEnabled desired state of the session profiler feature
   */
-+ (void) setSessionProfilerEnabled:(NSNumber*) sessionProfilerEnabled {
++ (void)setSessionProfilerEnabled:(NSNumber *)sessionProfilerEnabled {
    BOOL boolValue = [sessionProfilerEnabled boolValue];
    [Instabug setSessionProfilerEnabled:boolValue];
 }
