@@ -315,7 +315,7 @@
   *
   * @param userData
   */
-+ (void) setUserData:(NSString *)userData {
++ (void)setUserData:(NSString *)userData {
   [Instabug setUserData:userData];
 }
 
