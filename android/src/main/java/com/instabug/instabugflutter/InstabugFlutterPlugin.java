@@ -414,4 +414,13 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             }
         });
     }
+
+    /**
+     * Adds specific user data that you need to be added to the reports
+     *
+     * @param userData
+     */
+    public void setUserData(String userData) {
+        Instabug.setUserData(userData);
+    }
 }

@@ -306,6 +306,17 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('setUserData: Test', () async {
+    String s = "This is a String";
+    final List<dynamic> args = <dynamic>[s];
+    Instabug.setUserData(s);
+    expect(log, <Matcher>[
+      isMethodCall('setUserData:',
+        arguments: args,
+      )
+    ]);
+  });
+
 }
 
 

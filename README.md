@@ -45,7 +45,7 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 | `setSessionProfilerEnabled(bool sessionProfilerEnabled)`            | `setSessionProfilerState(Feature.State state)`<br>`sessionProfilerEnabled`                                |
 |`setPrimaryColor(Color color)`                                       | `setPrimaryColor(@ColorInt int primaryColorValue)`<br>`tintColor`                                         |
 |                                                                      | `onReportSubmitHandler(Report.OnReportCreatedListener listener)`<br>`willSendReportHandler`.              |
-|                                                                      | `setUserData(String userData)`<br>`userData`                                                              |
+|`setUserData(String userData)`                                        | `setUserData(String userData)`<br>`userData`                                                              |
 |                                                                      | `addFileAttachment(Uri fileUri, String fileNameWithExtension)`<br>`+ addFileAttachmentWithURL:`           |
 |                                                                      | `addFileAttachment(byte[] data, String fileNameWithExtension)` `+ addFileAttachmentWithData:`             |
 |                                                                      | `clearFileAttachment()`<br>`+ clearFileAttachments`                                                       |
