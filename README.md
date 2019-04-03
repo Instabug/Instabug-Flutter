@@ -46,9 +46,9 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 |`setPrimaryColor(Color color)`                                       | `setPrimaryColor(@ColorInt int primaryColorValue)`<br>`tintColor`                                         |
 |                                                                      | `onReportSubmitHandler(Report.OnReportCreatedListener listener)`<br>`willSendReportHandler`.              |
 |`setUserData(String userData)`                                        | `setUserData(String userData)`<br>`userData`                                                              |
-|                                                                      | `addFileAttachment(Uri fileUri, String fileNameWithExtension)`<br>`+ addFileAttachmentWithURL:`           |
-|                                                                      | `addFileAttachment(byte[] data, String fileNameWithExtension)` `+ addFileAttachmentWithData:`             |
-|                                                                      | `clearFileAttachment()`<br>`+ clearFileAttachments`                                                       |
+| `addFileAttachmentWithURL(String filePath, String fileName)`         | `addFileAttachment(Uri fileUri, String fileNameWithExtension)`<br>`+ addFileAttachmentWithURL:`           |
+| `addFileAttachmentWithData(Uint8List data, String fileName)`         | `addFileAttachment(byte[] data, String fileNameWithExtension)` `+ addFileAttachmentWithData:`             |
+| `clearFileAttachments()`                                             | `clearFileAttachment()`<br>`+ clearFileAttachments`                                                       |
 |                                                                      | `setWelcomeMessageState(WelcomeMessage.State welcomeMessageState)`<br>`welcomeMessageMode`                |
 
 #### `BugReporting`
