@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:instabug_flutter/Instabug.dart';
@@ -313,6 +314,39 @@ test('startWithToken:invocationEvents: Test', () async {
     expect(log, <Matcher>[
       isMethodCall('setUserData:',
         arguments: args,
+      )
+    ]);
+  });
+
+  test('addFileAttachmentWithURL: Test', () async {
+    String filePath = "filePath";
+    String fileName = "fileName";
+    final List<dynamic> args = <dynamic>[filePath, fileName];
+    Instabug.addFileAttachmentWithURL(filePath,fileName);
+    expect(log, <Matcher>[
+      isMethodCall('addFileAttachmentWithURL:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('addFileAttachmentWithData: Test', () async {
+    var bdata = new Uint8List(10);
+    String fileName = "fileName";
+    final List<dynamic> args = <dynamic>[bdata, fileName];
+    Instabug.addFileAttachmentWithData(bdata,fileName);
+    expect(log, <Matcher>[
+      isMethodCall('addFileAttachmentWithData:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('clearFileAttachments Test', () async {
+    Instabug.clearFileAttachments();
+    expect(log, <Matcher>[
+      isMethodCall('clearFileAttachments',
+        arguments: null,
       )
     ]);
   });
