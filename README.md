@@ -42,14 +42,14 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 | `getUserAttributes()`                                                | `getAllUserAttributes()`<br>`+ userAttributes:`                                                           |
 | `logUserEventWithName(String name)`                                  | `logUserEvent(String name)`<br>`+ logUserEventWithName:`                                                  |
 | `show()`                                                             | `show()`<br>`+ show`                                                                                      |
-| `setSessionProfilerEnabled(bool sessionProfilerEnabled)`            | `setSessionProfilerState(Feature.State state)`<br>`sessionProfilerEnabled`                                |
-|`setPrimaryColor(Color color)`                                       | `setPrimaryColor(@ColorInt int primaryColorValue)`<br>`tintColor`                                         |
+| `setSessionProfilerEnabled(bool sessionProfilerEnabled)`             | `setSessionProfilerState(Feature.State state)`<br>`sessionProfilerEnabled`                                |
+| `setPrimaryColor(Color color)`                                       | `setPrimaryColor(@ColorInt int primaryColorValue)`<br>`tintColor`                                         |
 |                                                                      | `onReportSubmitHandler(Report.OnReportCreatedListener listener)`<br>`willSendReportHandler`.              |
-|`setUserData(String userData)`                                        | `setUserData(String userData)`<br>`userData`                                                              |
+| `setUserData(String userData)`                                       | `setUserData(String userData)`<br>`userData`                                                              |
 | `addFileAttachmentWithURL(String filePath, String fileName)`         | `addFileAttachment(Uri fileUri, String fileNameWithExtension)`<br>`+ addFileAttachmentWithURL:`           |
 | `addFileAttachmentWithData(Uint8List data, String fileName)`         | `addFileAttachment(byte[] data, String fileNameWithExtension)` `+ addFileAttachmentWithData:`             |
 | `clearFileAttachments()`                                             | `clearFileAttachment()`<br>`+ clearFileAttachments`                                                       |
-|                                                                      | `setWelcomeMessageState(WelcomeMessage.State welcomeMessageState)`<br>`welcomeMessageMode`                |
+| `setWelcomeMessageMode(WelcomeMessageMode welcomeMessageMode)`       | `setWelcomeMessageState(WelcomeMessage.State welcomeMessageState)`<br>`welcomeMessageMode`                |
 
 #### `BugReporting`
 
