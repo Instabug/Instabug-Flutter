@@ -261,6 +261,13 @@ class Instabug {
       await _channel.invokeMethod<Object>('clearFileAttachments'); 
   } 
 
+  ///Sets the welcome message mode to live, beta or disabled.
+  ///[welcomeMessageMode] An enum to set the welcome message mode to live, beta or disabled.
+  static void setWelcomeMessageMode(WelcomeMessageMode welcomeMessageMode) async {
+    final List<dynamic> params = <dynamic>[welcomeMessageMode.toString()];
+    await _channel.invokeMethod<Object>('setWelcomeMessageMode:', params); 
+  } 
+
 }
 
 
