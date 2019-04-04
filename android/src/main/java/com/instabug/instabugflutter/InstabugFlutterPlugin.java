@@ -1,6 +1,7 @@
 package com.instabug.instabugflutter;
 
 import android.app.Application;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -422,5 +424,39 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      */
     public void setUserData(String userData) {
         Instabug.setUserData(userData);
+    }
+
+    /**
+     * The file at filePath will be uploaded along upcoming reports with the name
+     * fileNameWithExtension
+     *
+     * @param fileUri               the file uri
+     * @param fileNameWithExtension the file name with extension
+     */
+    public void addFileAttachmentWithURL(String fileUri, String fileNameWithExtension) {
+        File file = new File(fileUri);
+        if (file.exists()) {
+            Instabug.addFileAttachment(Uri.fromFile(file), fileNameWithExtension);
+        }
+    }
+
+
+    /**
+     * The file at filePath will be uploaded along upcoming reports with the name
+     * fileNameWithExtension
+     *
+     * @param data                  the data of the file
+     * @param fileNameWithExtension the file name with extension
+     */
+    public void addFileAttachmentWithData(byte[] data, String fileNameWithExtension) {
+        Instabug.addFileAttachment(data, fileNameWithExtension);
+    }
+
+    /**
+     * Clears all Uris of the attached files.
+     * The URIs which added via {@link Instabug#addFileAttachment} API not the physical files.
+     */
+    public void clearFileAttachments() {
+        Instabug.clearFileAttachment();
     }
 }

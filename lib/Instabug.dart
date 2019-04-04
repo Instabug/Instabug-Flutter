@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'dart:ui';
+import 'dart:io' show Platform;
 import 'package:flutter/services.dart';
 
 enum InvocationEvent {
@@ -225,6 +227,38 @@ class Instabug {
   static void setUserData(String userData) async {
     final List<dynamic> params = <dynamic>[userData];
     await _channel.invokeMethod<Object>('setUserData:', params); 
+  } 
+
+   ///Add file to be attached to the bug report.
+   ///[filePath] of the file
+   ///[fileName] of the file
+  static void addFileAttachmentWithURL(String filePath, String fileName) async {
+    if (Platform.isIOS) {
+      final List<dynamic> params = <dynamic>[filePath];
+      await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params); 
+    } else {
+      final List<dynamic> params = <dynamic>[filePath,fileName];
+      await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params); 
+    }
+  } 
+
+  ///Add file to be attached to the bug report.
+   ///[data] of the file
+   ///[fileName] of the file
+  static void addFileAttachmentWithData(Uint8List data, String fileName) async {
+    if (Platform.isIOS) {
+      final List<dynamic> params = <dynamic>[data];
+      await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params); 
+    } else {
+      final List<dynamic> params = <dynamic>[data,fileName];
+      await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params); 
+    }
+  } 
+
+  ///Clears all Uris of the attached files.
+  ///The URIs which added via {@link Instabug#addFileAttachment} API not the physical files.
+  static void clearFileAttachments() async {
+      await _channel.invokeMethod<Object>('clearFileAttachments'); 
   } 
 
 }

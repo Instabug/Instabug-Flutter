@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io' show Platform;
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/Instabug.dart';
@@ -54,9 +55,12 @@ class _MyAppState extends State<MyApp> {
       Instabug.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK);
       Instabug.setSessionProfilerEnabled(false);
       Color c = const Color.fromRGBO(255, 0, 255, 1.0);
-      Color c = const Color.fromRGBO(255, 0, 0, 1.0);
       Instabug.setPrimaryColor(c);
       Instabug.setUserData("This is some useful data");
+      var list = Uint8List(10);
+      Instabug.addFileAttachmentWithData(list, "My File");
+      Instabug.clearFileAttachments();
+      //Instabug.clearFileAttachments();
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }

@@ -319,6 +319,34 @@
   [Instabug setUserData:userData];
 }
 
+/**
+  * The file at filePath will be uploaded along upcoming reports with the name
+  * fileNameWithExtension
+  *
+  * @param fileUri               the file uri
+  */
++ (void)addFileAttachmentWithURL:(NSString *)fileURLString {
+  [Instabug addFileAttachmentWithURL:[NSURL URLWithString:fileURLString]];
+}
+
+/**
+  * The file at filePath will be uploaded along upcoming reports with the name
+  * fileNameWithExtension
+  *
+  * @param data               the file data
+  */
++ (void)addFileAttachmentWithData:(FlutterStandardTypedData *)data {
+  [Instabug addFileAttachmentWithData:[data data]];
+}
+
+/**
+  * Clears all Uris of the attached files.
+  * The URIs which added via {@link Instabug#addFileAttachment} API not the physical files.
+  */
++ (void)clearFileAttachments {
+  [Instabug clearFileAttachments];
+}
+
 
 + (NSDictionary *)constants {
   return @{
