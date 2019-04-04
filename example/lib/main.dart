@@ -32,6 +32,7 @@ class _MyAppState extends State<MyApp> {
         Instabug.start('9582e6cfe34e2b8897f48cfa3b617adb', <InvocationEvent>[InvocationEvent.floatingButton, InvocationEvent.shake]);
       }
       Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
+      Instabug.setWelcomeMessageMode(WelcomeMessageMode.beta);
       Instabug.identifyUserWithEmail('aezz@instabug.com', 'Aly Ezz');
       InstabugLog.logInfo('Test Log Info Message from Flutter!');
       InstabugLog.logDebug('Test Debug Message from Flutter!');
