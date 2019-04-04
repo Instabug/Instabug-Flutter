@@ -60,6 +60,7 @@ class _MyAppState extends State<MyApp> {
       var list = Uint8List(10);
       Instabug.addFileAttachmentWithData(list, "My File");
       Instabug.clearFileAttachments();
+      //Instabug.clearFileAttachments();
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
