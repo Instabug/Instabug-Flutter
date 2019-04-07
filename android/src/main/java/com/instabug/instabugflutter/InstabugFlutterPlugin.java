@@ -14,7 +14,9 @@ import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
+import com.instabug.library.OnSdkDismissCallback;
 import com.instabug.library.invocation.InstabugInvocationEvent;
+import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 
@@ -47,11 +49,12 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
 
     private InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
 
+    static MethodChannel channel;
     /**
      * Plugin registration.
      */
     public static void registerWith(Registrar registrar) {
-        final MethodChannel channel = new MethodChannel(registrar.messenger(), "instabug_flutter");
+        channel = new MethodChannel(registrar.messenger(), "instabug_flutter");
         channel.setMethodCallHandler(new InstabugFlutterPlugin());
     }
 
@@ -472,4 +475,55 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         Instabug.setWelcomeMessageState(resolvedWelcomeMessageMode);
     }
 
+    /**
+     * Enables and disables manual invocation and prompt options for bug and feedback.
+     * @param {boolean} isEnabled
+     */
+    public void setBugReportingEnabled(final boolean isEnabled) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (isEnabled) {
+                        BugReporting.setState(Feature.State.ENABLED);
+                    } else {
+                        BugReporting.setState(Feature.State.DISABLED);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * Sets a block of code to be executed just before the SDK's UI is presented.
+     * This block is executed on the UI thread. Could be used for performing any
+     * UI changes before the SDK's UI is shown.
+     */
+    public void setOnInvokeCallback() {
+        BugReporting.setOnInvokeCallback(new OnInvokeCallback() {
+            @Override
+            public void onInvoke() {
+                channel.invokeMethod("onInvokeCallback", "a");
+            }
+        });
+    }
+
+    /**
+     * Sets a block of code to be executed right after the SDK's UI is dismissed.
+     * This block is executed on the UI thread. Could be used for performing any
+     * UI changes after the SDK's UI is dismissed.
+     */
+    public void setOnDismissCallback() {
+           BugReporting.setOnDismissCallback(new OnSdkDismissCallback() {
+               @Override
+               public void call(DismissType dismissType, ReportType reportType) {
+                   HashMap<String, String> params = new HashMap<>();
+                   params.put("dismissType", dismissType.toString());
+                   params.put("reportType", reportType.toString());
+                   channel.invokeMethod("onDismissCallback", params);
+               }
+           });
+    }
 }
