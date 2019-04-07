@@ -459,4 +459,17 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     public void clearFileAttachments() {
         Instabug.clearFileAttachment();
     }
+
+    /**
+     * Sets the welcome message mode to live, beta or disabled.
+     *
+     * @param welcomeMessageMode An enum to set the welcome message mode to
+     *                          live, beta or disabled.
+     */
+    public void setWelcomeMessageMode(String welcomeMessageMode) {
+        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(
+                welcomeMessageMode, WelcomeMessage.State.class);
+        Instabug.setWelcomeMessageState(resolvedWelcomeMessageMode);
+    }
+
 }

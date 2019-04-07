@@ -351,6 +351,16 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('setWelcomeMessageMode Test', () async {
+    final List<dynamic> args = <dynamic>[WelcomeMessageMode.live.toString()];
+    Instabug.setWelcomeMessageMode(WelcomeMessageMode.live);
+    expect(log, <Matcher>[
+      isMethodCall('setWelcomeMessageMode:',
+        arguments: args,
+      )
+    ]);
+  });
+
 }
 
 

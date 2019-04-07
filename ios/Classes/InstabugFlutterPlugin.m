@@ -347,6 +347,17 @@
   [Instabug clearFileAttachments];
 }
 
+/**
+  * Sets the welcome message mode to live, beta or disabled.
+  *
+  * @param welcomeMessageMode An enum to set the welcome message mode to
+  *                          live, beta or disabled.
+  */
++ (void)setWelcomeMessageMode:(NSString *)welcomeMessageMode {
+    NSDictionary *constants = [self constants];
+    NSInteger welcomeMode = ((NSNumber *) constants[welcomeMessageMode]).integerValue;
+    [Instabug setWelcomeMessageMode:welcomeMode];
+}
 
 + (NSDictionary *)constants {
   return @{
