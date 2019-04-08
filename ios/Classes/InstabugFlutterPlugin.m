@@ -411,6 +411,106 @@ FlutterMethodChannel* channel;
         };
 }
 
+/**
+  * Sets whether attachments in bug reporting and in-app messaging are enabled or not.
+  *
+  * @param  screenshot A boolean to enable or disable screenshot attachments.
+  * @param  extraScreenShot A boolean to enable or disable extra screenshot attachments.
+  * @param  galleryImage A boolean to enable or disable gallery image attachments.
+  * @param  screenRecording A boolean to enable or disable screen recording attachments.
+  */
++ (void)setEnabledAttachmentTypes:(NSNumber *)screenShot
+                    extraScreenShot:(NSNumber *)extraScreenShot
+                    galleryImage:(NSNumber *)galleryImage
+                    screenRecording:(NSNumber *)screenRecording {
+   IBGAttachmentType attachmentTypes = 0;
+     if([screenShot boolValue]) {
+         attachmentTypes = IBGAttachmentTypeScreenShot;
+     }
+     if([extraScreenShot boolValue]) {
+         attachmentTypes |= IBGAttachmentTypeExtraScreenShot;
+     }
+     if([galleryImage boolValue]) {
+         attachmentTypes |= IBGAttachmentTypeGalleryImage;
+     }
+     if([screenRecording boolValue]) {
+         attachmentTypes |= IBGAttachmentTypeScreenRecording;
+     }
+
+     IBGBugReporting.enabledAttachmentTypes = attachmentTypes;
+}
+
+/**
+  * Sets the events that invoke the feedback form.
+  * Default is set by `Instabug.startWithToken`.
+  * @param {invocationEvent} invocationEvent Array of events that invokes the
+  * feedback form.
+  */
++ (void)setInvocationEvents:(NSArray *)invocationEventsArray {
+    NSDictionary *constants = [self constants];
+    NSInteger invocationEvents = IBGInvocationEventNone;
+    for (NSString * invocationEvent in invocationEventsArray) {
+        invocationEvents |= ((NSNumber *) constants[invocationEvent]).integerValue;
+    }
+    IBGBugReporting.invocationEvents = invocationEvents;
+}
+
+/**
+  * Sets the events that invoke the feedback form.
+  * Default is set by `Instabug.startWithToken`.
+  * @param {invocationEvent} invocationEvent Array of events that invokes the
+  * feedback form.
+  */
++ (void)setReportTypes:(NSArray*)reportTypesArray {
+    NSDictionary *constants = [self constants];
+    NSInteger reportTypes = 0;
+    for (NSString * reportType in reportTypesArray) {
+        reportTypes |= ((NSNumber *) constants[reportType]).integerValue;
+    }
+   [IBGBugReporting setPromptOptionsEnabledReportTypes: reportTypes];
+}
+
+/**
+  * Sets whether the extended bug report mode should be disabled,
+  * enabled with required fields,  or enabled with optional fields.
+  *
+  * @param extendedBugReportMode
+  */
++ (void)setExtendedBugReportMode:(NSString *)extendedBugReportMode {
+    NSDictionary *constants = [self constants];
+    NSInteger extendedBugReportModeInt = ((NSNumber *) constants[extendedBugReportMode]).integerValue;
+    IBGBugReporting.extendedBugReportMode = extendedBugReportModeInt;
+}
+
+/**
+  * Sets the invocation options
+  *
+  * @param invocationOptions the array of invocation options
+  */
++ (void)setInvocationOptions:(NSArray *)invocationOptionsArray {
+    NSDictionary *constants = [self constants];
+    NSInteger invocationOptions = 0;
+    for (NSString * invocationOption in invocationOptionsArray) {
+        invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
+    }
+    IBGBugReporting.invocationOptions = invocationOptions;
+}
+
+/**
+  * Sets the invocation options
+  *
+  * @param invocationOptions the array of invocation options
+  */
++ (void)showBugReportingWithReportTypeAndOptions:(NSString*)reportType options:(NSArray *)invocationOptionsArray  {
+    NSDictionary *constants = [self constants];
+    NSInteger invocationOptions = 0;
+    for (NSString * invocationOption in invocationOptionsArray) {
+        invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
+    }
+    NSInteger reportTypeInt = ((NSNumber *) constants[reportType]).integerValue;
+    [IBGBugReporting showWithReportType:reportTypeInt options:invocationOptions];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
@@ -485,6 +585,13 @@ FlutterMethodChannel* channel;
       @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT": kIBGBetaWelcomeMessageFinishStepContent,
       @"IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_TITLE": kIBGLiveWelcomeMessageTitle,
       @"IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_CONTENT": kIBGLiveWelcomeMessageContent,
+
+      @"ReportType.BUG": @(IBGBugReportingReportTypeBug),
+      @"ReportType.FEEDBACK": @(IBGBugReportingReportTypeFeedback),
+
+      @"ExtendedBugReportMode.ENABLED_WITH_REQUIRED_FIELDS": @(IBGExtendedBugReportModeEnabledWithRequiredFields),
+      @"ExtendedBugReportMode.ENABLED_WITH_OPTIONAL_FIELDS": @(IBGExtendedBugReportModeEnabledWithOptionalFields),
+      @"ExtendedBugReportMode.DISABLED": @(IBGExtendedBugReportModeDisabled),
   };
 };
 
