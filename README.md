@@ -55,14 +55,14 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 
 | API Method                                                                                  | Native Equivalent (Android/iOS)                                                                                             |
 |---------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| `invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions])` | `invoke(InvocationMode mode, @InvocationOption int... options)`<br>`+ invokeWithMode:options:`                              |
-|                                                                                             | `setState(Feature.State state)`<br>`enabled`                                                                                |
-|                                                                                             | `setOnInvokeCallback(OnInvokeCallback onInvokeCallback)`<br>`willInvokeHandler`                                             |
-|                                                                                             | `setOnDismissCallback(OnSdkDismissCallback onSdkDismissedCallback)`<br>`didDismissHandler`                                  |
-|                                                                                             | `setInvocationEvents(InstabugInvocationEvent... invocationEvents)`<br>`invocationEvents`                                    |
-|                                                                                             | `setAttachmentTypesEnabled(boolean initial, boolean extra, boolean gallery, boolean recording)`<br>`enabledAttachmentTypes` |
-|                                                                                             | `setReportTypes(@BugReporting.ReportType int... types)`<br>`promptOptionsEnabledReportTypes`                                |
-|                                                                                             | `setExtendedBugReportState(ExtendedBugReport.State state)`<br>`extendedBugReportMode`                                       |
+| `invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions])` | `invoke(InvocationMode mode, @InvocationOption int... options)`<br>`+invokeWithMode:options:`|
+| `setEnabled(bool isEnabled)`                                                                | `setState(Feature.State state)`<br>`enabled`                                                 |
+| `setOnInvokeCallback(Function function)`                                                    | `setOnInvokeCallback(OnInvokeCallback onInvokeCallback)`<br>`willInvokeHandler`              |
+| `setOnDismissCallback(Function function)`                                                   | `setOnDismissCallback(OnSdkDismissCallback onSdkDismissedCallback)`<br>`didDismissHandler`   |
+|                                                                                             | `setInvocationEvents(InstabugInvocationEvent... invocationEvents)`<br>`invocationEvents`     |
+|                                                                                             | `setAttachmentTypesEnabled(boolean initial, boolean extra, boolean gallery, boolean                                                                                                            recording`<br>`enabledAttachmentTypes` |
+|                                                                                             | `setReportTypes(@BugReporting.ReportType int... types)`<br>`promptOptionsEnabledReportTypes` |
+|                                                                                             | `setExtendedBugReportState(ExtendedBugReport.State state)`<br>`extendedBugReportMode`        |
 |                                                                                             | `setOptions(@Option int... options)`<br>`bugReportingOptions`
 |                                                                                             | `show(@BugReporting.ReportType int type)`<br>`+ showWithReportType:options:`
 

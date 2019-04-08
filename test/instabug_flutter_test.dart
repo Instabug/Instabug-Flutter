@@ -361,6 +361,37 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('setBugReportingEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    BugReporting.setEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setBugReportingEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setOnInvokeCallback Test', () async {
+    BugReporting.setOnInvokeCallback(()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('setOnInvokeCallback',
+        arguments: null,
+      )
+    ]);
+  });
+
+  test('setOnDismissCallback Test', () async {
+    BugReporting.setOnDismissCallback(()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('setOnDismissCallback',
+        arguments: null,
+      )
+    ]);
+  });
+
+
+
 }
 
 

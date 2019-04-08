@@ -62,6 +62,9 @@ class _MyAppState extends State<MyApp> {
       Instabug.addFileAttachmentWithData(list, "My File");
       Instabug.clearFileAttachments();
       //Instabug.clearFileAttachments();
+      //BugReporting.setEnabled(false);
+      BugReporting.setOnInvokeCallback(sdkInvoked);
+      BugReporting.setOnDismissCallback(sdkDismissed);
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -77,6 +80,15 @@ class _MyAppState extends State<MyApp> {
 
   void resetTags() {
     Instabug.resetTags();
+  }
+
+  void sdkInvoked() {
+    debugPrint("I am called before invocation");
+  }
+
+  void sdkDismissed(DismissType dismissType, ReportType reportType) {
+    debugPrint('SDK Dismissed DismissType: ' + dismissType.toString());
+     debugPrint('SDK Dismissed ReportType: ' + reportType.toString());
   }
 
   void show() {

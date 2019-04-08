@@ -1,5 +1,8 @@
 ## Master
 
+* Adds setOnDismissCallback API mapping.
+* Adds setOnInvokeCallback API mapping.
+* Adds BugReporting.setEnabled API mapping.
 * Adds setWelcomeMessageMode API mapping.
 * Adds addFileAttachmentWithURL, addFileAttachmentWithData, clearFileAttachments API mapping.
 * Adds setUserData API mapping.
