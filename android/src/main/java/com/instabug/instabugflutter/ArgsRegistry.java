@@ -7,6 +7,7 @@ import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
+import com.instabug.library.extendedbugreport.ExtendedBugReport;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -57,6 +58,8 @@ final class ArgsRegistry {
         registerInvocationModeArgs(ARGS);
         registerInvocationOptionsArgs(ARGS);
         registerCustomTextPlaceHolderKeysArgs(ARGS);
+        registerInstabugReportTypesArgs(ARGS);
+        registerInstabugExtendedBugReportModeArgs(ARGS);
     }
 
     /**
@@ -197,5 +200,18 @@ final class ArgsRegistry {
         args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT);
         args.put("IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_TITLE", InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_TITLE);
         args.put("IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_CONTENT", InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_CONTENT);
+    }
+
+    @VisibleForTesting
+    static void registerInstabugReportTypesArgs(Map<String, Object> args) {
+        args.put("ReportType.BUG", BugReporting.ReportType.BUG);
+        args.put("ReportType.FEEDBACK", BugReporting.ReportType.FEEDBACK);
+    }
+
+    @VisibleForTesting
+    static void registerInstabugExtendedBugReportModeArgs(Map<String, Object> args) {
+        args.put("ExtendedBugReportMode.ENABLED_WITH_REQUIRED_FIELDS", ExtendedBugReport.State.ENABLED_WITH_REQUIRED_FIELDS);
+        args.put("ExtendedBugReportMode.ENABLED_WITH_OPTIONAL_FIELDS", ExtendedBugReport.State.ENABLED_WITH_OPTIONAL_FIELDS);
+        args.put("ExtendedBugReportMode.DISABLED",ExtendedBugReport.State.DISABLED);
     }
 }
