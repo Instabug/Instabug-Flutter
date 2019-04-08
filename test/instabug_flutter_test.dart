@@ -390,7 +390,65 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('setInvocationEvents Test', () async {
+     BugReporting.setInvocationEvents(<InvocationEvent>[InvocationEvent.floatingButton]);
+    final List<dynamic> args = <dynamic>[<String>[InvocationEvent.floatingButton.toString()]];
+    expect(log, <Matcher>[
+      isMethodCall('setInvocationEvents:',
+        arguments: args,
+      )
+    ]);
+  });
 
+  test('setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording: Test', () async {
+    BugReporting.setEnabledAttachmentTypes(false, false, false, false);
+    final List<dynamic> args = <dynamic>[false, false, false, false];
+    expect(log, <Matcher>[
+      isMethodCall('setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording:',
+        arguments: args,
+      )
+    ]);
+  });
+
+ test('setInvocationEvents Test', () async {
+    BugReporting.setReportTypes(<ReportType>[ReportType.FEEDBACK]);
+    final List<dynamic> args = <dynamic>[<String>[ReportType.FEEDBACK.toString()]];
+    expect(log, <Matcher>[
+      isMethodCall('setReportTypes:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setInvocationEvents Test', () async {
+    BugReporting.setExtendedBugReportMode(ExtendedBugReportMode.ENABLED_WITH_OPTIONAL_FIELDS);
+    final List<dynamic> args = <dynamic>[ExtendedBugReportMode.ENABLED_WITH_OPTIONAL_FIELDS.toString()];
+    expect(log, <Matcher>[
+      isMethodCall('setExtendedBugReportMode:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setInvocationOptions Test', () async {
+    BugReporting.setInvocationOptions(<InvocationOption>[InvocationOption.EMAIL_FIELD_HIDDEN]);
+    final List<dynamic> args = <dynamic>[<String>[InvocationOption.EMAIL_FIELD_HIDDEN.toString()]];
+    expect(log, <Matcher>[
+      isMethodCall('setInvocationOptions:',
+        arguments: args,
+      )
+    ]);
+  });
+
+   test('showBugReportingWithReportTypeAndOptions:options Test', () async {
+   BugReporting.showWithOptions(ReportType.BUG, <InvocationOption>[InvocationOption.EMAIL_FIELD_HIDDEN]);
+    final List<dynamic> args = <dynamic>[ReportType.BUG.toString(), <String>[InvocationOption.EMAIL_FIELD_HIDDEN.toString()]];
+    expect(log, <Matcher>[
+      isMethodCall('showBugReportingWithReportTypeAndOptions:options:',
+        arguments: args,
+      )
+    ]);
+  });
 
 }
 
