@@ -364,8 +364,8 @@ FlutterMethodChannel* channel;
   * Enables and disables manual invocation and prompt options for bug and feedback.
   * @param {boolean} isEnabled
   */
-+ (void)setBugReportingEnabled:(NSNumber *)sessionProfilerEnabled {
-   BOOL boolValue = [sessionProfilerEnabled boolValue];
++ (void)setBugReportingEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
    IBGBugReporting.enabled = boolValue;
 }
 
