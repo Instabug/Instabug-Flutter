@@ -10,6 +10,18 @@ enum InvocationOption {
   EMAIL_FIELD_OPTIONAL
 }
 
+enum DissmissType {
+  CANCEL,
+  SUBMIT,
+  ADD_ATTACHMENT
+}
+
+enum ReportType {
+  BUG,
+  FEEDBACK,
+  OTHER
+}
+
 class BugReporting {
 
   static Function onInvokeCallback;
@@ -27,8 +39,35 @@ class BugReporting {
       onInvokeCallback();
       return ;
     case 'onDismissCallback':
+      Map<dynamic, dynamic> map = call.arguments;
+      DissmissType dissmissType;
+      ReportType reportType;
+      final String dismissTypeString = map['dismissType'].toUpperCase();
+      switch(dismissTypeString) {
+        case 'CANCEL':
+          dissmissType = DissmissType.CANCEL;
+          break;
+        case 'SUBMIT':
+          dissmissType = DissmissType.SUBMIT;
+          break;
+        case 'ADD_ATTACHMENT':
+          dissmissType = DissmissType.ADD_ATTACHMENT;
+          break;
+      }
+      final String reportTypeString = map['reportType'].toUpperCase();
+      switch(reportTypeString) {
+        case 'BUG':
+          reportType = ReportType.BUG;
+          break;
+        case 'FEEDBACK':
+          reportType = ReportType.FEEDBACK;
+          break;
+        case 'OTHER':
+          reportType = ReportType.OTHER;
+          break;
+      }
       try {
-        onDismissCallback(call.arguments);
+        onDismissCallback(dissmissType,reportType);
       }
       catch(exception) {
         onDismissCallback();
