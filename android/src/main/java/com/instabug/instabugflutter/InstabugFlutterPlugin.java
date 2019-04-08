@@ -483,15 +483,11 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                try {
                     if (isEnabled) {
                         BugReporting.setState(Feature.State.ENABLED);
                     } else {
                         BugReporting.setState(Feature.State.DISABLED);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
         });
     }
