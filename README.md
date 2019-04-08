@@ -59,12 +59,12 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 | `setEnabled(bool isEnabled)`                                                                | `setState(Feature.State state)`<br>`enabled`                                                 |
 | `setOnInvokeCallback(Function function)`                                                    | `setOnInvokeCallback(OnInvokeCallback onInvokeCallback)`<br>`willInvokeHandler`              |
 | `setOnDismissCallback(Function function)`                                                   | `setOnDismissCallback(OnSdkDismissCallback onSdkDismissedCallback)`<br>`didDismissHandler`   |
-|                                                                                             | `setInvocationEvents(InstabugInvocationEvent... invocationEvents)`<br>`invocationEvents`     |
-|                                                                                             | `setAttachmentTypesEnabled(boolean initial, boolean extra, boolean gallery, boolean                                                                                                            recording`<br>`enabledAttachmentTypes` |
-|                                                                                             | `setReportTypes(@BugReporting.ReportType int... types)`<br>`promptOptionsEnabledReportTypes` |
-|                                                                                             | `setExtendedBugReportState(ExtendedBugReport.State state)`<br>`extendedBugReportMode`        |
-|                                                                                             | `setOptions(@Option int... options)`<br>`bugReportingOptions`
-|                                                                                             | `show(@BugReporting.ReportType int type)`<br>`+ showWithReportType:options:`
+| `setInvocationEvents(List<InvocationEvent> invocationEvents)`                               | `setInvocationEvents(InstabugInvocationEvent... invocationEvents)`<br>`invocationEvents`     |
+| `setEnabledAttachmentTypes(bool screenshot, bool extraScreenshot, bool galleryImage, bool screenRecording)` | `setAttachmentTypesEnabled(boolean initial, boolean extra, boolean gallery, boolean                                                                                                            recording`<br>`enabledAttachmentTypes` |
+| `setReportTypes(List<ReportType> reportTypes)`                                              | `setReportTypes(@BugReporting.ReportType int... types)`<br>`promptOptionsEnabledReportTypes` |
+| `setExtendedBugReportMode(ExtendedBugReportMode extendedBugReportMode)`                     | `setExtendedBugReportState(ExtendedBugReport.State state)`<br>`extendedBugReportMode`        |
+| `setInvocationOptions(List<InvocationOption> invocationOptions)`                            | `setOptions(@Option int... options)`<br>`bugReportingOptions`
+| `showWithOptions(ReportType reportType, List<InvocationOption> invocationOptions)`          | `show(@BugReporting.ReportType int type)`<br>`+ showWithReportType:options:`
 
 #### `InstabugLog`
 
