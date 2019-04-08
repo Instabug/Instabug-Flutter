@@ -15,6 +15,7 @@ import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.OnSdkDismissCallback;
+import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.logging.InstabugLog;
@@ -521,5 +522,95 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
                    channel.invokeMethod("onDismissCallback", params);
                }
            });
+    }
+
+    /**
+     * Sets the event used to invoke Instabug SDK
+     *
+     * @param invocationEvents ArrayList of invocation events
+     */
+    public void setInvocationEvents(final  ArrayList<String> invocationEvents) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
+                for (int i = 0; i < invocationEvents.size(); i++) {
+                    String key = invocationEvents.get(i);
+                    invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key, InstabugInvocationEvent.class);
+                }
+                BugReporting.setInvocationEvents(invocationEventsArray);
+            }
+        });
+    }
+
+    /**
+     * Sets whether attachments in bug reporting and in-app messaging are enabled or not.
+     *
+     * @param  screenshot A boolean to enable or disable screenshot attachments.
+     * @param {boolean} extraScreenShot A boolean to enable or disable extra screenshot attachments.
+     * @param {boolean} galleryImage A boolean to enable or disable gallery image attachments.
+     * @param {boolean} screenRecording A boolean to enable or disable screen recording attachments.
+     */
+    public void setEnabledAttachmentTypes(boolean screenshot, boolean extraScreenshot, boolean
+            galleryImage, boolean screenRecording) {
+            BugReporting.setAttachmentTypesEnabled(screenshot, extraScreenshot, galleryImage,
+                    screenRecording);
+    }
+
+
+ /**
+   * Sets what type of reports, bug or feedback, should be invoked.
+   * @param {array} reportTypes - Array of reportTypes
+   */
+    public void setReportTypes(final ArrayList<String> reportTypes) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                int[] reportTypesArray = new int[reportTypes.size()];
+                for (int i = 0; i < reportTypes.size(); i++) {
+                    String key = reportTypes.get(i);
+                    reportTypesArray[i] = ArgsRegistry.getDeserializedValue(key, Integer.class);
+                }
+                BugReporting.setReportTypes(reportTypesArray);
+            }
+        });
+    }
+
+    /**
+     * Sets whether the extended bug report mode should be disabled,
+     * enabled with required fields,  or enabled with optional fields.
+     *
+     * @param extendedBugReportMode
+     */
+    public void setExtendedBugReportMode(String extendedBugReportMode) {
+        ExtendedBugReport.State extendedBugReport = ArgsRegistry.getDeserializedValue(extendedBugReportMode,  ExtendedBugReport.State.class);
+        BugReporting.setExtendedBugReportState(extendedBugReport);
+    }
+
+    /**
+     * Sets the invocation options
+     *
+     * @param invocationOptions the array of invocation options
+     */
+    public void setInvocationOptions(List<String> invocationOptions) {
+        int[] options = new int[invocationOptions.size()];
+        for (int i = 0; i < invocationOptions.size(); i++) {
+            options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i), Integer.class);
+        }
+        BugReporting.setOptions(options);
+    }
+
+    /**
+     * Invoke bug reporting with report type and options.
+     * @param {reportType} type
+     * @param {invocationOptions} options
+     */
+    public void showBugReportingWithReportTypeAndOptions(final String reportType, final List<String> invocationOptions) {
+        int[] options = new int[invocationOptions.size()];
+        for (int i = 0; i < invocationOptions.size(); i++) {
+            options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i), Integer.class);
+        }
+        int reportTypeInt = ArgsRegistry.getDeserializedValue(reportType, Integer.class);
+        BugReporting.show(reportTypeInt,options);
     }
 }
