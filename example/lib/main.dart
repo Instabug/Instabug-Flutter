@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> {
     debugPrint("I am called before invocation");
   }
 
-  void sdkDismissed(DissmissType dismissType, ReportType reportType) {
+  void sdkDismissed(DismissType dismissType, ReportType reportType) {
     debugPrint('SDK Dismissed DismissType: ' + dismissType.toString());
      debugPrint('SDK Dismissed ReportType: ' + reportType.toString());
   }

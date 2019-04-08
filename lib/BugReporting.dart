@@ -10,7 +10,7 @@ enum InvocationOption {
   EMAIL_FIELD_OPTIONAL
 }
 
-enum DissmissType {
+enum DismissType {
   CANCEL,
   SUBMIT,
   ADD_ATTACHMENT
@@ -40,18 +40,18 @@ class BugReporting {
       return ;
     case 'onDismissCallback':
       Map<dynamic, dynamic> map = call.arguments;
-      DissmissType dissmissType;
+      DismissType dismissType;
       ReportType reportType;
       final String dismissTypeString = map['dismissType'].toUpperCase();
       switch(dismissTypeString) {
         case 'CANCEL':
-          dissmissType = DissmissType.CANCEL;
+          dismissType = DismissType.CANCEL;
           break;
         case 'SUBMIT':
-          dissmissType = DissmissType.SUBMIT;
+          dismissType = DismissType.SUBMIT;
           break;
         case 'ADD_ATTACHMENT':
-          dissmissType = DissmissType.ADD_ATTACHMENT;
+          dismissType = DismissType.ADD_ATTACHMENT;
           break;
       }
       final String reportTypeString = map['reportType'].toUpperCase();
@@ -67,7 +67,7 @@ class BugReporting {
           break;
       }
       try {
-        onDismissCallback(dissmissType,reportType);
+        onDismissCallback(dismissType,reportType);
       }
       catch(exception) {
         onDismissCallback();
