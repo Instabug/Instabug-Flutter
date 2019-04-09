@@ -89,8 +89,8 @@ test('startWithToken:invocationEvents: Test', () async {
   });
   
   test('setLocale:', () async {
-    Instabug.setLocale(Locale.German);
-    final List<dynamic> args = <dynamic>[Locale.German.toString()];
+    Instabug.setLocale(Locale.german);
+    final List<dynamic> args = <dynamic>[Locale.german.toString()];
     expect(log, <Matcher>[
       isMethodCall('setLocale:',
         arguments: args,
@@ -254,8 +254,8 @@ test('startWithToken:invocationEvents: Test', () async {
 
   
   test('invokeWithMode:options: Test', () async {
-    BugReporting.invokeWithMode(InvocationMode.BUG, [InvocationOption.COMMENT_FIELD_REQUIRED]);
-    final List<dynamic> args = <dynamic>[InvocationMode.BUG.toString(), <String>[InvocationOption.COMMENT_FIELD_REQUIRED.toString()]];
+    BugReporting.invokeWithMode(InvocationMode.bug, [InvocationOption.commentFieldRequired]);
+    final List<dynamic> args = <dynamic>[InvocationMode.bug.toString(), <String>[InvocationOption.commentFieldRequired.toString()]];
     expect(log, <Matcher>[
       isMethodCall('invokeWithMode:options:',
         arguments: args,
@@ -275,7 +275,7 @@ test('startWithToken:invocationEvents: Test', () async {
 
   test('test setValueForStringWithKey should be called with two arguments', () async {
     const String value = 'Some key';
-    const IBGCustomTextPlaceHolderKey key = IBGCustomTextPlaceHolderKey.SHAKE_HINT;
+    const IBGCustomTextPlaceHolderKey key = IBGCustomTextPlaceHolderKey.shakeHint;
     Instabug.setValueForStringWithKey(value, key);
     final List<dynamic> args = <dynamic>[value, key.toString()];
     expect(log, <Matcher>[
@@ -411,8 +411,8 @@ test('startWithToken:invocationEvents: Test', () async {
   });
 
  test('setInvocationEvents Test', () async {
-    BugReporting.setReportTypes(<ReportType>[ReportType.FEEDBACK]);
-    final List<dynamic> args = <dynamic>[<String>[ReportType.FEEDBACK.toString()]];
+    BugReporting.setReportTypes(<ReportType>[ReportType.feedback]);
+    final List<dynamic> args = <dynamic>[<String>[ReportType.feedback.toString()]];
     expect(log, <Matcher>[
       isMethodCall('setReportTypes:',
         arguments: args,
@@ -421,8 +421,8 @@ test('startWithToken:invocationEvents: Test', () async {
   });
 
   test('setInvocationEvents Test', () async {
-    BugReporting.setExtendedBugReportMode(ExtendedBugReportMode.ENABLED_WITH_OPTIONAL_FIELDS);
-    final List<dynamic> args = <dynamic>[ExtendedBugReportMode.ENABLED_WITH_OPTIONAL_FIELDS.toString()];
+    BugReporting.setExtendedBugReportMode(ExtendedBugReportMode.enabledWithOptionalFields);
+    final List<dynamic> args = <dynamic>[ExtendedBugReportMode.enabledWithOptionalFields.toString()];
     expect(log, <Matcher>[
       isMethodCall('setExtendedBugReportMode:',
         arguments: args,
@@ -431,8 +431,8 @@ test('startWithToken:invocationEvents: Test', () async {
   });
 
   test('setInvocationOptions Test', () async {
-    BugReporting.setInvocationOptions(<InvocationOption>[InvocationOption.EMAIL_FIELD_HIDDEN]);
-    final List<dynamic> args = <dynamic>[<String>[InvocationOption.EMAIL_FIELD_HIDDEN.toString()]];
+    BugReporting.setInvocationOptions(<InvocationOption>[InvocationOption.emailFieldHidden]);
+    final List<dynamic> args = <dynamic>[<String>[InvocationOption.emailFieldHidden.toString()]];
     expect(log, <Matcher>[
       isMethodCall('setInvocationOptions:',
         arguments: args,
@@ -441,8 +441,8 @@ test('startWithToken:invocationEvents: Test', () async {
   });
 
    test('showBugReportingWithReportTypeAndOptions:options Test', () async {
-   BugReporting.showWithOptions(ReportType.BUG, <InvocationOption>[InvocationOption.EMAIL_FIELD_HIDDEN]);
-    final List<dynamic> args = <dynamic>[ReportType.BUG.toString(), <String>[InvocationOption.EMAIL_FIELD_HIDDEN.toString()]];
+   BugReporting.showWithOptions(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
+    final List<dynamic> args = <dynamic>[ReportType.bug.toString(), <String>[InvocationOption.emailFieldHidden.toString()]];
     expect(log, <Matcher>[
       isMethodCall('showBugReportingWithReportTypeAndOptions:options:',
         arguments: args,
