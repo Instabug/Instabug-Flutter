@@ -128,90 +128,90 @@ final class ArgsRegistry {
 
     @VisibleForTesting
     static void registerInvocationModeArgs(Map<String, Object> args) {
-        args.put("InvocationMode.BUG", BugReporting.ReportType.BUG);
-        args.put("InvocationMode.FEEDBACK", BugReporting.ReportType.FEEDBACK);
+        args.put("InvocationMode.bug", BugReporting.ReportType.BUG);
+        args.put("InvocationMode.feedback", BugReporting.ReportType.FEEDBACK);
     }
 
     @VisibleForTesting
     static void registerInvocationOptionsArgs(Map<String, Object> args) {
-        args.put("InvocationOption.COMMENT_FIELD_REQUIRED", Option.COMMENT_FIELD_REQUIRED);
-        args.put("InvocationOption.DISABLE_POST_SENDING_DIALOG", Option.DISABLE_POST_SENDING_DIALOG);
-        args.put("InvocationOption.EMAIL_FIELD_HIDDEN", Option.EMAIL_FIELD_HIDDEN);
-        args.put("InvocationOption.EMAIL_FIELD_OPTIONAL", Option.EMAIL_FIELD_OPTIONAL);
+        args.put("InvocationOption.commentFieldRequired", Option.COMMENT_FIELD_REQUIRED);
+        args.put("InvocationOption.disablePostSendingDialog", Option.DISABLE_POST_SENDING_DIALOG);
+        args.put("InvocationOption.emailFieldHidden", Option.EMAIL_FIELD_HIDDEN);
+        args.put("InvocationOption.emailFieldOptional", Option.EMAIL_FIELD_OPTIONAL);
     }
 
     @VisibleForTesting
     static void registerLocaleArgs(Map<String, Object> args) {
-        args.put("Locale.ChineseTraditional", new Locale(TRADITIONAL_CHINESE.getCode(), TRADITIONAL_CHINESE.getCountry()));
-        args.put("Locale.PortuguesePortugal", new Locale(PORTUGUESE_PORTUGAL.getCode(), PORTUGUESE_PORTUGAL.getCountry()));
-        args.put("Locale.ChineseSimplified", new Locale(SIMPLIFIED_CHINESE.getCode(), SIMPLIFIED_CHINESE.getCountry()));
-        args.put("Locale.PortugueseBrazil", new Locale(PORTUGUESE_BRAZIL.getCode(), PORTUGUESE_BRAZIL.getCountry()));
-        args.put("Locale.Indonesian", new Locale(INDONESIAN.getCode(), INDONESIAN.getCountry()));
-        args.put("Locale.Dutch", new Locale(NETHERLANDS.getCode(), NETHERLANDS.getCountry()));
-        args.put("Locale.Norwegian", new Locale(NORWEGIAN.getCode(), NORWEGIAN.getCountry()));
-        args.put("Locale.Japanese", new Locale(JAPANESE.getCode(), JAPANESE.getCountry()));
-        args.put("Locale.English", new Locale(ENGLISH.getCode(), ENGLISH.getCountry()));
-        args.put("Locale.Italian", new Locale(ITALIAN.getCode(), ITALIAN.getCountry()));
-        args.put("Locale.Russian", new Locale(RUSSIAN.getCode(), RUSSIAN.getCountry()));
-        args.put("Locale.Spanish", new Locale(SPANISH.getCode(), SPANISH.getCountry()));
-        args.put("Locale.Swedish", new Locale(SWEDISH.getCode(), SWEDISH.getCountry()));
-        args.put("Locale.Turkish", new Locale(TURKISH.getCode(), TURKISH.getCountry()));
-        args.put("Locale.Arabic", new Locale(ARABIC.getCode(), ARABIC.getCountry()));
-        args.put("Locale.Danish", new Locale(DANISH.getCode(), DANISH.getCountry()));
-        args.put("Locale.French", new Locale(FRENCH.getCode(), FRENCH.getCountry()));
-        args.put("Locale.German", new Locale(GERMAN.getCode(), GERMAN.getCountry()));
-        args.put("Locale.Korean", new Locale(KOREAN.getCode(), KOREAN.getCountry()));
-        args.put("Locale.Polish", new Locale(POLISH.getCode(), POLISH.getCountry()));
-        args.put("Locale.Slovak", new Locale(SLOVAK.getCode(), SLOVAK.getCountry()));
-        args.put("Locale.Czech", new Locale(CZECH.getCode(), CZECH.getCountry()));
+        args.put("Locale.chineseTraditional", new Locale(TRADITIONAL_CHINESE.getCode(), TRADITIONAL_CHINESE.getCountry()));
+        args.put("Locale.portuguesePortugal", new Locale(PORTUGUESE_PORTUGAL.getCode(), PORTUGUESE_PORTUGAL.getCountry()));
+        args.put("Locale.chineseSimplified", new Locale(SIMPLIFIED_CHINESE.getCode(), SIMPLIFIED_CHINESE.getCountry()));
+        args.put("Locale.portugueseBrazil", new Locale(PORTUGUESE_BRAZIL.getCode(), PORTUGUESE_BRAZIL.getCountry()));
+        args.put("Locale.indonesian", new Locale(INDONESIAN.getCode(), INDONESIAN.getCountry()));
+        args.put("Locale.dutch", new Locale(NETHERLANDS.getCode(), NETHERLANDS.getCountry()));
+        args.put("Locale.norwegian", new Locale(NORWEGIAN.getCode(), NORWEGIAN.getCountry()));
+        args.put("Locale.japanese", new Locale(JAPANESE.getCode(), JAPANESE.getCountry()));
+        args.put("Locale.english", new Locale(ENGLISH.getCode(), ENGLISH.getCountry()));
+        args.put("Locale.italian", new Locale(ITALIAN.getCode(), ITALIAN.getCountry()));
+        args.put("Locale.russian", new Locale(RUSSIAN.getCode(), RUSSIAN.getCountry()));
+        args.put("Locale.spanish", new Locale(SPANISH.getCode(), SPANISH.getCountry()));
+        args.put("Locale.swedish", new Locale(SWEDISH.getCode(), SWEDISH.getCountry()));
+        args.put("Locale.turkish", new Locale(TURKISH.getCode(), TURKISH.getCountry()));
+        args.put("Locale.arabic", new Locale(ARABIC.getCode(), ARABIC.getCountry()));
+        args.put("Locale.danish", new Locale(DANISH.getCode(), DANISH.getCountry()));
+        args.put("Locale.french", new Locale(FRENCH.getCode(), FRENCH.getCountry()));
+        args.put("Locale.german", new Locale(GERMAN.getCode(), GERMAN.getCountry()));
+        args.put("Locale.korean", new Locale(KOREAN.getCode(), KOREAN.getCountry()));
+        args.put("Locale.polish", new Locale(POLISH.getCode(), POLISH.getCountry()));
+        args.put("Locale.slovak", new Locale(SLOVAK.getCode(), SLOVAK.getCountry()));
+        args.put("Locale.czech", new Locale(CZECH.getCode(), CZECH.getCountry()));
     }
 
     @VisibleForTesting
     static void registerCustomTextPlaceHolderKeysArgs(Map<String, Object> args) {
-        args.put("IBGCustomTextPlaceHolderKey.SHAKE_HINT", InstabugCustomTextPlaceHolder.Key.SHAKE_HINT);
-        args.put("IBGCustomTextPlaceHolderKey.SWIPE_HINT", InstabugCustomTextPlaceHolder.Key.SWIPE_HINT);
-        args.put("IBGCustomTextPlaceHolderKey.INVALID_EMAIL_MESSAGE", InstabugCustomTextPlaceHolder.Key.INVALID_EMAIL_MESSAGE);
-        args.put("IBGCustomTextPlaceHolderKey.INVALID_COMMENT_MESSAGE", InstabugCustomTextPlaceHolder.Key.INVALID_COMMENT_MESSAGE);
-        args.put("IBGCustomTextPlaceHolderKey.INVOCATION_HEADER", InstabugCustomTextPlaceHolder.Key.INVOCATION_HEADER);
-        args.put("IBGCustomTextPlaceHolderKey.START_CHATS", InstabugCustomTextPlaceHolder.Key.START_CHATS);
-        args.put("IBGCustomTextPlaceHolderKey.REPORT_BUG", InstabugCustomTextPlaceHolder.Key.REPORT_BUG);
-        args.put("IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK", InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK);
-        args.put("IBGCustomTextPlaceHolderKey.EMAIL_FIELD_HINT", InstabugCustomTextPlaceHolder.Key.EMAIL_FIELD_HINT);
-        args.put("IBGCustomTextPlaceHolderKey.COMMENT_FIELD_HINT_FOR_BUG_REPORT", InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_BUG_REPORT);
-        args.put("IBGCustomTextPlaceHolderKey.COMMENT_FIELD_HINT_FOR_FEEDBACK", InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_FEEDBACK);
-        args.put("IBGCustomTextPlaceHolderKey.ADD_VOICE_MESSAGE", InstabugCustomTextPlaceHolder.Key.ADD_VOICE_MESSAGE);
-        args.put("IBGCustomTextPlaceHolderKey.ADD_IMAGE_FROM_GALLERY", InstabugCustomTextPlaceHolder.Key.ADD_IMAGE_FROM_GALLERY);
-        args.put("IBGCustomTextPlaceHolderKey.ADD_EXTRA_SCREENSHOT", InstabugCustomTextPlaceHolder.Key.ADD_EXTRA_SCREENSHOT);
-        args.put("IBGCustomTextPlaceHolderKey.CONVERSATIONS_LIST_TITLE", InstabugCustomTextPlaceHolder.Key.CONVERSATIONS_LIST_TITLE);
-        args.put("IBGCustomTextPlaceHolderKey.AUDIO_RECORDING_PERMISSION_DENIED", InstabugCustomTextPlaceHolder.Key.AUDIO_RECORDING_PERMISSION_DENIED);
-        args.put("IBGCustomTextPlaceHolderKey.CONVERSATION_TEXT_FIELD_HINT", InstabugCustomTextPlaceHolder.Key.CONVERSATION_TEXT_FIELD_HINT);
-        args.put("IBGCustomTextPlaceHolderKey.BUG_REPORT_HEADER", InstabugCustomTextPlaceHolder.Key.BUG_REPORT_HEADER);
-        args.put("IBGCustomTextPlaceHolderKey.FEEDBACK_REPORT_HEADER", InstabugCustomTextPlaceHolder.Key.FEEDBACK_REPORT_HEADER);
-        args.put("IBGCustomTextPlaceHolderKey.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD", InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD);
-        args.put("IBGCustomTextPlaceHolderKey.VOICE_MESSAGE_RELEASE_TO_ATTACH", InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_RELEASE_TO_ATTACH);
-        args.put("IBGCustomTextPlaceHolderKey.REPORT_SUCCESSFULLY_SENT", InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);
-        args.put("IBGCustomTextPlaceHolderKey.SUCCESS_DIALOG_HEADER", InstabugCustomTextPlaceHolder.Key.SUCCESS_DIALOG_HEADER);
-        args.put("IBGCustomTextPlaceHolderKey.ADD_VIDEO", InstabugCustomTextPlaceHolder.Key.ADD_VIDEO);
-        args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE);
-        args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT);
-        args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE);
-        args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT);
-        args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE);
-        args.put("IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT);
-        args.put("IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_TITLE", InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_TITLE);
-        args.put("IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_CONTENT", InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_CONTENT);
+        args.put("IBGCustomTextPlaceHolderKey.shakeHint", InstabugCustomTextPlaceHolder.Key.SHAKE_HINT);
+        args.put("IBGCustomTextPlaceHolderKey.swipeHint", InstabugCustomTextPlaceHolder.Key.SWIPE_HINT);
+        args.put("IBGCustomTextPlaceHolderKey.invalidEmailMessage", InstabugCustomTextPlaceHolder.Key.INVALID_EMAIL_MESSAGE);
+        args.put("IBGCustomTextPlaceHolderKey.invalidCommentMessage", InstabugCustomTextPlaceHolder.Key.INVALID_COMMENT_MESSAGE);
+        args.put("IBGCustomTextPlaceHolderKey.invocationHeader", InstabugCustomTextPlaceHolder.Key.INVOCATION_HEADER);
+        args.put("IBGCustomTextPlaceHolderKey.startChats", InstabugCustomTextPlaceHolder.Key.START_CHATS);
+        args.put("IBGCustomTextPlaceHolderKey.reportBug", InstabugCustomTextPlaceHolder.Key.REPORT_BUG);
+        args.put("IBGCustomTextPlaceHolderKey.reportFeedback", InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK);
+        args.put("IBGCustomTextPlaceHolderKey.emailFieldHint", InstabugCustomTextPlaceHolder.Key.EMAIL_FIELD_HINT);
+        args.put("IBGCustomTextPlaceHolderKey.commentFieldHintForBugReport", InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_BUG_REPORT);
+        args.put("IBGCustomTextPlaceHolderKey.commentFieldHintForFeedback", InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_FEEDBACK);
+        args.put("IBGCustomTextPlaceHolderKey.addVoiceMessage", InstabugCustomTextPlaceHolder.Key.ADD_VOICE_MESSAGE);
+        args.put("IBGCustomTextPlaceHolderKey.addImageFromGallery", InstabugCustomTextPlaceHolder.Key.ADD_IMAGE_FROM_GALLERY);
+        args.put("IBGCustomTextPlaceHolderKey.addExtraScreenshot", InstabugCustomTextPlaceHolder.Key.ADD_EXTRA_SCREENSHOT);
+        args.put("IBGCustomTextPlaceHolderKey.conversationsListTitle", InstabugCustomTextPlaceHolder.Key.CONVERSATIONS_LIST_TITLE);
+        args.put("IBGCustomTextPlaceHolderKey.audioRecordingPermissionDenied", InstabugCustomTextPlaceHolder.Key.AUDIO_RECORDING_PERMISSION_DENIED);
+        args.put("IBGCustomTextPlaceHolderKey.conversationTextFieldHint", InstabugCustomTextPlaceHolder.Key.CONVERSATION_TEXT_FIELD_HINT);
+        args.put("IBGCustomTextPlaceHolderKey.bugReportHeader", InstabugCustomTextPlaceHolder.Key.BUG_REPORT_HEADER);
+        args.put("IBGCustomTextPlaceHolderKey.feedbackReportHeader", InstabugCustomTextPlaceHolder.Key.FEEDBACK_REPORT_HEADER);
+        args.put("IBGCustomTextPlaceHolderKey.voiceMessagePressAndHoldToRecord", InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD);
+        args.put("IBGCustomTextPlaceHolderKey.voiceMessageReleaseToAttach", InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_RELEASE_TO_ATTACH);
+        args.put("IBGCustomTextPlaceHolderKey.reportSuccessfullySent", InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);
+        args.put("IBGCustomTextPlaceHolderKey.successDialogHeader", InstabugCustomTextPlaceHolder.Key.SUCCESS_DIALOG_HEADER);
+        args.put("IBGCustomTextPlaceHolderKey.addVideo", InstabugCustomTextPlaceHolder.Key.ADD_VIDEO);
+        args.put("IBGCustomTextPlaceHolderKey.betaWelcomeMessageWelcomeStepTitle", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE);
+        args.put("IBGCustomTextPlaceHolderKey.betaWelcomeMessageWelcomeStepContent", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT);
+        args.put("IBGCustomTextPlaceHolderKey.betaWelcomeMessageHowToReportStepTitle", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE);
+        args.put("IBGCustomTextPlaceHolderKey.betaWelcomeMessageHowToReportStepContent", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT);
+        args.put("IBGCustomTextPlaceHolderKey.betaWelcomeMessageFinishStepTitle", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE);
+        args.put("IBGCustomTextPlaceHolderKey.betaWelcomeMessageFinishStepContent", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT);
+        args.put("IBGCustomTextPlaceHolderKey.liveWelcomeMessageTitle", InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_TITLE);
+        args.put("IBGCustomTextPlaceHolderKey.liveWelcomeMessageContent", InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_CONTENT);
     }
 
     @VisibleForTesting
     static void registerInstabugReportTypesArgs(Map<String, Object> args) {
-        args.put("ReportType.BUG", BugReporting.ReportType.BUG);
-        args.put("ReportType.FEEDBACK", BugReporting.ReportType.FEEDBACK);
+        args.put("ReportType.bug", BugReporting.ReportType.BUG);
+        args.put("ReportType.feedback", BugReporting.ReportType.FEEDBACK);
     }
 
     @VisibleForTesting
     static void registerInstabugExtendedBugReportModeArgs(Map<String, Object> args) {
-        args.put("ExtendedBugReportMode.ENABLED_WITH_REQUIRED_FIELDS", ExtendedBugReport.State.ENABLED_WITH_REQUIRED_FIELDS);
-        args.put("ExtendedBugReportMode.ENABLED_WITH_OPTIONAL_FIELDS", ExtendedBugReport.State.ENABLED_WITH_OPTIONAL_FIELDS);
-        args.put("ExtendedBugReportMode.DISABLED",ExtendedBugReport.State.DISABLED);
+        args.put("ExtendedBugReportMode.enabledWithRequiredFields", ExtendedBugReport.State.ENABLED_WITH_REQUIRED_FIELDS);
+        args.put("ExtendedBugReportMode.enabledWithOptionalFields", ExtendedBugReport.State.ENABLED_WITH_OPTIONAL_FIELDS);
+        args.put("ExtendedBugReportMode.disabled",ExtendedBugReport.State.DISABLED);
     }
 }

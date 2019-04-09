@@ -314,9 +314,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      */
      public void invokeWithMode(String invocationMode, List<String> invocationOptions) {
         switch (invocationMode) {
-            case "InvocationMode.CHATS" : Chats.show();
+            case "InvocationMode.chats" : Chats.show();
                 return;
-            case "InvocationMode.REPLIES" : Replies.show();
+            case "InvocationMode.replies" : Replies.show();
                 return;
         }
         int[] options = new int[invocationOptions.size()];

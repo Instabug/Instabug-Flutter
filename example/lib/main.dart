@@ -52,8 +52,8 @@ class _MyAppState extends State<MyApp> {
       final Map<String, String> userAttributes = await Instabug.getUserAttributes();
       print(userAttributes.toString()); 
       Instabug.logUserEventWithName('Aly Event');
-      Instabug.setValueForStringWithKey('What\'s the problem', IBGCustomTextPlaceHolderKey.REPORT_BUG);
-      Instabug.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK);
+      Instabug.setValueForStringWithKey('What\'s the problem', IBGCustomTextPlaceHolderKey.reportBug);
+      Instabug.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.reportFeedback);
       Instabug.setSessionProfilerEnabled(false);
       Color c = const Color.fromRGBO(255, 0, 255, 1.0);
       Instabug.setPrimaryColor(c);
@@ -98,11 +98,11 @@ class _MyAppState extends State<MyApp> {
 
   void show() {
     //Instabug.show();
-    BugReporting.showWithOptions(ReportType.BUG, <InvocationOption>[InvocationOption.EMAIL_FIELD_HIDDEN]);
+    BugReporting.showWithOptions(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
   }
 
   void invokeWithMode() {
-    BugReporting.invokeWithMode(InvocationMode.BUG, [InvocationOption.EMAIL_FIELD_HIDDEN]);
+    BugReporting.invokeWithMode(InvocationMode.bug, [InvocationOption.emailFieldHidden]);
   }
 
   void getTags() async {

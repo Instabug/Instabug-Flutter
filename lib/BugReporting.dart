@@ -4,28 +4,28 @@ import 'package:flutter/services.dart';
 import 'package:instabug_flutter/Instabug.dart';
 
 enum InvocationOption {
-  COMMENT_FIELD_REQUIRED,
-  DISABLE_POST_SENDING_DIALOG,
-  EMAIL_FIELD_HIDDEN,
-  EMAIL_FIELD_OPTIONAL
+  commentFieldRequired,
+  disablePostSendingDialog,
+  emailFieldHidden,
+  emailFieldOptional
 }
 
 enum DismissType {
-  CANCEL,
-  SUBMIT,
-  ADD_ATTACHMENT
+  cancel,
+  submit,
+  addAttachment
 }
 
 enum ReportType {
-  BUG,
-  FEEDBACK,
-  OTHER
+  bug,
+  feedback,
+  other
 }
 
 enum ExtendedBugReportMode {
-  ENABLED_WITH_REQUIRED_FIELDS,
-  ENABLED_WITH_OPTIONAL_FIELDS,
-  DISABLED
+  enabledWithRequiredFields,
+  enabledWithOptionalFields,
+  disabled
 }
 
 class BugReporting {
@@ -51,25 +51,25 @@ class BugReporting {
       final String dismissTypeString = map['dismissType'].toUpperCase();
       switch(dismissTypeString) {
         case 'CANCEL':
-          dismissType = DismissType.CANCEL;
+          dismissType = DismissType.cancel;
           break;
         case 'SUBMIT':
-          dismissType = DismissType.SUBMIT;
+          dismissType = DismissType.submit;
           break;
         case 'ADD_ATTACHMENT':
-          dismissType = DismissType.ADD_ATTACHMENT;
+          dismissType = DismissType.addAttachment;
           break;
       }
       final String reportTypeString = map['reportType'].toUpperCase();
       switch(reportTypeString) {
         case 'BUG':
-          reportType = ReportType.BUG;
+          reportType = ReportType.bug;
           break;
         case 'FEEDBACK':
-          reportType = ReportType.FEEDBACK;
+          reportType = ReportType.feedback;
           break;
         case 'OTHER':
-          reportType = ReportType.OTHER;
+          reportType = ReportType.other;
           break;
       }
       try {
