@@ -59,12 +59,12 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 | `setEnabled(bool isEnabled)`                                                                | `setState(Feature.State state)`<br>`enabled`                                                 |
 | `setOnInvokeCallback(Function function)`                                                    | `setOnInvokeCallback(OnInvokeCallback onInvokeCallback)`<br>`willInvokeHandler`              |
 | `setOnDismissCallback(Function function)`                                                   | `setOnDismissCallback(OnSdkDismissCallback onSdkDismissedCallback)`<br>`didDismissHandler`   |
-|                                                                                             | `setInvocationEvents(InstabugInvocationEvent... invocationEvents)`<br>`invocationEvents`     |
-|                                                                                             | `setAttachmentTypesEnabled(boolean initial, boolean extra, boolean gallery, boolean                                                                                                            recording`<br>`enabledAttachmentTypes` |
-|                                                                                             | `setReportTypes(@BugReporting.ReportType int... types)`<br>`promptOptionsEnabledReportTypes` |
-|                                                                                             | `setExtendedBugReportState(ExtendedBugReport.State state)`<br>`extendedBugReportMode`        |
-|                                                                                             | `setOptions(@Option int... options)`<br>`bugReportingOptions`
-|                                                                                             | `show(@BugReporting.ReportType int type)`<br>`+ showWithReportType:options:`
+| `setInvocationEvents(List<InvocationEvent> invocationEvents)`                               | `setInvocationEvents(InstabugInvocationEvent... invocationEvents)`<br>`invocationEvents`     |
+| `setEnabledAttachmentTypes(bool screenshot, bool extraScreenshot, bool galleryImage, bool screenRecording)` | `setAttachmentTypesEnabled(boolean initial, boolean extra, boolean gallery, boolean                                                                                                            recording`<br>`enabledAttachmentTypes` |
+| `setReportTypes(List<ReportType> reportTypes)`                                              | `setReportTypes(@BugReporting.ReportType int... types)`<br>`promptOptionsEnabledReportTypes` |
+| `setExtendedBugReportMode(ExtendedBugReportMode extendedBugReportMode)`                     | `setExtendedBugReportState(ExtendedBugReport.State state)`<br>`extendedBugReportMode`        |
+| `setInvocationOptions(List<InvocationOption> invocationOptions)`                            | `setOptions(@Option int... options)`<br>`bugReportingOptions`
+| `showWithOptions(ReportType reportType, List<InvocationOption> invocationOptions)`          | `show(@BugReporting.ReportType int type)`<br>`+ showWithReportType:options:`
 
 #### `InstabugLog`
 
@@ -146,7 +146,11 @@ invocationEvents.add(InstabugFlutterPlugin.INVOCATION_EVENT_SHAKE);
 new InstabugFlutterPlugin().start(CustomFlutterApplication.this, "APP_TOKEN", invocationEvents);
 ```
 
-5. For iOS apps, Instabug needs access to the microphone and photo library to be able to let users add audio and video attachments. Add the following 2 keys to your app’s `Info.plist` file with text explaining to the user why those permissions are needed:
+## Microphone and Photo Library Usage Description (iOS Only)
+
+Instabug needs access to the microphone and photo library to be able to let users add audio and video attachments. Starting from iOS 10, apps that don’t provide a usage description for those 2 permissions would be rejected when submitted to the App Store.
+
+For your app not to be rejected, you’ll need to add the following 2 keys to your app’s info.plist file with text explaining to the user why those permissions are needed:
 
 * `NSMicrophoneUsageDescription`
 * `NSPhotoLibraryUsageDescription`

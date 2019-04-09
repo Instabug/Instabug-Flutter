@@ -4,22 +4,28 @@ import 'package:flutter/services.dart';
 import 'package:instabug_flutter/Instabug.dart';
 
 enum InvocationOption {
-  COMMENT_FIELD_REQUIRED,
-  DISABLE_POST_SENDING_DIALOG,
-  EMAIL_FIELD_HIDDEN,
-  EMAIL_FIELD_OPTIONAL
+  commentFieldRequired,
+  disablePostSendingDialog,
+  emailFieldHidden,
+  emailFieldOptional
 }
 
 enum DismissType {
-  CANCEL,
-  SUBMIT,
-  ADD_ATTACHMENT
+  cancel,
+  submit,
+  addAttachment
 }
 
 enum ReportType {
-  BUG,
-  FEEDBACK,
-  OTHER
+  bug,
+  feedback,
+  other
+}
+
+enum ExtendedBugReportMode {
+  enabledWithRequiredFields,
+  enabledWithOptionalFields,
+  disabled
 }
 
 class BugReporting {
@@ -45,25 +51,25 @@ class BugReporting {
       final String dismissTypeString = map['dismissType'].toUpperCase();
       switch(dismissTypeString) {
         case 'CANCEL':
-          dismissType = DismissType.CANCEL;
+          dismissType = DismissType.cancel;
           break;
         case 'SUBMIT':
-          dismissType = DismissType.SUBMIT;
+          dismissType = DismissType.submit;
           break;
         case 'ADD_ATTACHMENT':
-          dismissType = DismissType.ADD_ATTACHMENT;
+          dismissType = DismissType.addAttachment;
           break;
       }
       final String reportTypeString = map['reportType'].toUpperCase();
       switch(reportTypeString) {
         case 'BUG':
-          reportType = ReportType.BUG;
+          reportType = ReportType.bug;
           break;
         case 'FEEDBACK':
-          reportType = ReportType.FEEDBACK;
+          reportType = ReportType.feedback;
           break;
         case 'OTHER':
-          reportType = ReportType.OTHER;
+          reportType = ReportType.other;
           break;
       }
       try {
@@ -114,5 +120,80 @@ class BugReporting {
      _channel.setMethodCallHandler(_handleMethod);
     onDismissCallback = function;
     await _channel.invokeMethod<Object>('setOnDismissCallback'); 
+  } 
+
+   /// Sets the events that invoke the feedback form.
+   /// Default is set by `Instabug.startWithToken`.
+   /// [invocationEvents] invocationEvent List of events that invokes the
+  static void setInvocationEvents(List<InvocationEvent> invocationEvents) async {
+    List<String> invocationEventsStrings = <String>[];
+    if (invocationEvents != null) {
+      invocationEvents.forEach((e) {
+        invocationEventsStrings.add(e.toString());
+      });
+    }
+    final List<dynamic> params = <dynamic>[invocationEventsStrings];
+    await _channel.invokeMethod<Object>('setInvocationEvents:',params);
+  } 
+
+   /// Sets whether attachments in bug reporting and in-app messaging are enabled or not.
+   /// [screenshot] A boolean to enable or disable screenshot attachments.
+   /// [extraScreenshot] A boolean to enable or disable extra screenshot attachments.
+   /// [galleryImage] A boolean to enable or disable gallery image
+   /// attachments. In iOS 10+,NSPhotoLibraryUsageDescription should be set in
+   /// info.plist to enable gallery image attachments.
+   /// [screenRecording] A boolean to enable or disable screen recording attachments.
+  static void setEnabledAttachmentTypes(bool screenshot, bool extraScreenshot, bool galleryImage, bool screenRecording) async {
+    final List<dynamic> params = <dynamic>[screenshot, extraScreenshot, galleryImage, screenRecording];
+    await _channel.invokeMethod<Object>('setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording:',params);
+  } 
+
+   ///Sets what type of reports, bug or feedback, should be invoked.
+   /// [reportTypes] - List of reportTypes
+  static void setReportTypes(List<ReportType> reportTypes) async {
+    List<String> reportTypesStrings = <String>[];
+    if (reportTypes != null) {
+      reportTypes.forEach((e) {
+        reportTypesStrings.add(e.toString());
+      });
+    }
+    final List<dynamic> params = <dynamic>[reportTypesStrings];
+    await _channel.invokeMethod<Object>('setReportTypes:',params);
+  } 
+
+   /// Sets whether the extended bug report mode should be disabled, enabled with
+   /// required fields or enabled with optional fields.
+   /// [extendedBugReportMode] ExtendedBugReportMode enum 
+  static void setExtendedBugReportMode(ExtendedBugReportMode extendedBugReportMode) async {
+    final List<dynamic> params = <dynamic>[extendedBugReportMode.toString()];
+    await _channel.invokeMethod<Object>('setExtendedBugReportMode:', params); 
+  } 
+
+   /// Sets the invocation options.
+   /// Default is set by `Instabug.startWithToken`.
+   /// [invocationOptions] List of invocation options
+  static void setInvocationOptions(List<InvocationOption> invocationOptions) async {
+    List<String> invocationOptionsStrings = <String>[];
+    if (invocationOptions != null) {
+      invocationOptions.forEach((e) {
+        invocationOptionsStrings.add(e.toString());
+      });
+    }
+    final List<dynamic> params = <dynamic>[invocationOptionsStrings];
+    await _channel.invokeMethod<Object>('setInvocationOptions:',params);
+  } 
+
+   /// Invoke bug reporting with report type and options.
+   /// [reportType] type 
+   /// [invocationOptions]  List of invocation options
+  static void showWithOptions(ReportType reportType, List<InvocationOption> invocationOptions) async {
+    List<String> invocationOptionsStrings = <String>[];
+    if (invocationOptions != null) {
+      invocationOptions.forEach((e) {
+        invocationOptionsStrings.add(e.toString());
+      });
+    }
+    final List<dynamic> params = <dynamic>[reportType.toString(), invocationOptionsStrings];
+    await _channel.invokeMethod<Object>('showBugReportingWithReportTypeAndOptions:options:',params);
   } 
 }

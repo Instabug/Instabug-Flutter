@@ -29,10 +29,10 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       if (Platform.isIOS) {
-        Instabug.start('9582e6cfe34e2b8897f48cfa3b617adb', <InvocationEvent>[InvocationEvent.floatingButton, InvocationEvent.shake]);
+        Instabug.start('9582e6cfe34e2b8897f48cfa3b617adb', <InvocationEvent>[InvocationEvent.shake]);
       }
-      Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
-      Instabug.setWelcomeMessageMode(WelcomeMessageMode.beta);
+      //Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
+      //Instabug.setWelcomeMessageMode(WelcomeMessageMode.beta);
       Instabug.identifyUserWithEmail('aezz@instabug.com', 'Aly Ezz');
       InstabugLog.logInfo('Test Log Info Message from Flutter!');
       InstabugLog.logDebug('Test Debug Message from Flutter!');
@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
       InstabugLog.logError('Test Error Message from Flutter!');
       InstabugLog.logWarn('Test Warn Message from Flutter!');
       Instabug.logOut();
-      Instabug.setLocale(Locale.German);
+      //Instabug.setLocale(Locale.German);
       Instabug.setColorTheme(ColorTheme.dark);
       Instabug.appendTags(<String>['tag1', 'tag2']);
       Instabug.setUserAttributeWithKey('19', 'Age');
@@ -52,8 +52,8 @@ class _MyAppState extends State<MyApp> {
       final Map<String, String> userAttributes = await Instabug.getUserAttributes();
       print(userAttributes.toString()); 
       Instabug.logUserEventWithName('Aly Event');
-      Instabug.setValueForStringWithKey('What\'s the problem', IBGCustomTextPlaceHolderKey.REPORT_BUG);
-      Instabug.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK);
+      Instabug.setValueForStringWithKey('What\'s the problem', IBGCustomTextPlaceHolderKey.reportBug);
+      Instabug.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.reportFeedback);
       Instabug.setSessionProfilerEnabled(false);
       Color c = const Color.fromRGBO(255, 0, 255, 1.0);
       Instabug.setPrimaryColor(c);
@@ -65,6 +65,11 @@ class _MyAppState extends State<MyApp> {
       //BugReporting.setEnabled(false);
       BugReporting.setOnInvokeCallback(sdkInvoked);
       BugReporting.setOnDismissCallback(sdkDismissed);
+      BugReporting.setInvocationEvents(<InvocationEvent>[InvocationEvent.floatingButton]);
+      //BugReporting.setEnabledAttachmentTypes(false, false, false, false);
+      //BugReporting.setReportTypes(<ReportType>[ReportType.FEEDBACK,ReportType.BUG]);
+      //BugReporting.setExtendedBugReportMode(ExtendedBugReportMode.ENABLED_WITH_REQUIRED_FIELDS);
+      //BugReporting.setInvocationOptions(<InvocationOption>[InvocationOption.EMAIL_FIELD_HIDDEN]);
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -92,11 +97,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   void show() {
-    Instabug.show();
+    //Instabug.show();
+    BugReporting.showWithOptions(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
   }
 
   void invokeWithMode() {
-    BugReporting.invokeWithMode(InvocationMode.BUG, [InvocationOption.EMAIL_FIELD_HIDDEN]);
+    BugReporting.invokeWithMode(InvocationMode.bug, [InvocationOption.emailFieldHidden]);
   }
 
   void getTags() async {

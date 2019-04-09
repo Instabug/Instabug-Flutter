@@ -1,5 +1,11 @@
 ## Master
 
+* Adds showWithOptions API mapping.
+* Adds setInvocationOptions API mapping.
+* Adds setExtendedBugReportMode API mapping.
+* Adds setReportTypes API mapping.
+* Adds setEnabledAttachmentTypes API mapping.
+* Adds setInvocationEvents API mapping.
 * Adds setOnDismissCallback API mapping.
 * Adds setOnInvokeCallback API mapping.
 * Adds BugReporting.setEnabled API mapping.

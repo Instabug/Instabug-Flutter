@@ -253,11 +253,11 @@ FlutterMethodChannel* channel;
   * @param invocationOptions the array of invocation options
   */
 + (void) invokeWithMode:(NSString *)invocationMode options:(NSArray*)invocationOptionsArray {
-    if ([invocationMode isEqualToString:@"InvocationMode.CHATS"]) {
+    if ([invocationMode isEqualToString:@"InvocationMode.chats"]) {
          [IBGChats show];
          return;
     }
-     if ([invocationMode isEqualToString:@"InvocationMode.REPLIES"]) {
+     if ([invocationMode isEqualToString:@"InvocationMode.replies"]) {
         [IBGReplies show];
         return;
     }
@@ -411,6 +411,106 @@ FlutterMethodChannel* channel;
         };
 }
 
+/**
+  * Sets whether attachments in bug reporting and in-app messaging are enabled or not.
+  *
+  * @param  screenshot A boolean to enable or disable screenshot attachments.
+  * @param  extraScreenShot A boolean to enable or disable extra screenshot attachments.
+  * @param  galleryImage A boolean to enable or disable gallery image attachments.
+  * @param  screenRecording A boolean to enable or disable screen recording attachments.
+  */
++ (void)setEnabledAttachmentTypes:(NSNumber *)screenShot
+                    extraScreenShot:(NSNumber *)extraScreenShot
+                    galleryImage:(NSNumber *)galleryImage
+                    screenRecording:(NSNumber *)screenRecording {
+   IBGAttachmentType attachmentTypes = 0;
+     if([screenShot boolValue]) {
+         attachmentTypes = IBGAttachmentTypeScreenShot;
+     }
+     if([extraScreenShot boolValue]) {
+         attachmentTypes |= IBGAttachmentTypeExtraScreenShot;
+     }
+     if([galleryImage boolValue]) {
+         attachmentTypes |= IBGAttachmentTypeGalleryImage;
+     }
+     if([screenRecording boolValue]) {
+         attachmentTypes |= IBGAttachmentTypeScreenRecording;
+     }
+
+     IBGBugReporting.enabledAttachmentTypes = attachmentTypes;
+}
+
+/**
+  * Sets the events that invoke the feedback form.
+  * Default is set by `Instabug.startWithToken`.
+  * @param {invocationEvent} invocationEvent Array of events that invokes the
+  * feedback form.
+  */
++ (void)setInvocationEvents:(NSArray *)invocationEventsArray {
+    NSDictionary *constants = [self constants];
+    NSInteger invocationEvents = IBGInvocationEventNone;
+    for (NSString * invocationEvent in invocationEventsArray) {
+        invocationEvents |= ((NSNumber *) constants[invocationEvent]).integerValue;
+    }
+    IBGBugReporting.invocationEvents = invocationEvents;
+}
+
+/**
+  * Sets the events that invoke the feedback form.
+  * Default is set by `Instabug.startWithToken`.
+  * @param {invocationEvent} invocationEvent Array of events that invokes the
+  * feedback form.
+  */
++ (void)setReportTypes:(NSArray*)reportTypesArray {
+    NSDictionary *constants = [self constants];
+    NSInteger reportTypes = 0;
+    for (NSString * reportType in reportTypesArray) {
+        reportTypes |= ((NSNumber *) constants[reportType]).integerValue;
+    }
+   [IBGBugReporting setPromptOptionsEnabledReportTypes: reportTypes];
+}
+
+/**
+  * Sets whether the extended bug report mode should be disabled,
+  * enabled with required fields,  or enabled with optional fields.
+  *
+  * @param extendedBugReportMode
+  */
++ (void)setExtendedBugReportMode:(NSString *)extendedBugReportMode {
+    NSDictionary *constants = [self constants];
+    NSInteger extendedBugReportModeInt = ((NSNumber *) constants[extendedBugReportMode]).integerValue;
+    IBGBugReporting.extendedBugReportMode = extendedBugReportModeInt;
+}
+
+/**
+  * Sets the invocation options
+  *
+  * @param invocationOptions the array of invocation options
+  */
++ (void)setInvocationOptions:(NSArray *)invocationOptionsArray {
+    NSDictionary *constants = [self constants];
+    NSInteger invocationOptions = 0;
+    for (NSString * invocationOption in invocationOptionsArray) {
+        invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
+    }
+    IBGBugReporting.invocationOptions = invocationOptions;
+}
+
+/**
+  * Sets the invocation options
+  *
+  * @param invocationOptions the array of invocation options
+  */
++ (void)showBugReportingWithReportTypeAndOptions:(NSString*)reportType options:(NSArray *)invocationOptionsArray  {
+    NSDictionary *constants = [self constants];
+    NSInteger invocationOptions = 0;
+    for (NSString * invocationOption in invocationOptionsArray) {
+        invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
+    }
+    NSInteger reportTypeInt = ((NSNumber *) constants[reportType]).integerValue;
+    [IBGBugReporting showWithReportType:reportTypeInt options:invocationOptions];
+}
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
@@ -426,65 +526,72 @@ FlutterMethodChannel* channel;
       @"ColorTheme.dark": @(IBGColorThemeDark),
       @"ColorTheme.light": @(IBGColorThemeLight),
 
-      @"InvocationMode.BUG": @(IBGBugReportingReportTypeBug),
-      @"InvocationMode.FEEDBACK": @(IBGBugReportingReportTypeFeedback),
+      @"InvocationMode.bug": @(IBGBugReportingReportTypeBug),
+      @"InvocationMode.feedback": @(IBGBugReportingReportTypeFeedback),
 
-      @"InvocationOption.COMMENT_FIELD_REQUIRED": @(IBGBugReportingOptionCommentFieldRequired),
-      @"InvocationOption.DISABLE_POST_SENDING_DIALOG": @(IBGBugReportingOptionDisablePostSendingDialog),
-      @"InvocationOption.EMAIL_FIELD_HIDDEN": @(IBGBugReportingOptionEmailFieldHidden),
-      @"InvocationOption.EMAIL_FIELD_OPTIONAL": @(IBGBugReportingOptionEmailFieldOptional),
+      @"InvocationOption.commentFieldRequired": @(IBGBugReportingOptionCommentFieldRequired),
+      @"InvocationOption.disablePostSendingDialog": @(IBGBugReportingOptionDisablePostSendingDialog),
+      @"InvocationOption.emailFieldHidden": @(IBGBugReportingOptionEmailFieldHidden),
+      @"InvocationOption.emailFieldOptional": @(IBGBugReportingOptionEmailFieldOptional),
 
-      @"Locale.Arabic": @(IBGLocaleArabic),
-      @"Locale.ChineseSimplified": @(IBGLocaleChineseSimplified),
-      @"Locale.ChineseTraditional": @(IBGLocaleChineseTraditional),
-      @"Locale.Czech": @(IBGLocaleCzech),
-      @"Locale.Danish": @(IBGLocaleDanish),
-      @"Locale.Dutch": @(IBGLocaleDutch),
-      @"Locale.English": @(IBGLocaleEnglish),
-      @"Locale.French": @(IBGLocaleFrench),
-      @"Locale.German": @(IBGLocaleGerman),
-      @"Locale.Italian": @(IBGLocaleItalian),
-      @"Locale.Japanese": @(IBGLocaleJapanese),
-      @"Locale.Korean": @(IBGLocaleKorean),
-      @"Locale.Polish": @(IBGLocalePolish),
-      @"Locale.PortugueseBrazil": @(IBGLocalePortugueseBrazil),
-      @"Locale.Russian": @(IBGLocaleRussian),
-      @"Locale.Spanish": @(IBGLocaleSpanish),
-      @"Locale.Swedish": @(IBGLocaleSwedish),
-      @"Locale.Turkish": @(IBGLocaleTurkish),
+      @"Locale.arabic": @(IBGLocaleArabic),
+      @"Locale.chineseSimplified": @(IBGLocaleChineseSimplified),
+      @"Locale.chineseTraditional": @(IBGLocaleChineseTraditional),
+      @"Locale.czech": @(IBGLocaleCzech),
+      @"Locale.danish": @(IBGLocaleDanish),
+      @"Locale.dutch": @(IBGLocaleDutch),
+      @"Locale.english": @(IBGLocaleEnglish),
+      @"Locale.french": @(IBGLocaleFrench),
+      @"Locale.german": @(IBGLocaleGerman),
+      @"Locale.italian": @(IBGLocaleItalian),
+      @"Locale.japanese": @(IBGLocaleJapanese),
+      @"Locale.korean": @(IBGLocaleKorean),
+      @"Locale.polish": @(IBGLocalePolish),
+      @"Locale.portugueseBrazil": @(IBGLocalePortugueseBrazil),
+      @"Locale.russian": @(IBGLocaleRussian),
+      @"Locale.spanish": @(IBGLocaleSpanish),
+      @"Locale.swedish": @(IBGLocaleSwedish),
+      @"Locale.turkish": @(IBGLocaleTurkish),
       
-      @"IBGCustomTextPlaceHolderKey.SHAKE_HINT": kIBGShakeStartAlertTextStringName,
-      @"IBGCustomTextPlaceHolderKey.SWIPE_HINT": kIBGEdgeSwipeStartAlertTextStringName,
-      @"IBGCustomTextPlaceHolderKey.INVALID_EMAIL_MESSAGE": kIBGInvalidEmailMessageStringName,
-      @"IBGCustomTextPlaceHolderKey.INVALID_COMMENT_MESSAGE": kIBGInvalidCommentMessageStringName,
-      @"IBGCustomTextPlaceHolderKey.INVOCATION_HEADER": kIBGInvocationTitleStringName,
-      @"IBGCustomTextPlaceHolderKey.START_CHATS": kIBGChatsTitleStringName,
-      @"IBGCustomTextPlaceHolderKey.REPORT_BUG": kIBGReportBugStringName,
-      @"IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK": kIBGReportFeedbackStringName,
-      @"IBGCustomTextPlaceHolderKey.EMAIL_FIELD_HINT": kIBGEmailFieldPlaceholderStringName,
-      @"IBGCustomTextPlaceHolderKey.COMMENT_FIELD_HINT_FOR_BUG_REPORT": kIBGCommentFieldPlaceholderForBugReportStringName,
-      @"IBGCustomTextPlaceHolderKey.COMMENT_FIELD_HINT_FOR_FEEDBACK": kIBGCommentFieldPlaceholderForFeedbackStringName,
-      @"IBGCustomTextPlaceHolderKey.ADD_VOICE_MESSAGE": kIBGAddVoiceMessageStringName,
-      @"IBGCustomTextPlaceHolderKey.ADD_IMAGE_FROM_GALLERY": kIBGAddImageFromGalleryStringName,
-      @"IBGCustomTextPlaceHolderKey.ADD_EXTRA_SCREENSHOT": kIBGAddExtraScreenshotStringName,
-      @"IBGCustomTextPlaceHolderKey.CONVERSATIONS_LIST_TITLE": kIBGChatsTitleStringName,
-      @"IBGCustomTextPlaceHolderKey.AUDIO_RECORDING_PERMISSION_DENIED": kIBGAudioRecordingPermissionDeniedTitleStringName,
-      @"IBGCustomTextPlaceHolderKey.CONVERSATION_TEXT_FIELD_HINT": kIBGChatReplyFieldPlaceholderStringName,
-      @"IBGCustomTextPlaceHolderKey.BUG_REPORT_HEADER": kIBGReportBugStringName,
-      @"IBGCustomTextPlaceHolderKey.FEEDBACK_REPORT_HEADER": kIBGReportFeedbackStringName,
-      @"IBGCustomTextPlaceHolderKey.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD": kIBGRecordingMessageToHoldTextStringName,
-      @"IBGCustomTextPlaceHolderKey.VOICE_MESSAGE_RELEASE_TO_ATTACH": kIBGRecordingMessageToReleaseTextStringName,
-      @"IBGCustomTextPlaceHolderKey.REPORT_SUCCESSFULLY_SENT": kIBGThankYouAlertMessageStringName,
-      @"IBGCustomTextPlaceHolderKey.SUCCESS_DIALOG_HEADER": kIBGThankYouAlertTitleStringName,
-      @"IBGCustomTextPlaceHolderKey.ADD_VIDEO": kIBGAddScreenRecordingMessageStringName,
-      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE": kIBGBetaWelcomeMessageWelcomeStepTitle,
-      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT": kIBGBetaWelcomeMessageWelcomeStepContent,
-      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE": kIBGBetaWelcomeMessageHowToReportStepTitle,
-      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT": kIBGBetaWelcomeMessageHowToReportStepContent,
-      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE": kIBGBetaWelcomeMessageFinishStepTitle,
-      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT": kIBGBetaWelcomeMessageFinishStepContent,
-      @"IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_TITLE": kIBGLiveWelcomeMessageTitle,
-      @"IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_CONTENT": kIBGLiveWelcomeMessageContent,
+      @"IBGCustomTextPlaceHolderKey.shakeHint": kIBGShakeStartAlertTextStringName,
+      @"IBGCustomTextPlaceHolderKey.swipeHint": kIBGEdgeSwipeStartAlertTextStringName,
+      @"IBGCustomTextPlaceHolderKey.invalidEmailMessage": kIBGInvalidEmailMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.invalidCommentMessage": kIBGInvalidCommentMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.invocationHeader": kIBGInvocationTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.startChats": kIBGChatsTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.reportBug": kIBGReportBugStringName,
+      @"IBGCustomTextPlaceHolderKey.reportFeedback": kIBGReportFeedbackStringName,
+      @"IBGCustomTextPlaceHolderKey.emailFieldHint": kIBGEmailFieldPlaceholderStringName,
+      @"IBGCustomTextPlaceHolderKey.commentFieldHintForBugReport": kIBGCommentFieldPlaceholderForBugReportStringName,
+      @"IBGCustomTextPlaceHolderKey.commentFieldHintForFeedback": kIBGCommentFieldPlaceholderForFeedbackStringName,
+      @"IBGCustomTextPlaceHolderKey.addVoiceMessage": kIBGAddVoiceMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.addImageFromGallery": kIBGAddImageFromGalleryStringName,
+      @"IBGCustomTextPlaceHolderKey.addExtraScreenshot": kIBGAddExtraScreenshotStringName,
+      @"IBGCustomTextPlaceHolderKey.conversationsListTitle": kIBGChatsTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.audioRecordingPermissionDenied": kIBGAudioRecordingPermissionDeniedTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.conversationTextFieldHint": kIBGChatReplyFieldPlaceholderStringName,
+      @"IBGCustomTextPlaceHolderKey.bugReportHeader": kIBGReportBugStringName,
+      @"IBGCustomTextPlaceHolderKey.feedbackReportHeader": kIBGReportFeedbackStringName,
+      @"IBGCustomTextPlaceHolderKey.voiceMessagePressAndHoldToRecord": kIBGRecordingMessageToHoldTextStringName,
+      @"IBGCustomTextPlaceHolderKey.voiceMessageReleaseToAttach": kIBGRecordingMessageToReleaseTextStringName,
+      @"IBGCustomTextPlaceHolderKey.reportSuccessfullySent": kIBGThankYouAlertMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.successDialogHeader": kIBGThankYouAlertTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.addVideo": kIBGAddScreenRecordingMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.betaWelcomeMessageWelcomeStepTitle": kIBGBetaWelcomeMessageWelcomeStepTitle,
+      @"IBGCustomTextPlaceHolderKey.betaWelcomeMessageWelcomeStepContent": kIBGBetaWelcomeMessageWelcomeStepContent,
+      @"IBGCustomTextPlaceHolderKey.betaWelcomeMessageHowToReportStepTitle": kIBGBetaWelcomeMessageHowToReportStepTitle,
+      @"IBGCustomTextPlaceHolderKey.betaWelcomeMessageHowToReportStepContent": kIBGBetaWelcomeMessageHowToReportStepContent,
+      @"IBGCustomTextPlaceHolderKey.betaWelcomeMessageFinishStepTitle": kIBGBetaWelcomeMessageFinishStepTitle,
+      @"IBGCustomTextPlaceHolderKey.betaWelcomeMessageFinishStepContent": kIBGBetaWelcomeMessageFinishStepContent,
+      @"IBGCustomTextPlaceHolderKey.liveWelcomeMessageTitle": kIBGLiveWelcomeMessageTitle,
+      @"IBGCustomTextPlaceHolderKey.liveWelcomeMessageContent": kIBGLiveWelcomeMessageContent,
+
+      @"ReportType.bug": @(IBGBugReportingReportTypeBug),
+      @"ReportType.feedback": @(IBGBugReportingReportTypeFeedback),
+
+      @"ExtendedBugReportMode.enabledWithRequiredFields": @(IBGExtendedBugReportModeEnabledWithRequiredFields),
+      @"ExtendedBugReportMode.enabledWithOptionalFields": @(IBGExtendedBugReportModeEnabledWithOptionalFields),
+      @"ExtendedBugReportMode.disabled": @(IBGExtendedBugReportModeDisabled),
   };
 };
 
