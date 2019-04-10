@@ -502,10 +502,10 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
-  test('showSurveysIfAvailable: Test', () async {
+  test('showSurveysIfAvailable Test', () async {
     Surveys.showSurveyIfAvailable();
     expect(log, <Matcher>[
-      isMethodCall('showSurveysIfAvailable:',
+      isMethodCall('showSurveysIfAvailable',
       )
     ]);
   });
