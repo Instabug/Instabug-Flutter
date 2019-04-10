@@ -81,13 +81,13 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 
 | API Method                                    | Native Equivalent (Android/iOS)                                                                                                             |
 |-----------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
-|                                               | `setState(Feature.State state)`<br>`enabled`                                                                                                |
-|                                               | `setAutoShowingEnabled(boolean isAutoShowingEnabled)`<br>`autoShowingEnabled`                                                               |
-|                                               | `getAvailableSurveys()`<br>`+ availableSurveys`                                                                                             |
-|                                               | `setOnShowCallback(OnShowCallback onShowCallback)`<br>`willShowSurveyHandler`                                                               |
-|                                               | `setOnDismissCallback(OnDismissCallback onDismissCallback)`<br>`didDismissSurveyHandler`                                                    |
-|                                               | `setShouldShowWelcomeScreen(boolean shouldShow)`<br>`shouldShowWelcomeScreen`                                                               |
-|                                               | `showSurveyIfAvailable()`<br>`+ showSurveyIfAvailable`                                                                                      |
+| `setEnabled(bool isEnabled)`                  | `setState(Feature.State state)`<br>`enabled`                                                                                                |
+| `setAutoShowingEnabled(bool isEnabled)`       | `setAutoShowingEnabled(boolean isAutoShowingEnabled)`<br>`autoShowingEnabled`                                                               |
+| `getAvailableSurveys(Function function)`      | `getAvailableSurveys()`<br>`+ availableSurveys`                                                                                             |
+| `setOnShowCallback(Function function)`        | `setOnShowCallback(OnShowCallback onShowCallback)`<br>`willShowSurveyHandler`                                                               |
+| `setOnDismissCallback(Function function)`     | `setOnDismissCallback(OnDismissCallback onDismissCallback)`<br>`didDismissSurveyHandler`                                                    |
+| `setShouldShowWelcomeScreen(bool shouldShowWelcomeScreen)` | `setShouldShowWelcomeScreen(boolean shouldShow)`<br>`shouldShowWelcomeScreen`                                                                 |
+| `showSurveyIfAvailable()`                     | `showSurveyIfAvailable()`<br>`+ showSurveyIfAvailable`                                                                                      |
 |                                               | `showSurvey(String token)`<br>`+ showSurveyWithToken:`                                                                                      |
 |                                               | `setThresholdForReshowingSurveyAfterDismiss(int sessionsCount, int daysCount)`<br>`+ setThresholdForReshowingSurveyAfterDismiss:daysCount:` |
 |                                               | `hasRespondToSurvey(String token)`<br>`+ hasRespondedToSurveyWithToken:`                                                                    |
