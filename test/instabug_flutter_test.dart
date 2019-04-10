@@ -7,6 +7,7 @@ import 'package:instabug_flutter/BugReporting.dart';
 import 'package:instabug_flutter/InstabugLog.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:instabug_flutter/Surveys.dart';
 
 void main() {
 
@@ -446,6 +447,65 @@ test('startWithToken:invocationEvents: Test', () async {
     expect(log, <Matcher>[
       isMethodCall('showBugReportingWithReportTypeAndOptions:options:',
         arguments: args,
+      )
+    ]);
+  });
+
+  test('setSurveysEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    Surveys.setEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setSurveysEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setAutoShowingSurveysEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    Surveys.setAutoShowingEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setAutoShowingSurveysEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setOnShowSurveyCallback Test', () async {
+    Surveys.setOnShowCallback(()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('setOnShowSurveyCallback',
+        arguments: null,
+      )
+    ]);
+  });
+
+  test('setOnDismissSurveyCallback Test', () async {
+    Surveys.setOnDismissCallback(()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('setOnDismissSurveyCallback',
+        arguments: null,
+      )
+    ]);
+  });
+
+  test('setShouldShowSurveysWelcomeScreen: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    Surveys.setShouldShowWelcomeScreen(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setShouldShowSurveysWelcomeScreen:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('showSurveysIfAvailable: Test', () async {
+    Surveys.showSurveyIfAvailable();
+    expect(log, <Matcher>[
+      isMethodCall('showSurveysIfAvailable:',
       )
     ]);
   });
