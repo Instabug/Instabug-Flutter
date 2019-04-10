@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:instabug_flutter/Instabug.dart';
 import 'package:instabug_flutter/BugReporting.dart';
 import 'package:instabug_flutter/InstabugLog.dart';
+import 'package:instabug_flutter/Surveys.dart';
 
 void main() => runApp(MyApp());
 
@@ -66,10 +67,15 @@ class _MyAppState extends State<MyApp> {
       BugReporting.setOnInvokeCallback(sdkInvoked);
       BugReporting.setOnDismissCallback(sdkDismissed);
       BugReporting.setInvocationEvents(<InvocationEvent>[InvocationEvent.floatingButton]);
+      Surveys.setEnabled(true);
+      Surveys.setAutoShowingEnabled(false);
+      Surveys.setOnShowCallback(surveyShown);
+      Surveys.setOnDismissCallback(surveyDismiss);
       //BugReporting.setEnabledAttachmentTypes(false, false, false, false);
       //BugReporting.setReportTypes(<ReportType>[ReportType.FEEDBACK,ReportType.BUG]);
       //BugReporting.setExtendedBugReportMode(ExtendedBugReportMode.ENABLED_WITH_REQUIRED_FIELDS);
       //BugReporting.setInvocationOptions(<InvocationOption>[InvocationOption.EMAIL_FIELD_HIDDEN]);
+      
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -87,8 +93,21 @@ class _MyAppState extends State<MyApp> {
     Instabug.resetTags();
   }
 
+  void getSurveys(List<String> surveys) {
+    int x = surveys.length;
+    debugPrint(x.toString());
+  }
+
   void sdkInvoked() {
     debugPrint("I am called before invocation");
+  }
+
+  void surveyShown() {
+    debugPrint("The user will se a survey nwoww");
+  }
+
+  void surveyDismiss() {
+    debugPrint("The survey is Dismissed");
   }
 
   void sdkDismissed(DismissType dismissType, ReportType reportType) {
@@ -98,7 +117,10 @@ class _MyAppState extends State<MyApp> {
 
   void show() {
     //Instabug.show();
-    BugReporting.showWithOptions(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
+    Surveys.getAvailableSurveys(getSurveys);
+    Surveys.showSurveyIfAvailable();
+    Surveys.setShouldShowWelcomeScreen(true);
+    //BugReporting.showWithOptions(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
   }
 
   void invokeWithMode() {
