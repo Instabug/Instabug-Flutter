@@ -1,5 +1,12 @@
 ## Master
 
+* Adds showSurveyIfAvailable API mapping.
+* Adds setShouldShowWelcomeScreen API mapping.
+* Adds setOnDismissCallback API mapping.
+* Adds setOnShowCallback API mapping.
+* Adds getAvailableSurveys API mapping.
+* Adds setAutoShowingEnabled API mapping.
+* Adds Surveys.setEnabled API mapping.
 * Adds showWithOptions API mapping.
 * Adds setInvocationOptions API mapping.
 * Adds setExtendedBugReportMode API mapping.
