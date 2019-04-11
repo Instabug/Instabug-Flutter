@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       if (Platform.isIOS) {
-        Instabug.start('9582e6cfe34e2b8897f48cfa3b617adb', <InvocationEvent>[InvocationEvent.shake]);
+        Instabug.start('068ba9a8c3615035e163dc5f829c73be', <InvocationEvent>[InvocationEvent.shake]);
       }
       //Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
       //Instabug.setWelcomeMessageMode(WelcomeMessageMode.beta);
@@ -115,16 +115,21 @@ class _MyAppState extends State<MyApp> {
      debugPrint('SDK Dismissed ReportType: ' + reportType.toString());
   }
 
+   void hasResponded(bool hasResponded) {
+    debugPrint(hasResponded.toString());
+  }
   void show() {
     //Instabug.show();
-    Surveys.getAvailableSurveys(getSurveys);
-    Surveys.showSurveyIfAvailable();
-    Surveys.setShouldShowWelcomeScreen(true);
+    // Surveys.getAvailableSurveys(getSurveys);
+    // Surveys.showSurveyIfAvailable();
+    // Surveys.setShouldShowWelcomeScreen(true);
+    Surveys.showSurvey("BHJI1iaKYhr4CYHHcUAaTg");
     //BugReporting.showWithOptions(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
   }
 
   void invokeWithMode() {
-    BugReporting.invokeWithMode(InvocationMode.bug, [InvocationOption.emailFieldHidden]);
+    Surveys.hasRespondedToSurvey("BHJI1iaKYhr4CYHHcUAaTg", hasResponded);
+   // BugReporting.invokeWithMode(InvocationMode.bug, [InvocationOption.emailFieldHidden]);
   }
 
   void getTags() async {
