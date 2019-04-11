@@ -1,5 +1,7 @@
 ## Master
 
+* Adds hasRespondedToSurvey API mapping.
+* Adds showSurvey API mapping.
 * Adds showSurveyIfAvailable API mapping.
 * Adds setShouldShowWelcomeScreen API mapping.
 * Adds setOnDismissCallback API mapping.
