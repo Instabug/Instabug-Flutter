@@ -20,6 +20,10 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+import com.instabug.survey.OnDismissCallback;
+import com.instabug.survey.OnShowCallback;
+import com.instabug.survey.Survey;
+import com.instabug.survey.Surveys;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -613,4 +617,94 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         int reportTypeInt = ArgsRegistry.getDeserializedValue(reportType, Integer.class);
         BugReporting.show(reportTypeInt,options);
     }
+
+    /**
+     * Show any valid survey if exist
+     *
+     * @param {isEnabled} boolean
+     */
+    public void setSurveysEnabled(final boolean isEnabled) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (isEnabled) {
+                    Surveys.setState(Feature.State.ENABLED);
+                } else {
+                    Surveys.setState(Feature.State.DISABLED);
+                }
+            }
+        });
+    }
+
+    /**
+     * Set Surveys auto-showing state, default state auto-showing enabled
+     *
+     * @param isEnabled whether Surveys should be auto-showing or not
+     */
+    public void setAutoShowingSurveysEnabled(boolean isEnabled) {
+        Surveys.setAutoShowingEnabled(isEnabled);
+    }
+
+     /**
+     * Sets the runnable that gets executed just before showing any valid survey<br/>
+     * WARNING: This runs on your application's main UI thread. Please do not include
+     * any blocking operations to avoid ANRs.
+     */
+    public void setOnShowSurveyCallback() {
+            Surveys.setOnShowCallback(new OnShowCallback() {
+                @Override
+                public void onShow() {
+                    channel.invokeMethod("onShowSurveyCallback", null);
+                }
+            });
+    }
+
+    /**
+     * Sets the runnable that gets executed just after showing any valid survey<br/>
+     * WARNING: This runs on your application's main UI thread. Please do not include
+     * any blocking operations to avoid ANRs.
+     *
+     */
+    public void setOnDismissSurveyCallback() {
+
+            Surveys.setOnDismissCallback(new OnDismissCallback() {
+                @Override
+                public void onDismiss() {
+                    channel.invokeMethod("onDismissSurveyCallback", null);
+                }
+            });
+    }
+
+    /**
+     * Returns an array containing the available surveys.*
+     */
+    public void getAvailableSurveys() {
+        List<Survey> availableSurveys = Surveys.getAvailableSurveys();
+        ArrayList<String> result = new ArrayList<>();
+        for (Survey obj : availableSurveys) {
+            result.add(obj.getTitle());
+        }
+        channel.invokeMethod("availableSurveysCallback", result);
+    }
+
+
+     /**
+     * Set Surveys welcome screen enabled, default value is false
+     *
+     * @param shouldShow shouldShow whether should a welcome screen be shown
+     *                   before taking surveys or not
+     */
+    public void setShouldShowSurveysWelcomeScreen(boolean shouldShow) {
+        Surveys.setShouldShowWelcomeScreen(shouldShow);
+    }
+
+    /**
+     * Show any valid survey if exist
+     *
+     * @return true if a valid survey was shown otherwise false
+     */
+    public void showSurveysIfAvailable() {
+        Surveys.showSurveyIfAvailable();
+    }
+
 }

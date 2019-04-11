@@ -511,6 +511,86 @@ FlutterMethodChannel* channel;
     [IBGBugReporting showWithReportType:reportTypeInt options:invocationOptions];
 }
 
+/**
+  * Show any valid survey if exist
+  *
+  * @param {isEnabled} boolean
+  */
++ (void)setSurveysEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGSurveys.enabled = boolValue;
+}
+
+/**
+  * Set Surveys auto-showing state, default state auto-showing enabled
+  *
+  * @param {isEnabled} whether Surveys should be auto-showing or not
+  */
++ (void)setAutoShowingSurveysEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGSurveys.autoShowingEnabled = boolValue;
+}
+
+
+/**
+  * Sets the runnable that gets executed just before showing any valid survey<br/>
+  * WARNING: This runs on your application's main UI thread. Please do not include
+  * any blocking operations to avoid ANRs.
+  */
++ (void)setOnShowSurveyCallback {
+  IBGSurveys.willShowSurveyHandler = ^{
+           [channel invokeMethod:@"onShowSurveyCallback" arguments:nil];
+        };
+}
+
+/**
+  * Sets the runnable that gets executed just after showing any valid survey<br/>
+  * WARNING: This runs on your application's main UI thread. Please do not include
+  * any blocking operations to avoid ANRs.
+  *
+  */
++ (void)setOnDismissSurveyCallback {
+  IBGSurveys.didDismissSurveyHandler = ^{
+            [channel invokeMethod:@"onDismissSurveyCallback" arguments:nil];
+        };
+}
+
+/**
+  * Sets a block of code to be executed right after the SDK's UI is dismissed.
+  * This block is executed on the UI thread. Could be used for performing any
+  * UI changes after the SDK's UI is dismissed.
+  */
++ (void)getAvailableSurveys {
+     NSArray<IBGSurvey *> *surveys = [IBGSurveys availableSurveys];
+     NSMutableArray <NSString *> *surveysArray = [[NSMutableArray alloc] init];
+     for (IBGSurvey * survey in surveys) {
+        [surveysArray addObject:survey.title];
+    }
+    NSArray *result = [surveysArray copy];
+    [channel invokeMethod:@"availableSurveysCallback" arguments:result];
+}
+
+
+/**
+  * Set Surveys auto-showing state, default state auto-showing enabled
+  *
+  * @param {isEnabled} whether Surveys should be auto-showing or not
+  */
++ (void)setShouldShowSurveysWelcomeScreen:(NSNumber *)shouldShowWelcomeScreen {
+   BOOL boolValue = [shouldShowWelcomeScreen boolValue];
+   IBGSurveys.shouldShowWelcomeScreen = boolValue;
+}
+
+/**
+  * Show any valid survey if exist
+  *
+  * @return true if a valid survey was shown otherwise false
+  */
++ (void)showSurveysIfAvailable {
+   [IBGSurveys showSurveyIfAvailable];
+}
+
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
