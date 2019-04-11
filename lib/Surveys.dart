@@ -9,6 +9,7 @@ class Surveys {
   static Function onShowCallback;
   static Function onDismissCallback;
   static Function availableSurveysCallback;
+  static Function hasRespondedToSurveyCallback;
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
   static Future<String> get platformVersion async {
@@ -31,6 +32,9 @@ class Surveys {
         params.add(result[i].toString());
       }
       availableSurveysCallback(params);
+      return ;
+    case 'hasRespondedToSurveyCallback':
+      hasRespondedToSurveyCallback(call.arguments);
       return ;
   }
 }
@@ -97,4 +101,25 @@ class Surveys {
   static void showSurveyIfAvailable() async {
     await _channel.invokeMethod<Object>('showSurveysIfAvailable'); 
   } 
+
+   /// Shows survey with a specific token.
+   /// Does nothing if there are no available surveys with that specific token.
+   /// Answered and cancelled surveys won't show up again.
+   /// [surveyToken] - A String with a survey token.
+  static void showSurvey(String surveyToken) async {
+    final List<dynamic> params = <dynamic>[surveyToken];
+    await _channel.invokeMethod<Object>('showSurveyWithToken:', params); 
+  } 
+
+  /// Sets a block of code to be executed just before the SDK's UI is presented.
+   /// This block is executed on the UI thread. Could be used for performing any
+   /// UI changes  after the survey's UI is dismissed.
+   /// [function]  A callback that gets executed after the survey's UI is dismissed.
+  static void hasRespondedToSurvey(String surveyToken, Function function) async {
+     _channel.setMethodCallHandler(_handleMethod);
+    hasRespondedToSurveyCallback = function;
+    final List<dynamic> params = <dynamic>[surveyToken];
+    await _channel.invokeMethod<Object>('hasRespondedToSurveyWithToken:', params); 
+  } 
+
 }
