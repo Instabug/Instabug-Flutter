@@ -638,6 +638,22 @@ FlutterMethodChannel* channel;
     [IBGFeatureRequests setEmailFieldRequired:boolValue forAction:actionTypes];
 }
 
+/**
+  * Manual invocation for chats view. 
+  */
++ (void)showChats {
+   [IBGChats show];
+}
+
+/**
+  * Enables and disables everything related to creating new chats.
+  * @param {boolean} isEnabled 
+  */
++ (void)setChatsEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGChats.enabled = boolValue;
+}
+
 
 + (NSDictionary *)constants {
   return @{
