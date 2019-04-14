@@ -10,6 +10,7 @@ import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
 import com.instabug.chat.Chats;
 import com.instabug.chat.Replies;
+import com.instabug.featuresrequest.FeatureRequests;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
@@ -730,6 +731,28 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         boolean hasResponded;
         hasResponded = Surveys.hasRespondToSurvey(surveyToken);
         channel.invokeMethod("hasRespondedToSurveyCallback", hasResponded);
+    }
+
+    /**
+     * Shows the UI for feature requests list
+     */
+    public void showFeatureRequests() {
+        FeatureRequests.show();
+    }
+
+    /**
+     * Sets whether email field is required or not when submitting
+     * new-feature-request/new-comment-on-feature
+     *
+     * @param isEmailRequired set true to make email field required
+     * @param actionTypes Bitwise-or of actions
+     */
+    public void setEmailFieldRequiredForFeatureRequests(final Boolean isEmailRequired, final List<String> actionTypes) {
+        int[] actions = new int[actionTypes.size()];
+        for (int i = 0; i < actionTypes.size(); i++) {
+            actions[i] = ArgsRegistry.getDeserializedValue(actionTypes.get(i), Integer.class);
+        }
+        FeatureRequests.setEmailFieldRequired(isEmailRequired, actions);
     }
 
 }
