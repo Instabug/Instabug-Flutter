@@ -91,6 +91,13 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 | `showSurvey(String surveyToken)`              | `showSurvey(String token)`<br>`+ showSurveyWithToken:`                                                                                      |
 | `hasRespondedToSurvey(String surveyToken, Function function)`   | `hasRespondToSurvey(String token)`<br>`+ hasRespondedToSurveyWithToken:`                                                                    |
 
+#### `FeatureRequests`
+
+| API Method                                    | Native Equivalent (Android/iOS)                              |
+|-----------------------------------------------|--------------------------------------------------------------|
+| `show()                 `                     | `show()`<br>`+ show`                         |
+| `setEmailFieldRequired(bool isEmailFieldRequired, List<ActionType> actionTypes)`             | `setEmailFieldRequired(boolean isEmailRequired, ActionTypes actions)`<br>`+ setEmailFieldRequired:forAction:`                       |
+
 ## Integration
 
 Creating a Flutter app on the Instabug dashboard isn't possible yet. Create a React Native app instead.
