@@ -755,4 +755,29 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         FeatureRequests.setEmailFieldRequired(isEmailRequired, actions);
     }
 
+    /**
+     * Manual invocation for chats view. 
+     */
+    public void showChats() {
+        Chats.show();
+    }
+
+    /**
+     * Enables and disables everything related to creating new chats.
+     * @param {boolean} isEnabled
+     */
+    public void setChatsEnabled(final boolean isEnabled) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (isEnabled) {
+                    Chats.setState(Feature.State.ENABLED);
+                } else {
+                    Chats.setState(Feature.State.DISABLED);
+                }
+            }
+        });
+    }
+
+
 }
