@@ -1,3 +1,8 @@
+## Master
+
+* Adds Chats Api mappings
+* Adds FeatureRequests Api mappings.
+
 ## Version 0.0.4 (2019-04-14)
 
 * Adds hasRespondedToSurvey API mapping.

@@ -5,6 +5,7 @@ import android.support.annotation.VisibleForTesting;
 
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
+import com.instabug.library.ActionType;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
@@ -60,6 +61,7 @@ final class ArgsRegistry {
         registerCustomTextPlaceHolderKeysArgs(ARGS);
         registerInstabugReportTypesArgs(ARGS);
         registerInstabugExtendedBugReportModeArgs(ARGS);
+        registerInstabugActionTypesArgs(ARGS);
     }
 
     /**
@@ -214,4 +216,13 @@ final class ArgsRegistry {
         args.put("ExtendedBugReportMode.enabledWithOptionalFields", ExtendedBugReport.State.ENABLED_WITH_OPTIONAL_FIELDS);
         args.put("ExtendedBugReportMode.disabled",ExtendedBugReport.State.DISABLED);
     }
+
+    @VisibleForTesting
+    static void registerInstabugActionTypesArgs(Map<String, Object> args) {
+        args.put("ActionType.allActions", ActionType.ALL_ACTIONS);
+        args.put("ActionType.reportBug", ActionType.REPORT_BUG);
+        args.put("ActionType.requestNewFeature",ActionType.REQUEST_NEW_FEATURE);
+        args.put("ActionType.addCommentToFeature",ActionType.ADD_COMMENT_TO_FEATURE);
+    }
+
 }

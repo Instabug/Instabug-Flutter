@@ -614,6 +614,46 @@ FlutterMethodChannel* channel;
     [channel invokeMethod:@"hasRespondedToSurveyCallback" arguments:boolNumber];
 }
 
+/**
+  * Shows the UI for feature requests list
+  */
++ (void)showFeatureRequests {
+   [IBGFeatureRequests show];
+}
+
+/**
+  * Sets whether email field is required or not when submitting
+  * new-feature-request/new-comment-on-feature
+  *
+  * @param isEmailRequired set true to make email field required
+  * @param actionTypes Bitwise-or of actions
+  */
++ (void)setEmailFieldRequiredForFeatureRequests:(NSNumber*)isEmailFieldRequired forAction:(NSArray *)actionTypesArray  {
+    NSDictionary *constants = [self constants];
+    NSInteger actionTypes = 0;
+    for (NSString * actionType in actionTypesArray) {
+        actionTypes |= ((NSNumber *) constants[actionType]).integerValue;
+    }
+    BOOL boolValue = [isEmailFieldRequired boolValue];
+    [IBGFeatureRequests setEmailFieldRequired:boolValue forAction:actionTypes];
+}
+
+/**
+  * Manual invocation for chats view. 
+  */
++ (void)showChats {
+   [IBGChats show];
+}
+
+/**
+  * Enables and disables everything related to creating new chats.
+  * @param {boolean} isEnabled 
+  */
++ (void)setChatsEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGChats.enabled = boolValue;
+}
+
 
 + (NSDictionary *)constants {
   return @{
@@ -696,6 +736,11 @@ FlutterMethodChannel* channel;
       @"ExtendedBugReportMode.enabledWithRequiredFields": @(IBGExtendedBugReportModeEnabledWithRequiredFields),
       @"ExtendedBugReportMode.enabledWithOptionalFields": @(IBGExtendedBugReportModeEnabledWithOptionalFields),
       @"ExtendedBugReportMode.disabled": @(IBGExtendedBugReportModeDisabled),
+
+      @"ActionType.allActions": @(IBGActionAllActions),
+      @"ActionType.reportBug": @(IBGActionReportBug),
+      @"ActionType.requestNewFeature": @(IBGActionRequestNewFeature),
+      @"ActionType.addCommentToFeature": @(IBGActionAddCommentToFeature),
   };
 };
 
