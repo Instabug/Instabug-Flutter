@@ -8,6 +8,7 @@ import 'package:instabug_flutter/BugReporting.dart';
 import 'package:instabug_flutter/InstabugLog.dart';
 import 'package:instabug_flutter/Surveys.dart';
 import 'package:instabug_flutter/FeatureRequests.dart';
+import 'package:instabug_flutter/Chats.dart';
 
 void main() => runApp(MyApp());
 
@@ -126,8 +127,10 @@ class _MyAppState extends State<MyApp> {
     // Surveys.setShouldShowWelcomeScreen(true);
     //Surveys.showSurvey("BHJI1iaKYhr4CYHHcUAaTg");
     //BugReporting.showWithOptions(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
-    FeatureRequests.setEmailFieldRequired(false, [ActionType.allActions]);
-    FeatureRequests.show();
+    // FeatureRequests.setEmailFieldRequired(false, [ActionType.allActions]);
+    // FeatureRequests.show();
+    Chats.setEnabled(true);
+    Chats.show();
     
   }
 
