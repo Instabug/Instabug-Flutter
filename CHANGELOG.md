@@ -1,4 +1,4 @@
-## Master
+## Version 0.0.4 (2019-04-14)
 
 * Adds hasRespondedToSurvey API mapping.
 * Adds showSurvey API mapping.
