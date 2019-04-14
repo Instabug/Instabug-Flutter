@@ -590,6 +590,30 @@ FlutterMethodChannel* channel;
    [IBGSurveys showSurveyIfAvailable];
 }
 
+/**
+  * Shows survey with a specific token.
+  * Does nothing if there are no available surveys with that specific token.
+  * Answered and cancelled surveys won't show up again.
+  *
+  * @param surveyToken A String with a survey token.
+  */
++ (void)showSurveyWithToken:(NSString *)surveyToken {
+   [IBGSurveys showSurveyWithToken:surveyToken];
+}
+
+/**
+  * Returns true if the survey with a specific token was answered before.
+  * Will return false if the token does not exist or if the survey was not answered before.
+  *
+  * @param surveyToken          the attribute key as string
+  * @return the desired value of whether the user has responded to the survey or not.
+  */
++ (void)hasRespondedToSurveyWithToken:(NSString *)surveyToken {
+    bool hasResponded = [IBGSurveys hasRespondedToSurveyWithToken:surveyToken];
+    NSNumber *boolNumber = [NSNumber numberWithBool:hasResponded];
+    [channel invokeMethod:@"hasRespondedToSurveyCallback" arguments:boolNumber];
+}
+
 
 + (NSDictionary *)constants {
   return @{

@@ -88,9 +88,8 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 | `setOnDismissCallback(Function function)`     | `setOnDismissCallback(OnDismissCallback onDismissCallback)`<br>`didDismissSurveyHandler`                                                    |
 | `setShouldShowWelcomeScreen(bool shouldShowWelcomeScreen)` | `setShouldShowWelcomeScreen(boolean shouldShow)`<br>`shouldShowWelcomeScreen`                                                                 |
 | `showSurveyIfAvailable()`                     | `showSurveyIfAvailable()`<br>`+ showSurveyIfAvailable`                                                                                      |
-|                                               | `showSurvey(String token)`<br>`+ showSurveyWithToken:`                                                                                      |
-|                                               | `setThresholdForReshowingSurveyAfterDismiss(int sessionsCount, int daysCount)`<br>`+ setThresholdForReshowingSurveyAfterDismiss:daysCount:` |
-|                                               | `hasRespondToSurvey(String token)`<br>`+ hasRespondedToSurveyWithToken:`                                                                    |
+| `showSurvey(String surveyToken)`              | `showSurvey(String token)`<br>`+ showSurveyWithToken:`                                                                                      |
+| `hasRespondedToSurvey(String surveyToken, Function function)`   | `hasRespondToSurvey(String token)`<br>`+ hasRespondedToSurveyWithToken:`                                                                    |
 
 ## Integration
 

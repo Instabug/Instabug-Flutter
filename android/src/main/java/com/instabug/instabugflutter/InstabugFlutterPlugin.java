@@ -707,4 +707,29 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         Surveys.showSurveyIfAvailable();
     }
 
+    /**
+     * Shows survey with a specific token.
+     * Does nothing if there are no available surveys with that specific token.
+     * Answered and cancelled surveys won't show up again.
+     *
+     * @param surveyToken A String with a survey token.
+     */
+    public void showSurveyWithToken(String surveyToken) {
+        Surveys.showSurvey(surveyToken);
+    }
+
+
+    /**
+     * Returns true if the survey with a specific token was answered before.
+     * Will return false if the token does not exist or if the survey was not answered before.
+     *
+     * @param surveyToken          the attribute key as string
+     * @return the desired value of whether the user has responded to the survey or not.
+     */
+    public void hasRespondedToSurveyWithToken(String surveyToken) {
+        boolean hasResponded;
+        hasResponded = Surveys.hasRespondToSurvey(surveyToken);
+        channel.invokeMethod("hasRespondedToSurveyCallback", hasResponded);
+    }
+
 }

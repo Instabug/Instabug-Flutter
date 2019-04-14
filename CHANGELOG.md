@@ -1,5 +1,7 @@
-## Master
+## Version 0.0.4 (2019-04-14)
 
+* Adds hasRespondedToSurvey API mapping.
+* Adds showSurvey API mapping.
 * Adds showSurveyIfAvailable API mapping.
 * Adds setShouldShowWelcomeScreen API mapping.
 * Adds setOnDismissCallback API mapping.

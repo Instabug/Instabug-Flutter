@@ -510,6 +510,28 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('showSurveyWithToken Test', () async {
+    String token = "token";
+    final List<dynamic> args = <dynamic>[token];
+    Surveys.showSurvey(token);
+    expect(log, <Matcher>[
+      isMethodCall('showSurveyWithToken:',
+      arguments: args,
+      )
+    ]);
+  });
+
+  test('hasRespondedToSurvey Test', () async {
+    String token = "token";
+    final List<dynamic> args = <dynamic>[token];
+    Surveys.hasRespondedToSurvey(token,()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('hasRespondedToSurveyWithToken:',
+      arguments: args,
+      )
+    ]);
+  });
+
 }
 
 
