@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/Surveys.dart';
 import 'package:instabug_flutter/FeatureRequests.dart';
+import 'package:instabug_flutter/Chats.dart';
 
 void main() {
 
@@ -549,6 +550,25 @@ test('startWithToken:invocationEvents: Test', () async {
       isMethodCall('setEmailFieldRequiredForFeatureRequests:forAction:',
       arguments: args,
      )
+    ]);
+  });
+
+  test('showChats Test', () async {
+    Chats.show();
+    expect(log, <Matcher>[
+      isMethodCall('showChats'
+     )
+    ]);
+  });
+
+  test('setChatsEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    Chats.setEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setChatsEnabled:',
+        arguments: args,
+      )
     ]);
   });
 
