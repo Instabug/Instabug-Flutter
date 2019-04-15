@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/Surveys.dart';
 import 'package:instabug_flutter/FeatureRequests.dart';
 import 'package:instabug_flutter/Chats.dart';
+import 'package:instabug_flutter/Replies.dart';
 
 void main() {
 
@@ -571,6 +572,74 @@ test('startWithToken:invocationEvents: Test', () async {
       )
     ]);
   });
+
+  test('setRepliesEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    Replies.setEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setRepliesEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('showReplies Test', () async {
+    Replies.show();
+    expect(log, <Matcher>[
+      isMethodCall('showReplies'
+     )
+    ]);
+  });
+
+  test('hasChats Test', () async {
+    Replies.hasChats(()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('hasChats'
+      )
+    ]);
+  });
+
+  test('setOnNewReplyReceivedCallback Test', () async {
+    Replies.setOnNewReplyReceivedCallback(()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('setOnNewReplyReceivedCallback'
+      )
+    ]);
+  });
+
+  test('getUnreadRepliesCount Test', () async {
+    Replies.getUnreadRepliesCount(()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('getUnreadRepliesCount'
+      )
+    ]);
+  });
+
+   test('setChatNotificationEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    Replies.setInAppNotificationsEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setChatNotificationEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+
+  ///Since the below method only runs on android and has the [Platform.isAndroid] condition in it, it will fail when running outside android,
+  /// therefore its commented.
+    // test('setEnableInAppNotificationSound: Test', () async {
+    //   bool isEnabled = false;
+    //   final List<dynamic> args = <dynamic>[isEnabled];
+    //   Replies.setInAppNotificationSound(isEnabled);
+    //   expect(log, <Matcher>[
+    //     isMethodCall('setEnableInAppNotificationSound:',
+    //       arguments: args,
+    //     )
+    //   ]);
+    // });
 
 }
 
