@@ -9,6 +9,7 @@ import 'package:instabug_flutter/InstabugLog.dart';
 import 'package:instabug_flutter/Surveys.dart';
 import 'package:instabug_flutter/FeatureRequests.dart';
 import 'package:instabug_flutter/Chats.dart';
+import 'package:instabug_flutter/Replies.dart';
 
 void main() => runApp(MyApp());
 
@@ -73,6 +74,10 @@ class _MyAppState extends State<MyApp> {
       Surveys.setAutoShowingEnabled(false);
       Surveys.setOnShowCallback(surveyShown);
       Surveys.setOnDismissCallback(surveyDismiss);
+      //Replies.setInAppNotificationsEnabled(false);
+      Replies.setEnabled(true);
+      Replies.show();
+      Replies.setOnNewReplyReceivedCallback(replies);
       //BugReporting.setEnabledAttachmentTypes(false, false, false, false);
       //BugReporting.setReportTypes(<ReportType>[ReportType.FEEDBACK,ReportType.BUG]);
       //BugReporting.setExtendedBugReportMode(ExtendedBugReportMode.ENABLED_WITH_REQUIRED_FIELDS);
@@ -120,6 +125,10 @@ class _MyAppState extends State<MyApp> {
    void hasResponded(bool hasResponded) {
     debugPrint(hasResponded.toString());
   }
+
+  void replies() {
+    debugPrint("new Replyyy");
+  }
   void show() {
     //Instabug.show();
     // Surveys.getAvailableSurveys(getSurveys);
@@ -129,9 +138,10 @@ class _MyAppState extends State<MyApp> {
     //BugReporting.showWithOptions(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
     // FeatureRequests.setEmailFieldRequired(false, [ActionType.allActions]);
     // FeatureRequests.show();
-    Chats.setEnabled(true);
-    Chats.show();
-    
+    // Replies.setEnabled(true);
+    // Replies.show();
+    //Replies.setInAppNotificationsEnabled(false);
+    //Replies.getUnreadRepliesCount(replies);
   }
 
   void invokeWithMode() {
