@@ -1,5 +1,6 @@
 ## Master
 
+* Adds Replies Api mappings 
 * Adds Chats Api mappings
 * Adds FeatureRequests Api mappings.
 
