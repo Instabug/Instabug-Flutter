@@ -1,4 +1,4 @@
-## Master
+## Version 1.0-beta.1 (2019-04-16)
 
 * Adds New Sample App
 * Adds Replies Api mappings 
