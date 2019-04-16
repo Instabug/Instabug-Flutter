@@ -1,8 +1,5 @@
 package com.instabug.instabugflutter;
 
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
 import com.instabug.library.ActionType;
@@ -48,7 +45,6 @@ import static com.instabug.library.ui.onboarding.WelcomeMessage.State.LIVE;
 @SuppressWarnings({"SameParameterValue", "unchecked"})
 final class ArgsRegistry {
 
-    @VisibleForTesting
     static final Map<String, Object> ARGS = new HashMap<>();
 
     static {
@@ -77,7 +73,6 @@ final class ArgsRegistry {
      * @param clazz the type in which the value should be deserialized to
      * @return the value deserialized if all the assertions were successful, null otherwise
      */
-    @Nullable
     static <T> T getDeserializedValue(String key, Class<T> clazz) {
         if (key != null && ARGS.containsKey(key)) {
             Object constant = ARGS.get(key);
@@ -98,7 +93,6 @@ final class ArgsRegistry {
      * @param key the key whose associated value is to be returned
      * @return the value  if all the assertions were successful, null otherwise
      */
-    @Nullable
     static Object getRawValue(String key) {
         if (key != null) {
             return ARGS.get(key);
@@ -106,7 +100,6 @@ final class ArgsRegistry {
         return null;
     }
 
-    @VisibleForTesting
     static void registerInstabugInvocationEventsArgs(Map<String, Object> args) {
         args.put("InvocationEvent.twoFingersSwipeLeft", TWO_FINGER_SWIPE_LEFT);
         args.put("InvocationEvent.floatingButton", FLOATING_BUTTON);
@@ -115,26 +108,22 @@ final class ArgsRegistry {
         args.put("InvocationEvent.none", NONE);
     }
 
-    @VisibleForTesting
     static void registerWelcomeMessageArgs(Map<String, Object> args) {
         args.put("WelcomeMessageMode.disabled", DISABLED);
         args.put("WelcomeMessageMode.live", LIVE);
         args.put("WelcomeMessageMode.beta", BETA);
     }
 
-    @VisibleForTesting
     static void registerColorThemeArgs(Map<String, Object> args) {
         args.put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
         args.put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
     }
 
-    @VisibleForTesting
     static void registerInvocationModeArgs(Map<String, Object> args) {
         args.put("InvocationMode.bug", BugReporting.ReportType.BUG);
         args.put("InvocationMode.feedback", BugReporting.ReportType.FEEDBACK);
     }
 
-    @VisibleForTesting
     static void registerInvocationOptionsArgs(Map<String, Object> args) {
         args.put("InvocationOption.commentFieldRequired", Option.COMMENT_FIELD_REQUIRED);
         args.put("InvocationOption.disablePostSendingDialog", Option.DISABLE_POST_SENDING_DIALOG);
@@ -142,7 +131,6 @@ final class ArgsRegistry {
         args.put("InvocationOption.emailFieldOptional", Option.EMAIL_FIELD_OPTIONAL);
     }
 
-    @VisibleForTesting
     static void registerLocaleArgs(Map<String, Object> args) {
         args.put("Locale.chineseTraditional", new Locale(TRADITIONAL_CHINESE.getCode(), TRADITIONAL_CHINESE.getCountry()));
         args.put("Locale.portuguesePortugal", new Locale(PORTUGUESE_PORTUGAL.getCode(), PORTUGUESE_PORTUGAL.getCountry()));
@@ -168,7 +156,6 @@ final class ArgsRegistry {
         args.put("Locale.czech", new Locale(CZECH.getCode(), CZECH.getCountry()));
     }
 
-    @VisibleForTesting
     static void registerCustomTextPlaceHolderKeysArgs(Map<String, Object> args) {
         args.put("IBGCustomTextPlaceHolderKey.shakeHint", InstabugCustomTextPlaceHolder.Key.SHAKE_HINT);
         args.put("IBGCustomTextPlaceHolderKey.swipeHint", InstabugCustomTextPlaceHolder.Key.SWIPE_HINT);
@@ -204,20 +191,17 @@ final class ArgsRegistry {
         args.put("IBGCustomTextPlaceHolderKey.liveWelcomeMessageContent", InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_CONTENT);
     }
 
-    @VisibleForTesting
     static void registerInstabugReportTypesArgs(Map<String, Object> args) {
         args.put("ReportType.bug", BugReporting.ReportType.BUG);
         args.put("ReportType.feedback", BugReporting.ReportType.FEEDBACK);
     }
 
-    @VisibleForTesting
     static void registerInstabugExtendedBugReportModeArgs(Map<String, Object> args) {
         args.put("ExtendedBugReportMode.enabledWithRequiredFields", ExtendedBugReport.State.ENABLED_WITH_REQUIRED_FIELDS);
         args.put("ExtendedBugReportMode.enabledWithOptionalFields", ExtendedBugReport.State.ENABLED_WITH_OPTIONAL_FIELDS);
         args.put("ExtendedBugReportMode.disabled",ExtendedBugReport.State.DISABLED);
     }
 
-    @VisibleForTesting
     static void registerInstabugActionTypesArgs(Map<String, Object> args) {
         args.put("ActionType.allActions", ActionType.ALL_ACTIONS);
         args.put("ActionType.reportBug", ActionType.REPORT_BUG);
