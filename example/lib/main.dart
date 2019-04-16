@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
       }
       //Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
       //Instabug.setWelcomeMessageMode(WelcomeMessageMode.beta);
-      Instabug.identifyUserWithEmail('aezz@instabug.com', 'Aly Ezz');
+      Instabug.identifyUser('aezz@instabug.com', 'Aly Ezz');
       InstabugLog.logInfo('Test Log Info Message from Flutter!');
       InstabugLog.logDebug('Test Debug Message from Flutter!');
       InstabugLog.logVerbose('Test Verbose Message from Flutter!');
@@ -48,14 +48,14 @@ class _MyAppState extends State<MyApp> {
       //Instabug.setLocale(Locale.German);
       Instabug.setColorTheme(ColorTheme.dark);
       Instabug.appendTags(<String>['tag1', 'tag2']);
-      Instabug.setUserAttributeWithKey('19', 'Age');
-      Instabug.setUserAttributeWithKey('female', 'gender');
-      Instabug.removeUserAttributeForKey('gender');
+      Instabug.setUserAttribute('19', 'Age');
+      Instabug.setUserAttribute('female', 'gender');
+      Instabug.removeUserAttribute('gender');
       final String value = await Instabug.getUserAttributeForKey('Age');
       print('User Attribute ' + value);
       final Map<String, String> userAttributes = await Instabug.getUserAttributes();
       print(userAttributes.toString()); 
-      Instabug.logUserEventWithName('Aly Event');
+      Instabug.logUserEvent('Aly Event');
       Instabug.setValueForStringWithKey('What\'s the problem', IBGCustomTextPlaceHolderKey.reportBug);
       Instabug.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.reportFeedback);
       Instabug.setSessionProfilerEnabled(false);

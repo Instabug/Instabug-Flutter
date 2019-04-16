@@ -83,7 +83,7 @@ class BugReporting {
   /// invoke sdk manually with desire invocation mode
   /// [invocationMode] the invocation mode
   /// [invocationOptions] the array of invocation options
-  static void invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions]) async {
+  static void invoke(InvocationMode invocationMode, [List<InvocationOption> invocationOptions]) async {
     final List<String> invocationOptionsStrings = <String>[];
     if (invocationOptions != null) {
       invocationOptions.forEach((e) {
@@ -185,7 +185,7 @@ class BugReporting {
    /// Invoke bug reporting with report type and options.
    /// [reportType] type 
    /// [invocationOptions]  List of invocation options
-  static void showWithOptions(ReportType reportType, List<InvocationOption> invocationOptions) async {
+  static void show(ReportType reportType, List<InvocationOption> invocationOptions) async {
     final List<String> invocationOptionsStrings = <String>[];
     if (invocationOptions != null) {
       invocationOptions.forEach((e) {

@@ -65,7 +65,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
 
   test('identifyUserWithEmail:name: Test', () async {
-    Instabug.identifyUserWithEmail(email, name);
+    Instabug.identifyUser(email, name);
     final List<dynamic> args = <dynamic>[email, name];
     expect(log, <Matcher>[
       isMethodCall('identifyUserWithEmail:name:',
@@ -75,7 +75,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
   
   test('identifyUserWithEmail:name: Test Optional Parameter', () async {
-    Instabug.identifyUserWithEmail(email);
+    Instabug.identifyUser(email);
     final List<dynamic> args = <dynamic>[email, null];
     expect(log, <Matcher>[
       isMethodCall('identifyUserWithEmail:name:',
@@ -206,7 +206,7 @@ test('startWithToken:invocationEvents: Test', () async {
   test('test setUserAttributeWithKey should be called with two string arguments', () async {
     const String value = '19';
     const String key = 'Age';
-    Instabug.setUserAttributeWithKey(value, key);
+    Instabug.setUserAttribute(value, key);
     final List<dynamic> args = <dynamic>[value, key];
     expect(log, <Matcher>[
       isMethodCall('setUserAttribute:withKey:',
@@ -217,7 +217,7 @@ test('startWithToken:invocationEvents: Test', () async {
 
   test('test removeUserAttributeForKey should be called with a string argument', () async {
     const String key = 'Age';
-    Instabug.removeUserAttributeForKey(key);
+    Instabug.removeUserAttribute(key);
     final List<dynamic> args = <dynamic>[key];
     expect(log, <Matcher>[
       isMethodCall('removeUserAttributeForKey:',
@@ -258,7 +258,7 @@ test('startWithToken:invocationEvents: Test', () async {
 
   
   test('invokeWithMode:options: Test', () async {
-    BugReporting.invokeWithMode(InvocationMode.bug, [InvocationOption.commentFieldRequired]);
+    BugReporting.invoke(InvocationMode.bug, [InvocationOption.commentFieldRequired]);
     final List<dynamic> args = <dynamic>[InvocationMode.bug.toString(), <String>[InvocationOption.commentFieldRequired.toString()]];
     expect(log, <Matcher>[
       isMethodCall('invokeWithMode:options:',
@@ -268,7 +268,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
 
   test('logUserEventWithName: Test', () async {
-    Instabug.logUserEventWithName(name);
+    Instabug.logUserEvent(name);
     final List<dynamic> args = <dynamic>[name];
     expect(log, <Matcher>[
       isMethodCall('logUserEventWithName:',
@@ -445,7 +445,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
 
    test('showBugReportingWithReportTypeAndOptions:options Test', () async {
-   BugReporting.showWithOptions(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
+   BugReporting.show(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
     final List<dynamic> args = <dynamic>[ReportType.bug.toString(), <String>[InvocationOption.emailFieldHidden.toString()]];
     expect(log, <Matcher>[
       isMethodCall('showBugReportingWithReportTypeAndOptions:options:',
