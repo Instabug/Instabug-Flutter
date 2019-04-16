@@ -654,6 +654,59 @@ FlutterMethodChannel* channel;
    IBGChats.enabled = boolValue;
 }
 
+/**
+  * Enables and disables everything related to receiving replies.
+  * @param {boolean} isEnabled 
+  */
++ (void)setRepliesEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGReplies.enabled = boolValue;
+}
+
+/**
+  * Manual invocation for replies.
+  */
++ (void)showReplies {
+   [IBGReplies show];
+}
+
+/**
+  * Tells whether the user has chats already or not.
+  */
++ (void)hasChats {
+    BOOL hasChats = IBGReplies.hasChats;
+    NSNumber *boolNumber = [NSNumber numberWithBool:hasChats];
+    [channel invokeMethod:@"hasChatsCallback" arguments:boolNumber];
+}
+
+/**
+  * Sets a block of code that gets executed when a new message is received.
+  */
++ (void)setOnNewReplyReceivedCallback {
+  IBGReplies.didReceiveReplyHandler = ^{
+          [channel invokeMethod:@"onNewReplyReceivedCallback" arguments:nil];
+        };
+}
+
+/**
+  * Get current unread count of messages for this user
+  *
+  * @return number of messages that are unread for this user
+  */
++ (void)getUnreadRepliesCount {
+    [channel invokeMethod:@"unreadRepliesCountCallback" arguments:@(IBGReplies.unreadRepliesCount)];
+}
+
+/**
+  * Enabled/disable chat notification
+  *
+  * @param isEnabled whether chat notification is reburied or not
+  */
++ (void)setChatNotificationEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGReplies.inAppNotificationsEnabled = boolValue;
+}
+
 
 + (NSDictionary *)constants {
   return @{

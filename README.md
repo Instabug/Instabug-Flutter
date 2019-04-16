@@ -10,9 +10,9 @@ A Flutter plugin for [Instabug](https://instabug.com/).
 |:---------------------------------------------------------:|:-------:|
 | [Bug Reporting](https://instabug.com/bug-reporting)       |    ⚙️   |
 | [Crash Reporting](https://instabug.com/crash-reporting)   |    ❌   |
-| [In-App Chat](https://instabug.com/in-app-chat)           |    ❌   |
+| [In-App Chat](https://instabug.com/in-app-chat)           |    ⚙️   |
 | [In-App Surveys](https://instabug.com/in-app-surveys)     |    ⚙️   |
-| [Feature Requests](https://instabug.com/feature-requests) |    ❌   |
+| [Feature Requests](https://instabug.com/feature-requests) |    ⚙️   |
 
 * ✅ Stable
 * ⚙️ Under active development
@@ -105,6 +105,19 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 |-----------------------------------------------|--------------------------------------------------------------|
 | `show()`                     | `show()`<br>`+ show`                         |
 | `setEnabled(bool isEnabled)`                  | `setState(Feature.State state)`<br>`enabled`                 |
+
+
+#### `Replies`
+
+| API Method                                    | Native Equivalent (Android/iOS)                                                                                                             |
+|-----------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| `setEnabled(bool isEnabled)`                  | `setState(Feature.State state)`<br>`enabled`                                               |
+| `show()`                                      | `show()`<br>`+ show`                                                                       |
+| `hasChats(Function function)`                 | `hasChats()`<br>`+ hasChats`                                                               |
+| `setOnNewReplyReceivedCallback(Function function)`  | `setOnNewReplyReceivedCallback(Callback callback)`<br>`didReceiveReplyHandler` 
+| `getUnreadRepliesCount(Function function)`    | `getUnreadRepliesCount()`<br>`unreadRepliesCount`                                         |
+| `setInAppNotificationsEnabled(bool isEnabled)`| `setInAppNotificationEnabled(Boolean isChatNotificationEnable)`<br>`inAppNotificationsEnabled`  |
+| `setInAppNotificationSound(bool isEnabled)`   | `setInAppNotificationSound(Boolean shouldPlaySound)`                                       |
 
 ## Integration
 
