@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         body: SingleChildScrollView(
-          padding: EdgeInsets.only(top: 40.0),
+          padding: EdgeInsets.only(top: 60.0),
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
