@@ -1,6 +1,7 @@
 package com.instabug.instabugflutter;
 
 import android.app.Application;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -9,13 +10,23 @@ import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
 import com.instabug.chat.Chats;
 import com.instabug.chat.Replies;
+import com.instabug.featuresrequest.FeatureRequests;
+import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
+import com.instabug.library.OnSdkDismissCallback;
+import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.invocation.InstabugInvocationEvent;
+import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+import com.instabug.survey.OnDismissCallback;
+import com.instabug.survey.OnShowCallback;
+import com.instabug.survey.Survey;
+import com.instabug.survey.Surveys;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -44,11 +55,12 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
 
     private InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
 
+    static MethodChannel channel;
     /**
      * Plugin registration.
      */
     public static void registerWith(Registrar registrar) {
-        final MethodChannel channel = new MethodChannel(registrar.messenger(), "instabug_flutter");
+        channel = new MethodChannel(registrar.messenger(), "instabug_flutter");
         channel.setMethodCallHandler(new InstabugFlutterPlugin());
     }
 
@@ -307,9 +319,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      */
      public void invokeWithMode(String invocationMode, List<String> invocationOptions) {
         switch (invocationMode) {
-            case "InvocationMode.CHATS" : Chats.show();
+            case "InvocationMode.chats" : Chats.show();
                 return;
-            case "InvocationMode.REPLIES" : Replies.show();
+            case "InvocationMode.replies" : Replies.show();
                 return;
         }
         int[] options = new int[invocationOptions.size()];
@@ -386,4 +398,386 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         }
         return null;
     }
+
+    /**
+     * Enable/disable session profiler
+     *
+     * @param sessionProfilerEnabled desired state of the session profiler feature
+     */
+    public void setSessionProfilerEnabled(boolean sessionProfilerEnabled) {
+        if (sessionProfilerEnabled) {
+            Instabug.setSessionProfilerState(Feature.State.ENABLED);
+        } else {
+            Instabug.setSessionProfilerState(Feature.State.DISABLED);
+        }
+    }
+
+    /**
+     * Set the primary color that the SDK will use to tint certain UI elements in the SDK
+     *
+     * @param primaryColor The value of the primary color 
+     */
+    public void setPrimaryColor(final long primaryColor) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Instabug.setPrimaryColor((int)primaryColor);
+            }
+        });
+    }
+
+    /**
+     * Adds specific user data that you need to be added to the reports
+     *
+     * @param userData
+     */
+    public void setUserData(String userData) {
+        Instabug.setUserData(userData);
+    }
+
+    /**
+     * The file at filePath will be uploaded along upcoming reports with the name
+     * fileNameWithExtension
+     *
+     * @param fileUri               the file uri
+     * @param fileNameWithExtension the file name with extension
+     */
+    public void addFileAttachmentWithURL(String fileUri, String fileNameWithExtension) {
+        File file = new File(fileUri);
+        if (file.exists()) {
+            Instabug.addFileAttachment(Uri.fromFile(file), fileNameWithExtension);
+        }
+    }
+
+
+    /**
+     * The file at filePath will be uploaded along upcoming reports with the name
+     * fileNameWithExtension
+     *
+     * @param data                  the data of the file
+     * @param fileNameWithExtension the file name with extension
+     */
+    public void addFileAttachmentWithData(byte[] data, String fileNameWithExtension) {
+        Instabug.addFileAttachment(data, fileNameWithExtension);
+    }
+
+    /**
+     * Clears all Uris of the attached files.
+     * The URIs which added via {@link Instabug#addFileAttachment} API not the physical files.
+     */
+    public void clearFileAttachments() {
+        Instabug.clearFileAttachment();
+    }
+
+    /**
+     * Sets the welcome message mode to live, beta or disabled.
+     *
+     * @param welcomeMessageMode An enum to set the welcome message mode to
+     *                          live, beta or disabled.
+     */
+    public void setWelcomeMessageMode(String welcomeMessageMode) {
+        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(
+                welcomeMessageMode, WelcomeMessage.State.class);
+        Instabug.setWelcomeMessageState(resolvedWelcomeMessageMode);
+    }
+
+    /**
+     * Enables and disables manual invocation and prompt options for bug and feedback.
+     * @param {boolean} isEnabled
+     */
+    public void setBugReportingEnabled(final boolean isEnabled) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                    if (isEnabled) {
+                        BugReporting.setState(Feature.State.ENABLED);
+                    } else {
+                        BugReporting.setState(Feature.State.DISABLED);
+                    }
+            }
+        });
+    }
+
+    /**
+     * Sets a block of code to be executed just before the SDK's UI is presented.
+     * This block is executed on the UI thread. Could be used for performing any
+     * UI changes before the SDK's UI is shown.
+     */
+    public void setOnInvokeCallback() {
+        BugReporting.setOnInvokeCallback(new OnInvokeCallback() {
+            @Override
+            public void onInvoke() {
+                channel.invokeMethod("onInvokeCallback", "a");
+            }
+        });
+    }
+
+    /**
+     * Sets a block of code to be executed right after the SDK's UI is dismissed.
+     * This block is executed on the UI thread. Could be used for performing any
+     * UI changes after the SDK's UI is dismissed.
+     */
+    public void setOnDismissCallback() {
+           BugReporting.setOnDismissCallback(new OnSdkDismissCallback() {
+               @Override
+               public void call(DismissType dismissType, ReportType reportType) {
+                   HashMap<String, String> params = new HashMap<>();
+                   params.put("dismissType", dismissType.toString());
+                   params.put("reportType", reportType.toString());
+                   channel.invokeMethod("onDismissCallback", params);
+               }
+           });
+    }
+
+    /**
+     * Sets the event used to invoke Instabug SDK
+     *
+     * @param invocationEvents ArrayList of invocation events
+     */
+    public void setInvocationEvents(final  ArrayList<String> invocationEvents) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
+                for (int i = 0; i < invocationEvents.size(); i++) {
+                    String key = invocationEvents.get(i);
+                    invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key, InstabugInvocationEvent.class);
+                }
+                BugReporting.setInvocationEvents(invocationEventsArray);
+            }
+        });
+    }
+
+    /**
+     * Sets whether attachments in bug reporting and in-app messaging are enabled or not.
+     *
+     * @param  screenshot A boolean to enable or disable screenshot attachments.
+     * @param {boolean} extraScreenShot A boolean to enable or disable extra screenshot attachments.
+     * @param {boolean} galleryImage A boolean to enable or disable gallery image attachments.
+     * @param {boolean} screenRecording A boolean to enable or disable screen recording attachments.
+     */
+    public void setEnabledAttachmentTypes(boolean screenshot, boolean extraScreenshot, boolean
+            galleryImage, boolean screenRecording) {
+            BugReporting.setAttachmentTypesEnabled(screenshot, extraScreenshot, galleryImage,
+                    screenRecording);
+    }
+
+
+ /**
+   * Sets what type of reports, bug or feedback, should be invoked.
+   * @param {array} reportTypes - Array of reportTypes
+   */
+    public void setReportTypes(final ArrayList<String> reportTypes) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                int[] reportTypesArray = new int[reportTypes.size()];
+                for (int i = 0; i < reportTypes.size(); i++) {
+                    String key = reportTypes.get(i);
+                    reportTypesArray[i] = ArgsRegistry.getDeserializedValue(key, Integer.class);
+                }
+                BugReporting.setReportTypes(reportTypesArray);
+            }
+        });
+    }
+
+    /**
+     * Sets whether the extended bug report mode should be disabled,
+     * enabled with required fields,  or enabled with optional fields.
+     *
+     * @param extendedBugReportMode
+     */
+    public void setExtendedBugReportMode(String extendedBugReportMode) {
+        ExtendedBugReport.State extendedBugReport = ArgsRegistry.getDeserializedValue(extendedBugReportMode,  ExtendedBugReport.State.class);
+        BugReporting.setExtendedBugReportState(extendedBugReport);
+    }
+
+    /**
+     * Sets the invocation options
+     *
+     * @param invocationOptions the array of invocation options
+     */
+    public void setInvocationOptions(List<String> invocationOptions) {
+        int[] options = new int[invocationOptions.size()];
+        for (int i = 0; i < invocationOptions.size(); i++) {
+            options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i), Integer.class);
+        }
+        BugReporting.setOptions(options);
+    }
+
+    /**
+     * Invoke bug reporting with report type and options.
+     * @param {reportType} type
+     * @param {invocationOptions} options
+     */
+    public void showBugReportingWithReportTypeAndOptions(final String reportType, final List<String> invocationOptions) {
+        int[] options = new int[invocationOptions.size()];
+        for (int i = 0; i < invocationOptions.size(); i++) {
+            options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i), Integer.class);
+        }
+        int reportTypeInt = ArgsRegistry.getDeserializedValue(reportType, Integer.class);
+        BugReporting.show(reportTypeInt,options);
+    }
+
+    /**
+     * Show any valid survey if exist
+     *
+     * @param {isEnabled} boolean
+     */
+    public void setSurveysEnabled(final boolean isEnabled) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (isEnabled) {
+                    Surveys.setState(Feature.State.ENABLED);
+                } else {
+                    Surveys.setState(Feature.State.DISABLED);
+                }
+            }
+        });
+    }
+
+    /**
+     * Set Surveys auto-showing state, default state auto-showing enabled
+     *
+     * @param isEnabled whether Surveys should be auto-showing or not
+     */
+    public void setAutoShowingSurveysEnabled(boolean isEnabled) {
+        Surveys.setAutoShowingEnabled(isEnabled);
+    }
+
+     /**
+     * Sets the runnable that gets executed just before showing any valid survey<br/>
+     * WARNING: This runs on your application's main UI thread. Please do not include
+     * any blocking operations to avoid ANRs.
+     */
+    public void setOnShowSurveyCallback() {
+            Surveys.setOnShowCallback(new OnShowCallback() {
+                @Override
+                public void onShow() {
+                    channel.invokeMethod("onShowSurveyCallback", null);
+                }
+            });
+    }
+
+    /**
+     * Sets the runnable that gets executed just after showing any valid survey<br/>
+     * WARNING: This runs on your application's main UI thread. Please do not include
+     * any blocking operations to avoid ANRs.
+     *
+     */
+    public void setOnDismissSurveyCallback() {
+
+            Surveys.setOnDismissCallback(new OnDismissCallback() {
+                @Override
+                public void onDismiss() {
+                    channel.invokeMethod("onDismissSurveyCallback", null);
+                }
+            });
+    }
+
+    /**
+     * Returns an array containing the available surveys.*
+     */
+    public void getAvailableSurveys() {
+        List<Survey> availableSurveys = Surveys.getAvailableSurveys();
+        ArrayList<String> result = new ArrayList<>();
+        for (Survey obj : availableSurveys) {
+            result.add(obj.getTitle());
+        }
+        channel.invokeMethod("availableSurveysCallback", result);
+    }
+
+
+     /**
+     * Set Surveys welcome screen enabled, default value is false
+     *
+     * @param shouldShow shouldShow whether should a welcome screen be shown
+     *                   before taking surveys or not
+     */
+    public void setShouldShowSurveysWelcomeScreen(boolean shouldShow) {
+        Surveys.setShouldShowWelcomeScreen(shouldShow);
+    }
+
+    /**
+     * Show any valid survey if exist
+     *
+     * @return true if a valid survey was shown otherwise false
+     */
+    public void showSurveysIfAvailable() {
+        Surveys.showSurveyIfAvailable();
+    }
+
+    /**
+     * Shows survey with a specific token.
+     * Does nothing if there are no available surveys with that specific token.
+     * Answered and cancelled surveys won't show up again.
+     *
+     * @param surveyToken A String with a survey token.
+     */
+    public void showSurveyWithToken(String surveyToken) {
+        Surveys.showSurvey(surveyToken);
+    }
+
+
+    /**
+     * Returns true if the survey with a specific token was answered before.
+     * Will return false if the token does not exist or if the survey was not answered before.
+     *
+     * @param surveyToken          the attribute key as string
+     * @return the desired value of whether the user has responded to the survey or not.
+     */
+    public void hasRespondedToSurveyWithToken(String surveyToken) {
+        boolean hasResponded;
+        hasResponded = Surveys.hasRespondToSurvey(surveyToken);
+        channel.invokeMethod("hasRespondedToSurveyCallback", hasResponded);
+    }
+
+    /**
+     * Shows the UI for feature requests list
+     */
+    public void showFeatureRequests() {
+        FeatureRequests.show();
+    }
+
+    /**
+     * Sets whether email field is required or not when submitting
+     * new-feature-request/new-comment-on-feature
+     *
+     * @param isEmailRequired set true to make email field required
+     * @param actionTypes Bitwise-or of actions
+     */
+    public void setEmailFieldRequiredForFeatureRequests(final Boolean isEmailRequired, final List<String> actionTypes) {
+        int[] actions = new int[actionTypes.size()];
+        for (int i = 0; i < actionTypes.size(); i++) {
+            actions[i] = ArgsRegistry.getDeserializedValue(actionTypes.get(i), Integer.class);
+        }
+        FeatureRequests.setEmailFieldRequired(isEmailRequired, actions);
+    }
+
+    /**
+     * Manual invocation for chats view. 
+     */
+    public void showChats() {
+        Chats.show();
+    }
+
+    /**
+     * Enables and disables everything related to creating new chats.
+     * @param {boolean} isEnabled
+     */
+    public void setChatsEnabled(final boolean isEnabled) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (isEnabled) {
+                    Chats.setState(Feature.State.ENABLED);
+                } else {
+                    Chats.setState(Feature.State.DISABLED);
+                }
+            }
+        });
+    }
+
+
 }

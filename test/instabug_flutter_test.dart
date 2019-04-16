@@ -1,8 +1,15 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
 
-import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/Instabug.dart';
+import 'package:instabug_flutter/BugReporting.dart';
+import 'package:instabug_flutter/InstabugLog.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:instabug_flutter/Surveys.dart';
+import 'package:instabug_flutter/FeatureRequests.dart';
+import 'package:instabug_flutter/Chats.dart';
 
 void main() {
 
@@ -85,8 +92,8 @@ test('startWithToken:invocationEvents: Test', () async {
   });
   
   test('setLocale:', () async {
-    Instabug.setLocale(Locale.German);
-    final List<dynamic> args = <dynamic>[Locale.German.toString()];
+    Instabug.setLocale(Locale.german);
+    final List<dynamic> args = <dynamic>[Locale.german.toString()];
     expect(log, <Matcher>[
       isMethodCall('setLocale:',
         arguments: args,
@@ -96,7 +103,7 @@ test('startWithToken:invocationEvents: Test', () async {
 
 
   test('logVerbose: Test', () async {
-    Instabug.logVerbose(message);
+    InstabugLog.logVerbose(message);
     final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logVerbose:',
@@ -106,7 +113,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
   
   test('logDebug: Test', () async {
-    Instabug.logDebug(message);
+    InstabugLog.logDebug(message);
     final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logDebug:',
@@ -116,7 +123,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
   
   test('logInfo: Test', () async {
-    Instabug.logInfo(message);
+    InstabugLog.logInfo(message);
     final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logInfo:',
@@ -126,7 +133,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
 
   test('clearAllLogs: Test', () async {
-    Instabug.clearAllLogs();
+    InstabugLog.clearAllLogs();
     expect(log, <Matcher>[
       isMethodCall('clearAllLogs',
         arguments: null
@@ -135,7 +142,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
 
   test('logError: Test', () async {
-    Instabug.logError(message);
+    InstabugLog.logError(message);
     final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logError:',
@@ -145,7 +152,7 @@ test('startWithToken:invocationEvents: Test', () async {
   });
   
   test('logWarn: Test', () async {
-    Instabug.logWarn(message);
+    InstabugLog.logWarn(message);
     final List<dynamic> args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall('logWarn:',
@@ -250,8 +257,8 @@ test('startWithToken:invocationEvents: Test', () async {
 
   
   test('invokeWithMode:options: Test', () async {
-    Instabug.invokeWithMode(InvocationMode.BUG, [InvocationOption.COMMENT_FIELD_REQUIRED]);
-    final List<dynamic> args = <dynamic>[InvocationMode.BUG.toString(), <String>[InvocationOption.COMMENT_FIELD_REQUIRED.toString()]];
+    BugReporting.invokeWithMode(InvocationMode.bug, [InvocationOption.commentFieldRequired]);
+    final List<dynamic> args = <dynamic>[InvocationMode.bug.toString(), <String>[InvocationOption.commentFieldRequired.toString()]];
     expect(log, <Matcher>[
       isMethodCall('invokeWithMode:options:',
         arguments: args,
@@ -271,11 +278,295 @@ test('startWithToken:invocationEvents: Test', () async {
 
   test('test setValueForStringWithKey should be called with two arguments', () async {
     const String value = 'Some key';
-    const IBGCustomTextPlaceHolderKey key = IBGCustomTextPlaceHolderKey.SHAKE_HINT;
+    const IBGCustomTextPlaceHolderKey key = IBGCustomTextPlaceHolderKey.shakeHint;
     Instabug.setValueForStringWithKey(value, key);
     final List<dynamic> args = <dynamic>[value, key.toString()];
     expect(log, <Matcher>[
       isMethodCall('setValue:forStringWithKey:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setSessionProfilerEnabled: Test', () async {
+    const bool sessionProfilerEnabled = true;
+    final List<dynamic> args = <dynamic>[sessionProfilerEnabled];
+    Instabug.setSessionProfilerEnabled(sessionProfilerEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setSessionProfilerEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setPrimaryColor: Test', () async {
+    Color c = const Color.fromRGBO(255, 0, 255, 1.0);
+    final List<dynamic> args = <dynamic>[c.value];
+    Instabug.setPrimaryColor(c);
+    expect(log, <Matcher>[
+      isMethodCall('setPrimaryColor:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setUserData: Test', () async {
+    String s = "This is a String";
+    final List<dynamic> args = <dynamic>[s];
+    Instabug.setUserData(s);
+    expect(log, <Matcher>[
+      isMethodCall('setUserData:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('addFileAttachmentWithURL: Test', () async {
+    String filePath = "filePath";
+    String fileName = "fileName";
+    final List<dynamic> args = <dynamic>[filePath, fileName];
+    Instabug.addFileAttachmentWithURL(filePath,fileName);
+    expect(log, <Matcher>[
+      isMethodCall('addFileAttachmentWithURL:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('addFileAttachmentWithData: Test', () async {
+    var bdata = new Uint8List(10);
+    String fileName = "fileName";
+    final List<dynamic> args = <dynamic>[bdata, fileName];
+    Instabug.addFileAttachmentWithData(bdata,fileName);
+    expect(log, <Matcher>[
+      isMethodCall('addFileAttachmentWithData:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('clearFileAttachments Test', () async {
+    Instabug.clearFileAttachments();
+    expect(log, <Matcher>[
+      isMethodCall('clearFileAttachments',
+        arguments: null,
+      )
+    ]);
+  });
+
+  test('setWelcomeMessageMode Test', () async {
+    final List<dynamic> args = <dynamic>[WelcomeMessageMode.live.toString()];
+    Instabug.setWelcomeMessageMode(WelcomeMessageMode.live);
+    expect(log, <Matcher>[
+      isMethodCall('setWelcomeMessageMode:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setBugReportingEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    BugReporting.setEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setBugReportingEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setOnInvokeCallback Test', () async {
+    BugReporting.setOnInvokeCallback(()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('setOnInvokeCallback',
+        arguments: null,
+      )
+    ]);
+  });
+
+  test('setOnDismissCallback Test', () async {
+    BugReporting.setOnDismissCallback(()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('setOnDismissCallback',
+        arguments: null,
+      )
+    ]);
+  });
+
+  test('setInvocationEvents Test', () async {
+     BugReporting.setInvocationEvents(<InvocationEvent>[InvocationEvent.floatingButton]);
+    final List<dynamic> args = <dynamic>[<String>[InvocationEvent.floatingButton.toString()]];
+    expect(log, <Matcher>[
+      isMethodCall('setInvocationEvents:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording: Test', () async {
+    BugReporting.setEnabledAttachmentTypes(false, false, false, false);
+    final List<dynamic> args = <dynamic>[false, false, false, false];
+    expect(log, <Matcher>[
+      isMethodCall('setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording:',
+        arguments: args,
+      )
+    ]);
+  });
+
+ test('setInvocationEvents Test', () async {
+    BugReporting.setReportTypes(<ReportType>[ReportType.feedback]);
+    final List<dynamic> args = <dynamic>[<String>[ReportType.feedback.toString()]];
+    expect(log, <Matcher>[
+      isMethodCall('setReportTypes:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setInvocationEvents Test', () async {
+    BugReporting.setExtendedBugReportMode(ExtendedBugReportMode.enabledWithOptionalFields);
+    final List<dynamic> args = <dynamic>[ExtendedBugReportMode.enabledWithOptionalFields.toString()];
+    expect(log, <Matcher>[
+      isMethodCall('setExtendedBugReportMode:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setInvocationOptions Test', () async {
+    BugReporting.setInvocationOptions(<InvocationOption>[InvocationOption.emailFieldHidden]);
+    final List<dynamic> args = <dynamic>[<String>[InvocationOption.emailFieldHidden.toString()]];
+    expect(log, <Matcher>[
+      isMethodCall('setInvocationOptions:',
+        arguments: args,
+      )
+    ]);
+  });
+
+   test('showBugReportingWithReportTypeAndOptions:options Test', () async {
+   BugReporting.showWithOptions(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
+    final List<dynamic> args = <dynamic>[ReportType.bug.toString(), <String>[InvocationOption.emailFieldHidden.toString()]];
+    expect(log, <Matcher>[
+      isMethodCall('showBugReportingWithReportTypeAndOptions:options:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setSurveysEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    Surveys.setEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setSurveysEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setAutoShowingSurveysEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    Surveys.setAutoShowingEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setAutoShowingSurveysEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setOnShowSurveyCallback Test', () async {
+    Surveys.setOnShowCallback(()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('setOnShowSurveyCallback',
+        arguments: null,
+      )
+    ]);
+  });
+
+  test('setOnDismissSurveyCallback Test', () async {
+    Surveys.setOnDismissCallback(()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('setOnDismissSurveyCallback',
+        arguments: null,
+      )
+    ]);
+  });
+
+  test('setShouldShowSurveysWelcomeScreen: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    Surveys.setShouldShowWelcomeScreen(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setShouldShowSurveysWelcomeScreen:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('showSurveysIfAvailable Test', () async {
+    Surveys.showSurveyIfAvailable();
+    expect(log, <Matcher>[
+      isMethodCall('showSurveysIfAvailable',
+      )
+    ]);
+  });
+
+  test('showSurveyWithToken Test', () async {
+    String token = "token";
+    final List<dynamic> args = <dynamic>[token];
+    Surveys.showSurvey(token);
+    expect(log, <Matcher>[
+      isMethodCall('showSurveyWithToken:',
+      arguments: args,
+      )
+    ]);
+  });
+
+  test('hasRespondedToSurvey Test', () async {
+    String token = "token";
+    final List<dynamic> args = <dynamic>[token];
+    Surveys.hasRespondedToSurvey(token,()=> (){});
+    expect(log, <Matcher>[
+      isMethodCall('hasRespondedToSurveyWithToken:',
+      arguments: args,
+      )
+    ]);
+  });
+
+  test('showFeatureRequests Test', () async {
+    FeatureRequests.show();
+    expect(log, <Matcher>[
+      isMethodCall('showFeatureRequests'
+     )
+    ]);
+  });
+
+  test('setEmailFieldRequiredForFeatureRequests:forAction: Test', () async {
+    bool isEmailFieldRequired = false;
+    final List<dynamic> args = <dynamic>[isEmailFieldRequired, <String>[ActionType.allActions.toString()]];
+    FeatureRequests.setEmailFieldRequired(isEmailFieldRequired, [ActionType.allActions]);
+    expect(log, <Matcher>[
+      isMethodCall('setEmailFieldRequiredForFeatureRequests:forAction:',
+      arguments: args,
+     )
+    ]);
+  });
+
+  test('showChats Test', () async {
+    Chats.show();
+    expect(log, <Matcher>[
+      isMethodCall('showChats'
+     )
+    ]);
+  });
+
+  test('setChatsEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    Chats.setEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall('setChatsEnabled:',
         arguments: args,
       )
     ]);

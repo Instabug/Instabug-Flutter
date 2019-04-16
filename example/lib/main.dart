@@ -1,8 +1,14 @@
 import 'dart:async';
 import 'dart:io' show Platform;
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/Instabug.dart';
+import 'package:instabug_flutter/BugReporting.dart';
+import 'package:instabug_flutter/InstabugLog.dart';
+import 'package:instabug_flutter/Surveys.dart';
+import 'package:instabug_flutter/FeatureRequests.dart';
+import 'package:instabug_flutter/Chats.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,18 +32,19 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       if (Platform.isIOS) {
-        Instabug.start('9582e6cfe34e2b8897f48cfa3b617adb', <InvocationEvent>[InvocationEvent.floatingButton, InvocationEvent.shake]);
+        Instabug.start('068ba9a8c3615035e163dc5f829c73be', <InvocationEvent>[InvocationEvent.shake]);
       }
-      Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
+      //Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
+      //Instabug.setWelcomeMessageMode(WelcomeMessageMode.beta);
       Instabug.identifyUserWithEmail('aezz@instabug.com', 'Aly Ezz');
-      Instabug.logInfo('Test Log Info Message from Flutter!');
-      Instabug.logDebug('Test Debug Message from Flutter!');
-      Instabug.logVerbose('Test Verbose Message from Flutter!');
-      Instabug.clearAllLogs();
-      Instabug.logError('Test Error Message from Flutter!');
-      Instabug.logWarn('Test Warn Message from Flutter!');
+      InstabugLog.logInfo('Test Log Info Message from Flutter!');
+      InstabugLog.logDebug('Test Debug Message from Flutter!');
+      InstabugLog.logVerbose('Test Verbose Message from Flutter!');
+      InstabugLog.clearAllLogs();
+      InstabugLog.logError('Test Error Message from Flutter!');
+      InstabugLog.logWarn('Test Warn Message from Flutter!');
       Instabug.logOut();
-      Instabug.setLocale(Locale.German);
+      //Instabug.setLocale(Locale.German);
       Instabug.setColorTheme(ColorTheme.dark);
       Instabug.appendTags(<String>['tag1', 'tag2']);
       Instabug.setUserAttributeWithKey('19', 'Age');
@@ -48,8 +55,28 @@ class _MyAppState extends State<MyApp> {
       final Map<String, String> userAttributes = await Instabug.getUserAttributes();
       print(userAttributes.toString()); 
       Instabug.logUserEventWithName('Aly Event');
-      Instabug.setValueForStringWithKey('What\'s the problem', IBGCustomTextPlaceHolderKey.REPORT_BUG);
-      Instabug.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK);
+      Instabug.setValueForStringWithKey('What\'s the problem', IBGCustomTextPlaceHolderKey.reportBug);
+      Instabug.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.reportFeedback);
+      Instabug.setSessionProfilerEnabled(false);
+      Color c = const Color.fromRGBO(255, 0, 255, 1.0);
+      Instabug.setPrimaryColor(c);
+      Instabug.setUserData("This is some useful data");
+      var list = Uint8List(10);
+      Instabug.addFileAttachmentWithData(list, "My File");
+      Instabug.clearFileAttachments();
+      //Instabug.clearFileAttachments();
+      //BugReporting.setEnabled(false);
+      BugReporting.setOnInvokeCallback(sdkInvoked);
+      BugReporting.setOnDismissCallback(sdkDismissed);
+      BugReporting.setInvocationEvents(<InvocationEvent>[InvocationEvent.floatingButton]);
+      Surveys.setEnabled(true);
+      Surveys.setAutoShowingEnabled(false);
+      Surveys.setOnShowCallback(surveyShown);
+      Surveys.setOnDismissCallback(surveyDismiss);
+      //BugReporting.setEnabledAttachmentTypes(false, false, false, false);
+      //BugReporting.setReportTypes(<ReportType>[ReportType.FEEDBACK,ReportType.BUG]);
+      //BugReporting.setExtendedBugReportMode(ExtendedBugReportMode.ENABLED_WITH_REQUIRED_FIELDS);
+      //BugReporting.setInvocationOptions(<InvocationOption>[InvocationOption.EMAIL_FIELD_HIDDEN]);
       
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
@@ -68,12 +95,48 @@ class _MyAppState extends State<MyApp> {
     Instabug.resetTags();
   }
 
+  void getSurveys(List<String> surveys) {
+    int x = surveys.length;
+    debugPrint(x.toString());
+  }
+
+  void sdkInvoked() {
+    debugPrint("I am called before invocation");
+  }
+
+  void surveyShown() {
+    debugPrint("The user will se a survey nwoww");
+  }
+
+  void surveyDismiss() {
+    debugPrint("The survey is Dismissed");
+  }
+
+  void sdkDismissed(DismissType dismissType, ReportType reportType) {
+    debugPrint('SDK Dismissed DismissType: ' + dismissType.toString());
+     debugPrint('SDK Dismissed ReportType: ' + reportType.toString());
+  }
+
+   void hasResponded(bool hasResponded) {
+    debugPrint(hasResponded.toString());
+  }
   void show() {
-    Instabug.show();
+    //Instabug.show();
+    // Surveys.getAvailableSurveys(getSurveys);
+    // Surveys.showSurveyIfAvailable();
+    // Surveys.setShouldShowWelcomeScreen(true);
+    //Surveys.showSurvey("BHJI1iaKYhr4CYHHcUAaTg");
+    //BugReporting.showWithOptions(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
+    // FeatureRequests.setEmailFieldRequired(false, [ActionType.allActions]);
+    // FeatureRequests.show();
+    Chats.setEnabled(true);
+    Chats.show();
+    
   }
 
   void invokeWithMode() {
-    Instabug.invokeWithMode(InvocationMode.BUG, [InvocationOption.EMAIL_FIELD_HIDDEN]);
+    Surveys.hasRespondedToSurvey("BHJI1iaKYhr4CYHHcUAaTg", hasResponded);
+   // BugReporting.invokeWithMode(InvocationMode.bug, [InvocationOption.emailFieldHidden]);
   }
 
   void getTags() async {

@@ -1,11 +1,14 @@
 #import "InstabugFlutterPlugin.h"
 #import "Instabug.h"
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:((float)((rgbValue & 0xFF000000) >> 24))/255.0 ];
+
 @implementation InstabugFlutterPlugin
 
 
+FlutterMethodChannel* channel;
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  FlutterMethodChannel* channel = [FlutterMethodChannel
+  channel = [FlutterMethodChannel
       methodChannelWithName:@"instabug_flutter"
             binaryMessenger:[registrar messenger]];
   InstabugFlutterPlugin* instance = [[InstabugFlutterPlugin alloc] init];
@@ -250,11 +253,11 @@
   * @param invocationOptions the array of invocation options
   */
 + (void) invokeWithMode:(NSString *)invocationMode options:(NSArray*)invocationOptionsArray {
-    if ([invocationMode isEqualToString:@"InvocationMode.CHATS"]) {
+    if ([invocationMode isEqualToString:@"InvocationMode.chats"]) {
          [IBGChats show];
          return;
     }
-     if ([invocationMode isEqualToString:@"InvocationMode.REPLIES"]) {
+     if ([invocationMode isEqualToString:@"InvocationMode.replies"]) {
         [IBGReplies show];
         return;
     }
@@ -289,6 +292,369 @@
     [Instabug setValue:value forStringWithKey:constants[key]];
 }
 
+/**
+  * Enable/disable session profiler
+  *
+  * @param sessionProfilerEnabled desired state of the session profiler feature
+  */
++ (void)setSessionProfilerEnabled:(NSNumber *)sessionProfilerEnabled {
+   BOOL boolValue = [sessionProfilerEnabled boolValue];
+   [Instabug setSessionProfilerEnabled:boolValue];
+}
+
+/**
+  * Set the primary color that the SDK will use to tint certain UI elements in the SDK
+  *
+  * @param color The value of the primary color 
+  */
++ (void)setPrimaryColor:(NSNumber *)color {
+  Instabug.tintColor = UIColorFromRGB([color longValue]);
+}
+
+ /**
+  * Adds specific user data that you need to be added to the reports
+  *
+  * @param userData
+  */
++ (void)setUserData:(NSString *)userData {
+  [Instabug setUserData:userData];
+}
+
+/**
+  * The file at filePath will be uploaded along upcoming reports with the name
+  * fileNameWithExtension
+  *
+  * @param fileUri               the file uri
+  */
++ (void)addFileAttachmentWithURL:(NSString *)fileURLString {
+  [Instabug addFileAttachmentWithURL:[NSURL URLWithString:fileURLString]];
+}
+
+/**
+  * The file at filePath will be uploaded along upcoming reports with the name
+  * fileNameWithExtension
+  *
+  * @param data               the file data
+  */
++ (void)addFileAttachmentWithData:(FlutterStandardTypedData *)data {
+  [Instabug addFileAttachmentWithData:[data data]];
+}
+
+/**
+  * Clears all Uris of the attached files.
+  * The URIs which added via {@link Instabug#addFileAttachment} API not the physical files.
+  */
++ (void)clearFileAttachments {
+  [Instabug clearFileAttachments];
+}
+
+/**
+  * Sets the welcome message mode to live, beta or disabled.
+  *
+  * @param welcomeMessageMode An enum to set the welcome message mode to
+  *                          live, beta or disabled.
+  */
++ (void)setWelcomeMessageMode:(NSString *)welcomeMessageMode {
+    NSDictionary *constants = [self constants];
+    NSInteger welcomeMode = ((NSNumber *) constants[welcomeMessageMode]).integerValue;
+    [Instabug setWelcomeMessageMode:welcomeMode];
+}
+
+/**
+  * Enables and disables manual invocation and prompt options for bug and feedback.
+  * @param {boolean} isEnabled
+  */
++ (void)setBugReportingEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGBugReporting.enabled = boolValue;
+}
+
+/**
+  * Sets a block of code to be executed just before the SDK's UI is presented.
+  * This block is executed on the UI thread. Could be used for performing any
+  * UI changes before the SDK's UI is shown.
+  */
++ (void)setOnInvokeCallback {
+   IBGBugReporting.willInvokeHandler = ^{
+             [channel invokeMethod:@"onInvokeCallback" arguments:nil];
+        };
+}
+
+/**
+  * Sets a block of code to be executed right after the SDK's UI is dismissed.
+  * This block is executed on the UI thread. Could be used for performing any
+  * UI changes after the SDK's UI is dismissed.
+  */
++ (void)setOnDismissCallback {
+   IBGBugReporting.didDismissHandler = ^(IBGDismissType dismissType, IBGReportType reportType) {            
+            //parse dismiss type enum
+            NSString* dismissTypeString;
+            if (dismissType == IBGDismissTypeCancel) {
+                dismissTypeString = @"CANCEL";
+            } else if (dismissType == IBGDismissTypeSubmit) {
+                dismissTypeString = @"SUBMIT";
+            } else if (dismissType == IBGDismissTypeAddAttachment) {
+                dismissTypeString = @"ADD_ATTACHMENT";
+            }
+            //parse report type enum
+            NSString* reportTypeString;
+            if (reportType == IBGReportTypeBug) {
+                reportTypeString = @"bug";
+            } else if (reportType == IBGReportTypeFeedback) {
+                reportTypeString = @"feedback";
+            } else {
+                reportTypeString = @"other";
+            }
+            NSDictionary *result = @{ @"dismissType": dismissTypeString,
+                                     @"reportType": reportTypeString};
+             [channel invokeMethod:@"onDismissCallback" arguments:result];
+        };
+}
+
+/**
+  * Sets whether attachments in bug reporting and in-app messaging are enabled or not.
+  *
+  * @param  screenshot A boolean to enable or disable screenshot attachments.
+  * @param  extraScreenShot A boolean to enable or disable extra screenshot attachments.
+  * @param  galleryImage A boolean to enable or disable gallery image attachments.
+  * @param  screenRecording A boolean to enable or disable screen recording attachments.
+  */
++ (void)setEnabledAttachmentTypes:(NSNumber *)screenShot
+                    extraScreenShot:(NSNumber *)extraScreenShot
+                    galleryImage:(NSNumber *)galleryImage
+                    screenRecording:(NSNumber *)screenRecording {
+   IBGAttachmentType attachmentTypes = 0;
+     if([screenShot boolValue]) {
+         attachmentTypes = IBGAttachmentTypeScreenShot;
+     }
+     if([extraScreenShot boolValue]) {
+         attachmentTypes |= IBGAttachmentTypeExtraScreenShot;
+     }
+     if([galleryImage boolValue]) {
+         attachmentTypes |= IBGAttachmentTypeGalleryImage;
+     }
+     if([screenRecording boolValue]) {
+         attachmentTypes |= IBGAttachmentTypeScreenRecording;
+     }
+
+     IBGBugReporting.enabledAttachmentTypes = attachmentTypes;
+}
+
+/**
+  * Sets the events that invoke the feedback form.
+  * Default is set by `Instabug.startWithToken`.
+  * @param {invocationEvent} invocationEvent Array of events that invokes the
+  * feedback form.
+  */
++ (void)setInvocationEvents:(NSArray *)invocationEventsArray {
+    NSDictionary *constants = [self constants];
+    NSInteger invocationEvents = IBGInvocationEventNone;
+    for (NSString * invocationEvent in invocationEventsArray) {
+        invocationEvents |= ((NSNumber *) constants[invocationEvent]).integerValue;
+    }
+    IBGBugReporting.invocationEvents = invocationEvents;
+}
+
+/**
+  * Sets the events that invoke the feedback form.
+  * Default is set by `Instabug.startWithToken`.
+  * @param {invocationEvent} invocationEvent Array of events that invokes the
+  * feedback form.
+  */
++ (void)setReportTypes:(NSArray*)reportTypesArray {
+    NSDictionary *constants = [self constants];
+    NSInteger reportTypes = 0;
+    for (NSString * reportType in reportTypesArray) {
+        reportTypes |= ((NSNumber *) constants[reportType]).integerValue;
+    }
+   [IBGBugReporting setPromptOptionsEnabledReportTypes: reportTypes];
+}
+
+/**
+  * Sets whether the extended bug report mode should be disabled,
+  * enabled with required fields,  or enabled with optional fields.
+  *
+  * @param extendedBugReportMode
+  */
++ (void)setExtendedBugReportMode:(NSString *)extendedBugReportMode {
+    NSDictionary *constants = [self constants];
+    NSInteger extendedBugReportModeInt = ((NSNumber *) constants[extendedBugReportMode]).integerValue;
+    IBGBugReporting.extendedBugReportMode = extendedBugReportModeInt;
+}
+
+/**
+  * Sets the invocation options
+  *
+  * @param invocationOptions the array of invocation options
+  */
++ (void)setInvocationOptions:(NSArray *)invocationOptionsArray {
+    NSDictionary *constants = [self constants];
+    NSInteger invocationOptions = 0;
+    for (NSString * invocationOption in invocationOptionsArray) {
+        invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
+    }
+    IBGBugReporting.invocationOptions = invocationOptions;
+}
+
+/**
+  * Sets the invocation options
+  *
+  * @param invocationOptions the array of invocation options
+  */
++ (void)showBugReportingWithReportTypeAndOptions:(NSString*)reportType options:(NSArray *)invocationOptionsArray  {
+    NSDictionary *constants = [self constants];
+    NSInteger invocationOptions = 0;
+    for (NSString * invocationOption in invocationOptionsArray) {
+        invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
+    }
+    NSInteger reportTypeInt = ((NSNumber *) constants[reportType]).integerValue;
+    [IBGBugReporting showWithReportType:reportTypeInt options:invocationOptions];
+}
+
+/**
+  * Show any valid survey if exist
+  *
+  * @param {isEnabled} boolean
+  */
++ (void)setSurveysEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGSurveys.enabled = boolValue;
+}
+
+/**
+  * Set Surveys auto-showing state, default state auto-showing enabled
+  *
+  * @param {isEnabled} whether Surveys should be auto-showing or not
+  */
++ (void)setAutoShowingSurveysEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGSurveys.autoShowingEnabled = boolValue;
+}
+
+
+/**
+  * Sets the runnable that gets executed just before showing any valid survey<br/>
+  * WARNING: This runs on your application's main UI thread. Please do not include
+  * any blocking operations to avoid ANRs.
+  */
++ (void)setOnShowSurveyCallback {
+  IBGSurveys.willShowSurveyHandler = ^{
+           [channel invokeMethod:@"onShowSurveyCallback" arguments:nil];
+        };
+}
+
+/**
+  * Sets the runnable that gets executed just after showing any valid survey<br/>
+  * WARNING: This runs on your application's main UI thread. Please do not include
+  * any blocking operations to avoid ANRs.
+  *
+  */
++ (void)setOnDismissSurveyCallback {
+  IBGSurveys.didDismissSurveyHandler = ^{
+            [channel invokeMethod:@"onDismissSurveyCallback" arguments:nil];
+        };
+}
+
+/**
+  * Sets a block of code to be executed right after the SDK's UI is dismissed.
+  * This block is executed on the UI thread. Could be used for performing any
+  * UI changes after the SDK's UI is dismissed.
+  */
++ (void)getAvailableSurveys {
+     NSArray<IBGSurvey *> *surveys = [IBGSurveys availableSurveys];
+     NSMutableArray <NSString *> *surveysArray = [[NSMutableArray alloc] init];
+     for (IBGSurvey * survey in surveys) {
+        [surveysArray addObject:survey.title];
+    }
+    NSArray *result = [surveysArray copy];
+    [channel invokeMethod:@"availableSurveysCallback" arguments:result];
+}
+
+
+/**
+  * Set Surveys auto-showing state, default state auto-showing enabled
+  *
+  * @param {isEnabled} whether Surveys should be auto-showing or not
+  */
++ (void)setShouldShowSurveysWelcomeScreen:(NSNumber *)shouldShowWelcomeScreen {
+   BOOL boolValue = [shouldShowWelcomeScreen boolValue];
+   IBGSurveys.shouldShowWelcomeScreen = boolValue;
+}
+
+/**
+  * Show any valid survey if exist
+  *
+  * @return true if a valid survey was shown otherwise false
+  */
++ (void)showSurveysIfAvailable {
+   [IBGSurveys showSurveyIfAvailable];
+}
+
+/**
+  * Shows survey with a specific token.
+  * Does nothing if there are no available surveys with that specific token.
+  * Answered and cancelled surveys won't show up again.
+  *
+  * @param surveyToken A String with a survey token.
+  */
++ (void)showSurveyWithToken:(NSString *)surveyToken {
+   [IBGSurveys showSurveyWithToken:surveyToken];
+}
+
+/**
+  * Returns true if the survey with a specific token was answered before.
+  * Will return false if the token does not exist or if the survey was not answered before.
+  *
+  * @param surveyToken          the attribute key as string
+  * @return the desired value of whether the user has responded to the survey or not.
+  */
++ (void)hasRespondedToSurveyWithToken:(NSString *)surveyToken {
+    bool hasResponded = [IBGSurveys hasRespondedToSurveyWithToken:surveyToken];
+    NSNumber *boolNumber = [NSNumber numberWithBool:hasResponded];
+    [channel invokeMethod:@"hasRespondedToSurveyCallback" arguments:boolNumber];
+}
+
+/**
+  * Shows the UI for feature requests list
+  */
++ (void)showFeatureRequests {
+   [IBGFeatureRequests show];
+}
+
+/**
+  * Sets whether email field is required or not when submitting
+  * new-feature-request/new-comment-on-feature
+  *
+  * @param isEmailRequired set true to make email field required
+  * @param actionTypes Bitwise-or of actions
+  */
++ (void)setEmailFieldRequiredForFeatureRequests:(NSNumber*)isEmailFieldRequired forAction:(NSArray *)actionTypesArray  {
+    NSDictionary *constants = [self constants];
+    NSInteger actionTypes = 0;
+    for (NSString * actionType in actionTypesArray) {
+        actionTypes |= ((NSNumber *) constants[actionType]).integerValue;
+    }
+    BOOL boolValue = [isEmailFieldRequired boolValue];
+    [IBGFeatureRequests setEmailFieldRequired:boolValue forAction:actionTypes];
+}
+
+/**
+  * Manual invocation for chats view. 
+  */
++ (void)showChats {
+   [IBGChats show];
+}
+
+/**
+  * Enables and disables everything related to creating new chats.
+  * @param {boolean} isEnabled 
+  */
++ (void)setChatsEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGChats.enabled = boolValue;
+}
+
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),
@@ -304,65 +670,77 @@
       @"ColorTheme.dark": @(IBGColorThemeDark),
       @"ColorTheme.light": @(IBGColorThemeLight),
 
-      @"InvocationMode.BUG": @(IBGBugReportingReportTypeBug),
-      @"InvocationMode.FEEDBACK": @(IBGBugReportingReportTypeFeedback),
+      @"InvocationMode.bug": @(IBGBugReportingReportTypeBug),
+      @"InvocationMode.feedback": @(IBGBugReportingReportTypeFeedback),
 
-      @"InvocationOption.COMMENT_FIELD_REQUIRED": @(IBGBugReportingOptionCommentFieldRequired),
-      @"InvocationOption.DISABLE_POST_SENDING_DIALOG": @(IBGBugReportingOptionDisablePostSendingDialog),
-      @"InvocationOption.EMAIL_FIELD_HIDDEN": @(IBGBugReportingOptionEmailFieldHidden),
-      @"InvocationOption.EMAIL_FIELD_OPTIONAL": @(IBGBugReportingOptionEmailFieldOptional),
+      @"InvocationOption.commentFieldRequired": @(IBGBugReportingOptionCommentFieldRequired),
+      @"InvocationOption.disablePostSendingDialog": @(IBGBugReportingOptionDisablePostSendingDialog),
+      @"InvocationOption.emailFieldHidden": @(IBGBugReportingOptionEmailFieldHidden),
+      @"InvocationOption.emailFieldOptional": @(IBGBugReportingOptionEmailFieldOptional),
 
-      @"Locale.Arabic": @(IBGLocaleArabic),
-      @"Locale.ChineseSimplified": @(IBGLocaleChineseSimplified),
-      @"Locale.ChineseTraditional": @(IBGLocaleChineseTraditional),
-      @"Locale.Czech": @(IBGLocaleCzech),
-      @"Locale.Danish": @(IBGLocaleDanish),
-      @"Locale.Dutch": @(IBGLocaleDutch),
-      @"Locale.English": @(IBGLocaleEnglish),
-      @"Locale.French": @(IBGLocaleFrench),
-      @"Locale.German": @(IBGLocaleGerman),
-      @"Locale.Italian": @(IBGLocaleItalian),
-      @"Locale.Japanese": @(IBGLocaleJapanese),
-      @"Locale.Korean": @(IBGLocaleKorean),
-      @"Locale.Polish": @(IBGLocalePolish),
-      @"Locale.PortugueseBrazil": @(IBGLocalePortugueseBrazil),
-      @"Locale.Russian": @(IBGLocaleRussian),
-      @"Locale.Spanish": @(IBGLocaleSpanish),
-      @"Locale.Swedish": @(IBGLocaleSwedish),
-      @"Locale.Turkish": @(IBGLocaleTurkish),
+      @"Locale.arabic": @(IBGLocaleArabic),
+      @"Locale.chineseSimplified": @(IBGLocaleChineseSimplified),
+      @"Locale.chineseTraditional": @(IBGLocaleChineseTraditional),
+      @"Locale.czech": @(IBGLocaleCzech),
+      @"Locale.danish": @(IBGLocaleDanish),
+      @"Locale.dutch": @(IBGLocaleDutch),
+      @"Locale.english": @(IBGLocaleEnglish),
+      @"Locale.french": @(IBGLocaleFrench),
+      @"Locale.german": @(IBGLocaleGerman),
+      @"Locale.italian": @(IBGLocaleItalian),
+      @"Locale.japanese": @(IBGLocaleJapanese),
+      @"Locale.korean": @(IBGLocaleKorean),
+      @"Locale.polish": @(IBGLocalePolish),
+      @"Locale.portugueseBrazil": @(IBGLocalePortugueseBrazil),
+      @"Locale.russian": @(IBGLocaleRussian),
+      @"Locale.spanish": @(IBGLocaleSpanish),
+      @"Locale.swedish": @(IBGLocaleSwedish),
+      @"Locale.turkish": @(IBGLocaleTurkish),
       
-      @"IBGCustomTextPlaceHolderKey.SHAKE_HINT": kIBGShakeStartAlertTextStringName,
-      @"IBGCustomTextPlaceHolderKey.SWIPE_HINT": kIBGEdgeSwipeStartAlertTextStringName,
-      @"IBGCustomTextPlaceHolderKey.INVALID_EMAIL_MESSAGE": kIBGInvalidEmailMessageStringName,
-      @"IBGCustomTextPlaceHolderKey.INVALID_COMMENT_MESSAGE": kIBGInvalidCommentMessageStringName,
-      @"IBGCustomTextPlaceHolderKey.INVOCATION_HEADER": kIBGInvocationTitleStringName,
-      @"IBGCustomTextPlaceHolderKey.START_CHATS": kIBGChatsTitleStringName,
-      @"IBGCustomTextPlaceHolderKey.REPORT_BUG": kIBGReportBugStringName,
-      @"IBGCustomTextPlaceHolderKey.REPORT_FEEDBACK": kIBGReportFeedbackStringName,
-      @"IBGCustomTextPlaceHolderKey.EMAIL_FIELD_HINT": kIBGEmailFieldPlaceholderStringName,
-      @"IBGCustomTextPlaceHolderKey.COMMENT_FIELD_HINT_FOR_BUG_REPORT": kIBGCommentFieldPlaceholderForBugReportStringName,
-      @"IBGCustomTextPlaceHolderKey.COMMENT_FIELD_HINT_FOR_FEEDBACK": kIBGCommentFieldPlaceholderForFeedbackStringName,
-      @"IBGCustomTextPlaceHolderKey.ADD_VOICE_MESSAGE": kIBGAddVoiceMessageStringName,
-      @"IBGCustomTextPlaceHolderKey.ADD_IMAGE_FROM_GALLERY": kIBGAddImageFromGalleryStringName,
-      @"IBGCustomTextPlaceHolderKey.ADD_EXTRA_SCREENSHOT": kIBGAddExtraScreenshotStringName,
-      @"IBGCustomTextPlaceHolderKey.CONVERSATIONS_LIST_TITLE": kIBGChatsTitleStringName,
-      @"IBGCustomTextPlaceHolderKey.AUDIO_RECORDING_PERMISSION_DENIED": kIBGAudioRecordingPermissionDeniedTitleStringName,
-      @"IBGCustomTextPlaceHolderKey.CONVERSATION_TEXT_FIELD_HINT": kIBGChatReplyFieldPlaceholderStringName,
-      @"IBGCustomTextPlaceHolderKey.BUG_REPORT_HEADER": kIBGReportBugStringName,
-      @"IBGCustomTextPlaceHolderKey.FEEDBACK_REPORT_HEADER": kIBGReportFeedbackStringName,
-      @"IBGCustomTextPlaceHolderKey.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD": kIBGRecordingMessageToHoldTextStringName,
-      @"IBGCustomTextPlaceHolderKey.VOICE_MESSAGE_RELEASE_TO_ATTACH": kIBGRecordingMessageToReleaseTextStringName,
-      @"IBGCustomTextPlaceHolderKey.REPORT_SUCCESSFULLY_SENT": kIBGThankYouAlertMessageStringName,
-      @"IBGCustomTextPlaceHolderKey.SUCCESS_DIALOG_HEADER": kIBGThankYouAlertTitleStringName,
-      @"IBGCustomTextPlaceHolderKey.ADD_VIDEO": kIBGAddScreenRecordingMessageStringName,
-      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE": kIBGBetaWelcomeMessageWelcomeStepTitle,
-      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT": kIBGBetaWelcomeMessageWelcomeStepContent,
-      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE": kIBGBetaWelcomeMessageHowToReportStepTitle,
-      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT": kIBGBetaWelcomeMessageHowToReportStepContent,
-      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE": kIBGBetaWelcomeMessageFinishStepTitle,
-      @"IBGCustomTextPlaceHolderKey.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT": kIBGBetaWelcomeMessageFinishStepContent,
-      @"IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_TITLE": kIBGLiveWelcomeMessageTitle,
-      @"IBGCustomTextPlaceHolderKey.LIVE_WELCOME_MESSAGE_CONTENT": kIBGLiveWelcomeMessageContent,
+      @"IBGCustomTextPlaceHolderKey.shakeHint": kIBGShakeStartAlertTextStringName,
+      @"IBGCustomTextPlaceHolderKey.swipeHint": kIBGEdgeSwipeStartAlertTextStringName,
+      @"IBGCustomTextPlaceHolderKey.invalidEmailMessage": kIBGInvalidEmailMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.invalidCommentMessage": kIBGInvalidCommentMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.invocationHeader": kIBGInvocationTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.startChats": kIBGChatsTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.reportBug": kIBGReportBugStringName,
+      @"IBGCustomTextPlaceHolderKey.reportFeedback": kIBGReportFeedbackStringName,
+      @"IBGCustomTextPlaceHolderKey.emailFieldHint": kIBGEmailFieldPlaceholderStringName,
+      @"IBGCustomTextPlaceHolderKey.commentFieldHintForBugReport": kIBGCommentFieldPlaceholderForBugReportStringName,
+      @"IBGCustomTextPlaceHolderKey.commentFieldHintForFeedback": kIBGCommentFieldPlaceholderForFeedbackStringName,
+      @"IBGCustomTextPlaceHolderKey.addVoiceMessage": kIBGAddVoiceMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.addImageFromGallery": kIBGAddImageFromGalleryStringName,
+      @"IBGCustomTextPlaceHolderKey.addExtraScreenshot": kIBGAddExtraScreenshotStringName,
+      @"IBGCustomTextPlaceHolderKey.conversationsListTitle": kIBGChatsTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.audioRecordingPermissionDenied": kIBGAudioRecordingPermissionDeniedTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.conversationTextFieldHint": kIBGChatReplyFieldPlaceholderStringName,
+      @"IBGCustomTextPlaceHolderKey.bugReportHeader": kIBGReportBugStringName,
+      @"IBGCustomTextPlaceHolderKey.feedbackReportHeader": kIBGReportFeedbackStringName,
+      @"IBGCustomTextPlaceHolderKey.voiceMessagePressAndHoldToRecord": kIBGRecordingMessageToHoldTextStringName,
+      @"IBGCustomTextPlaceHolderKey.voiceMessageReleaseToAttach": kIBGRecordingMessageToReleaseTextStringName,
+      @"IBGCustomTextPlaceHolderKey.reportSuccessfullySent": kIBGThankYouAlertMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.successDialogHeader": kIBGThankYouAlertTitleStringName,
+      @"IBGCustomTextPlaceHolderKey.addVideo": kIBGAddScreenRecordingMessageStringName,
+      @"IBGCustomTextPlaceHolderKey.betaWelcomeMessageWelcomeStepTitle": kIBGBetaWelcomeMessageWelcomeStepTitle,
+      @"IBGCustomTextPlaceHolderKey.betaWelcomeMessageWelcomeStepContent": kIBGBetaWelcomeMessageWelcomeStepContent,
+      @"IBGCustomTextPlaceHolderKey.betaWelcomeMessageHowToReportStepTitle": kIBGBetaWelcomeMessageHowToReportStepTitle,
+      @"IBGCustomTextPlaceHolderKey.betaWelcomeMessageHowToReportStepContent": kIBGBetaWelcomeMessageHowToReportStepContent,
+      @"IBGCustomTextPlaceHolderKey.betaWelcomeMessageFinishStepTitle": kIBGBetaWelcomeMessageFinishStepTitle,
+      @"IBGCustomTextPlaceHolderKey.betaWelcomeMessageFinishStepContent": kIBGBetaWelcomeMessageFinishStepContent,
+      @"IBGCustomTextPlaceHolderKey.liveWelcomeMessageTitle": kIBGLiveWelcomeMessageTitle,
+      @"IBGCustomTextPlaceHolderKey.liveWelcomeMessageContent": kIBGLiveWelcomeMessageContent,
+
+      @"ReportType.bug": @(IBGBugReportingReportTypeBug),
+      @"ReportType.feedback": @(IBGBugReportingReportTypeFeedback),
+
+      @"ExtendedBugReportMode.enabledWithRequiredFields": @(IBGExtendedBugReportModeEnabledWithRequiredFields),
+      @"ExtendedBugReportMode.enabledWithOptionalFields": @(IBGExtendedBugReportModeEnabledWithOptionalFields),
+      @"ExtendedBugReportMode.disabled": @(IBGExtendedBugReportModeDisabled),
+
+      @"ActionType.allActions": @(IBGActionAllActions),
+      @"ActionType.reportBug": @(IBGActionReportBug),
+      @"ActionType.requestNewFeature": @(IBGActionRequestNewFeature),
+      @"ActionType.addCommentToFeature": @(IBGActionAddCommentToFeature),
   };
 };
 

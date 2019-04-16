@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui';
+import 'dart:io' show Platform;
 import 'package:flutter/services.dart';
 
 enum InvocationEvent {
@@ -12,80 +15,72 @@ enum InvocationEvent {
 enum WelcomeMessageMode { live, beta, disabled }
 
 enum Locale {
-  Arabic,
-  ChineseSimplified,
-  ChineseTraditional,
-  Czech,
-  Danish,
-  Dutch,
-  English,
-  French,
-  German,
-  Italian,
-  Japanese,
-  Korean,
-  Polish,
-  PortugueseBrazil,
-  PortuguesePortugal,
-  Russian,
-  Spanish,
-  Swedish,
-  Turkish,
-  Indonesian,
-  Slovak,
-  Norwegian
+  arabic,
+  chineseSimplified,
+  chineseTraditional,
+  czech,
+  danish,
+  dutch,
+  english,
+  french,
+  german,
+  italian,
+  japanese,
+  korean,
+  polish,
+  portugueseBrazil,
+  portuguesePortugal,
+  russian,
+  spanish,
+  swedish,
+  turkish,
+  indonesian,
+  slovak,
+  norwegian
 }
 
 enum InvocationMode {
-  BUG,
-  FEEDBACK,
-  CHATS,
-  REPLIES
+  bug,
+  feedback,
+  chats,
+  replies
 }
-
-enum InvocationOption {
-  COMMENT_FIELD_REQUIRED,
-  DISABLE_POST_SENDING_DIALOG,
-  EMAIL_FIELD_HIDDEN,
-  EMAIL_FIELD_OPTIONAL
-}
-
 
 enum ColorTheme { dark, light }
 
 enum IBGCustomTextPlaceHolderKey {
-  SHAKE_HINT,
-  SWIPE_HINT,
-  INVALID_EMAIL_MESSAGE,
-  INVALID_COMMENT_MESSAGE,
-  INVOCATION_HEADER,
-  START_CHATS,
-  REPORT_BUG,
-  REPORT_FEEDBACK,
-  EMAIL_FIELD_HINT,
-  COMMENT_FIELD_HINT_FOR_BUG_REPORT,
-  COMMENT_FIELD_HINT_FOR_FEEDBACK,
-  ADD_VOICE_MESSAGE,
-  ADD_IMAGE_FROM_GALLERY,
-  ADD_EXTRA_SCREENSHOT,
-  CONVERSATIONS_LIST_TITLE,
-  AUDIO_RECORDING_PERMISSION_DENIED,
-  CONVERSATION_TEXT_FIELD_HINT,
-  BUG_REPORT_HEADER,
-  FEEDBACK_REPORT_HEADER,
-  VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD,
-  VOICE_MESSAGE_RELEASE_TO_ATTACH,
-  REPORT_SUCCESSFULLY_SENT,
-  SUCCESS_DIALOG_HEADER,
-  ADD_VIDEO,
-  BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE,
-  BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT,
-  BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE,
-  BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT,
-  BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE,
-  BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT,
-  LIVE_WELCOME_MESSAGE_TITLE,
-  LIVE_WELCOME_MESSAGE_CONTENT
+  shakeHint,
+  swipeHint,
+  invalidEmailMessage,
+  invalidCommentMessage,
+  invocationHeader,
+  startChats,
+  reportBug,
+  reportFeedback,
+  emailFieldHint,
+  commentFieldHintForBugReport,
+  commentFieldHintForFeedback,
+  addVoiceMessage,
+  addImageFromGallery,
+  addExtraScreenshot,
+  conversationsListTitle,
+  audioRecordingPermissionDenied,
+  conversationTextFieldHint,
+  bugReportHeader,
+  feedbackReportHeader,
+  voiceMessagePressAndHoldToRecord,
+  voiceMessageReleaseToAttach,
+  reportSuccessfullySent,
+  successDialogHeader,
+  addVideo,
+  betaWelcomeMessageWelcomeStepTitle,
+  betaWelcomeMessageWelcomeStepContent,
+  betaWelcomeMessageHowToReportStepTitle,
+  betaWelcomeMessageHowToReportStepContent,
+  betaWelcomeMessageFinishStepTitle,
+  betaWelcomeMessageFinishStepContent,
+  liveWelcomeMessageTitle,
+  liveWelcomeMessageContent
 }
 
 class Instabug {
@@ -143,56 +138,6 @@ class Instabug {
     final List<dynamic> params = <dynamic>[locale.toString()];
     await _channel.invokeMethod<Object>('setLocale:', params);
   }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logVerbose(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logVerbose:', params);
-  }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logDebug(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logDebug:', params);
-  }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logInfo(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logInfo:', params);
-  }
-
-  /// Clears Instabug internal log
-  static void clearAllLogs() async {
-    await _channel.invokeMethod<Object>('clearAllLogs');
-  }
-  
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logError(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logError:', params);
-  }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static void logWarn(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logWarn:', params);
-  }
   
   /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.
   /// It should be of type [ColorTheme].
@@ -248,21 +193,6 @@ class Instabug {
     await _channel.invokeMethod<Object>('show');
   }
 
-
-  /// invoke sdk manually with desire invocation mode
-  /// [invocationMode] the invocation mode
-  /// [invocationOptions] the array of invocation options
-  static void invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions]) async {
-    List<String> invocationOptionsStrings = <String>[];
-    if (invocationOptions != null) {
-      invocationOptions.forEach((e) {
-        invocationOptionsStrings.add(e.toString());
-      });
-    }
-    final List<dynamic> params = <dynamic>[invocationMode.toString(), invocationOptionsStrings];
-    await _channel.invokeMethod<Object>('invokeWithMode:options:',params);
-  }
-
   /// Logs a user event with [name] that happens through the lifecycle of the application.
   /// Logged user events are going to be sent with each report, as well as at the end of a session.
   static void logUserEventWithName(String name) async {
@@ -276,6 +206,69 @@ class Instabug {
     final List<dynamic> params = <dynamic>[value, key.toString()];
     await _channel.invokeMethod<Object>('setValue:forStringWithKey:', params); 
   } 
+
+  /// Enable/disable session profiler
+  /// [sessionProfilerEnabled] desired state of the session profiler feature.
+  static void setSessionProfilerEnabled(bool sessionProfilerEnabled) async {
+    final List<dynamic> params = <dynamic>[sessionProfilerEnabled];
+    await _channel.invokeMethod<Object>('setSessionProfilerEnabled:', params); 
+  } 
+
+  /// Sets the primary color of the SDK's UI.
+  /// Sets the color of UI elements indicating interactivity or call to action.
+  /// [color] primaryColor A color to set the UI elements of the SDK to.
+  static void setPrimaryColor(Color color) async {
+    final List<dynamic> params = <dynamic>[color.value];
+    await _channel.invokeMethod<Object>('setPrimaryColor:', params); 
+  } 
+
+  /// Adds specific user data that you need to be added to the reports
+  /// [userData] data to be added
+  static void setUserData(String userData) async {
+    final List<dynamic> params = <dynamic>[userData];
+    await _channel.invokeMethod<Object>('setUserData:', params); 
+  } 
+
+   ///Add file to be attached to the bug report.
+   ///[filePath] of the file
+   ///[fileName] of the file
+  static void addFileAttachmentWithURL(String filePath, String fileName) async {
+    if (Platform.isIOS) {
+      final List<dynamic> params = <dynamic>[filePath];
+      await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params); 
+    } else {
+      final List<dynamic> params = <dynamic>[filePath,fileName];
+      await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params); 
+    }
+  } 
+
+  ///Add file to be attached to the bug report.
+   ///[data] of the file
+   ///[fileName] of the file
+  static void addFileAttachmentWithData(Uint8List data, String fileName) async {
+    if (Platform.isIOS) {
+      final List<dynamic> params = <dynamic>[data];
+      await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params); 
+    } else {
+      final List<dynamic> params = <dynamic>[data,fileName];
+      await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params); 
+    }
+  } 
+
+  ///Clears all Uris of the attached files.
+  ///The URIs which added via {@link Instabug#addFileAttachment} API not the physical files.
+  static void clearFileAttachments() async {
+      await _channel.invokeMethod<Object>('clearFileAttachments'); 
+  } 
+
+  ///Sets the welcome message mode to live, beta or disabled.
+  ///[welcomeMessageMode] An enum to set the welcome message mode to live, beta or disabled.
+  static void setWelcomeMessageMode(WelcomeMessageMode welcomeMessageMode) async {
+    final List<dynamic> params = <dynamic>[welcomeMessageMode.toString()];
+    await _channel.invokeMethod<Object>('setWelcomeMessageMode:', params); 
+  } 
+
 }
+
 
 
