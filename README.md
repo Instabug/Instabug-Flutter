@@ -8,11 +8,11 @@ A Flutter plugin for [Instabug](https://instabug.com/).
 
 |      Feature                                              | Status  |
 |:---------------------------------------------------------:|:-------:|
-| [Bug Reporting](https://instabug.com/bug-reporting)       |    ⚙️   |
+| [Bug Reporting](https://instabug.com/bug-reporting)       |    ✅   |
 | [Crash Reporting](https://instabug.com/crash-reporting)   |    ❌   |
-| [In-App Chat](https://instabug.com/in-app-chat)           |    ⚙️   |
-| [In-App Surveys](https://instabug.com/in-app-surveys)     |    ⚙️   |
-| [Feature Requests](https://instabug.com/feature-requests) |    ⚙️   |
+| [In-App Chat](https://instabug.com/in-app-chat)           |    ✅   |
+| [In-App Surveys](https://instabug.com/in-app-surveys)     |    ✅   |
+| [Feature Requests](https://instabug.com/feature-requests) |    ✅   |
 
 * ✅ Stable
 * ⚙️ Under active development
@@ -44,7 +44,6 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 | `show()`                                                             | `show()`<br>`+ show`                                                                                      |
 | `setSessionProfilerEnabled(bool sessionProfilerEnabled)`             | `setSessionProfilerState(Feature.State state)`<br>`sessionProfilerEnabled`                                |
 | `setPrimaryColor(Color color)`                                       | `setPrimaryColor(@ColorInt int primaryColorValue)`<br>`tintColor`                                         |
-|                                                                      | `onReportSubmitHandler(Report.OnReportCreatedListener listener)`<br>`willSendReportHandler`.              |
 | `setUserData(String userData)`                                       | `setUserData(String userData)`<br>`userData`                                                              |
 | `addFileAttachmentWithURL(String filePath, String fileName)`         | `addFileAttachment(Uri fileUri, String fileNameWithExtension)`<br>`+ addFileAttachmentWithURL:`           |
 | `addFileAttachmentWithData(Uint8List data, String fileName)`         | `addFileAttachment(byte[] data, String fileNameWithExtension)` `+ addFileAttachmentWithData:`             |
