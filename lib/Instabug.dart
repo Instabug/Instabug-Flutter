@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'dart:typed_data';
 import 'dart:ui';
-import 'dart:io' show Platform;
 import 'package:flutter/services.dart';
 
 enum InvocationEvent {
@@ -119,7 +119,7 @@ class Instabug {
   /// and set the user's [name] to be included with all reports.
   /// It also reset the chats on device to that email and removes user attributes,
   /// user data and completed surveys.
-  static void identifyUserWithEmail(String email, [String name]) async {
+  static void identifyUser(String email, [String name]) async {
     final List<dynamic> params = <dynamic>[email, name];
     await _channel.invokeMethod<Object>('identifyUserWithEmail:name:', params);
   }
@@ -164,14 +164,14 @@ class Instabug {
   }
 
   /// Add custom user attribute [value] with a [key] that is going to be sent with each feedback, bug or crash.
-  static void setUserAttributeWithKey(String value, String key) async {
+  static void setUserAttribute(String value, String key) async {
     final List<dynamic> params = <dynamic>[value, key];
     await _channel.invokeMethod<Object>('setUserAttribute:withKey:', params);
   }
 
   /// Removes a given [key] and its associated value from user attributes.
   /// Does nothing if a [key] does not exist.
-  static void removeUserAttributeForKey(String key) async {
+  static void removeUserAttribute(String key) async {
     final List<dynamic> params = <dynamic>[key];
     await _channel.invokeMethod<Object>('removeUserAttributeForKey:', params);
   }
@@ -195,7 +195,7 @@ class Instabug {
 
   /// Logs a user event with [name] that happens through the lifecycle of the application.
   /// Logged user events are going to be sent with each report, as well as at the end of a session.
-  static void logUserEventWithName(String name) async {
+  static void logUserEvent(String name) async {
     final List<String> params = <String>[name];
     await _channel.invokeMethod<Object>('logUserEventWithName:', params);
   }

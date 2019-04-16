@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/Instabug.dart';
 
@@ -30,8 +29,8 @@ enum ExtendedBugReportMode {
 
 class BugReporting {
 
-  static Function onInvokeCallback;
-  static Function onDismissCallback;
+  static Function _onInvokeCallback;
+  static Function _onDismissCallback;
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
   static Future<String> get platformVersion async {
@@ -42,10 +41,10 @@ class BugReporting {
   static Future<dynamic> _handleMethod(MethodCall call) async {
   switch(call.method) {
     case 'onInvokeCallback':
-      onInvokeCallback();
+      _onInvokeCallback();
       return ;
     case 'onDismissCallback':
-      Map<dynamic, dynamic> map = call.arguments;
+      final Map<dynamic, dynamic> map = call.arguments;
       DismissType dismissType;
       ReportType reportType;
       final String dismissTypeString = map['dismissType'].toUpperCase();
@@ -73,10 +72,10 @@ class BugReporting {
           break;
       }
       try {
-        onDismissCallback(dismissType,reportType);
+        _onDismissCallback(dismissType,reportType);
       }
       catch(exception) {
-        onDismissCallback();
+        _onDismissCallback();
       }
       return ;
   }
@@ -84,8 +83,8 @@ class BugReporting {
   /// invoke sdk manually with desire invocation mode
   /// [invocationMode] the invocation mode
   /// [invocationOptions] the array of invocation options
-  static void invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions]) async {
-    List<String> invocationOptionsStrings = <String>[];
+  static void invoke(InvocationMode invocationMode, [List<InvocationOption> invocationOptions]) async {
+    final List<String> invocationOptionsStrings = <String>[];
     if (invocationOptions != null) {
       invocationOptions.forEach((e) {
         invocationOptionsStrings.add(e.toString());
@@ -108,7 +107,7 @@ class BugReporting {
    /// [function]  A callback that gets executed before invoking the SDK
   static void setOnInvokeCallback(Function function) async {
      _channel.setMethodCallHandler(_handleMethod);
-    onInvokeCallback = function;
+    _onInvokeCallback = function;
     await _channel.invokeMethod<Object>('setOnInvokeCallback'); 
   } 
   
@@ -118,7 +117,7 @@ class BugReporting {
    /// [function]  A callback that gets executed before invoking the SDK
   static void setOnDismissCallback(Function function) async {
      _channel.setMethodCallHandler(_handleMethod);
-    onDismissCallback = function;
+    _onDismissCallback = function;
     await _channel.invokeMethod<Object>('setOnDismissCallback'); 
   } 
 
@@ -126,7 +125,7 @@ class BugReporting {
    /// Default is set by `Instabug.startWithToken`.
    /// [invocationEvents] invocationEvent List of events that invokes the
   static void setInvocationEvents(List<InvocationEvent> invocationEvents) async {
-    List<String> invocationEventsStrings = <String>[];
+    final List<String> invocationEventsStrings = <String>[];
     if (invocationEvents != null) {
       invocationEvents.forEach((e) {
         invocationEventsStrings.add(e.toString());
@@ -151,7 +150,7 @@ class BugReporting {
    ///Sets what type of reports, bug or feedback, should be invoked.
    /// [reportTypes] - List of reportTypes
   static void setReportTypes(List<ReportType> reportTypes) async {
-    List<String> reportTypesStrings = <String>[];
+    final List<String> reportTypesStrings = <String>[];
     if (reportTypes != null) {
       reportTypes.forEach((e) {
         reportTypesStrings.add(e.toString());
@@ -173,7 +172,7 @@ class BugReporting {
    /// Default is set by `Instabug.startWithToken`.
    /// [invocationOptions] List of invocation options
   static void setInvocationOptions(List<InvocationOption> invocationOptions) async {
-    List<String> invocationOptionsStrings = <String>[];
+    final List<String> invocationOptionsStrings = <String>[];
     if (invocationOptions != null) {
       invocationOptions.forEach((e) {
         invocationOptionsStrings.add(e.toString());
@@ -186,8 +185,8 @@ class BugReporting {
    /// Invoke bug reporting with report type and options.
    /// [reportType] type 
    /// [invocationOptions]  List of invocation options
-  static void showWithOptions(ReportType reportType, List<InvocationOption> invocationOptions) async {
-    List<String> invocationOptionsStrings = <String>[];
+  static void show(ReportType reportType, List<InvocationOption> invocationOptions) async {
+    final List<String> invocationOptionsStrings = <String>[];
     if (invocationOptions != null) {
       invocationOptions.forEach((e) {
         invocationOptionsStrings.add(e.toString());

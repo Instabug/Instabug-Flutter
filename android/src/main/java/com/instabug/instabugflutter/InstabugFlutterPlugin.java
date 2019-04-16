@@ -779,5 +779,80 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         });
     }
 
+    /**
+     * Enables and disables everything related to receiving replies.
+     * @param {boolean} isEnabled
+     */
+    public void setRepliesEnabled(final boolean isEnabled) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (isEnabled) {
+                    Replies.setState(Feature.State.ENABLED);
+                } else {
+                    Replies.setState(Feature.State.DISABLED);
+                }
+            }
+        });
+    }
+
+    /**
+     * Manual invocation for replies.
+     */
+    public void showReplies() {
+        Replies.show();
+    }
+
+
+    /**
+     * Tells whether the user has chats already or not.
+     */
+    public void hasChats() {
+        boolean hasChats = Replies.hasChats();
+        channel.invokeMethod("hasChatsCallback", hasChats);
+    }
+
+    /**
+     * Sets a block of code that gets executed when a new message is received.
+     */
+    public void setOnNewReplyReceivedCallback() {
+        Runnable onNewMessageRunnable = new Runnable() {
+            @Override
+            public void run() {
+                channel.invokeMethod("onNewReplyReceivedCallback", null);
+            }
+        };
+        Replies.setOnNewReplyReceivedCallback(onNewMessageRunnable);
+    }
+
+    /**
+     * Get current unread count of messages for this user
+     *
+     * @return number of messages that are unread for this user
+     */
+    public void getUnreadRepliesCount() {
+        int unreadMessages = Replies.getUnreadRepliesCount();
+        channel.invokeMethod("unreadRepliesCountCallback", unreadMessages);
+    }
+
+    /**
+     * Enabled/disable chat notification
+     *
+     * @param isChatNotificationEnable whether chat notification is reburied or not
+     */
+    public void setChatNotificationEnabled(boolean isChatNotificationEnable) {
+            Replies.setInAppNotificationEnabled(isChatNotificationEnable);
+    }
+
+    /**
+     * Set whether new in app notification received will play a small sound notification
+     * or not (Default is {@code false})
+     *
+     * @param shouldPlaySound desired state of conversation sounds
+     * @since 4.1.0
+     */
+    public void setEnableInAppNotificationSound(boolean shouldPlaySound) {
+            Replies.setInAppNotificationSound(shouldPlaySound);
+    }
 
 }

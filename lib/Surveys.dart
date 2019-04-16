@@ -6,10 +6,10 @@ import 'package:instabug_flutter/Instabug.dart';
 
 class Surveys {
 
-  static Function onShowCallback;
-  static Function onDismissCallback;
-  static Function availableSurveysCallback;
-  static Function hasRespondedToSurveyCallback;
+  static Function _onShowCallback;
+  static Function _onDismissCallback;
+  static Function _availableSurveysCallback;
+  static Function _hasRespondedToSurveyCallback;
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
   static Future<String> get platformVersion async {
@@ -20,10 +20,10 @@ class Surveys {
   static Future<dynamic> _handleMethod(MethodCall call) async {
   switch(call.method) {
     case 'onShowSurveyCallback':
-      onShowCallback();
+      _onShowCallback();
       return ;
     case 'onDismissSurveyCallback':
-      onDismissCallback();
+      _onDismissCallback();
       return ;
     case 'availableSurveysCallback':
       final List<dynamic> result = call.arguments;
@@ -31,10 +31,10 @@ class Surveys {
       for (int i = 0 ; i < result.length ; i++) {
         params.add(result[i].toString());
       }
-      availableSurveysCallback(params);
+      _availableSurveysCallback(params);
       return ;
     case 'hasRespondedToSurveyCallback':
-      hasRespondedToSurveyCallback(call.arguments);
+      _hasRespondedToSurveyCallback(call.arguments);
       return ;
   }
 }
@@ -63,7 +63,7 @@ class Surveys {
    /// argument available surveys
   static void getAvailableSurveys(Function function) async {
     _channel.setMethodCallHandler(_handleMethod);
-    availableSurveysCallback = function;
+    _availableSurveysCallback = function;
     await _channel.invokeMethod<Object>('getAvailableSurveys'); 
   } 
    
@@ -73,7 +73,7 @@ class Surveys {
    /// [function]  A callback that gets executed before presenting the survey's UI.
   static void setOnShowCallback(Function function) async {
      _channel.setMethodCallHandler(_handleMethod);
-    onShowCallback = function;
+    _onShowCallback = function;
     await _channel.invokeMethod<Object>('setOnShowSurveyCallback'); 
   } 
   
@@ -83,7 +83,7 @@ class Surveys {
    /// [function]  A callback that gets executed after the survey's UI is dismissed.
   static void setOnDismissCallback(Function function) async {
      _channel.setMethodCallHandler(_handleMethod);
-    onDismissCallback = function;
+    _onDismissCallback = function;
     await _channel.invokeMethod<Object>('setOnDismissSurveyCallback'); 
   } 
 
@@ -117,7 +117,7 @@ class Surveys {
    /// [function]  A callback that gets executed after the survey's UI is dismissed.
   static void hasRespondedToSurvey(String surveyToken, Function function) async {
      _channel.setMethodCallHandler(_handleMethod);
-    hasRespondedToSurveyCallback = function;
+    _hasRespondedToSurveyCallback = function;
     final List<dynamic> params = <dynamic>[surveyToken];
     await _channel.invokeMethod<Object>('hasRespondedToSurveyWithToken:', params); 
   } 
