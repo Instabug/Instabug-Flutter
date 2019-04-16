@@ -35,54 +35,6 @@ class _MyAppState extends State<MyApp> {
       if (Platform.isIOS) {
         Instabug.start('068ba9a8c3615035e163dc5f829c73be', <InvocationEvent>[InvocationEvent.shake]);
       }
-      //Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
-      //Instabug.setWelcomeMessageMode(WelcomeMessageMode.beta);
-      Instabug.identifyUser('aezz@instabug.com', 'Aly Ezz');
-      InstabugLog.logInfo('Test Log Info Message from Flutter!');
-      InstabugLog.logDebug('Test Debug Message from Flutter!');
-      InstabugLog.logVerbose('Test Verbose Message from Flutter!');
-      InstabugLog.clearAllLogs();
-      InstabugLog.logError('Test Error Message from Flutter!');
-      InstabugLog.logWarn('Test Warn Message from Flutter!');
-      Instabug.logOut();
-      //Instabug.setLocale(Locale.German);
-      Instabug.setColorTheme(ColorTheme.dark);
-      Instabug.appendTags(<String>['tag1', 'tag2']);
-      Instabug.setUserAttribute('19', 'Age');
-      Instabug.setUserAttribute('female', 'gender');
-      Instabug.removeUserAttribute('gender');
-      final String value = await Instabug.getUserAttributeForKey('Age');
-      print('User Attribute ' + value);
-      final Map<String, String> userAttributes = await Instabug.getUserAttributes();
-      print(userAttributes.toString()); 
-      Instabug.logUserEvent('Aly Event');
-      Instabug.setValueForStringWithKey('What\'s the problem', IBGCustomTextPlaceHolderKey.reportBug);
-      Instabug.setValueForStringWithKey('Send some ideas', IBGCustomTextPlaceHolderKey.reportFeedback);
-      Instabug.setSessionProfilerEnabled(false);
-      Color c = const Color.fromRGBO(255, 0, 255, 1.0);
-      Instabug.setPrimaryColor(c);
-      Instabug.setUserData("This is some useful data");
-      var list = Uint8List(10);
-      Instabug.addFileAttachmentWithData(list, "My File");
-      Instabug.clearFileAttachments();
-      //Instabug.clearFileAttachments();
-      //BugReporting.setEnabled(false);
-      BugReporting.setOnInvokeCallback(sdkInvoked);
-      BugReporting.setOnDismissCallback(sdkDismissed);
-      BugReporting.setInvocationEvents(<InvocationEvent>[InvocationEvent.floatingButton]);
-      Surveys.setEnabled(true);
-      Surveys.setAutoShowingEnabled(false);
-      Surveys.setOnShowCallback(surveyShown);
-      Surveys.setOnDismissCallback(surveyDismiss);
-      //Replies.setInAppNotificationsEnabled(false);
-      Replies.setEnabled(true);
-      Replies.show();
-      Replies.setOnNewReplyReceivedCallback(replies);
-      //BugReporting.setEnabledAttachmentTypes(false, false, false, false);
-      //BugReporting.setReportTypes(<ReportType>[ReportType.FEEDBACK,ReportType.BUG]);
-      //BugReporting.setExtendedBugReportMode(ExtendedBugReportMode.ENABLED_WITH_REQUIRED_FIELDS);
-      //BugReporting.setInvocationOptions(<InvocationOption>[InvocationOption.EMAIL_FIELD_HIDDEN]);
-      
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -96,92 +48,250 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void resetTags() {
-    Instabug.resetTags();
-  }
-
-  void getSurveys(List<String> surveys) {
-    int x = surveys.length;
-    debugPrint(x.toString());
-  }
-
-  void sdkInvoked() {
-    debugPrint("I am called before invocation");
-  }
-
-  void surveyShown() {
-    debugPrint("The user will se a survey nwoww");
-  }
-
-  void surveyDismiss() {
-    debugPrint("The survey is Dismissed");
-  }
-
-  void sdkDismissed(DismissType dismissType, ReportType reportType) {
-    debugPrint('SDK Dismissed DismissType: ' + dismissType.toString());
-     debugPrint('SDK Dismissed ReportType: ' + reportType.toString());
-  }
-
-   void hasResponded(bool hasResponded) {
-    debugPrint(hasResponded.toString());
-  }
-
-  void replies() {
-    debugPrint("new Replyyy");
-  }
   void show() {
-    //Instabug.show();
-    // Surveys.getAvailableSurveys(getSurveys);
-    // Surveys.showSurveyIfAvailable();
-    // Surveys.setShouldShowWelcomeScreen(true);
-    //Surveys.showSurvey("BHJI1iaKYhr4CYHHcUAaTg");
-    //BugReporting.showWithOptions(ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
-    // FeatureRequests.setEmailFieldRequired(false, [ActionType.allActions]);
-    // FeatureRequests.show();
-    // Replies.setEnabled(true);
-    // Replies.show();
-    //Replies.setInAppNotificationsEnabled(false);
-    //Replies.getUnreadRepliesCount(replies);
+    Instabug.show();
   }
 
-  void invokeWithMode() {
-    Surveys.hasRespondedToSurvey("BHJI1iaKYhr4CYHHcUAaTg", hasResponded);
-   // BugReporting.invokeWithMode(InvocationMode.bug, [InvocationOption.emailFieldHidden]);
+  void sendBugReport() {
+    BugReporting.invoke(InvocationMode.bug, [InvocationOption.emailFieldOptional]);
   }
 
-  void getTags() async {
-    final List<String> tags = await Instabug.getTags();
-    print(tags.toString());
+  void sendFeedback() {
+    BugReporting.invoke(InvocationMode.feedback, [InvocationOption.emailFieldOptional]);
+  }
+
+  void startNewConversation () {
+    Chats.show();
+  }
+
+  void showNpsSurvey() {
+    Surveys.showSurvey('pcV_mE2ttqHxT1iqvBxL0w');
+  }
+
+  void showMultipleQuestionSurvey() {
+    Surveys.showSurvey('ZAKSlVz98QdPyOx1wIt8BA');
+  }
+
+  void showFeatureRequests () {
+    FeatureRequests.show();
+  }
+
+  void setInvocationEvent(InvocationEvent invocationEvent) {
+    BugReporting.setInvocationEvents([invocationEvent]);
+  }
+
+  void setPrimaryColor (Color c) {
+    Instabug.setPrimaryColor(c);
+  }
+
+  void setColorTheme (ColorTheme colorTheme) {
+    Instabug.setColorTheme(colorTheme);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
+        body: SingleChildScrollView(
+          padding: EdgeInsets.only(top: 60.0),
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Running on: $_platformVersion\n'),
-            RaisedButton(
+             Container(
+            margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+            child :  Text(
+              'Hello Instabug\'s awesome user! The purpose of this application is to show you the different options for customizing the SDK and how easy it is to integrate it to your existing app',
+              textAlign: TextAlign.center,
+             ),
+            ),
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              // height: double.infinity,
+              child:  RaisedButton(
                 onPressed: show,
-                child: Text('show'),
+                textColor: Colors.white,
+                child: Text('Invoke'),
                 color: Colors.lightBlue),
-            RaisedButton(
-                onPressed: invokeWithMode,
-                child: Text('invokeWithMode'),
+            ),
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              // height: double.infinity,
+              child:  RaisedButton(
+                onPressed: sendBugReport,
+                textColor: Colors.white,
+                child: Text('Send Bug Report'),
                 color: Colors.lightBlue),
-            RaisedButton(
-                onPressed: resetTags,
-                child: Text('reset tags'),
+            ),
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              // height: double.infinity,
+              child:  RaisedButton(
+                onPressed: sendFeedback,
+                textColor: Colors.white,
+                child: Text('Send Feedback'),
                 color: Colors.lightBlue),
-            RaisedButton(
-                onPressed: getTags,
-                child: Text('get tags'),
-                color: Colors.lightBlue)
+            ),
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              // height: double.infinity,
+              child:  RaisedButton(
+                onPressed: startNewConversation,
+                textColor: Colors.white,
+                child: Text('Start a New Conversation'),
+                color: Colors.lightBlue),
+            ),
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              // height: double.infinity,
+              child:  RaisedButton(
+                onPressed: showNpsSurvey,
+                textColor: Colors.white,
+                child: Text('Show NPS Survey'),
+                color: Colors.lightBlue),
+            ),
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              // height: double.infinity,
+              child:  RaisedButton(
+                onPressed: showMultipleQuestionSurvey,
+                textColor: Colors.white,
+                child: Text('Show Multiple Questions Survey'),
+                color: Colors.lightBlue),
+            ),
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              // height: double.infinity,
+              child:  RaisedButton(
+                onPressed: showFeatureRequests,
+                textColor: Colors.white,
+                child: Text('Show Feature Requests'),
+                color: Colors.lightBlue),
+            ),
+            Container(
+            alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.only(top: 20.0, left: 20.0),
+            child :  Text(
+              'Change Invocation Event',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+             ),
+            ),
+            ButtonBar (
+              mainAxisSize: MainAxisSize.min,
+              alignment: MainAxisAlignment.start,
+              children: <Widget>[
+                      RaisedButton(
+                        onPressed: ()=>setInvocationEvent(InvocationEvent.none),
+                        textColor: Colors.white,
+                        child: Text('none'),
+                        color: Colors.lightBlue),
+                      RaisedButton(
+                        onPressed: ()=>setInvocationEvent(InvocationEvent.shake),
+                        textColor: Colors.white,
+                        child: Text('Shake'),
+                        color: Colors.lightBlue),
+                        RaisedButton(
+                        onPressed: ()=>setInvocationEvent(InvocationEvent.screenshot),
+                        textColor: Colors.white,
+                        child: Text('Screenshot'),
+                        color: Colors.lightBlue),
+                  ],
+            ),
+            ButtonBar (
+              mainAxisSize: MainAxisSize.min,
+              alignment: MainAxisAlignment.start,
+              children: <Widget>[
+                      RaisedButton(
+                        onPressed: ()=>setInvocationEvent(InvocationEvent.floatingButton),
+                        textColor: Colors.white,
+                        child: Text('Floating Button'),
+                        color: Colors.lightBlue),
+                      RaisedButton(
+                        onPressed: ()=>setInvocationEvent(InvocationEvent.twoFingersSwipeLeft),
+                        textColor: Colors.white,
+                        child: Text('Two Fingers Swipe Left'),
+                        color: Colors.lightBlue),
+                  ],
+            ),
+            Container(
+            alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.only( left: 20.0),
+            child :  Text(
+              'Set Primary Color',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+             ),
+            ),
+            ButtonBar (
+              mainAxisSize: MainAxisSize.min,
+              alignment: MainAxisAlignment.center,
+              children: <Widget>[
+                      ButtonTheme(
+                          minWidth: 50.0,
+                          height: 30.0,
+                          child: RaisedButton(
+                              onPressed: ()=>setPrimaryColor(Colors.red),
+                              textColor: Colors.white,
+                              color: Colors.red),
+                          ),
+                        ButtonTheme(
+                          minWidth: 50.0,
+                          height: 30.0,
+                          child: RaisedButton(
+                              onPressed: ()=>setPrimaryColor(Colors.green),
+                              textColor: Colors.white,
+                              color: Colors.green),
+                          ),
+                        ButtonTheme(
+                          minWidth: 50.0,
+                          height: 30.0,
+                          child: RaisedButton(
+                              onPressed: ()=>setPrimaryColor(Colors.blue),
+                              textColor: Colors.white,
+                              color: Colors.blue),
+                          ),
+                        ButtonTheme(
+                          minWidth: 50.0,
+                          height: 30.0,
+                          child: RaisedButton(
+                              onPressed: ()=>setPrimaryColor(Colors.yellow),
+                              textColor: Colors.white,
+                              color: Colors.yellow),
+                          ),
+                  ],
+            ),
+            Container(
+            alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.only( left: 20.0),
+            child :  Text(
+              'Color Theme',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+             ),
+            ),
+            ButtonBar (
+              mainAxisSize: MainAxisSize.max,
+              alignment: MainAxisAlignment.center,
+              children: <Widget>[
+                      RaisedButton(
+                        onPressed: ()=> setColorTheme(ColorTheme.light),
+                        textColor: Colors.lightBlue,
+                        child: Text('Light'),
+                        color: Colors.white),
+                      RaisedButton(
+                        onPressed: ()=> setColorTheme(ColorTheme.dark),
+                        textColor: Colors.white,
+                        child: Text('Dark'),
+                        color: Colors.black),
+                  ],
+            ),
           ],
         )),
       ),
