@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'dart:typed_data';
 import 'dart:ui';
-import 'dart:io' show Platform;
 import 'package:flutter/services.dart';
 
 enum InvocationEvent {

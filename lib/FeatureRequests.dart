@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/Instabug.dart';
 
 enum ActionType {
   allActions,
@@ -30,7 +28,7 @@ class FeatureRequests {
   /// field is required or not.
   /// [actionTypes] An enum that indicates which action types will have the isEmailFieldRequired
   static void setEmailFieldRequired(bool isEmailFieldRequired, List<ActionType> actionTypes) async {
-    List<String> actionTypesStrings = <String>[];
+    final List<String> actionTypesStrings = <String>[];
     if (actionTypes != null) {
       actionTypes.forEach((e) {
         actionTypesStrings.add(e.toString());
