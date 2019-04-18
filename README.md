@@ -150,7 +150,7 @@ import 'package:instabug_flutter/Instabug.dart';
 2. Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the devices is shaken.
 
 ```dart
-InstabugFlutter.start('APP_TOKEN', [InvocationEvent.shake]);
+Instabug.start('APP_TOKEN', [InvocationEvent.shake]);
 ```
 
 Make sure to replace `app_token` with your application token.
