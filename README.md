@@ -2,7 +2,7 @@
 
 A Flutter plugin for [Instabug](https://instabug.com/).
 
-⚠️ This plugin is currently under active development and is not ready for production use yet. If you'd like to give us [feedback](https://github.com/Instabug/Instabug-Flutter/issues) or create a [pull request](https://github.com/Instabug/Instabug-Flutter/pulls), we would highly appreciate it!
+⚠️ While this plugin is currently in beta, it's safe to start using it and ship apps with it to production. If you'd like to give us [feedback](https://github.com/Instabug/Instabug-Flutter/issues) or create a [pull request](https://github.com/Instabug/Instabug-Flutter/pulls), we would highly appreciate it!
 
 ## Available Features
 
