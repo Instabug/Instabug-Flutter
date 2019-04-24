@@ -120,7 +120,7 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 
 ## Integration
 
-Creating a Flutter app on the Instabug dashboard isn't possible yet. Create a React Native app instead.
+Creating a Flutter app on the Instabug dashboard isn't possible yet.Therfore, create a React Native app instead.
 
 
 ### Installation
