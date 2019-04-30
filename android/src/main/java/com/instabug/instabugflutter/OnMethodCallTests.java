@@ -47,4 +47,102 @@ import static org.mockito.Mockito.verify;
         testMethodCall(methodName,argsList);
         verify(instabugMock).showWelcomeMessageWithMode("WelcomeMessageMode.live");
     }
+
+     void testIdentifyUserWithEmail() {
+         String methodName = "identifyUserWithEmail";
+         ArrayList<Object> argsList = new ArrayList<>();
+         argsList.add("aly@gmail.com");
+         argsList.add("Aly");
+         Mockito.doNothing().when(instabugMock).identifyUserWithEmail(any(String.class),any(String.class));
+         testMethodCall(methodName,argsList);
+         verify(instabugMock).identifyUserWithEmail("aly@gmail.com","Aly");
+     }
+
+     void testLogOut() {
+         String methodName = "logOut";
+         Mockito.doNothing().when(instabugMock).logOut();
+         testMethodCall(methodName,null);
+         verify(instabugMock).logOut();
+     }
+
+     void testAppendTags() {
+         String methodName = "appendTags";
+         ArrayList<Object> argsList = new ArrayList<>();
+         ArrayList<String> tags = new ArrayList<>();
+         tags.add("tag1");
+         tags.add("tag2");
+         argsList.add(tags);
+         Mockito.doNothing().when(instabugMock).appendTags(any(ArrayList.class));
+         testMethodCall(methodName,argsList);
+         verify(instabugMock).appendTags(tags);
+     }
+
+     void testInvokeWithMode() {
+         String methodName = "invokeWithMode";
+         ArrayList<Object> argsList = new ArrayList<>();
+         ArrayList<String> options = new ArrayList<>();
+         options.add("commentFieldRequired");
+         options.add("disablePostSendingDialog");
+         argsList.add("bug");
+         argsList.add(options);
+         Mockito.doNothing().when(instabugMock).invokeWithMode(any(String.class),any(ArrayList.class));
+         testMethodCall(methodName,argsList);
+         verify(instabugMock).invokeWithMode("bug", options);
+     }
+
+     void testSetSessionProfilerEnabled() {
+         String methodName = "setSessionProfilerEnabled";
+         ArrayList<Object> argsList = new ArrayList<>();
+         argsList.add(true);
+         Mockito.doNothing().when(instabugMock).setSessionProfilerEnabled(any(Boolean.class));
+         testMethodCall(methodName,argsList);
+         verify(instabugMock).setSessionProfilerEnabled(true);
+     }
+
+     void testSetPrimaryColor() {
+         String methodName = "setPrimaryColor";
+         ArrayList<Object> argsList = new ArrayList<>();
+         argsList.add(12312331231233L);
+         Mockito.doNothing().when(instabugMock).setPrimaryColor(any(Long.class));
+         testMethodCall(methodName,argsList);
+         verify(instabugMock).setPrimaryColor(12312331231233L);
+     }
+
+     void testAddFileAttachmentWithData() {
+         String methodName = "addFileAttachmentWithData";
+         ArrayList<Object> argsList = new ArrayList<>();
+         String string = "myfile";
+         argsList.add(string.getBytes());
+         argsList.add(string);
+         Mockito.doNothing().when(instabugMock).addFileAttachmentWithData(any(byte[].class), any(String.class));
+         testMethodCall(methodName,argsList);
+         verify(instabugMock).addFileAttachmentWithData(string.getBytes(), string);
+     }
+
+     void testSetEnabledAttachmentTypes() {
+         String methodName = "setEnabledAttachmentTypes";
+         ArrayList<Object> argsList = new ArrayList<>();
+         argsList.add(true);
+         argsList.add(true);
+         argsList.add(true);
+         argsList.add(true);
+         Mockito.doNothing().when(instabugMock).setEnabledAttachmentTypes(any(Boolean.class),any(Boolean.class),any(Boolean.class),any(Boolean.class));
+         testMethodCall(methodName,argsList);
+         verify(instabugMock).setEnabledAttachmentTypes(true,true,true,true);
+     }
+
+     void testSetEmailFieldRequiredForFeatureRequests() {
+         String methodName = "setEmailFieldRequiredForFeatureRequests";
+         ArrayList<Object> argsList = new ArrayList<>();
+         ArrayList<String> actions = new ArrayList<>();
+         actions.add("reportBug");
+         actions.add("requestNewFeature");
+         argsList.add(true);
+         argsList.add(actions);
+         Mockito.doNothing().when(instabugMock).setEmailFieldRequiredForFeatureRequests(any(Boolean.class),any(ArrayList.class));
+         testMethodCall(methodName,argsList);
+         verify(instabugMock).setEmailFieldRequiredForFeatureRequests(true,actions);
+     }
+
+
 }
