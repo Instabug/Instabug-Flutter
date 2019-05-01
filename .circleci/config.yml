@@ -12,7 +12,6 @@ jobs:
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
    android_test:
-    working_directory: ~/project/example/android
     docker:
       # Android the primary container
       - image: circleci/android:api-26-alpha
