@@ -13,13 +13,13 @@ jobs:
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
       - run: flutter build
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "example/android/build.gradle" }}-{{ checksum  "example/android/app/build.gradle" }}
       - run:
           name: chmod permissions
-          command: chmod +x ./gradlew
+          command: chmod +x ./example/android/gradlew
       - run:
           name: Download Dependencies
-          command: ./gradlew androidDependencies
+          command: ./example/android/gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle
