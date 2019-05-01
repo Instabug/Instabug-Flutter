@@ -40,7 +40,7 @@ class OnMethodCallTests {
    }
 
    public void testShowWelcomeMessageWithMode() {
-       String methodName = "showWelcomeMessageWithMode";
+       String methodName = "showWelcomeMessageWithMod";
        ArrayList<Object> argsList = new ArrayList<>();
        argsList.add("WelcomeMessageMode.live");
        Mockito.doNothing().when(instabugMock).showWelcomeMessageWithMode(any(String.class));
