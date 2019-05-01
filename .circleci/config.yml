@@ -1,38 +1,40 @@
 version: 2
 jobs:
    build:
+    working_directory: ~/project/example/android
     docker:
       - image: cirrusci/flutter
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - run: bundle check || sudo bundle install        
       - run: bundle exec danger
       - run: flutter doctor
       - run: pub get
-      - run: flutter test
-      - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
+      # - run: flutter test
+      # - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
       - run: flutter build
       - restore_cache:
-          key: jars-{{ checksum "example/android/build.gradle" }}-{{ checksum  "example/android/app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: chmod permissions
           command: chmod +x ./example/android/gradlew
       - run:
           name: Generating Gradle wrapper files ⚙️...
-          command: example/android/gradlew wrapper
+          command: gradlew wrapper
       - run:
           name: Building project 🏗...
-          command: example/android/gradlew build    
+          command: gradlew build    
       - run:
           name: Download Dependencies
-          command: example/android/gradlew androidDependencies
+          command: gradlew androidDependencies
       - save_cache:
           paths:
-            - ~/example/android/.gradle
-          key: jars-{{ checksum "example/android/build.gradle" }}-{{ checksum  "example/android/app/build.gradle" }}
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run UnitTest
-          command: ./example/android/gradlew InstabugFlutterPluginTest
+          command: ./gradlew InstabugFlutterPluginTest
   #  android_test:
   #   working_directory: ~/project/example/android
   #   docker:
