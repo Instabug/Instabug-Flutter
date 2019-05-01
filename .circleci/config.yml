@@ -7,8 +7,8 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      - run: bundle check || sudo bundle install        
-      - run: bundle exec danger
+      # - run: bundle check || sudo bundle install        
+      # - run: bundle exec danger
       - run: flutter doctor
       - run: pub get
       # - run: flutter test
