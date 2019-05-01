@@ -108,11 +108,11 @@ class FlutterPlugin implements Plugin<Project> {
 
         String flutterRootPath = resolveProperty(project, "flutter.sdk", System.env.FLUTTER_ROOT)
         if (flutterRootPath == null) {
-            //throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file or with a FLUTTER_ROOT environment variable.")
+            throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file or with a FLUTTER_ROOT environment variable.")
         }
         flutterRoot = project.file(flutterRootPath)
         if (!flutterRoot.isDirectory()) {
-            //throw new GradleException("flutter.sdk must point to the Flutter SDK directory")
+            throw new GradleException("flutter.sdk must point to the Flutter SDK directory")
         }
 
         String flutterExecutableName = Os.isFamily(Os.FAMILY_WINDOWS) ? "flutter.bat" : "flutter"
@@ -122,11 +122,11 @@ class FlutterPlugin implements Plugin<Project> {
             String engineOutPath = project.property('localEngineOut')
             File engineOut = project.file(engineOutPath)
             if (!engineOut.isDirectory()) {
-               // throw new GradleException('localEngineOut must point to a local engine build')
+                throw new GradleException('localEngineOut must point to a local engine build')
             }
             flutterJar = Paths.get(engineOut.absolutePath, "flutter.jar").toFile()
             if (!flutterJar.isFile()) {
-               // throw new GradleException('Local engine build does not contain flutter.jar')
+                throw new GradleException('Local engine build does not contain flutter.jar')
             }
 
             localEngine = engineOut.name

@@ -27,6 +27,12 @@ jobs:
           name: chmod permissions
           command: chmod +x ./gradlew
       - run:
+          name: Generating Gradle wrapper files
+          command: ./gradlew wrapper
+      - run:
+          name: Cleaning
+          command: ./gradlew clean
+      - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
