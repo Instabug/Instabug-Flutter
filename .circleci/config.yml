@@ -12,25 +12,27 @@ jobs:
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
    android_test:
+    working_directory: ~/example/android
     docker:
       # Android the primary container
       - image: circleci/android:api-26-alpha
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
-      - checkout
+      - checkout:
+          path: ~/example
       - restore_cache:
-          key: jars-{{ checksum "example/android/build.gradle" }}-{{ checksum  "example/android/app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Download Dependencies
-          command: ./example/android/gradlew androidDependencies
+          command: ./gradlew androidDependencies
       - save_cache:
           paths:
-            - ~/example/android/.gradle
-          key: jars-{{ checksum "example/android/build.gradle" }}-{{ checksum  "example/android/app/build.gradle" }}
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run UnitTest
-          command: ./example/android/gradlew InstabugFlutterPluginTest
+          command: ./gradlew InstabugFlutterPluginTest
    release:
     docker:
       - image: cirrusci/flutter
