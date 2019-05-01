@@ -1,12 +1,10 @@
 version: 2
 jobs:
    build:
-    working_directory: ~/project/example/android
     docker:
       - image: cirrusci/flutter
     steps:
-      - checkout:
-          path: ~/project
+      - checkout
       - run: bundle check || sudo bundle install        
       - run: bundle exec danger
       - run: flutter doctor
