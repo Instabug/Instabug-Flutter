@@ -23,6 +23,9 @@ jobs:
       - run:
           name: Building project 🏗...
           command: example/android/gradlew build    
+      - run:
+          name: Download Dependencies
+          command: example/android/gradlew androidDependencies
       - save_cache:
           paths:
             - ~/example/android/.gradle
