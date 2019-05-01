@@ -39,7 +39,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run UnitTest
-          command: ./gradlew InstabugFlutterPluginTest
+          command: ./gradlew test
    release:
     docker:
       - image: cirrusci/flutter
