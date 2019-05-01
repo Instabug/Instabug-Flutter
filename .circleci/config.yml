@@ -18,15 +18,24 @@ jobs:
           name: chmod permissions
           command: chmod +x ./example/android/gradlew
       - run:
+          name: Generating Gradle wrapper files ⚙️...
+          command: example/android/gradlew wrapper
+      - run:
+          name: Cleaning 🧹...
+          command: example/android/gradlew clean
+      - run:
+          name: Building project 🏗...
+          command: example/android/gradlew build    
+      - run:
           name: Download Dependencies
-          command: ./example/android/gradlew androidDependencies
+          command: example/android/gradlew androidDependencies
       - save_cache:
           paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+            - ~/example/android/.gradle
+          key: jars-{{ checksum "example/android/build.gradle" }}-{{ checksum  "example/android/app/build.gradle" }}
       - run:
           name: Run UnitTest
-          command: ./gradlew InstabugFlutterPluginTest
+          command: ./example/android/gradlew InstabugFlutterPluginTest
   #  android_test:
   #   working_directory: ~/project/example/android
   #   docker:
