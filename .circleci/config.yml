@@ -52,12 +52,12 @@ workflows:
   build-test-and-approval-deploy:
     jobs:
       - build
-      # - android_test
+      - android_test
       - hold:
           type: approval
           requires:
             - build
-            # - android_test
+            - android_test
           filters:
             branches:
               only: master
