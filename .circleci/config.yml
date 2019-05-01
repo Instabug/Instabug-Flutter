@@ -12,7 +12,7 @@ jobs:
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
    android_test:
-    working_directory: ~/Instabug-Flutter/example/android
+    working_directory: /Instabug-Flutter/example/android
     docker:
       # Android the primary container
       - image: circleci/android:api-26-alpha
@@ -20,7 +20,7 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout:
-          path: ~/Instabug-Flutter/example/android
+          path: /Instabug-Flutter/example/android
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
