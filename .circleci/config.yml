@@ -12,6 +12,7 @@ jobs:
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
    android_test:
+    working_directory: ~/project/example/android
     docker:
       # Android the primary container
       - image: circleci/android:api-26-alpha
@@ -24,7 +25,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Download Dependencies
-          command: cd example/android;./gradlew androidDependencies
+          command: ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle
