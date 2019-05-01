@@ -24,6 +24,9 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run: flutter doctor
+      - run: 
+          name: Flutter build
+          command: cd ..; flutter build aot
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
