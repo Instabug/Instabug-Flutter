@@ -12,10 +12,10 @@ jobs:
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
    android_test:
-    working_directory: ~/example/android
+    working_directory: $CIRCLE_WORKING_DIRECTORY/example/android
     docker:
       # Android the primary container
-      - image: circleci/android:api-26-alpha
+      - image: circleci/android:api-28-alpha
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
