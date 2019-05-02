@@ -48,18 +48,17 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      # - run:
-      #     name: Fetch CocoaPods Specs
-      #     command: |
-      #       curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-      - run: bundle exec pod check || bundle exec pod install
+      - run:
+          name: Fetch CocoaPods Specs
+          command: |
+            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
       - run: flutter doctor
       - run: 
           name: Flutter build
           command: cd ..; flutter build aot
-      - run:
-          name: Install CocoaPods
-          command: pod install --verbose
+      # - run:
+      #     name: Install CocoaPods
+      #     command: pod install --verbose
       # - run:
       #     name: Build and run tests
       #     command:  xcodebuild   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone X,OS=12.2'   test
