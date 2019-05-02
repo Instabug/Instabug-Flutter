@@ -40,8 +40,6 @@ jobs:
           name: Run UnitTest
           command: ./gradlew test
    ios_test:
-    docker:
-      - image: cirrusci/flutter
     macos:
       xcode: "10.2.0"
     working_directory: ~/project/example/ios
