@@ -11,7 +11,6 @@ jobs:
       - run: pub get
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-
    android_test:
     working_directory: ~/project/example/android
     docker:
@@ -40,42 +39,7 @@ jobs:
       - run:
           name: Run UnitTest
           command: ./gradlew test
-   ios-tests:
-    macos:
-      xcode: "9.3.1"
-    working_directory: ~/project/example/ios
-    environment:
-      BUNDLE_PATH: vendor/bundle  # path to install gems and use for caching
-      ARTIFACTS_DIRECTORY: ~/project/example/ios/artifacts
-    steps:
-      - checkout:
-          path: ~/project
-      - restore_cache:
-          keys:
-          - gems-{{ checksum "Gemfile.lock" }}
-          # Fall back to using the latest cache if no exact match is found.
-          # - v1-gems-
-      - run: 
-          name: Create artifacts directory
-          command: mkdir $ARTIFACTS_DIRECTORY
-      # Install gems.
-      - run:
-          name: Bundle install
-          command: bundle check || bundle install
-          environment:
-            BUNDLE_JOBS: 4
-            BUNDLE_RETRY: 3
-      - save_cache:
-          key: gems-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
-      - run:
-          name: Pre-start simulator
-          command: xcrun instruments -w "iPhone 8 (11.3) [" || true
-      - run:
-          name: Run Instabug unit tests
-          command: set -o pipefail && xcodebuild -workspace Runner.xcworkspace -scheme AllUnitTests -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=11.3,name=iPhone 8' -enableCodeCoverage YES test | xcpretty --color --report junit --output $ARTIFACTS_DIRECTORY/AllTests_unittest_results.xml
-    release:
+   release:
     docker:
       - image: cirrusci/flutter
     steps:
@@ -88,13 +52,11 @@ workflows:
     jobs:
       - build
       - android_test
-      - ios_test
       - hold:
           type: approval
           requires:
             - build
             - android_test
-            - ios_test
           filters:
             branches:
               only: master
