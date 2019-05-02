@@ -75,6 +75,7 @@ workflows:
     jobs:
       - build
       - android_test
+      - ios_test
       - hold:
           type: approval
           requires:
