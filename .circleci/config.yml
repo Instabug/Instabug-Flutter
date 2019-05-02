@@ -61,7 +61,7 @@ jobs:
           command: fastlane scan
           environment:
             SCAN_DEVICE: iPhone 8
-            SCAN_SCHEME: Runner
+            SCAN_SCHEME: instabug_flutter_exampleTests
    release:
     docker:
       - image: cirrusci/flutter
