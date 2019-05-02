@@ -1,5 +1,4 @@
 version: 2
-
 jobs:
    build:
     docker:
@@ -12,7 +11,34 @@ jobs:
       - run: pub get
       - run: flutter test
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-
+   android_test:
+    working_directory: ~/project/example/android
+    docker:
+      - image: cirrusci/flutter
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - checkout:
+          path: ~/project
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run: flutter doctor
+      - run: 
+          name: Flutter build
+          command: cd ..; flutter build aot
+      - run:
+          name: chmod permissions
+          command: chmod +x ./gradlew
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Run UnitTest
+          command: ./gradlew test
    release:
     docker:
       - image: cirrusci/flutter
@@ -25,10 +51,12 @@ workflows:
   build-test-and-approval-deploy:
     jobs:
       - build
+      - android_test
       - hold:
           type: approval
           requires:
             - build
+            - android_test
           filters:
             branches:
               only: master
