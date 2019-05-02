@@ -40,8 +40,8 @@ jobs:
           name: Run UnitTest
           command: ./gradlew test
    ios_test:
-    docker:
-      - image: cirrusci/mojave-xcode-10.2-flutter
+    # docker:
+    #   - image: cirrusci/mojave-xcode-10.2-flutter
     working_directory: ~/project/example/ios
     environment:
       FL_OUTPUT_DIR: output
