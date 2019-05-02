@@ -61,7 +61,7 @@ jobs:
           command: fastlane scan
           environment:
             SCAN_DEVICE: iPhone 8
-            SCAN_SCHEME: WebTests
+            SCAN_SCHEME: Runner
    release:
     docker:
       - image: cirrusci/flutter
