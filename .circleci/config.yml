@@ -52,9 +52,7 @@ jobs:
       #     name: Fetch CocoaPods Specs
       #     command: |
       #       curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-      - run: gem install cocoapods
-      - run: gem install fastlane
-      - run: bundle install
+      - run: bundle exec pod check || bundle exec pod install
       - run: flutter doctor
       - run: 
           name: Flutter build
