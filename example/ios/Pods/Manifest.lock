@@ -1,0 +1,33 @@
+PODS:
+  - Flutter (1.0.0)
+  - Instabug (8.2.2)
+  - instabug_flutter (0.0.1):
+    - Flutter
+    - Instabug (= 8.2.2)
+  - OCMock (3.4.3)
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios-release`)
+  - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
+  - OCMock (~> 3.4)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Instabug
+    - OCMock
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios-release"
+  instabug_flutter:
+    :path: ".symlinks/plugins/instabug_flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  Instabug: bfd57853ad11b4135fbc914cdc77a44286f5eeed
+  instabug_flutter: ff2f9a07a1838044cda200ca4523a70fd5bdcbfb
+  OCMock: 43565190abc78977ad44a61c0d20d7f0784d35ab
+
+PODFILE CHECKSUM: a03f425a8c7f2fd2915839c4716f626b8d95ae16
+
+COCOAPODS: 1.6.1

@@ -1,0 +1,1 @@
+../../../../.symlinks/plugins/instabug_flutter/ios/Classes/InstabugFlutterPlugin.h
