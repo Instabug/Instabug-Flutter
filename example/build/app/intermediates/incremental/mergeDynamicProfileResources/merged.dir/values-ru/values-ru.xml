@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="instabug_feature_rq_str_days_ago">
+        <item quantity="one">%d день назад</item>
+        <item quantity="other">%d дней назад</item>
+        <item quantity="few">%d дня назад</item>
+        <item quantity="many">%d дней назад</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_hours_ago">
+        <item quantity="one">%d час назад</item>
+        <item quantity="other">%d часов назад</item>
+        <item quantity="few">%d часа назад</item>
+        <item quantity="many">%d часов назад</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_minutes_ago">
+        <item quantity="one">%d минуту назад</item>
+        <item quantity="other">%d минут назад</item>
+        <item quantity="few">%d минуты назад</item>
+        <item quantity="many">%d минут назад</item>
+    </plurals>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Перейти на главный экран"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Перейти вверх"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Другие параметры"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Готово"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Показать все"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Выбрать приложение"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"ОТКЛ."</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"ВКЛ."</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"Alt +"</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"Ctrl +"</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"Delete"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"Ввод"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"Fn +"</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"Meta +"</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"Shift +"</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"Пробел"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"Sym +"</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"Меню +"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"Поиск"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Удалить запрос"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Поисковый запрос"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Поиск"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Отправить запрос"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Голосовой поиск"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Открыть доступ"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"Открыть доступ приложению \"<ns1:g id="APPLICATION_NAME">%s</ns1:g>\""</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Свернуть"</string>
+    <string name="add_feature">Добавьте свои мысли</string>
+    <string name="close">Закрыть</string>
+    <string name="feature_request_close_dialog_message">Вы действительно хотите отменить?</string>
+    <string name="feature_request_comments">Комментарии</string>
+    <string name="feature_request_comments_count">%d комментариев</string>
+    <string name="feature_request_go_back">Назад</string>
+    <string name="feature_request_leave_comment">Станьте первым оставившим комментарий.</string>
+    <string name="feature_request_owner">От %s</string>
+    <string name="feature_request_owner_anonymous">От анонимного</string>
+    <string name="feature_request_owner_anonymous_word">Анонимный</string>
+    <string name="feature_request_status_changed_to">Статус изменился на</string>
+    <string name="feature_request_str_add_comment_comment_empty">Оставьте корректный комментарий.</string>
+    <string name="feature_request_str_add_comment_disclaimer">Нам необходимо знать вашу электронную почту, чтобы сообщать вам об обновлениях.</string>
+    <string name="feature_request_str_add_comment_error">При добавлении вашего комментария что-то пошло не так.</string>
+    <string name="feature_request_str_add_comment_valid_email">Укажите корректный адрес электронной почты.</string>
+    <string name="feature_request_str_add_feature_error">При попытке добавить вашу функцию что-то пошло не так.</string>
+    <string name="feature_request_str_adding_your_comment">Добавление вашего комментария</string>
+    <string name="feature_request_str_just_now">Только сейчас</string>
+    <string name="feature_request_str_less">Меньше</string>
+    <string name="feature_request_str_more">Больше</string>
+    <string name="feature_request_str_post_comment">Опубликовать</string>
+    <string name="feature_request_str_thanks">Спасибо за ваш отзыв!</string>
+    <string name="feature_request_str_thanks_msg">Мы будем сообщать вам об обновлениях</string>
+    <string name="feature_request_votes_count">%d голосов</string>
+    <string name="feature_requests_details">Сведения о функции</string>
+    <string name="feature_requests_error_state_sub_title">Проверьте подключение и повторите попытку.</string>
+    <string name="feature_requests_error_state_title">Что-то пошло не так.</string>
+    <string name="feature_requests_new_adding_your_suggestion">Добавление вашего предложения.</string>
+    <string name="feature_requests_new_appbar_title">Добавить функцию</string>
+    <string name="feature_requests_new_bottom_hint">Нам необходимо знать вашу электронную почту, чтобы сообщать вам об обновлениях.</string>
+    <string name="feature_requests_new_description">Описание</string>
+    <string name="feature_requests_new_email">Электронная почта</string>
+    <string name="feature_requests_new_err_msg_email">укажите корректную электронную почту</string>
+    <string name="feature_requests_new_err_msg_required">Заполнение этого поля обязательно</string>
+    <string name="feature_requests_new_name">Имя</string>
+    <string name="feature_requests_new_positive_button">Добавить</string>
+    <string name="feature_requests_new_title">Название</string>
+    <string name="feature_requests_new_toast_message">Не забудьте указать четкое название и привести описание.</string>
+    <string name="features_rq_main_fragment_tab1">Все</string>
+    <string name="features_rq_main_fragment_tab2">Мои</string>
+    <string name="ib_feature_rq_status_completed">Разработана</string>
+    <string name="ib_feature_rq_status_inprogress">Разрабатывается</string>
+    <string name="ib_feature_rq_status_maybe_later">Возможно, позже</string>
+    <string name="ib_feature_rq_status_open">Открыть</string>
+    <string name="ib_feature_rq_status_planned">Запланирована</string>
+    <string name="ib_feature_rq_str_add_your_idea">Добавьте свою идею</string>
+    <string name="ib_feature_rq_str_completed_features">%d готовых функций</string>
+    <string name="ib_feature_rq_str_load_more_fail_txt">Не удается загрузить данные</string>
+    <string name="ib_feature_rq_str_load_more_loading_txt">Обновление...</string>
+    <string name="ib_feature_rq_str_no_ideas_are_added_yet">Идеи пока не добавлены.</string>
+    <string name="ib_feature_rq_str_no_results">Результатов не найдено</string>
+    <string name="ib_feature_rq_str_pull_to_refresh">Для обновления потяните</string>
+    <string name="ib_feature_rq_str_release_to_refresh">Для обновления отпустите</string>
+    <string name="ib_feature_rq_str_search">Поиск</string>
+    <string name="ib_feature_rq_str_votes">Голоса</string>
+    <string name="ib_str_beta_done">Готово</string>
+    <string name="ib_str_beta_welcome_finishing_step_content">Обновитесь до последней версии, чтобы все исправления и функции вступили в силу.</string>
+    <string name="ib_str_beta_welcome_finishing_step_title">Будьте в курсе.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_floating">Чтобы пожаловаться на проблему или предложить улучшение, нажмите на плавающую кнопку.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_screenshot">Чтобы пожаловаться на проблему или предложить улучшение, сделайте снимок экрана.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_shake">Чтобы пожаловаться на проблему или предложить улучшение, потрясите устройство.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_swipe">Чтобы пожаловаться на проблему или предложить улучшение, проведите пальцем справа налево.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_title">Как сообщить об ошибке?</string>
+    <string name="ib_str_beta_welcome_step_content">Спасибо, что помогаете нам совершенствовать наше приложение. С нетерпением ждем ваших отзывов и сообщений об ошибках.</string>
+    <string name="ib_str_beta_welcome_step_title">Рады представить вам наше бета-приложение</string>
+    <string name="ib_str_live_welcome_message_title">Нам всегда интересны ваше мнение и предложения.</string>
+    <string name="instabug_audio_recorder_permission_denied">В разрешении на аудиозапись отказано</string>
+    <string name="instabug_custom_survey_thanks_subtitle">Ваши идеи помогут улучшить будущие обновления.</string>
+    <string name="instabug_custom_survey_thanks_title">Спасибо!</string>
+    <string name="instabug_err_invalid_comment">Введите допустимый комментарий</string>
+    <string name="instabug_err_invalid_email">Введите действительный эл. адрес</string>
+    <string name="instabug_err_invalid_extra_field">Отсутствуют данные: требуется %1$s!</string>
+    <string name="instabug_external_storage_permission_denied">В сохранении отказано</string>
+    <string name="instabug_store_rating_survey_thanks_subtitle">Ваш отзыв поможет нам улучшить приложение.</string>
+    <string name="instabug_store_rating_survey_thanks_title">@string/instabug_custom_survey_thanks_title</string>
+    <string name="instabug_str_action_submit">Отправить</string>
+    <string name="instabug_str_actual_results">Фактические результаты</string>
+    <string name="instabug_str_add_attachment">Добавить приложения</string>
+    <string name="instabug_str_add_photo">Выбрать изображение из Альбома</string>
+    <string name="instabug_str_alert_message_max_attachments">Чтобы добавить новое вложение, удалите имеющееся.</string>
+    <string name="instabug_str_alert_title_max_attachments">Не удается добавить вложение</string>
+    <string name="instabug_str_annotate">Рисовать на снимке экрана</string>
+    <string name="instabug_str_ask_a_question">Задать вопрос</string>
+    <string name="instabug_str_audio">Аудио</string>
+    <string name="instabug_str_bug_comment_hint">Что случилось?</string>
+    <string name="instabug_str_bug_header">Сообщить о проблеме</string>
+    <string name="instabug_str_bugreport_dismiss_cancel">Оставить</string>
+    <string name="instabug_str_bugreport_dismiss_discard">Удалить</string>
+    <string name="instabug_str_bugreport_dismiss_warning_message">Вы уверены, что хотите удалить отчет?</string>
+    <string name="instabug_str_bugreport_dismiss_warning_title">Удалить отчет?</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_message">Загрузите файл весом менее %d Мб.</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_title">Размер файла слишком велик.</string>
+    <string name="instabug_str_cancel">Отмена</string>
+    <string name="instabug_str_capturing_screenshot_error">Не удалось захватить снимок экрана из-за низкой памяти</string>
+    <string name="instabug_str_conversations">Разговоры</string>
+    <string name="instabug_str_dialog_message_preparing">Подготовка...</string>
+    <string name="instabug_str_dismiss">Закрыть</string>
+    <string name="instabug_str_email_hint">Введите адрес эл. почты</string>
+    <string name="instabug_str_error_survey_without_answer">Опрос невозможно отправить без ответа.</string>
+    <string name="instabug_str_expected_results">Ожидаемые результаты</string>
+    <string name="instabug_str_features_request_header">Запрос функций</string>
+    <string name="instabug_str_features_request_ptr_loading_list_text">Мы счастливы, когда вы делитесь с нами своими мыслями!</string>
+    <string name="instabug_str_feedback_comment_hint">Что мы можем улучшить?</string>
+    <string name="instabug_str_feedback_header">Предложить улучшение</string>
+    <string name="instabug_str_hint_enter_your_answer">Напишите свой ответ...</string>
+    <string name="instabug_str_hold_to_record">Нажмите и удерживайте, чтобы записать</string>
+    <string name="instabug_str_image">Изображение</string>
+    <string name="instabug_str_image_loading_error">Не удалось загрузить изображение</string>
+    <string name="instabug_str_invocation_dialog_title">Нужна помощь?</string>
+    <string name="instabug_str_messages">Сообщения</string>
+    <string name="instabug_str_notification_title">"Рабочая группа %1$s "</string>
+    <string name="instabug_str_notifications_body">%1$d новых сообщения (-ий) от %2$s и других</string>
+    <string name="instabug_str_ok">ОК</string>
+    <string name="instabug_str_pick_media_chooser_title">Выберите файл </string>
+    <string name="instabug_str_pick_media_from_gallery">Выбрать файл из галереи</string>
+    <string name="instabug_str_please_wait">Подождите немного</string>
+    <string name="instabug_str_record_video">Записать изображение экрана</string>
+    <string name="instabug_str_release_stop_record">Отпустите, чтобы прикрепить</string>
+    <string name="instabug_str_reply">Ответить</string>
+    <string name="instabug_str_request_feature">Запросить функцию</string>
+    <string name="instabug_str_sending_message_hint">Введите сообщение</string>
+    <string name="instabug_str_shake_hint"><![CDATA[Будем очень благодарны вам за отзыв<br/>Чтобы поговорить с нами, <b>встряхните</b> свое устройство.]]></string>
+    <string name="instabug_str_steps_to_reproduce">Шаги для воспроизводства</string>
+    <string name="instabug_str_success_note">Мы получили ваш отзыв.\nСпасибо, что помогаете нам улучшить %s.</string>
+    <string name="instabug_str_survey_next">Далее</string>
+    <string name="instabug_str_swipe_hint"><![CDATA[Будем очень благодарны вам за отзыв<br />Чтобы поговорить с нами, <b>смахните</b> двумя пальцами.]]></string>
+    <string name="instabug_str_take_screenshot">Сделать снимок экрана</string>
+    <string name="instabug_str_talk_to_us">Свяжитесь с нами</string>
+    <string name="instabug_str_thank_you">Спасибо</string>
+    <string name="instabug_str_video">Видео</string>
+    <string name="instabug_str_video_encoder_busy">Видеокодировщик сейчас кодирует другое видео</string>
+    <string name="instabug_str_video_encoding_error">Не удалось закодировать видео из-за нехватки памяти. </string>
+    <string name="instabug_str_video_length_limit_warning_message">Загрузите видео продолжительностью менее 1 минуты.</string>
+    <string name="instabug_str_video_length_limit_warning_title">Слишком длинное видео</string>
+    <string name="instabug_str_video_player">Видеоплеер</string>
+    <string name="instabug_str_video_recording_hint">Нажмите кнопку записи, когда будете готовы</string>
+    <string name="instabug_survey_welcome_button">Поехали</string>
+    <string name="instabug_survey_welcome_feedback">Мы хотели бы узнать ваше мнение</string>
+    <string name="instabug_survey_welcome_feedback_msg">Помогите нам стать лучше, пройдя небольшой опрос.</string>
+    <string msgid="146198913615257606" name="search_menu_title">"Поиск"</string>
+    <string name="sort_by_recently_updated">Недавние</string>
+    <string name="sort_by_top_rated">Топ</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="surveys_nps_btn_rate_us">Оцените нас в Play Store</string>
+    <string name="surveys_nps_less_likely">Маловероятно</string>
+    <string name="surveys_nps_rate_us_message">Спасибо за любовь!</string>
+    <string name="surveys_nps_very_likely">Весьма вероятно</string>
+</resources>

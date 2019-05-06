@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="Instabug_text_medium">22sp</dimen>
+    <dimen name="abc_action_bar_default_height_material">48dp</dimen>
+    <dimen name="abc_text_size_subtitle_material_toolbar">12dp</dimen>
+    <dimen name="abc_text_size_title_material_toolbar">14dp</dimen>
+    <dimen name="ib_core_dialog_width_default">300dp</dimen>
+    <dimen name="ib_core_onboarding_margin_sides">100dp</dimen>
+    <dimen name="ib_core_padding_xsmall">8dp</dimen>
+    <dimen name="ib_core_prompt_dialog_padding">140dp</dimen>
+    <dimen name="instabug_button_text_size">14sp</dimen>
+    <dimen name="instabug_date_text_size">12sp</dimen>
+    <dimen name="instabug_dialog_padding_left_right">40dp</dimen>
+    <dimen name="instabug_dialog_padding_top_bottom">24dp</dimen>
+    <dimen name="instabug_normal_text_size">16sp</dimen>
+    <dimen name="instabug_question_text_size">18sp</dimen>
+    <dimen name="instabug_remove_attachment_button_padding">8dp</dimen>
+    <dimen name="instabug_remove_attachment_button_size">34dp</dimen>
+    <dimen name="instabug_survey_container_padding">8dp</dimen>
+    <dimen name="instabug_survey_welcome_dialog_padding_left_right">140dp</dimen>
+    <dimen name="instabug_survey_welcome_dialog_padding_top_bottom">18dp</dimen>
+    <dimen name="instabug_toolbar_button_padding">12dp</dimen>
+    <dimen name="survey_button_height">38dp</dimen>
+    <dimen name="survey_button_margin_top">6dp</dimen>
+    <dimen name="survey_button_text_size">16sp</dimen>
+    <dimen name="survey_nps_likely_top_margin">4dp</dimen>
+    <dimen name="survey_nps_selected_rect_size">30dp</dimen>
+    <dimen name="survey_nps_top_margin">0dp</dimen>
+    <dimen name="survey_rate_us_subTitle_text_size">16sp</dimen>
+    <dimen name="survey_welcome_subtitle_text_margin_top">16sp</dimen>
+    <dimen name="survey_welcome_title_text_size">20sp</dimen>
+    <style name="Widget.Design.TabLayout" parent="Base.Widget.Design.TabLayout">
+    <item name="tabGravity">center</item>
+    <item name="tabMode">fixed</item>
+  </style>
+</resources>

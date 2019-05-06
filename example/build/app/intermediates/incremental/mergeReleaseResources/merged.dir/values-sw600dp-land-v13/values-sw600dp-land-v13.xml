@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ib_core_dialog_width_default">300dp</dimen>
+    <dimen name="ib_core_onboarding_margin_sides">100dp</dimen>
+    <dimen name="ib_core_padding_xsmall">8dp</dimen>
+</resources>

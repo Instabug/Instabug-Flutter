@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ib_survey_thanks_subtitle">15sp</dimen>
+    <dimen name="ib_survey_thanks_title">25sp</dimen>
+    <dimen name="survey_button_height">48dp</dimen>
+    <dimen name="survey_button_margin_top">10dp</dimen>
+    <dimen name="survey_button_text_size">16sp</dimen>
+    <dimen name="survey_margin_left_right">24dp</dimen>
+    <dimen name="survey_nps_height">100dp</dimen>
+    <dimen name="survey_nps_likely_labels_size">13sp</dimen>
+    <dimen name="survey_nps_likely_top_margin">8dp</dimen>
+    <dimen name="survey_nps_selected_rect_size">36dp</dimen>
+    <dimen name="survey_nps_selection_text_size">26sp</dimen>
+    <dimen name="survey_nps_text_size">15sp</dimen>
+    <dimen name="survey_nps_top_margin">0dp</dimen>
+    <dimen name="survey_rate_us_image_height">70dp</dimen>
+    <dimen name="survey_rate_us_subTitle_text_size">16sp</dimen>
+    <dimen name="survey_rate_us_title_text_size">25sp</dimen>
+    <dimen name="survey_welcome_subtitle_text_margin_top">16dp</dimen>
+    <dimen name="survey_welcome_subtitle_text_size">14sp</dimen>
+    <dimen name="survey_welcome_title_text_size">18sp</dimen>
+</resources>

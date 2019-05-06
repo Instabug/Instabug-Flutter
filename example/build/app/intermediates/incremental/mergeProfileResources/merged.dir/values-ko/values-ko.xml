@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="instabug_feature_rq_str_days_ago">
+        <item quantity="other">%d일 전</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_hours_ago">
+        <item quantity="other">%d시간 전</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_minutes_ago">
+        <item quantity="other">%d분 전</item>
+    </plurals>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"홈 탐색"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"위로 탐색"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"옵션 더보기"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"완료"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"전체 보기"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"앱 선택"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"사용 안함"</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"사용"</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"Alt+"</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"Ctrl+"</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"삭제"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"입력"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"Function+"</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"Meta+"</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"Shift+"</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"스페이스바"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"Sym+"</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"Menu+"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"검색..."</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"검색어 삭제"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"검색어"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"검색"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"검색어 보내기"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"음성 검색"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"공유 대상"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"<ns1:g id="APPLICATION_NAME">%s</ns1:g>와(과) 공유"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"접기"</string>
+    <string name="add_feature">생각 추가</string>
+    <string name="close">닫기</string>
+    <string name="feature_request_close_dialog_message">취소하시겠습니까?</string>
+    <string name="feature_request_comments">댓글</string>
+    <string name="feature_request_comments_count">%d개의 댓글</string>
+    <string name="feature_request_go_back">뒤로</string>
+    <string name="feature_request_leave_comment">가장 먼저 댓글을 남겨보세요.</string>
+    <string name="feature_request_owner">요청자: %s</string>
+    <string name="feature_request_owner_anonymous">익명 전환</string>
+    <string name="feature_request_owner_anonymous_word">익명</string>
+    <string name="feature_request_status_changed_to">상태 변경:</string>
+    <string name="feature_request_str_add_comment_comment_empty">유효한 댓글을 입력하세요.</string>
+    <string name="feature_request_str_add_comment_disclaimer">최신 소식을 계속 알려드리려면 회원님의 이메일 주소가 필요합니다.</string>
+    <string name="feature_request_str_add_comment_error">댓글을 추가하는 중 문제가 발생했습니다.</string>
+    <string name="feature_request_str_add_comment_valid_email">유효한 이메일 주소를 입력하세요.</string>
+    <string name="feature_request_str_add_feature_error">기능을 추가하는 중 문제가 발생했습니다.</string>
+    <string name="feature_request_str_adding_your_comment">댓글을 추가하는 중</string>
+    <string name="feature_request_str_just_now">방금</string>
+    <string name="feature_request_str_less">덜 보기</string>
+    <string name="feature_request_str_more">더 보기</string>
+    <string name="feature_request_str_post_comment">게시</string>
+    <string name="feature_request_str_thanks">의견을 보내주셔서 감사합니다!</string>
+    <string name="feature_request_str_thanks_msg">계속해서 최신 소식을 보내드리겠습니다</string>
+    <string name="feature_request_votes_count">%d개의 투표</string>
+    <string name="feature_requests_details">기능 세부 정보</string>
+    <string name="feature_requests_error_state_sub_title">연결 상태를 확인한 후 다시 시도하세요.</string>
+    <string name="feature_requests_error_state_title">문제가 발생했습니다.</string>
+    <string name="feature_requests_new_adding_your_suggestion">제안을 추가하는 중.</string>
+    <string name="feature_requests_new_appbar_title">기능 추가</string>
+    <string name="feature_requests_new_bottom_hint">최신 소식을 계속 알려드리려면 회원님의 이메일 주소가 필요합니다.</string>
+    <string name="feature_requests_new_description">설명</string>
+    <string name="feature_requests_new_email">이메일</string>
+    <string name="feature_requests_new_err_msg_email">유효한 이메일 주소를 입력하세요</string>
+    <string name="feature_requests_new_err_msg_required">이 필드는 필수입니다</string>
+    <string name="feature_requests_new_name">이름</string>
+    <string name="feature_requests_new_positive_button">추가</string>
+    <string name="feature_requests_new_title">제목</string>
+    <string name="feature_requests_new_toast_message">명확한 제목과 설명을 입력하세요.</string>
+    <string name="features_rq_main_fragment_tab1">모두</string>
+    <string name="features_rq_main_fragment_tab2">내 항목</string>
+    <string name="ib_feature_rq_status_completed">완료됨</string>
+    <string name="ib_feature_rq_status_inprogress">진행 중</string>
+    <string name="ib_feature_rq_status_maybe_later">나중에</string>
+    <string name="ib_feature_rq_status_open">열기</string>
+    <string name="ib_feature_rq_status_planned">예정됨</string>
+    <string name="ib_feature_rq_str_add_your_idea">아이디어 추가</string>
+    <string name="ib_feature_rq_str_completed_features">%d개의 완료된 기능</string>
+    <string name="ib_feature_rq_str_load_more_fail_txt">실패, 데이터를 로드할 수 없습니다</string>
+    <string name="ib_feature_rq_str_load_more_loading_txt">새로 고치는 중...</string>
+    <string name="ib_feature_rq_str_no_ideas_are_added_yet">아직 추가된 아이디어가 없습니다.</string>
+    <string name="ib_feature_rq_str_no_results">검색된 결과가 없습니다</string>
+    <string name="ib_feature_rq_str_pull_to_refresh">당겨서 새로 고침</string>
+    <string name="ib_feature_rq_str_release_to_refresh">떼어서 새로 고침</string>
+    <string name="ib_feature_rq_str_search">검색</string>
+    <string name="ib_feature_rq_str_votes">투표</string>
+    <string name="ib_str_beta_done">완료</string>
+    <string name="ib_str_beta_welcome_finishing_step_content">모든 수정 사항과 기능에 액세스 하려면 최신 버전을 유지하세요.</string>
+    <string name="ib_str_beta_welcome_finishing_step_title">최신 상태를 유지하세요.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_floating">떠다니는 버튼을 눌러서 문제를 신고하거나 개선 사항을 제안합니다.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_screenshot">스크린샷을 촬영해서 문제를 신고하거나 개선 사항을 제안합니다.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_shake">장치를 흔들어서 문제를 신고하거나 개선 사항을 제안합니다.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_swipe">오른쪽에서 왼쪽으로 밀어서 문제를 신고하거나 개선 사항을 제안합니다.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_title">버그 신고 방법</string>
+    <string name="ib_str_beta_welcome_step_content">저희 앱을 개선할 수 있도록 도와주셔서 감사합니다. 회원님의 피드백과 버그 신고를 기대하겠습니다.</string>
+    <string name="ib_str_beta_welcome_step_title">베타 앱에 오신 걸 환영합니다</string>
+    <string name="ib_str_live_welcome_message_title">언제나 회원님의 의견을 환영합니다.</string>
+    <string name="instabug_audio_recorder_permission_denied">오디오 녹음 권한 거부됨</string>
+    <string name="instabug_custom_survey_thanks_subtitle">귀하의 의견은 향후 업데이트를 개선하는 데 도움이 됩니다.</string>
+    <string name="instabug_custom_survey_thanks_title">감사합니다!</string>
+    <string name="instabug_err_invalid_comment">유효한 의견을 입력해주십시오</string>
+    <string name="instabug_err_invalid_email">유효한 이메일을 입력해주십시오</string>
+    <string name="instabug_err_invalid_extra_field">데이터 없음: %1$s 필요!</string>
+    <string name="instabug_external_storage_permission_denied">스토리지 권한 거부됨</string>
+    <string name="instabug_store_rating_survey_thanks_subtitle">앱을 개선하기 위해 여러분의 의견은 매우 큰 도움이 됩니다.</string>
+    <string name="instabug_store_rating_survey_thanks_title">@string/instabug_custom_survey_thanks_title</string>
+    <string name="instabug_str_action_submit">제출</string>
+    <string name="instabug_str_actual_results">실제 결과</string>
+    <string name="instabug_str_add_attachment">첨부 파일 추가</string>
+    <string name="instabug_str_add_photo">갤러리에서 사진 선택</string>
+    <string name="instabug_str_alert_message_max_attachments">기존 첨부파일을 삭제하고 새 파일을 추가하세요.</string>
+    <string name="instabug_str_alert_title_max_attachments">첨부파일 추가 실패</string>
+    <string name="instabug_str_annotate">스크린샷 위에 그리기</string>
+    <string name="instabug_str_ask_a_question">질문하기</string>
+    <string name="instabug_str_audio">오디오</string>
+    <string name="instabug_str_bug_comment_hint">무엇이 잘못됐습니까?</string>
+    <string name="instabug_str_bug_header">오류 신고</string>
+    <string name="instabug_str_bugreport_dismiss_cancel">계속 진행</string>
+    <string name="instabug_str_bugreport_dismiss_discard">취소</string>
+    <string name="instabug_str_bugreport_dismiss_warning_message">신고를 취소하시겠습니까?</string>
+    <string name="instabug_str_bugreport_dismiss_warning_title">신고를 취소합니까?</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_message">%d MB 미만의 파일을 업로드하세요.</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_title">파일 크기가 너무 큽니다</string>
+    <string name="instabug_str_cancel">취소</string>
+    <string name="instabug_str_capturing_screenshot_error">메모리가 부족하여 캡쳐 화면을 캡처 할 수 없습니다.</string>
+    <string name="instabug_str_conversations">대화</string>
+    <string name="instabug_str_dialog_message_preparing">준비 중...</string>
+    <string name="instabug_str_dismiss">닫기</string>
+    <string name="instabug_str_email_hint">이메일 주소 입력</string>
+    <string name="instabug_str_error_survey_without_answer">설문에 대한 답을 반드시 입력해야 합니다.</string>
+    <string name="instabug_str_expected_results">예상 결과</string>
+    <string name="instabug_str_features_request_header">기능 요청</string>
+    <string name="instabug_str_features_request_ptr_loading_list_text">의견을 들려주셔서 감사합니다!</string>
+    <string name="instabug_str_feedback_comment_hint">어떤 것을 향상시켜야 할까요?</string>
+    <string name="instabug_str_feedback_header">향상 제안</string>
+    <string name="instabug_str_hint_enter_your_answer">대답을 입력하세요...</string>
+    <string name="instabug_str_hold_to_record">누른 상태에서 녹음하기</string>
+    <string name="instabug_str_image">이미지</string>
+    <string name="instabug_str_image_loading_error">이미지 불러오기 실패</string>
+    <string name="instabug_str_invocation_dialog_title">도움이 필요하세요?</string>
+    <string name="instabug_str_messages">메시지</string>
+    <string name="instabug_str_notification_title">"%1$s 팀"</string>
+    <string name="instabug_str_notifications_body">%2$s님과 다른 사용자들로부터 %1$d개의 새 메시지</string>
+    <string name="instabug_str_ok">확인</string>
+    <string name="instabug_str_pick_media_chooser_title">파일 선택 </string>
+    <string name="instabug_str_pick_media_from_gallery">갤러리에서 파일 선택</string>
+    <string name="instabug_str_please_wait">잠시만 기다리세요</string>
+    <string name="instabug_str_record_video">사용 화면 녹화</string>
+    <string name="instabug_str_release_stop_record">버튼을 놓아서 첨부하기</string>
+    <string name="instabug_str_reply">회신</string>
+    <string name="instabug_str_request_feature">기능 요청</string>
+    <string name="instabug_str_sending_message_hint">메시지 내용 입력</string>
+    <string name="instabug_str_shake_hint"><![CDATA[피드백을 들려주세요.<br/>연락하려면 기기를 <b>흔들어주세요</b>.]]></string>
+    <string name="instabug_str_steps_to_reproduce">재현 절차</string>
+    <string name="instabug_str_success_note">피드백을 잘 받았습니다.\n%s 향상에 도움을 주셔서 감사합니다.</string>
+    <string name="instabug_str_survey_next">다음</string>
+    <string name="instabug_str_swipe_hint"><![CDATA[피드백을 들려주세요.<br/>연락하려면 <b>두 손가락으로 밀어주세요.</b>]]></string>
+    <string name="instabug_str_take_screenshot">스크린샷 촬영</string>
+    <string name="instabug_str_talk_to_us">개발사 문의</string>
+    <string name="instabug_str_thank_you">감사합니다</string>
+    <string name="instabug_str_video">비디오</string>
+    <string name="instabug_str_video_encoder_busy">인코더가 다른 동영상을 인코딩 중입니다</string>
+    <string name="instabug_str_video_encoding_error">메모리 부족으로 동영상 인코딩에 실패했습니다</string>
+    <string name="instabug_str_video_length_limit_warning_message">재생 시간이 1분 미만인 동영상을 업로드하세요.</string>
+    <string name="instabug_str_video_length_limit_warning_title">동영상 재생 시간이 너무 깁니다</string>
+    <string name="instabug_str_video_player">동영상 플레이어</string>
+    <string name="instabug_str_video_recording_hint">준비가 끝났으면 녹화를 누르세요</string>
+    <string name="instabug_survey_welcome_button">이동</string>
+    <string name="instabug_survey_welcome_feedback">귀하의 의견을 듣고 싶습니다</string>
+    <string name="instabug_survey_welcome_feedback_msg">간단한 설문조사를 작성하시어 저희가 더 잘 할 수 있도록 도와주시겠습니까?</string>
+    <string msgid="146198913615257606" name="search_menu_title">"검색"</string>
+    <string name="sort_by_recently_updated">최근</string>
+    <string name="sort_by_top_rated">상위</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="surveys_nps_btn_rate_us">Play 스토어에서 평가하기</string>
+    <string name="surveys_nps_less_likely">가능성 작음</string>
+    <string name="surveys_nps_rate_us_message">성원을 보내주셔셔 감사합니다!</string>
+    <string name="surveys_nps_very_likely">가능성 큼</string>
+</resources>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="instabug_feature_rq_str_days_ago">
+        <item quantity="one">%d dzień temu</item>
+        <item quantity="other">%d dni temu</item>
+        <item quantity="few">%d dni temu</item>
+        <item quantity="many">%d dni temu</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_hours_ago">
+        <item quantity="one">%d godz. temu</item>
+        <item quantity="other">%d godz. temu</item>
+        <item quantity="few">%d godz. temu</item>
+        <item quantity="many">%d godz. temu</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_minutes_ago">
+        <item quantity="one">%d minutę temu</item>
+        <item quantity="other">%d minut(-y) temu</item>
+        <item quantity="few">%d minuty temu</item>
+        <item quantity="many">%d minut temu</item>
+    </plurals>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Przejdź do strony głównej"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Przejdź wyżej"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Więcej opcji"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Gotowe"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Zobacz wszystkie"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Wybierz aplikację"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"WYŁ."</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"WŁ."</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"Alt+"</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"Ctrl+"</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"Delete"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"Enter"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"Funkcyjny+"</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"Meta+"</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"Shift+"</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"spacja"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"Sym+"</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"Menu+"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"Szukaj…"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Wyczyść zapytanie"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Wyszukiwane hasło"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Szukaj"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Wyślij zapytanie"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Wyszukiwanie głosowe"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Udostępnij dla"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"Udostępnij przez: <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Zwiń"</string>
+    <string name="add_feature">Dodaj swoje przemyślenia</string>
+    <string name="close">Zamknij</string>
+    <string name="feature_request_close_dialog_message">Na pewno chcesz anulować?</string>
+    <string name="feature_request_comments">Uwagi</string>
+    <string name="feature_request_comments_count">%d uwag(-i)</string>
+    <string name="feature_request_go_back">Wstecz</string>
+    <string name="feature_request_leave_comment">Skomentuj jako pierwszy(-a).</string>
+    <string name="feature_request_owner">%s</string>
+    <string name="feature_request_owner_anonymous">Pozostań anonimowy(-a)</string>
+    <string name="feature_request_owner_anonymous_word">Anonimowo</string>
+    <string name="feature_request_status_changed_to">Zmieniono status na</string>
+    <string name="feature_request_str_add_comment_comment_empty">Wpisz istotną uwagę.</string>
+    <string name="feature_request_str_add_comment_disclaimer">Podaj nam swój e-mail, abyśmy mogli zawiadamiać Cię na bieżąco o aktualizacjach.</string>
+    <string name="feature_request_str_add_comment_error">Coś poszło nie tak podczas próby dodania twojej uwagi.</string>
+    <string name="feature_request_str_add_comment_valid_email">Wpisz prawidłowy adres e-mail.</string>
+    <string name="feature_request_str_add_feature_error">Coś poszło nie tak podczas próby dodania twojej funkcji.</string>
+    <string name="feature_request_str_adding_your_comment">Dodaję twoją uwagę</string>
+    <string name="feature_request_str_just_now">Teraz</string>
+    <string name="feature_request_str_less">Mniej</string>
+    <string name="feature_request_str_more">Więcej</string>
+    <string name="feature_request_str_post_comment">Post</string>
+    <string name="feature_request_str_thanks">Dziękujemy za opinię!</string>
+    <string name="feature_request_str_thanks_msg">Będziemy Cię zawiadamiać o aktualizacjach.</string>
+    <string name="feature_request_votes_count">%d głosy(-ów)</string>
+    <string name="feature_requests_details">Szczegóły funkcji</string>
+    <string name="feature_requests_error_state_sub_title">Sprawdź stan połączenia i spróbuj ponownie.</string>
+    <string name="feature_requests_error_state_title">Coś poszło nie tak.</string>
+    <string name="feature_requests_new_adding_your_suggestion">Dodaję twoją sugestię.</string>
+    <string name="feature_requests_new_appbar_title">Dodaj funkcję</string>
+    <string name="feature_requests_new_bottom_hint">Podaj nam swój adres e-mail, abyśmy mogli zawiadamiać Cię na bieżąco o aktualizacjach.</string>
+    <string name="feature_requests_new_description">Opis</string>
+    <string name="feature_requests_new_email">E-mail</string>
+    <string name="feature_requests_new_err_msg_email">Wpisz prawidłowy e-mail</string>
+    <string name="feature_requests_new_err_msg_required">To pole jest wymagane</string>
+    <string name="feature_requests_new_name">Nazwisko</string>
+    <string name="feature_requests_new_positive_button">Dodaj</string>
+    <string name="feature_requests_new_title">Tytuł</string>
+    <string name="feature_requests_new_toast_message">Prosimy w podanie tytułu i opisu</string>
+    <string name="features_rq_main_fragment_tab1">Wszystkie</string>
+    <string name="features_rq_main_fragment_tab2">Moje</string>
+    <string name="ib_feature_rq_status_completed">Ukończone</string>
+    <string name="ib_feature_rq_status_inprogress">W toku</string>
+    <string name="ib_feature_rq_status_maybe_later">Może później</string>
+    <string name="ib_feature_rq_status_open">Otwórz</string>
+    <string name="ib_feature_rq_status_planned">Zaplanowane</string>
+    <string name="ib_feature_rq_str_add_your_idea">Dodaj swój pomysł</string>
+    <string name="ib_feature_rq_str_completed_features">%d gotowe(-ych) funkcji</string>
+    <string name="ib_feature_rq_str_load_more_fail_txt">Nie udało się się wczytać danych</string>
+    <string name="ib_feature_rq_str_load_more_loading_txt">Odświeżam</string>
+    <string name="ib_feature_rq_str_no_ideas_are_added_yet">Nie masz jeszcze pomysłów.</string>
+    <string name="ib_feature_rq_str_no_results">Brak wyników</string>
+    <string name="ib_feature_rq_str_pull_to_refresh">Pociągnij, aby odświeżyć</string>
+    <string name="ib_feature_rq_str_release_to_refresh">Zwolnij, aby odświeżyć</string>
+    <string name="ib_feature_rq_str_search">Szukaj</string>
+    <string name="ib_feature_rq_str_votes">Głosy</string>
+    <string name="ib_str_beta_done">Gotowe</string>
+    <string name="ib_str_beta_welcome_finishing_step_content">Korzystaj z najnowszej wersji, aby mieć dostęp do wszystkich poprawek i funkcji.</string>
+    <string name="ib_str_beta_welcome_finishing_step_title">Bądź na bieżąco.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_floating">Dotknij pływającego przycisku, aby zgłosić problem lub zaproponować zmianę na lepsze.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_screenshot">Zrób zrzut z ekranu, aby zgłosić problem lub zaproponować zmianę na lepsze.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_shake">Potrząśnij swoim urządzeniem, aby zgłosić problem lub zaproponować zmianę na lepsze.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_swipe">Przesuń palcem od prawej do lewej, aby zgłosić problem lub zaproponować zmianę na lepsze.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_title">Jak zgłosić błąd?</string>
+    <string name="ib_str_beta_welcome_step_content">Dziękujemy za pomoc w doskonaleniu naszej aplikacji. Czekamy na Wasze opinie i raporty o błędach.</string>
+    <string name="ib_str_beta_welcome_step_title">Witamy w wersji beta naszej aplikacji</string>
+    <string name="ib_str_live_welcome_message_title">Zawsze nas cieszy, kiedy dzielicie się z nami swoimi myślami.</string>
+    <string name="instabug_audio_recorder_permission_denied">Brak zgody na nagrywanie dźwięku</string>
+    <string name="instabug_custom_survey_thanks_subtitle">Twoje przemyślenia sprawią, że w aktualizacje będą coraz lepsze.</string>
+    <string name="instabug_custom_survey_thanks_title">Dziękujemy!</string>
+    <string name="instabug_err_invalid_comment">Proszę wprowadzić poprawny komentarz</string>
+    <string name="instabug_err_invalid_email">Proszę podać prawidłowy adres e-mail</string>
+    <string name="instabug_err_invalid_extra_field">Brakujące dane: pole %1$s jest wymagane!</string>
+    <string name="instabug_external_storage_permission_denied">Brak dostępu do pamięci</string>
+    <string name="instabug_store_rating_survey_thanks_subtitle">Dzięki Waszym opiniom, nasza aplikacja staje się lepsza.</string>
+    <string name="instabug_store_rating_survey_thanks_title">@string/instabug_custom_survey_thanks_title</string>
+    <string name="instabug_str_action_submit">Wyślij</string>
+    <string name="instabug_str_actual_results">Rzeczywiste wyniki</string>
+    <string name="instabug_str_add_attachment">Dodaj załączniki</string>
+    <string name="instabug_str_add_photo">Wybierz obraz z Galerii</string>
+    <string name="instabug_str_alert_message_max_attachments">Usuń istniejący załącznik, aby dodać nowy.</string>
+    <string name="instabug_str_alert_title_max_attachments">Nie udało się dodać załącznika</string>
+    <string name="instabug_str_annotate">Rysuj na zrzucie ekranu</string>
+    <string name="instabug_str_ask_a_question">Zadaj pytanie</string>
+    <string name="instabug_str_audio">Dźwięk</string>
+    <string name="instabug_str_bug_comment_hint">Co poszło nie tak?</string>
+    <string name="instabug_str_bug_header">Zgłoś problem</string>
+    <string name="instabug_str_bugreport_dismiss_cancel">Zostaw</string>
+    <string name="instabug_str_bugreport_dismiss_discard">Odrzuć</string>
+    <string name="instabug_str_bugreport_dismiss_warning_message">Na pewno chcesz odrzucić raport?</string>
+    <string name="instabug_str_bugreport_dismiss_warning_title">Odrzucić raport?</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_message">Prześlij plik, który ma mniej niż %d MB</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_title">Za duży plik</string>
+    <string name="instabug_str_cancel">Anuluj</string>
+    <string name="instabug_str_capturing_screenshot_error">Nie można przechwycić zrzutu ekranu z powodu niskiej ilości pamięci</string>
+    <string name="instabug_str_conversations">Rozmowy</string>
+    <string name="instabug_str_dialog_message_preparing">Przygotowywanie…</string>
+    <string name="instabug_str_dismiss">Odrzuć</string>
+    <string name="instabug_str_email_hint">Wprowadź adres e-mail</string>
+    <string name="instabug_str_error_survey_without_answer">Nie można przesłać ankiety bez odpowiedzi.</string>
+    <string name="instabug_str_expected_results">Oczekiwane wyniki</string>
+    <string name="instabug_str_features_request_header">Funkcja Zgłoszenia</string>
+    <string name="instabug_str_features_request_ptr_loading_list_text">Jesteśmy zachwyceni, dowiadując się, co myślisz!</string>
+    <string name="instabug_str_feedback_comment_hint">Co możemy ulepszyć?</string>
+    <string name="instabug_str_feedback_header">Zasugeruj ulepszenie</string>
+    <string name="instabug_str_hint_enter_your_answer">Wpisz odpowiedź...</string>
+    <string name="instabug_str_hold_to_record">Naciśnij i przytrzymaj, aby nagrać</string>
+    <string name="instabug_str_image">Obraz</string>
+    <string name="instabug_str_image_loading_error">Nie udało się załadować obrazu</string>
+    <string name="instabug_str_invocation_dialog_title">Potrzebujesz pomocy?</string>
+    <string name="instabug_str_messages">Wiadomości</string>
+    <string name="instabug_str_notification_title">"Zespół %1$s"</string>
+    <string name="instabug_str_notifications_body">Nowe wiadomości: %1$d od użytkownika %2$s i innych</string>
+    <string name="instabug_str_ok">OK</string>
+    <string name="instabug_str_pick_media_chooser_title">Wybierz plik </string>
+    <string name="instabug_str_pick_media_from_gallery">Wybierz a galerii</string>
+    <string name="instabug_str_please_wait">Proszę chwilę zaczekać</string>
+    <string name="instabug_str_record_video">Nagraj zawartość ekranu</string>
+    <string name="instabug_str_release_stop_record">Zwolnij, aby załączyć</string>
+    <string name="instabug_str_reply">Odpowiedz</string>
+    <string name="instabug_str_request_feature">Zapytaj a funkcję</string>
+    <string name="instabug_str_sending_message_hint">Wpisz wiadomość</string>
+    <string name="instabug_str_shake_hint"><![CDATA[Chcielibyśmy poznać Twoją opinię<br/><b>Potrząśnij</b> urządzeniem, aby z nami porozmawiać.]]></string>
+    <string name="instabug_str_steps_to_reproduce">Kroki do odtworzenia</string>
+    <string name="instabug_str_success_note">Otrzymaliśmy Twoją opinię.\nDziękujemy, że pomagasz nam wprowadzać %s ulepszenia.</string>
+    <string name="instabug_str_survey_next">Dalej</string>
+    <string name="instabug_str_swipe_hint"><![CDATA[Chcielibyśmy poznać Twoją opinię<br /><b>Przeciągnij 2 palcami</b>, aby z nami porozmawiać.]]></string>
+    <string name="instabug_str_take_screenshot">Zrób zrzut ekranu</string>
+    <string name="instabug_str_talk_to_us">Porozmawiaj z nami</string>
+    <string name="instabug_str_thank_you">Dziękujemy</string>
+    <string name="instabug_str_video">Wideo</string>
+    <string name="instabug_str_video_encoder_busy">Koder wideo jest zajęty – trwa kodowanie innego nagrania</string>
+    <string name="instabug_str_video_encoding_error">Kodowanie wideo nie powiodło się z powodu małej ilości pamięci</string>
+    <string name="instabug_str_video_length_limit_warning_message">Prześlij film trwający najwyżej 1 minutę.</string>
+    <string name="instabug_str_video_length_limit_warning_title">Film jest za długi</string>
+    <string name="instabug_str_video_player">Odtwarzacz wideo</string>
+    <string name="instabug_str_video_recording_hint">Naciśnij przycisk nagrywania, aby rozpocząć</string>
+    <string name="instabug_survey_welcome_button">Zaczynamy</string>
+    <string name="instabug_survey_welcome_feedback">Cieszymy się, gdy dzielicie się z nami swoimi opiniami.</string>
+    <string name="instabug_survey_welcome_feedback_msg">Pomóż doskonalić nasz serwis, wypełniając tę krótką ankietę. Dziękujemy.</string>
+    <string msgid="146198913615257606" name="search_menu_title">"Szukaj"</string>
+    <string name="sort_by_recently_updated">Ostatnie</string>
+    <string name="sort_by_top_rated">Najwyżej ocenione</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="surveys_nps_btn_rate_us">Oceń nas w Play Store</string>
+    <string name="surveys_nps_less_likely">Raczej nie</string>
+    <string name="surveys_nps_rate_us_message">Dziękujemy za okazaną sympatię!</string>
+    <string name="surveys_nps_very_likely">Raczej tak</string>
+</resources>

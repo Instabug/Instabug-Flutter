@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="instabug_feature_rq_str_days_ago">
+        <item quantity="other">%d 天前</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_hours_ago">
+        <item quantity="other">%d 小时前</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_minutes_ago">
+        <item quantity="other">%d 分钟前</item>
+    </plurals>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"转到主屏幕"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"转到上一层级"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"更多选项"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"完成"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"查看全部"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"选择应用"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"关闭"</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"开启"</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"Alt+"</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"Ctrl+"</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"Delete 键"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"Enter 键"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"Fn+"</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"Meta+"</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"Shift+"</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"空格键"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"Sym+"</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"Menu+"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"搜索…"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"清除查询"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"搜索查询"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"搜索"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"提交查询"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"语音搜索"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"分享方式"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"使用<ns1:g id="APPLICATION_NAME">%s</ns1:g>分享"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"收起"</string>
+    <string name="add_feature">添加您的想法</string>
+    <string name="close">关闭</string>
+    <string name="feature_request_close_dialog_message">您确定要取消吗？</string>
+    <string name="feature_request_comments">留言</string>
+    <string name="feature_request_comments_count">%d 个留言</string>
+    <string name="feature_request_go_back">返回</string>
+    <string name="feature_request_leave_comment">成为第一个留言的人。</string>
+    <string name="feature_request_owner">来自 %s</string>
+    <string name="feature_request_owner_anonymous">来自匿名</string>
+    <string name="feature_request_owner_anonymous_word">匿名</string>
+    <string name="feature_request_status_changed_to">状态变更为</string>
+    <string name="feature_request_str_add_comment_comment_empty">请输入格式正确的留言。</string>
+    <string name="feature_request_str_add_comment_disclaimer">请提供您的电子邮箱，帮助我们随时提供您每次更新的最新消息。</string>
+    <string name="feature_request_str_add_comment_error">添加留言时发生错误。</string>
+    <string name="feature_request_str_add_comment_valid_email">请输入真实存在的电子邮箱。</string>
+    <string name="feature_request_str_add_feature_error">添加功能时发生错误。</string>
+    <string name="feature_request_str_adding_your_comment">正在添加留言</string>
+    <string name="feature_request_str_just_now">刚刚</string>
+    <string name="feature_request_str_less">较少</string>
+    <string name="feature_request_str_more">较多</string>
+    <string name="feature_request_str_post_comment">发布</string>
+    <string name="feature_request_str_thanks">感谢您的反馈！</string>
+    <string name="feature_request_str_thanks_msg">有更新时我们会立即通知您</string>
+    <string name="feature_request_votes_count">%d 票</string>
+    <string name="feature_requests_details">功能描述</string>
+    <string name="feature_requests_error_state_sub_title">请检查网络连线，再试一次。</string>
+    <string name="feature_requests_error_state_title">发生错误。</string>
+    <string name="feature_requests_new_adding_your_suggestion">正在添加您的建议。</string>
+    <string name="feature_requests_new_appbar_title">添加功能</string>
+    <string name="feature_requests_new_bottom_hint">请提供您的电子邮箱，帮助我们随时提供您每次更新的最新消息。</string>
+    <string name="feature_requests_new_description">描述</string>
+    <string name="feature_requests_new_email">电子邮件</string>
+    <string name="feature_requests_new_err_msg_email">请输入真实存在的电子邮箱</string>
+    <string name="feature_requests_new_err_msg_required">此栏为必填</string>
+    <string name="feature_requests_new_name">名字</string>
+    <string name="feature_requests_new_positive_button">添加</string>
+    <string name="feature_requests_new_title">标题</string>
+    <string name="feature_requests_new_toast_message">标题与描述请尽量写清楚。</string>
+    <string name="features_rq_main_fragment_tab1">全部</string>
+    <string name="features_rq_main_fragment_tab2">我的</string>
+    <string name="ib_feature_rq_status_completed">完成</string>
+    <string name="ib_feature_rq_status_inprogress">进行中</string>
+    <string name="ib_feature_rq_status_maybe_later">以后再说</string>
+    <string name="ib_feature_rq_status_open">开启</string>
+    <string name="ib_feature_rq_status_planned">已计划</string>
+    <string name="ib_feature_rq_str_add_your_idea">添加点子</string>
+    <string name="ib_feature_rq_str_completed_features">%d 个已完成功能</string>
+    <string name="ib_feature_rq_str_load_more_fail_txt">无法加载数据</string>
+    <string name="ib_feature_rq_str_load_more_loading_txt">刷新中……</string>
+    <string name="ib_feature_rq_str_no_ideas_are_added_yet">尚无点子。</string>
+    <string name="ib_feature_rq_str_no_results">没有找到结果</string>
+    <string name="ib_feature_rq_str_pull_to_refresh">拉动以刷新</string>
+    <string name="ib_feature_rq_str_release_to_refresh">放开以刷新</string>
+    <string name="ib_feature_rq_str_search">搜寻</string>
+    <string name="ib_feature_rq_str_votes">票数</string>
+    <string name="ib_str_beta_done">完成</string>
+    <string name="ib_str_beta_welcome_finishing_step_content">及时更新版本，获得所有修复和新功能。</string>
+    <string name="ib_str_beta_welcome_finishing_step_title">获得最新消息。</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_floating">点击浮动按钮，即可回报问题或建议改进方式。</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_screenshot">撷取屏幕，即可回报问题或建议改进方式。</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_shake">摇动您的装置，即可回报问题或建议改进方式。</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_swipe">从右滑动到左，即可回报问题或建议改进方式。</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_title">如何回报错误？</string>
+    <string name="ib_str_beta_welcome_step_content">感谢您帮助我们改进我们的程序，我们非常期待您的反馈及任何错误报告。</string>
+    <string name="ib_str_beta_welcome_step_title">欢迎使用我们的测试版应用程序</string>
+    <string name="ib_str_live_welcome_message_title">我们非常乐意听听您的想法。</string>
+    <string name="instabug_audio_recorder_permission_denied">录音权限被拒绝</string>
+    <string name="instabug_custom_survey_thanks_subtitle">您的意见能帮助我们提供更优质的产品更新。</string>
+    <string name="instabug_custom_survey_thanks_title">謝謝！</string>
+    <string name="instabug_err_invalid_comment">请输入有效的评论</string>
+    <string name="instabug_err_invalid_email">请输入有效的电子邮件地址</string>
+    <string name="instabug_err_invalid_extra_field">缺少数据：需要 %1$s！</string>
+    <string name="instabug_external_storage_permission_denied">无存储权限</string>
+    <string name="instabug_store_rating_survey_thanks_subtitle">您的反馈让我们做的更好。</string>
+    <string name="instabug_store_rating_survey_thanks_title">@string/instabug_custom_survey_thanks_title</string>
+    <string name="instabug_str_action_submit">提交</string>
+    <string name="instabug_str_actual_results">实际结果</string>
+    <string name="instabug_str_add_attachment">附加檔案</string>
+    <string name="instabug_str_add_photo">从图库中选择图像</string>
+    <string name="instabug_str_alert_message_max_attachments">移除现有附件，以添加新附件。</string>
+    <string name="instabug_str_alert_title_max_attachments">无法添加附件</string>
+    <string name="instabug_str_annotate">在截屏上画画</string>
+    <string name="instabug_str_ask_a_question">我有疑问</string>
+    <string name="instabug_str_audio">音频</string>
+    <string name="instabug_str_bug_comment_hint">出了什么错？</string>
+    <string name="instabug_str_bug_header">报告问题</string>
+    <string name="instabug_str_bugreport_dismiss_cancel">繼續編輯</string>
+    <string name="instabug_str_bugreport_dismiss_discard">放棄</string>
+    <string name="instabug_str_bugreport_dismiss_warning_message">您確定要放棄此報告嗎？</string>
+    <string name="instabug_str_bugreport_dismiss_warning_title">要放棄此報告嗎？</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_message">请上传小于 %d MB 的文件。</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_title">文件过大</string>
+    <string name="instabug_str_cancel">取消</string>
+    <string name="instabug_str_capturing_screenshot_error">由于内存不足，无法捕获屏幕截图</string>
+    <string name="instabug_str_conversations">对话</string>
+    <string name="instabug_str_dialog_message_preparing">正在准备...</string>
+    <string name="instabug_str_dismiss">关闭</string>
+    <string name="instabug_str_email_hint">输入电子邮件地址</string>
+    <string name="instabug_str_error_survey_without_answer">没有回答，调查无法提交</string>
+    <string name="instabug_str_expected_results">预期结果</string>
+    <string name="instabug_str_features_request_header">新功能建议</string>
+    <string name="instabug_str_features_request_ptr_loading_list_text">我们非常欢迎您的建议！</string>
+    <string name="instabug_str_feedback_comment_hint">我们如何改进？</string>
+    <string name="instabug_str_feedback_header">改进建议</string>
+    <string name="instabug_str_hint_enter_your_answer">输入您的答案...</string>
+    <string name="instabug_str_hold_to_record">按住即可录音</string>
+    <string name="instabug_str_image">图像</string>
+    <string name="instabug_str_image_loading_error">无法加载图像</string>
+    <string name="instabug_str_invocation_dialog_title">需要帮助吗？</string>
+    <string name="instabug_str_messages">消息</string>
+    <string name="instabug_str_notification_title">"%1$s 团队"</string>
+    <string name="instabug_str_notifications_body">%1$d 条新消息，来自 %2$s 和其他人</string>
+    <string name="instabug_str_ok">确定</string>
+    <string name="instabug_str_pick_media_chooser_title">选取文件 </string>
+    <string name="instabug_str_pick_media_from_gallery">从相片集选取文件</string>
+    <string name="instabug_str_please_wait">请稍候</string>
+    <string name="instabug_str_record_video">录制屏幕</string>
+    <string name="instabug_str_release_stop_record">松开即可添加附件</string>
+    <string name="instabug_str_reply">回复</string>
+    <string name="instabug_str_request_feature">建议增加功能</string>
+    <string name="instabug_str_sending_message_hint">输入您的消息</string>
+    <string name="instabug_str_shake_hint"><![CDATA[我们希望得到您的反馈意见<br/><b>摇晃</b>您的设备，与我们沟通。]]></string>
+    <string name="instabug_str_steps_to_reproduce">复制步骤</string>
+    <string name="instabug_str_success_note">我们收到了您的反馈意见。\n感谢您帮助我们把 %s 做得更好！</string>
+    <string name="instabug_str_survey_next">下一步</string>
+    <string name="instabug_str_swipe_hint"><![CDATA[我们希望得到您的反馈意见<br /><b>用 2 个手指滑动</b>，与我们沟通。]]></string>
+    <string name="instabug_str_take_screenshot">截屏</string>
+    <string name="instabug_str_talk_to_us">与我们沟通</string>
+    <string name="instabug_str_thank_you">谢谢</string>
+    <string name="instabug_str_video">视频</string>
+    <string name="instabug_str_video_encoder_busy">视频解码器正在解码其他视频</string>
+    <string name="instabug_str_video_encoding_error">内存太少，无法对视频进行编码</string>
+    <string name="instabug_str_video_length_limit_warning_message">请上载短于 1 分钟的视频。</string>
+    <string name="instabug_str_video_length_limit_warning_title">视频过长</string>
+    <string name="instabug_str_video_player">视频播放器</string>
+    <string name="instabug_str_video_recording_hint">准备好后，点按“录制”</string>
+    <string name="instabug_survey_welcome_button">現在就去</string>
+    <string name="instabug_survey_welcome_feedback">我们很想听听您的意见！</string>
+    <string name="instabug_survey_welcome_feedback_msg">可以请您填写这份简短的问卷，帮助我们做得更好吗？</string>
+    <string msgid="146198913615257606" name="search_menu_title">"搜索"</string>
+    <string name="sort_by_recently_updated">更新日期最新</string>
+    <string name="sort_by_top_rated">评分最高</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="surveys_nps_btn_rate_us">在 Play 商店為我們評分</string>
+    <string name="surveys_nps_less_likely">不太可能</string>
+    <string name="surveys_nps_rate_us_message">感謝您的支持！</string>
+    <string name="surveys_nps_very_likely">非常可能</string>
+</resources>

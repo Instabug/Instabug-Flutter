@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="instabug_feature_rq_str_days_ago">
+        <item quantity="one">%d روز قبل</item>
+        <item quantity="other">%d روز قبل</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_hours_ago">
+        <item quantity="one">%d ساعت قبل</item>
+        <item quantity="other">%d ساعت قبل</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_minutes_ago">
+        <item quantity="one">%d دقیقه قبل</item>
+        <item quantity="other">%d دقیقه قبل</item>
+    </plurals>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"پیمایش به صفحه اصلی"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"پیمایش به بالا"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"گزینه‌های بیشتر"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"تمام"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"مشاهده همه"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"انتخاب برنامه"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"خاموش"</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"روشن"</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"‎Alt+‎"</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"‎Ctrl+‎"</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"delete"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"enter"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"‎Function+‎"</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"‎Meta+‎"</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"‎Shift+‎"</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"کلید فاصله"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"‎Sym+‎"</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"منو+"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"جستجو…"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"پاک کردن عبارت جستجو"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"عبارت جستجو"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"جستجو"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"ارسال عبارت جستجو"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"جستجوی گفتاری"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"اشتراک‌گذاری با"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"اشتراک‌گذاری با <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"کوچک کردن"</string>
+    <string name="add_feature">افزودن نظراتتان</string>
+    <string name="close">بستن</string>
+    <string name="feature_request_close_dialog_message">مطمئنید که می‌خواید لغو کنید؟</string>
+    <string name="feature_request_comments">نظرات</string>
+    <string name="feature_request_comments_count">%d نظر</string>
+    <string name="feature_request_go_back">برگشت</string>
+    <string name="feature_request_leave_comment">اولین کسی باشید که نظر می‌دهد.</string>
+    <string name="feature_request_owner">با حساب %s</string>
+    <string name="feature_request_owner_anonymous">به‌صورت ناشناس</string>
+    <string name="feature_request_owner_anonymous_word">ناشناس</string>
+    <string name="feature_request_status_changed_to">وضعیت تغییر داده شد به</string>
+    <string name="feature_request_str_add_comment_comment_empty">لطفاً نظر معتبری وارد کنید.</string>
+    <string name="feature_request_str_add_comment_disclaimer">رایانامه‌تان را برای ارسال به‌روز‌رسانی‌ها به شما به نیاز داریم.</string>
+    <string name="feature_request_str_add_comment_error">هنگام افزودن نظرتان مشکلی پیش آمد.</string>
+    <string name="feature_request_str_add_comment_valid_email">لطفاً رایانامه معتبری وارد کنید.</string>
+    <string name="feature_request_str_add_feature_error">هنگام افزودن ویژگی‌تان مشکلی پیش آمد.</string>
+    <string name="feature_request_str_adding_your_comment">در حال افزودن نظرتان</string>
+    <string name="feature_request_str_just_now">اکنون</string>
+    <string name="feature_request_str_less">کمتر</string>
+    <string name="feature_request_str_more">بیشتر</string>
+    <string name="feature_request_str_post_comment">پست کردن</string>
+    <string name="feature_request_str_thanks">از بازخوردتان متشکریم!</string>
+    <string name="feature_request_str_thanks_msg">به‌روزرسانی‌ها را برایتان ارسال می‌کنیم</string>
+    <string name="feature_request_votes_count">%d رأی</string>
+    <string name="feature_requests_details">جزئیات ویژگی</string>
+    <string name="feature_requests_error_state_sub_title">اتصال اینترنتتان را بررسی و دوباره امتحان کنید.</string>
+    <string name="feature_requests_error_state_title">مشکلی پیش آمد.</string>
+    <string name="feature_requests_new_adding_your_suggestion">در حال افزودن پیشنهادتان.</string>
+    <string name="feature_requests_new_appbar_title">افزودن ویژگی</string>
+    <string name="feature_requests_new_bottom_hint">رایانامه‌تان را برای ارسال به‌روز‌رسانی‌ها به شما به نیاز داریم.</string>
+    <string name="feature_requests_new_description">شرح</string>
+    <string name="feature_requests_new_email">رایانامه</string>
+    <string name="feature_requests_new_err_msg_email">لطفاً رایانامه معتبری وارد کنید</string>
+    <string name="feature_requests_new_err_msg_required">این فیلد الزامی است</string>
+    <string name="feature_requests_new_name">نام</string>
+    <string name="feature_requests_new_positive_button">افزودن</string>
+    <string name="feature_requests_new_title">عنوان</string>
+    <string name="feature_requests_new_toast_message">مطمئن شوید که عنوان و شرح واضحی بنویسید.</string>
+    <string name="features_rq_main_fragment_tab1">همه</string>
+    <string name="features_rq_main_fragment_tab2">متعلق به من</string>
+    <string name="ib_feature_rq_status_completed">تکمیل‌شده</string>
+    <string name="ib_feature_rq_status_inprogress">در حال انجام</string>
+    <string name="ib_feature_rq_status_maybe_later">شاید بعداً</string>
+    <string name="ib_feature_rq_status_open">باز کردن</string>
+    <string name="ib_feature_rq_status_planned">برنامه‌ریزی‌شده</string>
+    <string name="ib_feature_rq_str_add_your_idea">افزودن نظر</string>
+    <string name="ib_feature_rq_str_completed_features">%d ویژگی‌های تکمیل‌شده</string>
+    <string name="ib_feature_rq_str_load_more_fail_txt">انجام نشد، داده بازگذاری نمی‌شود</string>
+    <string name="ib_feature_rq_str_load_more_loading_txt">در حال بازخوانی…</string>
+    <string name="ib_feature_rq_str_no_ideas_are_added_yet">هنوز هیچ نظری اضافه نشده است.</string>
+    <string name="ib_feature_rq_str_no_results">نتیجه‌ای پیدا نشد</string>
+    <string name="ib_feature_rq_str_pull_to_refresh">برای بازخوانی بکشید</string>
+    <string name="ib_feature_rq_str_release_to_refresh">برای بازخوانی رها کنید</string>
+    <string name="ib_feature_rq_str_search">جستجو</string>
+    <string name="ib_feature_rq_str_votes">آرا</string>
+    <string name="ib_str_beta_done">انجام شد</string>
+    <string name="ib_str_beta_welcome_finishing_step_content">برای دسترسی به همه بهبودها و ویژگیهای جدید، آخرین نسخه را دریافت کنید.</string>
+    <string name="ib_str_beta_welcome_finishing_step_title">به روز بمانید.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_floating">برای گزارش کردن یک مشکل یا پیشنهادی برای بهبودی، روی دکمه شناور ضربه بزنید.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_screenshot">برای گزارش کردن یک مشکل یا پیشنهادی برای بهبودی، اسکرین شات بگیرید.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_shake">برای گزارش کردن یک مشکل یا پیشنهادی برای بهبودی، دستگاه خود را تکان دهید.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_swipe">برای گزارش کردن یک مشکل یا پیشنهادی برای بهبودی، از راست به چپ ورق بزنید.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_title">نحوه گزارش خرابی</string>
+    <string name="ib_str_beta_welcome_step_content">از این که به ما در بهبود برنامه کمک میکنید متشکریم. مشتاقانه منتظر بازخورد و گزارشهای خرابی از سوی شما هستیم.</string>
+    <string name="ib_str_beta_welcome_step_title">به برنامه بتا خوش آمدید</string>
+    <string name="ib_str_live_welcome_message_title">از شنیدن نظرات شما همواره خشنود میشویم.</string>
+    <string name="instabug_audio_recorder_permission_denied">مجوز ضبط صدا رد شد</string>
+    <string name="instabug_custom_survey_thanks_subtitle">نظرهایتان باعث می‌شود به‌روزرسانی‌های آینده بهتر شود.</string>
+    <string name="instabug_custom_survey_thanks_title">متشکریم!</string>
+    <string name="instabug_err_invalid_comment">لطفاً نظر معتبری وارد کنید</string>
+    <string name="instabug_err_invalid_email">لطفاً آدرس ایمیل معتبری وارد کنید</string>
+    <string name="instabug_err_invalid_extra_field">داده ناموجود: %1$s ضروری است!</string>
+    <string name="instabug_external_storage_permission_denied">مجوز ذخیره‌سازی رد شد</string>
+    <string name="instabug_store_rating_survey_thanks_subtitle">بازخوردتان کمک می‌کند برنامه بهتری بسازیم.</string>
+    <string name="instabug_store_rating_survey_thanks_title">@string/instabug_custom_survey_thanks_title</string>
+    <string name="instabug_str_action_submit">ارسال</string>
+    <string name="instabug_str_actual_results">نتایج واقعی</string>
+    <string name="instabug_str_add_attachment">افزودن پیوست</string>
+    <string name="instabug_str_add_photo">انتخاب تصویر از داخل گالری</string>
+    <string name="instabug_str_alert_message_max_attachments">برای افزودن پیوست جدید، یکی از پیوست‌های موجود را حذف کنید.</string>
+    <string name="instabug_str_alert_title_max_attachments">افزودن پیوست مقدور نیست</string>
+    <string name="instabug_str_annotate">ترسیم روی عکس صفحه</string>
+    <string name="instabug_str_ask_a_question">سؤالی دارید؟</string>
+    <string name="instabug_str_audio">صدا</string>
+    <string name="instabug_str_bug_comment_hint">چه مشکلی پیش آمد؟</string>
+    <string name="instabug_str_bug_header">گزارش مشکل</string>
+    <string name="instabug_str_bugreport_dismiss_cancel">ماندن</string>
+    <string name="instabug_str_bugreport_dismiss_discard">صرف‌نظر کردن</string>
+    <string name="instabug_str_bugreport_dismiss_warning_message">مطمئنید که می‌خواهید از گزارش صرف‌نظر کنید؟</string>
+    <string name="instabug_str_bugreport_dismiss_warning_title">صرف‌نظر کردن از گزارش؟</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_message">لطفاً فایلی کمتر از %d مگابایت را آپلود کنید</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_title">سایز فایل بسیار بزرگ است</string>
+    <string name="instabug_str_cancel">لغو</string>
+    <string name="instabug_str_capturing_screenshot_error">با توجه به حافظه کم، نمیتوان تصویر را ضبط کرد</string>
+    <string name="instabug_str_conversations">گفتگوها</string>
+    <string name="instabug_str_dialog_message_preparing">در حال آماده‌سازی...</string>
+    <string name="instabug_str_dismiss">رد کردن</string>
+    <string name="instabug_str_email_hint">نشانی ایمیل خود را وارد کنید</string>
+    <string name="instabug_str_error_survey_without_answer">ارسال نظرسنجی بدون پاسخ امکان‌پذیر نیست.</string>
+    <string name="instabug_str_expected_results">نتایج مورد انتظار</string>
+    <string name="instabug_str_features_request_header">درخواست ویژگی</string>
+    <string name="instabug_str_features_request_ptr_loading_list_text">خوشحال می‌شویم نظراتتان را بشنویم!</string>
+    <string name="instabug_str_feedback_comment_hint">چطور می‌توانیم سیستم را بهبود دهیم؟</string>
+    <string name="instabug_str_feedback_header">پیشنهاد بهبود</string>
+    <string name="instabug_str_hint_enter_your_answer">پاسختان را بنویسید…</string>
+    <string name="instabug_str_hold_to_record">برای ضبط کردن، فشار دهید و نگه دارید</string>
+    <string name="instabug_str_image">تصویر</string>
+    <string name="instabug_str_image_loading_error">تصویر بارگذاری نشد</string>
+    <string name="instabug_str_invocation_dialog_title">به راهنمایی نیاز دارید؟</string>
+    <string name="instabug_str_messages">پیام‌ها</string>
+    <string name="instabug_str_notification_title">"تیم %1$s"</string>
+    <string name="instabug_str_notifications_body">%1$d پیام جدید از %2$s و دیگران</string>
+    <string name="instabug_str_ok">تأیید</string>
+    <string name="instabug_str_pick_media_chooser_title">انتخاب یک فایل </string>
+    <string name="instabug_str_pick_media_from_gallery">انتخاب از گالری</string>
+    <string name="instabug_str_please_wait">لطفاً چند لحظه صبر کنید</string>
+    <string name="instabug_str_record_video">صفحه نمایش را ضبط کنید</string>
+    <string name="instabug_str_release_stop_record">برای پیوست کردن، رها کنید</string>
+    <string name="instabug_str_reply">پاسخ</string>
+    <string name="instabug_str_request_feature">درخواست یک ویژگی</string>
+    <string name="instabug_str_sending_message_hint">پیام خود را تایپ کنید</string>
+    <string name="instabug_str_shake_hint"><![CDATA[خیلی دوست داریم نظر شما را بدانیم<br/>برای حرف زدن با ما، دستگاهتان را <b>تکان دهید</b>.]]></string>
+    <string name="instabug_str_steps_to_reproduce">مراحل تولید مجدد</string>
+    <string name="instabug_str_success_note">نظر شما دریافت شده است.\nاز اینکه در بهبود %s به ما کمک نمودید سپاسگزاریم.</string>
+    <string name="instabug_str_survey_next">بعدی</string>
+    <string name="instabug_str_swipe_hint"><![CDATA[خیلی دوست داریم نظر شما را بدانیم<br/>برای حرف زدن با ما، <b>2 انگشت خود را روی صفحه بکشید</b>.]]></string>
+    <string name="instabug_str_take_screenshot">یک عکس از صفحه بگیرید</string>
+    <string name="instabug_str_talk_to_us">با ما حرف بزنید</string>
+    <string name="instabug_str_thank_you">سپاسگزاریم</string>
+    <string name="instabug_str_video">فیلم</string>
+    <string name="instabug_str_video_encoder_busy">«کدگذار فیلم» مشغول کدگذاری فیلم دیگری است</string>
+    <string name="instabug_str_video_encoding_error">به علت کم بودن حافظه، کدگذاری فیلم مقدور نیست</string>
+    <string name="instabug_str_video_length_limit_warning_message">لطفاً ویدئویی را بازگذاری کنید که مدت آن کمتر از ۱ دقیقه باشد.</string>
+    <string name="instabug_str_video_length_limit_warning_title">مدت زمان ویدئو خیلی طولانی است</string>
+    <string name="instabug_str_video_player">پخش‌کننده فیلم</string>
+    <string name="instabug_str_video_recording_hint">وقتی آماده شدید، «ضبط» را فشار دهید</string>
+    <string name="instabug_survey_welcome_button">بزن بریم</string>
+    <string name="instabug_survey_welcome_feedback">دوست داریم نظرتان را بشنویم</string>
+    <string name="instabug_survey_welcome_feedback_msg">می‌توانید با تکمیل کردن این نظرسنجی کمک کنید بهتر شویم؟</string>
+    <string msgid="146198913615257606" name="search_menu_title">"جستجو"</string>
+    <string name="sort_by_recently_updated">اخیر</string>
+    <string name="sort_by_top_rated">رتبه‌بندی بالا</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="surveys_nps_btn_rate_us">در Play Store به ما رتبه بدهید</string>
+    <string name="surveys_nps_less_likely">به احتمال کم</string>
+    <string name="surveys_nps_rate_us_message">از لطفتان سپاسگزاریم!</string>
+    <string name="surveys_nps_very_likely">به احتمال زیاد</string>
+</resources>

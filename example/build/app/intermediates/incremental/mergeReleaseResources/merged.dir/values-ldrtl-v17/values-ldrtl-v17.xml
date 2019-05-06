@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="instabug_icon_lang_rotation">180</integer>
+    <style name="InstabugSurveyDialogQuestion" parent="InstabugBaseText">
+        <item name="android:textSize">@dimen/survey_question_title</item>
+        <item name="android:textColor">?attr/instabug_survey_question_color</item>
+        <item name="android:gravity">start</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:lineSpacingExtra">8dp</item>
+        <item name="android:layout_marginLeft">@dimen/survey_text_end_margin</item>
+        <item name="android:layout_marginRight">@dimen/instabug_dialog_container_padding</item>
+        <item name="android:layout_marginTop">@dimen/survey_question_top_margin</item>
+        <item name="android:background">?attr/instabug_survey_dialog_header_transition</item>
+        <item name="android:ellipsize">none</item>
+        <item name="android:maxLines">4</item>
+    </style>
+</resources>

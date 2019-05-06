@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="instabug_feature_rq_str_days_ago">
+        <item quantity="one">Pred %d dňom</item>
+        <item quantity="other">Pred %d dňami</item>
+        <item quantity="few">Pred %d dňami</item>
+        <item quantity="many">Pred %d dňami</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_hours_ago">
+        <item quantity="one">Pred %d hodinou</item>
+        <item quantity="other">Pred %d hodinami</item>
+        <item quantity="few">Pred %d hodinami</item>
+        <item quantity="many">Pred %d hodinami</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_minutes_ago">
+        <item quantity="one">Pred %d minútou</item>
+        <item quantity="other">Pred %d minútami</item>
+        <item quantity="few">Pred %d minútami</item>
+        <item quantity="many">Pred %d minútami</item>
+    </plurals>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Prejsť na plochu"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Prejsť hore"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Ďalšie možnosti"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Hotovo"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Zobraziť všetko"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Zvoľte aplikáciu"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"VYPNUTÉ"</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"ZAPNUTÉ"</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"Alt+"</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"Ctrl+"</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"odstrániť"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"enter"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"Function+"</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"Meta+"</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"Shift+"</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"medzerník"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"Sym+"</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"Menu+"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"Vyhľadať…"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Vymazať dopyt"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Vyhľadávací dopyt"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Hľadať"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Odoslať dopyt"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Hlasové vyhľadávanie"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Zdieľať pomocou"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"Zdieľať s aplikáciou <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Zbaliť"</string>
+    <string name="add_feature">Pridajte svoje myšlienky</string>
+    <string name="close">Zatvoriť</string>
+    <string name="feature_request_close_dialog_message">Skutočne to chcete zrušiť?</string>
+    <string name="feature_request_comments">Komentáre</string>
+    <string name="feature_request_comments_count">Komentáre: %d</string>
+    <string name="feature_request_go_back">Späť</string>
+    <string name="feature_request_leave_comment">Pridajte prvý komentár</string>
+    <string name="feature_request_owner">Autor: %s</string>
+    <string name="feature_request_owner_anonymous">Od anonyma</string>
+    <string name="feature_request_owner_anonymous_word">Anonym</string>
+    <string name="feature_request_status_changed_to">Stav bol zmenený na</string>
+    <string name="feature_request_str_add_comment_comment_empty">Zadajte platný komentár.</string>
+    <string name="feature_request_str_add_comment_disclaimer">Budeme potrebovať váš e-mail, aby sme vás mohli informovať o novinkách.</string>
+    <string name="feature_request_str_add_comment_error">Pri pokuse o pridanie komentára sa vyskytla chyba.</string>
+    <string name="feature_request_str_add_comment_valid_email">Zadajte platnú e-mailovú adresu.</string>
+    <string name="feature_request_str_add_feature_error">Pri pokuse o pridanie funkcie sa vyskytla chyba.</string>
+    <string name="feature_request_str_adding_your_comment">Pridáva sa váš komentár</string>
+    <string name="feature_request_str_just_now">Práve teraz</string>
+    <string name="feature_request_str_less">Menej</string>
+    <string name="feature_request_str_more">Viac</string>
+    <string name="feature_request_str_post_comment">Príspevok</string>
+    <string name="feature_request_str_thanks">Ďakujeme za spätnú väzbu!</string>
+    <string name="feature_request_str_thanks_msg">Budeme vás informovať o novinkách.</string>
+    <string name="feature_request_votes_count">Hlasy: %d</string>
+    <string name="feature_requests_details">Podrobnosti funkcie</string>
+    <string name="feature_requests_error_state_sub_title">Skontrolujte si pripojenie a skúste to znova.</string>
+    <string name="feature_requests_error_state_title">Vyskytla sa chyba.</string>
+    <string name="feature_requests_new_adding_your_suggestion">Pridáva sa váš návrh.</string>
+    <string name="feature_requests_new_appbar_title">Pridať funkciu</string>
+    <string name="feature_requests_new_bottom_hint">Budeme potrebovať váš e-mail, aby sme vás mohli informovať o novinkách.</string>
+    <string name="feature_requests_new_description">Popis</string>
+    <string name="feature_requests_new_email">E-mail</string>
+    <string name="feature_requests_new_err_msg_email">zadajte platný e-mail</string>
+    <string name="feature_requests_new_err_msg_required">Toto pole je povinné</string>
+    <string name="feature_requests_new_name">Meno</string>
+    <string name="feature_requests_new_positive_button">Pridať</string>
+    <string name="feature_requests_new_title">Názov</string>
+    <string name="feature_requests_new_toast_message">Napíšte jasný názov a popis.</string>
+    <string name="features_rq_main_fragment_tab1">Všetky</string>
+    <string name="features_rq_main_fragment_tab2">Moje</string>
+    <string name="ib_feature_rq_status_completed">Dokončené</string>
+    <string name="ib_feature_rq_status_inprogress">Prebiehajúce</string>
+    <string name="ib_feature_rq_status_maybe_later">Možno neskôr</string>
+    <string name="ib_feature_rq_status_open">Otvoriť</string>
+    <string name="ib_feature_rq_status_planned">Plánované</string>
+    <string name="ib_feature_rq_str_add_your_idea">Pridajte svoj nápad</string>
+    <string name="ib_feature_rq_str_completed_features">Dokončené funkcie: %d</string>
+    <string name="ib_feature_rq_str_load_more_fail_txt">Neúspešné, nie je možné načítať údaje</string>
+    <string name="ib_feature_rq_str_load_more_loading_txt">Obnovuje sa...</string>
+    <string name="ib_feature_rq_str_no_ideas_are_added_yet">Zatiaľ nie sú pridané žiadne nápady.</string>
+    <string name="ib_feature_rq_str_no_results">Nenašli sa žiadne výsledky</string>
+    <string name="ib_feature_rq_str_pull_to_refresh">Obnovte potiahnutím</string>
+    <string name="ib_feature_rq_str_release_to_refresh">Obnovte uvoľnením</string>
+    <string name="ib_feature_rq_str_search">Vyhľadať</string>
+    <string name="ib_feature_rq_str_votes">Hlasy</string>
+    <string name="ib_str_beta_done">Hotovo</string>
+    <string name="ib_str_beta_welcome_finishing_step_content">Zostaň na najnovšej verzii a zachováš si prístup k všetkým opravám a funkciám.</string>
+    <string name="ib_str_beta_welcome_finishing_step_title">Nechajte sa informovať.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_floating">Ak chcete nahlásiť problém alebo navrhnúť zlepšenie, ťuknite na plávajúce tlačidlo.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_screenshot">Ak chcete nahlásiť problém alebo navrhnúť zlepšenie, urobte snímku obrazovky.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_shake">Ak chcete nahlásiť problém alebo navrhnúť zlepšenie, potraste zariadením.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_swipe">Ak chcete nahlásiť problém alebo navrhnúť zlepšenie, posuňte prstom sprava doľava.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_title">Ako nahlásiť chybu?</string>
+    <string name="ib_str_beta_welcome_step_content">Ďakujeme za pomoc pri vylepšovaní aplikácie. Tešíme sa na vašu odozvu a nahlasovanie chýb.</string>
+    <string name="ib_str_beta_welcome_step_title">Vitajte v aplikácii beta</string>
+    <string name="ib_str_live_welcome_message_title">Vždy si radi vypočujeme váš názor.</string>
+    <string name="instabug_audio_recorder_permission_denied">Povolenie pre nahrávanie zvuku je zamietnuté</string>
+    <string name="instabug_custom_survey_thanks_subtitle">Vaše nápady ovplyvnia naše budúce aktualizácie.</string>
+    <string name="instabug_custom_survey_thanks_title">Ďakujeme!</string>
+    <string name="instabug_err_invalid_comment">Prosím, zadajte platný komentár</string>
+    <string name="instabug_err_invalid_email">Prosím, zadajte platnú e-mailovú adresu</string>
+    <string name="instabug_err_invalid_extra_field">Chýbajúce údaje: vyžaduje sa %1$s!</string>
+    <string name="instabug_external_storage_permission_denied">Povolenie pre ukladanie je zamietnuté</string>
+    <string name="instabug_store_rating_survey_thanks_subtitle">Vaša spätná väzba nám pomôže vytvoriť lepšiu aplikáciu.</string>
+    <string name="instabug_store_rating_survey_thanks_title">@string/instabug_custom_survey_thanks_title</string>
+    <string name="instabug_str_action_submit">Odoslať</string>
+    <string name="instabug_str_actual_results">Skutočné výsledky</string>
+    <string name="instabug_str_add_attachment">Pridať prílohy</string>
+    <string name="instabug_str_add_photo">Zvoliť obrázok z galérie</string>
+    <string name="instabug_str_alert_message_max_attachments">Odoberte existujúcu prílohu a pridajte novú.</string>
+    <string name="instabug_str_alert_title_max_attachments">Prílohu nemožno pridať.</string>
+    <string name="instabug_str_annotate">Kresliť po snímke obrazovky</string>
+    <string name="instabug_str_ask_a_question">Položiť otázku</string>
+    <string name="instabug_str_audio">Zvuk</string>
+    <string name="instabug_str_bug_comment_hint">Čo sa pokazilo?</string>
+    <string name="instabug_str_bug_header">Nahlásiť problém</string>
+    <string name="instabug_str_bugreport_dismiss_cancel">Zostať</string>
+    <string name="instabug_str_bugreport_dismiss_discard">Zahodiť</string>
+    <string name="instabug_str_bugreport_dismiss_warning_message">Skutočne chcete prehľad zahodiť?</string>
+    <string name="instabug_str_bugreport_dismiss_warning_title">Zahodiť prehľad?</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_message">Nahrajte súbor menší než %d MB.</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_title">Súbor je príliš veľký</string>
+    <string name="instabug_str_cancel">Zrušiť</string>
+    <string name="instabug_str_capturing_screenshot_error">Z dôvodu nedostatku pamäte sa nepodarilo zachytiť snímku obrazovky</string>
+    <string name="instabug_str_conversations">Konverzácie</string>
+    <string name="instabug_str_dialog_message_preparing">Pripravuje sa...</string>
+    <string name="instabug_str_dismiss">Zrušiť</string>
+    <string name="instabug_str_email_hint">Zadajte svoju e-mailovú adresu</string>
+    <string name="instabug_str_error_survey_without_answer">Bez odpovede nemožno prieskum odoslať.</string>
+    <string name="instabug_str_expected_results">Očakávané výsledky</string>
+    <string name="instabug_str_features_request_header">Žiadosti o funkcie</string>
+    <string name="instabug_str_features_request_ptr_loading_list_text">Radi si vypočujeme vaše názory!</string>
+    <string name="instabug_str_feedback_comment_hint">Ako sa môžeme zlepšiť?</string>
+    <string name="instabug_str_feedback_header">Odporučiť zlepšenie</string>
+    <string name="instabug_str_hint_enter_your_answer">Napíšte odpoveď...</string>
+    <string name="instabug_str_hold_to_record">Ak chcete nahrať, stlačte a podržte</string>
+    <string name="instabug_str_image">Obrázok</string>
+    <string name="instabug_str_image_loading_error">Obrázok sa nepodarilo načítať</string>
+    <string name="instabug_str_invocation_dialog_title">Potrebujete pomoc?</string>
+    <string name="instabug_str_messages">Správy</string>
+    <string name="instabug_str_notification_title">"Tím služby %1$s"</string>
+    <string name="instabug_str_notifications_body">%1$d nových správ od používateľa %2$s a ďalších</string>
+    <string name="instabug_str_ok">OK</string>
+    <string name="instabug_str_pick_media_chooser_title">Vybrať súbor </string>
+    <string name="instabug_str_pick_media_from_gallery">Vybrať súbor z galérie</string>
+    <string name="instabug_str_please_wait">Prosím, počkajte chvíľu</string>
+    <string name="instabug_str_record_video">Vykonať záznam obrazovky</string>
+    <string name="instabug_str_release_stop_record">Uvoľnením pripojíte</string>
+    <string name="instabug_str_reply">Odpovedať</string>
+    <string name="instabug_str_request_feature">Žiadosť o funkciu</string>
+    <string name="instabug_str_sending_message_hint">Napíšte svoju správu</string>
+    <string name="instabug_str_shake_hint"><![CDATA[Radi by sme si vypočuli vašu spätnú väzbu<br/><b>Potraste</b> svojím zariadením a porozprávajte sa s nami.]]></string>
+    <string name="instabug_str_steps_to_reproduce">Kroky na reprodukovanie</string>
+    <string name="instabug_str_success_note">Dostali sme vašu spätnú väzbu.\nĎakujeme, že nám pomáhate skvalitniť %s.</string>
+    <string name="instabug_str_survey_next">Ďalej</string>
+    <string name="instabug_str_swipe_hint"><![CDATA[Radi by sme si vypočuli vašu spätnú väzbu<br /><b>Potiahnite dvoma prstami</b> a porozprávajte sa s nami.]]></string>
+    <string name="instabug_str_take_screenshot">Nasnímať snímku obrazovky</string>
+    <string name="instabug_str_talk_to_us">Porozprávajte sa s nami</string>
+    <string name="instabug_str_thank_you">Ďakujeme vám</string>
+    <string name="instabug_str_video">Video</string>
+    <string name="instabug_str_video_encoder_busy">Kódovač videa je zaneprázdnený kódovaním iného videa</string>
+    <string name="instabug_str_video_encoding_error">Kvôli nepostačujúcej pamäti nebolo možné video zakódovať</string>
+    <string name="instabug_str_video_length_limit_warning_message">Nahrajte video, ktoré nemá viac než 1 minútu.</string>
+    <string name="instabug_str_video_length_limit_warning_title">Video je príliš dlhé</string>
+    <string name="instabug_str_video_player">Prehrávač videí</string>
+    <string name="instabug_str_video_recording_hint">Ak ste pripravení, stlačte tlačidlo na nahrávanie</string>
+    <string name="instabug_survey_welcome_button">Poďme na to</string>
+    <string name="instabug_survey_welcome_feedback">Radi by sme počuli váš názor</string>
+    <string name="instabug_survey_welcome_feedback_msg">Pomôžete nám zlepšiť sa vyplnením tohto stručného prieskumu?</string>
+    <string msgid="146198913615257606" name="search_menu_title">"Vyhľadávanie"</string>
+    <string name="sort_by_recently_updated">Nedávne</string>
+    <string name="sort_by_top_rated">Naj</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="surveys_nps_btn_rate_us">Ohodnoťte nás v službe Play Store</string>
+    <string name="surveys_nps_less_likely">Nepravdepodobnejšie</string>
+    <string name="surveys_nps_rate_us_message">Ďakujeme za podporu!</string>
+    <string name="surveys_nps_very_likely">Pravdepodobnejšie</string>
+</resources>

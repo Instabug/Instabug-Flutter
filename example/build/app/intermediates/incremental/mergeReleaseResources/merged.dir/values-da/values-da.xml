@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="instabug_feature_rq_str_days_ago">
+        <item quantity="one">%d dag siden</item>
+        <item quantity="other">%d dage siden</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_hours_ago">
+        <item quantity="one">%d time siden</item>
+        <item quantity="other">%d timer siden</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_minutes_ago">
+        <item quantity="one">%d minut siden</item>
+        <item quantity="other">%d minutter siden</item>
+    </plurals>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Naviger hjem"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Naviger op"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Flere muligheder"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Luk"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Se alle"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Vælg en app"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"FRA"</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"TIL"</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"Alt+"</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"Ctrl+"</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"delete"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"enter"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"Fn+"</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"Meta+"</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"Shift+"</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"mellemrum"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"Sym+"</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"Menu+"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"Søg…"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Ryd forespørgslen"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Søgeforespørgsel"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Søg"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Indsend forespørgslen"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Talesøgning"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Del med"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"Del med <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Skjul"</string>
+    <string name="add_feature">Tilføj dine tanker</string>
+    <string name="close">Luk</string>
+    <string name="feature_request_close_dialog_message">Er du sikker på, at du vil annullere?</string>
+    <string name="feature_request_comments">Kommentarer</string>
+    <string name="feature_request_comments_count">%d kommentarer</string>
+    <string name="feature_request_go_back">Tilbage</string>
+    <string name="feature_request_leave_comment">Vær den første til at efterlade en kommentar.</string>
+    <string name="feature_request_owner">Af %s</string>
+    <string name="feature_request_owner_anonymous">Vær anonym</string>
+    <string name="feature_request_owner_anonymous_word">Anonym</string>
+    <string name="feature_request_status_changed_to">Status ændret til</string>
+    <string name="feature_request_str_add_comment_comment_empty">Angiv en gyldig kommentar.</string>
+    <string name="feature_request_str_add_comment_disclaimer">Vi skal bruge din e-mail til at holde dig orienteres om opdateringerne.</string>
+    <string name="feature_request_str_add_comment_error">Noget gik galt under forsøg på at tilføje din kommentar.</string>
+    <string name="feature_request_str_add_comment_valid_email">Angiv en gyldig e-mailadresse.</string>
+    <string name="feature_request_str_add_feature_error">Noget gik galt under forsøg på at tilføje din funktion.</string>
+    <string name="feature_request_str_adding_your_comment">Tilføjer din kommentar</string>
+    <string name="feature_request_str_just_now">Lige nu</string>
+    <string name="feature_request_str_less">Mindre</string>
+    <string name="feature_request_str_more">Mere</string>
+    <string name="feature_request_str_post_comment">Slå op</string>
+    <string name="feature_request_str_thanks">Tak for din feedback!</string>
+    <string name="feature_request_str_thanks_msg">Vi holder dig orienteret om opdateringerne!</string>
+    <string name="feature_request_votes_count">%d stemmer</string>
+    <string name="feature_requests_details">Funktionsdetaljer</string>
+    <string name="feature_requests_error_state_sub_title">Tjek din forbindelse, og prøv igen.</string>
+    <string name="feature_requests_error_state_title">Noget gik galt.</string>
+    <string name="feature_requests_new_adding_your_suggestion">Tilføjer dit forslag.</string>
+    <string name="feature_requests_new_appbar_title">Tilføj funktion</string>
+    <string name="feature_requests_new_bottom_hint">Vi skal bruge din e-mail for at holde dig orienteret om opdateringerne.</string>
+    <string name="feature_requests_new_description">Beskrivelse</string>
+    <string name="feature_requests_new_email">E-mail</string>
+    <string name="feature_requests_new_err_msg_email">Angiv en gyldig e-mail.</string>
+    <string name="feature_requests_new_err_msg_required">Dette felt er påkrævet</string>
+    <string name="feature_requests_new_name">Navn</string>
+    <string name="feature_requests_new_positive_button">Tilføj</string>
+    <string name="feature_requests_new_title">Titel</string>
+    <string name="feature_requests_new_toast_message">Sørg for at skrive en klar titel og beskrivelse.</string>
+    <string name="features_rq_main_fragment_tab1">Alle</string>
+    <string name="features_rq_main_fragment_tab2">Mine</string>
+    <string name="ib_feature_rq_status_completed">Fuldført</string>
+    <string name="ib_feature_rq_status_inprogress">I gang</string>
+    <string name="ib_feature_rq_status_maybe_later">Måske senere</string>
+    <string name="ib_feature_rq_status_open">Åben</string>
+    <string name="ib_feature_rq_status_planned">Planlagt</string>
+    <string name="ib_feature_rq_str_add_your_idea">Tilføj din ide</string>
+    <string name="ib_feature_rq_str_completed_features">%d fuldførte funktioner</string>
+    <string name="ib_feature_rq_str_load_more_fail_txt">Mislykkedes. Kan ikke indlæse data</string>
+    <string name="ib_feature_rq_str_load_more_loading_txt">Opdaterer...</string>
+    <string name="ib_feature_rq_str_no_ideas_are_added_yet">Ingen ideer tilføjet endnu.</string>
+    <string name="ib_feature_rq_str_no_results">Ingen resultater blev fundet</string>
+    <string name="ib_feature_rq_str_pull_to_refresh">Træk for at opdatere</string>
+    <string name="ib_feature_rq_str_release_to_refresh">Frigør for at opdatere</string>
+    <string name="ib_feature_rq_str_search">Søg</string>
+    <string name="ib_feature_rq_str_votes">Stemmer</string>
+    <string name="ib_str_beta_done">Færdig</string>
+    <string name="ib_str_beta_welcome_finishing_step_content">Bliv på den forrige version for at have adgang til alle rettelser og funktioner.</string>
+    <string name="ib_str_beta_welcome_finishing_step_title">Hold dig opdateret</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_floating">Tryk på den flydende knap for at rapportere et problem eller foreslå en forbedring.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_screenshot">Tag et skærmbillede for at rapportere om et problem eller foreslå en forbedring.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_shake">Ryst din enhed for at rapportere et problem eller foreslå en forbedring.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_swipe">Swipe fra højre til venstre for at rapportere et problem eller foreslå en forbedring.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_title">Hvordan rapporteres en bug</string>
+    <string name="ib_str_beta_welcome_step_content">Tak for din hjælp med at forbedre appen. Vi ser frem til din respons og rapporteringer af bugs.</string>
+    <string name="ib_str_beta_welcome_step_title">Velkommen til vores beta-app</string>
+    <string name="ib_str_live_welcome_message_title">Vi hører altid gerne fra dig.</string>
+    <string name="instabug_audio_recorder_permission_denied">Tilladelse til lydoptagelse nægtet</string>
+    <string name="instabug_custom_survey_thanks_subtitle">Din respons påvirker fremtidige opdateringer med forbedringer.</string>
+    <string name="instabug_custom_survey_thanks_title">Tak!</string>
+    <string name="instabug_err_invalid_comment">Indtast en gyldig kommentar</string>
+    <string name="instabug_err_invalid_email">Indtast en gyldig e-mail</string>
+    <string name="instabug_err_invalid_extra_field">Manglende data: %1$s er påkrævet!</string>
+    <string name="instabug_external_storage_permission_denied">Tilladelse til lagring nægtet</string>
+    <string name="instabug_store_rating_survey_thanks_subtitle">Din feedback hjælper os med at skabe en bedre app.</string>
+    <string name="instabug_store_rating_survey_thanks_title">@string/instabug_custom_survey_thanks_title</string>
+    <string name="instabug_str_action_submit">Indsend</string>
+    <string name="instabug_str_actual_results">Faktiske resultater</string>
+    <string name="instabug_str_add_attachment">Tilføj vedhæftede filer</string>
+    <string name="instabug_str_add_photo">Vælg billede fra galleri</string>
+    <string name="instabug_str_alert_message_max_attachments">Fjern en eksisterende vedhæftning for at tilføje en ny.</string>
+    <string name="instabug_str_alert_title_max_attachments">Kan ikke tilføje vedhæftning</string>
+    <string name="instabug_str_annotate">Tegn på screenshot</string>
+    <string name="instabug_str_ask_a_question">Stil et spørgsmål</string>
+    <string name="instabug_str_audio">Lyd</string>
+    <string name="instabug_str_bug_comment_hint">Hvad gik galt?</string>
+    <string name="instabug_str_bug_header">Rapporter om et problem</string>
+    <string name="instabug_str_bugreport_dismiss_cancel">Bliv</string>
+    <string name="instabug_str_bugreport_dismiss_discard">Kasser</string>
+    <string name="instabug_str_bugreport_dismiss_warning_message">Er du sikker på, at du vil kassere rapporten?</string>
+    <string name="instabug_str_bugreport_dismiss_warning_title">Kasser rapport</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_message">Overfør en fil på mindre end %d MB.</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_title">Filstørrelsen er for stor</string>
+    <string name="instabug_str_cancel">Annuller</string>
+    <string name="instabug_str_capturing_screenshot_error">Kunne ikke fange screenshot på grund af lav hukommelse</string>
+    <string name="instabug_str_conversations">Samtaler</string>
+    <string name="instabug_str_dialog_message_preparing">Forbereder...</string>
+    <string name="instabug_str_dismiss">Afvis</string>
+    <string name="instabug_str_email_hint">Indtast din e-mail</string>
+    <string name="instabug_str_error_survey_without_answer">Undersøgelse kan ikke indsendes uden et svar.</string>
+    <string name="instabug_str_expected_results">Forventede resultater</string>
+    <string name="instabug_str_features_request_header">Funktionsanmodninger</string>
+    <string name="instabug_str_features_request_ptr_loading_list_text">Det vil glæde os at høre din mening!</string>
+    <string name="instabug_str_feedback_comment_hint">Hvad kan vi gøre bedre?</string>
+    <string name="instabug_str_feedback_header">Foreslå en forbedring</string>
+    <string name="instabug_str_hint_enter_your_answer">Angiv dit svar...</string>
+    <string name="instabug_str_hold_to_record">Tryk og hold nede for at optage</string>
+    <string name="instabug_str_image">Billede</string>
+    <string name="instabug_str_image_loading_error">Kunne ikke indlæse billede</string>
+    <string name="instabug_str_invocation_dialog_title">Brug for hjælp?</string>
+    <string name="instabug_str_messages">Beskeder</string>
+    <string name="instabug_str_notification_title">"%1$s team"</string>
+    <string name="instabug_str_notifications_body">%1$d nye beskeder fra %2$s og andre</string>
+    <string name="instabug_str_ok">OK</string>
+    <string name="instabug_str_pick_media_chooser_title">Vælg en fil </string>
+    <string name="instabug_str_pick_media_from_gallery">Vælg en fil fra galleriet</string>
+    <string name="instabug_str_please_wait">Vent et øjeblik</string>
+    <string name="instabug_str_record_video">Foretag en skærmoptagelse</string>
+    <string name="instabug_str_release_stop_record">Slip for at vedhæfte</string>
+    <string name="instabug_str_reply">Svar</string>
+    <string name="instabug_str_request_feature">Anmod om en funktion</string>
+    <string name="instabug_str_sending_message_hint">Skriv din besked</string>
+    <string name="instabug_str_shake_hint"><![CDATA[Vi vil gerne høre din feedback<br/><b>Ryst</b> din enhed for at tale til os.]]></string>
+    <string name="instabug_str_steps_to_reproduce">Trin til genskabelse</string>
+    <string name="instabug_str_success_note">Vi har modtaget din feedback.\nTak fordi du hjælper os med at gøre %s bedre.</string>
+    <string name="instabug_str_survey_next">Næste</string>
+    <string name="instabug_str_swipe_hint"><![CDATA[Vi vil gerne høre din feedback<br /><b>Skub med to fingre</b> for at tale til os.]]></string>
+    <string name="instabug_str_take_screenshot">Tag et screenshot</string>
+    <string name="instabug_str_talk_to_us">Tal til os</string>
+    <string name="instabug_str_thank_you">Tak</string>
+    <string name="instabug_str_video">Video</string>
+    <string name="instabug_str_video_encoder_busy">Video Encoder har travlt med at kode en anden video</string>
+    <string name="instabug_str_video_encoding_error">Kunne ikke kode video på grund af lav hukommelse</string>
+    <string name="instabug_str_video_length_limit_warning_message">Upload en video, som er mindre end 1 minut lang.</string>
+    <string name="instabug_str_video_length_limit_warning_title">Videoens varighed er for lang</string>
+    <string name="instabug_str_video_player">Videoafspiller</string>
+    <string name="instabug_str_video_recording_hint">Tryk på optag, når du er klar</string>
+    <string name="instabug_survey_welcome_button">Lad os komme i gang</string>
+    <string name="instabug_survey_welcome_feedback">Vi vil meget gerne høre fra dig</string>
+    <string name="instabug_survey_welcome_feedback_msg">Kan du hjælpe os med at blive bedre ved at gennemføre denne korte undersøgelse?</string>
+    <string msgid="146198913615257606" name="search_menu_title">"Søg"</string>
+    <string name="sort_by_recently_updated">Nylig</string>
+    <string name="sort_by_top_rated">Top</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="surveys_nps_btn_rate_us">Bedøm os i Play Store</string>
+    <string name="surveys_nps_less_likely">Mindre sandsynligt</string>
+    <string name="surveys_nps_rate_us_message">Tak for den fine anmeldelse!</string>
+    <string name="surveys_nps_very_likely">    <string name="build_better_app">Din feedback hjælper os med at skabe en bedre app.</string></string>
+</resources>

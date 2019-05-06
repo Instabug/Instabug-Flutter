@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="instabug_feature_rq_str_days_ago">
+        <item quantity="one">%d gün önce</item>
+        <item quantity="other">%d gün önce</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_hours_ago">
+        <item quantity="one">%d saat önce</item>
+        <item quantity="other">%d saat önce</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_minutes_ago">
+        <item quantity="one">%d dakika önce</item>
+        <item quantity="other">%d dakika önce</item>
+    </plurals>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Ana ekrana git"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Yukarı git"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Diğer seçenekler"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Bitti"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Tümünü göster"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Bir uygulama seçin"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"KAPAT"</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"AÇ"</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"Alt+"</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"Ctrl+"</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"sil"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"enter"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"İşlev+"</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"Meta+"</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"Üst Karakter+"</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"boşluk"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"Sym+"</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"Menü+"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"Ara…"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Sorguyu temizle"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Arama sorgusu"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Ara"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Sorguyu gönder"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Sesli arama"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Şununla paylaş"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"<ns1:g id="APPLICATION_NAME">%s</ns1:g> ile paylaş"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Daralt"</string>
+    <string name="add_feature">Düşüncelerinizi ekleyin</string>
+    <string name="close">Kapatın</string>
+    <string name="feature_request_close_dialog_message">İptal etmek istediğinizden emin misiniz?</string>
+    <string name="feature_request_comments">Yorumlar</string>
+    <string name="feature_request_comments_count">%d Yorum</string>
+    <string name="feature_request_go_back">Geri</string>
+    <string name="feature_request_leave_comment">İlk yorum yazan siz olun.</string>
+    <string name="feature_request_owner">%s tarafından</string>
+    <string name="feature_request_owner_anonymous">Anonim tarafından</string>
+    <string name="feature_request_owner_anonymous_word">Anonim</string>
+    <string name="feature_request_status_changed_to">Durum değişti:</string>
+    <string name="feature_request_str_add_comment_comment_empty">Lütfen geçerli bir yorum girin.</string>
+    <string name="feature_request_str_add_comment_disclaimer">Sizi güncellemelerden haberdar edebilmek için e-postanıza ihtiyacımız olacak.</string>
+    <string name="feature_request_str_add_comment_error">Yorumunuzu eklemeye çalışırken bir şey ters gitti.</string>
+    <string name="feature_request_str_add_comment_valid_email">Lütfen geçerli bir e-posta adresi girin.</string>
+    <string name="feature_request_str_add_feature_error">Özelliğinizi eklemeye çalışırken bir şey ters gitti.</string>
+    <string name="feature_request_str_adding_your_comment">Yorumunuz ekleniyor</string>
+    <string name="feature_request_str_just_now">Az Önce</string>
+    <string name="feature_request_str_less">Daha az</string>
+    <string name="feature_request_str_more">Daha fazla</string>
+    <string name="feature_request_str_post_comment">Yayınlayın</string>
+    <string name="feature_request_str_thanks">Geri bildiriminiz için teşekkürler!</string>
+    <string name="feature_request_str_thanks_msg">Sizi güncellemelerden haberdar edeceğiz</string>
+    <string name="feature_request_votes_count">%d Oy</string>
+    <string name="feature_requests_details">Özellik Ayrıntıları</string>
+    <string name="feature_requests_error_state_sub_title">Bağlantınızı kontrol edin ve tekrar deneyin.</string>
+    <string name="feature_requests_error_state_title">Bir şey ters gitti.</string>
+    <string name="feature_requests_new_adding_your_suggestion">Öneriniz ekleniyor.</string>
+    <string name="feature_requests_new_appbar_title">Özellik ekleyin</string>
+    <string name="feature_requests_new_bottom_hint">Sizi güncellemelerden haberdar edebilmek için e-postanıza ihtiyacımız olacak.</string>
+    <string name="feature_requests_new_description">Açıklama</string>
+    <string name="feature_requests_new_email">E-posta</string>
+    <string name="feature_requests_new_err_msg_email">Lütfen geçerli bir e-posta girin</string>
+    <string name="feature_requests_new_err_msg_required">Bu alan zorunludur</string>
+    <string name="feature_requests_new_name">İsim</string>
+    <string name="feature_requests_new_positive_button">Ekleyin</string>
+    <string name="feature_requests_new_title">Başlık</string>
+    <string name="feature_requests_new_toast_message">Net bir başlık ve açıklama yazdığınızdan emin olun.</string>
+    <string name="features_rq_main_fragment_tab1">Tümü</string>
+    <string name="features_rq_main_fragment_tab2">Benim</string>
+    <string name="ib_feature_rq_status_completed">Tamamlandı</string>
+    <string name="ib_feature_rq_status_inprogress">Devam ediyor</string>
+    <string name="ib_feature_rq_status_maybe_later">Belki daha sonra</string>
+    <string name="ib_feature_rq_status_open">Açın</string>
+    <string name="ib_feature_rq_status_planned">Planlandı</string>
+    <string name="ib_feature_rq_str_add_your_idea">Fikrinizi Ekleyin</string>
+    <string name="ib_feature_rq_str_completed_features">%d Tamamlanan Özellikler:</string>
+    <string name="ib_feature_rq_str_load_more_fail_txt">Başarısız, veriler yüklenemiyor</string>
+    <string name="ib_feature_rq_str_load_more_loading_txt">Yenileniyor...</string>
+    <string name="ib_feature_rq_str_no_ideas_are_added_yet">Henüz eklenen fikir yok.</string>
+    <string name="ib_feature_rq_str_no_results">Sonuç bulunamadı</string>
+    <string name="ib_feature_rq_str_pull_to_refresh">Yenilemek için çekin</string>
+    <string name="ib_feature_rq_str_release_to_refresh">Yenilemek için bırakın</string>
+    <string name="ib_feature_rq_str_search">Arayın</string>
+    <string name="ib_feature_rq_str_votes">Oylar</string>
+    <string name="ib_str_beta_done">Bitti</string>
+    <string name="ib_str_beta_welcome_finishing_step_content">Tüm düzeltme ve özelliklere erişmek için en son sürümde kalın.</string>
+    <string name="ib_str_beta_welcome_finishing_step_title">Güncel kalın.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_floating">Bir sorunu rapor etmek için kayan düğmeye dokunun ya da bir iyileştirme önerin.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_screenshot">Bir sorunu rapor etmek için ekran görüntüsü alın ya da bir iyileştirme önerin.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_shake">Bir sorunu rapor etmek için cihazınızı sallayın ya da bir iyileştirme önerin.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_swipe">Bir sorunu rapor etmek için sağdan sola kaydırın ya da bir iyileştirme önerin.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_title">Bir hata nasıl rapor edilir?</string>
+    <string name="ib_str_beta_welcome_step_content">Uygulamamızı geliştirebilmemiz için bize yardım ettiğiniz için teşekkür ederiz. Geri bildiriminizi ve hata raporlarınızı sabırsızlıkla bekliyoruz.</string>
+    <string name="ib_str_beta_welcome_step_title">Beta uygulamamıza hoş geldiniz</string>
+    <string name="ib_str_live_welcome_message_title">Düşüncelerinizi duymaktan her zaman mutluluk duyarız.</string>
+    <string name="instabug_audio_recorder_permission_denied">Ses dosyası kaydetme izni engellendi</string>
+    <string name="instabug_custom_survey_thanks_subtitle">Düşünceleriniz gelecekteki güncellemeleri etkileyecek.</string>
+    <string name="instabug_custom_survey_thanks_title">Teşekkür ederiz!</string>
+    <string name="instabug_err_invalid_comment">Lütfen geçerli bir yorum girin</string>
+    <string name="instabug_err_invalid_email">Lütfen geçerli bir e-posta girin</string>
+    <string name="instabug_err_invalid_extra_field">Eksik Veri: %1$s gerekli!</string>
+    <string name="instabug_external_storage_permission_denied">Depolama izni engellendi</string>
+    <string name="instabug_store_rating_survey_thanks_subtitle">Geri bildirminiz daha iyi bir uygulama geliştirebilmemiz için bize yardımcı olacak.</string>
+    <string name="instabug_store_rating_survey_thanks_title">@string/instabug_custom_survey_thanks_title</string>
+    <string name="instabug_str_action_submit">Gönder</string>
+    <string name="instabug_str_actual_results">Gerçek Sonuçlar</string>
+    <string name="instabug_str_add_attachment">Ek ekleyin</string>
+    <string name="instabug_str_add_photo">Galeriden Resim Seç</string>
+    <string name="instabug_str_alert_message_max_attachments">Yenisini eklemek için mevcut bir eklentiyi kaldırın.</string>
+    <string name="instabug_str_alert_title_max_attachments">Eklenti Eklenemiyor</string>
+    <string name="instabug_str_annotate">Ekran görüntüsü çekin</string>
+    <string name="instabug_str_ask_a_question">Bir soru sorun</string>
+    <string name="instabug_str_audio">Ses</string>
+    <string name="instabug_str_bug_comment_hint">Sorun neydi?</string>
+    <string name="instabug_str_bug_header">Sorun Bildir</string>
+    <string name="instabug_str_bugreport_dismiss_cancel">Kal</string>
+    <string name="instabug_str_bugreport_dismiss_discard">Vazgeç</string>
+    <string name="instabug_str_bugreport_dismiss_warning_message">Bildirimden vazgeçmek istediğinizden emin misiniz?</string>
+    <string name="instabug_str_bugreport_dismiss_warning_title">Bildirimden vazgeçilsin mi?</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_message">Lütfen %d MB\'tan az bir dosya karşıya yükleyin.</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_title">Dosya boyutu çok büyük</string>
+    <string name="instabug_str_cancel">İptal</string>
+    <string name="instabug_str_capturing_screenshot_error">Düşük bellek nedeniyle ekran görüntüsü yakalanamadı</string>
+    <string name="instabug_str_conversations">Konuşmalar</string>
+    <string name="instabug_str_dialog_message_preparing">Hazırlanıyor…</string>
+    <string name="instabug_str_dismiss">Kapat</string>
+    <string name="instabug_str_email_hint">E-posta adresinizi girin</string>
+    <string name="instabug_str_error_survey_without_answer">Anket bir cevap olmadan gönderilemez.</string>
+    <string name="instabug_str_expected_results">Beklenen Sonuçlar</string>
+    <string name="instabug_str_features_request_header">Özellik Talepleri</string>
+    <string name="instabug_str_features_request_ptr_loading_list_text">Düşüncelerinizi duymak bize keyif veriyor!</string>
+    <string name="instabug_str_feedback_comment_hint">Nasıl iyileştirebiliriz?</string>
+    <string name="instabug_str_feedback_header">İyileştirme Öner</string>
+    <string name="instabug_str_hint_enter_your_answer">Cevabınızı yazın...</string>
+    <string name="instabug_str_hold_to_record">Kaydetmek için Basılı Tut</string>
+    <string name="instabug_str_image">Resim</string>
+    <string name="instabug_str_image_loading_error">Resim yüklenemedi</string>
+    <string name="instabug_str_invocation_dialog_title">Yardıma ihtiyacınız mı var?</string>
+    <string name="instabug_str_messages">Mesajlar</string>
+    <string name="instabug_str_notification_title">"%1$s Ekibi"</string>
+    <string name="instabug_str_notifications_body">%2$s ve diğer kullanıcılardan %1$d yeni mesaj</string>
+    <string name="instabug_str_ok">Tamam</string>
+    <string name="instabug_str_pick_media_chooser_title">Bir dosya seçin </string>
+    <string name="instabug_str_pick_media_from_gallery">Galeriden dosya seçin</string>
+    <string name="instabug_str_please_wait">Lütfen bir dakika bekleyin</string>
+    <string name="instabug_str_record_video">Ekranı kayda alın</string>
+    <string name="instabug_str_release_stop_record">Eklemek için Serbest Bırak</string>
+    <string name="instabug_str_reply">Cevap ver</string>
+    <string name="instabug_str_request_feature">Bir özellik talep edin</string>
+    <string name="instabug_str_sending_message_hint">Mesajınızı yazın</string>
+    <string name="instabug_str_shake_hint"><![CDATA[Geribildirimlerinizi almayı çok isteriz bizimle<br/> konuşmak için cihazınızı <b>sallayın</b>]]></string>
+    <string name="instabug_str_steps_to_reproduce">Tekrarlanması Gereken Adımlar</string>
+    <string name="instabug_str_success_note">Geribildiriminizi aldık.\n%s uygulamasını daha iyi hale getirmemize yardım ettiğiniz için teşekkürler.</string>
+    <string name="instabug_str_survey_next">Sonraki</string>
+    <string name="instabug_str_swipe_hint"><![CDATA[Geribildirimlerinizi almayı çok isteriz, <br />bize ulaşmak için<b>2 parmağınızla ekranı kaydırın</b>.]]></string>
+    <string name="instabug_str_take_screenshot">Ekran Görüntüsü Al</string>
+    <string name="instabug_str_talk_to_us">Bizimle konuşun</string>
+    <string name="instabug_str_thank_you">Teşekkür Ederiz</string>
+    <string name="instabug_str_video">Video</string>
+    <string name="instabug_str_video_encoder_busy">Video Kodlayıcı başla bir videonun kodlanmasıyla meşgul</string>
+    <string name="instabug_str_video_encoding_error">Yetersiz bellek nedeniyle video kodlanamadı</string>
+    <string name="instabug_str_video_length_limit_warning_message">Lütfen süresi 1 dakikadan az olan bir video karşıya yükleyin.</string>
+    <string name="instabug_str_video_length_limit_warning_title">Videonun süresi çok uzun</string>
+    <string name="instabug_str_video_player">Video Oynatıcı</string>
+    <string name="instabug_str_video_recording_hint">Hazır olduğunuzda kaydet tuşuna basın</string>
+    <string name="instabug_survey_welcome_button">Başlayalım</string>
+    <string name="instabug_survey_welcome_feedback">Sizden duymak isteriz</string>
+    <string name="instabug_survey_welcome_feedback_msg">Bu kısa anketi doldurarak daha iyi bir hale getirmemize yardım edebilir misiniz?</string>
+    <string msgid="146198913615257606" name="search_menu_title">"Ara"</string>
+    <string name="sort_by_recently_updated">En Son</string>
+    <string name="sort_by_top_rated">En iyi</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="surveys_nps_btn_rate_us">"Play Store\'da bize puan verin"</string>
+    <string name="surveys_nps_less_likely">Hiç Sanmam</string>
+    <string name="surveys_nps_rate_us_message">Sevginiz için teşekkürler!</string>
+    <string name="surveys_nps_very_likely">Büyük Olasılıkla</string>
+</resources>

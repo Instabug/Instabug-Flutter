@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/alyezz/Flutter/Instabug-Flutter/example/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-sw600dp-land-v13/values-sw600dp-land-v13.xml",
+            "map": [
+                {
+                    "source": "/Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/res/values-sw600dp-land-v13/values-sw600dp-land-v13.xml",
+                    "from": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,116,180",
+                        "endColumns": "60,63,52",
+                        "endOffsets": "111,175,228"
+                    }
+                }
+            ]
+        }
+    ]
+}

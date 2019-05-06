@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="instabug_feature_rq_str_days_ago">
+        <item quantity="other">%d日前</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_hours_ago">
+        <item quantity="other">%d時間前</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_minutes_ago">
+        <item quantity="other">%d分前</item>
+    </plurals>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"ホームへ移動"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"上へ移動"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"その他のオプション"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"完了"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"すべて表示"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"アプリの選択"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"OFF"</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"ON"</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"Alt+"</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"Ctrl+"</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"Delete"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"Enter"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"Function+"</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"Meta+"</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"Shift+"</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"Space"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"Sym+"</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"Menu+"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"検索…"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"検索キーワードを削除"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"検索キーワード"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"検索"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"検索キーワードを送信"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"音声検索"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"共有"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"<ns1:g id="APPLICATION_NAME">%s</ns1:g>と共有"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"折りたたむ"</string>
+    <string name="add_feature">あなたの考えを追加する</string>
+    <string name="close">閉じる</string>
+    <string name="feature_request_close_dialog_message">本当にキャンセルしてもよろしいですか？</string>
+    <string name="feature_request_comments">コメント</string>
+    <string name="feature_request_comments_count">%d件のコメント</string>
+    <string name="feature_request_go_back">戻る</string>
+    <string name="feature_request_leave_comment">コメントを残す最初の人になりましょう。</string>
+    <string name="feature_request_owner">%sより</string>
+    <string name="feature_request_owner_anonymous">匿名希望</string>
+    <string name="feature_request_owner_anonymous_word">匿名</string>
+    <string name="feature_request_status_changed_to">へステータスの変更</string>
+    <string name="feature_request_str_add_comment_comment_empty">有効なコメントを入力してください。</string>
+    <string name="feature_request_str_add_comment_disclaimer">更新内容を投稿し続けるために電子メールが必要となります。</string>
+    <string name="feature_request_str_add_comment_error">あなたのコメントを追加しようとしている最中に何か問題が発生しました。</string>
+    <string name="feature_request_str_add_comment_valid_email">有効なメールアドレスを入力してください。</string>
+    <string name="feature_request_str_add_feature_error">あなたの機能を追加しようとしているときに何か問題が発生しました。</string>
+    <string name="feature_request_str_adding_your_comment">コメントを追加中</string>
+    <string name="feature_request_str_just_now">たった今</string>
+    <string name="feature_request_str_less">少ない</string>
+    <string name="feature_request_str_more">もっと多い</string>
+    <string name="feature_request_str_post_comment">投稿</string>
+    <string name="feature_request_str_thanks">ご意見ありがとうございます！</string>
+    <string name="feature_request_str_thanks_msg">あなたに最新情報をお知らせします</string>
+    <string name="feature_request_votes_count">%d件の投票</string>
+    <string name="feature_requests_details">機能の詳細</string>
+    <string name="feature_requests_error_state_sub_title">接続を確認して、もう一度お試しください。</string>
+    <string name="feature_requests_error_state_title">何かが間違っています。</string>
+    <string name="feature_requests_new_adding_your_suggestion">あなたの提案を追加する。</string>
+    <string name="feature_requests_new_appbar_title">機能の追加</string>
+    <string name="feature_requests_new_bottom_hint">更新内容を投稿し続けるために電子メールが必要となります。</string>
+    <string name="feature_requests_new_description">説明</string>
+    <string name="feature_requests_new_email">Eメール</string>
+    <string name="feature_requests_new_err_msg_email">正しいメールアドレスを入力してください</string>
+    <string name="feature_requests_new_err_msg_required">この項目は必須です</string>
+    <string name="feature_requests_new_name">名前</string>
+    <string name="feature_requests_new_positive_button">追加する</string>
+    <string name="feature_requests_new_title">タイトル</string>
+    <string name="feature_requests_new_toast_message">明確なタイトルと説明を必ず記入してください。</string>
+    <string name="features_rq_main_fragment_tab1">すべて</string>
+    <string name="features_rq_main_fragment_tab2">自分のアイテム</string>
+    <string name="ib_feature_rq_status_completed">完了</string>
+    <string name="ib_feature_rq_status_inprogress">進行中</string>
+    <string name="ib_feature_rq_status_maybe_later">後で行う</string>
+    <string name="ib_feature_rq_status_open">開く</string>
+    <string name="ib_feature_rq_status_planned">計画済み</string>
+    <string name="ib_feature_rq_str_add_your_idea">アイデアを追加する</string>
+    <string name="ib_feature_rq_str_completed_features">完了した%d機能</string>
+    <string name="ib_feature_rq_str_load_more_fail_txt">失敗、データを読み込めません</string>
+    <string name="ib_feature_rq_str_load_more_loading_txt">更新中...</string>
+    <string name="ib_feature_rq_str_no_ideas_are_added_yet">アイデアはまだ追加されていません。</string>
+    <string name="ib_feature_rq_str_no_results">結果なし</string>
+    <string name="ib_feature_rq_str_pull_to_refresh">プルして更新する</string>
+    <string name="ib_feature_rq_str_release_to_refresh">リリースして更新</string>
+    <string name="ib_feature_rq_str_search">検索</string>
+    <string name="ib_feature_rq_str_votes">投票</string>
+    <string name="ib_str_beta_done">完了</string>
+    <string name="ib_str_beta_welcome_finishing_step_content">常に最新バージョンを使用して全ての修正と機能にアクセスしましょう。</string>
+    <string name="ib_str_beta_welcome_finishing_step_title">最新に保ちましょう。</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_floating">フローティングボタンをタップして問題を報告するか、改善を提案してください。</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_screenshot">スクリーンショットを撮って問題を報告するか、改善を提案してください。</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_shake">デバイスを振って問題を報告するか、改善を提案してください。</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_swipe">右から左にスワイプして問題を報告するか、改善を提案してください。</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_title">バグの報告するには？</string>
+    <string name="ib_str_beta_welcome_step_content">アプリの改善にご協力いただきありがとうございます。お客様のご意見とバグ報告をお待ちしております。</string>
+    <string name="ib_str_beta_welcome_step_title">ベータ版アプリへようこそ</string>
+    <string name="ib_str_live_welcome_message_title">お客様のご意見をお聞かせください。</string>
+    <string name="instabug_audio_recorder_permission_denied">音声録音の許可が拒否されました</string>
+    <string name="instabug_custom_survey_thanks_subtitle">お客様のご意見は、今後の更新に良い影響をもたらします。</string>
+    <string name="instabug_custom_survey_thanks_title">ありがとう！</string>
+    <string name="instabug_err_invalid_comment">有用なコメントを入力してください</string>
+    <string name="instabug_err_invalid_email">有効なメールアドレスを入力してください</string>
+    <string name="instabug_err_invalid_extra_field">データ不足： %1$s は必須事項です！</string>
+    <string name="instabug_external_storage_permission_denied">ストレージ許可が拒否されました</string>
+    <string name="instabug_store_rating_survey_thanks_subtitle">皆様のフィードバックはより優れたアプリ制作に役立てさせて頂きます。</string>
+    <string name="instabug_store_rating_survey_thanks_title">@string/instabug_custom_survey_thanks_title</string>
+    <string name="instabug_str_action_submit">送信する</string>
+    <string name="instabug_str_actual_results">実際の結果</string>
+    <string name="instabug_str_add_attachment">添付ファイルを追加する</string>
+    <string name="instabug_str_add_photo">ギャラリーから画像を選択</string>
+    <string name="instabug_str_alert_message_max_attachments">既存の添付ファイルを削除後、新しいファイルを追加してください。</string>
+    <string name="instabug_str_alert_title_max_attachments">添付ファイルを追加できません</string>
+    <string name="instabug_str_annotate">スクリーンショット上に描画</string>
+    <string name="instabug_str_ask_a_question">質問をしますか？</string>
+    <string name="instabug_str_audio">オーディオ</string>
+    <string name="instabug_str_bug_comment_hint">どのような問題ですか？</string>
+    <string name="instabug_str_bug_header">問題を報告</string>
+    <string name="instabug_str_bugreport_dismiss_cancel">続ける</string>
+    <string name="instabug_str_bugreport_dismiss_discard">破棄する</string>
+    <string name="instabug_str_bugreport_dismiss_warning_message">レポートを破棄してもよろしいですか？</string>
+    <string name="instabug_str_bugreport_dismiss_warning_title">レポートを破棄しますか？</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_message">%d MB未満のファイルをアップロードしてください。</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_title">ファイルサイズが大きすぎます</string>
+    <string name="instabug_str_cancel">キャンセル</string>
+    <string name="instabug_str_capturing_screenshot_error">メモリ不足のためにスクリーンショットをキャプチャできませんでした</string>
+    <string name="instabug_str_conversations">会話</string>
+    <string name="instabug_str_dialog_message_preparing">準備中…</string>
+    <string name="instabug_str_dismiss">閉じる</string>
+    <string name="instabug_str_email_hint">メールアドレスを入力</string>
+    <string name="instabug_str_error_survey_without_answer">回答なしで統計データを送信することはできません。</string>
+    <string name="instabug_str_expected_results">予想された結果</string>
+    <string name="instabug_str_features_request_header">リクエスト特集</string>
+    <string name="instabug_str_features_request_ptr_loading_list_text">あなたの考えを聞けて光栄です！</string>
+    <string name="instabug_str_feedback_comment_hint">どのように改善して欲しいですか？</string>
+    <string name="instabug_str_feedback_header">改善を提案</string>
+    <string name="instabug_str_hint_enter_your_answer">あなたの答えを入力してください...</string>
+    <string name="instabug_str_hold_to_record">長押しして録音</string>
+    <string name="instabug_str_image">画像</string>
+    <string name="instabug_str_image_loading_error">画像をロードできませんでした</string>
+    <string name="instabug_str_invocation_dialog_title">ヘルプが必要ですか？</string>
+    <string name="instabug_str_messages">メッセージ</string>
+    <string name="instabug_str_notification_title">"%1$s チーム"</string>
+    <string name="instabug_str_notifications_body">%2$s とその他の相手から %1$d 通の新規メッセージ</string>
+    <string name="instabug_str_ok">ＯＫ</string>
+    <string name="instabug_str_pick_media_chooser_title">ファイルを選択</string>
+    <string name="instabug_str_pick_media_from_gallery">ギャラリーからファイルを選択</string>
+    <string name="instabug_str_please_wait">少々お待ちください</string>
+    <string name="instabug_str_record_video">携帯画面ビデオを録画</string>
+    <string name="instabug_str_release_stop_record">リリースして添付</string>
+    <string name="instabug_str_reply">返信</string>
+    <string name="instabug_str_request_feature">機能をリクエストする</string>
+    <string name="instabug_str_sending_message_hint">メッセージを入力</string>
+    <string name="instabug_str_shake_hint"><![CDATA[フォードバックをお待ちしています<br/>デバイスを <b>シェイク</b> すれば弊社担当者とチャットできます。]]></string>
+    <string name="instabug_str_steps_to_reproduce">再現する手順</string>
+    <string name="instabug_str_success_note">フィードバックを承りました。\n%s 改善へのご協力ありがとうございました。</string>
+    <string name="instabug_str_survey_next">次へ</string>
+    <string name="instabug_str_swipe_hint"><![CDATA[フォードバックをお待ちしています<br/><b>2 本指でスワイプ</b> すれば弊社担当者とチャットできます。]]></string>
+    <string name="instabug_str_take_screenshot">スクリーンショットを撮影</string>
+    <string name="instabug_str_talk_to_us">弊社にご連絡ください</string>
+    <string name="instabug_str_thank_you">ありがとうございます</string>
+    <string name="instabug_str_video">ビデオ</string>
+    <string name="instabug_str_video_encoder_busy">ビデオエンコーダは現在別のビデオをエンコード中です</string>
+    <string name="instabug_str_video_encoding_error">メモリー不足のため、ビデオをエンコードできませんでした</string>
+    <string name="instabug_str_video_length_limit_warning_message">1分以内の動画をアップロードしてください。</string>
+    <string name="instabug_str_video_length_limit_warning_title">動画の長さが長すぎます</string>
+    <string name="instabug_str_video_player">ビデオプレイヤー</string>
+    <string name="instabug_str_video_recording_hint">準備ができたら［記録］を押してください</string>
+    <string name="instabug_survey_welcome_button">レッツゴー</string>
+    <string name="instabug_survey_welcome_feedback">ご意見をお聞かせください</string>
+    <string name="instabug_survey_welcome_feedback_msg">この簡単なアンケートにお答えいただき、当社の改善に手助けしていただけますか？</string>
+    <string msgid="146198913615257606" name="search_menu_title">"検索"</string>
+    <string name="sort_by_recently_updated">最近</string>
+    <string name="sort_by_top_rated">トップ</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="surveys_nps_btn_rate_us">Play Storeで当社を評価してください</string>
+    <string name="surveys_nps_less_likely">おすすめしません</string>
+    <string name="surveys_nps_rate_us_message">愛をありがとう！</string>
+    <string name="surveys_nps_very_likely">おすすめします</string>
+</resources>

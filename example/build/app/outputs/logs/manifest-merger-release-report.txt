@@ -1,0 +1,418 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:1:1-39:12
+MERGED from [:instabug_flutter] /Users/alyezz/Flutter/Instabug-Flutter/example/build/instabug_flutter/intermediates/merged_manifests/release/processReleaseManifest/merged/AndroidManifest.xml:2:1-7:12
+MERGED from [com.instabug.library:instabug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-8.2.2.aar/6dcc83edd07bf10bc860db3e1a912b25/AndroidManifest.xml:2:1-12:12
+MERGED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:2:1-31:12
+MERGED from [com.instabug.library:instabug-crash:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-crash-8.2.2.aar/1280bdb2b51b5dc1b2b5c722d2828aa7/AndroidManifest.xml:2:1-17:12
+MERGED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:2:1-40:12
+MERGED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:2:1-27:12
+MERGED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:2:1-24:12
+MERGED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:2:1-42:12
+MERGED from [io.reactivex.rxjava2:rxandroid:2.0.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/rxandroid-2.0.2.aar/0b8f3a34a8e0c259b56166cf830b0fa5/AndroidManifest.xml:15:1-21:12
+MERGED from [com.android.support:support-v4:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-v4-28.0.0.aar/b253af387e7e56e9942c66270d34a73c/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:design:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/2edede5b9151a6a2842c055ace8b76ad/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:support-media-compat:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/ad752f8dcfca17d72e847381d668f568/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/4999880eceb1f39fd83d9520a59133b6/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/89964bec9e72d3b1bcf03d1b48b36d23/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/edfbdf2c1d5002689ff3c1f76e797b04/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/fe0948138861e4ca4fce3b0db6d8bfcb/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/b3cb937dc7e72ec7340408d3c8f9b15e/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/0840cdfcb59c30e7722d1c71acc3895e/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:transition:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/8f00987cff9c7d14e8cb65374d7d53f5/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/01b74bb43ea2c723866f184242e3201f/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/1d634adcb36166ffe06302d2e843c167/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/f6e6a9c81f66142ada448b9437819553/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/773c94aa1104054847896ea3fff494c0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/67271816f3f0aafc64fd35421c4f2d8f/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/763171920ddac32344a827d9e548e21d/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/976b4e453bebf7d8fa7d1e643d7f87fe/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/7ae509002aae5af733d4bd7d3577fe28/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/50bb5a17952b4612e021d1bd8ee98626/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/86a3dee832ac19e831d6d9db8b22042b/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/6bf15c31596246f2de032df655e6a802/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/82e2e0ccd110a28d72dfe463ef815420/AndroidManifest.xml:17:1-25:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/b1448e77fc1d9782c9e68e603d5e2bc7/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/9ea3910944e2ab8f5868ae6a01ac4ac6/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/a37dea9b30277480f4e5914de40ee32c/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/4fe90d747a5e1e4185fa8a5f3074ed0a/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/7179d72dbdaf5fa16f80ca0541b71cb2/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/d06fed663d19f74ab06feffce63725bf/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/551c77c2ad288dc3f3198823f4538e20/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/a4ac1b742d1146b2b468110e74b4b8f5/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/683fd12e7c3be9f2fee3224423b95461/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/2f9102cc140954a40b94ce8df93eb084/AndroidManifest.xml:17:1-22:12
+INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:1:1-39:12
+	package
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:2:5-50
+		INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:1:1-39:12
+		INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:1:1-39:12
+		INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:1:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:8:5-66
+MERGED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:15:5-67
+MERGED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:15:5-67
+	android:name
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:8:22-64
+application
+ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:15:5-38:19
+MERGED from [com.instabug.library:instabug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-8.2.2.aar/6dcc83edd07bf10bc860db3e1a912b25/AndroidManifest.xml:9:5-10:19
+MERGED from [com.instabug.library:instabug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-8.2.2.aar/6dcc83edd07bf10bc860db3e1a912b25/AndroidManifest.xml:9:5-10:19
+MERGED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:11:5-29:19
+MERGED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:11:5-29:19
+MERGED from [com.instabug.library:instabug-crash:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-crash-8.2.2.aar/1280bdb2b51b5dc1b2b5c722d2828aa7/AndroidManifest.xml:11:5-15:19
+MERGED from [com.instabug.library:instabug-crash:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-crash-8.2.2.aar/1280bdb2b51b5dc1b2b5c722d2828aa7/AndroidManifest.xml:11:5-15:19
+MERGED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:14:5-38:19
+MERGED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:14:5-38:19
+MERGED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:11:5-25:19
+MERGED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:11:5-25:19
+MERGED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:11:5-22:19
+MERGED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:11:5-22:19
+MERGED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:18:5-40:19
+MERGED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:18:5-40:19
+MERGED from [com.android.support:design:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/2edede5b9151a6a2842c055ace8b76ad/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/2edede5b9151a6a2842c055ace8b76ad/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-compat:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/86a3dee832ac19e831d6d9db8b22042b/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/86a3dee832ac19e831d6d9db8b22042b/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/82e2e0ccd110a28d72dfe463ef815420/AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/82e2e0ccd110a28d72dfe463ef815420/AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/86a3dee832ac19e831d6d9db8b22042b/AndroidManifest.xml:22:18-91
+	android:label
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:17:9-49
+	android:icon
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:18:9-43
+	android:name
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:16:9-49
+activity#com.instabug.instabugflutterexample.MainActivity
+ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:19:9-37:20
+	android:launchMode
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:21:13-43
+	android:hardwareAccelerated
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:24:13-47
+	android:windowSoftInputMode
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:25:13-55
+	android:configChanges
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:23:13-137
+	android:theme
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:22:13-47
+	android:name
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:20:13-41
+meta-data#io.flutter.app.android.SplashScreenUntilFirstFrame
+ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:30:13-32:40
+	android:value
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:32:17-37
+	android:name
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:31:17-82
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:33:13-36:29
+action#android.intent.action.MAIN
+ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:34:17-68
+	android:name
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:34:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:35:17-76
+	android:name
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml:35:27-74
+uses-sdk
+INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+MERGED from [:instabug_flutter] /Users/alyezz/Flutter/Instabug-Flutter/example/build/instabug_flutter/intermediates/merged_manifests/release/processReleaseManifest/merged/AndroidManifest.xml:5:5-44
+MERGED from [:instabug_flutter] /Users/alyezz/Flutter/Instabug-Flutter/example/build/instabug_flutter/intermediates/merged_manifests/release/processReleaseManifest/merged/AndroidManifest.xml:5:5-44
+MERGED from [com.instabug.library:instabug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-8.2.2.aar/6dcc83edd07bf10bc860db3e1a912b25/AndroidManifest.xml:5:5-7:41
+MERGED from [com.instabug.library:instabug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-8.2.2.aar/6dcc83edd07bf10bc860db3e1a912b25/AndroidManifest.xml:5:5-7:41
+MERGED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:7:5-9:41
+MERGED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:7:5-9:41
+MERGED from [com.instabug.library:instabug-crash:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-crash-8.2.2.aar/1280bdb2b51b5dc1b2b5c722d2828aa7/AndroidManifest.xml:7:5-9:41
+MERGED from [com.instabug.library:instabug-crash:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-crash-8.2.2.aar/1280bdb2b51b5dc1b2b5c722d2828aa7/AndroidManifest.xml:7:5-9:41
+MERGED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:7:5-9:41
+MERGED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:7:5-9:41
+MERGED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:7:5-9:41
+MERGED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:7:5-9:41
+MERGED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:7:5-9:41
+MERGED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:7:5-9:41
+MERGED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:5:5-7:41
+MERGED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:5:5-7:41
+MERGED from [io.reactivex.rxjava2:rxandroid:2.0.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/rxandroid-2.0.2.aar/0b8f3a34a8e0c259b56166cf830b0fa5/AndroidManifest.xml:19:5-43
+MERGED from [io.reactivex.rxjava2:rxandroid:2.0.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/rxandroid-2.0.2.aar/0b8f3a34a8e0c259b56166cf830b0fa5/AndroidManifest.xml:19:5-43
+MERGED from [com.android.support:support-v4:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-v4-28.0.0.aar/b253af387e7e56e9942c66270d34a73c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-v4-28.0.0.aar/b253af387e7e56e9942c66270d34a73c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/2edede5b9151a6a2842c055ace8b76ad/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/2edede5b9151a6a2842c055ace8b76ad/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/ad752f8dcfca17d72e847381d668f568/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/ad752f8dcfca17d72e847381d668f568/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/4999880eceb1f39fd83d9520a59133b6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/4999880eceb1f39fd83d9520a59133b6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/89964bec9e72d3b1bcf03d1b48b36d23/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/89964bec9e72d3b1bcf03d1b48b36d23/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/edfbdf2c1d5002689ff3c1f76e797b04/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/edfbdf2c1d5002689ff3c1f76e797b04/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/fe0948138861e4ca4fce3b0db6d8bfcb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/fe0948138861e4ca4fce3b0db6d8bfcb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/b3cb937dc7e72ec7340408d3c8f9b15e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/b3cb937dc7e72ec7340408d3c8f9b15e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/0840cdfcb59c30e7722d1c71acc3895e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/0840cdfcb59c30e7722d1c71acc3895e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/8f00987cff9c7d14e8cb65374d7d53f5/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/8f00987cff9c7d14e8cb65374d7d53f5/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/01b74bb43ea2c723866f184242e3201f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/01b74bb43ea2c723866f184242e3201f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/1d634adcb36166ffe06302d2e843c167/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/1d634adcb36166ffe06302d2e843c167/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/f6e6a9c81f66142ada448b9437819553/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/f6e6a9c81f66142ada448b9437819553/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/773c94aa1104054847896ea3fff494c0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/773c94aa1104054847896ea3fff494c0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/67271816f3f0aafc64fd35421c4f2d8f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/67271816f3f0aafc64fd35421c4f2d8f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/763171920ddac32344a827d9e548e21d/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/763171920ddac32344a827d9e548e21d/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/976b4e453bebf7d8fa7d1e643d7f87fe/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/976b4e453bebf7d8fa7d1e643d7f87fe/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/7ae509002aae5af733d4bd7d3577fe28/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/7ae509002aae5af733d4bd7d3577fe28/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/50bb5a17952b4612e021d1bd8ee98626/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/50bb5a17952b4612e021d1bd8ee98626/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/86a3dee832ac19e831d6d9db8b22042b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/86a3dee832ac19e831d6d9db8b22042b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/6bf15c31596246f2de032df655e6a802/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/6bf15c31596246f2de032df655e6a802/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/82e2e0ccd110a28d72dfe463ef815420/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/82e2e0ccd110a28d72dfe463ef815420/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/b1448e77fc1d9782c9e68e603d5e2bc7/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/b1448e77fc1d9782c9e68e603d5e2bc7/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/9ea3910944e2ab8f5868ae6a01ac4ac6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/9ea3910944e2ab8f5868ae6a01ac4ac6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/a37dea9b30277480f4e5914de40ee32c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/a37dea9b30277480f4e5914de40ee32c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/4fe90d747a5e1e4185fa8a5f3074ed0a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/4fe90d747a5e1e4185fa8a5f3074ed0a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/7179d72dbdaf5fa16f80ca0541b71cb2/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/7179d72dbdaf5fa16f80ca0541b71cb2/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/d06fed663d19f74ab06feffce63725bf/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/d06fed663d19f74ab06feffce63725bf/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/551c77c2ad288dc3f3198823f4538e20/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/551c77c2ad288dc3f3198823f4538e20/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/a4ac1b742d1146b2b468110e74b4b8f5/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/a4ac1b742d1146b2b468110e74b4b8f5/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/683fd12e7c3be9f2fee3224423b95461/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/683fd12e7c3be9f2fee3224423b95461/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/2f9102cc140954a40b94ce8df93eb084/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/2f9102cc140954a40b94ce8df93eb084/AndroidManifest.xml:20:5-44
+INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/alyezz/Flutter/Instabug-Flutter/example/android/app/src/main/AndroidManifest.xml
+activity#com.instabug.survey.ui.SurveyActivity
+ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:12:9-16:58
+	android:launchMode
+		ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:14:13-43
+	android:windowSoftInputMode
+		ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:16:13-55
+	android:theme
+		ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:15:13-63
+	android:name
+		ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:13:13-65
+activity#com.instabug.survey.announcements.ui.activity.AnnouncementActivity
+ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:17:9-21:58
+	android:launchMode
+		ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:19:13-43
+	android:windowSoftInputMode
+		ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:21:13-55
+	android:theme
+		ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:20:13-63
+	android:name
+		ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:18:13-94
+service#com.instabug.survey.network.service.InstabugSurveysSubmitterService
+ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:23:9-25:72
+	android:permission
+		ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:25:13-69
+	android:name
+		ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:24:13-95
+service#com.instabug.survey.announcements.network.InstabugAnnouncementSubmitterService
+ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:26:9-28:72
+	android:permission
+		ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:28:13-69
+	android:name
+		ADDED from [com.instabug.library:instabug-survey:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/AndroidManifest.xml:27:13-106
+service#com.instabug.crash.network.InstabugCrashesUploaderService
+ADDED from [com.instabug.library:instabug-crash:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-crash-8.2.2.aar/1280bdb2b51b5dc1b2b5c722d2828aa7/AndroidManifest.xml:12:9-14:72
+	android:permission
+		ADDED from [com.instabug.library:instabug-crash:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-crash-8.2.2.aar/1280bdb2b51b5dc1b2b5c722d2828aa7/AndroidManifest.xml:14:13-69
+	android:name
+		ADDED from [com.instabug.library:instabug-crash:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-crash-8.2.2.aar/1280bdb2b51b5dc1b2b5c722d2828aa7/AndroidManifest.xml:13:13-85
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:11:5-81
+MERGED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:10:5-81
+MERGED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:10:5-81
+	android:name
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:11:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:12:5-80
+MERGED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:11:5-80
+MERGED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:11:5-80
+	android:name
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:12:22-77
+activity#com.instabug.bug.view.BugReportingActivity
+ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:15:9-30:20
+	android:launchMode
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:18:13-44
+	android:windowSoftInputMode
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:20:13-55
+	android:configChanges
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:17:13-74
+	android:theme
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:19:13-52
+	android:name
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:16:13-70
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.DEFAULT+data:host:instabug-disclaimer.com+data:scheme:instabug-bug
+ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:21:13-29:29
+data
+ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:22:17-24:53
+	android:host
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:23:21-59
+	android:scheme
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:24:21-50
+category#android.intent.category.DEFAULT
+ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:26:17-76
+	android:name
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:26:27-73
+action#android.intent.action.VIEW
+ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:28:17-69
+	android:name
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:28:25-66
+service#com.instabug.bug.network.InstabugBugsUploaderService
+ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:32:9-34:72
+	android:permission
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:34:13-69
+	android:name
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:33:13-80
+service#com.instabug.bug.view.actionList.service.ReportCategoriesService
+ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:35:9-37:72
+	android:permission
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:37:13-69
+	android:name
+		ADDED from [com.instabug.library:instabug-bug:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/AndroidManifest.xml:36:13-92
+activity#com.instabug.chat.ui.ChatActivity
+ADDED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:12:9-17:58
+	android:launchMode
+		ADDED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:15:13-43
+	android:windowSoftInputMode
+		ADDED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:17:13-55
+	android:configChanges
+		ADDED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:14:13-59
+	android:theme
+		ADDED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:16:13-52
+	android:name
+		ADDED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:13:13-61
+service#com.instabug.chat.network.InstabugMessageUploaderService
+ADDED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:19:9-21:72
+	android:permission
+		ADDED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:21:13-69
+	android:name
+		ADDED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:20:13-84
+service#com.instabug.chat.network.InstabugPushNotificationTokenService
+ADDED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:22:9-24:72
+	android:permission
+		ADDED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:24:13-69
+	android:name
+		ADDED from [com.instabug.library:instabug-chat:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-chat-8.2.2.aar/1df9bcbda5dc4c5e04e67a6842cdba8c/AndroidManifest.xml:23:13-90
+activity#com.instabug.featuresrequest.ui.FeaturesRequestActivity
+ADDED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:12:9-17:58
+	android:launchMode
+		ADDED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:15:13-43
+	android:windowSoftInputMode
+		ADDED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:17:13-55
+	android:configChanges
+		ADDED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:14:13-59
+	android:theme
+		ADDED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:16:13-51
+	android:name
+		ADDED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:13:13-83
+service#com.instabug.featuresrequest.network.service.FeaturesRequestVoteService
+ADDED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:19:9-21:72
+	android:permission
+		ADDED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:21:13-69
+	android:name
+		ADDED from [com.instabug.library:instabug-features-request:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-features-request-8.2.2.aar/3b4de09d00a3242d235af4b3743d62ba/AndroidManifest.xml:20:13-99
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:9:5-79
+	android:name
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:9:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:12:5-76
+	android:name
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:12:22-73
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:13:5-71
+	android:name
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:13:22-68
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:14:5-80
+	android:name
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:14:22-77
+uses-permission#android.permission.WAKE_LOCK
+ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:16:5-68
+	android:name
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:16:22-65
+service#com.instabug.library.network.worker.uploader.InstabugSessionUploaderService
+ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:19:9-21:72
+	android:permission
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:21:13-69
+	android:name
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:20:13-103
+service#com.instabug.library.analytics.network.InstabugAnalyticsUploaderService
+ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:22:9-24:72
+	android:permission
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:24:13-69
+	android:name
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:23:13-99
+activity#com.instabug.library.internal.video.RequestPermissionActivity
+ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:26:9-29:75
+	android:configChanges
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:28:13-59
+	android:theme
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:29:13-72
+	android:name
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:27:13-89
+activity#com.instabug.library.invocation.invocationdialog.InstabugDialogActivity
+ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:30:9-33:66
+	android:launchMode
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:32:13-44
+	android:theme
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:33:13-63
+	android:name
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:31:13-99
+activity#com.instabug.library.ui.onboarding.OnboardingActivity
+ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:34:9-37:66
+	android:launchMode
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:36:13-44
+	android:theme
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:37:13-63
+	android:name
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:35:13-81
+service#com.instabug.library.internal.video.ScreenRecordingService
+ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:39:9-94
+	android:name
+		ADDED from [com.instabug.library:instabug-core:8.2.2] /Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-core-8.2.2.aar/2c86ae9e2b8eed1ec7a84dad541b1598/AndroidManifest.xml:39:18-91

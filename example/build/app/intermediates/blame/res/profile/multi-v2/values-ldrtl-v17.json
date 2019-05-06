@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/alyezz/Flutter/Instabug-Flutter/example/build/app/intermediates/incremental/mergeProfileResources/merged.dir/values-ldrtl-v17/values-ldrtl-v17.xml",
+            "map": [
+                {
+                    "source": "/Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/res/values-ldrtl-v17/values-ldrtl-v17.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "14",
+                        "endColumns": "12",
+                        "endOffsets": "913"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "117",
+                        "endLines": "15",
+                        "endColumns": "12",
+                        "endOffsets": "975"
+                    }
+                },
+                {
+                    "source": "/Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/res/values-ldrtl-v17/values-ldrtl-v17.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "61",
+                        "endOffsets": "112"
+                    }
+                }
+            ]
+        }
+    ]
+}

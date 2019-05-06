@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="instabug_feature_rq_str_days_ago">
+        <item quantity="other">%d hari yang lalu</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_hours_ago">
+        <item quantity="other">%d jam yang lalu</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_minutes_ago">
+        <item quantity="other">%d menit yang lalu</item>
+    </plurals>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Navigasi ke beranda"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Navigasi naik"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Opsi lain"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Selesai"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Lihat semua"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Pilih aplikasi"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"NONAKTIF"</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"AKTIF"</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"Alt+"</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"Ctrl+"</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"delete"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"enter"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"Function+"</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"Meta+"</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"Shift+"</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"spasi"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"Sym+"</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"Menu+"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"Telusuri..."</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Hapus kueri"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Kueri penelusuran"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Telusuri"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Kirim kueri"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Penelusuran suara"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Bagikan dengan"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"Bagikan ke <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Ciutkan"</string>
+    <string name="add_feature">Tambahkan pendapat Anda</string>
+    <string name="close">Tutup</string>
+    <string name="feature_request_close_dialog_message">Apakah Anda yakin ingin membatalkan?</string>
+    <string name="feature_request_comments">Komentar</string>
+    <string name="feature_request_comments_count">%d Komentar</string>
+    <string name="feature_request_go_back">Kembali</string>
+    <string name="feature_request_leave_comment">Jadilah yang pertama berkomentar.</string>
+    <string name="feature_request_owner">Oleh %s</string>
+    <string name="feature_request_owner_anonymous">Oleh Anonim</string>
+    <string name="feature_request_owner_anonymous_word">Anonim</string>
+    <string name="feature_request_status_changed_to">Status diubah menjadi</string>
+    <string name="feature_request_str_add_comment_comment_empty">Masukkan komentar yang valid.</string>
+    <string name="feature_request_str_add_comment_disclaimer">Kami akan memerlukan email Anda untuk mengirimkan informasi terbaru.</string>
+    <string name="feature_request_str_add_comment_error">Terjadi kesalahan saat mencoba menambahkan komentar Anda.</string>
+    <string name="feature_request_str_add_comment_valid_email">Masukkan alamat email yang valid.</string>
+    <string name="feature_request_str_add_feature_error">Terjadi kesalahan saat mencoba menambahkan fitur Anda.</string>
+    <string name="feature_request_str_adding_your_comment">Menambahkan komentar Anda</string>
+    <string name="feature_request_str_just_now">Baru Saja</string>
+    <string name="feature_request_str_less">Ciutkan</string>
+    <string name="feature_request_str_more">Selengkapnya</string>
+    <string name="feature_request_str_post_comment">Posting</string>
+    <string name="feature_request_str_thanks">Terima kasih atas masukan Anda!</string>
+    <string name="feature_request_str_thanks_msg">Kami akan mengirimkan informasi terbaru untuk Anda</string>
+    <string name="feature_request_votes_count">%d Suara</string>
+    <string name="feature_requests_details">Detail Fitur</string>
+    <string name="feature_requests_error_state_sub_title">Periksa koneksi Anda, lalu coba lagi.</string>
+    <string name="feature_requests_error_state_title">Terjadi kesalahan.</string>
+    <string name="feature_requests_new_adding_your_suggestion">Menambahkan saran Anda.</string>
+    <string name="feature_requests_new_appbar_title">Tambahkan Fitur</string>
+    <string name="feature_requests_new_bottom_hint">Kami memerlukan email Anda untuk mengirimkan informasi terbaru.</string>
+    <string name="feature_requests_new_description">Deskripsi</string>
+    <string name="feature_requests_new_email">Email</string>
+    <string name="feature_requests_new_err_msg_email">Masukkan email yang valid</string>
+    <string name="feature_requests_new_err_msg_required">Bidang ini wajib diisi</string>
+    <string name="feature_requests_new_name">Nama</string>
+    <string name="feature_requests_new_positive_button">Tambah</string>
+    <string name="feature_requests_new_title">Judul</string>
+    <string name="feature_requests_new_toast_message">Pastikan Anda menuliskan judul dan deskripsi dengan jelas.</string>
+    <string name="features_rq_main_fragment_tab1">Semua</string>
+    <string name="features_rq_main_fragment_tab2">Milik Saya</string>
+    <string name="ib_feature_rq_status_completed">Selesai</string>
+    <string name="ib_feature_rq_status_inprogress">Berlangsung</string>
+    <string name="ib_feature_rq_status_maybe_later">Mungkin nanti</string>
+    <string name="ib_feature_rq_status_open">Buka</string>
+    <string name="ib_feature_rq_status_planned">Direncanakan</string>
+    <string name="ib_feature_rq_str_add_your_idea">Tambahkan Gagasan Anda</string>
+    <string name="ib_feature_rq_str_completed_features">%d Fitur Diselesaikan</string>
+    <string name="ib_feature_rq_str_load_more_fail_txt">Gagal, Tidak dapat memuat data</string>
+    <string name="ib_feature_rq_str_load_more_loading_txt">Menyegarkan...</string>
+    <string name="ib_feature_rq_str_no_ideas_are_added_yet">Belum ada gagasan yang ditambahkan.</string>
+    <string name="ib_feature_rq_str_no_results">Hasil tidak ditemukan</string>
+    <string name="ib_feature_rq_str_pull_to_refresh">Tarik untuk menyegarkan</string>
+    <string name="ib_feature_rq_str_release_to_refresh">Lepaskan untuk menyegarkan</string>
+    <string name="ib_feature_rq_str_search">Cari</string>
+    <string name="ib_feature_rq_str_votes">Suara</string>
+    <string name="ib_str_beta_done">Selesai</string>
+    <string name="ib_str_beta_welcome_finishing_step_content">Miliki versi terbaru supaya dapat mengakses semua perbaikan dan fitur.</string>
+    <string name="ib_str_beta_welcome_finishing_step_title">Tetap mutakhir.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_floating">Ketuk pada tombol melayang untuk melaporkan masalah atau menyarankan peningkatan.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_screenshot">Ambil tangkapan layar untuk melaporkan masalah atau menyarankan peningkatan.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_shake">Goyangkan peranti Anda untuk melaporkan masalah atau menyarankan peningkatan.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_swipe">Geser dari kanan ke kiri untuk melaporkan masalah atau menyarankan peningkatan.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_title">Bagaimana cara melaporkan bug?</string>
+    <string name="ib_str_beta_welcome_step_content">Terima kasih telah membantu kami meningkatkan aplikasi ini. Kami menantikan masukan dan laporan bug dari Anda .</string>
+    <string name="ib_str_beta_welcome_step_title">Selamat datang di aplikasi beta kami</string>
+    <string name="ib_str_live_welcome_message_title">Kami senang mendengar masukan dari Anda.</string>
+    <string name="instabug_audio_recorder_permission_denied">Izin merekam audio ditolak</string>
+    <string name="instabug_custom_survey_thanks_subtitle">Saran dari Anda akan memengaruhi pembaruan yang lebih baik di masa mendatang.</string>
+    <string name="instabug_custom_survey_thanks_title">Terima kasih!</string>
+    <string name="instabug_err_invalid_comment">Masukkan komentar yang valid</string>
+    <string name="instabug_err_invalid_email">Masukkan email yang valid</string>
+    <string name="instabug_err_invalid_extra_field">Data Tidak Ada: %1$s wajib diisi!</string>
+    <string name="instabug_external_storage_permission_denied">Izin penyimpanan ditolak</string>
+    <string name="instabug_store_rating_survey_thanks_subtitle">Masukan Anda akan membantu kami membuat aplikasi yang lebih baik.</string>
+    <string name="instabug_store_rating_survey_thanks_title">@string/instabug_custom_survey_thanks_title</string>
+    <string name="instabug_str_action_submit">Kirim</string>
+    <string name="instabug_str_actual_results">Hasil nyata</string>
+    <string name="instabug_str_add_attachment">Tambahkan Lampiran</string>
+    <string name="instabug_str_add_photo">Pilih Gambar dari Galeri</string>
+    <string name="instabug_str_alert_message_max_attachments">Buang lampiran yang ada untuk menambahkan yang baru</string>
+    <string name="instabug_str_alert_title_max_attachments">Tidak Bisa Menambahkan Lampiran</string>
+    <string name="instabug_str_annotate">Gambari tangkapan layar</string>
+    <string name="instabug_str_ask_a_question">Ajukan pertanyaan</string>
+    <string name="instabug_str_audio">Audio</string>
+    <string name="instabug_str_bug_comment_hint">Apa masalahnya?</string>
+    <string name="instabug_str_bug_header">Laporkan Masalah</string>
+    <string name="instabug_str_bugreport_dismiss_cancel">Batal</string>
+    <string name="instabug_str_bugreport_dismiss_discard">Singkirkan</string>
+    <string name="instabug_str_bugreport_dismiss_warning_message">Apakah Anda yakin ingin menyingkirkan laporan?</string>
+    <string name="instabug_str_bugreport_dismiss_warning_title">Singkirkan Laporan?</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_message">Mohon unggah file kurang dari %d MB.</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_title">Ukuran file terlalu besar</string>
+    <string name="instabug_str_cancel">Batalkan</string>
+    <string name="instabug_str_capturing_screenshot_error">Tidak dapat menangkap tangkapan layar karena memori rendah</string>
+    <string name="instabug_str_conversations">Percakapan</string>
+    <string name="instabug_str_dialog_message_preparing">Menyiapkan…</string>
+    <string name="instabug_str_dismiss">Tutup</string>
+    <string name="instabug_str_email_hint">Masukkan email Anda</string>
+    <string name="instabug_str_error_survey_without_answer">Survei tidak bisa dikirimkan tanpa jawaban.</string>
+    <string name="instabug_str_expected_results">hasil yang diharapkan</string>
+    <string name="instabug_str_features_request_header">Permintaan Fitur</string>
+    <string name="instabug_str_features_request_ptr_loading_list_text">Kami senang mendengar masukan dari Anda!</string>
+    <string name="instabug_str_feedback_comment_hint">Perbaikan apa yang dapat kami lakukan?</string>
+    <string name="instabug_str_feedback_header">Sarankan Perbaikan</string>
+    <string name="instabug_str_hint_enter_your_answer">Ketikkan jawaban Anda...</string>
+    <string name="instabug_str_hold_to_record">Tekan dan Tahan untuk Merekam</string>
+    <string name="instabug_str_image">Gambar</string>
+    <string name="instabug_str_image_loading_error">Gambar tidak bisa dimuat</string>
+    <string name="instabug_str_invocation_dialog_title">Perlu bantuan?</string>
+    <string name="instabug_str_messages">Pesan</string>
+    <string name="instabug_str_notification_title">"Tim %1$s"</string>
+    <string name="instabug_str_notifications_body">%1$d pesan baru dari %2$s dan lainnya</string>
+    <string name="instabug_str_ok">Oke</string>
+    <string name="instabug_str_pick_media_chooser_title">Pilih file </string>
+    <string name="instabug_str_pick_media_from_gallery">Pilih file dari galeri</string>
+    <string name="instabug_str_please_wait">Mohon tunggu sebentar</string>
+    <string name="instabug_str_record_video">Amil rekaman layar</string>
+    <string name="instabug_str_release_stop_record">Lepas untuk Melampirkan</string>
+    <string name="instabug_str_reply">Balasan</string>
+    <string name="instabug_str_request_feature">Minta fitur</string>
+    <string name="instabug_str_sending_message_hint">Ketikkan pesan Anda</string>
+    <string name="instabug_str_shake_hint"><![CDATA[Kami ingin mendengar masukan dari Anda<br/><b>Goncangkan</b> perangkat Anda untuk berbicara dengan kami.]]></string>
+    <string name="instabug_str_steps_to_reproduce">Langkah untuk Mereproduksi</string>
+    <string name="instabug_str_success_note">Kami telah menerima masukan Anda.\nTerima kasih atas bantuan Anda untuk membuat %s menjadi lebih baik.</string>
+    <string name="instabug_str_survey_next">Berikutnya</string>
+    <string name="instabug_str_swipe_hint"><![CDATA[Kami ingin mendengar masukan dari Anda<br /><b>Geser dengan 2 jari</b> untuk menghubungi kami.]]></string>
+    <string name="instabug_str_take_screenshot">Ambil Tangkapan Layar</string>
+    <string name="instabug_str_talk_to_us">Sampaikan pada kami</string>
+    <string name="instabug_str_thank_you">Terima Kasih</string>
+    <string name="instabug_str_video">Video</string>
+    <string name="instabug_str_video_encoder_busy">Penmbuat Kode Video sibuk mengkodekan video lain</string>
+    <string name="instabug_str_video_encoding_error">Video tidak bisa dikodekan karena memori rendah</string>
+    <string name="instabug_str_video_length_limit_warning_message">Unggah video yang durasinya kurang dari 1 menit.</string>
+    <string name="instabug_str_video_length_limit_warning_title">Durasi video terlalu panjang</string>
+    <string name="instabug_str_video_player">Pemutar Video</string>
+    <string name="instabug_str_video_recording_hint">Tekan rekam jika telah siap</string>
+    <string name="instabug_survey_welcome_button">Mari Mulai</string>
+    <string name="instabug_survey_welcome_feedback">Kami ingin mendengar masukan dari Anda</string>
+    <string name="instabug_survey_welcome_feedback_msg">Dapatkah Anda membantu kami melakukan peningkatan dengan mengisi survei singkat ini?</string>
+    <string msgid="146198913615257606" name="search_menu_title">"Telusuri"</string>
+    <string name="sort_by_recently_updated">Terkini</string>
+    <string name="sort_by_top_rated">Teratas</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="surveys_nps_btn_rate_us">Beri kami nilai di Play Store</string>
+    <string name="surveys_nps_less_likely">Sangat tidak mungkin</string>
+    <string name="surveys_nps_rate_us_message">Terima kasih atas cinta Anda!</string>
+    <string name="surveys_nps_very_likely">Sangat mungkin</string>
+</resources>

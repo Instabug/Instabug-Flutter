@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/alyezz/Flutter/Instabug-Flutter/example/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-sw320dp-land-v13/values-sw320dp-land-v13.xml",
+            "map": [
+                {
+                    "source": "/Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-survey-8.2.2.aar/9668a87692643a945fd64652bf7b1827/res/values-sw320dp-land-v13/values-sw320dp-land-v13.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,107,162,217,266,325,390,452,522,587",
+                        "endColumns": "51,54,54,48,58,64,61,69,64,61",
+                        "endOffsets": "102,157,212,261,320,385,447,517,582,644"
+                    }
+                }
+            ]
+        }
+    ]
+}

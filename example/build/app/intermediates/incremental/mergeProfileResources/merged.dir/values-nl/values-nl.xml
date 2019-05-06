@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="instabug_feature_rq_str_days_ago">
+        <item quantity="one">%d dag geleden</item>
+        <item quantity="other">%d dagen geleden</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_hours_ago">
+        <item quantity="one">%d uur geleden</item>
+        <item quantity="other">%d uur geleden</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_minutes_ago">
+        <item quantity="one">%d minuut geleden</item>
+        <item quantity="other">%d minuten geleden</item>
+    </plurals>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Navigeren naar startpositie"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Omhoog navigeren"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Meer opties"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Gereed"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Alles weergeven"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Een app selecteren"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"UIT"</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"AAN"</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"Alt +"</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"Ctrl +"</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"verwijderen"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"enter"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"Functie +"</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"Meta +"</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"Shift +"</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"spatie"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"Sym +"</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"Menu +"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"Zoeken…"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Zoekopdracht wissen"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Zoekopdracht"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Zoeken"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Zoekopdracht verzenden"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Gesproken zoekopdracht"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Delen met"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"Delen met <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Samenvouwen"</string>
+    <string name="add_feature">Voeg uw mening toe</string>
+    <string name="close">Sluiten</string>
+    <string name="feature_request_close_dialog_message">Weet u zeker dat u wilt annuleren?</string>
+    <string name="feature_request_comments">Reacties</string>
+    <string name="feature_request_comments_count">%d reacties</string>
+    <string name="feature_request_go_back">Terug</string>
+    <string name="feature_request_leave_comment">Wees de eerste die reageert.</string>
+    <string name="feature_request_owner">Door %s</string>
+    <string name="feature_request_owner_anonymous">Door Anoniem</string>
+    <string name="feature_request_owner_anonymous_word">Anoniem</string>
+    <string name="feature_request_status_changed_to">Status gewijzigd in</string>
+    <string name="feature_request_str_add_comment_comment_empty">Voer een geldige reactie in.</string>
+    <string name="feature_request_str_add_comment_disclaimer">We hebben uw e-mailadres nodig om u op de hoogte te stellen van updates.</string>
+    <string name="feature_request_str_add_comment_error">Er is iets verkeerd gegaan bij het toevoegen van uw reactie.</string>
+    <string name="feature_request_str_add_comment_valid_email">Voer een geldig e-mailadres in.</string>
+    <string name="feature_request_str_add_feature_error">Er is iets verkeerd gegaan tijdens het toevoegen van uw eigenschap.</string>
+    <string name="feature_request_str_adding_your_comment">Uw reactie wordt toegevoegd</string>
+    <string name="feature_request_str_just_now">Zojuist</string>
+    <string name="feature_request_str_less">Minder</string>
+    <string name="feature_request_str_more">Meer</string>
+    <string name="feature_request_str_post_comment">Bericht</string>
+    <string name="feature_request_str_thanks">Bedankt voor uw feedback!</string>
+    <string name="feature_request_str_thanks_msg">We houden u op de hoogte van updates.</string>
+    <string name="feature_request_votes_count">%d stemmen</string>
+    <string name="feature_requests_details">Details van eigenschap</string>
+    <string name="feature_requests_error_state_sub_title">Controleer uw verbinding en probeer het opnieuw.</string>
+    <string name="feature_requests_error_state_title">Er is iets verkeerd gegaan.</string>
+    <string name="feature_requests_new_adding_your_suggestion">Uw suggestie wordt toegevoegd.</string>
+    <string name="feature_requests_new_appbar_title">Eigenschap toevoegen</string>
+    <string name="feature_requests_new_bottom_hint">We hebben uw e-mailadres nodig om u op de hoogte te houden van updates.</string>
+    <string name="feature_requests_new_description">Beschrijving</string>
+    <string name="feature_requests_new_email">E-mailadres</string>
+    <string name="feature_requests_new_err_msg_email">Voer een geldig e-mailadres in</string>
+    <string name="feature_requests_new_err_msg_required">Dit veld is verplicht</string>
+    <string name="feature_requests_new_name">Naam</string>
+    <string name="feature_requests_new_positive_button">Toevoegen</string>
+    <string name="feature_requests_new_title">Titel</string>
+    <string name="feature_requests_new_toast_message">Kies een duidelijke titel en beschrijving.</string>
+    <string name="features_rq_main_fragment_tab1">Alle</string>
+    <string name="features_rq_main_fragment_tab2">Eigen</string>
+    <string name="ib_feature_rq_status_completed">Voltooid</string>
+    <string name="ib_feature_rq_status_inprogress">In uitvoering</string>
+    <string name="ib_feature_rq_status_maybe_later">Misschien later</string>
+    <string name="ib_feature_rq_status_open">Open</string>
+    <string name="ib_feature_rq_status_planned">Gepland</string>
+    <string name="ib_feature_rq_str_add_your_idea">Voeg uw idee toe</string>
+    <string name="ib_feature_rq_str_completed_features">%d voltooide eigenschappen</string>
+    <string name="ib_feature_rq_str_load_more_fail_txt">Mislukt, kan gegevens niet laden</string>
+    <string name="ib_feature_rq_str_load_more_loading_txt">Vernieuwen...</string>
+    <string name="ib_feature_rq_str_no_ideas_are_added_yet">Er zijn nog geen ideeën toegevoegd.</string>
+    <string name="ib_feature_rq_str_no_results">Geen resultaten gevonden</string>
+    <string name="ib_feature_rq_str_pull_to_refresh">Trek hieraan om te vernieuwen</string>
+    <string name="ib_feature_rq_str_release_to_refresh">Laat los om te vernieuwen</string>
+    <string name="ib_feature_rq_str_search">Zoeken</string>
+    <string name="ib_feature_rq_str_votes">Stemmen</string>
+    <string name="ib_str_beta_done">Klaar</string>
+    <string name="ib_str_beta_welcome_finishing_step_content">Blijf bij de nieuwste versie voor toegang tot alle functies en probleemoplossingen.</string>
+    <string name="ib_str_beta_welcome_finishing_step_title">Blijf op de hoogte.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_floating">Tik op de zwevende knop om een probleem te melden of een verbetering voor te stellen.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_screenshot">Neem een screenshot om een probleem te melden of een verbetering voor te stellen.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_shake">Schud uw apparaat om een probleem te melden of een verbetering voor te stellen.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_swipe">Veeg van rechts naar links om een probleem te melden of een verbetering voor te stellen.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_title">Hoe meld ik een bug?</string>
+    <string name="ib_str_beta_welcome_step_content">Bedankt voor uw hulp bij het verbeteren van onze app. We kijken uit naar uw feedback en bug-meldingen.</string>
+    <string name="ib_str_beta_welcome_step_title">Welkom op onze bèta-app</string>
+    <string name="ib_str_live_welcome_message_title">We horen altijd graag van u.</string>
+    <string name="instabug_audio_recorder_permission_denied">Toestemming voor geluidsopname geweigerd</string>
+    <string name="instabug_custom_survey_thanks_subtitle">Uw mening heeft invloed op betere updates.</string>
+    <string name="instabug_custom_survey_thanks_title">Bedankt!</string>
+    <string name="instabug_err_invalid_comment">Voer een geldige reactie in</string>
+    <string name="instabug_err_invalid_email">Voer een geldig e-mailadres in</string>
+    <string name="instabug_err_invalid_extra_field">Ontbrekende gegevens: %1$s is vereist!</string>
+    <string name="instabug_external_storage_permission_denied">Opslagtoestemming geweigerd</string>
+    <string name="instabug_store_rating_survey_thanks_subtitle">Uw feedback helpt ons om een betere app te maken.</string>
+    <string name="instabug_store_rating_survey_thanks_title">@string/instabug_custom_survey_thanks_title</string>
+    <string name="instabug_str_action_submit">Indienen</string>
+    <string name="instabug_str_actual_results">Werkelijke resultaten</string>
+    <string name="instabug_str_add_attachment">Bijlagen toevoegen</string>
+    <string name="instabug_str_add_photo">Afbeelding in galerie selecteren</string>
+    <string name="instabug_str_alert_message_max_attachments">Verwijder een bestaande bijlage om een nieuwe toe te voegen.</string>
+    <string name="instabug_str_alert_title_max_attachments">Toevoegen bijlage mislukt</string>
+    <string name="instabug_str_annotate">Tekenen op schermafbeelding</string>
+    <string name="instabug_str_ask_a_question">Een vraag stellen</string>
+    <string name="instabug_str_audio">Geluid</string>
+    <string name="instabug_str_bug_comment_hint">Wat is er mis gegaan?</string>
+    <string name="instabug_str_bug_header">Een probleem melden</string>
+    <string name="instabug_str_bugreport_dismiss_cancel">Hier blijven</string>
+    <string name="instabug_str_bugreport_dismiss_discard">Weggooien</string>
+    <string name="instabug_str_bugreport_dismiss_warning_message">Weet u zeker dat u het rapport wilt weggooien?</string>
+    <string name="instabug_str_bugreport_dismiss_warning_title">Rapport weggooien?</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_message">Upload een bestand niet groter dan %d MB.</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_title">Bestandsomvang is te groot</string>
+    <string name="instabug_str_cancel">Annuleren</string>
+    <string name="instabug_str_capturing_screenshot_error">Kan schermafbeelding niet maken vanwege onvoldoende geheugen</string>
+    <string name="instabug_str_conversations">Gesprekken</string>
+    <string name="instabug_str_dialog_message_preparing">Voorbereiden...</string>
+    <string name="instabug_str_dismiss">Sluiten</string>
+    <string name="instabug_str_email_hint">Voer uw e-mailadres in</string>
+    <string name="instabug_str_error_survey_without_answer">Enquête kan niet worden verzonden zonder antwoord.</string>
+    <string name="instabug_str_expected_results">Verwachte resultaten</string>
+    <string name="instabug_str_features_request_header">Verzoeken om eigenschappen</string>
+    <string name="instabug_str_features_request_ptr_loading_list_text">We horen heel graag wat u ervan vindt!</string>
+    <string name="instabug_str_feedback_comment_hint">Hoe kunnen we verbeteren?</string>
+    <string name="instabug_str_feedback_header">Een verbetering voorstellen</string>
+    <string name="instabug_str_hint_enter_your_answer">Typ uw antwoord…</string>
+    <string name="instabug_str_hold_to_record">Ingedrukt houden om op te nemen</string>
+    <string name="instabug_str_image">Afbeelding</string>
+    <string name="instabug_str_image_loading_error">Afbeelding laden mislukt</string>
+    <string name="instabug_str_invocation_dialog_title">Hulp nodig?</string>
+    <string name="instabug_str_messages">Berichten</string>
+    <string name="instabug_str_notification_title">"%1$s-team"</string>
+    <string name="instabug_str_notifications_body">%1$d nieuwe berichten van %2$s en anderen</string>
+    <string name="instabug_str_ok">OK</string>
+    <string name="instabug_str_pick_media_chooser_title">Selecteer een bestand </string>
+    <string name="instabug_str_pick_media_from_gallery">Selecteer bestand uit galerij</string>
+    <string name="instabug_str_please_wait">Momentje...</string>
+    <string name="instabug_str_record_video">Maak een schermopname</string>
+    <string name="instabug_str_release_stop_record">Loslaten om bij te voegen</string>
+    <string name="instabug_str_reply">Beantwoorden</string>
+    <string name="instabug_str_request_feature">Vraag een eigenschap aan</string>
+    <string name="instabug_str_sending_message_hint">Typ uw bericht</string>
+    <string name="instabug_str_shake_hint"><![CDATA[We horen graag uw feedback<br/><b>Schud</b> met uw apparaat om met ons te praten.]]></string>
+    <string name="instabug_str_steps_to_reproduce">Stappen om te reproduceren</string>
+    <string name="instabug_str_success_note">We hebben uw feedback ontvangen.\nHartelijk dank dat u ons helpt met het verbeteren van %s.</string>
+    <string name="instabug_str_survey_next">Volgende</string>
+    <string name="instabug_str_swipe_hint"><![CDATA[We horen graag uw feedback<br /><b>Veeg met 2 vingers</b> om met ons te praten.]]></string>
+    <string name="instabug_str_take_screenshot">Maak een schermafbeelding</string>
+    <string name="instabug_str_talk_to_us">Praat met ons</string>
+    <string name="instabug_str_thank_you">Bedankt</string>
+    <string name="instabug_str_video">Video</string>
+    <string name="instabug_str_video_encoder_busy">Op dit moment wordt een andere video gecodeerd</string>
+    <string name="instabug_str_video_encoding_error">Video coderen niet mogelijk door te weinig geheugen</string>
+    <string name="instabug_str_video_length_limit_warning_message">Upload een video van maximaal 1 minuut.</string>
+    <string name="instabug_str_video_length_limit_warning_title">De video duurt te lang</string>
+    <string name="instabug_str_video_player">Videospeler</string>
+    <string name="instabug_str_video_recording_hint">Druk op de opnameknop als u klaar bent</string>
+    <string name="instabug_survey_welcome_button">Aan de slag</string>
+    <string name="instabug_survey_welcome_feedback">We horen heel graag van u</string>
+    <string name="instabug_survey_welcome_feedback_msg">Wilt u ons helpen beter te worden door deze korte vragenlijst in te vullen?</string>
+    <string msgid="146198913615257606" name="search_menu_title">"Zoeken"</string>
+    <string name="sort_by_recently_updated">Recent</string>
+    <string name="sort_by_top_rated">Beste</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="surveys_nps_btn_rate_us">Beoordeel ons in de Play Store</string>
+    <string name="surveys_nps_less_likely">Minder waarschijnlijk</string>
+    <string name="surveys_nps_rate_us_message">Bedankt! Wat lief van je!</string>
+    <string name="surveys_nps_very_likely">Waarschijnlijker</string>
+</resources>

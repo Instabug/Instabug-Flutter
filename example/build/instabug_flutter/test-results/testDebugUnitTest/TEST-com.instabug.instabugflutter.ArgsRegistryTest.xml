@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.instabug.instabugflutter.ArgsRegistryTest" tests="11" skipped="1" failures="0" errors="0" timestamp="2019-05-01T14:01:15" hostname="Alys-iMac.local" time="0.009">
+  <properties/>
+  <testcase name="givenEnglishLocaleIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale" classname="com.instabug.instabugflutter.ArgsRegistryTest" time="0.004"/>
+  <testcase name="given$registerWelcomeMessageArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria" classname="com.instabug.instabugflutter.ArgsRegistryTest" time="0.001"/>
+  <testcase name="given$registerColorThemeArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria" classname="com.instabug.instabugflutter.ArgsRegistryTest" time="0.0"/>
+  <testcase name="givenShakeHintIsPresent_when$getDeserializedValue_thenShouldReturnNonNullKey" classname="com.instabug.instabugflutter.ArgsRegistryTest" time="0.0"/>
+  <testcase name="duplicate_given$registerPlaceHolderKeysArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria" classname="com.instabug.instabugflutter.ArgsRegistryTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="given$registerInstabugInvocationEventsArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria" classname="com.instabug.instabugflutter.ArgsRegistryTest" time="0.0"/>
+  <testcase name="given$ArgsRegistryIsInitialized_whenQuery_thenShouldMatchCriteria" classname="com.instabug.instabugflutter.ArgsRegistryTest" time="0.001"/>
+  <testcase name="givenWelcomeMessageBetaIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale" classname="com.instabug.instabugflutter.ArgsRegistryTest" time="0.0"/>
+  <testcase name="given$registerLocaleArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria" classname="com.instabug.instabugflutter.ArgsRegistryTest" time="0.0"/>
+  <testcase name="givenFabInvocationIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale" classname="com.instabug.instabugflutter.ArgsRegistryTest" time="0.0"/>
+  <testcase name="given$registerPlaceHolderKeysArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria" classname="com.instabug.instabugflutter.ArgsRegistryTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

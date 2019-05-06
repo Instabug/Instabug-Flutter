@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/alyezz/Flutter/Instabug-Flutter/example/build/app/intermediates/incremental/mergeReleaseResources/merged.dir/values-v11/values-v11.xml",
+            "map": [
+                {
+                    "source": "/Users/alyezz/.gradle/caches/transforms-1/files-1.1/instabug-bug-8.2.2.aar/d126114db2e3d345d7c738abd48f5088/res/values-v11/values-v11.xml",
+                    "from": {
+                        "startLines": "2,6",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,322",
+                        "endLines": "5,9",
+                        "endColumns": "12,12",
+                        "endOffsets": "317,597"
+                    }
+                }
+            ]
+        }
+    ]
+}

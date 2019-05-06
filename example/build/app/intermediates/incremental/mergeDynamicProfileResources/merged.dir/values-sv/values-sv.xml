@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="instabug_feature_rq_str_days_ago">
+        <item quantity="one">%d dag sedan</item>
+        <item quantity="other">%d dagar sedan</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_hours_ago">
+        <item quantity="one">%d timme sedan</item>
+        <item quantity="other">%d timmar sedan</item>
+    </plurals>
+    <plurals name="instabug_feature_rq_str_minutes_ago">
+        <item quantity="one">%d minut sedan</item>
+        <item quantity="other">%d minuter sedan</item>
+    </plurals>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Visa startsidan"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Navigera uppåt"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Fler alternativ"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Klart"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Visa alla"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Välj en app"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"AV"</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"PÅ"</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"Alt + "</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"Ctrl + "</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"delete"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"retur"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"Funktion + "</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"Meta + "</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"Skift + "</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"blanksteg"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"Symbol + "</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"Meny + "</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"Sök …"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Ta bort frågan"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Sökfråga"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Sök"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Skicka fråga"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Röstsökning"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Dela med"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"Dela med <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Komprimera"</string>
+    <string name="add_feature">Lägg till dina synpunkter</string>
+    <string name="close">Stäng</string>
+    <string name="feature_request_close_dialog_message">Är det säkert att du vill avbryta?</string>
+    <string name="feature_request_comments">Kommentarer</string>
+    <string name="feature_request_comments_count">%d kommentarer</string>
+    <string name="feature_request_go_back">Tillbaka</string>
+    <string name="feature_request_leave_comment">Bli den första som kommenterar.</string>
+    <string name="feature_request_owner">Av %s</string>
+    <string name="feature_request_owner_anonymous">Av anonym</string>
+    <string name="feature_request_owner_anonymous_word">Anonym</string>
+    <string name="feature_request_status_changed_to">Status ändrad till</string>
+    <string name="feature_request_str_add_comment_comment_empty">Ange en giltig kommentar.</string>
+    <string name="feature_request_str_add_comment_disclaimer">Vi behöver din e-postadress för att kunna hålla dig informerad om uppdateringarna.</string>
+    <string name="feature_request_str_add_comment_error">Någonting gick fel när din kommentar skulle läggas till.</string>
+    <string name="feature_request_str_add_comment_valid_email">Ange en giltig e-postadress.</string>
+    <string name="feature_request_str_add_feature_error">Någonting gick fel när din funktion skulle läggas till.</string>
+    <string name="feature_request_str_adding_your_comment">Lägger till din kommentar</string>
+    <string name="feature_request_str_just_now">Alldeles nyss</string>
+    <string name="feature_request_str_less">Mindre</string>
+    <string name="feature_request_str_more">Mer</string>
+    <string name="feature_request_str_post_comment">Lägg upp</string>
+    <string name="feature_request_str_thanks">Tack för din feedback!</string>
+    <string name="feature_request_str_thanks_msg">Vi kommer att hålla dig informerad om uppdateringarna</string>
+    <string name="feature_request_votes_count">%d röster</string>
+    <string name="feature_requests_details">Detaljerad funktionsbeskrivning</string>
+    <string name="feature_requests_error_state_sub_title">Kontrollera din anslutning och försök igen.</string>
+    <string name="feature_requests_error_state_title">Någonting gick fel.</string>
+    <string name="feature_requests_new_adding_your_suggestion">Lägger till ditt förslag.</string>
+    <string name="feature_requests_new_appbar_title">Lägg till funktion</string>
+    <string name="feature_requests_new_bottom_hint">Vi behöver din e-postadress för att hålla dig informerad om uppdateringar.</string>
+    <string name="feature_requests_new_description">Beskrivning</string>
+    <string name="feature_requests_new_email">E-postadress</string>
+    <string name="feature_requests_new_err_msg_email">ange en giltig e-postadress</string>
+    <string name="feature_requests_new_err_msg_required">Det här fältet är obligatoriskt</string>
+    <string name="feature_requests_new_name">Namn</string>
+    <string name="feature_requests_new_positive_button">Lägg till</string>
+    <string name="feature_requests_new_title">Titel</string>
+    <string name="feature_requests_new_toast_message">Skriv titeln och beskrivningen tydligt.</string>
+    <string name="features_rq_main_fragment_tab1">Alla</string>
+    <string name="features_rq_main_fragment_tab2">Mina</string>
+    <string name="ib_feature_rq_status_completed">Klar</string>
+    <string name="ib_feature_rq_status_inprogress">Pågår</string>
+    <string name="ib_feature_rq_status_maybe_later">Kanske senare</string>
+    <string name="ib_feature_rq_status_open">Öppen</string>
+    <string name="ib_feature_rq_status_planned">Planerad</string>
+    <string name="ib_feature_rq_str_add_your_idea">Lägg till din idé</string>
+    <string name="ib_feature_rq_str_completed_features">%d klara funktioner</string>
+    <string name="ib_feature_rq_str_load_more_fail_txt">Det gick inte att ladda datan</string>
+    <string name="ib_feature_rq_str_load_more_loading_txt">Laddar om...</string>
+    <string name="ib_feature_rq_str_no_ideas_are_added_yet">Inga idéer har lagts till ännu.</string>
+    <string name="ib_feature_rq_str_no_results">Inga resultat hittades</string>
+    <string name="ib_feature_rq_str_pull_to_refresh">Dra för att ladda om</string>
+    <string name="ib_feature_rq_str_release_to_refresh">Släpp för att ladda om</string>
+    <string name="ib_feature_rq_str_search">Sök</string>
+    <string name="ib_feature_rq_str_votes">Röster</string>
+    <string name="ib_str_beta_done">Klar</string>
+    <string name="ib_str_beta_welcome_finishing_step_content">Se till att du har den senaste versionen för att få tillgång till alla felrättningar och funktioner.</string>
+    <string name="ib_str_beta_welcome_finishing_step_title">Håll dig uppdaterad.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_floating">Klicka på den flytande knappen för att rapportera ett problem eller föreslå en förbättring.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_screenshot">Ta en skärmbild för att rapportera ett problem eller föreslå en förbättring.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_shake">Skaka på enheten för att rapportera ett problem eller föreslå en förbättring.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_content_swipe">Dra från höger till vänster på skärmen för att rapportera ett problem eller föreslå en förbättring.</string>
+    <string name="ib_str_beta_welcome_how_to_report_step_title">Hur rapporterar jag ett fel?</string>
+    <string name="ib_str_beta_welcome_step_content">Tack för att du hjälper oss att förbättra vår app. Vi ser fram emot din feedback och rapporter om eventuella fel.</string>
+    <string name="ib_str_beta_welcome_step_title">Välkommen till vår beta-app</string>
+    <string name="ib_str_live_welcome_message_title">Vi vill gärna höra vad du tycker.</string>
+    <string name="instabug_audio_recorder_permission_denied">Tillstånd för ljudinspelning nekades</string>
+    <string name="instabug_custom_survey_thanks_subtitle">Dina synpunkter hjälper oss att förbättra våra uppdateringar i framtiden.</string>
+    <string name="instabug_custom_survey_thanks_title">Tack!</string>
+    <string name="instabug_err_invalid_comment">Vänligen fyll i en giltig kommentar</string>
+    <string name="instabug_err_invalid_email">Vänligen ange en giltig e-postadress</string>
+    <string name="instabug_err_invalid_extra_field">Information saknas: %1$s krävs!</string>
+    <string name="instabug_external_storage_permission_denied">Lagringsåtkomst nekad</string>
+    <string name="instabug_store_rating_survey_thanks_subtitle">Din feedback hjälper oss att göra appen bättre.</string>
+    <string name="instabug_store_rating_survey_thanks_title">@string/instabug_custom_survey_thanks_title</string>
+    <string name="instabug_str_action_submit">Skicka</string>
+    <string name="instabug_str_actual_results">Faktiska resultat</string>
+    <string name="instabug_str_add_attachment">Lägg till bilagor</string>
+    <string name="instabug_str_add_photo">Välj bild från galleri</string>
+    <string name="instabug_str_alert_message_max_attachments">Ta bort en befintlig bilaga för att lägga till en ny.</string>
+    <string name="instabug_str_alert_title_max_attachments">Kan inte lägga till bilaga</string>
+    <string name="instabug_str_annotate">Rita på skärmavbild</string>
+    <string name="instabug_str_ask_a_question">Ställ en fråga</string>
+    <string name="instabug_str_audio">Ljud</string>
+    <string name="instabug_str_bug_comment_hint">Vad gick fel?</string>
+    <string name="instabug_str_bug_header">Rapportera ett problem</string>
+    <string name="instabug_str_bugreport_dismiss_cancel">Stanna kvar</string>
+    <string name="instabug_str_bugreport_dismiss_discard">Avfärda</string>
+    <string name="instabug_str_bugreport_dismiss_warning_message">Är det säkert att du vill avfärda rapporten?</string>
+    <string name="instabug_str_bugreport_dismiss_warning_title">Avfärda rapport?</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_message">Ladda upp en fil som är mindre än %d MB.</string>
+    <string name="instabug_str_bugreport_file_size_limit_warning_title">Filen är för stor</string>
+    <string name="instabug_str_cancel">Avbryt</string>
+    <string name="instabug_str_capturing_screenshot_error">Kunde inte fånga skärmdump på grund av lågt minne</string>
+    <string name="instabug_str_conversations">Samtal</string>
+    <string name="instabug_str_dialog_message_preparing">Förbereder…</string>
+    <string name="instabug_str_dismiss">Stäng</string>
+    <string name="instabug_str_email_hint">Fyll i din e-postadress</string>
+    <string name="instabug_str_error_survey_without_answer">Enkäten kan inte skickas utan svar.</string>
+    <string name="instabug_str_expected_results">Förväntade resultat</string>
+    <string name="instabug_str_features_request_header">Funktionsförfrågningar</string>
+    <string name="instabug_str_features_request_ptr_loading_list_text">Vi är jätteglada att få höra vad du tycker!</string>
+    <string name="instabug_str_feedback_comment_hint">Hur kan vi bli bättre?</string>
+    <string name="instabug_str_feedback_header">Föreslå en förbättring</string>
+    <string name="instabug_str_hint_enter_your_answer">Skriv in ditt svar...</string>
+    <string name="instabug_str_hold_to_record">Tryck och håll för att spela in</string>
+    <string name="instabug_str_image">Bild</string>
+    <string name="instabug_str_image_loading_error">Kunde inte läsa in bild</string>
+    <string name="instabug_str_invocation_dialog_title">Behöver du hjälp?</string>
+    <string name="instabug_str_messages">Meddelanden</string>
+    <string name="instabug_str_notification_title">"Teamet för %1$s"</string>
+    <string name="instabug_str_notifications_body">%1$d nya meddelanden från bland andra %2$s</string>
+    <string name="instabug_str_ok">OK</string>
+    <string name="instabug_str_pick_media_chooser_title">Välj en fil </string>
+    <string name="instabug_str_pick_media_from_gallery">Välj en fil i galleriet</string>
+    <string name="instabug_str_please_wait">Vänligen vänta ett ögonblick</string>
+    <string name="instabug_str_record_video">Gör en skärminspelning</string>
+    <string name="instabug_str_release_stop_record">Släpp för att bifoga</string>
+    <string name="instabug_str_reply">Svara</string>
+    <string name="instabug_str_request_feature">Be om en funktion</string>
+    <string name="instabug_str_sending_message_hint">Skriv ditt meddelande</string>
+    <string name="instabug_str_shake_hint"><![CDATA[Vi vill gärna höra dina synpunkter.<br/><b>Skaka</b> din enhet för att prata med oss.]]></string>
+    <string name="instabug_str_steps_to_reproduce">Steg att återskapa</string>
+    <string name="instabug_str_success_note">Vi har tagit emot dina synpunkter.\nTack för att du hjälper oss att göra %s bättre.</string>
+    <string name="instabug_str_survey_next">Nästa</string>
+    <string name="instabug_str_swipe_hint"><![CDATA[Vi vill gärna höra dina synpunkter.<br /><b>Svep med två fingrar</b> för att prata med oss.]]></string>
+    <string name="instabug_str_take_screenshot">Ta en skärmavbild</string>
+    <string name="instabug_str_talk_to_us">Prata med oss</string>
+    <string name="instabug_str_thank_you">Tack</string>
+    <string name="instabug_str_video">Video</string>
+    <string name="instabug_str_video_encoder_busy">Videokodaren är upptage med att koda en annan video</string>
+    <string name="instabug_str_video_encoding_error">Kunde inte koda videon på grund av brist på ledigt minne</string>
+    <string name="instabug_str_video_length_limit_warning_message">Ladda upp en video som är under 1 minut lång.</string>
+    <string name="instabug_str_video_length_limit_warning_title">Videon är för lång</string>
+    <string name="instabug_str_video_player">Videospelare</string>
+    <string name="instabug_str_video_recording_hint">Tryck på spela in när du är redo</string>
+    <string name="instabug_survey_welcome_button">Nu kör vi</string>
+    <string name="instabug_survey_welcome_feedback">Vi vill gärna höra vad du tycker</string>
+    <string name="instabug_survey_welcome_feedback_msg">Kan du hjälpa oss att bli bättre genom att besvara en kort enkät?</string>
+    <string msgid="146198913615257606" name="search_menu_title">"Sök"</string>
+    <string name="sort_by_recently_updated">Senaste</string>
+    <string name="sort_by_top_rated">Populärast</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="surveys_nps_btn_rate_us">Betygsätt oss i Play Store</string>
+    <string name="surveys_nps_less_likely">Mindre troligt</string>
+    <string name="surveys_nps_rate_us_message">Tack för kärleken!</string>
+    <string name="surveys_nps_very_likely">Väldigt troligt</string>
+</resources>

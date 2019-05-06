@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="Instabug_text_medium">20sp</dimen>
+    <dimen name="ib_fr_toast_text_size">12sp</dimen>
+    <dimen name="instabug_button_text_size">14sp</dimen>
+    <dimen name="instabug_date_text_size">12sp</dimen>
+    <dimen name="instabug_normal_text_size">16sp</dimen>
+    <dimen name="instabug_question_text_size">18sp</dimen>
+    <dimen name="instabug_remove_attachment_button_padding">8dp</dimen>
+    <dimen name="instabug_remove_attachment_button_size">34dp</dimen>
+    <dimen name="instabug_toolbar_button_padding">12dp</dimen>
+    <dimen name="survey_button_height">40dp</dimen>
+    <dimen name="survey_button_margin_top">4dp</dimen>
+    <dimen name="survey_button_text_size">15sp</dimen>
+    <dimen name="survey_nps_height">80dp</dimen>
+    <dimen name="survey_nps_likely_labels_size">11sp</dimen>
+    <dimen name="survey_nps_likely_top_margin">4dp</dimen>
+    <dimen name="survey_nps_selected_rect_size">32dp</dimen>
+    <dimen name="survey_nps_selection_text_size">22sp</dimen>
+    <dimen name="survey_nps_text_size">15sp</dimen>
+    <dimen name="survey_nps_top_margin">2dp</dimen>
+    <dimen name="survey_rate_us_image_height">60dp</dimen>
+    <dimen name="survey_rate_us_subTitle_text_size">14sp</dimen>
+    <dimen name="survey_rate_us_title_text_size">22sp</dimen>
+    <dimen name="survey_welcome_subtitle_text_margin_top">4dp</dimen>
+    <dimen name="survey_welcome_subtitle_text_size">14sp</dimen>
+    <dimen name="survey_welcome_title_text_size">18sp</dimen>
+</resources>

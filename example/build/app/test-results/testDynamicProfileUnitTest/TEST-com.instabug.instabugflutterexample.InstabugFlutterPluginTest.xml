@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.instabug.instabugflutterexample.InstabugFlutterPluginTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2019-05-01T13:42:40" hostname="Alys-iMac.local" time="0.148">
+  <properties/>
+  <testcase name="testIdentifyUserWithEmail" classname="com.instabug.instabugflutterexample.InstabugFlutterPluginTest" time="0.14"/>
+  <testcase name="testSetSessionProfilerEnabled" classname="com.instabug.instabugflutterexample.InstabugFlutterPluginTest" time="0.001"/>
+  <testcase name="testSetEnabledAttachmentTypes" classname="com.instabug.instabugflutterexample.InstabugFlutterPluginTest" time="0.001"/>
+  <testcase name="testSetEmailFieldRequiredForFeatureRequests" classname="com.instabug.instabugflutterexample.InstabugFlutterPluginTest" time="0.001"/>
+  <testcase name="testAddFileAttachmentWithData" classname="com.instabug.instabugflutterexample.InstabugFlutterPluginTest" time="0.001"/>
+  <testcase name="testShowWelcomeMessageWithMode" classname="com.instabug.instabugflutterexample.InstabugFlutterPluginTest" time="0.001"/>
+  <testcase name="testSetPrimaryColor" classname="com.instabug.instabugflutterexample.InstabugFlutterPluginTest" time="0.001"/>
+  <testcase name="testAppendTags" classname="com.instabug.instabugflutterexample.InstabugFlutterPluginTest" time="0.001"/>
+  <testcase name="testInvokeWithMode" classname="com.instabug.instabugflutterexample.InstabugFlutterPluginTest" time="0.001"/>
+  <testcase name="testLogOut" classname="com.instabug.instabugflutterexample.InstabugFlutterPluginTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

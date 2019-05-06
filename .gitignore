@@ -6,7 +6,6 @@
 .pub-cache/
 .pub/
 pubspec.lock
-build/
 
 ### Android ###
 gen-external-apklibs
