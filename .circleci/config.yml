@@ -48,6 +48,23 @@ jobs:
     steps:
       - checkout:
           path: ~/project
+      - restore_cache:
+          keys: 
+            - flutter_sdk
+      - run:
+          name: download flutter SDK
+          command: curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip
+      - save_cache:
+          key: flutter_sdk
+          paths:
+            - flutter_sdk.zip
+      - run:
+          name: unzip flutter SDK
+          command: unzip flutter_sdk.zip
+      - run:
+          name: export flutter path
+          command: export PATH="$PATH:`pwd`/flutter/bin"
+      - run: flutter doctor
       - run:
           name: Fetch CocoaPods Specs
           command: |
