@@ -53,7 +53,7 @@ jobs:
             - flutter
       - run:
           name: download flutter SDK
-          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip fi
+          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip
       - run:
           name: unzip flutter SDK
           command: unzip flutter_sdk.zip
