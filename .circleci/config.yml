@@ -53,7 +53,7 @@ jobs:
             - flutter
       - run:
           name: download flutter SDK
-          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip
+          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip; fi
       - run:
           name: unzip flutter SDK
           command: unzip flutter_sdk.zip
@@ -63,7 +63,7 @@ jobs:
       - run:
           name: Fetch CocoaPods Specs
           command: |
-            if ! test -f "fetch-cocoapods-repo-from-s3.sh"; then curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh fi | bash -s cf
+            if ! test -f "fetch-cocoapods-repo-from-s3.sh"; then curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh; fi | bash -s cf
       - save_cache:
           key: flutter
           paths:
