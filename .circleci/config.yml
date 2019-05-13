@@ -39,7 +39,7 @@ jobs:
       - run:
           name: Run UnitTest
           command: ./gradlew test
-          
+
    ios_test:
     macos:
       xcode: "10.2.0"
@@ -64,7 +64,7 @@ jobs:
       - run:
           name: Fetch CocoaPods Specs
           command: |
-            if ! test -f "fetch-cocoapods-repo-from-s3.sh"; then curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh; fi | bash -s cf
+            if ! test -f "fetch-cocoapods-repo-from-s3.sh"; then curl -o fetch-cocoapods-repo-from-s3.sh https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh; fi | bash -s cf
       - save_cache:
           key: flutter
           paths:
