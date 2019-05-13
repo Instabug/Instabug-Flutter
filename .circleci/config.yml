@@ -63,7 +63,7 @@ jobs:
           command: unzip flutter_sdk.zip
       - run:
           name: export flutter path
-          command: export PATH="$PATH:`pwd`/flutter/bin"
+          command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV 
       - run: flutter doctor
       - run:
           name: Fetch CocoaPods Specs
