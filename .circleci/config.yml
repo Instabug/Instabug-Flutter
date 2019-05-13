@@ -60,9 +60,9 @@ jobs:
       - run:
           name: export flutter path
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV 
-      - run:
-          name: Fetch CocoaPods Specs
-          command: if ! test -f "$HOME/.cocoapods/repos"; then  curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh; fi | bash -s cf
+      # - run:
+      #     name: Fetch CocoaPods Specs
+      #     command: if ! test -f "$HOME/.cocoapods/repos"; then curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh; fi | bash -s cf
       - run: flutter doctor
       - run: 
           name: Flutter build
