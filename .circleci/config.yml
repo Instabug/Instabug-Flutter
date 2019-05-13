@@ -65,11 +65,6 @@ jobs:
           name: Fetch CocoaPods Specs
           command: |
             if ! test -f "fetch-cocoapods-repo-from-s3.sh"; then curl -o fetch-cocoapods-repo-from-s3.sh https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh; fi | bash -s cf
-      - save_cache:
-          key: flutter
-          paths:
-            - flutter_sdk.zip
-            - fetch-cocoapods-repo-from-s3.sh
       - run: flutter doctor
       - run: 
           name: Flutter build
@@ -80,6 +75,12 @@ jobs:
       - run:
           name: Build and run tests
           command:  xcodebuild   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone X,OS=12.2'   test
+       - save_cache:
+          key: flutter
+          paths:
+            - flutter_sdk.zip
+            - fetch-cocoapods-repo-from-s3.sh
+            - Pods
    
    release:
     docker:
