@@ -50,7 +50,7 @@ jobs:
           path: ~/project
       - restore_cache:
           keys: 
-            - flutter-cache
+            - my-cache
       - run:
           name: download flutter SDK
           command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip; fi
@@ -62,7 +62,7 @@ jobs:
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV 
       - run:
           name: Fetch CocoaPods Specs
-          command: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+          command: if ! test -f "$HOME/.cocoapods/repos"; then  curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh; fi | bash -s cf
       - run: flutter doctor
       - run: 
           name: Flutter build
@@ -74,10 +74,11 @@ jobs:
           name: Build and run tests
           command:  xcodebuild   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone X,OS=12.2'   test
       - save_cache:
-          key: flutter-cache
+          key: my-cache
           paths:
             - flutter_sdk.zip
             - Pods
+            - $HOME/.cocoapods/repos
    
    release:
     docker:
