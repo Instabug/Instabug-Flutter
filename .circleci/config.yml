@@ -62,8 +62,7 @@ jobs:
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV 
       - run:
           name: Fetch CocoaPods Specs
-          command: |
-            if ! test -f "fetch-cocoapods-repo-from-s3.sh"; then curl -o fetch-cocoapods-repo-from-s3.sh https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh; fi | bash -s cf
+          command: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
       - run: flutter doctor
       - run: 
           name: Flutter build
@@ -78,7 +77,6 @@ jobs:
           key: flutter-cache
           paths:
             - flutter_sdk.zip
-            - fetch-cocoapods-repo-from-s3.sh
             - Pods
    
    release:
