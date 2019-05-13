@@ -51,31 +51,35 @@ jobs:
       - restore_cache:
           keys: 
             - flutter_sdk
+            - cocoapods
       - run:
           name: download flutter SDK
           command: curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip
-      - save_cache:
-          key: flutter_sdk
-          paths:
-            - flutter_sdk.zip
       - run:
           name: unzip flutter SDK
           command: unzip flutter_sdk.zip
       - run:
           name: export flutter path
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV 
-      - run: flutter doctor
       - run:
           name: Fetch CocoaPods Specs
           command: |
             curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-      # - run: flutter doctor
-      # - run: 
-      #     name: Flutter build
-      #     command: cd ..; flutter build aot
+      - save_cache:
+          key: flutter_sdk
+          paths:
+            - flutter_sdk.zip
+      - save_cache:
+          key: cocoapods
+          paths:
+            - fetch-cocoapods-repo-from-s3.sh
       - run:
           name: Install CocoaPods
           command: pod install --verbose
+      - run: flutter doctor
+      - run: 
+          name: Flutter build
+          command: cd ..; flutter build aot
       - run:
           name: Build and run tests
           command:  xcodebuild   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone X,OS=12.2'   test
