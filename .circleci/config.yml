@@ -50,11 +50,10 @@ jobs:
           path: ~/project
       - restore_cache:
           keys: 
-            - flutter_sdk
-            - cocoapods
+            - flutter
       - run:
           name: download flutter SDK
-          command: curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip
+          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip fi
       - run:
           name: unzip flutter SDK
           command: unzip flutter_sdk.zip
@@ -64,14 +63,11 @@ jobs:
       - run:
           name: Fetch CocoaPods Specs
           command: |
-            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+            if ! test -f "fetch-cocoapods-repo-from-s3.sh"; then curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh fi | bash -s cf
       - save_cache:
-          key: flutter_sdk
+          key: flutter
           paths:
             - flutter_sdk.zip
-      - save_cache:
-          key: cocoapods
-          paths:
             - fetch-cocoapods-repo-from-s3.sh
       - run: flutter doctor
       - run: 
