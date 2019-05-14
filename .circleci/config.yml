@@ -72,7 +72,7 @@ jobs:
           command: pod install
       - run:
           name: Build and run tests
-          command:  xcodebuild   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone X,OS=12.2'   test
+          command:  xcodebuild   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone X,OS=12.2'   test | xcpretty
       - save_cache:
           key: flutter-cache
           paths:
