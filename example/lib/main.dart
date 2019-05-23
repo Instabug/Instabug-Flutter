@@ -3,13 +3,13 @@ import 'dart:io' show Platform;
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/Instabug.dart';
-import 'package:instabug_flutter/BugReporting.dart';
-import 'package:instabug_flutter/InstabugLog.dart';
-import 'package:instabug_flutter/Surveys.dart';
-import 'package:instabug_flutter/FeatureRequests.dart';
-import 'package:instabug_flutter/Chats.dart';
-import 'package:instabug_flutter/Replies.dart';
+import 'package:instabug/Instabug.dart';
+import 'package:instabug/BugReporting.dart';
+import 'package:instabug/InstabugLog.dart';
+import 'package:instabug/Surveys.dart';
+import 'package:instabug/FeatureRequests.dart';
+import 'package:instabug/Chats.dart';
+import 'package:instabug/Replies.dart';
 
 void main() => runApp(MyApp());
 
