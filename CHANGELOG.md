@@ -1,6 +1,6 @@
 ## Version 1.0.1-beta.1 (2019-05-22)
 
-**⚠️ Package `instabug_flutter` is now deprecated, please use `Instabug` instead**
+**⚠️ Package `instabug_flutter` is now deprecated, please use `instabug` instead**
 
 * Bump native SDK's to version 8.3
 * Fixes issue of manually invoking BugReporting
