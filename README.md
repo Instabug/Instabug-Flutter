@@ -147,7 +147,7 @@ flutter packages get
 import 'package:instabug/Instabug.dart';
 ```
 
-2. Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the devices is shaken. ( Ignore this if you're building for android only )
+2. Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the device is shaken. Ignore this if you're building for Android only.
 
 ```dart
 Instabug.start('APP_TOKEN', [InvocationEvent.shake]);
