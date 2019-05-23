@@ -1,3 +1,10 @@
+## Version 1.0.0-beta.2 (2019-05-22)
+
+**⚠️ Check the README.md integration steps to add our new maven repository in android**
+
+* Bump native SDK's to version 8.3
+* Fixes issue of manually invoking BugReporting
+
 ## Version 1.0.0-beta.1 (2019-04-16)
 
 * Adds New Sample App
