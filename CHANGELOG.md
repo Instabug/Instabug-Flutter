@@ -1,6 +1,6 @@
 ## Version 1.0.1-beta.1 (2019-05-22)
 
-**⚠️ Package `instabug_flutter` is now deprecated, please use `instabug` instead**
+**⚠️ Check the README.md integration steps to add our new maven repository in android**
 
 * Bump native SDK's to version 8.3
 * Fixes issue of manually invoking BugReporting
