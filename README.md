@@ -153,7 +153,7 @@ import 'package:instabug/Instabug.dart';
 Instabug.start('APP_TOKEN', [InvocationEvent.shake]);
 ```
 
-3. Add the following Maven repository to your app's `build.gradle`
+3. Add the following Maven repository to your project level `build.gradle`
 
 ```dart
 allprojects {
