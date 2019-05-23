@@ -1,4 +1,4 @@
-## Version 1.0.1-beta.1 (2019-05-22)
+## Version 1.0.0-beta.2 (2019-05-22)
 
 **⚠️ Check the README.md integration steps to add our new maven repository in android**
 
