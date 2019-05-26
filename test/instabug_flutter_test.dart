@@ -93,8 +93,8 @@ test('startWithToken:invocationEvents: Test', () async {
   });
   
   test('setLocale:', () async {
-    Instabug.setLocale(Locale.german);
-    final List<dynamic> args = <dynamic>[Locale.german.toString()];
+    Instabug.setLocale(IBGLocale.german);
+    final List<dynamic> args = <dynamic>[IBGLocale.german.toString()];
     expect(log, <Matcher>[
       isMethodCall('setLocale:',
         arguments: args,
@@ -279,7 +279,7 @@ test('startWithToken:invocationEvents: Test', () async {
 
   test('test setValueForStringWithKey should be called with two arguments', () async {
     const String value = 'Some key';
-    const IBGCustomTextPlaceHolderKey key = IBGCustomTextPlaceHolderKey.shakeHint;
+    const CustomTextPlaceHolderKey key = CustomTextPlaceHolderKey.shakeHint;
     Instabug.setValueForStringWithKey(value, key);
     final List<dynamic> args = <dynamic>[value, key.toString()];
     expect(log, <Matcher>[

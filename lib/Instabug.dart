@@ -14,7 +14,7 @@ enum InvocationEvent {
 
 enum WelcomeMessageMode { live, beta, disabled }
 
-enum Locale {
+enum IBGLocale {
   arabic,
   chineseSimplified,
   chineseTraditional,
@@ -49,6 +49,7 @@ enum InvocationMode {
 enum ColorTheme { dark, light }
 
 enum IBGCustomTextPlaceHolderKey {
+enum CustomTextPlaceHolderKey {
   shakeHint,
   swipeHint,
   invalidEmailMessage,

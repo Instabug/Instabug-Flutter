@@ -86,7 +86,7 @@ public class ArgsRegistryTest {
     @Test
     public void givenEnglishLocaleIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale() {
         // when
-        Locale actualLocale = ArgsRegistry.getDeserializedValue("Locale.english", Locale.class);
+        Locale actualLocale = ArgsRegistry.getDeserializedValue("IBGLocale.english", Locale.class);
         // then
         Assert.assertNotNull(actualLocale);
         Assert.assertEquals("en", actualLocale.getLanguage());
@@ -106,7 +106,7 @@ public class ArgsRegistryTest {
     public void givenShakeHintIsPresent_when$getDeserializedValue_thenShouldReturnNonNullKey() {
         // when
         InstabugCustomTextPlaceHolder.Key actualKey =
-                ArgsRegistry.getDeserializedValue("IBGCustomTextPlaceHolderKey.shakeHint", InstabugCustomTextPlaceHolder.Key.class);
+                ArgsRegistry.getDeserializedValue("CustomTextPlaceHolderKey.shakeHint", InstabugCustomTextPlaceHolder.Key.class);
         // then
         Assert.assertNotNull(actualKey);
         Assert.assertEquals(InstabugCustomTextPlaceHolder.Key.SHAKE_HINT, actualKey);
