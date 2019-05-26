@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       if (Platform.isIOS) {
-        Instabug.start('068ba9a8c3615035e163dc5f829c73be', <InvocationEvent>[InvocationEvent.shake]);
+        Instabug.start('YOUR_TOKEN', <InvocationEvent>[InvocationEvent.shake]);
       }
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
