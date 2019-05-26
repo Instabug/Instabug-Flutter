@@ -32,17 +32,17 @@ The section below contains the APIs we're planning to implement for our 1.0 rele
 | `showWelcomeMessageWithMode(WelcomeMessageMode welcomeMessageMode)`  | `showWelcomeMessage(WelcomeMessage.State state)`<br>`+ showWelcomeMessageWithMode:`                       |
 | `identifyUserWithEmail(String email, [String name])`                 | `identifyUser(String username, String email)`<br>`+ identifyUserWithEmail:name:`                          |
 | `logOut()`                                                           | `logoutUser()`<br>`+ logOut`                                                                              |
-| `setLocale(Locale locale)`                                           | `setLocale(Locale locale)`<br>`+ setLocale:`                                                              |
+| `setLocale(IBGLocale locale)`                                        | `setLocale(Locale locale)`<br>`+ setLocale:`                                                              |
 | `setColorTheme(ColorTheme colorTheme)`                               | `setColorTheme(InstabugColorTheme theme)`<br>`+ setColorTheme:`                                           |
 | `appendTags(List<String> tags)`                                      | `addTags(String... tags)`<br>`+ appendTags:`                                                              |
 | `resetTags()`                                                        | `resetTags()`<br>`+ resetTags`                                                                            |
 | `getTags()`                                                          | `getTags()`<br>`+ getTags`                                                                                |
-| `setStringForKey(String value, String key)`                          | `setCustomTextPlaceHolders(InstabugCustomTextPlaceHolder placeholder)`<br>`+ setValue:forStringWithKey:`  |
+| `setValueForStringWithKey(String value, CustomTextPlaceHolderKey key)`| `setCustomTextPlaceHolders(InstabugCustomTextPlaceHolder placeholder)`<br>`+ setValue:forStringWithKey:` |
 | `setUserAttributeWithKey(String value, String key)`                  | `setUserAttribute(String key, String value)`<br>`+ setUserAttribute:withKey:`                             |
 | `getUserAttributeForKey(Sring Key)`                                  | `getUserAttribute(String key)`<br>`+ userAttributeForKey:`                                                |
 | `removeUserAttributeForKey(String key)`                              | `removeUserAttribute(String key)`<br>`+ removeUserAttributeForKey:`                                       |
 | `getUserAttributes()`                                                | `getAllUserAttributes()`<br>`+ userAttributes:`                                                           |
-| `logUserEventWithName(String name)`                                  | `logUserEvent(String name)`<br>`+ logUserEventWithName:`                                                  |
+| `logUserEvent(String name)`                                          | `logUserEvent(String name)`<br>`+ logUserEventWithName:`                                                  |
 | `show()`                                                             | `show()`<br>`+ show`                                                                                      |
 | `setSessionProfilerEnabled(bool sessionProfilerEnabled)`             | `setSessionProfilerState(Feature.State state)`<br>`sessionProfilerEnabled`                                |
 | `setPrimaryColor(Color color)`                                       | `setPrimaryColor(@ColorInt int primaryColorValue)`<br>`tintColor`                                         |
