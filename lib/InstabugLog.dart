@@ -27,7 +27,7 @@ class InstabugLog {
     await _channel.invokeMethod<Object>('logWarn:', params);
   }
 
-   /// Appends a log [message] to Instabug internal log
+  /// Appends a log [message] to Instabug internal log
   /// These logs are then sent along the next uploaded report.
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
@@ -53,7 +53,6 @@ class InstabugLog {
     final List<dynamic> params = <dynamic>[message];
     await _channel.invokeMethod<Object>('logInfo:', params);
   }
-
 
   /// Clears Instabug internal log
   static void clearAllLogs() async {
