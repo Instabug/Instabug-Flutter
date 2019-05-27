@@ -1,6 +1,6 @@
 ## Version 1.0.0-beta.3 (2019-05-26)
 
-* Fixes `Locale` enum name collision with `dart.ui` library
+* Fixes `Locale` enum name collision with `dart.ui` library. Use `IBGLocale` instead.
 
 ## Version 1.0.0-beta.2 (2019-05-22)
 
