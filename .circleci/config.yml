@@ -106,6 +106,7 @@ workflows:
           requires:
             - build
             - android_test
+            - ios_test
           filters:
             branches:
               only: master
