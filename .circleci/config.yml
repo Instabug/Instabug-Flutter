@@ -117,7 +117,7 @@ workflows:
               only: master
       - publish:
           requires:
-            - hold
+            - release
           filters:
             branches:
               only: master
