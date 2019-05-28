@@ -1,15 +1,12 @@
 import 'dart:async';
 import 'dart:io' show Platform;
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instabug/Instabug.dart';
 import 'package:instabug/BugReporting.dart';
-import 'package:instabug/InstabugLog.dart';
 import 'package:instabug/Surveys.dart';
 import 'package:instabug/FeatureRequests.dart';
 import 'package:instabug/Chats.dart';
-import 'package:instabug/Replies.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,7 +30,7 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       if (Platform.isIOS) {
-        Instabug.start('068ba9a8c3615035e163dc5f829c73be', <InvocationEvent>[InvocationEvent.shake]);
+        Instabug.start('YOUR_TOKEN', <InvocationEvent>[InvocationEvent.shake]);
       }
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';

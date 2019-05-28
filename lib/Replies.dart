@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:instabug/Instabug.dart';
 import 'dart:io' show Platform;
+import 'package:flutter/services.dart';
 
 
 class Replies {

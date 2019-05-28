@@ -14,7 +14,7 @@ enum InvocationEvent {
 
 enum WelcomeMessageMode { live, beta, disabled }
 
-enum Locale {
+enum IBGLocale {
   arabic,
   chineseSimplified,
   chineseTraditional,
@@ -39,16 +39,11 @@ enum Locale {
   norwegian
 }
 
-enum InvocationMode {
-  bug,
-  feedback,
-  chats,
-  replies
-}
+enum InvocationMode { bug, feedback, chats, replies }
 
 enum ColorTheme { dark, light }
 
-enum IBGCustomTextPlaceHolderKey {
+enum CustomTextPlaceHolderKey {
   shakeHint,
   swipeHint,
   invalidEmailMessage,
@@ -98,7 +93,8 @@ class Instabug {
   /// it on your dashboard.
   /// The [invocationEvents] are the events that invoke
   /// the SDK's UI.
-  static void start(String token, List<InvocationEvent> invocationEvents) async {
+  static void start(
+      String token, List<InvocationEvent> invocationEvents) async {
     final List<String> invocationEventsStrings = <String>[];
     invocationEvents.forEach((e) {
       invocationEventsStrings.add(e.toString());
@@ -110,7 +106,8 @@ class Instabug {
 
   /// Shows the welcome message in a specific mode.
   /// [welcomeMessageMode] is an enum to set the welcome message mode to live, or beta.
-  static void showWelcomeMessageWithMode(WelcomeMessageMode welcomeMessageMode) async {
+  static void showWelcomeMessageWithMode(
+      WelcomeMessageMode welcomeMessageMode) async {
     final List<dynamic> params = <dynamic>[welcomeMessageMode.toString()];
     await _channel.invokeMethod<Object>('showWelcomeMessageWithMode:', params);
   }
@@ -134,11 +131,11 @@ class Instabug {
   /// Sets the SDK's [locale].
   /// Use to change the SDK's UI to different language.
   /// Defaults to the device's current locale.
-  static void setLocale(Locale locale) async {
+  static void setLocale(IBGLocale locale) async {
     final List<dynamic> params = <dynamic>[locale.toString()];
     await _channel.invokeMethod<Object>('setLocale:', params);
   }
-  
+
   /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.
   /// It should be of type [ColorTheme].
   static void setColorTheme(ColorTheme colorTheme) async {
@@ -179,15 +176,19 @@ class Instabug {
   /// Returns the user attribute associated with a given [key].
   static Future<String> getUserAttributeForKey(String key) async {
     final List<dynamic> params = <dynamic>[key];
-    return await _channel.invokeMethod<Object>('getUserAttributeForKey:', params);
+    return await _channel.invokeMethod<Object>(
+        'getUserAttributeForKey:', params);
   }
 
   /// A new Map containing all the currently set user attributes, or an empty Map if no user attributes have been set.
   static Future<Map<String, String>> getUserAttributes() async {
-    final Object userAttributes = await _channel.invokeMethod<Object>('getUserAttributes');
-    return userAttributes != null ? Map<String, String>.from(userAttributes) : <String, String>{};
+    final Object userAttributes =
+        await _channel.invokeMethod<Object>('getUserAttributes');
+    return userAttributes != null
+        ? Map<String, String>.from(userAttributes)
+        : <String, String>{};
   }
-  
+
   /// invoke sdk manually
   static void show() async {
     await _channel.invokeMethod<Object>('show');
@@ -202,73 +203,71 @@ class Instabug {
 
   /// Overrides any of the strings shown in the SDK with custom ones.
   /// Allows you to customize a [value] shown to users in the SDK using a predefined [key].
-  static void setValueForStringWithKey(String value, IBGCustomTextPlaceHolderKey key) async {
+  static void setValueForStringWithKey(
+      String value, CustomTextPlaceHolderKey key) async {
     final List<dynamic> params = <dynamic>[value, key.toString()];
-    await _channel.invokeMethod<Object>('setValue:forStringWithKey:', params); 
-  } 
+    await _channel.invokeMethod<Object>('setValue:forStringWithKey:', params);
+  }
 
   /// Enable/disable session profiler
   /// [sessionProfilerEnabled] desired state of the session profiler feature.
   static void setSessionProfilerEnabled(bool sessionProfilerEnabled) async {
     final List<dynamic> params = <dynamic>[sessionProfilerEnabled];
-    await _channel.invokeMethod<Object>('setSessionProfilerEnabled:', params); 
-  } 
+    await _channel.invokeMethod<Object>('setSessionProfilerEnabled:', params);
+  }
 
   /// Sets the primary color of the SDK's UI.
   /// Sets the color of UI elements indicating interactivity or call to action.
   /// [color] primaryColor A color to set the UI elements of the SDK to.
   static void setPrimaryColor(Color color) async {
     final List<dynamic> params = <dynamic>[color.value];
-    await _channel.invokeMethod<Object>('setPrimaryColor:', params); 
-  } 
+    await _channel.invokeMethod<Object>('setPrimaryColor:', params);
+  }
 
   /// Adds specific user data that you need to be added to the reports
   /// [userData] data to be added
   static void setUserData(String userData) async {
     final List<dynamic> params = <dynamic>[userData];
-    await _channel.invokeMethod<Object>('setUserData:', params); 
-  } 
+    await _channel.invokeMethod<Object>('setUserData:', params);
+  }
 
-   ///Add file to be attached to the bug report.
-   ///[filePath] of the file
-   ///[fileName] of the file
+  ///Add file to be attached to the bug report.
+  ///[filePath] of the file
+  ///[fileName] of the file
   static void addFileAttachmentWithURL(String filePath, String fileName) async {
     if (Platform.isIOS) {
       final List<dynamic> params = <dynamic>[filePath];
-      await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params); 
+      await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params);
     } else {
-      final List<dynamic> params = <dynamic>[filePath,fileName];
-      await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params); 
+      final List<dynamic> params = <dynamic>[filePath, fileName];
+      await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params);
     }
-  } 
+  }
 
   ///Add file to be attached to the bug report.
-   ///[data] of the file
-   ///[fileName] of the file
+  ///[data] of the file
+  ///[fileName] of the file
   static void addFileAttachmentWithData(Uint8List data, String fileName) async {
     if (Platform.isIOS) {
       final List<dynamic> params = <dynamic>[data];
-      await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params); 
+      await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params);
     } else {
-      final List<dynamic> params = <dynamic>[data,fileName];
-      await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params); 
+      final List<dynamic> params = <dynamic>[data, fileName];
+      await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params);
     }
-  } 
+  }
 
   ///Clears all Uris of the attached files.
   ///The URIs which added via {@link Instabug#addFileAttachment} API not the physical files.
   static void clearFileAttachments() async {
-      await _channel.invokeMethod<Object>('clearFileAttachments'); 
-  } 
+    await _channel.invokeMethod<Object>('clearFileAttachments');
+  }
 
   ///Sets the welcome message mode to live, beta or disabled.
   ///[welcomeMessageMode] An enum to set the welcome message mode to live, beta or disabled.
-  static void setWelcomeMessageMode(WelcomeMessageMode welcomeMessageMode) async {
+  static void setWelcomeMessageMode(
+      WelcomeMessageMode welcomeMessageMode) async {
     final List<dynamic> params = <dynamic>[welcomeMessageMode.toString()];
-    await _channel.invokeMethod<Object>('setWelcomeMessageMode:', params); 
-  } 
-
+    await _channel.invokeMethod<Object>('setWelcomeMessageMode:', params);
+  }
 }
-
-
-
