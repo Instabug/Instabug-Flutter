@@ -26,3 +26,4 @@ flutter:
   plugin:
     androidPackage: com.instabug.instabugflutter
     pluginClass: InstabugFlutterPlugin
+    
