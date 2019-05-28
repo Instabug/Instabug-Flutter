@@ -1,6 +1,8 @@
-## Version 1.0.0-beta.3 (2019-05-26)
+## Version 1.0.0-beta.3 (2019-05-28)
 
 * Fixes `Locale` enum name collision with `dart.ui` library. Use `IBGLocale` instead.
+
+* Updates Native SDK's to version 8.4
 
 ## Version 1.0.0-beta.2 (2019-05-22)
 
