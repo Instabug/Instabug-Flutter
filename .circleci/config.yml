@@ -79,11 +79,16 @@ jobs:
             - flutter_sdk.zip
             - Pods
    release:
-    macos:
-      xcode: "10.1.0"
+    docker:
+      - image: cirrusci/flutter
     steps:
       - checkout
       - run: ./release.sh
+
+   publish:
+    macos:
+      xcode: "10.1.0"
+    steps:
       - run: git clone https://InstabugCI:$RELEASE_GITHUB_TOKEN@github.com/Instabug/Escape.git
       - run: cd Escape; swift build -c release -Xswiftc -static-stdlib
       - run: cd Escape/.build/release; cp -f Escape /usr/local/bin/escape
@@ -105,6 +110,12 @@ workflows:
             branches:
               only: master
       - release:
+          requires:
+            - hold
+          filters:
+            branches:
+              only: master
+      - publish:
           requires:
             - hold
           filters:
