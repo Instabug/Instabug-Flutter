@@ -15,17 +15,5 @@ else
     }
 EOF
     flutter packages pub publish -f
-
-    OWNER="Instabug"
-    REPOSITORY="Instabug-Flutter"
-    ACCESS_TOKEN=${RELEASE_GITHUB_TOKEN}
-    VERSION=$(echo ${VERSION} | sed 's/ //1')
-    curl --data '{"tag_name": "'$VERSION'",
-                "target_commitish": "master",
-                "name": "'$VERSION'",
-                "body": "Release of version '$VERSION'",
-                "draft": false,
-                "prerelease": false}'  https://api.github.com/repos/$OWNER/$REPOSITORY/releases?access_token=$ACCESS_TOKEN
-    echo "https://api.github.com/repos/$OWNER/$REPOSITORY/releases?access_token=$ACCESS_TOKEN"
 fi
 
