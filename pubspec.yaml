@@ -1,5 +1,5 @@
 name: instabug
-version: 1.0.0-beta.2
+version: 1.0.0-beta.3
 description: >-
   Instabug is an in-app feedback and bug reporting tool for mobile apps. 
   With just a simple shake, your users or beta testers can report bugs or 
@@ -26,3 +26,4 @@ flutter:
   plugin:
     androidPackage: com.instabug.instabugflutter
     pluginClass: InstabugFlutterPlugin
+    
