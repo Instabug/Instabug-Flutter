@@ -1,6 +1,5 @@
 # Instabug for Flutter
 
-[![CircleCI](https://circleci.com/gh/Instabug/Instabug-Flutter/tree/master.svg?style=svg)](https://circleci.com/gh/Instabug/Instabug-Flutter/tree/master)
 [![pub package](https://img.shields.io/pub/v/instabug.svg)](https://pub.dev/packages/instabug)
 
 A Flutter plugin for [Instabug](https://instabug.com/).
