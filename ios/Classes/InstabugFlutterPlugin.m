@@ -707,6 +707,57 @@ FlutterMethodChannel* channel;
    IBGReplies.inAppNotificationsEnabled = boolValue;
 }
 
+/**
+ * Extracts HTTP connection properties. Request method, Headers, Date, Url and Response code
+ *
+ * @param networkData the NSDictionary containing all HTTP connection properties
+ */
++ (void)networkLog:(NSDictionary *) networkData {
+
+
+    NSString* url = networkData[@"url"];
+    NSString* method = networkData[@"method"];
+    NSString* requestBody = networkData[@"requestBody"];
+    NSString* responseBody = networkData[@"responseBody"];
+    int32_t responseCode = [networkData[@"responseCode"] integerValue];
+    NSDictionary* requestHeaders = networkData[@"requestHeaders"];
+    NSDictionary* responseHeaders = networkData[@"responseHeaders"];
+    NSString* contentType = networkData[@"contentType"];
+    double duration = [networkData[@"duration"] doubleValue];
+    
+    NSLog(@"url");
+    NSLog(@"%@", url);
+    NSLog(@"method");
+    NSLog(@"%@", method);
+    NSLog(@"responseCode");
+    NSLog(@"%d@", responseCode);
+    NSLog(@"requestBody");
+    NSLog(@"%@", requestBody);
+    NSLog(@"responseBody");
+    NSLog(@"%@", responseBody);
+    
+    SEL networkLogSEL = NSSelectorFromString(@"addNetworkLogWithUrl:method:requestBody:responseBody:responseCode:requestHeaders:responseHeaders:contentType:duration:");
+
+    if([[IBGNetworkLogger class] respondsToSelector:networkLogSEL]) {
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[IBGNetworkLogger class] methodSignatureForSelector:networkLogSEL]];
+        [inv setSelector:networkLogSEL];
+        [inv setTarget:[IBGNetworkLogger class]];
+
+        [inv setArgument:&(url) atIndex:2];
+        [inv setArgument:&(method) atIndex:3];
+        [inv setArgument:&(requestBody) atIndex:4];
+        [inv setArgument:&(responseBody) atIndex:5];
+        [inv setArgument:&(responseCode) atIndex:6];
+        [inv setArgument:&(requestHeaders) atIndex:7];
+        [inv setArgument:&(responseHeaders) atIndex:8];
+        [inv setArgument:&(contentType) atIndex:9];
+        [inv setArgument:&(duration) atIndex:10];
+
+        [inv invoke];
+    }
+}
+
+
 
 + (NSDictionary *)constants {
   return @{
