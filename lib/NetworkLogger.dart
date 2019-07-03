@@ -26,10 +26,10 @@ class NetworkLogger {
   /// [dynamic] responseBody
   static void logHttpClientResponse(HttpClientResponse response,  HttpClientRequest request, { dynamic responseBody }) async {
     final NetworkData data = HttpClientParser.onResponse(response, request, responseBody: responseBody);
-    _networkLog(data);
+    networkLog(data);
   }
 
-  static Future<bool> _networkLog(NetworkData data) async {
+  static Future<bool> networkLog(NetworkData data) async {
     final List<dynamic> params = <dynamic>[data.toMap()];
     return await _channel.invokeMethod<Object>('networkLog:', params);
   }
