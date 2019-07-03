@@ -5,13 +5,11 @@ import 'package:instabug/models/network_data.dart';
 
 class HttpClientParser {
 
-  static List<NetworkData> requests = <NetworkData>[];
+  static Map<int, NetworkData> requests = <int, NetworkData>{};
 
   static NetworkData _getRequestData(int requestHashCode) {
-    for (NetworkData request in requests) {
-      if (request.requestHashCode == requestHashCode) {
-        return request;
-      }
+    if (requests[requestHashCode] != null) {
+      return requests.remove(requestHashCode);
     }
     return null;
   }
@@ -19,7 +17,6 @@ class HttpClientParser {
   static void onRequest(HttpClientRequest request, { dynamic requestBody }) {
     final NetworkData requestData = NetworkData();
     requestData.startTime = DateTime.now();
-    requestData.requestHashCode = request.hashCode;
     requestData.method = request.method;
     requestData.url = request.uri.toString();
     request.headers.forEach((String header, dynamic value) {
@@ -28,7 +25,7 @@ class HttpClientParser {
     if (requestBody != null) {
       requestData.requestBody = requestBody;
     }
-    requests.add(requestData);
+    requests[request.hashCode] = requestData;
   }
 
   static NetworkData onResponse(HttpClientResponse response, HttpClientRequest request, {dynamic responseBody}) {

@@ -10,7 +10,6 @@ class NetworkData {
   String contentType = '';
   DateTime endTime;
   DateTime startTime;
-  int requestHashCode;
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = <String, dynamic>{};
