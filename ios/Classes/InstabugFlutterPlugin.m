@@ -713,7 +713,7 @@ FlutterMethodChannel* channel;
  * @param networkData the NSDictionary containing all HTTP connection properties
  */
 + (void)networkLog:(NSDictionary *) networkData {
-
+    [IBGLog clearAllLogs];
 
     NSString* url = networkData[@"url"];
     NSString* method = networkData[@"method"];
@@ -721,20 +721,17 @@ FlutterMethodChannel* channel;
     NSString* responseBody = networkData[@"responseBody"];
     int32_t responseCode = [networkData[@"responseCode"] integerValue];
     NSDictionary* requestHeaders = networkData[@"requestHeaders"];
+    if ([requestHeaders count] == 0) {
+        requestHeaders = @{};
+    }
     NSDictionary* responseHeaders = networkData[@"responseHeaders"];
-    NSString* contentType = networkData[@"contentType"];
+    NSString* contentType = @"application/json";
     double duration = [networkData[@"duration"] doubleValue];
-    
-    NSLog(@"url");
-    NSLog(@"%@", url);
-    NSLog(@"method");
-    NSLog(@"%@", method);
-    NSLog(@"responseCode");
-    NSLog(@"%d@", responseCode);
-    NSLog(@"requestBody");
-    NSLog(@"%@", requestBody);
-    NSLog(@"responseBody");
-    NSLog(@"%@", responseBody);
+
+    for(NSString *key in [requestHeaders allKeys]) {
+        NSLog(@"key: %@", key);
+        NSLog(@"value: %@",[requestHeaders objectForKey:key]);
+    }
     
     SEL networkLogSEL = NSSelectorFromString(@"addNetworkLogWithUrl:method:requestBody:responseBody:responseCode:requestHeaders:responseHeaders:contentType:duration:");
 

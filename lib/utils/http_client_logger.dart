@@ -1,20 +1,21 @@
 import 'dart:io';
 
+import 'package:instabug/NetworkLogger.dart';
 import 'package:instabug/models/network_data.dart';
 
 
-class HttpClientParser {
+class HttpClientLogger {
 
-  static Map<int, NetworkData> requests = <int, NetworkData>{};
+  Map<int, NetworkData> requests = <int, NetworkData>{};
 
-  static NetworkData _getRequestData(int requestHashCode) {
+  NetworkData _getRequestData(int requestHashCode) {
     if (requests[requestHashCode] != null) {
       return requests.remove(requestHashCode);
     }
     return null;
   }
 
-  static void onRequest(HttpClientRequest request, { dynamic requestBody }) {
+  void onRequest(HttpClientRequest request, { dynamic requestBody }) {
     final NetworkData requestData = NetworkData();
     requestData.startTime = DateTime.now();
     requestData.method = request.method;
@@ -28,7 +29,7 @@ class HttpClientParser {
     requests[request.hashCode] = requestData;
   }
 
-  static NetworkData onResponse(HttpClientResponse response, HttpClientRequest request, {dynamic responseBody}) {
+  void onResponse(HttpClientResponse response, HttpClientRequest request, {dynamic responseBody}) {
     final DateTime endTime = DateTime.now();
     final NetworkData networkData = _getRequestData(request.hashCode);
 
@@ -50,7 +51,7 @@ class HttpClientParser {
       networkData.responseBody = responseBody;
     }
 
-    return networkData;
+    NetworkLogger.networkLog(networkData);
 
   }
 
