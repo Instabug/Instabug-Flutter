@@ -201,3 +201,19 @@ If your app doesn’t already access the microphone or photo library, we recomme
 * "`<app name>` needs access to your photo library for you to be able to attach images."
 
 **The permission alert for accessing the microphone/photo library will NOT appear unless users attempt to attach a voice note/photo while using Instabug.**
+
+## Network Logging
+You can choose to attach all your network requests to the reports being sent to the dashboard. To enable the feature when using the `dart:io` package `HttpClient`, use the custom Instabug client:
+```
+InstabugCustomHttpClient client = InstabugCustomHttpClient();
+```
+
+and continue to use the package normally to make your network requests:
+
+```
+client.getUrl(Uri.parse(URL)).then((request) async {
+      var response = await request.close();
+});
+```
+
+We also support the packages `http` and `dio`. For details on how to enable network logging for these external packages, refer to the [Instabug Dart Http Adapter](https://github.com/Instabug/Instabug-Dart-http-Adapter) and the [Instabug Dio Interceptor](https://github.com/Instabug/Instabug-Dio-Interceptor) repositories.
