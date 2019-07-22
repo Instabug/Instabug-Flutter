@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'instabug'
-  s.module_name      = 'instabug_flutter
+  s.module_name      = 'instabug_flutter'
   s.version          = '0.0.1'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
