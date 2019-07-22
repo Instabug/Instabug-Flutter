@@ -1,3 +1,7 @@
+## Version 1.0.0-beta.4 (2019-07-22)
+
+* Adds Network logging feature for the dart:io package HttpClient. 
+
 ## Version 1.0.0-beta.3 (2019-05-28)
 
 * Fixes `Locale` enum name collision with `dart.ui` library. Use `IBGLocale` instead.
