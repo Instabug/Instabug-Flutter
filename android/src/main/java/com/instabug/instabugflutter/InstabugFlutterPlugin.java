@@ -20,11 +20,15 @@ import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.logging.InstabugLog;
+import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 import com.instabug.survey.OnDismissCallback;
 import com.instabug.survey.OnShowCallback;
 import com.instabug.survey.Survey;
 import com.instabug.survey.Surveys;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -853,6 +857,29 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      */
     public void setEnableInAppNotificationSound(boolean shouldPlaySound) {
             Replies.setInAppNotificationSound(shouldPlaySound);
+    }
+
+    /**
+     * Extracts HTTP connection properties. Request method, Headers, Date, Url and Response code
+     *
+     * @param jsonObject the JSON object containing all HTTP connection properties
+     */
+    public void networkLog(HashMap<String, Object> jsonObject)  throws JSONException {
+
+            int responseCode = 0;
+
+            NetworkLog networkLog = new NetworkLog();
+            String date = System.currentTimeMillis()+"";
+            networkLog.setDate(date);
+            networkLog.setUrl((String)jsonObject.get("url"));
+            networkLog.setRequest((String)jsonObject.get("requestBody"));
+            networkLog.setResponse((String)jsonObject.get("responseBody"));
+            networkLog.setMethod((String) jsonObject.get("method"));
+            networkLog.setResponseCode((Integer) jsonObject.get("responseCode"));
+            networkLog.setRequestHeaders((new JSONObject((HashMap<String, String>)jsonObject.get("requestHeaders"))).toString(4));
+            networkLog.setResponseHeaders((new JSONObject((HashMap<String, String>)jsonObject.get("responseHeaders"))).toString(4));
+            networkLog.setTotalDuration(((Number) jsonObject.get("duration")).longValue());
+            networkLog.insert();
     }
 
 }

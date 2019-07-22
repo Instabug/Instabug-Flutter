@@ -707,6 +707,54 @@ FlutterMethodChannel* channel;
    IBGReplies.inAppNotificationsEnabled = boolValue;
 }
 
+/**
+ * Extracts HTTP connection properties. Request method, Headers, Date, Url and Response code
+ *
+ * @param networkData the NSDictionary containing all HTTP connection properties
+ */
++ (void)networkLog:(NSDictionary *) networkData {
+    [IBGLog clearAllLogs];
+
+    NSString* url = networkData[@"url"];
+    NSString* method = networkData[@"method"];
+    NSString* requestBody = networkData[@"requestBody"];
+    NSString* responseBody = networkData[@"responseBody"];
+    int32_t responseCode = [networkData[@"responseCode"] integerValue];
+    NSDictionary* requestHeaders = networkData[@"requestHeaders"];
+    if ([requestHeaders count] == 0) {
+        requestHeaders = @{};
+    }
+    NSDictionary* responseHeaders = networkData[@"responseHeaders"];
+    NSString* contentType = @"application/json";
+    double duration = [networkData[@"duration"] doubleValue];
+
+    for(NSString *key in [requestHeaders allKeys]) {
+        NSLog(@"key: %@", key);
+        NSLog(@"value: %@",[requestHeaders objectForKey:key]);
+    }
+    
+    SEL networkLogSEL = NSSelectorFromString(@"addNetworkLogWithUrl:method:requestBody:responseBody:responseCode:requestHeaders:responseHeaders:contentType:duration:");
+
+    if([[IBGNetworkLogger class] respondsToSelector:networkLogSEL]) {
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[IBGNetworkLogger class] methodSignatureForSelector:networkLogSEL]];
+        [inv setSelector:networkLogSEL];
+        [inv setTarget:[IBGNetworkLogger class]];
+
+        [inv setArgument:&(url) atIndex:2];
+        [inv setArgument:&(method) atIndex:3];
+        [inv setArgument:&(requestBody) atIndex:4];
+        [inv setArgument:&(responseBody) atIndex:5];
+        [inv setArgument:&(responseCode) atIndex:6];
+        [inv setArgument:&(requestHeaders) atIndex:7];
+        [inv setArgument:&(responseHeaders) atIndex:8];
+        [inv setArgument:&(contentType) atIndex:9];
+        [inv setArgument:&(duration) atIndex:10];
+
+        [inv invoke];
+    }
+}
+
+
 
 + (NSDictionary *)constants {
   return @{
