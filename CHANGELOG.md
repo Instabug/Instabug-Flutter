@@ -1,6 +1,7 @@
 ## Version 1.0.0-beta.5 (2019-07-22)
 
 * Adds Network logging feature for the dart:io package HttpClient.
+* Fixes a linker issue when using cocoapods.
 
 ## Version 1.0.0-beta.4 (2019-06-25)
 
