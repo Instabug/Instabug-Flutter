@@ -3,6 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'instabug'
+  s.module_name      = 'instabug_flutter'
   s.version          = '0.0.1'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
@@ -15,8 +16,9 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'Instabug', '8.4'
+  s.dependency 'Instabug', '8.5.2'
 
   s.ios.deployment_target = '10.0'
+  s.pod_target_xcconfig = { 'OTHER_LDFLAGS' => '-framework "Flutter" -framework "Instabug"'}
 end
 
