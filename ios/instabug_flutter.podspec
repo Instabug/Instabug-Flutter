@@ -18,5 +18,6 @@ A new flutter plugin project.
   s.dependency 'Instabug', '8.5.2'
 
   s.ios.deployment_target = '10.0'
+  s.pod_target_xcconfig = { 'OTHER_LDFLAGS' => '-framework "Flutter" -framework "Instabug"'}
 end
 
