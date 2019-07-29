@@ -1,6 +1,6 @@
 # Instabug for Flutter
 
-[![pub package](https://img.shields.io/pub/v/instabug.svg)](https://pub.dev/packages/instabug)
+[![pub package](https://img.shields.io/pub/v/instabug_flutter.svg)](https://pub.dev/packages/instabug_flutter)
 
 A Flutter plugin for [Instabug](https://instabug.com/).
 
