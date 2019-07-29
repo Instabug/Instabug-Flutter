@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:instabug/models/network_data.dart';
+import 'package:instabug_flutter/models/network_data.dart';
 
 class NetworkLogger {
 
