@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:instabug/NetworkLogger.dart';
-import 'package:instabug/models/network_data.dart';
+import 'package:instabug_flutter/NetworkLogger.dart';
+import 'package:instabug_flutter/models/network_data.dart';
 
 
 class HttpClientLogger {
