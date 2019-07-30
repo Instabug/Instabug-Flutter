@@ -10,6 +10,7 @@ jobs:
       - run: flutter doctor
       - run: pub get
       - run: flutter test --coverage
+      - run: bash <(curl -s https://codecov.io/bash)
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
    android_test:
     working_directory: ~/project/example/android
