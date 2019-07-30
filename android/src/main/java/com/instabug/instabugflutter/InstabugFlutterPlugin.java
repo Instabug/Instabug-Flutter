@@ -1,6 +1,7 @@
 package com.instabug.instabugflutter;
 
 import android.app.Application;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -45,6 +46,7 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
+import io.reactivex.annotations.Nullable;
 
 /**
  * InstabugFlutterPlugin
@@ -880,6 +882,24 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             networkLog.setResponseHeaders((new JSONObject((HashMap<String, String>)jsonObject.get("responseHeaders"))).toString(4));
             networkLog.setTotalDuration(((Number) jsonObject.get("duration")).longValue());
             networkLog.insert();
+    }
+
+    /**
+     *
+     */
+    public void reportScreenChange(String screenName) {
+        try {
+            Method method = getMethod(Class.forName("com.instabug.library.Instabug"), "reportScreenChange", Bitmap.class, String.class);
+            if (method != null) {
+                method.invoke(null , null, screenName);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
 }
