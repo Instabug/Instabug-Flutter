@@ -19,9 +19,14 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
+  coverage:
   flutter_test:
     sdk: flutter
   mockito:
+
+executables:
+  dart_codecov_generator:
+  generate_coverage:
 
 flutter:
   plugin:
