@@ -270,4 +270,12 @@ class Instabug {
     final List<dynamic> params = <dynamic>[welcomeMessageMode.toString()];
     await _channel.invokeMethod<Object>('setWelcomeMessageMode:', params);
   }
+
+   ///Reports that the screen has been changed (repro steps)
+  ///[screenName] String containing the screen name
+  static void reportScreenChange(
+      String screenName) async {
+    final List<dynamic> params = <dynamic>[screenName];
+    await _channel.invokeMethod<Object>('reportScreenChange:', params);
+  }
 }

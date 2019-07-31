@@ -365,6 +365,17 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
+  test('setWelcomeMessageMode Test', () async {
+    const String screenName = 'screen 1';
+    final List<dynamic> args = <dynamic>[screenName];
+    Instabug.reportScreenChange(screenName);
+    expect(log, <Matcher>[
+      isMethodCall('reportScreenChange:',
+        arguments: args,
+      )
+    ]);
+  });
+
   test('setBugReportingEnabled: Test', () async {
     bool isEnabled = false;
     final List<dynamic> args = <dynamic>[isEnabled];
