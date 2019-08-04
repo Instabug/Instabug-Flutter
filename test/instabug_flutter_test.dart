@@ -365,12 +365,22 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
-  test('setWelcomeMessageMode Test', () async {
+  test('reportScreenChange Test', () async {
     const String screenName = 'screen 1';
     final List<dynamic> args = <dynamic>[screenName];
     Instabug.reportScreenChange(screenName);
     expect(log, <Matcher>[
       isMethodCall('reportScreenChange:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setReproStepsMode Test', () async {
+    final List<dynamic> args = <dynamic>[ReproStepsMode.enabled.toString()];
+    Instabug.setReproStepsMode(ReproStepsMode.enabled);
+    expect(log, <Matcher>[
+      isMethodCall('setReproStepsMode:',
         arguments: args,
       )
     ]);

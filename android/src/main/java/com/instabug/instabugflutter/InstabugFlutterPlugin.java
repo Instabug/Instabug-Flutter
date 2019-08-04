@@ -23,6 +23,7 @@ import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+import com.instabug.library.visualusersteps.State;
 import com.instabug.survey.OnDismissCallback;
 import com.instabug.survey.OnShowCallback;
 import com.instabug.survey.Survey;
@@ -116,8 +117,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             String key = invocationEvents.get(i);
             invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key, InstabugInvocationEvent.class);
         }
-        new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).build();
+        new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).setReproStepsState(State.DISABLED).build();
         enableScreenShotByMediaProjection();
+        //Instabug.setReproStepsState(State.DISABLED);
     }
 
 
@@ -895,6 +897,29 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             Method method = getMethod(Class.forName("com.instabug.library.Instabug"), "reportScreenChange", Bitmap.class, String.class);
             if (method != null) {
                 method.invoke(null , null, screenName);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Sets the Repro Steps mode
+     *
+     * @param reproStepsMode string repro step mode
+     *
+     */
+    public void setReproStepsMode(String reproStepsMode) {
+        try {
+            State reproStepsState = ArgsRegistry.getDeserializedValue(
+                    reproStepsMode, State.class);
+            Method method = getMethod(Class.forName("com.instabug.library.Instabug"), "setRnReproStepsState", State.class);
+            if (method != null) {
+                method.invoke(null , reproStepsState);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

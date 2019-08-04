@@ -78,6 +78,8 @@ enum CustomTextPlaceHolderKey {
   liveWelcomeMessageContent
 }
 
+enum ReproStepsMode { enabled, disabled, noScreenshot }
+
 class Instabug {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
@@ -277,5 +279,13 @@ class Instabug {
       String screenName) async {
     final List<dynamic> params = <dynamic>[screenName];
     await _channel.invokeMethod<Object>('reportScreenChange:', params);
+  }
+
+   ///Sets the repro steps mode
+  ///[mode] repro steps mode
+  static void setReproStepsMode(
+      ReproStepsMode reproStepsMode) async {
+    final List<dynamic> params = <dynamic>[reproStepsMode.toString()];
+    await _channel.invokeMethod<Object>('setReproStepsMode:', params);
   }
 }

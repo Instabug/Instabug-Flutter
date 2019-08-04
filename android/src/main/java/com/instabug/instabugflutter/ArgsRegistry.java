@@ -6,6 +6,7 @@ import com.instabug.library.ActionType;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
+import com.instabug.library.visualusersteps.State;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -58,6 +59,7 @@ final class ArgsRegistry {
         registerInstabugReportTypesArgs(ARGS);
         registerInstabugExtendedBugReportModeArgs(ARGS);
         registerInstabugActionTypesArgs(ARGS);
+        registerReproStepsModeArgs(ARGS);
     }
 
     /**
@@ -207,6 +209,12 @@ final class ArgsRegistry {
         args.put("ActionType.reportBug", ActionType.REPORT_BUG);
         args.put("ActionType.requestNewFeature",ActionType.REQUEST_NEW_FEATURE);
         args.put("ActionType.addCommentToFeature",ActionType.ADD_COMMENT_TO_FEATURE);
+    }
+
+    static void registerReproStepsModeArgs(Map<String, Object> args) {
+        args.put("ReproStepsMode.enabled", State.ENABLED);
+        args.put("ReproStepsMode.disabled", State.DISABLED);
+        args.put("ReproStepsMode.noScreenshot",State.ENABLED_WITH_NO_SCREENSHOTS);
     }
 
 }
