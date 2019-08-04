@@ -1,6 +1,6 @@
 # Instabug for Flutter
 
-[![pub package](https://img.shields.io/pub/v/instabug.svg)](https://pub.dev/packages/instabug)
+[![pub package](https://img.shields.io/pub/v/instabug_flutter.svg)](https://pub.dev/packages/instabug_flutter)
 
 A Flutter plugin for [Instabug](https://instabug.com/).
 
@@ -20,106 +20,6 @@ A Flutter plugin for [Instabug](https://instabug.com/).
 * ⚙️ Under active development
 * ⚠ Not available yet
 
-### APIs
-
-The section below contains the APIs we're planning to implement for our 1.0 release across different classes. We'll add the Dart API methods as we implement them.
-
-#### `Instabug`
-
-| API Method                                                           | Native Equivalent (Android/iOS)                                                                           |
-|----------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| `start(String token, List<InvocationEvent> invocationEvents)`        | `new Instabug.Builder(this, "APP_TOKEN").build()`<br>`+ startWithToken:invocationEvents:`                 |
-| `showWelcomeMessageWithMode(WelcomeMessageMode welcomeMessageMode)`  | `showWelcomeMessage(WelcomeMessage.State state)`<br>`+ showWelcomeMessageWithMode:`                       |
-| `identifyUserWithEmail(String email, [String name])`                 | `identifyUser(String username, String email)`<br>`+ identifyUserWithEmail:name:`                          |
-| `logOut()`                                                           | `logoutUser()`<br>`+ logOut`                                                                              |
-| `setLocale(Locale locale)`                                           | `setLocale(Locale locale)`<br>`+ setLocale:`                                                              |
-| `setColorTheme(ColorTheme colorTheme)`                               | `setColorTheme(InstabugColorTheme theme)`<br>`+ setColorTheme:`                                           |
-| `appendTags(List<String> tags)`                                      | `addTags(String... tags)`<br>`+ appendTags:`                                                              |
-| `resetTags()`                                                        | `resetTags()`<br>`+ resetTags`                                                                            |
-| `getTags()`                                                          | `getTags()`<br>`+ getTags`                                                                                |
-| `setStringForKey(String value, String key)`                          | `setCustomTextPlaceHolders(InstabugCustomTextPlaceHolder placeholder)`<br>`+ setValue:forStringWithKey:`  |
-| `setUserAttributeWithKey(String value, String key)`                  | `setUserAttribute(String key, String value)`<br>`+ setUserAttribute:withKey:`                             |
-| `getUserAttributeForKey(Sring Key)`                                  | `getUserAttribute(String key)`<br>`+ userAttributeForKey:`                                                |
-| `removeUserAttributeForKey(String key)`                              | `removeUserAttribute(String key)`<br>`+ removeUserAttributeForKey:`                                       |
-| `getUserAttributes()`                                                | `getAllUserAttributes()`<br>`+ userAttributes:`                                                           |
-| `logUserEventWithName(String name)`                                  | `logUserEvent(String name)`<br>`+ logUserEventWithName:`                                                  |
-| `show()`                                                             | `show()`<br>`+ show`                                                                                      |
-| `setSessionProfilerEnabled(bool sessionProfilerEnabled)`             | `setSessionProfilerState(Feature.State state)`<br>`sessionProfilerEnabled`                                |
-| `setPrimaryColor(Color color)`                                       | `setPrimaryColor(@ColorInt int primaryColorValue)`<br>`tintColor`                                         |
-| `setUserData(String userData)`                                       | `setUserData(String userData)`<br>`userData`                                                              |
-| `addFileAttachmentWithURL(String filePath, String fileName)`         | `addFileAttachment(Uri fileUri, String fileNameWithExtension)`<br>`+ addFileAttachmentWithURL:`           |
-| `addFileAttachmentWithData(Uint8List data, String fileName)`         | `addFileAttachment(byte[] data, String fileNameWithExtension)` `+ addFileAttachmentWithData:`             |
-| `clearFileAttachments()`                                             | `clearFileAttachment()`<br>`+ clearFileAttachments`                                                       |
-| `setWelcomeMessageMode(WelcomeMessageMode welcomeMessageMode)`       | `setWelcomeMessageState(WelcomeMessage.State welcomeMessageState)`<br>`welcomeMessageMode`                |
-
-#### `BugReporting`
-
-| API Method                                                                                  | Native Equivalent (Android/iOS)                                                                                             |
-|---------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| `invokeWithMode(InvocationMode invocationMode, [List<InvocationOption> invocationOptions])` | `invoke(InvocationMode mode, @InvocationOption int... options)`<br>`+invokeWithMode:options:`|
-| `setEnabled(bool isEnabled)`                                                                | `setState(Feature.State state)`<br>`enabled`                                                 |
-| `setOnInvokeCallback(Function function)`                                                    | `setOnInvokeCallback(OnInvokeCallback onInvokeCallback)`<br>`willInvokeHandler`              |
-| `setOnDismissCallback(Function function)`                                                   | `setOnDismissCallback(OnSdkDismissCallback onSdkDismissedCallback)`<br>`didDismissHandler`   |
-| `setInvocationEvents(List<InvocationEvent> invocationEvents)`                               | `setInvocationEvents(InstabugInvocationEvent... invocationEvents)`<br>`invocationEvents`     |
-| `setEnabledAttachmentTypes(bool screenshot, bool extraScreenshot, bool galleryImage, bool screenRecording)` | `setAttachmentTypesEnabled(boolean initial, boolean extra, boolean gallery, boolean                                                                                                            recording`<br>`enabledAttachmentTypes` |
-| `setReportTypes(List<ReportType> reportTypes)`                                              | `setReportTypes(@BugReporting.ReportType int... types)`<br>`promptOptionsEnabledReportTypes` |
-| `setExtendedBugReportMode(ExtendedBugReportMode extendedBugReportMode)`                     | `setExtendedBugReportState(ExtendedBugReport.State state)`<br>`extendedBugReportMode`        |
-| `setInvocationOptions(List<InvocationOption> invocationOptions)`                            | `setOptions(@Option int... options)`<br>`bugReportingOptions`
-| `showWithOptions(ReportType reportType, List<InvocationOption> invocationOptions)`          | `show(@BugReporting.ReportType int type)`<br>`+ showWithReportType:options:`
-
-#### `InstabugLog`
-
-| API Method                                    | Native Equivalent (Android/iOS)                              |
-|-----------------------------------------------|--------------------------------------------------------------|
-| `logDebug(String message)`                     | `d(String message)`<br>`+ logDebug:`                         |
-| `logVerbose(String message)`                  | `v(String message)`<br>`+ logVerbose:`                       |
-| `logInfo(String message)`                     | `i(String message)`<br>`+ logInfo:`                          |
-| `logWarn(String message)`                     | `w(String message)`<br>`+ logWarn:`                          |
-| `logError(String message)`                    | `e(String message)`<br>`+ logError:`                         |
-| `clearAllLogs(String message)`                | `clearLogs()`<br>`+ clearAllLogs:`                           |
-
-#### `Surveys`
-
-| API Method                                    | Native Equivalent (Android/iOS)                                                                                                             |
-|-----------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
-| `setEnabled(bool isEnabled)`                  | `setState(Feature.State state)`<br>`enabled`                                                                                                |
-| `setAutoShowingEnabled(bool isEnabled)`       | `setAutoShowingEnabled(boolean isAutoShowingEnabled)`<br>`autoShowingEnabled`                                                               |
-| `getAvailableSurveys(Function function)`      | `getAvailableSurveys()`<br>`+ availableSurveys`                                                                                             |
-| `setOnShowCallback(Function function)`        | `setOnShowCallback(OnShowCallback onShowCallback)`<br>`willShowSurveyHandler`                                                               |
-| `setOnDismissCallback(Function function)`     | `setOnDismissCallback(OnDismissCallback onDismissCallback)`<br>`didDismissSurveyHandler`                                                    |
-| `setShouldShowWelcomeScreen(bool shouldShowWelcomeScreen)` | `setShouldShowWelcomeScreen(boolean shouldShow)`<br>`shouldShowWelcomeScreen`                                                                 |
-| `showSurveyIfAvailable()`                     | `showSurveyIfAvailable()`<br>`+ showSurveyIfAvailable`                                                                                      |
-| `showSurvey(String surveyToken)`              | `showSurvey(String token)`<br>`+ showSurveyWithToken:`                                                                                      |
-| `hasRespondedToSurvey(String surveyToken, Function function)`   | `hasRespondToSurvey(String token)`<br>`+ hasRespondedToSurveyWithToken:`                                                                    |
-
-#### `FeatureRequests`
-
-| API Method                                    | Native Equivalent (Android/iOS)                              |
-|-----------------------------------------------|--------------------------------------------------------------|
-| `show()                 `                     | `show()`<br>`+ show`                         |
-| `setEmailFieldRequired(bool isEmailFieldRequired, List<ActionType> actionTypes)`             | `setEmailFieldRequired(boolean isEmailRequired, ActionTypes actions)`<br>`+ setEmailFieldRequired:forAction:`                       |
-
-
-#### `Chats`
-
-| API Method                                    | Native Equivalent (Android/iOS)                              |
-|-----------------------------------------------|--------------------------------------------------------------|
-| `show()`                     | `show()`<br>`+ show`                         |
-| `setEnabled(bool isEnabled)`                  | `setState(Feature.State state)`<br>`enabled`                 |
-
-
-#### `Replies`
-
-| API Method                                    | Native Equivalent (Android/iOS)                                                                                                             |
-|-----------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
-| `setEnabled(bool isEnabled)`                  | `setState(Feature.State state)`<br>`enabled`                                               |
-| `show()`                                      | `show()`<br>`+ show`                                                                       |
-| `hasChats(Function function)`                 | `hasChats()`<br>`+ hasChats`                                                               |
-| `setOnNewReplyReceivedCallback(Function function)`  | `setOnNewReplyReceivedCallback(Callback callback)`<br>`didReceiveReplyHandler` 
-| `getUnreadRepliesCount(Function function)`    | `getUnreadRepliesCount()`<br>`unreadRepliesCount`                                         |
-| `setInAppNotificationsEnabled(bool isEnabled)`| `setInAppNotificationEnabled(Boolean isChatNotificationEnable)`<br>`inAppNotificationsEnabled`  |
-| `setInAppNotificationSound(bool isEnabled)`   | `setInAppNotificationSound(Boolean shouldPlaySound)`                                       |
-
 ## Integration
 
 Creating a Flutter app on the Instabug dashboard isn't possible yet. Create a React Native app instead.
@@ -132,7 +32,7 @@ Creating a Flutter app on the Instabug dashboard isn't possible yet. Create a Re
 
 ```yaml
 dependencies:
-    instabug:
+    instabug_flutter:
 ```
 
 2. Install the package by running the following command.
@@ -146,7 +46,7 @@ flutter packages get
 1. To start using Instabug, import it into your Flutter app. 
 
 ```dart
-import 'package:instabug/Instabug.dart';
+import 'package:instabug_flutter/Instabug.dart';
 ```
 
 2. Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the device is shaken. Ignore this if you're building for Android only.

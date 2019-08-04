@@ -4,10 +4,10 @@ import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:instabug/NetworkLogger.dart';
-import 'package:instabug/instabug_custom_http_client.dart';
-import 'package:instabug/models/network_data.dart';
-import 'package:instabug/utils/http_client_logger.dart';
+import 'package:instabug_flutter/NetworkLogger.dart';
+import 'package:instabug_flutter/instabug_custom_http_client.dart';
+import 'package:instabug_flutter/models/network_data.dart';
+import 'package:instabug_flutter/utils/http_client_logger.dart';
 import 'package:mockito/mockito.dart';
 // import 'package:test_api/test_api.dart';
 
