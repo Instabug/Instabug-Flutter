@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:instabug/Instabug.dart';
+import 'package:instabug_flutter/Instabug.dart';
 
 class InstabugNavigatorObserver extends NavigatorObserver {
 
@@ -15,5 +15,5 @@ class InstabugNavigatorObserver extends NavigatorObserver {
     Instabug.reportScreenChange(route.settings.name.toString());
     print(route.settings.name);
   }
-  
+
 }
