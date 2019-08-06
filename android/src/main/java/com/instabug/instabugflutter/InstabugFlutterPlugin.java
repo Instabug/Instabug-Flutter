@@ -898,11 +898,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             if (method != null) {
                 method.invoke(null , null, screenName);
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -921,11 +917,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             if (method != null) {
                 method.invoke(null , reproStepsState);
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
