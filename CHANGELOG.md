@@ -1,3 +1,7 @@
+## Master
+
+* Adds initializing android sdk from using `Instabug.start` instead of inside the application class
+
 ## Version 1.0.0 (2019-07-29)
 
 **⚠️ Package on pub has been renamed to `instabug_flutter` the old package `instabug` is deprecated**
