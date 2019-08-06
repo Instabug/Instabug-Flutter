@@ -1,6 +1,6 @@
 ## Master
 
-* Adds Repro Steps
+* Adds support for Repro Steps. Repro Steps list all of the actions an app user took before reporting a bug or crash, grouped by the screens they visited in your app.
 
 ## Version 1.0.0 (2019-07-29)
 
