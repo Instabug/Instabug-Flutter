@@ -95,6 +95,25 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         }
     }
 
+        /**
+     * starts the SDK
+     *
+     * @param application      the application Object
+     * @param token            token The token that identifies the app, you can find
+     *                         it on your dashboard.
+     * @param invocationEvents invocationEvents The events that invoke
+     *                         the SDK's UI.
+     */
+    public void start(Application application, String token, ArrayList<String> invocationEvents) {
+        InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
+        for (int i = 0; i < invocationEvents.size(); i++) {
+            String key = invocationEvents.get(i);
+            invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key, InstabugInvocationEvent.class);
+        }
+        new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).build();
+        enableScreenShotByMediaProjection();
+    }
+
     /**
      * starts the SDK
      *
