@@ -16,7 +16,7 @@ jobs:
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV 
       - run:
           name: accept lisences
-          command: yes | sdkmanager --licenses
+          command: yes | sdkmanager --licenses && sdkmanager --update
       - run:
           name: Setup emulator
           command: sdkmanager "system-images;android-22;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-22;default;armeabi-v7a"
