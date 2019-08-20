@@ -5,7 +5,16 @@ jobs:
       - image: circleci/android@sha256:5cdc8626cc6f13efe5ed982cdcdb432b0472f8740fed8743a6461e025ad6cdfc
     steps:
       - run:
-          name: Setup emulator
+          name: download flutter SDK
+          command: if ! test -f "flutter_sdk.tar.xz"; then curl -o flutter_sdk.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_v1.7.8+hotfix.4-stable.tar.xz; fi
+      - run:
+          name: unzip flutter SDK
+          command: unzip flutter_sdk.tar.xz
+      - run:
+          name: export flutter path
+          command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV 
+      - run:
+          name: accept lisences
           command: yes | sdkmanager --licenses
       - run:
           name: Setup emulator
