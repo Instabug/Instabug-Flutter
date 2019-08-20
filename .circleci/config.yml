@@ -30,6 +30,9 @@ jobs:
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
+      - run: echo y | android update sdk --all --no-ui --filter "sys-img-armeabi-v7a-google_apis-23"
+      - run: echo "no" | android -v create avd --force -n arm -t "android-23" --abi "google_apis/armeabi-v7a"
+      - run: emulator64-arm -avd arm -no-audio -no-window -no-boot-anim & adb wait-for-device
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
