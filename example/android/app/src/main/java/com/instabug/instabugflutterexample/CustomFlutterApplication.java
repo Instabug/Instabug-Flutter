@@ -11,6 +11,6 @@ public class CustomFlutterApplication extends FlutterApplication {
     super.onCreate();
     ArrayList<String> invocation_events = new ArrayList<>();
     invocation_events.add(InstabugFlutterPlugin.INVOCATION_EVENT_FLOATING_BUTTON);
-    new InstabugFlutterPlugin().start(CustomFlutterApplication.this, "YOUR_TOKEN", invocation_events);
+    new InstabugFlutterPlugin().start(CustomFlutterApplication.this, "efa41f402620b5654f2af2b86e387029", invocation_events);
   }
 }

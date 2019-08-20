@@ -52,6 +52,21 @@
                ReferencedContainer = "container:Runner.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A0BE54C6230AC8B80016CD95"
+               BuildableName = "instabug_flutter_exampleUITests.xctest"
+               BlueprintName = "instabug_flutter_exampleUITests"
+               ReferencedContainer = "container:Runner.xcodeproj">
+            </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "instabug_UITests">
+               </Test>
+            </SkippedTests>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
