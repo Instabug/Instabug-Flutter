@@ -43,11 +43,7 @@ jobs:
       # - run:
       #     name: Run UITest
       #     command: ./gradlew connectedAndroidTest
-      - run: adb push /Users/alyezz/Flutter/Instabug-Flutter/example/build/app/outputs/apk/debug/app-debug.apk /data/local/tmp/com.instabug.instabugflutterexample
-      - run: adb shell pm install --full -t -r "/data/local/tmp/com.instabug.instabugflutterexample"
-      - run: adb push /Users/alyezz/Flutter/Instabug-Flutter/example/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk /data/local/tmp/com.instabug.instabugflutterexample.test
-      - run: adb shell pm install --full -t -r "/data/local/tmp/com.instabug.instabugflutterexample.test"
-      - run: $ adb shell am instrument -w -r   -e debug false -e class 'com.instabug.instabugflutterexample.InvokeInstabugUITest' com.instabug.instabugflutterexample.test/android.support.test.runner.AndroidJUnitRunner   
+      - run: adb shell am instrument -w -r   -e debug false -e class 'com.instabug.instabugflutterexample.InvokeInstabugUITest' com.instabug.instabugflutterexample.test/android.support.test.runner.AndroidJUnitRunner   
    build:
     docker:
       - image: cirrusci/flutter
