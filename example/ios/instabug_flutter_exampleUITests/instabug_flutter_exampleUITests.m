@@ -30,7 +30,7 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
-- (void)testExample {
+- (void)testInstabugSendBugReport {
     
     XCUIApplication *app = [[XCUIApplication alloc] init];
     XCUIElement *ibgfloatingbuttonaccessibilityidentifierElement = app/*@START_MENU_TOKEN@*/.otherElements[@"IBGFloatingButtonAccessibilityIdentifier"]/*[[".otherElements[@\"Floating Button\"]",".otherElements[@\"IBGFloatingButtonAccessibilityIdentifier\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
@@ -39,6 +39,10 @@
 
     XCUIElement *textField = app.scrollViews.otherElements.textFields[@"IBGBugInputViewEmailFieldAccessibilityIdentifier"];
     [textField tap];
+    if (![textField.value  isEqual: @"Enter your email"]) {
+        [textField pressForDuration:1.2];
+        [app.menuItems[@"Select All"] tap];
+    }
     [textField typeText:@"inst@bug.com"];
     [app.navigationBars[@"Report a problem"]/*@START_MENU_TOKEN@*/.buttons[@"IBGBugVCNextButtonAccessibilityIdentifier"]/*[[".buttons[@\"Send\"]",".buttons[@\"IBGBugVCNextButtonAccessibilityIdentifier\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
 

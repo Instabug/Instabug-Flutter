@@ -21,7 +21,6 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		999354DC0E63372C73A68B4C /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EBB397F99FB54015C87211 /* libPods-Runner.a */; };
-		A0A2E7A6230BECAF00EB0DEF /* instabug_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A2E7A5230BECAF00EB0DEF /* instabug_UITests.swift */; };
 		A0BE54CA230AC8B80016CD95 /* instabug_flutter_exampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE54C9230AC8B80016CD95 /* instabug_flutter_exampleUITests.m */; };
 		A0CE77B4227B03D600DE990D /* instabug_flutter_exampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CE77B3227B03D600DE990D /* instabug_flutter_exampleTests.m */; };
 /* End PBXBuildFile section */
@@ -79,8 +78,6 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A0A2E7A4230BECAF00EB0DEF /* instabug_flutter_exampleUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "instabug_flutter_exampleUITests-Bridging-Header.h"; sourceTree = "<group>"; };
-		A0A2E7A5230BECAF00EB0DEF /* instabug_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = instabug_UITests.swift; sourceTree = "<group>"; };
 		A0BE54C7230AC8B80016CD95 /* instabug_flutter_exampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = instabug_flutter_exampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0BE54C9230AC8B80016CD95 /* instabug_flutter_exampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = instabug_flutter_exampleUITests.m; sourceTree = "<group>"; };
 		A0BE54CB230AC8B80016CD95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -207,10 +204,8 @@
 		A0BE54C8230AC8B80016CD95 /* instabug_flutter_exampleUITests */ = {
 			isa = PBXGroup;
 			children = (
-				A0A2E7A5230BECAF00EB0DEF /* instabug_UITests.swift */,
 				A0BE54C9230AC8B80016CD95 /* instabug_flutter_exampleUITests.m */,
 				A0BE54CB230AC8B80016CD95 /* Info.plist */,
-				A0A2E7A4230BECAF00EB0DEF /* instabug_flutter_exampleUITests-Bridging-Header.h */,
 			);
 			path = instabug_flutter_exampleUITests;
 			sourceTree = "<group>";
@@ -504,7 +499,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0A2E7A6230BECAF00EB0DEF /* instabug_UITests.swift in Sources */,
 				A0BE54CA230AC8B80016CD95 /* instabug_flutter_exampleUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
