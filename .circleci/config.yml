@@ -49,20 +49,13 @@ jobs:
       - run: 
           name: Flutter build
           command: cd ..; flutter build aot
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Download Android Dependencies
           command: ./gradlew androidDependencies
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Run Tests
+          name: Run UI Tests
           command: ./gradlew app:connectedAndroidTest
           
-
    build:
     docker:
       - image: cirrusci/flutter
@@ -173,6 +166,7 @@ workflows:
             - build
             - android_test
             - ios_test
+            - android_ui_test
           filters:
             branches:
               only: master
