@@ -32,6 +32,7 @@ public class InvokeInstabugUITest {
         onView(withText("Report a problem")).perform(click());
         onView(withResourceName("instabug_edit_text_email")).perform(replaceText("inst@bug.com"));
         onView(withResourceName("instabug_bugreporting_send")).perform(click());
+        onView(withResourceName("instabug_success_dialog_container")).perform(click());
     }
 
     private void disableScreenShotByMediaProjection() {
