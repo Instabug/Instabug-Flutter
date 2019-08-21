@@ -70,11 +70,11 @@ jobs:
           name: Run emulator in background
           command: /usr/local/share/android-sdk/tools/emulator @Pixel_2_API_26 -noaudio -no-boot-anim -no-window
           background: true
-      - *download_android_dependencies
       - run: flutter doctor
       - run: 
           name: Flutter build
           command: cd ..; flutter build aot
+      - *download_android_dependencies
       - run:
           name: Run Tests
           command: ./gradlew app:connectedAndroidTest
