@@ -1,12 +1,6 @@
 version: 2
-reference:
-  ## Constants
-  gradle_cache_path: &gradle_cache_path
-    gradle_cache-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-  workspace: &workspace
-    ~/src
-  ## Configurations
-  android_config: &android_config
+jobs:
+   android_ui_test:
     working_directory: ~/project/example/android
     macos:
       xcode: "9.4.0"
@@ -14,25 +8,6 @@ reference:
     environment:
       TERM: dumb
       JVM_OPTS: -Xmx3200m
-  ## Cache
-  restore_gradle_cache: &restore_gradle_cache
-    restore_cache:
-      key: *gradle_cache_path
-  save_gradle_cache: &save_gradle_cache
-    save_cache:
-      key: *gradle_cache_path
-      paths:
-        - ~/.gradle
-
-  ## Dependency Downloads
-  download_android_dependencies: &download_android_dependencies
-    run:
-      name: Download Android Dependencies
-      command: ./gradlew androidDependencies
-
-jobs:
-   ui_test:
-    <<: *android_config
     steps:
       - checkout:
           path: ~/project
@@ -74,86 +49,20 @@ jobs:
       - run: 
           name: Flutter build
           command: cd ..; flutter build aot
-      - *download_android_dependencies
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Run Tests
-          command: ./gradlew app:connectedAndroidTest
-          
-   emulator:
-    working_directory: ~/project/example/android
-    docker:
-      - image: circleci/android@sha256:5cdc8626cc6f13efe5ed982cdcdb432b0472f8740fed8743a6461e025ad6cdfc
-    steps:
-      - checkout:
-          path: ~/project
-      - run: mkdir artifacts
-      - run:
-          name: download flutter SDK
-          command: if ! test -f "flutter_sdk.tar.xz"; then curl -o flutter_sdk.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_v1.7.8+hotfix.4-stable.tar.xz; fi
-      - run:
-          name: unzip flutter SDK
-          command: tar xf flutter_sdk.tar.xz
-      - run:
-          name: export flutter path
-          command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV 
-      - run:
-          name: accept lisences
-          command: yes | sdkmanager --licenses || true
-      - run: flutter doctor
-      - run: 
-          name: Flutter build
-          command: cd ..; flutter build aot
-      - run:
-          name: chmod permissions
-          command: chmod +x ./gradlew
-      - run:
-          name: Download Dependencies
+          name: Download Android Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run: sudo apt-get install libpulse0
       - run:
-          name: Setup emulator
-          command: sdkmanager "system-images;android-22;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-22;default;armeabi-v7a"
-      - run:
-          name: Launch emulator
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator -avd test -noaudio -no-boot-anim -no-window
-          background: true
-      - run:
-            name: Wait emulator
-            command: |
-              # wait for it to have booted
-              circle-android wait-for-boot
-              # unlock the emulator screen
-              sleep 30
-              adb shell input keyevent 82
-      - run:
-          name: Fetch logcat and props
-          background: true
-          command: |
-            /opt/android/sdk/platform-tools/adb logcat >> ./artifacts/logcat.txt
-            /opt/android/sdk/platform-tools/adb shell getprop >> ./artifacts/props.txt
-      - run:
-          name: Run Android Connected Tests
-          command: |
-            export ADB_INSTALL_TIMEOUT=120
-            export ANDROID_HOME=$ANDROID_SDK_ROOT
-            # ./scripts/test.sh
-            ./gradlew assembleDebug
-            # Wait for emulator to fully boot
-            # TODO: Need to create a good check
-            sleep 60
-            # Is the emulator still running?
-            adb devices
-            # Check if package manager is running
-            adb shell pm list packages
-            # Install package
-            ./gradlew connectedAndroidTest
-      - store_artifacts:
-          path: ~/project/example/android/artifacts
-          destination: env
+          name: Run Tests
+          command: ./gradlew app:connectedAndroidTest
+          
+
    build:
     docker:
       - image: cirrusci/flutter
@@ -254,11 +163,10 @@ workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
-      - ui_test
       - build
-      - emulator
       - android_test
       - ios_test
+      - android_ui_test
       - hold:
           type: approval
           requires:
