@@ -74,7 +74,7 @@ jobs:
             # Install package
             ./gradlew connectedAndroidTest
       - store_artifacts:
-          path: ~/example/android/artifacts
+          path: ~/project/example/android/artifacts
           destination: env
    build:
     docker:
