@@ -57,9 +57,7 @@ jobs:
           name: Run emulator in background
           command: /usr/local/share/android-sdk/tools/emulator @Pixel_2_API_26 -noaudio -no-boot-anim -no-window
           background: true
-      - *restore_gradle_cache
       - *download_android_dependencies
-      - *save_gradle_cache
       - run:
           name: Run Tests
           command: ./gradlew app:connectedAndroidTest
