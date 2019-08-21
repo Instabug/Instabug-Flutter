@@ -7,6 +7,7 @@ jobs:
     steps:
       - checkout:
           path: ~/project
+      - run: mkdir artifacts
       - run:
           name: download flutter SDK
           command: if ! test -f "flutter_sdk.tar.xz"; then curl -o flutter_sdk.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_v1.7.8+hotfix.4-stable.tar.xz; fi
@@ -54,8 +55,8 @@ jobs:
           name: Fetch logcat and props
           background: true
           command: |
-            $ANDROID_SDK_ROOT/platform-tools/adb logcat >> ./artifacts/logcat.txt
-            $ANDROID_SDK_ROOT/platform-tools/adb shell getprop >> ./artifacts/props.txt
+            /opt/android/sdk/platform-tools/adb logcat >> ./artifacts/logcat.txt
+            /opt/android/sdk/platform-tools/adb shell getprop >> ./artifacts/props.txt
       - run:
           name: Run Android Connected Tests
           command: |
@@ -71,7 +72,7 @@ jobs:
             # Check if package manager is running
             adb shell pm list packages
             # Install package
-            $ANDROID_SDK_ROOT/platform-tools/adb install /home/android/androidlearn/app/build/outputs/apk/app-debug.apk
+            /opt/android/sdk/platform-tools/adb install /home/android/androidlearn/app/build/outputs/apk/app-debug.apk
             ./gradlew connectedAndroidTest
       - store_artifacts:
           path: ~/androidlearn/artifacts
