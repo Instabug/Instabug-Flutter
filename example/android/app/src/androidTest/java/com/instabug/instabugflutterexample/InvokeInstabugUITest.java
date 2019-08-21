@@ -3,8 +3,6 @@ package com.instabug.instabugflutterexample;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.instabug.bug.BugReporting;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,8 +28,7 @@ public class InvokeInstabugUITest {
     @Test
     public void ensureInstabugInvocati1on() {
         disableScreenShotByMediaProjection();
-        BugReporting.invoke();
-        //onView(withResourceName("instabug_floating_button")).perform(click());
+        onView(withResourceName("instabug_floating_button")).perform(click());
         onView(withText("Report a problem")).perform(click());
         onView(withResourceName("instabug_edit_text_email")).perform(replaceText("inst@bug.com"));
         onView(withResourceName("instabug_bugreporting_send")).perform(click());
