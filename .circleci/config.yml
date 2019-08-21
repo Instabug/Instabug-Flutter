@@ -7,7 +7,7 @@ reference:
     ~/src
   ## Configurations
   android_config: &android_config
-    working_directory: *workspace
+    working_directory: ~/project/example/android
     macos:
       xcode: "9.4.0"
     shell: /bin/bash --login -eo pipefail
@@ -34,7 +34,8 @@ jobs:
    ui_test:
     <<: *android_config
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - run:
           name: Setup environment variables
           command: |
@@ -57,7 +58,20 @@ jobs:
           name: Run emulator in background
           command: /usr/local/share/android-sdk/tools/emulator @Pixel_2_API_26 -noaudio -no-boot-anim -no-window
           background: true
+      - run:
+          name: download flutter SDK
+          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip; fi
+      - run:
+          name: unzip flutter SDK
+          command: unzip flutter_sdk.zip
+      - run:
+          name: export flutter path
+          command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
       - *download_android_dependencies
+      - run: flutter doctor
+      - run: 
+          name: Flutter build
+          command: cd ..; flutter build aot
       - run:
           name: Run Tests
           command: ./gradlew app:connectedAndroidTest
