@@ -72,10 +72,9 @@ jobs:
             # Check if package manager is running
             adb shell pm list packages
             # Install package
-            /opt/android/sdk/platform-tools/adb install /home/android/androidlearn/app/build/outputs/apk/app-debug.apk
             ./gradlew connectedAndroidTest
       - store_artifacts:
-          path: ~/androidlearn/artifacts
+          path: ~/example/android/artifacts
           destination: env
    build:
     docker:
