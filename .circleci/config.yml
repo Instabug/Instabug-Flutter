@@ -31,7 +31,7 @@ reference:
       command: ./gradlew androidDependencies
 
 jobs:
-  ui_test:
+   ui_test:
     <<: *android_config
     steps:
       - checkout
@@ -64,7 +64,7 @@ jobs:
           name: Run Tests
           command: ./gradlew app:connectedAndroidTest
 
-  emulator:
+   emulator:
     working_directory: ~/project/example/android
     docker:
       - image: circleci/android@sha256:5cdc8626cc6f13efe5ed982cdcdb432b0472f8740fed8743a6461e025ad6cdfc
