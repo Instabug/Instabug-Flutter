@@ -164,9 +164,8 @@ workflows:
           type: approval
           requires:
             - build
-            - android_test
-            - ios_test
-            - android_ui_test
+            - android_tests
+            - ios_tests
           filters:
             branches:
               only: master
