@@ -4,6 +4,7 @@ jobs:
     working_directory: ~/project/example/android
     macos:
       xcode: "10.1.0"
+    parallelism: 2
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -25,7 +26,7 @@ jobs:
             HOMEBREW_NO_AUTO_UPDATE=1 brew cask install android-sdk
       - run:
           name: Install emulator dependencies
-          command: (yes | sdkmanager "platform-tools" "platforms;android-27" "extras;intel;Hardware_Accelerated_Execution_Manager" "build-tools;27.0.0" "system-images;android-27;google_apis;x86" "emulator" --verbose) || true
+          command: (yes | sdkmanager "platform-tools" "platforms;android-26" "extras;intel;Hardware_Accelerated_Execution_Manager" "build-tools;26.0.0" "system-images;android-26;google_apis;x86" "emulator" --verbose) || true
       - run:
           name: download flutter SDK
           command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip; fi
@@ -38,11 +39,12 @@ jobs:
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
-      - run: avdmanager create avd -n Pixel_2_API_27 -k "system-images;android-27;google_apis;x86" -g google_apis -d "Nexus 5"
+      - run: avdmanager create avd -n Pixel_2_API_26 -k "system-images;android-26;google_apis;x86" -g google_apis -d "Nexus 5"
       - run:
           name: Run emulator in background
-          command: /usr/local/share/android-sdk/tools/emulator @Pixel_2_API_27 -noaudio -no-boot-anim -no-window
+          command: /usr/local/share/android-sdk/tools/emulator @Pixel_2_API_26 -noaudio -no-boot-anim -no-window
           background: true
+          parallel: true
       - run: flutter doctor
       - run: 
           name: Flutter build
@@ -53,9 +55,11 @@ jobs:
       - run:
           name: Run Unit Tests
           command: ./gradlew test
+          parallel: true
       - run:
           name: Run UI Tests
           command: ./gradlew app:connectedAndroidTest
+          parallel: true
           
    flutter_tests:
     docker:
