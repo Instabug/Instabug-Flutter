@@ -11,7 +11,7 @@ jobs:
           path: ~/project
       - restore_cache:
           keys: 
-            - android_tests_cache
+            - android_cache
       - run:
           name: Setup environment variables
           command: |
@@ -57,10 +57,9 @@ jobs:
           name: Run Unit Tests
           command: ./gradlew test
       - save_cache:
-          key: android_tests_cache
+          key: android_cache
           paths:
             - ~/.gradle
-            - ~/android-sdk
             - flutter_sdk.zip
 
    flutter_tests:
