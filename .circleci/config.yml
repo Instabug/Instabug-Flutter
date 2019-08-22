@@ -95,6 +95,7 @@ jobs:
       - run:
           name: Run UnitTest
           command: ./gradlew test
+          
    ios_tests:
     macos:
       xcode: "10.2.0"
