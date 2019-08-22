@@ -9,6 +9,9 @@ jobs:
     steps:
       - checkout:
           path: ~/project
+      - restore_cache:
+          keys: 
+            - android_tests_cache
       - run:
           name: Setup environment variables
           command: |
@@ -55,7 +58,12 @@ jobs:
       - run:
           name: Run Unit Tests
           command: ./gradlew test
-          
+      - save_cache:
+          key: android_tests_cache
+          paths:
+            - ~/.gradle
+            - flutter_sdk.zip
+
    flutter_tests:
     docker:
       - image: cirrusci/flutter
