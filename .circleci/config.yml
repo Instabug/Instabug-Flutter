@@ -3,7 +3,7 @@ jobs:
    android_tests:
     working_directory: ~/project/example/android
     macos:
-      xcode: "10.2.0"
+      xcode: "9.4.0"
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -57,7 +57,7 @@ jobs:
           name: Run UI Tests
           command: ./gradlew app:connectedAndroidTest
           
-   build:
+   flutter_tests:
     docker:
       - image: cirrusci/flutter
     steps:
@@ -157,13 +157,13 @@ workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
-      - build
+      - flutter_tests
       - android_tests
       - ios_tests
       - hold:
           type: approval
           requires:
-            - build
+            - flutter_tests
             - android_tests
             - ios_tests
           filters:
