@@ -55,6 +55,7 @@ jobs:
       - run:
           name: Run Unit Tests
           command: ./gradlew test
+          
    flutter_tests:
     docker:
       - image: cirrusci/flutter
@@ -67,35 +68,7 @@ jobs:
       - run: flutter test --coverage
       - run: bash <(curl -s https://codecov.io/bash)
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-   android_test:
-    working_directory: ~/project/example/android
-    docker:
-      - image: cirrusci/flutter
-    environment:
-      JVM_OPTS: -Xmx3200m
-    steps:
-      - checkout:
-          path: ~/project
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run: flutter doctor
-      - run: 
-          name: Flutter build
-          command: cd ..; flutter build aot
-      - run:
-          name: chmod permissions
-          command: chmod +x ./gradlew
-      - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run:
-          name: Run UnitTest
-          command: ./gradlew test
-          
+
    ios_tests:
     macos:
       xcode: "10.2.0"
@@ -135,6 +108,7 @@ jobs:
           paths:
             - flutter_sdk.zip
             - Pods
+
    release:
     docker:
       - image: cirrusci/flutter
