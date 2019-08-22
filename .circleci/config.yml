@@ -21,6 +21,7 @@ jobs:
             echo 'export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"' >> $BASH_ENV
             echo 'export QEMU_AUDIO_DRV=none' >> $BASH_ENV
             echo 'export JAVA_HOME=/Library/Java/Home' >> $BASH_ENV
+            echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
       - run:
           name: Install Android sdk
           command: |
@@ -35,9 +36,6 @@ jobs:
       - run:
           name: unzip flutter SDK
           command: unzip flutter_sdk.zip
-      - run:
-          name: export flutter path
-          command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
