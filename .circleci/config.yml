@@ -4,7 +4,6 @@ jobs:
     working_directory: ~/project/example/android
     macos:
       xcode: "10.1.0"
-    parallelism: 2
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
