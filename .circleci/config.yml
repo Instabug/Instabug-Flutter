@@ -55,7 +55,7 @@ jobs:
       - run:
           name: Run Unit Tests
           command: ./gradlew test
-          
+
    flutter_tests:
     docker:
       - image: cirrusci/flutter
