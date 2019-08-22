@@ -3,7 +3,7 @@ jobs:
    android_tests:
     working_directory: ~/project/example/android
     macos:
-      xcode: "9.4.0"
+      xcode: "10.1.0"
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -25,7 +25,7 @@ jobs:
             HOMEBREW_NO_AUTO_UPDATE=1 brew cask install android-sdk
       - run:
           name: Install emulator dependencies
-          command: (yes | sdkmanager "platform-tools" "platforms;android-28" "extras;intel;Hardware_Accelerated_Execution_Manager" "build-tools;28.0.0" "system-images;android-28;google_apis;x86" "emulator" --verbose) || true
+          command: (yes | sdkmanager "platform-tools" "platforms;android-27" "extras;intel;Hardware_Accelerated_Execution_Manager" "build-tools;27.0.0" "system-images;android-27;google_apis;x86" "emulator" --verbose) || true
       - run:
           name: download flutter SDK
           command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip; fi
@@ -38,10 +38,10 @@ jobs:
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
-      - run: avdmanager create avd -n Pixel_2_API_28 -k "system-images;android-28;google_apis;x86" -g google_apis -d "Nexus 5"
+      - run: avdmanager create avd -n Pixel_2_API_27 -k "system-images;android-27;google_apis;x86" -g google_apis -d "Nexus 5"
       - run:
           name: Run emulator in background
-          command: /usr/local/share/android-sdk/tools/emulator @Pixel_2_API_28 -noaudio -no-boot-anim -no-window
+          command: /usr/local/share/android-sdk/tools/emulator @Pixel_2_API_27 -noaudio -no-boot-anim -no-window
           background: true
       - run: flutter doctor
       - run: 
