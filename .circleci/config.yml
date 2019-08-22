@@ -3,7 +3,7 @@ jobs:
    android_tests:
     working_directory: ~/project/example/android
     macos:
-      xcode: "10.1.0"
+      xcode: "10.2.0"
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -43,8 +43,6 @@ jobs:
           name: Run emulator in background
           command: /usr/local/share/android-sdk/tools/emulator @Pixel_2_API_26 -noaudio -no-boot-anim -no-window
           background: true
-          parallel: true
-      - run: flutter doctor
       - run: 
           name: Flutter build
           command: cd ..; flutter build aot
@@ -52,13 +50,13 @@ jobs:
           name: Download Android Dependencies
           command: ./gradlew androidDependencies
       - run:
-          name: Run Unit Tests
-          command: ./gradlew test
-          parallel: true
-      - run:
-          name: Run UI Tests
-          command: ./gradlew app:connectedAndroidTest
-          parallel: true
+          name: Run Tests
+          command: | 
+              ./gradlew test
+              ./gradlew app:connectedAndroidTest
+      # - run:
+      #     name: Run UI Tests
+      #     command: ./gradlew app:connectedAndroidTest
           
    flutter_tests:
     docker:
