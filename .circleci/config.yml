@@ -1,9 +1,9 @@
 version: 2
 jobs:
-   android_ui_test:
+   android_tests:
     working_directory: ~/project/example/android
     macos:
-      xcode: "10.1.0"
+      xcode: "10.2.0"
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -51,6 +51,9 @@ jobs:
           name: Download Android Dependencies
           command: ./gradlew androidDependencies
       - run:
+          name: Run Unit Tests
+          command: ./gradlew test
+      - run:
           name: Run UI Tests
           command: ./gradlew app:connectedAndroidTest
           
@@ -94,7 +97,7 @@ jobs:
       - run:
           name: Run UnitTest
           command: ./gradlew test
-   ios_test:
+   ios_tests:
     macos:
       xcode: "10.2.0"
     working_directory: ~/project/example/ios
@@ -155,9 +158,8 @@ workflows:
   build-test-and-approval-deploy:
     jobs:
       - build
-      - android_test
-      - ios_test
-      - android_ui_test
+      - android_tests
+      - ios_tests
       - hold:
           type: approval
           requires:
