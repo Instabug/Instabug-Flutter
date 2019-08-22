@@ -62,6 +62,7 @@ jobs:
           key: android_tests_cache
           paths:
             - ~/.gradle
+            - ~/android-sdk
             - flutter_sdk.zip
 
    flutter_tests:
