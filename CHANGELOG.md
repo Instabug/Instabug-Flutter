@@ -1,4 +1,4 @@
-## Master
+## Version 8.6.1 (2019-08-26)
 
 * Bumps version to 8.6 to be in sync with other platforms.
 * Updates native SDK dependencies to 8.6.1.
