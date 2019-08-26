@@ -20,9 +20,6 @@ A Flutter plugin for [Instabug](https://instabug.com/).
 
 ## Integration
 
-Creating a Flutter app on the Instabug dashboard isn't possible yet. Create a React Native app instead.
-
-
 ### Installation
 
 
