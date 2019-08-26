@@ -1,3 +1,7 @@
+## Master
+
+* Bump native SDKs to 8.6.1
+
 ## Version 1.0.0 (2019-07-29)
 
 **⚠️ Package on pub has been renamed to `instabug_flutter` the old package `instabug` is deprecated**
