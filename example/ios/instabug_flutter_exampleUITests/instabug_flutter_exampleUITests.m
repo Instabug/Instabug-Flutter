@@ -24,7 +24,7 @@
     XCUIApplication *app = [[XCUIApplication alloc] init];
     XCUIElement *ibgfloatingbuttonaccessibilityidentifierElement = app/*@START_MENU_TOKEN@*/.otherElements[@"IBGFloatingButtonAccessibilityIdentifier"]/*[[".otherElements[@\"Floating Button\"]",".otherElements[@\"IBGFloatingButtonAccessibilityIdentifier\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
     [ibgfloatingbuttonaccessibilityidentifierElement tap];
-    [app.tables/*@START_MENU_TOKEN@*/.staticTexts[@"Report a problem"]/*[[".cells[@\"Report a problem\"].staticTexts[@\"Report a problem\"]",".cells[@\"IBGReportBugPromptOptionAccessibilityIdentifier\"].staticTexts[@\"Report a problem\"]",".staticTexts[@\"Report a problem\"]"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
+    [app.tables.staticTexts[@"Report a bug"] tap];
 
     XCUIElement *textField = app.scrollViews.otherElements.textFields[@"IBGBugInputViewEmailFieldAccessibilityIdentifier"];
     [textField tap];
@@ -33,7 +33,7 @@
         [app.menuItems[@"Select All"] tap];
     }
     [textField typeText:@"inst@bug.com"];
-    [app.navigationBars[@"Report a problem"]/*@START_MENU_TOKEN@*/.buttons[@"IBGBugVCNextButtonAccessibilityIdentifier"]/*[[".buttons[@\"Send\"]",".buttons[@\"IBGBugVCNextButtonAccessibilityIdentifier\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
+    [app.navigationBars[@"Report a bug"]/*@START_MENU_TOKEN@*/.buttons[@"IBGBugVCNextButtonAccessibilityIdentifier"]/*[[".buttons[@\"Send\"]",".buttons[@\"IBGBugVCNextButtonAccessibilityIdentifier\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
 
     XCUIElement *element = app.staticTexts[@"Thank you"];
     [self waitForElementToAppear:element withTimeout:5];
