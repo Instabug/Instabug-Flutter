@@ -1,6 +1,7 @@
 ## Master
 
-* Bump native SDKs to 8.6.1
+* Bumps version to 8.6 to be in sync with other platforms.
+* Updates native SDK dependencies to 8.6.1.
 
 ## Version 1.0.0 (2019-07-29)
 
