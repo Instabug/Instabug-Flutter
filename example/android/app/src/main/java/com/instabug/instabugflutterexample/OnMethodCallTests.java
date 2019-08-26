@@ -77,17 +77,17 @@ class OnMethodCallTests {
         verify(instabugMock).appendTags(tags);
     }
 
-    public void testInvokeWithMode() {
-        String methodName = "invokeWithMode";
+    public void testShowBugReportingWithReportTypeAndOptions() {
+        String methodName = "showBugReportingWithReportTypeAndOptions";
         ArrayList<Object> argsList = new ArrayList<>();
         ArrayList<String> options = new ArrayList<>();
         options.add("commentFieldRequired");
         options.add("disablePostSendingDialog");
         argsList.add("bug");
         argsList.add(options);
-        Mockito.doNothing().when(instabugMock).invokeWithMode(any(String.class),any(ArrayList.class));
+        Mockito.doNothing().when(instabugMock).showBugReportingWithReportTypeAndOptions(any(String.class),any(ArrayList.class));
         testMethodCall(methodName,argsList);
-        verify(instabugMock).invokeWithMode("bug", options);
+        verify(instabugMock).showBugReportingWithReportTypeAndOptions("bug", options);
     }
 
     public void testSetSessionProfilerEnabled() {

@@ -315,27 +315,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         });
     }
 
-     /**
-     * invoke sdk manually with desire invocation mode
-     *
-     * @param invocationMode the invocation mode
-     * @param invocationOptions the array of invocation options
-     */
-     public void invokeWithMode(String invocationMode, List<String> invocationOptions) {
-        switch (invocationMode) {
-            case "InvocationMode.chats" : Chats.show();
-                return;
-            case "InvocationMode.replies" : Replies.show();
-                return;
-        }
-        int[] options = new int[invocationOptions.size()];
-        for (int i = 0; i < invocationOptions.size(); i++) {
-           options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i), Integer.class);
-        }
-        int invMode = ArgsRegistry.getDeserializedValue(invocationMode, Integer.class);
-        BugReporting.show(invMode, options);
-     }
-
     /**
      * Logs a user event that happens through the lifecycle of the application.
      * Logged user events are going to be sent with each report, as well as at the end of a session.

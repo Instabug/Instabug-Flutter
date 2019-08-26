@@ -52,7 +52,6 @@ final class ArgsRegistry {
         registerWelcomeMessageArgs(ARGS);
         registerColorThemeArgs(ARGS);
         registerLocaleArgs(ARGS);
-        registerInvocationModeArgs(ARGS);
         registerInvocationOptionsArgs(ARGS);
         registerCustomTextPlaceHolderKeysArgs(ARGS);
         registerInstabugReportTypesArgs(ARGS);
@@ -119,11 +118,6 @@ final class ArgsRegistry {
         args.put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
     }
 
-    static void registerInvocationModeArgs(Map<String, Object> args) {
-        args.put("InvocationMode.bug", BugReporting.ReportType.BUG);
-        args.put("InvocationMode.feedback", BugReporting.ReportType.FEEDBACK);
-    }
-
     static void registerInvocationOptionsArgs(Map<String, Object> args) {
         args.put("InvocationOption.commentFieldRequired", Option.COMMENT_FIELD_REQUIRED);
         args.put("InvocationOption.disablePostSendingDialog", Option.DISABLE_POST_SENDING_DIALOG);
@@ -168,6 +162,7 @@ final class ArgsRegistry {
         args.put("CustomTextPlaceHolderKey.emailFieldHint", InstabugCustomTextPlaceHolder.Key.EMAIL_FIELD_HINT);
         args.put("CustomTextPlaceHolderKey.commentFieldHintForBugReport", InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_BUG_REPORT);
         args.put("CustomTextPlaceHolderKey.commentFieldHintForFeedback", InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_FEEDBACK);
+        args.put("CustomTextPlaceHolderKey.commentFieldHintForQuestion", InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_QUESTION);
         args.put("CustomTextPlaceHolderKey.addVoiceMessage", InstabugCustomTextPlaceHolder.Key.ADD_VOICE_MESSAGE);
         args.put("CustomTextPlaceHolderKey.addImageFromGallery", InstabugCustomTextPlaceHolder.Key.ADD_IMAGE_FROM_GALLERY);
         args.put("CustomTextPlaceHolderKey.addExtraScreenshot", InstabugCustomTextPlaceHolder.Key.ADD_EXTRA_SCREENSHOT);
@@ -194,6 +189,7 @@ final class ArgsRegistry {
     static void registerInstabugReportTypesArgs(Map<String, Object> args) {
         args.put("ReportType.bug", BugReporting.ReportType.BUG);
         args.put("ReportType.feedback", BugReporting.ReportType.FEEDBACK);
+        args.put("ReportType.question", BugReporting.ReportType.QUESTION);
     }
 
     static void registerInstabugExtendedBugReportModeArgs(Map<String, Object> args) {
