@@ -11,7 +11,7 @@ enum InvocationOption {
 
 enum DismissType { cancel, submit, addAttachment }
 
-enum ReportType { bug, feedback, other }
+enum ReportType { bug, feedback, question, other }
 
 enum ExtendedBugReportMode {
   enabledWithRequiredFields,
@@ -69,24 +69,6 @@ class BugReporting {
         }
         return;
     }
-  }
-
-  /// invoke sdk manually with desire invocation mode
-  /// [invocationMode] the invocation mode
-  /// [invocationOptions] the array of invocation options
-  static void invoke(InvocationMode invocationMode,
-      [List<InvocationOption> invocationOptions]) async {
-    final List<String> invocationOptionsStrings = <String>[];
-    if (invocationOptions != null) {
-      invocationOptions.forEach((e) {
-        invocationOptionsStrings.add(e.toString());
-      });
-    }
-    final List<dynamic> params = <dynamic>[
-      invocationMode.toString(),
-      invocationOptionsStrings
-    ];
-    await _channel.invokeMethod<Object>('invokeWithMode:options:', params);
   }
 
   ///Enables and disables manual invocation and prompt options for bug and feedback.
