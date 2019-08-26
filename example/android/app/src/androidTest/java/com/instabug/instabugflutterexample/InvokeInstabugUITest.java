@@ -13,8 +13,6 @@ import java.lang.reflect.Method;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withResourceName;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -26,10 +24,12 @@ public class InvokeInstabugUITest {
             new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void ensureInstabugInvocati1on() {
+    public void ensureInstabugInvocati1on() throws InterruptedException {
         disableScreenShotByMediaProjection();
         onView(withResourceName("instabug_floating_button")).perform(click());
+        Thread.sleep(5000);
         onView(withText("Report a problem")).perform(click());
+        Thread.sleep(5000);
         onView(withResourceName("instabug_edit_text_email")).perform(replaceText("inst@bug.com"));
         onView(withResourceName("instabug_bugreporting_send")).perform(click());
         onView(withResourceName("instabug_success_dialog_container")).perform(click());
