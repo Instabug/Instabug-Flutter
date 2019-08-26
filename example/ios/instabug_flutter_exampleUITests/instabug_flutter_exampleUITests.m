@@ -14,6 +14,11 @@
 
 @implementation instabug_flutter_exampleUITests
 
+- (void)setUp {
+    self.continueAfterFailure = NO;
+    [[[XCUIApplication alloc] init] launch];
+}
+
 - (void)testInstabugSendBugReport {
     
     XCUIApplication *app = [[XCUIApplication alloc] init];
