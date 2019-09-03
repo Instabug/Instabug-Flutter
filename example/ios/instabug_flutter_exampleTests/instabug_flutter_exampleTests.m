@@ -64,17 +64,17 @@
     [[[mock verify] classMethod] appendTags:tags];
 }
 
-- (void)testInvokeWithMode {
+- (void)testShowBugReportingWithReportTypeAndOptions {
     id mock = OCMClassMock([InstabugFlutterPlugin class]);
     InstabugFlutterPlugin *instabug = [[InstabugFlutterPlugin alloc] init];
     id result;
     
     NSArray *options = [NSArray arrayWithObjects:@"commentFieldRequired", @"disablePostSendingDialog", nil];
     NSArray *arguments = [NSArray arrayWithObjects:@"bug", options, nil];
-    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"invokeWithMode:options:" arguments:arguments];
-    [[[mock stub] classMethod] invokeWithMode:@"bug"options:options];
+    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"showBugReportingWithReportTypeAndOptions:options:" arguments:arguments];
+    [[[mock stub] classMethod] showBugReportingWithReportTypeAndOptions:@"bug"options:options];
     [instabug  handleMethodCall:call result:result];
-    [[[mock verify] classMethod] invokeWithMode:@"bug"options:options];
+    [[[mock verify] classMethod] showBugReportingWithReportTypeAndOptions:@"bug"options:options];
 }
 
 - (void)testSetSessionProfilerEnabled {

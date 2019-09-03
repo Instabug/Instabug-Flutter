@@ -246,30 +246,6 @@ FlutterMethodChannel* channel;
     [Instabug show];
 }
 
-/**
-  * invoke sdk manually with desire invocation mode
-  *
-  * @param invocationMode the invocation mode
-  * @param invocationOptions the array of invocation options
-  */
-+ (void) invokeWithMode:(NSString *)invocationMode options:(NSArray*)invocationOptionsArray {
-    if ([invocationMode isEqualToString:@"InvocationMode.chats"]) {
-         [IBGChats show];
-         return;
-    }
-     if ([invocationMode isEqualToString:@"InvocationMode.replies"]) {
-        [IBGReplies show];
-        return;
-    }
-    NSDictionary *constants = [self constants];
-    NSInteger invocationOptions = 0;
-    for (NSString * invocationOption in invocationOptionsArray) {
-        invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
-    }
-    NSInteger invocation = ((NSNumber *) constants[invocationMode]).integerValue;
-    [IBGBugReporting showWithReportType:invocation options:invocationOptions];
-}
-
  /**
   * Logs a user event that happens through the lifecycle of the application.
   * Logged user events are going to be sent with each report, as well as at the end of a session.
@@ -493,7 +469,7 @@ FlutterMethodChannel* channel;
     for (NSString * invocationOption in invocationOptionsArray) {
         invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
     }
-    IBGBugReporting.invocationOptions = invocationOptions;
+    IBGBugReporting.bugReportingOptions = invocationOptions;
 }
 
 /**
@@ -771,9 +747,6 @@ FlutterMethodChannel* channel;
       @"ColorTheme.dark": @(IBGColorThemeDark),
       @"ColorTheme.light": @(IBGColorThemeLight),
 
-      @"InvocationMode.bug": @(IBGBugReportingReportTypeBug),
-      @"InvocationMode.feedback": @(IBGBugReportingReportTypeFeedback),
-
       @"InvocationOption.commentFieldRequired": @(IBGBugReportingOptionCommentFieldRequired),
       @"InvocationOption.disablePostSendingDialog": @(IBGBugReportingOptionDisablePostSendingDialog),
       @"InvocationOption.emailFieldHidden": @(IBGBugReportingOptionEmailFieldHidden),
@@ -809,6 +782,7 @@ FlutterMethodChannel* channel;
       @"CustomTextPlaceHolderKey.emailFieldHint": kIBGEmailFieldPlaceholderStringName,
       @"CustomTextPlaceHolderKey.commentFieldHintForBugReport": kIBGCommentFieldPlaceholderForBugReportStringName,
       @"CustomTextPlaceHolderKey.commentFieldHintForFeedback": kIBGCommentFieldPlaceholderForFeedbackStringName,
+      @"CustomTextPlaceHolderKey.commentFieldHintForQuestion": kIBGCommentFieldPlaceholderForQuestionStringName,
       @"CustomTextPlaceHolderKey.addVoiceMessage": kIBGAddVoiceMessageStringName,
       @"CustomTextPlaceHolderKey.addImageFromGallery": kIBGAddImageFromGalleryStringName,
       @"CustomTextPlaceHolderKey.addExtraScreenshot": kIBGAddExtraScreenshotStringName,
@@ -833,6 +807,7 @@ FlutterMethodChannel* channel;
 
       @"ReportType.bug": @(IBGBugReportingReportTypeBug),
       @"ReportType.feedback": @(IBGBugReportingReportTypeFeedback),
+      @"ReportType.question": @(IBGBugReportingReportTypeQuestion),
 
       @"ExtendedBugReportMode.enabledWithRequiredFields": @(IBGExtendedBugReportModeEnabledWithRequiredFields),
       @"ExtendedBugReportMode.enabledWithOptionalFields": @(IBGExtendedBugReportModeEnabledWithOptionalFields),

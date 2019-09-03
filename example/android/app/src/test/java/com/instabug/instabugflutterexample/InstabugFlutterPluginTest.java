@@ -46,8 +46,8 @@ public class InstabugFlutterPluginTest {
      * (String, ArrayList<String>)
      */
     @Test
-    public void testInvokeWithMode() {
-        new OnMethodCallTests().testInvokeWithMode();
+    public void testShowBugReportingWithReportTypeAndOptions() {
+        new OnMethodCallTests().testShowBugReportingWithReportTypeAndOptions();
     }
 
     /**

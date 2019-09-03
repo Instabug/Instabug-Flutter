@@ -44,15 +44,15 @@ class _MyAppState extends State<MyApp> {
   }
 
   void sendBugReport() {
-    BugReporting.invoke(InvocationMode.bug, [InvocationOption.emailFieldOptional]);
+    BugReporting.show(ReportType.bug, [InvocationOption.emailFieldOptional]);
   }
 
   void sendFeedback() {
-    BugReporting.invoke(InvocationMode.feedback, [InvocationOption.emailFieldOptional]);
+    BugReporting.show(ReportType.feedback, [InvocationOption.emailFieldOptional]);
   }
 
-  void startNewConversation () {
-    Chats.show();
+  void askQuestion() {
+    BugReporting.show(ReportType.question, [InvocationOption.emailFieldOptional]);
   }
 
   void showNpsSurvey() {
@@ -130,9 +130,9 @@ class _MyAppState extends State<MyApp> {
               margin: const EdgeInsets.only(left: 20.0, right: 20.0),
               // height: double.infinity,
               child:  RaisedButton(
-                onPressed: startNewConversation,
+                onPressed: askQuestion,
                 textColor: Colors.white,
-                child: Text('Start a New Conversation'),
+                child: Text('Ask a Question'),
                 color: Colors.lightBlue),
             ),
             Container(
