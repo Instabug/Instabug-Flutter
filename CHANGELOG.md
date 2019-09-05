@@ -1,4 +1,4 @@
-## Master
+## Version 8.6.3 (2019-09-05)
 
 * You can now initialize Instabug on Android by calling `Instabug.start` from Javascript, instead of calling the builder method from the application class.
 * Updates native SDK dependencies to 8.6.2
