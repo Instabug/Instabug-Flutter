@@ -21,6 +21,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+     Instabug.start('efa41f402620b5654f2af2b86e387029', <InvocationEvent>[InvocationEvent.floatingButton]);
     initPlatformState();
   }
 
@@ -28,14 +29,6 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      if (Platform.isIOS) {
-        Instabug.start('efa41f402620b5654f2af2b86e387029', <InvocationEvent>[InvocationEvent.floatingButton]);
-        BugReporting.setReportTypes([ReportType.bug, ReportType.feedback]);
-      }
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
