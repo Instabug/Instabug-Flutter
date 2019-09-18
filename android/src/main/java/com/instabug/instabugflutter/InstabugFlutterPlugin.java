@@ -51,15 +51,19 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
  */
 public class InstabugFlutterPlugin implements MethodCallHandler {
 
+    final public static String INVOCATION_EVENT_NONE = "InvocationEvent.none";
+    final public static String INVOCATION_EVENT_SCREENSHOT = "InvocationEvent.screenshot";
+    final public static String INVOCATION_EVENT_TWO_FINGER_SWIPE_LEFT = "InvocationEvent.twoFingersSwipeLeft";
+    final public static String INVOCATION_EVENT_FLOATING_BUTTON = "InvocationEvent.floatingButton";
+    final public static String INVOCATION_EVENT_SHAKE = "InvocationEvent.shake";
+
     private InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
 
     static MethodChannel channel;
-    static Registrar myRegistrar;
     /**
      * Plugin registration.
      */
     public static void registerWith(Registrar registrar) {
-        myRegistrar = registrar;
         channel = new MethodChannel(registrar.messenger(), "instabug_flutter");
         channel.setMethodCallHandler(new InstabugFlutterPlugin());
     }
@@ -98,18 +102,19 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     /**
      * starts the SDK
      *
+     * @param application      the application Object
      * @param token            token The token that identifies the app, you can find
      *                         it on your dashboard.
      * @param invocationEvents invocationEvents The events that invoke
      *                         the SDK's UI.
      */
-    public void startWithToken( String token, ArrayList<String> invocationEvents) {
+    public void start(Application application, String token, ArrayList<String> invocationEvents) {
         InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
         for (int i = 0; i < invocationEvents.size(); i++) {
             String key = invocationEvents.get(i);
             invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key, InstabugInvocationEvent.class);
         }
-        new Instabug.Builder(myRegistrar.activity().getApplication(), token).setInvocationEvents(invocationEventsArray).build();
+        new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).build();
         enableScreenShotByMediaProjection();
     }
 
@@ -133,7 +138,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      * @param userEmail User's default email
      */
     public void identifyUserWithEmail(String userEmail, String userName) {
-        Instabug.identifyUser(userEmail, userName);
+        Instabug.identifyUser(userName, userEmail);
     }
 
     /**
