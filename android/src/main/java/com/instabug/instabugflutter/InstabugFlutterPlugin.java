@@ -138,7 +138,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      * @param userEmail User's default email
      */
     public void identifyUserWithEmail(String userEmail, String userName) {
-        Instabug.identifyUser(userEmail, userName);
+        Instabug.identifyUser(userName, userEmail);
     }
 
     /**
