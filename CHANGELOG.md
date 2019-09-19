@@ -2,6 +2,19 @@
 
 * Adds support for Repro Steps. Repro Steps list all of the actions an app user took before reporting a bug or crash, grouped by the screens they visited in your app.
 
+## Version 8.6.4 (2019-09-16)
+
+* Updates native SDK dependencies to 8.6.3
+
+## Version 8.6.3 (2019-09-05)
+
+* Updates native SDK dependencies to 8.6.2
+
+## Version 8.6.1 (2019-08-26)
+
+* Bumps version to 8.6 to be in sync with other platforms.
+* Updates native SDK dependencies to 8.6.1.
+
 ## Version 1.0.0 (2019-07-29)
 
 **⚠️ Package on pub has been renamed to `instabug_flutter` the old package `instabug` is deprecated**

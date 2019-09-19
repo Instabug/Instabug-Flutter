@@ -256,17 +256,6 @@ test('startWithToken:invocationEvents: Test', () async {
     ]);
   });
 
-  
-  test('invokeWithMode:options: Test', () async {
-    BugReporting.invoke(InvocationMode.bug, [InvocationOption.commentFieldRequired]);
-    final List<dynamic> args = <dynamic>[InvocationMode.bug.toString(), <String>[InvocationOption.commentFieldRequired.toString()]];
-    expect(log, <Matcher>[
-      isMethodCall('invokeWithMode:options:',
-        arguments: args,
-      )
-    ]);
-  });
-
   test('logUserEventWithName: Test', () async {
     Instabug.logUserEvent(name);
     final List<dynamic> args = <dynamic>[name];

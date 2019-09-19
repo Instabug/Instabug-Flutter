@@ -39,8 +39,6 @@ enum IBGLocale {
   norwegian
 }
 
-enum InvocationMode { bug, feedback, chats, replies }
-
 enum ColorTheme { dark, light }
 
 enum CustomTextPlaceHolderKey {
@@ -55,6 +53,7 @@ enum CustomTextPlaceHolderKey {
   emailFieldHint,
   commentFieldHintForBugReport,
   commentFieldHintForFeedback,
+  commentFieldHintForQuestion,
   addVoiceMessage,
   addImageFromGallery,
   addExtraScreenshot,

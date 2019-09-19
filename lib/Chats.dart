@@ -8,12 +8,16 @@ class Chats {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
-
+  
+  @deprecated
+  ///Use {@link BugReporting.show} instead.
   ///Manual invocation for chats view.
   static void show() async {
     await _channel.invokeMethod<Object>('showChats');
   }
 
+  @deprecated
+  ///Use {@link BugReporting.setReportTypes} instead.
   /// Enables and disables everything related to creating new chats.
   /// [boolean] isEnabled
   static void setEnabled(bool isEnabled) async {
