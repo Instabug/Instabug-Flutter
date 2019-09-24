@@ -119,7 +119,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         }
         new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).setReproStepsState(State.DISABLED).build();
         enableScreenShotByMediaProjection();
-        //Instabug.setReproStepsState(State.DISABLED);
     }
 
 

@@ -272,7 +272,7 @@ class Instabug {
     await _channel.invokeMethod<Object>('setWelcomeMessageMode:', params);
   }
 
-   ///Reports that the screen has been changed (repro steps)
+  ///Reports that the screen has been changed (repro steps)
   ///[screenName] String containing the screen name
   static void reportScreenChange(
       String screenName) async {
