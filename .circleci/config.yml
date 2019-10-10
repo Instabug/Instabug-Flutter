@@ -115,13 +115,6 @@ jobs:
             - flutter_sdk.zip
             - Pods
 
-   release:
-    docker:
-      - image: cirrusci/flutter
-    steps:
-      - checkout
-      - run: ./release.sh
-
    publish:
     macos:
       xcode: "10.1.0"
@@ -136,7 +129,8 @@ workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
-      - flutter_tests
+      - flutter_tests:
+          context: cross-platform
       - android_tests
       - ios_tests
       - hold:
@@ -148,15 +142,10 @@ workflows:
           filters:
             branches:
               only: master
-      - release:
+      - publish:
+          context: cross-platform
           requires:
             - hold
-          filters:
-            branches:
-              only: master
-      - publish:
-          requires:
-            - release
           filters:
             branches:
               only: master
