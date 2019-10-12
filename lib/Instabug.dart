@@ -1,8 +1,10 @@
 import 'dart:async';
-import 'dart:io' show Platform;
+import 'dart:io' show HttpOverrides, Platform;
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/services.dart';
+
+import 'instabug_http_overrides.dart';
 
 enum InvocationEvent {
   shake,
@@ -92,15 +94,18 @@ class Instabug {
   /// it on your dashboard.
   /// The [invocationEvents] are the events that invoke
   /// the SDK's UI.
-  static void start(
+  static Future<void> start(
       String token, List<InvocationEvent> invocationEvents) async {
     final List<String> invocationEventsStrings = <String>[];
     invocationEvents.forEach((e) {
       invocationEventsStrings.add(e.toString());
     });
     final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
-    await _channel.invokeMethod<Object>(
-        'startWithToken:invocationEvents:', params);
+    HttpOverrides.global = InstabugHttpOverrides(current: HttpOverrides.current);
+    if (Platform.isIOS) {
+      await _channel.invokeMethod<Object>(
+          'startWithToken:invocationEvents:', params);
+    }
   }
 
   /// Shows the welcome message in a specific mode.
