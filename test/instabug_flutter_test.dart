@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -11,6 +12,7 @@ import 'package:instabug_flutter/Surveys.dart';
 import 'package:instabug_flutter/FeatureRequests.dart';
 import 'package:instabug_flutter/Chats.dart';
 import 'package:instabug_flutter/Replies.dart';
+import 'package:instabug_flutter/instabug_http_overrides.dart';
 
 void main() {
 
@@ -52,6 +54,7 @@ test('startWithToken:invocationEvents: Test', () async {
         arguments: args,
       )
     ]);
+    expect(HttpOverrides.current is InstabugHttpOverrides, true);
   });
   
   test('showWelcomeMessageWithMode: Test', () async {

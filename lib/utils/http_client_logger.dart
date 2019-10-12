@@ -6,36 +6,22 @@ import 'package:instabug_flutter/models/network_data.dart';
 
 class HttpClientLogger {
 
-  Map<int, NetworkData> requests = <int, NetworkData>{};
-
-  NetworkData _getRequestData(int requestHashCode) {
-    if (requests[requestHashCode] != null) {
-      return requests.remove(requestHashCode);
-    }
-    return null;
-  }
-
-  void onRequest(HttpClientRequest request, { dynamic requestBody }) {
-    final NetworkData requestData = NetworkData();
-    requestData.startTime = DateTime.now();
-    requestData.method = request.method;
-    requestData.url = request.uri.toString();
+  Future<void> logNetworkIoRequest(HttpClientRequest request, {
+    DateTime startTime,
+    dynamic requestBody,
+    dynamic responseBody,
+  }) async {
+    final NetworkData networkData = NetworkData();
+    networkData.method = request.method;
+    networkData.url = request.uri.toString();
     request.headers.forEach((String header, dynamic value) {
-      requestData.requestHeaders[header] = value[0];
+      networkData.requestHeaders[header] = value[0];
     });
-    if (requestBody != null) {
-      requestData.requestBody = requestBody;
-    }
-    requests[request.hashCode] = requestData;
-  }
+    networkData.requestBody = requestBody ?? networkData.requestBody;
 
-  void onResponse(HttpClientResponse response, HttpClientRequest request, {dynamic responseBody}) {
+    networkData.startTime = startTime ?? DateTime.now();
+    final HttpClientResponse response = await request.done;
     final DateTime endTime = DateTime.now();
-    final NetworkData networkData = _getRequestData(request.hashCode);
-
-    if (networkData == null) {
-      return null;
-    }
 
     networkData.status = response.statusCode;
     networkData.duration = endTime.difference(networkData.startTime).inMilliseconds;
@@ -47,12 +33,9 @@ class HttpClientLogger {
       networkData.responseHeaders[header] = value[0];
     });
 
-    if (responseBody != null) {
-      networkData.responseBody = responseBody;
-    }
+    networkData.responseBody = responseBody ?? networkData.responseBody;
 
     NetworkLogger.networkLog(networkData);
-
   }
 
 }

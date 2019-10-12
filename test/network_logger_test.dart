@@ -13,9 +13,31 @@ import 'package:mockito/mockito.dart';
 
 class MockHttpClient extends Mock implements HttpClient {}
 
-class MockHttpClientRequest extends Mock implements HttpClientRequest {}
+class MockHttpClientRequest extends Mock implements HttpClientRequest {
+  @override
+  Future<HttpClientResponse> get done => Future.value(MockHttpClientResponse());
+  @override
+  Future<HttpClientResponse> close() => Future.value(MockHttpClientResponse());
+  @override
+  String get method => 'GET';
+  @override
+  Uri get uri => Uri.parse('https://jsonplaceholder.typicode.com');
+  @override
+  HttpHeaders get headers => MockHttpHeaders();
+}
 
-class MockHttpClientResponse extends Mock implements HttpClientResponse {}
+class MockHttpClientResponse extends Mock implements HttpClientResponse {
+  @override
+  int get statusCode => 200;
+  @override
+  HttpHeaders get headers => MockHttpHeaders();
+}
+
+class MockHttpHeaders extends Mock implements HttpHeaders {
+  @override
+  void forEach(void Function(String name, List<String> values) f) {
+  }
+}
 
 class MockHttpClientLogger extends Mock implements HttpClientLogger {}
 
@@ -38,9 +60,10 @@ void main() {
   });
 
   setUp(() {
-    instabugCustomHttpClient = InstabugCustomHttpClient();
-    instabugCustomHttpClient.client = MockHttpClient();
-    instabugCustomHttpClient.logger = MockHttpClientLogger();
+    instabugCustomHttpClient = InstabugCustomHttpClient(
+      client: MockHttpClient(),
+      logger: MockHttpClientLogger(),
+    );
   });
 
   tearDown(() async {
@@ -55,9 +78,7 @@ void main() {
     final request = await instabugCustomHttpClient.getUrl(Uri.parse(url));
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client GET to return request and log',
@@ -68,9 +89,7 @@ void main() {
     final request = await instabugCustomHttpClient.get(url, port, path);
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test(
@@ -82,9 +101,7 @@ void main() {
     final request = await instabugCustomHttpClient.deleteUrl(Uri.parse(url));
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client DELETE to return request and log',
@@ -95,9 +112,7 @@ void main() {
     final request = await instabugCustomHttpClient.delete(url, port, path);
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client POST URL to return request and log',
@@ -108,9 +123,7 @@ void main() {
     final request = await instabugCustomHttpClient.postUrl(Uri.parse(url));
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client POST to return request and log',
@@ -121,9 +134,7 @@ void main() {
     final request = await instabugCustomHttpClient.post(url, port, path);
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client HEAD URL to return request and log',
@@ -134,9 +145,7 @@ void main() {
     final request = await instabugCustomHttpClient.headUrl(Uri.parse(url));
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client HEAD to return request and log',
@@ -147,9 +156,7 @@ void main() {
     final request = await instabugCustomHttpClient.head(url, port, path);
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client PATCH URL to return request and log',
@@ -160,9 +167,7 @@ void main() {
     final request = await instabugCustomHttpClient.patchUrl(Uri.parse(url));
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client PATCH to return request and log',
@@ -173,9 +178,7 @@ void main() {
     final request = await instabugCustomHttpClient.patch(url, port, path);
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client OPEN URL to return request and log',
@@ -187,9 +190,7 @@ void main() {
         await instabugCustomHttpClient.openUrl('GET', Uri.parse(url));
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client OPEN to return request and log',
@@ -200,9 +201,7 @@ void main() {
     final request = await instabugCustomHttpClient.open('GET', url, port, path);
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client PUT URL to return request and log',
@@ -213,9 +212,7 @@ void main() {
     final request = await instabugCustomHttpClient.putUrl(Uri.parse(url));
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client PUT to return request and log',
@@ -226,9 +223,7 @@ void main() {
     final request = await instabugCustomHttpClient.put(url, port, path);
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client POST URL to return request and log',
@@ -239,9 +234,7 @@ void main() {
     final request = await instabugCustomHttpClient.postUrl(Uri.parse(url));
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client POST to return request and log',
@@ -252,9 +245,7 @@ void main() {
     final request = await instabugCustomHttpClient.post(url, port, path);
     final response = await request.close();
     expect(request, isInstanceOf<HttpClientRequest>());
-    verify(instabugCustomHttpClient.logger.onRequest(request)).called(1);
-    verify(instabugCustomHttpClient.logger.onResponse(response, request))
-        .called(1);
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(request)).called(1);
   });
 
   test('expect instabug custom http client to get client autoUncompress',
@@ -380,10 +371,8 @@ void main() {
     for(int i = 0; i < 10000; i++) {
       await instabugCustomHttpClient.getUrl(Uri.parse(url));
     }
-    
-    verify(instabugCustomHttpClient.logger.onRequest(any)).called(10000);
-    verify(instabugCustomHttpClient.logger.onResponse(any, any))
-        .called(10000);
+
+    verify(instabugCustomHttpClient.logger.logNetworkIoRequest(any)).called(10000);
   });
 
 }

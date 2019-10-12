@@ -3,12 +3,17 @@ import 'dart:io';
 import 'package:instabug_flutter/utils/http_client_logger.dart';
 import 'package:meta/meta.dart';
 
-class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
-  InstabugCustomHttpClient() {
-    client = HttpClient();
+class InstabugCustomHttpClient implements HttpClient {
 
-    logger = this;
-  }
+  InstabugCustomHttpClient({
+    HttpClient client,
+    HttpClientLogger logger
+  }) :
+        client = client ?? HttpClient(),
+        logger = logger ?? HttpClientLogger();
+
+  final HttpClient client;
+  final HttpClientLogger logger;
 
   @override
   set autoUncompress(bool au) => client.autoUncompress = au;
@@ -40,12 +45,6 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   String get userAgent => client.userAgent;
 
-  @visibleForTesting
-  HttpClient client;
-
-  @visibleForTesting
-  HttpClientLogger logger;
-
   @override
   void addCredentials(
       Uri url, String realm, HttpClientCredentials credentials) {
@@ -59,20 +58,20 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   }
 
   @override
-  void set authenticate(
+  set authenticate(
       Future<bool> Function(Uri url, String scheme, String realm) f) {
     client.authenticate = f;
   }
 
   @override
-  void set authenticateProxy(
+  set authenticateProxy(
       Future<bool> Function(String host, int port, String scheme, String realm)
-          f) {
+      f) {
     client.authenticateProxy = f;
   }
 
   @override
-  void set badCertificateCallback(
+  set badCertificateCallback(
       bool Function(X509Certificate cert, String host, int port) callback) {
     client.badCertificateCallback = callback;
   }
@@ -85,9 +84,7 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   Future<HttpClientRequest> delete(String host, int port, String path) {
     return client.delete(host, port, path).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
@@ -95,24 +92,20 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   Future<HttpClientRequest> deleteUrl(Uri url) {
     return client.deleteUrl(url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
 
   @override
-  void set findProxy(String Function(Uri url) f) {
+  set findProxy(String Function(Uri url) f) {
     client.findProxy = f;
   }
 
   @override
   Future<HttpClientRequest> get(String host, int port, String path) {
     return client.get(host, port, path).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
@@ -120,9 +113,7 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   Future<HttpClientRequest> getUrl(Uri url) {
     return client.getUrl(url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
@@ -130,9 +121,7 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   Future<HttpClientRequest> head(String host, int port, String path) {
     return client.head(host, port, path).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
@@ -140,9 +129,7 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   Future<HttpClientRequest> headUrl(Uri url) {
     return client.headUrl(url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
@@ -151,9 +138,7 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   Future<HttpClientRequest> open(
       String method, String host, int port, String path) {
     return client.open(method, host, port, path).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
@@ -161,9 +146,7 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   Future<HttpClientRequest> openUrl(String method, Uri url) {
     return client.openUrl(method, url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
@@ -171,9 +154,7 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   Future<HttpClientRequest> patch(String host, int port, String path) {
     return client.patch(host, port, path).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
@@ -181,9 +162,7 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   Future<HttpClientRequest> patchUrl(Uri url) {
     return client.patchUrl(url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
@@ -191,9 +170,7 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   Future<HttpClientRequest> post(String host, int port, String path) {
     return client.post(host, port, path).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
@@ -201,9 +178,7 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   Future<HttpClientRequest> postUrl(Uri url) {
     return client.postUrl(url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
@@ -211,9 +186,7 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   Future<HttpClientRequest> put(String host, int port, String path) {
     return client.put(host, port, path).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
@@ -221,12 +194,9 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   @override
   Future<HttpClientRequest> putUrl(Uri url) {
     return client.putUrl(url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
+      logger.logNetworkIoRequest(request);
       return request;
     });
   }
 
-  
 }

@@ -102,10 +102,8 @@ class Instabug {
     });
     final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
     HttpOverrides.global = InstabugHttpOverrides(current: HttpOverrides.current);
-    if (Platform.isIOS) {
-      await _channel.invokeMethod<Object>(
-          'startWithToken:invocationEvents:', params);
-    }
+    await _channel.invokeMethod<Object>(
+        'startWithToken:invocationEvents:', params);
   }
 
   /// Shows the welcome message in a specific mode.
