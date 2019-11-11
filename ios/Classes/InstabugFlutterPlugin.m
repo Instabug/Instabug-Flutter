@@ -732,6 +732,21 @@ FlutterMethodChannel* channel;
 
 
 
++ (void)sendJSCrashByReflection:(NSString *) jsonString handled: (NSNumber *) isHandled{
+     NSError *jsonError;
+     NSData *objectData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+     NSDictionary *stackTrace = [NSJSONSerialization JSONObjectWithData:objectData
+                                                          options:NSJSONReadingMutableContainers
+                                                            error:&jsonError];
+    SEL reportCrashWithStackTraceSEL = NSSelectorFromString(@"reportCrashWithStackTrace:handled:");
+        if ([[Instabug class] respondsToSelector:reportCrashWithStackTraceSEL]) {
+            [[Instabug class] performSelector:reportCrashWithStackTraceSEL withObject:stackTrace withObject:isHandled];
+        }
+    
+}
+
+
+
 + (NSDictionary *)constants {
   return @{
       @"InvocationEvent.shake": @(IBGInvocationEventShake),

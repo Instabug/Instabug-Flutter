@@ -12,7 +12,7 @@ public class CustomFlutterApplication extends FlutterApplication {
     ArrayList<String> invocation_events = new ArrayList<>();
     invocation_events.add(InstabugFlutterPlugin.INVOCATION_EVENT_FLOATING_BUTTON);
     InstabugFlutterPlugin instabug = new InstabugFlutterPlugin();
-    instabug.start(CustomFlutterApplication.this, "efa41f402620b5654f2af2b86e387029", invocation_events);
+    instabug.start(CustomFlutterApplication.this, "2d355f559ea67051a56fce82603f8e41", invocation_events);
     instabug.setWelcomeMessageMode("WelcomeMessageMode.disabled");
   }
 }

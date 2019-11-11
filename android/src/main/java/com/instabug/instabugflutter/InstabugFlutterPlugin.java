@@ -10,6 +10,7 @@ import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
 import com.instabug.chat.Chats;
 import com.instabug.chat.Replies;
+import com.instabug.crash.CrashReporting;
 import com.instabug.featuresrequest.FeatureRequests;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
@@ -36,6 +37,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -720,6 +722,8 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      * Shows the UI for feature requests list
      */
     public void showFeatureRequests() {
+            int x = 100/0;
+    
         FeatureRequests.show();
     }
 
@@ -859,6 +863,26 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             networkLog.setResponseHeaders((new JSONObject((HashMap<String, String>)jsonObject.get("responseHeaders"))).toString(4));
             networkLog.setTotalDuration(((Number) jsonObject.get("duration")).longValue());
             networkLog.insert();
+    }
+
+
+    public void sendJSCrashByReflection(final String map, final boolean isHandled) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final JSONObject exceptionObject = new JSONObject(map);
+                    Method method = getMethod(Class.forName("com.instabug.crash.CrashReporting"), "reportException", JSONObject.class, boolean.class);
+                    if (method != null) {
+                        method.invoke(null, exceptionObject, isHandled);
+                        Log.e("JSON", exceptionObject.toString());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
 }

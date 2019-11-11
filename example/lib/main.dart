@@ -1,14 +1,25 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:instabug_flutter/Instabug.dart';
 import 'package:instabug_flutter/BugReporting.dart';
 import 'package:instabug_flutter/Surveys.dart';
 import 'package:instabug_flutter/FeatureRequests.dart';
-import 'package:instabug_flutter/Chats.dart';
+import 'package:instabug_flutter/CrashReporting.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  
+  FlutterError.onError = (FlutterErrorDetails details) {
+    Zone.current.handleUncaughtError(details.exception, details.stack);
+  };
+
+  runZoned<Future<void>>(() async {
+    runApp(MyApp());
+  }, onError: (dynamic error, StackTrace stackTrace) {
+    CrashReporting.reportCrash(error, stackTrace);
+  });
+}
+
 
 class MyApp extends StatefulWidget {
   @override
@@ -22,7 +33,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     if (Platform.isIOS) {
-      Instabug.start('efa41f402620b5654f2af2b86e387029', <InvocationEvent>[InvocationEvent.floatingButton]);
+      Instabug.start('2d355f559ea67051a56fce82603f8e41', <InvocationEvent>[InvocationEvent.floatingButton]);
     }
     initPlatformState();
   }
