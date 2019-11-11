@@ -163,5 +163,5 @@ workflows:
           # filters:
           #   branches:
           #     only: master
-      -release:
+      - release:
           context: cross-platform
