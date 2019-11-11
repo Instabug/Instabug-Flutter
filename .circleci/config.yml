@@ -142,19 +142,17 @@ workflows:
           context: cross-platform
       - android_tests
       - ios_tests
-      - hold:
-          type: approval
-          requires:
-            - flutter_tests
-            - android_tests
-            - ios_tests
+      # - hold:
+      #     type: approval
+      #     requires:
+      #       - flutter_tests
+      #       - android_tests
+      #       - ios_tests
           # filters:
           #   branches:
           #     only: master
       - publish:
           context: cross-platform
-          requires:
-            - hold
           # filters:
           #   branches:
           #     only: master
