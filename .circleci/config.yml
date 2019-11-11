@@ -148,13 +148,13 @@ workflows:
             - flutter_tests
             - android_tests
             - ios_tests
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
       - publish:
           context: cross-platform
           requires:
             - hold
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
