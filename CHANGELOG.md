@@ -1,3 +1,7 @@
+## Version 8.7.0 (2019-11-11)
+
+* Updates native SDK dependencies to 8.7
+
 ## Version 8.6.4 (2019-09-16)
 
 * Updates native SDK dependencies to 8.6.3

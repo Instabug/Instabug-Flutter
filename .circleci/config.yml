@@ -70,7 +70,7 @@ jobs:
       - run: bundle check || sudo bundle install        
       - run: bundle exec danger
       - run: flutter doctor
-      - run: pub get
+      - run: flutter packages get
       - run: flutter test --coverage
       - run: bash <(curl -s https://codecov.io/bash)
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
