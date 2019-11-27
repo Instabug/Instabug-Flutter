@@ -77,7 +77,7 @@ jobs:
 
    ios_tests:
     macos:
-      xcode: "10.2.0"
+      xcode: "11.3.0"
     working_directory: ~/project/example/ios
     environment:
       FL_OUTPUT_DIR: output
