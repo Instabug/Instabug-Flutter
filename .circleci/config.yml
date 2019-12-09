@@ -115,6 +115,14 @@ jobs:
             - flutter_sdk.zip
             - Pods
 
+   release:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run: chmod +x ./release.sh
+      - run: ./release.sh
+
    publish:
     macos:
       xcode: "10.1.0"
@@ -143,6 +151,13 @@ workflows:
             branches:
               only: master
       - publish:
+          context: cross-platform
+          requires:
+            - hold
+          filters:
+            branches:
+              only: master
+      - release:
           context: cross-platform
           requires:
             - hold
