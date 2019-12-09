@@ -534,8 +534,8 @@ test('startWithToken:invocationEvents: Test', () async {
 
   test('setEmailFieldRequiredForFeatureRequests:forAction: Test', () async {
     bool isEmailFieldRequired = false;
-    final List<dynamic> args = <dynamic>[isEmailFieldRequired, <String>[ActionType.allActions.toString()]];
-    FeatureRequests.setEmailFieldRequired(isEmailFieldRequired, [ActionType.allActions]);
+    final List<dynamic> args = <dynamic>[isEmailFieldRequired, <String>[ActionType.addCommentToFeature.toString()]];
+    FeatureRequests.setEmailFieldRequired(isEmailFieldRequired, [ActionType.addCommentToFeature]);
     expect(log, <Matcher>[
       isMethodCall('setEmailFieldRequiredForFeatureRequests:forAction:',
       arguments: args,

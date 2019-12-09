@@ -2,8 +2,6 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 enum ActionType {
-  allActions,
-  reportBug,
   requestNewFeature,
   addCommentToFeature
 }
