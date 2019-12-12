@@ -777,6 +777,7 @@ FlutterMethodChannel* channel;
       @"CustomTextPlaceHolderKey.invalidCommentMessage": kIBGInvalidCommentMessageStringName,
       @"CustomTextPlaceHolderKey.invocationHeader": kIBGInvocationTitleStringName,
       @"CustomTextPlaceHolderKey.startChats": kIBGChatsTitleStringName,
+      @"CustomTextPlaceHolderKey.reportQuestion": kIBGAskAQuestionStringName,
       @"CustomTextPlaceHolderKey.reportBug": kIBGReportBugStringName,
       @"CustomTextPlaceHolderKey.reportFeedback": kIBGReportFeedbackStringName,
       @"CustomTextPlaceHolderKey.emailFieldHint": kIBGEmailFieldPlaceholderStringName,

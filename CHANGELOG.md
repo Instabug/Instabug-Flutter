@@ -1,3 +1,7 @@
+## Version 9.0.1 (2019-12-12)
+
+* Added enum `CustomTextPlaceHolderKey.reportQuestion` which maps to `InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION` on Android and `kIBGAskAQuestionStringName` on iOS
+
 ## Version 9.0.0 (2019-12-09)
 
 * Updated native SDKs to v9.0
