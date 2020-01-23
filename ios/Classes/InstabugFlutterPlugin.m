@@ -537,13 +537,14 @@ FlutterMethodChannel* channel;
   * UI changes after the SDK's UI is dismissed.
   */
 + (void)getAvailableSurveys {
-     NSArray<IBGSurvey *> *surveys = [IBGSurveys availableSurveys];
-     NSMutableArray <NSString *> *surveysArray = [[NSMutableArray alloc] init];
-     for (IBGSurvey * survey in surveys) {
-        [surveysArray addObject:survey.title];
-    }
-    NSArray *result = [surveysArray copy];
-    [channel invokeMethod:@"availableSurveysCallback" arguments:result];
+    [IBGSurveys availableSurveysWithCompletionHandler:^(NSArray<IBGSurvey *> *availableSurveys) {
+        NSMutableArray<NSDictionary*>* mappedSurveys = [[NSMutableArray alloc] init];
+        for (IBGSurvey* survey in availableSurveys) {
+            [mappedSurveys addObject:@{@"title": survey.title }];
+        }
+        NSArray *result = [mappedSurveys copy];
+        [channel invokeMethod:@"availableSurveysCallback" arguments:result];
+    }];
 }
 
 
