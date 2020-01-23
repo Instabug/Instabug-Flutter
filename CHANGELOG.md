@@ -1,38 +1,38 @@
-## v9.0.5 (2020*01*23)
+## v9.0.5 (2020-01-23)
 
 * Bump iOS Native SDK to v9.0.4
 * Bump Android Native SDK to v9.0.5
 
-## Version 9.0.1 (2019*12*12)
+## Version 9.0.1 (2019-12-12)
 
 * Added enum `CustomTextPlaceHolderKey.reportQuestion` which maps to `InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION` on Android and `kIBGAskAQuestionStringName` on iOS
 
-## Version 9.0.0 (2019*12*09)
+## Version 9.0.0 (2019-12-09)
 
 * Updated native SDKs to v9.0
 
-## Version 8.7.0 (2019*11*11)
+## Version 8.7.0 (2019-11-11)
 
 * Updates native SDK dependencies to 8.7
 
-## Version 8.6.4 (2019*09*16)
+## Version 8.6.4 (2019-09-16)
 
 * Updates native SDK dependencies to 8.6.3
 
-## Version 8.6.3 (2019*09*05)
+## Version 8.6.3 (2019-09-05)
 
 * Updates native SDK dependencies to 8.6.2
 
-## Version 8.6.1 (2019*08*26)
+## Version 8.6.1 (2019-08-26)
 
 * Bumps version to 8.6 to be in sync with other platforms.
 * Updates native SDK dependencies to 8.6.1.
 
-## Version 1.0.0 (2019*07*29)
+## Version 1.0.0 (2019-07-29)
 
 **⚠️ Package on pub has been renamed to `instabug_flutter` the old package `instabug` is deprecated**
 
-## Version 1.0.0*beta.5 (2019*07*22)
+## Version 1.0.0-beta.5 (2019-07-22)
 
 * Adds Network logging feature for the dart:io package HttpClient.
 * Fixes a linker issue on iOS when using Swift and CocoaPods.
@@ -42,27 +42,27 @@
 
 * Fixes crash on Android on launching the sample app.
 
-## Version 1.0.0*beta.3 (2019*05*28)
+## Version 1.0.0-beta.3 (2019-05-28)
 
 * Fixes `Locale` enum name collision with `dart.ui` library. Use `IBGLocale` instead.
 
 * Updates Native SDK's to version 8.4
 
-## Version 1.0.0*beta.2 (2019*05*22)
+## Version 1.0.0-beta.2 (2019-05-22)
 
 **⚠️ Check the README.md integration steps to add our new maven repository in android**
 
 * Bump native SDK's to version 8.3
 * Fixes issue of manually invoking BugReporting
 
-## Version 1.0.0*beta.1 (2019*04*16)
+## Version 1.0.0-beta.1 (2019-04-16)
 
 * Adds New Sample App
 * Adds Replies Api mappings
 * Adds Chats Api mappings
 * Adds FeatureRequests Api mappings.
 
-## Version 0.0.4 (2019*04*14)
+## Version 0.0.4 (2019-04-14)
 
 * Adds hasRespondedToSurvey API mapping.
 * Adds showSurvey API mapping.
@@ -88,15 +88,15 @@
 * Adds setPrimaryColor API mapping.
 * Adds setSessionProfilerEnabled API mapping.
 
-## Version 0.0.3 (2019*03*21)
+## Version 0.0.3 (2019-03-21)
 
 * Divides the library into separate modules: (`Instabug`, `BugReporting`, `InstabugLog`).
 
-## Version 0.0.2 (2019*03*20)
+## Version 0.0.2 (2019-03-20)
 
 * Adds more API mappings.
 
-## Version 0.0.1 (2019*03*07)
+## Version 0.0.1 (2019-03-07)
 
 Adds the following APIs:
 
