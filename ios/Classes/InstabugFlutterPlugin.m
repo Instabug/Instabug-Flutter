@@ -498,6 +498,15 @@ FlutterMethodChannel* channel;
 }
 
 /**
+  * Sets url for the published iOS app on AppStore
+  *
+  * @param {appStoreURL} String
+  */
++ (void)setAppStoreURL:(NSString *)appStoreURL {
+   IBGSurveys.appStoreURL = appStoreURL;
+}
+
+/**
   * Set Surveys auto-showing state, default state auto-showing enabled
   *
   * @param {isEnabled} whether Surveys should be auto-showing or not
