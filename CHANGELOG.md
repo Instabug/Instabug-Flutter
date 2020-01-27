@@ -1,3 +1,7 @@
+## v9.0.5 (2020-01-27)
+
+* Bump Native SDKs to v9.0.5
+
 ## Version 9.0.1 (2019-12-12)
 
 * Added enum `CustomTextPlaceHolderKey.reportQuestion` which maps to `InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION` on Android and `kIBGAskAQuestionStringName` on iOS
@@ -53,7 +57,7 @@
 ## Version 1.0.0-beta.1 (2019-04-16)
 
 * Adds New Sample App
-* Adds Replies Api mappings 
+* Adds Replies Api mappings
 * Adds Chats Api mappings
 * Adds FeatureRequests Api mappings.
 
@@ -90,7 +94,6 @@
 ## Version 0.0.2 (2019-03-20)
 
 * Adds more API mappings.
-
 
 ## Version 0.0.1 (2019-03-07)
 

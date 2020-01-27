@@ -22,8 +22,8 @@
 - (void)testInstabugSendBugReport {
     
     XCUIApplication *app = [[XCUIApplication alloc] init];
-    XCUIElement *ibgfloatingbuttonaccessibilityidentifierElement = app/*@START_MENU_TOKEN@*/.otherElements[@"IBGFloatingButtonAccessibilityIdentifier"]/*[[".otherElements[@\"Floating Button\"]",".otherElements[@\"IBGFloatingButtonAccessibilityIdentifier\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [ibgfloatingbuttonaccessibilityidentifierElement tap];
+    [app.buttons[@"IBGFloatingButtonAccessibilityIdentifier"] tap];
+
     [app.tables.staticTexts[@"Report a bug"] tap];
 
     XCUIElement *textField = app.scrollViews.otherElements.textFields[@"IBGBugInputViewEmailFieldAccessibilityIdentifier"];
@@ -38,6 +38,7 @@
     XCUIElement *element = app.staticTexts[@"Thank you"];
     [self waitForElementToAppear:element withTimeout:5];
 }
+
 
 - (void)waitForElementToAppear:(XCUIElement *)element withTimeout:(NSTimeInterval)timeout
 {
