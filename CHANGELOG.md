@@ -37,7 +37,7 @@
 * Fixes a linker issue on iOS when using Swift and CocoaPods.
 * Bumps native iOS and Android dependencies to version 8.5.
 
-## Version 1.0.0*beta.4 (2019*06*25)
+## Version 1.0.0-beta.4 (2019-06-25)
 
 * Fixes crash on Android on launching the sample app.
 
