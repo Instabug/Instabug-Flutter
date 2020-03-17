@@ -722,8 +722,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      * Shows the UI for feature requests list
      */
     public void showFeatureRequests() {
-            int x = 100/0;
-    
         FeatureRequests.show();
     }
 
