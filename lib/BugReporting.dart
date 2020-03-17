@@ -185,10 +185,7 @@ class BugReporting {
       reportType.toString(),
       invocationOptionsStrings
     ];
-    // await _channel.invokeMethod<Object>(
-    //     'showBugReportingWithReportTypeAndOptions:options:', params);
-
-    // throw new StateError('Unhandled crash in iOS that is fatal');
-    throw Exception("This is a crash!");
+    await _channel.invokeMethod<Object>(
+        'showBugReportingWithReportTypeAndOptions:options:', params);
   }
 }

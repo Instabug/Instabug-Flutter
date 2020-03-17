@@ -2,7 +2,7 @@ package com.instabug.instabugflutter;
 
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
-import com.instabug.library.ActionType;
+import com.instabug.featuresrequest.ActionType;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
@@ -157,6 +157,7 @@ final class ArgsRegistry {
         args.put("CustomTextPlaceHolderKey.invalidCommentMessage", InstabugCustomTextPlaceHolder.Key.INVALID_COMMENT_MESSAGE);
         args.put("CustomTextPlaceHolderKey.invocationHeader", InstabugCustomTextPlaceHolder.Key.INVOCATION_HEADER);
         args.put("CustomTextPlaceHolderKey.startChats", InstabugCustomTextPlaceHolder.Key.START_CHATS);
+        args.put("CustomTextPlaceHolderKey.reportQuestion", InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION);
         args.put("CustomTextPlaceHolderKey.reportBug", InstabugCustomTextPlaceHolder.Key.REPORT_BUG);
         args.put("CustomTextPlaceHolderKey.reportFeedback", InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK);
         args.put("CustomTextPlaceHolderKey.emailFieldHint", InstabugCustomTextPlaceHolder.Key.EMAIL_FIELD_HINT);
@@ -199,8 +200,6 @@ final class ArgsRegistry {
     }
 
     static void registerInstabugActionTypesArgs(Map<String, Object> args) {
-        args.put("ActionType.allActions", ActionType.ALL_ACTIONS);
-        args.put("ActionType.reportBug", ActionType.REPORT_BUG);
         args.put("ActionType.requestNewFeature",ActionType.REQUEST_NEW_FEATURE);
         args.put("ActionType.addCommentToFeature",ActionType.ADD_COMMENT_TO_FEATURE);
     }

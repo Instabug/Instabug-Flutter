@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         minSdkVersion 16
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -34,6 +34,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.instabug.library:instabug:8.6.3.1'
+    implementation 'com.instabug.library:instabug:9.0.5.6'
     testImplementation 'junit:junit:4.12'
 }

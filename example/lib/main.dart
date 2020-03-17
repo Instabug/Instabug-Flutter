@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     if (Platform.isIOS) {
-      Instabug.start('d6214538bd20c8cd50688994fb571589',
+      Instabug.start('2d355f559ea67051a56fce82603f8e41',
           <InvocationEvent>[InvocationEvent.floatingButton]);
     }
     initPlatformState();

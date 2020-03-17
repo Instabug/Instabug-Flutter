@@ -296,6 +296,14 @@
   */
 + (void)setSurveysEnabled:(NSNumber *)isEnabled ;
 
+
+/**
+  * Sets url for the published iOS app on AppStore
+  *
+  * @param {appStoreURL} String
+  */
++ (void)setAppStoreURL:(NSString *)appStoreURL ;
+
 /**
   * Set Surveys auto-showing state, default state auto-showing enabled
   *
