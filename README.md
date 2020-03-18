@@ -9,7 +9,7 @@ A Flutter plugin for [Instabug](https://instabug.com/).
 |      Feature                                              | Status  |
 |:---------------------------------------------------------:|:-------:|
 | [Bug Reporting](https://instabug.com/bug-reporting)       |    ✅   |
-| [Crash Reporting](https://instabug.com/crash-reporting)   |    ⚙️   |
+| [Crash Reporting](https://instabug.com/crash-reporting)   |    ✅    |
 | [In-App Chat](https://instabug.com/in-app-chat)           |    ✅   |
 | [In-App Surveys](https://instabug.com/in-app-surveys)     |    ✅   |
 | [Feature Requests](https://instabug.com/feature-requests) |    ✅   |
