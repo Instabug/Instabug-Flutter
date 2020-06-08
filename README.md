@@ -36,21 +36,22 @@ dependencies:
 flutter packages get
 ```
 
-### Using Instabug
+### Import Instabug
 
 1. To start using Instabug, import it into your Flutter app. 
 
 ```dart
 import 'package:instabug_flutter/Instabug.dart';
 ```
-
-2. Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the device is shaken. Ignore this if you're building for Android only.
+### Initializing Instabug
+* #### iOS
+1. Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the device is shaken.
 
 ```dart
 Instabug.start('APP_TOKEN', [InvocationEvent.shake]);
 ```
-
-3. Add the following Maven repository to your project level `build.gradle`
+* #### Android
+1. Add the following Maven repository to your project level `build.gradle`
 
 ```dart
 allprojects {
@@ -62,9 +63,8 @@ allprojects {
 }
 ```
 
-Make sure to replace `app_token` with your application token.
 
-4. If your app supports Android, create a new Java class that extends `FlutterApplication` and add it to your `AndroidManifest.xml`.
+2. Create a new Java class that extends `FlutterApplication` and add it to your `AndroidManifest.xml`.
 
 ```xml
 <application
@@ -73,7 +73,8 @@ Make sure to replace `app_token` with your application token.
 </application>
 ````
 
-5. In your newly created `CustomFlutterApplication` class, override `onCreate()` and add the following code.
+3. In your newly created `CustomFlutterApplication` class, override `onCreate()` and add the following code.
+
 
 ```java
 ArrayList<String> invocationEvents = new ArrayList<>();
