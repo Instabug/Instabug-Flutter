@@ -17,15 +17,27 @@ class CrashReporting {
 
   static void reportCrash(dynamic exception, StackTrace stack) async {
     if (kReleaseMode) {
-      reportUnhandledException(exception, stack);
+      _reportUnhandledCrash(exception, stack);
     } else {
       FlutterError.dumpErrorToConsole(
           FlutterErrorDetails(stack: stack, exception: exception));
     }
   }
 
-  static void reportUnhandledException(
-      dynamic exception, StackTrace stack) async {
+  static void reportHandledCrash(dynamic exception, [StackTrace stack]) async {
+    if (stack != null) {
+      _sendCrash(exception, stack, true);
+    } else {
+      _sendCrash(exception, StackTrace.current, true);
+    }
+  }
+
+  static void _reportUnhandledCrash(dynamic exception, StackTrace stack) async {
+    _sendCrash(exception, stack, false);
+  }
+
+  static void _sendCrash(
+      dynamic exception, StackTrace stack, bool handled) async {
     final Trace trace = Trace.from(stack);
     final List<ExceptionData> frames = <ExceptionData>[];
     for (int i = 0; i < trace.frames.length; i++) {
@@ -37,9 +49,7 @@ class CrashReporting {
     }
     final CrashData crashData = CrashData(
         exception.toString(), Platform.operatingSystem.toString(), frames);
-
-    // print(jsonEncode(crashData));
-    final List<dynamic> params = <dynamic>[jsonEncode(crashData), true];
+    final List<dynamic> params = <dynamic>[jsonEncode(crashData), handled];
     await _channel.invokeMethod<Object>(
         'sendJSCrashByReflection:handled:', params);
   }
