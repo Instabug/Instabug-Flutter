@@ -9,14 +9,22 @@ import 'package:stack_trace/stack_trace.dart';
 
 class CrashReporting {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
-
+  static bool enabled = true;
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
 
+  ///Enables and disables Enables and disables automatic crash reporting.
+  /// [boolean] isEnabled
+  static void setEnabled(bool isEnabled) async {
+    enabled = isEnabled;
+    final List<dynamic> params = <dynamic>[isEnabled];
+    await _channel.invokeMethod<Object>('setCrashReportingEnabled:', params);
+  }
+
   static void reportCrash(dynamic exception, StackTrace stack) async {
-    if (kReleaseMode) {
+    if (kReleaseMode && enabled) {
       _reportUnhandledCrash(exception, stack);
     } else {
       FlutterError.dumpErrorToConsole(

@@ -740,7 +740,14 @@ FlutterMethodChannel* channel;
     }
 }
 
-
+/**
+  * Enables and disables automatic crash reporting.
+  * @param {boolean} isEnabled
+  */
++ (void)setCrashReportingEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGCrashReporting.enabled = boolValue;
+}
 
 + (void)sendJSCrashByReflection:(NSString *) jsonString handled: (NSNumber *) isHandled{
      NSError *jsonError;
