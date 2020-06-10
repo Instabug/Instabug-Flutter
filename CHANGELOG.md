@@ -1,3 +1,7 @@
+## master
+
+* Adds CrashReporting
+
 ## v9.1.0 (2020-03-19)
 
 * Bump Native SDKs to v9.1
