@@ -67,6 +67,7 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
+      - run: bundle update --bundler
       - run: bundle check || sudo bundle install        
       - run: bundle exec danger
       - run: flutter doctor
