@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:instabug_flutter/CrashReporting.dart';
 import 'package:instabug_flutter/Instabug.dart';
 import 'package:instabug_flutter/BugReporting.dart';
 import 'package:instabug_flutter/InstabugLog.dart';
@@ -657,6 +658,18 @@ void main() {
     expect(log, <Matcher>[
       isMethodCall(
         'setChatNotificationEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setCrashReportingEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    CrashReporting.setEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setCrashReportingEnabled:',
         arguments: args,
       )
     ]);
