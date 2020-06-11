@@ -57,6 +57,16 @@ FlutterMethodChannel* channel;
   * the SDK's UI.
   */
 + (void)startWithToken:(NSString *)token invocationEvents:(NSArray*)invocationEventsArray {
+    SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
+    if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
+        NSInteger *enableCross = IBGPlatformFlutter;
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
+        [inv setSelector:setPrivateApiSEL];
+        [inv setTarget:[Instabug class]];
+        [inv setArgument:&(enableCross) atIndex:2];
+        [inv invoke];
+    }
+
     NSDictionary *constants = [self constants];
     NSInteger invocationEvents = IBGInvocationEventNone;
     for (NSString * invocationEvent in invocationEventsArray) {
@@ -757,7 +767,15 @@ FlutterMethodChannel* channel;
                                                             error:&jsonError];
     SEL reportCrashWithStackTraceSEL = NSSelectorFromString(@"reportCrashWithStackTrace:handled:");
         if ([[Instabug class] respondsToSelector:reportCrashWithStackTraceSEL]) {
-            [[Instabug class] performSelector:reportCrashWithStackTraceSEL withObject:stackTrace withObject:isHandled];
+
+            NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:reportCrashWithStackTraceSEL]];
+            [inv setSelector:reportCrashWithStackTraceSEL];
+            [inv setTarget:[Instabug class]];
+            
+            [inv setArgument:&(stackTrace) atIndex:2];
+            [inv setArgument:&(isHandled) atIndex:3];
+            [inv invoke];
+
         }
     
 }
