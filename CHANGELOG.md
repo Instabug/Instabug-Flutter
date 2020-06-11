@@ -2,6 +2,30 @@
 
 * Adds support for Repro Steps. Repro Steps list all of the actions an app user took before reporting a bug or crash, grouped by the screens they visited in your app.
 
+## v9.1.0 (2020-03-19)
+
+* Bump Native SDKs to v9.1
+
+## v9.0.6 (2020-01-29)
+
+* Bump iOS Native SDK to v9.0.6
+
+## v9.0.5 (2020-01-27)
+
+* Bump Native SDKs to v9.0.5
+
+## Version 9.0.1 (2019-12-12)
+
+* Added enum `CustomTextPlaceHolderKey.reportQuestion` which maps to `InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION` on Android and `kIBGAskAQuestionStringName` on iOS
+
+## Version 9.0.0 (2019-12-09)
+
+* Updated native SDKs to v9.0
+
+## Version 8.7.0 (2019-11-11)
+
+* Updates native SDK dependencies to 8.7
+
 ## Version 8.6.4 (2019-09-16)
 
 * Updates native SDK dependencies to 8.6.3
@@ -45,7 +69,7 @@
 ## Version 1.0.0-beta.1 (2019-04-16)
 
 * Adds New Sample App
-* Adds Replies Api mappings 
+* Adds Replies Api mappings
 * Adds Chats Api mappings
 * Adds FeatureRequests Api mappings.
 
@@ -82,7 +106,6 @@
 ## Version 0.0.2 (2019-03-20)
 
 * Adds more API mappings.
-
 
 ## Version 0.0.1 (2019-03-07)
 

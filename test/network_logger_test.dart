@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/NetworkLogger.dart';
@@ -22,6 +23,8 @@ class MockHttpClientLogger extends Mock implements HttpClientLogger {}
 class MockHttpClientCredentials extends Mock implements HttpClientCredentials {}
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   final List<MethodCall> log = <MethodCall>[];
   const String url = 'https://jsonplaceholder.typicode.com';
   const int port = 8888;
@@ -279,7 +282,9 @@ void main() {
   test('expect instabug custom http client to set client connectionTimout',
       () async {
     instabugCustomHttpClient.connectionTimeout = Duration(seconds: 5);
-    verify(instabugCustomHttpClient.client.connectionTimeout = Duration(seconds: 5)).called(1);
+    verify(instabugCustomHttpClient.client.connectionTimeout =
+            Duration(seconds: 5))
+        .called(1);
   });
 
   test('expect instabug custom http client to get client idleTimeout',
@@ -292,7 +297,8 @@ void main() {
   test('expect instabug custom http client to set client idleTimeout',
       () async {
     instabugCustomHttpClient.idleTimeout = Duration(seconds: 5);
-    verify(instabugCustomHttpClient.client.idleTimeout = Duration(seconds: 5)).called(1);
+    verify(instabugCustomHttpClient.client.idleTimeout = Duration(seconds: 5))
+        .called(1);
   });
 
   test('expect instabug custom http client to get client maxConnectionsPerHost',
@@ -312,8 +318,7 @@ void main() {
     expect(instabugCustomHttpClient.userAgent, '2');
   });
 
-  test('expect instabug custom http client to set client userAgent',
-      () async {
+  test('expect instabug custom http client to set client userAgent', () async {
     instabugCustomHttpClient.userAgent = 'something';
     verify(instabugCustomHttpClient.client.userAgent = 'something').called(1);
   });
@@ -352,38 +357,37 @@ void main() {
 
   test('expect instabug custom http client to set client authenticateProxy',
       () async {
-    final Future<bool> Function(String host, int port, String scheme, String realm) f =
+    final Future<bool> Function(
+            String host, int port, String scheme, String realm) f =
         (String host, int port, String scheme, String realm) {};
     instabugCustomHttpClient.authenticateProxy = f;
     verify(instabugCustomHttpClient.client.authenticateProxy = f).called(1);
   });
 
-  test('expect instabug custom http client to set client badCertificateCallback',
+  test(
+      'expect instabug custom http client to set client badCertificateCallback',
       () async {
     final Function(X509Certificate cert, String host, int port) f =
         (X509Certificate cert, String host, int port) {};
     instabugCustomHttpClient.badCertificateCallback = f;
-    verify(instabugCustomHttpClient.client.badCertificateCallback = f).called(1);
+    verify(instabugCustomHttpClient.client.badCertificateCallback = f)
+        .called(1);
   });
 
-  test('expect instabug custom http client to call client close',
-      () async {
+  test('expect instabug custom http client to call client close', () async {
     instabugCustomHttpClient.close(force: true);
     verify(instabugCustomHttpClient.client.close(force: true)).called(1);
   });
 
-  test('Stress test on GET URL method',
-      () async {
+  test('Stress test on GET URL method', () async {
     when<dynamic>(instabugCustomHttpClient.client.getUrl(any))
         .thenAnswer((_) async => MockHttpClientRequest());
 
-    for(int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 10000; i++) {
       await instabugCustomHttpClient.getUrl(Uri.parse(url));
     }
-    
-    verify(instabugCustomHttpClient.logger.onRequest(any)).called(10000);
-    verify(instabugCustomHttpClient.logger.onResponse(any, any))
-        .called(10000);
-  });
 
+    verify(instabugCustomHttpClient.logger.onRequest(any)).called(10000);
+    verify(instabugCustomHttpClient.logger.onResponse(any, any)).called(10000);
+  });
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'package:flutter/services.dart';
 
 class Surveys {
@@ -121,5 +122,16 @@ class Surveys {
     final List<dynamic> params = <dynamic>[surveyToken];
     await _channel.invokeMethod<Object>(
         'hasRespondedToSurveyWithToken:', params);
+  }
+
+  /// iOS Only
+  /// @summary Sets url for the published iOS app on AppStore, You can redirect
+  /// NPS Surveys or AppRating Surveys to AppStore to let users rate your app on AppStore itself.
+  /// [appStoreURL] A String url for the published iOS app on AppStore
+  static void setAppStoreURL(String appStoreURL) async {
+    if (Platform.isIOS) {
+      final List<dynamic> params = <dynamic>[appStoreURL];
+      await _channel.invokeMethod<Object>('setAppStoreURL:', params);
+    }
   }
 }

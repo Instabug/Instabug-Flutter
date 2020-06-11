@@ -507,6 +507,15 @@ FlutterMethodChannel* channel;
 }
 
 /**
+  * Sets url for the published iOS app on AppStore
+  *
+  * @param {appStoreURL} String
+  */
++ (void)setAppStoreURL:(NSString *)appStoreURL {
+   IBGSurveys.appStoreURL = appStoreURL;
+}
+
+/**
   * Set Surveys auto-showing state, default state auto-showing enabled
   *
   * @param {isEnabled} whether Surveys should be auto-showing or not
@@ -546,13 +555,14 @@ FlutterMethodChannel* channel;
   * UI changes after the SDK's UI is dismissed.
   */
 + (void)getAvailableSurveys {
-     NSArray<IBGSurvey *> *surveys = [IBGSurveys availableSurveys];
-     NSMutableArray <NSString *> *surveysArray = [[NSMutableArray alloc] init];
-     for (IBGSurvey * survey in surveys) {
-        [surveysArray addObject:survey.title];
-    }
-    NSArray *result = [surveysArray copy];
-    [channel invokeMethod:@"availableSurveysCallback" arguments:result];
+    [IBGSurveys availableSurveysWithCompletionHandler:^(NSArray<IBGSurvey *> *availableSurveys) {
+        NSMutableArray<NSDictionary*>* mappedSurveys = [[NSMutableArray alloc] init];
+        for (IBGSurvey* survey in availableSurveys) {
+            [mappedSurveys addObject:@{@"title": survey.title }];
+        }
+        NSArray *result = [mappedSurveys copy];
+        [channel invokeMethod:@"availableSurveysCallback" arguments:result];
+    }];
 }
 
 
@@ -813,6 +823,7 @@ FlutterMethodChannel* channel;
       @"CustomTextPlaceHolderKey.invalidCommentMessage": kIBGInvalidCommentMessageStringName,
       @"CustomTextPlaceHolderKey.invocationHeader": kIBGInvocationTitleStringName,
       @"CustomTextPlaceHolderKey.startChats": kIBGChatsTitleStringName,
+      @"CustomTextPlaceHolderKey.reportQuestion": kIBGAskAQuestionStringName,
       @"CustomTextPlaceHolderKey.reportBug": kIBGReportBugStringName,
       @"CustomTextPlaceHolderKey.reportFeedback": kIBGReportFeedbackStringName,
       @"CustomTextPlaceHolderKey.emailFieldHint": kIBGEmailFieldPlaceholderStringName,

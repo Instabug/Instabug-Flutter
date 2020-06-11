@@ -16,4 +16,3 @@ else
 EOF
     flutter packages pub publish -f
 fi
-
