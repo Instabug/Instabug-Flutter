@@ -57,10 +57,9 @@ FlutterMethodChannel* channel;
   * the SDK's UI.
   */
 + (void)startWithToken:(NSString *)token invocationEvents:(NSArray*)invocationEventsArray {
-    SEL setPrivateApiSEL = NSSelectorFromString(@"setCrossPlatform:");
+    SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
-        BOOL flag = true;
-        NSNumber *enableCross = [NSNumber numberWithBool:flag];
+        NSInteger *enableCross = IBGPlatformFlutter;
         NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
         [inv setSelector:setPrivateApiSEL];
         [inv setTarget:[Instabug class]];
@@ -747,7 +746,7 @@ FlutterMethodChannel* channel;
   *
   */
 + (void) reportScreenChange:(NSString *)screenName {
-   SEL setPrivateApiSEL = NSSelectorFromString(@"addReproStepForView:");
+   SEL setPrivateApiSEL = NSSelectorFromString(@"logViewDidAppearEvent:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
         NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
         [inv setSelector:setPrivateApiSEL];
