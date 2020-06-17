@@ -907,7 +907,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
                             JSONObject.class, boolean.class);
                     if (method != null) {
                         method.invoke(null, exceptionObject, isHandled);
-                        Log.e("JSON", exceptionObject.toString());
+                        Log.e("IBG-Flutter", exceptionObject.toString());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

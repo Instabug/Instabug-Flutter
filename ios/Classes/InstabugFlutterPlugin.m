@@ -766,16 +766,8 @@ FlutterMethodChannel* channel;
                                                           options:NSJSONReadingMutableContainers
                                                             error:&jsonError];
     SEL reportCrashWithStackTraceSEL = NSSelectorFromString(@"reportCrashWithStackTrace:handled:");
-        if ([[Instabug class] respondsToSelector:reportCrashWithStackTraceSEL]) {
-
-            NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:reportCrashWithStackTraceSEL]];
-            [inv setSelector:reportCrashWithStackTraceSEL];
-            [inv setTarget:[Instabug class]];
-            
-            [inv setArgument:&(stackTrace) atIndex:2];
-            [inv setArgument:&(isHandled) atIndex:3];
-            [inv invoke];
-
+      if ([[Instabug class] respondsToSelector:reportCrashWithStackTraceSEL]) {
+            [[Instabug class] performSelector:reportCrashWithStackTraceSEL withObject:stackTrace withObject:isHandled];
         }
     
 }
