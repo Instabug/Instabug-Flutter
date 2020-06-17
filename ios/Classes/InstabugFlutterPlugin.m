@@ -59,11 +59,11 @@ FlutterMethodChannel* channel;
 + (void)startWithToken:(NSString *)token invocationEvents:(NSArray*)invocationEventsArray {
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
-        NSInteger *enableCross = IBGPlatformFlutter;
+        NSInteger *platformID = IBGPlatformFlutter;
         NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
         [inv setSelector:setPrivateApiSEL];
         [inv setTarget:[Instabug class]];
-        [inv setArgument:&(enableCross) atIndex:2];
+        [inv setArgument:&(platformID) atIndex:2];
         [inv invoke];
     }
 
