@@ -5,7 +5,7 @@ class CrashData {
 
   String message;
   String os;
-  String platform = 'react_native';
+  String platform = 'flutter';
   List<ExceptionData> exception;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
