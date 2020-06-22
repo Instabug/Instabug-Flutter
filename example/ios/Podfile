@@ -96,3 +96,5 @@ post_install do |installer|
 end
 
   pod 'OCMock', '~> 3.4'
+
+  pod 'Instabug', :git => 'https://github.com/Instabug/Instabug-iOS.git', :branch => 'feature/rn-fixes'
