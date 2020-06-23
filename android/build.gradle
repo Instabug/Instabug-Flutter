@@ -33,6 +33,6 @@ android {
     }
 }
 dependencies {
-    implementation 'com.instabug.library:instabug:9.1.5.24-internal'
+    implementation 'com.instabug.library:instabug:9.1.0.0'
     testImplementation 'junit:junit:4.12'
 }
