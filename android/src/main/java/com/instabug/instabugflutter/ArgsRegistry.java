@@ -209,7 +209,7 @@ final class ArgsRegistry {
     static void registerReproStepsModeArgs(Map<String, Object> args) {
         args.put("ReproStepsMode.enabled", State.ENABLED);
         args.put("ReproStepsMode.disabled", State.DISABLED);
-        args.put("ReproStepsMode.noScreenshot",State.ENABLED_WITH_NO_SCREENSHOTS);
+        args.put("ReproStepsMode.enabledWithNoScreenshots",State.ENABLED_WITH_NO_SCREENSHOTS);
     }
 
 }

@@ -59,11 +59,11 @@ FlutterMethodChannel* channel;
 + (void)startWithToken:(NSString *)token invocationEvents:(NSArray*)invocationEventsArray {
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
-        NSInteger *enableCross = IBGPlatformFlutter;
+        NSInteger *platformId = IBGPlatformFlutter;
         NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
         [inv setSelector:setPrivateApiSEL];
         [inv setTarget:[Instabug class]];
-        [inv setArgument:&(enableCross) atIndex:2];
+        [inv setArgument:&(platformId) atIndex:2];
         [inv invoke];
     }
     NSDictionary *constants = [self constants];
@@ -867,7 +867,7 @@ FlutterMethodChannel* channel;
 
       @"ReproStepsMode.enabled": @(IBGUserStepsModeEnable),
       @"ReproStepsMode.disabled": @(IBGUserStepsModeDisable),
-      @"ReproStepsMode.noScreenshot": @(IBGUserStepsModeEnabledWithNoScreenshots)
+      @"ReproStepsMode.enabledWithNoScreenshots": @(IBGUserStepsModeEnabledWithNoScreenshots)
   };
 };
 
