@@ -22,7 +22,9 @@ class InstabugNavigatorObserver extends NavigatorObserver {
           _steps.remove(newRoute);
         }
       });
-    } catch (e) {}
+    } catch (e) {
+      print("[INSTAUG] - Rporting screen failed")
+    }
   }
 
   @override
