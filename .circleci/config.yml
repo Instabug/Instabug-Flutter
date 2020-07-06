@@ -67,6 +67,7 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
+      - run: gem install bundler:1.16.1
       - run: bundle check || sudo bundle install        
       - run: bundle exec danger
       - run: flutter doctor
