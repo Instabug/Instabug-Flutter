@@ -36,14 +36,13 @@ dependencies:
 flutter packages get
 ```
 
-### Import Instabug
+### Initializing Instabug
 
-1. To start using Instabug, import it into your Flutter app. 
+To start using Instabug, import it into your Flutter app. 
 
 ```dart
 import 'package:instabug_flutter/Instabug.dart';
 ```
-### Initializing Instabug
 * #### iOS
 1. Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the device is shaken.
 
