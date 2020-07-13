@@ -1,6 +1,7 @@
 package com.instabug.instabugflutter;
 
 import android.app.Application;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,6 +24,7 @@ import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+import com.instabug.library.visualusersteps.State;
 import com.instabug.survey.OnDismissCallback;
 import com.instabug.survey.OnShowCallback;
 import com.instabug.survey.Survey;
@@ -41,12 +43,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import com.instabug.library.Platform;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
+import io.reactivex.annotations.Nullable;
 
 /**
  * InstabugFlutterPlugin
@@ -102,6 +106,20 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         }
     }
 
+    private void setCrossPlatform() {
+        try {
+            Method method = getMethod(Class.forName("com.instabug.library.Instabug"), "setCrossPlatform", int.class);
+            if (method != null) {
+                Log.i("IB-CP-Bridge", "invoking setCrossPlatform with platform: " + Platform.FLUTTER);
+                method.invoke(null, Platform.FLUTTER);
+            } else {
+                Log.e("IB-CP-Bridge", "setCrossPlatform was not found by reflection");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * starts the SDK
      *
@@ -111,6 +129,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      * @param invocationEvents invocationEvents The events that invoke the SDK's UI.
      */
     public void start(Application application, String token, ArrayList<String> invocationEvents) {
+        setCrossPlatform();
         InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
         for (int i = 0; i < invocationEvents.size(); i++) {
             String key = invocationEvents.get(i);
@@ -914,7 +933,54 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
                 }
             }
         });
+    }
 
+    /*
+     * 
+     * Reports that the screen has been
+     * 
+     * changed (Repro Steps) the screen sent to this method will be the 'current
+     * view' on the dashboard
+     *
+     * @param screenName string containing the screen name
+     *
+     */
+
+    public void reportScreenChange(String screenName) {
+        try {
+            Method method = getMethod(Class.forName("com.instabug.library.Instabug"), "reportScreenChange",
+                    Bitmap.class, String.class);
+            if (method != null) {
+                method.invoke(null, null, screenName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Sets the Repro Steps mode
+     *
+     * @param reproStepsMode string repro step mode
+     *
+     */
+    public void setReproStepsMode(String reproStepsMode) {
+        try {
+            Instabug.setReproStepsState(ArgsRegistry.getDeserializedValue(reproStepsMode, State.class));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Sets the threshold value of the shake gesture for android devices. Default
+     * for android is an integer value equals 350. you could increase the shaking
+     * difficulty level by increasing the `350` value and vice versa
+     * 
+     * @param androidThreshold Threshold for android devices.
+     */
+    public void setShakingThresholdForAndroid(int androidThreshold) {
+        BugReporting.setShakingThreshold(androidThreshold);
     }
 
 }

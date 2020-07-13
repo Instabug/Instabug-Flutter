@@ -27,13 +27,17 @@ android {
     defaultConfig {
         minSdkVersion 16
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'proguard-rules.txt'
     }
     lintOptions {
         disable 'InvalidPackage'
     }
 }
-
 dependencies {
+<<<<<<< HEAD
     implementation 'com.instabug.library:instabug:9.1.5.25-internal'
+=======
+    implementation 'com.instabug.library:instabug:9.1.6.0'
+>>>>>>> 49c60741f96206819f1b4c42e0683b89bb9ad388
     testImplementation 'junit:junit:4.12'
 }

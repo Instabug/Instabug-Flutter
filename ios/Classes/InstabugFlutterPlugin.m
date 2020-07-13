@@ -703,6 +703,28 @@ FlutterMethodChannel* channel;
    IBGReplies.inAppNotificationsEnabled = boolValue;
 }
 
+
+/**
+ * Sets the threshold value of the shake gesture for iPhone/iPod Touch
+ * Default for iPhone is 2.5.
+ * @param  iPhoneShakingThreshold Threshold for iPhone.
+ */
++ (void)setShakingThresholdForiPhone:(NSNumber *)iPhoneShakingThreshold {
+    double threshold = [iPhoneShakingThreshold doubleValue];
+    IBGBugReporting.shakingThresholdForiPhone = threshold;
+
+}
+
+/**
+ * Sets the threshold value of the shake gesture for iPad.
+ * Default for iPad is 0.6.
+ * @param iPadShakingThreshold Threshold for iPad.
+ */
++ (void)setShakingThresholdForiPad:(NSNumber *)iPadShakingThreshold {
+    double threshold = [iPadShakingThreshold doubleValue];
+    IBGBugReporting.shakingThresholdForiPad = threshold;
+}
+
 /**
  * Extracts HTTP connection properties. Request method, Headers, Date, Url and Response code
  *
@@ -772,7 +794,33 @@ FlutterMethodChannel* channel;
     
 }
 
+  /** Reports that the screen has been changed (Repro Steps) the screen sent to this method will be the 'current view' on the dashboard
+  *
+  * @param screenName string containing the screen name
+  *
+  */
++ (void) reportScreenChange:(NSString *)screenName {
+   SEL setPrivateApiSEL = NSSelectorFromString(@"logViewDidAppearEvent:");
+    if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
+        [inv setSelector:setPrivateApiSEL];
+        [inv setTarget:[Instabug class]];
+        [inv setArgument:&(screenName) atIndex:2];
+        [inv invoke];
+    }
+}
 
+/**
+  * Sets the Repro Steps mode
+  *
+  * @param reproStepsMode string repro step mode
+  *
+  */
++ (void) setReproStepsMode:(NSString *)reproStepsMode {
+    NSDictionary *constants = [self constants];
+    NSInteger reproMode = ((NSNumber *) constants[reproStepsMode]).integerValue;
+    [Instabug setReproStepsMode:reproMode];
+}
 
 + (NSDictionary *)constants {
   return @{
@@ -860,6 +908,10 @@ FlutterMethodChannel* channel;
       @"ActionType.reportBug": @(IBGActionReportBug),
       @"ActionType.requestNewFeature": @(IBGActionRequestNewFeature),
       @"ActionType.addCommentToFeature": @(IBGActionAddCommentToFeature),
+
+      @"ReproStepsMode.enabled": @(IBGUserStepsModeEnable),
+      @"ReproStepsMode.disabled": @(IBGUserStepsModeDisable),
+      @"ReproStepsMode.enabledWithNoScreenshots": @(IBGUserStepsModeEnabledWithNoScreenshots)
   };
 };
 
