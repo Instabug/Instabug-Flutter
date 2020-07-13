@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:instabug_flutter/CrashReporting.dart';
 import 'package:instabug_flutter/Instabug.dart';
 import 'package:instabug_flutter/BugReporting.dart';
 import 'package:instabug_flutter/InstabugLog.dart';
@@ -12,6 +14,9 @@ import 'package:instabug_flutter/Surveys.dart';
 import 'package:instabug_flutter/FeatureRequests.dart';
 import 'package:instabug_flutter/Chats.dart';
 import 'package:instabug_flutter/Replies.dart';
+import 'package:instabug_flutter/models/crash_data.dart';
+import 'package:instabug_flutter/models/exception_data.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -681,6 +686,46 @@ void main() {
         arguments: args,
       )
     ]);
+  });
+
+  test('setCrashReportingEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    CrashReporting.setEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setCrashReportingEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('sendJSCrashByReflection:handled: Test', () async {
+    try {
+      final List<dynamic> params = <dynamic>[1, 2];
+      params[5] = 2;
+    } catch (exception, stack) {
+      const bool handled = true;
+      final Trace trace = Trace.from(stack);
+      final List<ExceptionData> frames = <ExceptionData>[];
+      for (int i = 0; i < trace.frames.length; i++) {
+        frames.add(ExceptionData(
+            trace.frames[i].uri.toString(),
+            trace.frames[i].member,
+            trace.frames[i].line,
+            trace.frames[i].column == null ? 0 : trace.frames[i].column));
+      }
+      CrashData crashData = CrashData(
+          exception.toString(), Platform.operatingSystem.toString(), frames);
+      final List<dynamic> args = <dynamic>[jsonEncode(crashData), handled];
+      CrashReporting.reportHandledCrash(exception, stack);
+      expect(log, <Matcher>[
+        isMethodCall(
+          'sendJSCrashByReflection:handled:',
+          arguments: args,
+        )
+      ]);
+    }
   });
 
   ///Since the below method only runs on android and has the [Platform.isAndroid] condition in it, it will fail when running outside android,

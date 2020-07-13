@@ -1,8 +1,8 @@
-## Master
+## v9.1.6 (2020-07-13)
 
+* Adds CrashReporting
 * Adds setShakingThresholdForiPhone, setShakingThresholdForiPad and setShakingThresholdForAndroid APIs
 * Added Proguard rules to protect Flutter bridge class and method names from getting obfuscated when the minifyEnabled flag is set to true.
-
 
 ## v9.1.0 (2020-03-19)
 

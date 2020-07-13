@@ -1,14 +1,23 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:instabug_flutter/Instabug.dart';
 import 'package:instabug_flutter/BugReporting.dart';
 import 'package:instabug_flutter/Surveys.dart';
 import 'package:instabug_flutter/FeatureRequests.dart';
-import 'package:instabug_flutter/Chats.dart';
+import 'package:instabug_flutter/CrashReporting.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    Zone.current.handleUncaughtError(details.exception, details.stack);
+  };
+
+  runZoned<Future<void>>(() async {
+    runApp(MyApp());
+  }, onError: (dynamic error, StackTrace stackTrace) {
+    CrashReporting.reportCrash(error, stackTrace);
+  });
+}
 
 class MyApp extends StatefulWidget {
   @override
