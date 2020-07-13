@@ -27,9 +27,6 @@ A Flutter plugin for [Instabug](https://instabug.com/).
 ```yaml
 dependencies:
       instabug_flutter:
-        git:
-          url: https://github.com/Instabug/instabug-flutter.git
-          ref: crash-reporting
 ```
 
 2. Install the package by running the following command.

@@ -32,6 +32,9 @@ class CrashReporting {
     }
   }
 
+  /// Reports a handled crash to you dashboard
+  /// [dynamic] exception
+  /// [StackTrace] stack
   static void reportHandledCrash(dynamic exception, [StackTrace stack]) async {
     if (stack != null) {
       _sendCrash(exception, stack, true);
