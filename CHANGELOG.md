@@ -1,3 +1,7 @@
+## master
+
+* Adds setShakingThresholdForiPhone, setShakingThresholdForiPad and setShakingThresholdForAndroid APIs
+
 ## v9.1.0 (2020-03-19)
 
 * Bump Native SDKs to v9.1
