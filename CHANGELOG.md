@@ -1,3 +1,7 @@
+## master
+
+* Added Proguard rules to protect Flutter bridge class and method names from getting obfuscated when the minifyEnabled flag is set to true.
+
 ## v9.1.0 (2020-03-19)
 
 * Bump Native SDKs to v9.1
