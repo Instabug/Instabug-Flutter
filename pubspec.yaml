@@ -17,6 +17,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  stack_trace:  ^1.9.3
+  meta: ^1.1.8
 
 dev_dependencies:
   flutter_test:
