@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/Instabug.dart';
 
@@ -187,5 +188,41 @@ class BugReporting {
     ];
     await _channel.invokeMethod<Object>(
         'showBugReportingWithReportTypeAndOptions:options:', params);
+  }
+
+  /// Sets the threshold value of the shake gesture for iPhone/iPod Touch
+  /// Default for iPhone is 2.5.
+  /// [iPhoneShakingThreshold] iPhoneShakingThreshold double
+  static void setShakingThresholdForiPhone(
+      double iPhoneShakingThreshold) async {
+    if (Platform.isIOS) {
+      final List<dynamic> params = <dynamic>[iPhoneShakingThreshold];
+      await _channel.invokeMethod<Object>(
+          'setShakingThresholdForiPhone:', params);
+    }
+  }
+
+  /// Sets the threshold value of the shake gesture for iPad
+  /// Default for iPhone is 0.6.
+  /// [iPadShakingThreshold] iPhoneShakingThreshold double
+  static void setShakingThresholdForiPad(double iPadShakingThreshold) async {
+    if (Platform.isIOS) {
+      final List<dynamic> params = <dynamic>[iPadShakingThreshold];
+      await _channel.invokeMethod<Object>(
+          'setShakingThresholdForiPad:', params);
+    }
+  }
+
+  /// Sets the threshold value of the shake gesture for android devices.
+  /// Default for android is an integer value equals 350.
+  /// you could increase the shaking difficulty level by
+  /// increasing the `350` value and vice versa
+  /// [androidThreshold] iPhoneShakingThreshold int
+  static void setShakingThresholdForAndroid(int androidThreshold) async {
+    if (Platform.isAndroid) {
+      final List<dynamic> params = <dynamic>[androidThreshold];
+      await _channel.invokeMethod<Object>(
+          'setShakingThresholdForAndroid:', params);
+    }
   }
 }
