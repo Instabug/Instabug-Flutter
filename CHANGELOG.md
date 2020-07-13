@@ -1,6 +1,8 @@
 ## Master
 
-* Adds support for Repro Steps. Repro Steps list all of the actions an app user took before reporting a bug or crash, grouped by the screens they visited in your app.
+* Adds setShakingThresholdForiPhone, setShakingThresholdForiPad and setShakingThresholdForAndroid APIs
+* Added Proguard rules to protect Flutter bridge class and method names from getting obfuscated when the minifyEnabled flag is set to true.
+
 
 ## v9.1.0 (2020-03-19)
 
