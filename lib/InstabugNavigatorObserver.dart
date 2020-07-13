@@ -23,7 +23,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         }
       });
     } catch (e) {
-      print("[INSTAUG] - Rporting screen failed")
+      print("[INSTAUG] - Rporting screen failed");
     }
   }
 
