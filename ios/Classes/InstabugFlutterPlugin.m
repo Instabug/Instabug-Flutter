@@ -57,6 +57,15 @@ FlutterMethodChannel* channel;
   * the SDK's UI.
   */
 + (void)startWithToken:(NSString *)token invocationEvents:(NSArray*)invocationEventsArray {
+    SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
+    if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
+        NSInteger *platformId = IBGPlatformFlutter;
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
+        [inv setSelector:setPrivateApiSEL];
+        [inv setTarget:[Instabug class]];
+        [inv setArgument:&(platformId) atIndex:2];
+        [inv invoke];
+    }
     NSDictionary *constants = [self constants];
     NSInteger invocationEvents = IBGInvocationEventNone;
     for (NSString * invocationEvent in invocationEventsArray) {
@@ -762,7 +771,34 @@ FlutterMethodChannel* channel;
     }
 }
 
+/**
+  * Reports that the screen has been changed (Repro Steps) the screen sent to this method will be the 'current view' on the dashboard
+  *
+  * @param screenName string containing the screen name
+  *
+  */
++ (void) reportScreenChange:(NSString *)screenName {
+   SEL setPrivateApiSEL = NSSelectorFromString(@"logViewDidAppearEvent:");
+    if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
+        [inv setSelector:setPrivateApiSEL];
+        [inv setTarget:[Instabug class]];
+        [inv setArgument:&(screenName) atIndex:2];
+        [inv invoke];
+    }
+}
 
+/**
+  * Sets the Repro Steps mode
+  *
+  * @param reproStepsMode string repro step mode
+  *
+  */
++ (void) setReproStepsMode:(NSString *)reproStepsMode {
+    NSDictionary *constants = [self constants];
+    NSInteger reproMode = ((NSNumber *) constants[reproStepsMode]).integerValue;
+    [Instabug setReproStepsMode:reproMode];
+}
 
 + (NSDictionary *)constants {
   return @{
@@ -850,6 +886,10 @@ FlutterMethodChannel* channel;
       @"ActionType.reportBug": @(IBGActionReportBug),
       @"ActionType.requestNewFeature": @(IBGActionRequestNewFeature),
       @"ActionType.addCommentToFeature": @(IBGActionAddCommentToFeature),
+
+      @"ReproStepsMode.enabled": @(IBGUserStepsModeEnable),
+      @"ReproStepsMode.disabled": @(IBGUserStepsModeDisable),
+      @"ReproStepsMode.enabledWithNoScreenshots": @(IBGUserStepsModeEnabledWithNoScreenshots)
   };
 };
 

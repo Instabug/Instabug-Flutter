@@ -1,6 +1,7 @@
 package com.instabug.instabugflutter;
 
 import android.app.Application;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,6 +23,7 @@ import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+import com.instabug.library.visualusersteps.State;
 import com.instabug.survey.OnDismissCallback;
 import com.instabug.survey.OnShowCallback;
 import com.instabug.survey.Survey;
@@ -39,12 +41,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import com.instabug.library.Platform;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
+import io.reactivex.annotations.Nullable;
 
 /**
  * InstabugFlutterPlugin
@@ -60,6 +64,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     private InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
 
     static MethodChannel channel;
+
     /**
      * Plugin registration.
      */
@@ -74,7 +79,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         boolean isImplemented = false;
         String callMethod = call.method;
         if (callMethod.contains(":")) {
-            callMethod = call.method.substring( 0, call.method.indexOf(":"));
+            callMethod = call.method.substring(0, call.method.indexOf(":"));
         }
         for (Method method : methods) {
             if (callMethod.equals(method.getName())) {
@@ -99,16 +104,30 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         }
     }
 
+    private void setCrossPlatform() {
+        try {
+            Method method = getMethod(Class.forName("com.instabug.library.Instabug"), "setCrossPlatform", int.class);
+            if (method != null) {
+                Log.i("IB-CP-Bridge", "invoking setCrossPlatform with platform: " + Platform.FLUTTER);
+                method.invoke(null, Platform.FLUTTER);
+            } else {
+                Log.e("IB-CP-Bridge", "setCrossPlatform was not found by reflection");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * starts the SDK
      *
      * @param application      the application Object
      * @param token            token The token that identifies the app, you can find
      *                         it on your dashboard.
-     * @param invocationEvents invocationEvents The events that invoke
-     *                         the SDK's UI.
+     * @param invocationEvents invocationEvents The events that invoke the SDK's UI.
      */
     public void start(Application application, String token, ArrayList<String> invocationEvents) {
+        setCrossPlatform();
         InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
         for (int i = 0; i < invocationEvents.size(); i++) {
             String key = invocationEvents.get(i);
@@ -118,16 +137,15 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         enableScreenShotByMediaProjection();
     }
 
-
     /**
      * Shows the welcome message in a specific mode.
      *
-     * @param welcomeMessageMode An enum to set the welcome message mode to
-     *                           live, or beta.
+     * @param welcomeMessageMode An enum to set the welcome message mode to live, or
+     *                           beta.
      */
     public void showWelcomeMessageWithMode(String welcomeMessageMode) {
-        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(
-                welcomeMessageMode, WelcomeMessage.State.class);
+        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(welcomeMessageMode,
+                WelcomeMessage.State.class);
         Instabug.showWelcomeMessage(resolvedWelcomeMessageMode);
     }
 
@@ -142,10 +160,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Sets the default value of the user's email to null and show email field and remove user
-     * name from all reports
-     * It also reset the chats on device and removes user attributes, user data and completed
-     * surveys.
+     * Sets the default value of the user's email to null and show email field and
+     * remove user name from all reports It also reset the chats on device and
+     * removes user attributes, user data and completed surveys.
      */
     public void logOut() {
         Instabug.logoutUser();
@@ -162,10 +179,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Appends a log message to Instabug internal log
-     * These logs are then sent along the next uploaded report.
-     * All log messages are timestamped
-     * Note: logs passed to this method are NOT printed to Logcat
+     * Appends a log message to Instabug internal log These logs are then sent along
+     * the next uploaded report. All log messages are timestamped Note: logs passed
+     * to this method are NOT printed to Logcat
      *
      * @param message the message
      */
@@ -174,10 +190,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Appends a log message to Instabug internal log
-     * These logs are then sent along the next uploaded report.
-     * All log messages are timestamped
-     * Note: logs passed to this method are NOT printed to Logcat
+     * Appends a log message to Instabug internal log These logs are then sent along
+     * the next uploaded report. All log messages are timestamped Note: logs passed
+     * to this method are NOT printed to Logcat
      *
      * @param message the message
      */
@@ -186,10 +201,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Appends a log message to Instabug internal log
-     * These logs are then sent along the next uploaded report.
-     * All log messages are timestamped
-     * Note: logs passed to this method are NOT printed to Logcat
+     * Appends a log message to Instabug internal log These logs are then sent along
+     * the next uploaded report. All log messages are timestamped Note: logs passed
+     * to this method are NOT printed to Logcat
      *
      * @param message the message
      */
@@ -198,10 +212,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Appends a log message to Instabug internal log
-     * These logs are then sent along the next uploaded report.
-     * All log messages are timestamped
-     * Note: logs passed to this method are NOT printed to Logcat
+     * Appends a log message to Instabug internal log These logs are then sent along
+     * the next uploaded report. All log messages are timestamped Note: logs passed
+     * to this method are NOT printed to Logcat
      *
      * @param message the message
      */
@@ -210,10 +223,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Appends a log message to Instabug internal log
-     * These logs are then sent along the next uploaded report.
-     * All log messages are timestamped
-     * Note: logs passed to this method are NOT printed to Logcat
+     * Appends a log message to Instabug internal log These logs are then sent along
+     * the next uploaded report. All log messages are timestamped Note: logs passed
+     * to this method are NOT printed to Logcat
      *
      * @param message the message
      */
@@ -241,7 +253,8 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Appends a set of tags to previously added tags of reported feedback, bug or crash.
+     * Appends a set of tags to previously added tags of reported feedback, bug or
+     * crash.
      *
      * @param tags An array of tags to append to current tags.
      */
@@ -266,7 +279,8 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Set custom user attributes that are going to be sent with each feedback, bug or crash.
+     * Set custom user attributes that are going to be sent with each feedback, bug
+     * or crash.
      *
      * @param value User attribute value.
      * @param key   User attribute key.
@@ -276,8 +290,8 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Removes a given key and its associated value from user attributes.
-     * Does nothing if a key does not exist.
+     * Removes a given key and its associated value from user attributes. Does
+     * nothing if a key does not exist.
      *
      * @param key The key to remove.
      */
@@ -287,20 +301,24 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
 
     /**
      * Returns the user attribute associated with a given key.
+     * 
      * @param key The key for which to return the corresponding value.
-     * @return The value associated with aKey, or null if no value is associated with aKey.
+     * @return The value associated with aKey, or null if no value is associated
+     *         with aKey.
      */
-   public String getUserAttributeForKey(String key) {
-       return Instabug.getUserAttribute(key);
-   }
+    public String getUserAttributeForKey(String key) {
+        return Instabug.getUserAttribute(key);
+    }
 
     /**
      * Returns all user attributes.
-     * @return A new HashMap containing all the currently set user attributes, or an empty HashMap if no user attributes have been set.
+     * 
+     * @return A new HashMap containing all the currently set user attributes, or an
+     *         empty HashMap if no user attributes have been set.
      */
-   public HashMap<String, String> getUserAttributes() {
-       return Instabug.getAllUserAttributes();
-   }
+    public HashMap<String, String> getUserAttributes() {
+        return Instabug.getAllUserAttributes();
+    }
 
     /**
      * invoke sdk manually
@@ -317,7 +335,8 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
 
     /**
      * Logs a user event that happens through the lifecycle of the application.
-     * Logged user events are going to be sent with each report, as well as at the end of a session.
+     * Logged user events are going to be sent with each report, as well as at the
+     * end of a session.
      *
      * @param name Event name.
      */
@@ -327,21 +346,24 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
 
     /**
      * Overrides any of the strings shown in the SDK with custom ones.
-     * @param value String value to override the default one.
+     * 
+     * @param value            String value to override the default one.
      * @param forStringWithKey Key of string to override.
      */
     public void setValue(String value, String forStringWithKey) {
-        InstabugCustomTextPlaceHolder.Key key = ArgsRegistry.getDeserializedValue(forStringWithKey, InstabugCustomTextPlaceHolder.Key.class);
+        InstabugCustomTextPlaceHolder.Key key = ArgsRegistry.getDeserializedValue(forStringWithKey,
+                InstabugCustomTextPlaceHolder.Key.class);
         placeHolder.set(key, value);
         Instabug.setCustomTextPlaceHolders(placeHolder);
-      }
+    }
 
     /**
      * Enables taking screenshots by media projection.
      */
     private void enableScreenShotByMediaProjection() {
         try {
-            Method method = getMethod(Class.forName("com.instabug.bug.BugReporting"), "setScreenshotByMediaProjectionEnabled", boolean.class);
+            Method method = getMethod(Class.forName("com.instabug.bug.BugReporting"),
+                    "setScreenshotByMediaProjectionEnabled", boolean.class);
             if (method != null) {
                 method.invoke(null, true);
             }
@@ -355,18 +377,18 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Gets the private method that matches the class, method name and parameter types given and making it accessible.
-     * For private use only.
-     * @param clazz the class the method is in
-     * @param methodName the method name
+     * Gets the private method that matches the class, method name and parameter
+     * types given and making it accessible. For private use only.
+     * 
+     * @param clazz         the class the method is in
+     * @param methodName    the method name
      * @param parameterType list of the parameter types of the method
      * @return the method that matches the class, method name and param types given
      */
     public static Method getMethod(Class clazz, String methodName, Class... parameterType) {
         final Method[] methods = clazz.getDeclaredMethods();
         for (Method method : methods) {
-            if (method.getName().equals(methodName) && method.getParameterTypes().length ==
-                    parameterType.length) {
+            if (method.getName().equals(methodName) && method.getParameterTypes().length == parameterType.length) {
                 for (int i = 0; i < parameterType.length; i++) {
                     if (method.getParameterTypes()[i] == parameterType[i]) {
                         if (i == method.getParameterTypes().length - 1) {
@@ -396,15 +418,16 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Set the primary color that the SDK will use to tint certain UI elements in the SDK
+     * Set the primary color that the SDK will use to tint certain UI elements in
+     * the SDK
      *
-     * @param primaryColor The value of the primary color 
+     * @param primaryColor The value of the primary color
      */
     public void setPrimaryColor(final long primaryColor) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                Instabug.setPrimaryColor((int)primaryColor);
+                Instabug.setPrimaryColor((int) primaryColor);
             }
         });
     }
@@ -432,7 +455,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         }
     }
 
-
     /**
      * The file at filePath will be uploaded along upcoming reports with the name
      * fileNameWithExtension
@@ -445,8 +467,8 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Clears all Uris of the attached files.
-     * The URIs which added via {@link Instabug#addFileAttachment} API not the physical files.
+     * Clears all Uris of the attached files. The URIs which added via
+     * {@link Instabug#addFileAttachment} API not the physical files.
      */
     public void clearFileAttachments() {
         Instabug.clearFileAttachment();
@@ -455,36 +477,38 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     /**
      * Sets the welcome message mode to live, beta or disabled.
      *
-     * @param welcomeMessageMode An enum to set the welcome message mode to
-     *                          live, beta or disabled.
+     * @param welcomeMessageMode An enum to set the welcome message mode to live,
+     *                           beta or disabled.
      */
     public void setWelcomeMessageMode(String welcomeMessageMode) {
-        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(
-                welcomeMessageMode, WelcomeMessage.State.class);
+        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(welcomeMessageMode,
+                WelcomeMessage.State.class);
         Instabug.setWelcomeMessageState(resolvedWelcomeMessageMode);
     }
 
     /**
-     * Enables and disables manual invocation and prompt options for bug and feedback.
+     * Enables and disables manual invocation and prompt options for bug and
+     * feedback.
+     * 
      * @param {boolean} isEnabled
      */
     public void setBugReportingEnabled(final boolean isEnabled) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                    if (isEnabled) {
-                        BugReporting.setState(Feature.State.ENABLED);
-                    } else {
-                        BugReporting.setState(Feature.State.DISABLED);
-                    }
+                if (isEnabled) {
+                    BugReporting.setState(Feature.State.ENABLED);
+                } else {
+                    BugReporting.setState(Feature.State.DISABLED);
+                }
             }
         });
     }
 
     /**
      * Sets a block of code to be executed just before the SDK's UI is presented.
-     * This block is executed on the UI thread. Could be used for performing any
-     * UI changes before the SDK's UI is shown.
+     * This block is executed on the UI thread. Could be used for performing any UI
+     * changes before the SDK's UI is shown.
      */
     public void setOnInvokeCallback() {
         BugReporting.setOnInvokeCallback(new OnInvokeCallback() {
@@ -497,19 +521,19 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
 
     /**
      * Sets a block of code to be executed right after the SDK's UI is dismissed.
-     * This block is executed on the UI thread. Could be used for performing any
-     * UI changes after the SDK's UI is dismissed.
+     * This block is executed on the UI thread. Could be used for performing any UI
+     * changes after the SDK's UI is dismissed.
      */
     public void setOnDismissCallback() {
-           BugReporting.setOnDismissCallback(new OnSdkDismissCallback() {
-               @Override
-               public void call(DismissType dismissType, ReportType reportType) {
-                   HashMap<String, String> params = new HashMap<>();
-                   params.put("dismissType", dismissType.toString());
-                   params.put("reportType", reportType.toString());
-                   channel.invokeMethod("onDismissCallback", params);
-               }
-           });
+        BugReporting.setOnDismissCallback(new OnSdkDismissCallback() {
+            @Override
+            public void call(DismissType dismissType, ReportType reportType) {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("dismissType", dismissType.toString());
+                params.put("reportType", reportType.toString());
+                channel.invokeMethod("onDismissCallback", params);
+            }
+        });
     }
 
     /**
@@ -517,7 +541,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      *
      * @param invocationEvents ArrayList of invocation events
      */
-    public void setInvocationEvents(final  ArrayList<String> invocationEvents) {
+    public void setInvocationEvents(final ArrayList<String> invocationEvents) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -532,24 +556,27 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Sets whether attachments in bug reporting and in-app messaging are enabled or not.
+     * Sets whether attachments in bug reporting and in-app messaging are enabled or
+     * not.
      *
-     * @param  screenshot A boolean to enable or disable screenshot attachments.
-     * @param {boolean} extraScreenShot A boolean to enable or disable extra screenshot attachments.
-     * @param {boolean} galleryImage A boolean to enable or disable gallery image attachments.
-     * @param {boolean} screenRecording A boolean to enable or disable screen recording attachments.
+     * @param screenshot A boolean to enable or disable screenshot attachments.
+     * @param {boolean}  extraScreenShot A boolean to enable or disable extra
+     *                   screenshot attachments.
+     * @param {boolean}  galleryImage A boolean to enable or disable gallery image
+     *                   attachments.
+     * @param {boolean}  screenRecording A boolean to enable or disable screen
+     *                   recording attachments.
      */
-    public void setEnabledAttachmentTypes(boolean screenshot, boolean extraScreenshot, boolean
-            galleryImage, boolean screenRecording) {
-            BugReporting.setAttachmentTypesEnabled(screenshot, extraScreenshot, galleryImage,
-                    screenRecording);
+    public void setEnabledAttachmentTypes(boolean screenshot, boolean extraScreenshot, boolean galleryImage,
+            boolean screenRecording) {
+        BugReporting.setAttachmentTypesEnabled(screenshot, extraScreenshot, galleryImage, screenRecording);
     }
 
-
- /**
-   * Sets what type of reports, bug or feedback, should be invoked.
-   * @param {array} reportTypes - Array of reportTypes
-   */
+    /**
+     * Sets what type of reports, bug or feedback, should be invoked.
+     * 
+     * @param {array} reportTypes - Array of reportTypes
+     */
     public void setReportTypes(final ArrayList<String> reportTypes) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
@@ -565,13 +592,14 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Sets whether the extended bug report mode should be disabled,
-     * enabled with required fields,  or enabled with optional fields.
+     * Sets whether the extended bug report mode should be disabled, enabled with
+     * required fields, or enabled with optional fields.
      *
      * @param extendedBugReportMode
      */
     public void setExtendedBugReportMode(String extendedBugReportMode) {
-        ExtendedBugReport.State extendedBugReport = ArgsRegistry.getDeserializedValue(extendedBugReportMode,  ExtendedBugReport.State.class);
+        ExtendedBugReport.State extendedBugReport = ArgsRegistry.getDeserializedValue(extendedBugReportMode,
+                ExtendedBugReport.State.class);
         BugReporting.setExtendedBugReportState(extendedBugReport);
     }
 
@@ -590,16 +618,18 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
 
     /**
      * Invoke bug reporting with report type and options.
-     * @param {reportType} type
+     * 
+     * @param {reportType}        type
      * @param {invocationOptions} options
      */
-    public void showBugReportingWithReportTypeAndOptions(final String reportType, final List<String> invocationOptions) {
+    public void showBugReportingWithReportTypeAndOptions(final String reportType,
+            final List<String> invocationOptions) {
         int[] options = new int[invocationOptions.size()];
         for (int i = 0; i < invocationOptions.size(); i++) {
             options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i), Integer.class);
         }
         int reportTypeInt = ArgsRegistry.getDeserializedValue(reportType, Integer.class);
-        BugReporting.show(reportTypeInt,options);
+        BugReporting.show(reportTypeInt, options);
     }
 
     /**
@@ -629,34 +659,35 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         Surveys.setAutoShowingEnabled(isEnabled);
     }
 
-     /**
-     * Sets the runnable that gets executed just before showing any valid survey<br/>
-     * WARNING: This runs on your application's main UI thread. Please do not include
-     * any blocking operations to avoid ANRs.
+    /**
+     * Sets the runnable that gets executed just before showing any valid
+     * survey<br/>
+     * WARNING: This runs on your application's main UI thread. Please do not
+     * include any blocking operations to avoid ANRs.
      */
     public void setOnShowSurveyCallback() {
-            Surveys.setOnShowCallback(new OnShowCallback() {
-                @Override
-                public void onShow() {
-                    channel.invokeMethod("onShowSurveyCallback", null);
-                }
-            });
+        Surveys.setOnShowCallback(new OnShowCallback() {
+            @Override
+            public void onShow() {
+                channel.invokeMethod("onShowSurveyCallback", null);
+            }
+        });
     }
 
     /**
      * Sets the runnable that gets executed just after showing any valid survey<br/>
-     * WARNING: This runs on your application's main UI thread. Please do not include
-     * any blocking operations to avoid ANRs.
+     * WARNING: This runs on your application's main UI thread. Please do not
+     * include any blocking operations to avoid ANRs.
      *
      */
     public void setOnDismissSurveyCallback() {
 
-            Surveys.setOnDismissCallback(new OnDismissCallback() {
-                @Override
-                public void onDismiss() {
-                    channel.invokeMethod("onDismissSurveyCallback", null);
-                }
-            });
+        Surveys.setOnDismissCallback(new OnDismissCallback() {
+            @Override
+            public void onDismiss() {
+                channel.invokeMethod("onDismissSurveyCallback", null);
+            }
+        });
     }
 
     /**
@@ -671,12 +702,11 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         channel.invokeMethod("availableSurveysCallback", result);
     }
 
-
-     /**
+    /**
      * Set Surveys welcome screen enabled, default value is false
      *
-     * @param shouldShow shouldShow whether should a welcome screen be shown
-     *                   before taking surveys or not
+     * @param shouldShow shouldShow whether should a welcome screen be shown before
+     *                   taking surveys or not
      */
     public void setShouldShowSurveysWelcomeScreen(boolean shouldShow) {
         Surveys.setShouldShowWelcomeScreen(shouldShow);
@@ -692,9 +722,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Shows survey with a specific token.
-     * Does nothing if there are no available surveys with that specific token.
-     * Answered and cancelled surveys won't show up again.
+     * Shows survey with a specific token. Does nothing if there are no available
+     * surveys with that specific token. Answered and cancelled surveys won't show
+     * up again.
      *
      * @param surveyToken A String with a survey token.
      */
@@ -702,13 +732,14 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         Surveys.showSurvey(surveyToken);
     }
 
-
     /**
-     * Returns true if the survey with a specific token was answered before.
-     * Will return false if the token does not exist or if the survey was not answered before.
+     * Returns true if the survey with a specific token was answered before. Will
+     * return false if the token does not exist or if the survey was not answered
+     * before.
      *
-     * @param surveyToken          the attribute key as string
-     * @return the desired value of whether the user has responded to the survey or not.
+     * @param surveyToken the attribute key as string
+     * @return the desired value of whether the user has responded to the survey or
+     *         not.
      */
     public void hasRespondedToSurveyWithToken(String surveyToken) {
         boolean hasResponded;
@@ -728,7 +759,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      * new-feature-request/new-comment-on-feature
      *
      * @param isEmailRequired set true to make email field required
-     * @param actionTypes Bitwise-or of actions
+     * @param actionTypes     Bitwise-or of actions
      */
     public void setEmailFieldRequiredForFeatureRequests(final Boolean isEmailRequired, final List<String> actionTypes) {
         int[] actions = new int[actionTypes.size()];
@@ -739,7 +770,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
-     * Manual invocation for chats view. 
+     * Manual invocation for chats view.
      */
     public void showChats() {
         Chats.show();
@@ -747,6 +778,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
 
     /**
      * Enables and disables everything related to creating new chats.
+     * 
      * @param {boolean} isEnabled
      */
     public void setChatsEnabled(final boolean isEnabled) {
@@ -764,6 +796,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
 
     /**
      * Enables and disables everything related to receiving replies.
+     * 
      * @param {boolean} isEnabled
      */
     public void setRepliesEnabled(final boolean isEnabled) {
@@ -785,7 +818,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     public void showReplies() {
         Replies.show();
     }
-
 
     /**
      * Tells whether the user has chats already or not.
@@ -824,41 +856,77 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      * @param isChatNotificationEnable whether chat notification is reburied or not
      */
     public void setChatNotificationEnabled(boolean isChatNotificationEnable) {
-            Replies.setInAppNotificationEnabled(isChatNotificationEnable);
+        Replies.setInAppNotificationEnabled(isChatNotificationEnable);
     }
 
     /**
-     * Set whether new in app notification received will play a small sound notification
-     * or not (Default is {@code false})
+     * Set whether new in app notification received will play a small sound
+     * notification or not (Default is {@code false})
      *
      * @param shouldPlaySound desired state of conversation sounds
      * @since 4.1.0
      */
     public void setEnableInAppNotificationSound(boolean shouldPlaySound) {
-            Replies.setInAppNotificationSound(shouldPlaySound);
+        Replies.setInAppNotificationSound(shouldPlaySound);
     }
 
     /**
-     * Extracts HTTP connection properties. Request method, Headers, Date, Url and Response code
+     * Extracts HTTP connection properties. Request method, Headers, Date, Url and
+     * Response code
      *
      * @param jsonObject the JSON object containing all HTTP connection properties
      */
-    public void networkLog(HashMap<String, Object> jsonObject)  throws JSONException {
+    public void networkLog(HashMap<String, Object> jsonObject) throws JSONException {
 
-            int responseCode = 0;
+        int responseCode = 0;
 
-            NetworkLog networkLog = new NetworkLog();
-            String date = System.currentTimeMillis()+"";
-            networkLog.setDate(date);
-            networkLog.setUrl((String)jsonObject.get("url"));
-            networkLog.setRequest((String)jsonObject.get("requestBody"));
-            networkLog.setResponse((String)jsonObject.get("responseBody"));
-            networkLog.setMethod((String) jsonObject.get("method"));
-            networkLog.setResponseCode((Integer) jsonObject.get("responseCode"));
-            networkLog.setRequestHeaders((new JSONObject((HashMap<String, String>)jsonObject.get("requestHeaders"))).toString(4));
-            networkLog.setResponseHeaders((new JSONObject((HashMap<String, String>)jsonObject.get("responseHeaders"))).toString(4));
-            networkLog.setTotalDuration(((Number) jsonObject.get("duration")).longValue());
-            networkLog.insert();
+        NetworkLog networkLog = new NetworkLog();
+        String date = System.currentTimeMillis() + "";
+        networkLog.setDate(date);
+        networkLog.setUrl((String) jsonObject.get("url"));
+        networkLog.setRequest((String) jsonObject.get("requestBody"));
+        networkLog.setResponse((String) jsonObject.get("responseBody"));
+        networkLog.setMethod((String) jsonObject.get("method"));
+        networkLog.setResponseCode((Integer) jsonObject.get("responseCode"));
+        networkLog.setRequestHeaders(
+                (new JSONObject((HashMap<String, String>) jsonObject.get("requestHeaders"))).toString(4));
+        networkLog.setResponseHeaders(
+                (new JSONObject((HashMap<String, String>) jsonObject.get("responseHeaders"))).toString(4));
+        networkLog.setTotalDuration(((Number) jsonObject.get("duration")).longValue());
+        networkLog.insert();
+    }
+
+    /**
+     * Reports that the screen has been changed (Repro Steps) the screen sent to
+     * this method will be the 'current view' on the dashboard
+     *
+     * @param screenName string containing the screen name
+     *
+     */
+    public void reportScreenChange(String screenName) {
+        try {
+            Method method = getMethod(Class.forName("com.instabug.library.Instabug"), "reportScreenChange",
+                    Bitmap.class, String.class);
+            if (method != null) {
+                method.invoke(null, null, screenName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Sets the Repro Steps mode
+     *
+     * @param reproStepsMode string repro step mode
+     *
+     */
+    public void setReproStepsMode(String reproStepsMode) {
+        try {
+            Instabug.setReproStepsState(ArgsRegistry.getDeserializedValue(reproStepsMode, State.class));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

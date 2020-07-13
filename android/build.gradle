@@ -33,8 +33,7 @@ android {
         disable 'InvalidPackage'
     }
 }
-
 dependencies {
-    implementation 'com.instabug.library:instabug:9.1.0.0'
+    implementation 'com.instabug.library:instabug:9.1.6.0'
     testImplementation 'junit:junit:4.12'
 }
