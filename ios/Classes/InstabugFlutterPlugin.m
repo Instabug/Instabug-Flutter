@@ -693,6 +693,28 @@ FlutterMethodChannel* channel;
    IBGReplies.inAppNotificationsEnabled = boolValue;
 }
 
+
+/**
+ * Sets the threshold value of the shake gesture for iPhone/iPod Touch
+ * Default for iPhone is 2.5.
+ * @param  iPhoneShakingThreshold Threshold for iPhone.
+ */
++ (void)setShakingThresholdForiPhone:(NSNumber *)iPhoneShakingThreshold {
+    double threshold = [iPhoneShakingThreshold doubleValue];
+    IBGBugReporting.shakingThresholdForiPhone = threshold;
+
+}
+
+/**
+ * Sets the threshold value of the shake gesture for iPad.
+ * Default for iPad is 0.6.
+ * @param iPadShakingThreshold Threshold for iPad.
+ */
++ (void)setShakingThresholdForiPad:(NSNumber *)iPadShakingThreshold {
+    double threshold = [iPadShakingThreshold doubleValue];
+    IBGBugReporting.shakingThresholdForiPad = threshold;
+}
+
 /**
  * Extracts HTTP connection properties. Request method, Headers, Date, Url and Response code
  *

@@ -861,4 +861,15 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             networkLog.insert();
     }
 
+    /**
+     * Sets the threshold value of the shake gesture for android devices.
+     * Default for android is an integer value equals 350.
+     * you could increase the shaking difficulty level by
+     * increasing the `350` value and vice versa
+     * @param androidThreshold Threshold for android devices.
+     */
+    public void setShakingThresholdForAndroid(int androidThreshold) {
+        BugReporting.setShakingThreshold(androidThreshold);
+    }
+
 }
