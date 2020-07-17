@@ -118,6 +118,23 @@ void main() async {
 }
 ```
 
+## Repro Steps
+Repro Steps list all of the actions an app user took before reporting a bug or crash, grouped by the screens they visited in your app.
+ 
+ To enable this feature, you need to add `InstabugNavigatorObserver` to the `navigatorObservers` :
+ ```
+  runApp(MaterialApp(
+    title: ...,
+    navigatorObservers: [InstabugNavigatorObserver()],
+    initialRoute: ...,
+    routes: {
+    ...
+    },
+  ));
+  ```
+
+⚠️  Screenshots in repro steps on android is not currently supported.
+
 ## Network Logging
 You can choose to attach all your network requests to the reports being sent to the dashboard. To enable the feature when using the `dart:io` package `HttpClient`, use the custom Instabug client:
 ```
