@@ -82,7 +82,10 @@ new InstabugFlutterPlugin().start(CustomFlutterApplication.this, "APP_TOKEN", in
 
 ## Crash reporting
 
-Instabug automatically captures every crash of your app and sends relevant details to the crashes page of your dashboard. Crashes are reported only when the app is running in release mode
+Instabug automatically captures every crash of your app and sends relevant details to the crashes page of your dashboard. 
+
+⚠️ **Crashes will only be reported in release mode and not in debug mode.**
+
 
 1. To start using Crash reporting, import the following into your `main.dart`. 
 
