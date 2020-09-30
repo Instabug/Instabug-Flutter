@@ -1,3 +1,7 @@
+## master
+
+* Added Enable/Disable APIs on Android
+
 ## v9.1.6 (2020-07-13)
 
 * Added CrashReporting
