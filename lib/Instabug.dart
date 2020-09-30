@@ -289,7 +289,7 @@ class Instabug {
 
   ///Android Only
   ///Enables all Instabug functionality
-  static void enable() async {
+  static void enableAndroid() async {
     if (Platform.isAndroid) {
       await _channel.invokeMethod<Object>('enable:');
     }
@@ -297,7 +297,7 @@ class Instabug {
 
   ///Android Only
   ///Disables all Instabug functionality
-  static void disable() async {
+  static void disableAndroid() async {
     if (Platform.isAndroid) {
       await _channel.invokeMethod<Object>('disable:');
     }
