@@ -286,4 +286,20 @@ class Instabug {
     final List<dynamic> params = <dynamic>[reproStepsMode.toString()];
     await _channel.invokeMethod<Object>('setReproStepsMode:', params);
   }
+
+  ///Android Only
+  ///Enables all Instabug functionality
+  static void enable() async {
+    if (Platform.isAndroid) {
+      await _channel.invokeMethod<Object>('enable:');
+    }
+  }
+
+  ///Android Only
+  ///Disables all Instabug functionality
+  static void disable() async {
+    if (Platform.isAndroid) {
+      await _channel.invokeMethod<Object>('disable:');
+    }
+  }
 }

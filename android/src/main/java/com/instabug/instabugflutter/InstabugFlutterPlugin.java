@@ -17,6 +17,7 @@ import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
+import com.instabug.library.InstabugState;
 import com.instabug.library.OnSdkDismissCallback;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.invocation.InstabugInvocationEvent;
@@ -981,6 +982,20 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      */
     public void setShakingThresholdForAndroid(int androidThreshold) {
         BugReporting.setShakingThreshold(androidThreshold);
+    }
+
+    /**
+     * Enables all Instabug functionality
+     */
+    public void enable() {
+        Instabug.enable();
+    }
+
+    /**
+     * Disables all Instabug functionality
+     */
+    public void disable() {
+        Instabug.disable();
     }
 
 }
