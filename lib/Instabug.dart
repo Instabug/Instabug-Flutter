@@ -16,6 +16,7 @@ enum WelcomeMessageMode { live, beta, disabled }
 
 enum IBGLocale {
   arabic,
+  azerbaijani,
   chineseSimplified,
   chineseTraditional,
   czech,

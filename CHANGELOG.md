@@ -1,6 +1,9 @@
-## master
+## v9.1.7 (2020-10-01)
 
-* Added Enable/Disable APIs on Android
+* Adds support for the Azerbaijani locale
+* Adds support for the Enable/Disable APIs on Android
+* Bumps Instabug iOS SDK to v9.1.7
+* Bumps Instabug Android SDK to v9.1.8
 
 ## v9.1.6 (2020-07-13)
 

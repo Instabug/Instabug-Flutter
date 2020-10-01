@@ -13,6 +13,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import static com.instabug.library.internal.module.InstabugLocale.ARABIC;
+import static com.instabug.library.internal.module.InstabugLocale.AZERBAIJANI;
 import static com.instabug.library.internal.module.InstabugLocale.CZECH;
 import static com.instabug.library.internal.module.InstabugLocale.DANISH;
 import static com.instabug.library.internal.module.InstabugLocale.ENGLISH;
@@ -143,6 +144,7 @@ final class ArgsRegistry {
         args.put("IBGLocale.swedish", new Locale(SWEDISH.getCode(), SWEDISH.getCountry()));
         args.put("IBGLocale.turkish", new Locale(TURKISH.getCode(), TURKISH.getCountry()));
         args.put("IBGLocale.arabic", new Locale(ARABIC.getCode(), ARABIC.getCountry()));
+        args.put("IBGLocale.azerbaijani", new Locale(AZERBAIJANI.getCode(), AZERBAIJANI.getCountry()));
         args.put("IBGLocale.danish", new Locale(DANISH.getCode(), DANISH.getCountry()));
         args.put("IBGLocale.french", new Locale(FRENCH.getCode(), FRENCH.getCountry()));
         args.put("IBGLocale.german", new Locale(GERMAN.getCode(), GERMAN.getCountry()));
