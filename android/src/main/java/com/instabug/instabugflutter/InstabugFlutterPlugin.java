@@ -983,4 +983,18 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         BugReporting.setShakingThreshold(androidThreshold);
     }
 
+    /**
+     * Enables all Instabug functionality
+     */
+    public void enable() {
+        Instabug.enable();
+    }
+
+    /**
+     * Disables all Instabug functionality
+     */
+    public void disable() {
+        Instabug.disable();
+    }
+
 }
