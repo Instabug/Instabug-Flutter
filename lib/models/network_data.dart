@@ -1,12 +1,12 @@
 class NetworkData {
-  String url;
-  String method;
+  String url = '';
+  String method = '';
   dynamic requestBody = '';
   dynamic responseBody = '';
-  int status;
+  int status = 0;
   Map<String, dynamic> requestHeaders = <String, dynamic>{};
   Map<String, dynamic> responseHeaders = <String, dynamic>{};
-  int duration;
+  int duration = 0;
   String contentType = '';
   DateTime endTime;
   DateTime startTime;
@@ -14,7 +14,7 @@ class NetworkData {
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = <String, dynamic>{};
     map['url'] = url;
-    map['method'] = method; 
+    map['method'] = method;
     map['requestBody'] = requestBody;
     map['responseBody'] = responseBody;
     map['responseCode'] = status;
