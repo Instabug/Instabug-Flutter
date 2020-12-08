@@ -885,10 +885,10 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         NetworkLog networkLog = new NetworkLog();
         String date = System.currentTimeMillis() + "";
         networkLog.setDate(date);
-        networkLog.setUrl((String) jsonObject.get("url"));
-        networkLog.setRequest((String) jsonObject.get("requestBody"));
-        networkLog.setResponse((String) jsonObject.get("responseBody"));
-        networkLog.setMethod((String) jsonObject.get("method"));
+        networkLog.setUrl((String) jsonObject.get("url").toString());
+        networkLog.setRequest((String) jsonObject.get("requestBody").toString());
+        networkLog.setResponse((String) jsonObject.get("responseBody").toString());
+        networkLog.setMethod((String) jsonObject.get("method").toString());
         networkLog.setResponseCode((Integer) jsonObject.get("responseCode"));
         networkLog.setRequestHeaders(
                 (new JSONObject((HashMap<String, String>) jsonObject.get("requestHeaders"))).toString(4));
