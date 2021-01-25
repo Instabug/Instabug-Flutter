@@ -1,33 +1,29 @@
 PODS:
   - Flutter (1.0.0)
-  - Instabug (9.1.4)
+  - Instabug (9.1.7)
   - instabug_flutter (0.0.1):
     - Flutter
     - Instabug (= 9.1.7)
-  - OCMock (3.8.1)
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `Flutter`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
-  - OCMock (~> 3.4)
 
 SPEC REPOS:
   trunk:
     - Instabug
-    - OCMock
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: Flutter
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  Flutter: 446b87ace8a3747a167979213b4aef59a0b5e5fa
   Instabug: 28838c071edc50e4f13800e6877645d3b328aab9
   instabug_flutter: 65794e9f82acebde599e56cc6a2e74a17b69410e
-  OCMock: 29f6e52085b4e7d9b075cbf03ed7c3112f82f934
 
-PODFILE CHECKSUM: 8a47551d4cb50d1be73b4b5bed8629d9a9468757
+PODFILE CHECKSUM: b9ee4d9f65f90936bba6f43025d3b134f174463e
 
 COCOAPODS: 1.10.1

@@ -3,27 +3,30 @@ jobs:
    android_tests:
     working_directory: ~/project/example/android
     macos:
-      xcode: "9.4.0"
+      xcode: "12.3.0"
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout:
           path: ~/project
       - run:
+          name: Install JAVA
+          command: |
+            HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask homebrew/cask-versions/adoptopenjdk8
+      - run:
+          name: Install Android sdk
+          command: |
+            HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask android-sdk
+      - run:
           name: Setup environment variables
           command: |
             echo 'export PATH="$PATH:/usr/local/opt/node@8/bin:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin:/usr/local/share/android-sdk/tools/bin"' >> $BASH_ENV
+            echo 'export JAVA_HOME=`/usr/libexec/java_home -v 1.8`' >> $BASH_ENV
             echo 'export ANDROID_HOME="/usr/local/share/android-sdk"' >> $BASH_ENV
             echo 'export ANDROID_SDK_HOME="/usr/local/share/android-sdk"' >> $BASH_ENV
             echo 'export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"' >> $BASH_ENV
             echo 'export QEMU_AUDIO_DRV=none' >> $BASH_ENV
-            echo 'export JAVA_HOME=/Library/Java/Home' >> $BASH_ENV
             echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
-      - run:
-          name: Install Android sdk
-          command: |
-            HOMEBREW_NO_AUTO_UPDATE=1 brew tap homebrew/cask
-            HOMEBREW_NO_AUTO_UPDATE=1 brew cask install android-sdk
       - run:
           name: Install emulator dependencies
           command: (yes | sdkmanager "platform-tools" "platforms;android-26" "extras;intel;Hardware_Accelerated_Execution_Manager" "build-tools;26.0.0" "system-images;android-26;google_apis;x86" "emulator" --verbose) || true
@@ -37,7 +40,7 @@ jobs:
           background: true
       - run:
           name: download flutter SDK
-          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip; fi
+          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_1.20.4-stable.zip; fi
       - run:
           name: unzip flutter SDK
           command: unzip flutter_sdk.zip
@@ -70,38 +73,36 @@ jobs:
 
    ios_tests:
     macos:
-      xcode: "10.2.0"
-    working_directory: ~/project/example/ios
+      xcode: "12.3.0"
+    working_directory: ~/project/example
     environment:
       FL_OUTPUT_DIR: output
     steps:
       - checkout:
           path: ~/project
       - run:
+          name: Install CocoaPods
+          command: sudo gem install cocoapods
+      - run:
           name: download flutter SDK
-          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip; fi
+          command: if ! test -f "~/Downloads/flutter_sdk.zip"; then curl -o ~/Downloads/flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_1.20.4-stable.zip; fi
       - run:
           name: unzip flutter SDK
-          command: unzip flutter_sdk.zip
+          command: unzip ~/Downloads/flutter_sdk.zip -d ~/Library
       - run:
           name: export flutter path
-          command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV 
-      - run:
-          name: Update Cocoapods
-          command: sudo gem install cocoapods
+          command: echo 'export PATH="$PATH:~/Library/flutter/bin"'  >> $BASH_ENV 
       - run: flutter doctor
+      - run: flutter pub get
+      - run:
+          name: Install Pods
+          command: cd ios && pod install --repo-update
       - run: 
           name: Flutter build
-          command: cd ..; flutter build aot
-      - run:
-          name: Update CocoaPods
-          command: pod update
-      - run:
-          name: Install CocoaPods
-          command: pod install --repo-update
+          command: flutter build aot
       - run:
           name: Build and run tests
-          command:  xcodebuild   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone X,OS=12.2'   test | xcpretty
+          command: cd ios && xcodebuild  -allowProvisioningUpdates   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone 12 Pro Max,OS=14.3'   test | xcpretty
 
    release:
     docker:
@@ -113,7 +114,7 @@ jobs:
 
    publish:
     macos:
-      xcode: "10.1.0"
+      xcode: "12.3.0"
     steps:
       - checkout
       - run: git clone https://InstabugCI:$RELEASE_GITHUB_TOKEN@github.com/Instabug/Escape.git
