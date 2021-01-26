@@ -3,8 +3,8 @@ PODS:
   - Instabug (9.1.4)
   - instabug_flutter (0.0.1):
     - Flutter
-    - Instabug (= 9.1.4)
-  - OCMock (3.6)
+    - Instabug (= 9.1.7)
+  - OCMock (3.8.1)
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
@@ -24,10 +24,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  Instabug: 6d8d38c329b8ae0a88bba4d148280e24bc0cf000
-  instabug_flutter: 904f8ae866249364e68e2d0ca05fc903f2fb7573
-  OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
+  Instabug: 28838c071edc50e4f13800e6877645d3b328aab9
+  instabug_flutter: 65794e9f82acebde599e56cc6a2e74a17b69410e
+  OCMock: 29f6e52085b4e7d9b075cbf03ed7c3112f82f934
 
 PODFILE CHECKSUM: 8a47551d4cb50d1be73b4b5bed8629d9a9468757
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.1
