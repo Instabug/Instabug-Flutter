@@ -9,9 +9,6 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      - restore_cache:
-          keys: 
-            - android_cache
       - run:
           name: Setup environment variables
           command: |
@@ -56,11 +53,6 @@ jobs:
       - run:
           name: Run Unit Tests
           command: ./gradlew test
-      - save_cache:
-          key: android_cache
-          paths:
-            - ~/.gradle
-            - flutter_sdk.zip
 
    flutter_tests:
     docker:
@@ -85,9 +77,6 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      - restore_cache:
-          keys: 
-            - flutter-cache
       - run:
           name: download flutter SDK
           command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.5.4-hotfix.2-stable.zip; fi
@@ -113,11 +102,6 @@ jobs:
       - run:
           name: Build and run tests
           command:  xcodebuild   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone X,OS=12.2'   test | xcpretty
-      - save_cache:
-          key: flutter-cache
-          paths:
-            - flutter_sdk.zip
-            - Pods
 
    release:
     docker:
