@@ -1,3 +1,7 @@
+## master
+
+* Fixes an issue with iOS invocation events causing the welcome message not to show.
+
 ## v9.1.7 (2020-10-01)
 
 * Adds support for the Azerbaijani locale
