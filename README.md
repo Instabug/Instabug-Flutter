@@ -124,12 +124,7 @@ Repro Steps list all of the actions an app user took before reporting a bug or c
  To enable this feature, you need to add `InstabugNavigatorObserver` to the `navigatorObservers` :
  ```
   runApp(MaterialApp(
-    title: ...,
     navigatorObservers: [InstabugNavigatorObserver()],
-    initialRoute: ...,
-    routes: {
-    ...
-    },
   ));
   ```
 
