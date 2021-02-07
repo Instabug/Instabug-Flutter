@@ -1,78 +1,46 @@
-### Flutter ###
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
 .flutter-plugins
+.flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
 pubspec.lock
 build/
 
-### Android ###
-gen-external-apklibs
-
-# OS-specific files
-.DS_Store
-.DS_Store?
-._*
-.Trashes
-
-# Built application files
-*.apk
-*.aab
-
-# Files for the ART/Dalvik VM
-*.dex
-
-# Generated files
-bin/
-gen/
-
-# Gradle files
-!/gradle/wrapper/gradle-wrapper.jar
+# Android related
 **/android/**/gradle-wrapper.jar
-**/android/gradlew
-/*/*/build/
-.gradle/
-
-# Local configuration file (sdk path, etc)
-/*/local.properties
-**/android/**/GeneratedPluginRegistrant.java
-/*/out
-
-# Log Files
-*.log
-
-# Android Studio Navigation editor temp files
-.navigation/
-
-# Android Studio captures folder
+**/android/.gradle
 **/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
 
-# IntelliJ
-*.iml
-.idea/
-
-# Keystore files
-*.jks
-*.keystore
-
-# Signing files
-.signing/
-
-# External native build folder generated in Android Studio 2.2 and later
-.externalNativeBuild
-
-# Google Services (e.g. APIs or Firebase)
-google-services.json
-
-# lint
-lint/intermediates/
-lint/generated/
-lint/outputs/
-lint/tmp/
-
-### IOS ###
+# iOS/XCode related
 **/ios/**/*.mode1v3
 **/ios/**/*.mode2v3
 **/ios/**/*.moved-aside
@@ -91,10 +59,12 @@ lint/tmp/
 **/ios/.generated/
 **/ios/Flutter/App.framework
 **/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
 **/ios/Flutter/Generated.xcconfig
 **/ios/Flutter/app.flx
 **/ios/Flutter/app.zip
 **/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
@@ -104,4 +74,3 @@ lint/tmp/
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-example/.flutter-plugins-dependencies
