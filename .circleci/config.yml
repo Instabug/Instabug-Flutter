@@ -74,7 +74,7 @@ jobs:
    ios_tests:
     macos:
       xcode: "12.3.0"
-    working_directory: ~/project/example
+    working_directory: ~/project/InstabugSample
     environment:
       FL_OUTPUT_DIR: output
     steps:
