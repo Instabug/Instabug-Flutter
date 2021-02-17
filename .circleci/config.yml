@@ -1,7 +1,7 @@
 version: 2
 jobs:
    android_tests:
-    working_directory: ~/project/example/android
+    working_directory: ~/project/InstabugSample/android
     macos:
       xcode: "12.3.0"
     environment:
