@@ -51,12 +51,12 @@ jobs:
       - run:
           name: Download Android Dependencies
           command: ./gradlew androidDependencies
-      # - run:
-      #     name: Run UI Tests
-      #     command: ./gradlew app:connectedAndroidTest
       - run:
           name: Run Unit Tests
           command: ./gradlew test
+      - run:
+          name: Run UI Tests
+          command: ./gradlew app:connectedAndroidTest
 
    flutter_tests:
     docker:
