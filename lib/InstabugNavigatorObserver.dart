@@ -29,7 +29,9 @@ class InstabugNavigatorObserver extends NavigatorObserver {
 
   @override
   void didPop(Route route, Route previousRoute) {
-    screenChanged(previousRoute);
+    if (previousRoute != null) {
+      screenChanged(previousRoute);
+    }
   }
 
   @override
