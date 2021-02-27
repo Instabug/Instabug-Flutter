@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io' show Platform;
+
 import 'package:flutter/services.dart';
 
 class Surveys {
@@ -43,7 +44,7 @@ class Surveys {
   /// To manually display any available surveys, call `Instabug.showSurveyIfAvailable()`.
   /// Defaults to `true`.
   /// [isEnabled] A boolean to set whether Instabug Surveys is enabled or disabled.
-  static void setEnabled(bool isEnabled) async {
+  static Future<void> setEnabled(bool isEnabled) async {
     final List<dynamic> params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>('setSurveysEnabled:', params);
   }
@@ -51,7 +52,7 @@ class Surveys {
   ///Sets whether auto surveys showing are enabled or not.
   /// [isEnabled] A boolean to indicate whether the
   /// surveys auto showing are enabled or not.
-  static void setAutoShowingEnabled(bool isEnabled) async {
+  static Future<void> setAutoShowingEnabled(bool isEnabled) async {
     final List<dynamic> params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>(
         'setAutoShowingSurveysEnabled:', params);
@@ -60,7 +61,7 @@ class Surveys {
   /// Returns an array containing the available surveys.
   /// [function] availableSurveysCallback callback with
   /// argument available surveys
-  static void getAvailableSurveys(Function function) async {
+  static Future<void> getAvailableSurveys(Function function) async {
     _channel.setMethodCallHandler(_handleMethod);
     _availableSurveysCallback = function;
     await _channel.invokeMethod<Object>('getAvailableSurveys');
@@ -70,7 +71,7 @@ class Surveys {
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes before the survey's UI is shown.
   /// [function]  A callback that gets executed before presenting the survey's UI.
-  static void setOnShowCallback(Function function) async {
+  static Future<void> setOnShowCallback(Function function) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onShowCallback = function;
     await _channel.invokeMethod<Object>('setOnShowSurveyCallback');
@@ -80,7 +81,7 @@ class Surveys {
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes  after the survey's UI is dismissed.
   /// [function]  A callback that gets executed after the survey's UI is dismissed.
-  static void setOnDismissCallback(Function function) async {
+  static Future<void> setOnDismissCallback(Function function) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onDismissCallback = function;
     await _channel.invokeMethod<Object>('setOnDismissSurveyCallback');
@@ -88,7 +89,8 @@ class Surveys {
 
   /// Setting an option for all the surveys to show a welcome screen before
   /// [shouldShowWelcomeScreen] A boolean for setting whether the  welcome screen should show.
-  static void setShouldShowWelcomeScreen(bool shouldShowWelcomeScreen) async {
+  static Future<void> setShouldShowWelcomeScreen(
+      bool shouldShowWelcomeScreen) async {
     final List<dynamic> params = <dynamic>[shouldShowWelcomeScreen];
     await _channel.invokeMethod<Object>(
         'setShouldShowSurveysWelcomeScreen:', params);
@@ -98,7 +100,7 @@ class Surveys {
   /// that match the current device/user.
   /// Does nothing if there are no available surveys or if a survey has already been shown
   /// in the current session.
-  static void showSurveyIfAvailable() async {
+  static Future<void> showSurveyIfAvailable() async {
     await _channel.invokeMethod<Object>('showSurveysIfAvailable');
   }
 
@@ -106,7 +108,7 @@ class Surveys {
   /// Does nothing if there are no available surveys with that specific token.
   /// Answered and cancelled surveys won't show up again.
   /// [surveyToken] - A String with a survey token.
-  static void showSurvey(String surveyToken) async {
+  static Future<void> showSurvey(String surveyToken) async {
     final List<dynamic> params = <dynamic>[surveyToken];
     await _channel.invokeMethod<Object>('showSurveyWithToken:', params);
   }
@@ -115,7 +117,7 @@ class Surveys {
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes  after the survey's UI is dismissed.
   /// [function]  A callback that gets executed after the survey's UI is dismissed.
-  static void hasRespondedToSurvey(
+  static Future<void> hasRespondedToSurvey(
       String surveyToken, Function function) async {
     _channel.setMethodCallHandler(_handleMethod);
     _hasRespondedToSurveyCallback = function;
@@ -128,7 +130,7 @@ class Surveys {
   /// @summary Sets url for the published iOS app on AppStore, You can redirect
   /// NPS Surveys or AppRating Surveys to AppStore to let users rate your app on AppStore itself.
   /// [appStoreURL] A String url for the published iOS app on AppStore
-  static void setAppStoreURL(String appStoreURL) async {
+  static Future<void> setAppStoreURL(String appStoreURL) async {
     if (Platform.isIOS) {
       final List<dynamic> params = <dynamic>[appStoreURL];
       await _channel.invokeMethod<Object>('setAppStoreURL:', params);

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/services.dart';
 
 class Chats {
@@ -8,19 +9,21 @@ class Chats {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
-  
+
   @deprecated
+
   ///Use {@link BugReporting.show} instead.
   ///Manual invocation for chats view.
-  static void show() async {
+  static Future<void> show() async {
     await _channel.invokeMethod<Object>('showChats');
   }
 
   @deprecated
+
   ///Use {@link BugReporting.setReportTypes} instead.
   /// Enables and disables everything related to creating new chats.
   /// [boolean] isEnabled
-  static void setEnabled(bool isEnabled) async {
+  static Future<void> setEnabled(bool isEnabled) async {
     final List<dynamic> params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>('setChatsEnabled:', params);
   }
