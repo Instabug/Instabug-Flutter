@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:instabug_flutter/NetworkLogger.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 
-
 class HttpClientLogger {
-
   Map<int, NetworkData> requests = <int, NetworkData>{};
 
   NetworkData _getRequestData(int requestHashCode) {
@@ -15,7 +13,7 @@ class HttpClientLogger {
     return null;
   }
 
-  void onRequest(HttpClientRequest request, { dynamic requestBody }) {
+  void onRequest(HttpClientRequest request, {dynamic requestBody}) {
     final NetworkData requestData = NetworkData();
     requestData.startTime = DateTime.now();
     requestData.method = request.method;
@@ -29,16 +27,18 @@ class HttpClientLogger {
     requests[request.hashCode] = requestData;
   }
 
-  void onResponse(HttpClientResponse response, HttpClientRequest request, {dynamic responseBody}) {
+  void onResponse(HttpClientResponse response, HttpClientRequest request,
+      {dynamic responseBody}) {
     final DateTime endTime = DateTime.now();
     final NetworkData networkData = _getRequestData(request.hashCode);
 
     if (networkData == null) {
-      return null;
+      return;
     }
 
     networkData.status = response.statusCode;
-    networkData.duration = endTime.difference(networkData.startTime).inMilliseconds;
+    networkData.duration =
+        endTime.difference(networkData.startTime).inMilliseconds;
     if (response.headers.contentType != null) {
       networkData.contentType = response.headers.contentType.value;
     }
@@ -52,7 +52,5 @@ class HttpClientLogger {
     }
 
     NetworkLogger.networkLog(networkData);
-
   }
-
 }

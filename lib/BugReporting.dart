@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io' show Platform;
+
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/Instabug.dart';
 
@@ -74,7 +75,7 @@ class BugReporting {
 
   ///Enables and disables manual invocation and prompt options for bug and feedback.
   /// [boolean] isEnabled
-  static void setEnabled(bool isEnabled) async {
+  static Future<void> setEnabled(bool isEnabled) async {
     final List<dynamic> params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>('setBugReportingEnabled:', params);
   }
@@ -83,7 +84,7 @@ class BugReporting {
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes before the SDK's UI is shown.
   /// [function]  A callback that gets executed before invoking the SDK
-  static void setOnInvokeCallback(Function function) async {
+  static Future<void> setOnInvokeCallback(Function function) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onInvokeCallback = function;
     await _channel.invokeMethod<Object>('setOnInvokeCallback');
@@ -93,7 +94,7 @@ class BugReporting {
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes before the SDK's UI is shown.
   /// [function]  A callback that gets executed before invoking the SDK
-  static void setOnDismissCallback(Function function) async {
+  static Future<void> setOnDismissCallback(Function function) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onDismissCallback = function;
     await _channel.invokeMethod<Object>('setOnDismissCallback');
@@ -102,7 +103,7 @@ class BugReporting {
   /// Sets the events that invoke the feedback form.
   /// Default is set by `Instabug.startWithToken`.
   /// [invocationEvents] invocationEvent List of events that invokes the
-  static void setInvocationEvents(
+  static Future<void> setInvocationEvents(
       List<InvocationEvent> invocationEvents) async {
     final List<String> invocationEventsStrings = <String>[];
     if (invocationEvents != null) {
@@ -121,8 +122,8 @@ class BugReporting {
   /// attachments. In iOS 10+,NSPhotoLibraryUsageDescription should be set in
   /// info.plist to enable gallery image attachments.
   /// [screenRecording] A boolean to enable or disable screen recording attachments.
-  static void setEnabledAttachmentTypes(bool screenshot, bool extraScreenshot,
-      bool galleryImage, bool screenRecording) async {
+  static Future<void> setEnabledAttachmentTypes(bool screenshot,
+      bool extraScreenshot, bool galleryImage, bool screenRecording) async {
     final List<dynamic> params = <dynamic>[
       screenshot,
       extraScreenshot,
@@ -136,7 +137,7 @@ class BugReporting {
 
   ///Sets what type of reports, bug or feedback, should be invoked.
   /// [reportTypes] - List of reportTypes
-  static void setReportTypes(List<ReportType> reportTypes) async {
+  static Future<void> setReportTypes(List<ReportType> reportTypes) async {
     final List<String> reportTypesStrings = <String>[];
     if (reportTypes != null) {
       reportTypes.forEach((e) {
@@ -150,7 +151,7 @@ class BugReporting {
   /// Sets whether the extended bug report mode should be disabled, enabled with
   /// required fields or enabled with optional fields.
   /// [extendedBugReportMode] ExtendedBugReportMode enum
-  static void setExtendedBugReportMode(
+  static Future<void> setExtendedBugReportMode(
       ExtendedBugReportMode extendedBugReportMode) async {
     final List<dynamic> params = <dynamic>[extendedBugReportMode.toString()];
     await _channel.invokeMethod<Object>('setExtendedBugReportMode:', params);
@@ -159,7 +160,7 @@ class BugReporting {
   /// Sets the invocation options.
   /// Default is set by `Instabug.startWithToken`.
   /// [invocationOptions] List of invocation options
-  static void setInvocationOptions(
+  static Future<void> setInvocationOptions(
       List<InvocationOption> invocationOptions) async {
     final List<String> invocationOptionsStrings = <String>[];
     if (invocationOptions != null) {
@@ -174,7 +175,7 @@ class BugReporting {
   /// Invoke bug reporting with report type and options.
   /// [reportType] type
   /// [invocationOptions]  List of invocation options
-  static void show(
+  static Future<void> show(
       ReportType reportType, List<InvocationOption> invocationOptions) async {
     final List<String> invocationOptionsStrings = <String>[];
     if (invocationOptions != null) {
@@ -193,7 +194,7 @@ class BugReporting {
   /// Sets the threshold value of the shake gesture for iPhone/iPod Touch
   /// Default for iPhone is 2.5.
   /// [iPhoneShakingThreshold] iPhoneShakingThreshold double
-  static void setShakingThresholdForiPhone(
+  static Future<void> setShakingThresholdForiPhone(
       double iPhoneShakingThreshold) async {
     if (Platform.isIOS) {
       final List<dynamic> params = <dynamic>[iPhoneShakingThreshold];
@@ -205,7 +206,8 @@ class BugReporting {
   /// Sets the threshold value of the shake gesture for iPad
   /// Default for iPhone is 0.6.
   /// [iPadShakingThreshold] iPhoneShakingThreshold double
-  static void setShakingThresholdForiPad(double iPadShakingThreshold) async {
+  static Future<void> setShakingThresholdForiPad(
+      double iPadShakingThreshold) async {
     if (Platform.isIOS) {
       final List<dynamic> params = <dynamic>[iPadShakingThreshold];
       await _channel.invokeMethod<Object>(
@@ -218,7 +220,8 @@ class BugReporting {
   /// you could increase the shaking difficulty level by
   /// increasing the `350` value and vice versa
   /// [androidThreshold] iPhoneShakingThreshold int
-  static void setShakingThresholdForAndroid(int androidThreshold) async {
+  static Future<void> setShakingThresholdForAndroid(
+      int androidThreshold) async {
     if (Platform.isAndroid) {
       final List<dynamic> params = <dynamic>[androidThreshold];
       await _channel.invokeMethod<Object>(
