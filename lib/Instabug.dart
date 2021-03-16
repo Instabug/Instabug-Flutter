@@ -98,13 +98,15 @@ class Instabug {
   /// the SDK's UI.
   static void start(
       String token, List<InvocationEvent> invocationEvents) async {
-    final List<String> invocationEventsStrings = <String>[];
-    invocationEvents.forEach((e) {
-      invocationEventsStrings.add(e.toString());
-    });
-    final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
-    await _channel.invokeMethod<Object>(
-        'startWithToken:invocationEvents:', params);
+    if (Platform.isIOS) {
+      final List<String> invocationEventsStrings = <String>[];
+      invocationEvents.forEach((e) {
+        invocationEventsStrings.add(e.toString());
+      });
+      final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
+      await _channel.invokeMethod<Object>(
+          'startWithToken:invocationEvents:', params);      
+    }
   }
 
   /// Shows the welcome message in a specific mode.
