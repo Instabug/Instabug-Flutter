@@ -87,39 +87,41 @@ Instabug automatically captures every crash of your app and sends relevant detai
 ⚠️ **Crashes will only be reported in release mode and not in debug mode.**
 
 
-1. To start using Crash reporting, import the following into your `main.dart`. 
+1. Import the following into your `main.dart`:
 
 ```dart
 import 'package:instabug_flutter/CrashReporting.dart';
 ```
 
-2. Replace `void main() => runApp(MyApp());` with the following snippet:
-```dart
-void main() async {
-  FlutterError.onError = (FlutterErrorDetails details) {
-    Zone.current.handleUncaughtError(details.exception, details.stack);
-  };
-  runZoned<Future<void>>(() async {
-    runApp(MyApp());
-  }, onError: (dynamic error, StackTrace stackTrace) {
-    CrashReporting.reportCrash(error, stackTrace);
-  });
-}
-```
+2. Replace `void main() => runApp(MyApp());` with the following snippet.
 
-With Flutter 1.17 use this snipped instead:
-```dart
-void main() async {
-  FlutterError.onError = (FlutterErrorDetails details) {
-    Zone.current.handleUncaughtError(details.exception, details.stack);
-  };
-  runZonedGuarded<Future<void>>(() async {
-  runApp(CrashyApp());
-    }, (Object error, StackTrace stackTrace) {
-        CrashReporting.reportCrash(error, stackTrace);
-    });
-}
-```
+	Recommended:
+	```dart
+	void main() async {
+	  FlutterError.onError = (FlutterErrorDetails details) {
+	    Zone.current.handleUncaughtError(details.exception, details.stack);
+	  };
+	  runZonedGuarded<Future<void>>(() async {
+	    runApp(MyApp());
+	  }, (Object error, StackTrace stackTrace) {
+	    CrashReporting.reportCrash(error, stackTrace);
+	  });
+	}
+	```
+
+	For Flutter versions prior to 1.17:
+	```dart
+	void main() async {
+	  FlutterError.onError = (FlutterErrorDetails details) {
+	    Zone.current.handleUncaughtError(details.exception, details.stack);
+	  };
+	  runZoned<Future<void>>(() async {
+	    runApp(MyApp());
+	  }, onError: (dynamic error, StackTrace stackTrace) {
+	    CrashReporting.reportCrash(error, stackTrace);
+	  });
+	}
+	```
 
 ## Repro Steps
 Repro Steps list all of the actions an app user took before reporting a bug or crash, grouped by the screens they visited in your app.
