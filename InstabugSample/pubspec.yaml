@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   instabug_flutter:
+    path: ../
 
 
   # The following adds the Cupertino Icons font to your application.
