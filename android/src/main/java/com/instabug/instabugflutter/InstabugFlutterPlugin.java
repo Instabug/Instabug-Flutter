@@ -423,6 +423,15 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     }
 
     /**
+     * Enable/disable SDK logs
+     *
+     * @param debugEnabled desired state of debug mode
+     */
+    public void setDebugEnabled(boolean debugEnabled) {
+        Instabug.setDebugEnabled(debugEnabled);
+    }
+
+    /**
      * Set the primary color that the SDK will use to tint certain UI elements in
      * the SDK
      *

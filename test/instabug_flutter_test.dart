@@ -358,6 +358,20 @@ void main() {
     ]);
   });
 
+  test('setDebugEnabled: Test', () async {
+    when(mockPlatform.isAndroid()).thenAnswer((_) => true);
+
+    const bool debugEnabled = true;
+    final List<dynamic> args = <dynamic>[debugEnabled];
+    Instabug.setDebugEnabled(debugEnabled);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setDebugEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
   test('setPrimaryColor: Test', () async {
     const c = Color.fromRGBO(255, 0, 255, 1.0);
     final List<dynamic> args = <dynamic>[c.value];

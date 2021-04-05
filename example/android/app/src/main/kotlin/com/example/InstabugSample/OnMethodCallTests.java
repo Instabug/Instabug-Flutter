@@ -99,6 +99,15 @@ class OnMethodCallTests {
         verify(instabugMock).setSessionProfilerEnabled(true);
     }
 
+    public void testSetDebugEnabled() {
+        String methodName = "setDebugEnabled";
+        ArrayList<Object> argsList = new ArrayList<>();
+        argsList.add(true);
+        Mockito.doNothing().when(instabugMock).setDebugEnabled(any(Boolean.class));
+        testMethodCall(methodName,argsList);
+        verify(instabugMock).setDebugEnabled(true);
+    }
+
     public void testSetPrimaryColor() {
         String methodName = "setPrimaryColor";
         ArrayList<Object> argsList = new ArrayList<>();

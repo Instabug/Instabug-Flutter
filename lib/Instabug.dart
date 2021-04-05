@@ -225,6 +225,16 @@ class Instabug {
     await _channel.invokeMethod<Object>('setSessionProfilerEnabled:', params);
   }
 
+  /// Android only
+  /// Enable/disable SDK logs
+  /// [debugEnabled] desired state of debug mode.
+  static void setDebugEnabled(bool debugEnabled) async {
+    if (PlatformManager.instance.isAndroid()) {
+      final List<dynamic> params = <dynamic>[debugEnabled];
+      await _channel.invokeMethod<Object>('setDebugEnabled:', params);
+    }
+  }
+
   /// Sets the primary color of the SDK's UI.
   /// Sets the color of UI elements indicating interactivity or call to action.
   /// [color] primaryColor A color to set the UI elements of the SDK to.
