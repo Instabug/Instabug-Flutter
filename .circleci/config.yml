@@ -1,7 +1,7 @@
 version: 2
 jobs:
    android_tests:
-    working_directory: ~/project/InstabugSample/android
+    working_directory: ~/project/example/android
     macos:
       xcode: "12.3.0"
     environment:
@@ -75,7 +75,7 @@ jobs:
    ios_tests:
     macos:
       xcode: "12.3.0"
-    working_directory: ~/project/InstabugSample
+    working_directory: ~/project/example
     environment:
       FL_OUTPUT_DIR: output
     steps:
