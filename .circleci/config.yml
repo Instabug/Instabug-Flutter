@@ -118,6 +118,11 @@ jobs:
       xcode: "12.3.0"
     steps:
       - checkout
+      - run: git clone https://github.com/kylef/swiftenv.git ~/.swiftenv
+      - run: echo 'export SWIFTENV_ROOT="$HOME/.swiftenv"' >> $BASH_ENV
+      - run: echo 'export PATH="$SWIFTENV_ROOT/bin:$PATH"' >> $BASH_ENV
+      - run: echo 'eval "$(swiftenv init -)"' >> $BASH_ENV
+      - run: swiftenv install 5.0.3 && swiftenv global 5.0.3
       - run: git clone https://InstabugCI:$RELEASE_GITHUB_TOKEN@github.com/Instabug/Escape.git
       - run: cd Escape; swift build -c release -Xswiftc -static-stdlib
       - run: cd Escape/.build/release; cp -f Escape /usr/local/bin/escape
@@ -140,17 +145,18 @@ workflows:
           filters:
             branches:
               only: master
-      - publish:
+      - release:
           context: cross-platform
           requires:
             - hold
           filters:
             branches:
               only: master
-      - release:
+      - publish:
           context: cross-platform
           requires:
             - hold
+            - release
           filters:
             branches:
               only: master
