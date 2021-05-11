@@ -283,6 +283,9 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT);
         keys.add(InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_TITLE);
         keys.add(InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_CONTENT);
+        keys.add(InstabugCustomTextPlaceHolder.Key.CHATS_TEAM_STRING_NAME);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_REPLY_BUTTON);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_DISMISS_BUTTON);
         return keys;
     }
 
@@ -329,6 +332,9 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_WELCOME_SCREEN_SUBTITLE);
         keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_WELCOME_SCREEN_BUTTON);
         keys.add(InstabugCustomTextPlaceHolder.Key.REQUEST_FEATURE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.CHATS_TEAM_STRING_NAME);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_REPLY_BUTTON);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_DISMISS_BUTTON);
         return keys;
     }
 }
