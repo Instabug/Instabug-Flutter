@@ -115,18 +115,15 @@ jobs:
 
    publish:
     macos:
-      xcode: "12.3.0"
+      xcode: "10.1.0"
+    working_directory: "~"
     steps:
-      - checkout
-      - run: git clone https://github.com/kylef/swiftenv.git ~/.swiftenv
-      - run: echo 'export SWIFTENV_ROOT="$HOME/.swiftenv"' >> $BASH_ENV
-      - run: echo 'export PATH="$SWIFTENV_ROOT/bin:$PATH"' >> $BASH_ENV
-      - run: echo 'eval "$(swiftenv init -)"' >> $BASH_ENV
-      - run: swiftenv install 5.0.3 && swiftenv global 5.0.3
+      - checkout:
+          path: ~/project
       - run: git clone https://InstabugCI:$RELEASE_GITHUB_TOKEN@github.com/Instabug/Escape.git
-      - run: cd Escape; swift build -c release -Xswiftc -static-stdlib
-      - run: cd Escape/.build/release; cp -f Escape /usr/local/bin/escape
-      - run: Escape flutter publish
+      - run: cd Escape && swift build -c release -Xswiftc -static-stdlib
+      - run: cd Escape/.build/release && cp -f Escape /usr/local/bin/escape
+      - run: cd project && Escape flutter publish
       
 workflows:
   version: 2
@@ -155,7 +152,6 @@ workflows:
       - publish:
           context: cross-platform
           requires:
-            - hold
             - release
           filters:
             branches:
