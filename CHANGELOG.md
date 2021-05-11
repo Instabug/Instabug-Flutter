@@ -1,3 +1,7 @@
+## v9.1.9 (2021-05-11)
+
+* Removes the use of `android:requestLegacyExternalStorage` attribute on Android
+
 ## v9.1.8 (2021-02-17)
 
 * Fixes an issue with iOS invocation events causing the welcome message not to show.
