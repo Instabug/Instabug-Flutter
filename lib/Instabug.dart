@@ -76,7 +76,10 @@ enum CustomTextPlaceHolderKey {
   betaWelcomeMessageFinishStepTitle,
   betaWelcomeMessageFinishStepContent,
   liveWelcomeMessageTitle,
-  liveWelcomeMessageContent
+  liveWelcomeMessageContent,
+  repliesNotificationTeamName,
+  repliesNotificationReplyButton,
+  repliesNotificationDismissButton
 }
 
 enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }

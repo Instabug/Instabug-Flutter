@@ -1,5 +1,6 @@
 ## v9.1.9 (2021-05-11)
 
+* Adds support for overriding the replies notification string values through `repliesNotificationTeamName`, `repliesNotificationReplyButton`, `repliesNotificationDismissButton`
 * Removes the use of `android:requestLegacyExternalStorage` attribute on Android
 
 ## v9.1.8 (2021-02-17)

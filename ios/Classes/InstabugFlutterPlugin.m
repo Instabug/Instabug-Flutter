@@ -900,6 +900,10 @@ FlutterMethodChannel* channel;
       @"CustomTextPlaceHolderKey.liveWelcomeMessageTitle": kIBGLiveWelcomeMessageTitle,
       @"CustomTextPlaceHolderKey.liveWelcomeMessageContent": kIBGLiveWelcomeMessageContent,
 
+      @"CustomTextPlaceHolderKey.repliesNotificationTeamName": kIBGTeamStringName,
+      @"CustomTextPlaceHolderKey.repliesNotificationReplyButton": kIBGReplyButtonTitleStringName,
+      @"CustomTextPlaceHolderKey.repliesNotificationDismissButton": kIBGDismissButtonTitleStringName,
+
       @"ReportType.bug": @(IBGBugReportingReportTypeBug),
       @"ReportType.feedback": @(IBGBugReportingReportTypeFeedback),
       @"ReportType.question": @(IBGBugReportingReportTypeQuestion),
