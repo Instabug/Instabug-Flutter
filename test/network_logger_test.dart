@@ -11,13 +11,13 @@ import 'package:mockito/mockito.dart';
 
 import 'network_logger_test.mocks.dart';
 
-class MockHttpClientRequest extends Mock implements HttpClientRequest {}
-
-class MockHttpClientResponse extends Mock implements HttpClientResponse {}
-
-class MockHttpClientCredentials extends Mock implements HttpClientCredentials {}
-
-@GenerateMocks([HttpClient, HttpClientLogger])
+@GenerateMocks([
+  HttpClient,
+  HttpClientLogger,
+  HttpClientRequest,
+  HttpClientResponse,
+  HttpClientCredentials,
+])
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
