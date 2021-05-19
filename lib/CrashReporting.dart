@@ -57,8 +57,8 @@ class CrashReporting {
     for (int i = 0; i < trace.frames.length; i++) {
       frames.add(ExceptionData(
           trace.frames[i].uri.toString(),
-          trace.frames[i].member!,
-          trace.frames[i].line!,
+          trace.frames[i].member,
+          trace.frames[i].line,
           trace.frames[i].column == null ? 0 : trace.frames[i].column!));
     }
     final CrashData crashData = CrashData(

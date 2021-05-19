@@ -46,193 +46,97 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
 
   @override
   void addCredentials(
-      Uri url, String realm, HttpClientCredentials credentials) {
-    client.addCredentials(url, realm, credentials);
-  }
+          Uri url, String realm, HttpClientCredentials credentials) =>
+      client.addCredentials(url, realm, credentials);
 
   @override
-  void addProxyCredentials(
-      String host, int port, String realm, HttpClientCredentials credentials) {
-    client.addProxyCredentials(host, port, realm, credentials);
-  }
+  void addProxyCredentials(String host, int port, String realm,
+          HttpClientCredentials credentials) =>
+      client.addProxyCredentials(host, port, realm, credentials);
 
   @override
   set authenticate(
-      Future<bool> Function(Uri url, String scheme, String realm)? f) {
-    client.authenticate = f;
-  }
+          Future<bool> Function(Uri url, String scheme, String realm)? f) =>
+      client.authenticate = f;
 
   @override
   set authenticateProxy(
-      Future<bool> Function(String host, int port, String scheme, String realm)?
-          f) {
-    client.authenticateProxy = f;
-  }
+          Future<bool> Function(
+                  String host, int port, String scheme, String realm)?
+              f) =>
+      client.authenticateProxy = f;
 
   @override
   set badCertificateCallback(
-      bool Function(X509Certificate cert, String host, int port)? callback) {
-    client.badCertificateCallback = callback;
-  }
+          bool Function(X509Certificate cert, String host, int port)?
+              callback) =>
+      client.badCertificateCallback = callback;
 
   @override
-  void close({bool force = false}) {
-    client.close(force: force);
-  }
+  void close({bool force = false}) => client.close(force: force);
 
   @override
-  Future<HttpClientRequest> delete(String host, int port, String path) {
-    return client
-        .delete(host, port, path)
-        .then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+  Future<HttpClientRequest> delete(String host, int port, String path) =>
+      client.delete(host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> deleteUrl(Uri url) {
-    return client.deleteUrl(url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+  Future<HttpClientRequest> deleteUrl(Uri url) =>
+      client.deleteUrl(url).then(_finish);
 
   @override
-  set findProxy(String Function(Uri url)? f) {
-    client.findProxy = f;
-  }
+  set findProxy(String Function(Uri url)? f) => client.findProxy = f;
 
   @override
-  Future<HttpClientRequest> get(String host, int port, String path) {
-    return client.get(host, port, path).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+  Future<HttpClientRequest> get(String host, int port, String path) =>
+      client.get(host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> getUrl(Uri url) {
-    return client.getUrl(url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+  Future<HttpClientRequest> getUrl(Uri url) => client.getUrl(url).then(_finish);
 
   @override
-  Future<HttpClientRequest> head(String host, int port, String path) {
-    return client
-        .head(host, port, path)
-        .then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+  Future<HttpClientRequest> head(String host, int port, String path) =>
+      client.head(host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> headUrl(Uri url) {
-    return client.headUrl(url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+  Future<HttpClientRequest> headUrl(Uri url) =>
+      client.headUrl(url).then(_finish);
 
   @override
   Future<HttpClientRequest> open(
-      String method, String host, int port, String path) {
-    return client
-        .open(method, host, port, path)
-        .then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+          String method, String host, int port, String path) =>
+      client.open(method, host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> openUrl(String method, Uri url) {
-    return client.openUrl(method, url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+  Future<HttpClientRequest> openUrl(String method, Uri url) =>
+      client.openUrl(method, url).then(_finish);
 
   @override
-  Future<HttpClientRequest> patch(String host, int port, String path) {
-    return client
-        .patch(host, port, path)
-        .then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+  Future<HttpClientRequest> patch(String host, int port, String path) =>
+      client.patch(host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> patchUrl(Uri url) {
-    return client.patchUrl(url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+  Future<HttpClientRequest> patchUrl(Uri url) =>
+      client.patchUrl(url).then(_finish);
 
   @override
-  Future<HttpClientRequest> post(String host, int port, String path) {
-    return client
-        .post(host, port, path)
-        .then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+  Future<HttpClientRequest> post(String host, int port, String path) =>
+      client.post(host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> postUrl(Uri url) {
-    return client.postUrl(url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+  Future<HttpClientRequest> postUrl(Uri url) =>
+      client.postUrl(url).then(_finish);
 
   @override
-  Future<HttpClientRequest> put(String host, int port, String path) {
-    return client.put(host, port, path).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
-  }
+  Future<HttpClientRequest> put(String host, int port, String path) =>
+      client.put(host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> putUrl(Uri url) {
-    return client.putUrl(url).then((HttpClientRequest request) async {
-      logger.onRequest(request);
-      final HttpClientResponse response = await request.close();
-      logger.onResponse(response, request);
-      return request;
-    });
+  Future<HttpClientRequest> putUrl(Uri url) => client.putUrl(url).then(_finish);
+
+  Future<HttpClientRequest> _finish(HttpClientRequest request) async {
+    logger.onRequest(request);
+    final response = await request.close();
+    logger.onResponse(response, request);
+    return request;
   }
 }
