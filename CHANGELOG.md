@@ -1,3 +1,7 @@
+## master
+
+* Change all `void ... async` methods to `Future<void> ... async` so that callers can use `await`.
+
 ## v9.1.9 (2021-05-11)
 
 * Adds support for overriding the replies notification string values through `repliesNotificationTeamName`, `repliesNotificationReplyButton`, `repliesNotificationDismissButton`
@@ -6,7 +10,6 @@
 ## v9.1.8 (2021-02-17)
 
 * Fixes an issue with iOS invocation events causing the welcome message not to show.
-* Change all `void ... async` methods to `Future<void> ... async` so that callers can use `await`.
 
 ## v9.1.7 (2020-10-01)
 

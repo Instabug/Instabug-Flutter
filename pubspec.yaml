@@ -1,5 +1,5 @@
 name: instabug_flutter
-version: 9.1.9
+version: 10.0.0
 description: >-
   Instabug is an in-app feedback and bug reporting tool for mobile apps. 
   With just a simple shake, your users or beta testers can report bugs or 
@@ -13,8 +13,7 @@ documentation: https://github.com/Instabug/Instabug-Flutter#readme
 dependencies:
   flutter:
     sdk: flutter
-  stack_trace:  ^1.9.3
-  meta: ^1.1.6
+  stack_trace: ^1.10.0
 
 dev_dependencies:
   flutter_test:
@@ -31,7 +30,7 @@ flutter:
         pluginClass: InstabugFlutterPlugin
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
   # Flutter versions prior to 1.12 did not support the
   # flutter.plugin.platforms map.
-  flutter: ">=1.12.0 <2.0.0"
+  flutter: ">=2.0.0 <3.0.0"

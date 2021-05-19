@@ -1,29 +1,29 @@
+// ignore_for_file: avoid_classes_with_only_static_members
+
 import 'dart:async';
 import 'dart:io' show Platform;
 
 import 'package:flutter/services.dart';
 
 class Replies {
-  static Function _hasChatsCallback;
-  static Function _onNewReplyReceivedCallback;
-  static Function _unreadRepliesCountCallback;
+  static Function? _hasChatsCallback;
+  static Function? _onNewReplyReceivedCallback;
+  static Function? _unreadRepliesCountCallback;
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
+  static Future<String> get platformVersion async =>
+      (await _channel.invokeMethod<String>('getPlatformVersion'))!;
 
   static Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
       case 'hasChatsCallback':
-        _hasChatsCallback(call.arguments);
+        _hasChatsCallback?.call(call.arguments);
         return;
       case 'onNewReplyReceivedCallback':
-        _onNewReplyReceivedCallback();
+        _onNewReplyReceivedCallback?.call();
         return;
       case 'unreadRepliesCountCallback':
-        _unreadRepliesCountCallback(call.arguments);
+        _unreadRepliesCountCallback?.call(call.arguments);
         return;
     }
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_classes_with_only_static_members
+
 import 'dart:async';
 import 'dart:io' show Platform;
 
@@ -22,24 +24,22 @@ enum ExtendedBugReportMode {
 }
 
 class BugReporting {
-  static Function _onInvokeCallback;
-  static Function _onDismissCallback;
+  static Function? _onInvokeCallback;
+  static Function? _onDismissCallback;
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
+  static Future<String> get platformVersion async =>
+      (await _channel.invokeMethod<String>('getPlatformVersion'))!;
 
   static Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
       case 'onInvokeCallback':
-        _onInvokeCallback();
+        _onInvokeCallback?.call();
         return;
       case 'onDismissCallback':
         final Map<dynamic, dynamic> map = call.arguments;
-        DismissType dismissType;
-        ReportType reportType;
+        DismissType? dismissType;
+        ReportType? reportType;
         final String dismissTypeString = map['dismissType'].toUpperCase();
         switch (dismissTypeString) {
           case 'CANCEL':
@@ -65,9 +65,9 @@ class BugReporting {
             break;
         }
         try {
-          _onDismissCallback(dismissType, reportType);
+          _onDismissCallback?.call(dismissType, reportType);
         } catch (exception) {
-          _onDismissCallback();
+          _onDismissCallback?.call();
         }
         return;
     }
@@ -104,14 +104,11 @@ class BugReporting {
   /// Default is set by `Instabug.startWithToken`.
   /// [invocationEvents] invocationEvent List of events that invokes the
   static Future<void> setInvocationEvents(
-      List<InvocationEvent> invocationEvents) async {
-    final List<String> invocationEventsStrings = <String>[];
-    if (invocationEvents != null) {
-      invocationEvents.forEach((e) {
-        invocationEventsStrings.add(e.toString());
-      });
-    }
-    final List<dynamic> params = <dynamic>[invocationEventsStrings];
+      List<InvocationEvent>? invocationEvents) async {
+    final invocationEventsStrings =
+        invocationEvents?.map((e) => e.toString()).toList(growable: false) ??
+            [];
+    final params = <dynamic>[invocationEventsStrings];
     await _channel.invokeMethod<Object>('setInvocationEvents:', params);
   }
 
@@ -137,14 +134,10 @@ class BugReporting {
 
   ///Sets what type of reports, bug or feedback, should be invoked.
   /// [reportTypes] - List of reportTypes
-  static Future<void> setReportTypes(List<ReportType> reportTypes) async {
-    final List<String> reportTypesStrings = <String>[];
-    if (reportTypes != null) {
-      reportTypes.forEach((e) {
-        reportTypesStrings.add(e.toString());
-      });
-    }
-    final List<dynamic> params = <dynamic>[reportTypesStrings];
+  static Future<void> setReportTypes(List<ReportType>? reportTypes) async {
+    final reportTypesStrings =
+        reportTypes?.map((e) => e.toString()).toList(growable: false) ?? [];
+    final params = <dynamic>[reportTypesStrings];
     await _channel.invokeMethod<Object>('setReportTypes:', params);
   }
 
@@ -161,14 +154,11 @@ class BugReporting {
   /// Default is set by `Instabug.startWithToken`.
   /// [invocationOptions] List of invocation options
   static Future<void> setInvocationOptions(
-      List<InvocationOption> invocationOptions) async {
-    final List<String> invocationOptionsStrings = <String>[];
-    if (invocationOptions != null) {
-      invocationOptions.forEach((e) {
-        invocationOptionsStrings.add(e.toString());
-      });
-    }
-    final List<dynamic> params = <dynamic>[invocationOptionsStrings];
+      List<InvocationOption>? invocationOptions) async {
+    final invocationOptionsStrings =
+        invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
+            [];
+    final params = <dynamic>[invocationOptionsStrings];
     await _channel.invokeMethod<Object>('setInvocationOptions:', params);
   }
 
@@ -176,13 +166,10 @@ class BugReporting {
   /// [reportType] type
   /// [invocationOptions]  List of invocation options
   static Future<void> show(
-      ReportType reportType, List<InvocationOption> invocationOptions) async {
-    final List<String> invocationOptionsStrings = <String>[];
-    if (invocationOptions != null) {
-      invocationOptions.forEach((e) {
-        invocationOptionsStrings.add(e.toString());
-      });
-    }
+      ReportType reportType, List<InvocationOption>? invocationOptions) async {
+    final invocationOptionsStrings =
+        invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
+            [];
     final List<dynamic> params = <dynamic>[
       reportType.toString(),
       invocationOptionsStrings

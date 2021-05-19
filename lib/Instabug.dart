@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_classes_with_only_static_members
+
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'dart:typed_data';
@@ -88,10 +90,8 @@ enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 class Instabug {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
+  static Future<String> get platformVersion async =>
+      (await _channel.invokeMethod<String>('getPlatformVersion'))!;
 
   /// Starts the SDK.
   /// This is the main SDK method that does all the magic. This is the only
@@ -102,10 +102,8 @@ class Instabug {
   /// the SDK's UI.
   static Future<void> start(
       String token, List<InvocationEvent> invocationEvents) async {
-    final List<String> invocationEventsStrings = <String>[];
-    invocationEvents.forEach((e) {
-      invocationEventsStrings.add(e.toString());
-    });
+    final List<String> invocationEventsStrings =
+        invocationEvents.map((e) => e.toString()).toList(growable: false);
     final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
     await _channel.invokeMethod<Object>(
         'startWithToken:invocationEvents:', params);
@@ -123,7 +121,7 @@ class Instabug {
   /// and set the user's [name] to be included with all reports.
   /// It also reset the chats on device to that email and removes user attributes,
   /// user data and completed surveys.
-  static Future<void> identifyUser(String email, [String name]) async {
+  static Future<void> identifyUser(String email, [String? name]) async {
     final List<dynamic> params = <dynamic>[email, name];
     await _channel.invokeMethod<Object>('identifyUserWithEmail:name:', params);
   }
@@ -162,9 +160,9 @@ class Instabug {
   }
 
   /// Gets all tags of reported feedback, bug or crash. Returns the list of tags.
-  static Future<List<String>> getTags() async {
-    final List<dynamic> tags = await _channel.invokeMethod<Object>('getTags');
-    return tags != null ? tags.cast<String>() : null;
+  static Future<List<String>?> getTags() async {
+    final tags = await _channel.invokeMethod<List<dynamic>>('getTags');
+    return tags?.cast<String>();
   }
 
   /// Add custom user attribute [value] with a [key] that is going to be sent with each feedback, bug or crash.
@@ -181,16 +179,16 @@ class Instabug {
   }
 
   /// Returns the user attribute associated with a given [key].
-  static Future<String> getUserAttributeForKey(String key) async {
+  static Future<String?> getUserAttributeForKey(String key) async {
     final List<dynamic> params = <dynamic>[key];
-    return await _channel.invokeMethod<Object>(
+    return await _channel.invokeMethod<String>(
         'getUserAttributeForKey:', params);
   }
 
   /// A new Map containing all the currently set user attributes, or an empty Map if no user attributes have been set.
   static Future<Map<String, String>> getUserAttributes() async {
-    final Object userAttributes =
-        await _channel.invokeMethod<Object>('getUserAttributes');
+    final userAttributes =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('getUserAttributes');
     return userAttributes != null
         ? Map<String, String>.from(userAttributes)
         : <String, String>{};

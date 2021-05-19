@@ -1,38 +1,38 @@
+// ignore_for_file: avoid_classes_with_only_static_members
+
 import 'dart:async';
 import 'dart:io' show Platform;
 
 import 'package:flutter/services.dart';
 
 class Surveys {
-  static Function _onShowCallback;
-  static Function _onDismissCallback;
-  static Function _availableSurveysCallback;
-  static Function _hasRespondedToSurveyCallback;
+  static Function? _onShowCallback;
+  static Function? _onDismissCallback;
+  static Function? _availableSurveysCallback;
+  static Function? _hasRespondedToSurveyCallback;
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
+  static Future<String> get platformVersion async =>
+      (await _channel.invokeMethod<String>('getPlatformVersion'))!;
 
   static Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
       case 'onShowSurveyCallback':
-        _onShowCallback();
+        _onShowCallback?.call();
         return;
       case 'onDismissSurveyCallback':
-        _onDismissCallback();
+        _onDismissCallback?.call();
         return;
       case 'availableSurveysCallback':
         final List<dynamic> result = call.arguments;
-        final List<String> params = List<String>();
+        final params = <String>[];
         for (int i = 0; i < result.length; i++) {
           params.add(result[i].toString());
         }
-        _availableSurveysCallback(params);
+        _availableSurveysCallback?.call(params);
         return;
       case 'hasRespondedToSurveyCallback':
-        _hasRespondedToSurveyCallback(call.arguments);
+        _hasRespondedToSurveyCallback?.call(call.arguments);
         return;
     }
   }

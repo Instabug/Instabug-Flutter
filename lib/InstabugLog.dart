@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_classes_with_only_static_members
+
 import 'dart:async';
 
 import 'package:flutter/services.dart';
@@ -5,10 +7,8 @@ import 'package:flutter/services.dart';
 class InstabugLog {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
+  static Future<String> get platformVersion async =>
+      (await _channel.invokeMethod<String>('getPlatformVersion'))!;
 
   /// Appends a log [message] to Instabug internal log
   /// These logs are then sent along the next uploaded report.

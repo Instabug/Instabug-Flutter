@@ -1,22 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:instabug_flutter/Instabug.dart';
 import 'dart:async';
-// import 'dart:io' show Platform;
+
+import 'package:flutter/material.dart';
 import 'package:instabug_flutter/BugReporting.dart';
-import 'package:instabug_flutter/Surveys.dart';
-import 'package:instabug_flutter/FeatureRequests.dart';
 import 'package:instabug_flutter/CrashReporting.dart';
+import 'package:instabug_flutter/FeatureRequests.dart';
+import 'package:instabug_flutter/Instabug.dart';
+import 'package:instabug_flutter/Surveys.dart';
 
 void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
     Zone.current.handleUncaughtError(details.exception, details.stack);
   };
 
-  runZoned<Future<void>>(() async {
-    runApp(MyApp());
-  }, onError: (dynamic error, StackTrace stackTrace) {
-    CrashReporting.reportCrash(error, stackTrace);
-  });
+  runZonedGuarded(() => runApp(MyApp()), CrashReporting.reportCrash);
 
   Instabug.start(
       'efa41f402620b5654f2af2b86e387029', [InvocationEvent.floatingButton]);
@@ -44,13 +40,13 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -68,19 +64,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   void show() {
     Instabug.show();
   }
@@ -125,6 +108,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final buttonStyle = ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(Colors.lightBlue),
+      foregroundColor: MaterialStateProperty.all(Colors.white),
+    );
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -138,14 +126,14 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: SingleChildScrollView(
-          padding: EdgeInsets.only(top: 20.0),
+          padding: const EdgeInsets.only(top: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
                 margin: const EdgeInsets.only(
                     left: 20.0, right: 20.0, bottom: 20.0),
-                child: Text(
+                child: const Text(
                   'Hello Instabug\'s awesome user! The purpose of this application is to show you the different options for customizing the SDK and how easy it is to integrate it to your existing app',
                   textAlign: TextAlign.center,
                 ),
@@ -154,76 +142,76 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: double.infinity,
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 // height: double.infinity,
-                child: RaisedButton(
-                    onPressed: show,
-                    textColor: Colors.white,
-                    child: Text('Invoke'),
-                    color: Colors.lightBlue),
+                child: ElevatedButton(
+                  onPressed: show,
+                  style: buttonStyle,
+                  child: const Text('Invoke'),
+                ),
               ),
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 // height: double.infinity,
-                child: RaisedButton(
-                    onPressed: sendBugReport,
-                    textColor: Colors.white,
-                    child: Text('Send Bug Report'),
-                    color: Colors.lightBlue),
+                child: ElevatedButton(
+                  onPressed: sendBugReport,
+                  style: buttonStyle,
+                  child: const Text('Send Bug Report'),
+                ),
               ),
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 // height: double.infinity,
-                child: RaisedButton(
-                    onPressed: sendFeedback,
-                    textColor: Colors.white,
-                    child: Text('Send Feedback'),
-                    color: Colors.lightBlue),
+                child: ElevatedButton(
+                  onPressed: sendFeedback,
+                  style: buttonStyle,
+                  child: const Text('Send Feedback'),
+                ),
               ),
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 // height: double.infinity,
-                child: RaisedButton(
-                    onPressed: askQuestion,
-                    textColor: Colors.white,
-                    child: Text('Ask a Question'),
-                    color: Colors.lightBlue),
+                child: ElevatedButton(
+                  onPressed: askQuestion,
+                  style: buttonStyle,
+                  child: const Text('Ask a Question'),
+                ),
               ),
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 // height: double.infinity,
-                child: RaisedButton(
-                    onPressed: showNpsSurvey,
-                    textColor: Colors.white,
-                    child: Text('Show NPS Survey'),
-                    color: Colors.lightBlue),
+                child: ElevatedButton(
+                  onPressed: showNpsSurvey,
+                  style: buttonStyle,
+                  child: const Text('Show NPS Survey'),
+                ),
               ),
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 // height: double.infinity,
-                child: RaisedButton(
-                    onPressed: showMultipleQuestionSurvey,
-                    textColor: Colors.white,
-                    child: Text('Show Multiple Questions Survey'),
-                    color: Colors.lightBlue),
+                child: ElevatedButton(
+                  onPressed: showMultipleQuestionSurvey,
+                  style: buttonStyle,
+                  child: const Text('Show Multiple Questions Survey'),
+                ),
               ),
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 // height: double.infinity,
-                child: RaisedButton(
-                    onPressed: showFeatureRequests,
-                    textColor: Colors.white,
-                    child: Text('Show Feature Requests'),
-                    color: Colors.lightBlue),
+                child: ElevatedButton(
+                  onPressed: showFeatureRequests,
+                  style: buttonStyle,
+                  child: const Text('Show Feature Requests'),
+                ),
               ),
               Container(
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(top: 20.0, left: 20.0),
-                child: Text(
+                child: const Text(
                   'Change Invocation Event',
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -233,47 +221,46 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisSize: MainAxisSize.min,
                 alignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  RaisedButton(
-                      onPressed: () => setInvocationEvent(InvocationEvent.none),
-                      textColor: Colors.white,
-                      child: Text('none'),
-                      color: Colors.lightBlue),
-                  RaisedButton(
-                      onPressed: () =>
-                          setInvocationEvent(InvocationEvent.shake),
-                      textColor: Colors.white,
-                      child: Text('Shake'),
-                      color: Colors.lightBlue),
-                  RaisedButton(
-                      onPressed: () =>
-                          setInvocationEvent(InvocationEvent.screenshot),
-                      textColor: Colors.white,
-                      child: Text('Screenshot'),
-                      color: Colors.lightBlue),
+                  ElevatedButton(
+                    onPressed: () => setInvocationEvent(InvocationEvent.none),
+                    style: buttonStyle,
+                    child: const Text('none'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => setInvocationEvent(InvocationEvent.shake),
+                    style: buttonStyle,
+                    child: const Text('Shake'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () =>
+                        setInvocationEvent(InvocationEvent.screenshot),
+                    style: buttonStyle,
+                    child: const Text('Screenshot'),
+                  ),
                 ],
               ),
               ButtonBar(
                 mainAxisSize: MainAxisSize.min,
                 alignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  RaisedButton(
-                      onPressed: () =>
-                          setInvocationEvent(InvocationEvent.floatingButton),
-                      textColor: Colors.white,
-                      child: Text('Floating Button'),
-                      color: Colors.lightBlue),
-                  RaisedButton(
-                      onPressed: () => setInvocationEvent(
-                          InvocationEvent.twoFingersSwipeLeft),
-                      textColor: Colors.white,
-                      child: Text('Two Fingers Swipe Left'),
-                      color: Colors.lightBlue),
+                  ElevatedButton(
+                    onPressed: () =>
+                        setInvocationEvent(InvocationEvent.floatingButton),
+                    style: buttonStyle,
+                    child: const Text('Floating Button'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () =>
+                        setInvocationEvent(InvocationEvent.twoFingersSwipeLeft),
+                    style: buttonStyle,
+                    child: const Text('Two Fingers Swipe Left'),
+                  ),
                 ],
               ),
               Container(
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(left: 20.0),
-                child: Text(
+                child: const Text(
                   'Set Primary Color',
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -286,41 +273,63 @@ class _MyHomePageState extends State<MyHomePage> {
                   ButtonTheme(
                     minWidth: 50.0,
                     height: 30.0,
-                    child: RaisedButton(
-                        onPressed: () => setPrimaryColor(Colors.red),
-                        textColor: Colors.white,
-                        color: Colors.red),
+                    child: ElevatedButton(
+                      onPressed: () => setPrimaryColor(Colors.red),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.red),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                      ),
+                      child: null,
+                    ),
                   ),
                   ButtonTheme(
                     minWidth: 50.0,
                     height: 30.0,
-                    child: RaisedButton(
-                        onPressed: () => setPrimaryColor(Colors.green),
-                        textColor: Colors.white,
-                        color: Colors.green),
+                    child: ElevatedButton(
+                      onPressed: () => setPrimaryColor(Colors.green),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.green),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                      ),
+                      child: null,
+                    ),
                   ),
                   ButtonTheme(
                     minWidth: 50.0,
                     height: 30.0,
-                    child: RaisedButton(
-                        onPressed: () => setPrimaryColor(Colors.blue),
-                        textColor: Colors.white,
-                        color: Colors.blue),
+                    child: ElevatedButton(
+                      onPressed: () => setPrimaryColor(Colors.blue),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.blue),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                      ),
+                      child: null,
+                    ),
                   ),
                   ButtonTheme(
                     minWidth: 50.0,
                     height: 30.0,
-                    child: RaisedButton(
-                        onPressed: () => setPrimaryColor(Colors.yellow),
-                        textColor: Colors.white,
-                        color: Colors.yellow),
+                    child: ElevatedButton(
+                      onPressed: () => setPrimaryColor(Colors.yellow),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.yellow),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                      ),
+                      child: null,
+                    ),
                   ),
                 ],
               ),
               Container(
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(left: 20.0),
-                child: Text(
+                child: const Text(
                   'Color Theme',
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -330,16 +339,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisSize: MainAxisSize.max,
                 alignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  RaisedButton(
-                      onPressed: () => setColorTheme(ColorTheme.light),
-                      textColor: Colors.lightBlue,
-                      child: Text('Light'),
-                      color: Colors.white),
-                  RaisedButton(
-                      onPressed: () => setColorTheme(ColorTheme.dark),
-                      textColor: Colors.white,
-                      child: Text('Dark'),
-                      color: Colors.black),
+                  ElevatedButton(
+                    onPressed: () => setColorTheme(ColorTheme.light),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.white),
+                      foregroundColor:
+                          MaterialStateProperty.all(Colors.lightBlue),
+                    ),
+                    child: const Text('Light'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => setColorTheme(ColorTheme.dark),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.black),
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                    ),
+                    child: const Text('Dark'),
+                  ),
                 ],
               ),
             ],

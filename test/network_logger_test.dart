@@ -1,16 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:instabug_flutter/NetworkLogger.dart';
 import 'package:instabug_flutter/instabug_custom_http_client.dart';
-import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/utils/http_client_logger.dart';
 import 'package:mockito/mockito.dart';
-// import 'package:test_api/test_api.dart';
 
 class MockHttpClient extends Mock implements HttpClient {}
 
@@ -29,9 +25,8 @@ void main() {
   const String url = 'https://jsonplaceholder.typicode.com';
   const int port = 8888;
   const String path = '/posts';
-  const String body = 'some request body';
 
-  InstabugCustomHttpClient instabugCustomHttpClient;
+  late InstabugCustomHttpClient instabugCustomHttpClient;
 
   setUpAll(() async {
     const MethodChannel('instabug_flutter')
@@ -275,29 +270,31 @@ void main() {
   test('expect instabug custom http client to get client connectionTimout',
       () async {
     when(instabugCustomHttpClient.client.connectionTimeout)
-        .thenReturn(Duration(seconds: 2));
-    expect(instabugCustomHttpClient.connectionTimeout, Duration(seconds: 2));
+        .thenReturn(const Duration(seconds: 2));
+    expect(
+        instabugCustomHttpClient.connectionTimeout, const Duration(seconds: 2));
   });
 
   test('expect instabug custom http client to set client connectionTimout',
       () async {
-    instabugCustomHttpClient.connectionTimeout = Duration(seconds: 5);
+    instabugCustomHttpClient.connectionTimeout = const Duration(seconds: 5);
     verify(instabugCustomHttpClient.client.connectionTimeout =
-            Duration(seconds: 5))
+            const Duration(seconds: 5))
         .called(1);
   });
 
   test('expect instabug custom http client to get client idleTimeout',
       () async {
     when(instabugCustomHttpClient.client.idleTimeout)
-        .thenReturn(Duration(seconds: 2));
-    expect(instabugCustomHttpClient.idleTimeout, Duration(seconds: 2));
+        .thenReturn(const Duration(seconds: 2));
+    expect(instabugCustomHttpClient.idleTimeout, const Duration(seconds: 2));
   });
 
   test('expect instabug custom http client to set client idleTimeout',
       () async {
-    instabugCustomHttpClient.idleTimeout = Duration(seconds: 5);
-    verify(instabugCustomHttpClient.client.idleTimeout = Duration(seconds: 5))
+    instabugCustomHttpClient.idleTimeout = const Duration(seconds: 5);
+    verify(instabugCustomHttpClient.client.idleTimeout =
+            const Duration(seconds: 5))
         .called(1);
   });
 
@@ -350,7 +347,7 @@ void main() {
   test('expect instabug custom http client to set client authenticate',
       () async {
     final Future<bool> Function(Uri url, String scheme, String realm) f =
-        (Uri url, String scheme, String realm) {};
+        (Uri url, String scheme, String realm) async => true;
     instabugCustomHttpClient.authenticate = f;
     verify(instabugCustomHttpClient.client.authenticate = f).called(1);
   });
@@ -359,7 +356,7 @@ void main() {
       () async {
     final Future<bool> Function(
             String host, int port, String scheme, String realm) f =
-        (String host, int port, String scheme, String realm) {};
+        (String host, int port, String scheme, String realm) async => true;
     instabugCustomHttpClient.authenticateProxy = f;
     verify(instabugCustomHttpClient.client.authenticateProxy = f).called(1);
   });
@@ -367,8 +364,8 @@ void main() {
   test(
       'expect instabug custom http client to set client badCertificateCallback',
       () async {
-    final Function(X509Certificate cert, String host, int port) f =
-        (X509Certificate cert, String host, int port) {};
+    final bool Function(X509Certificate cert, String host, int port) f =
+        (X509Certificate cert, String host, int port) => true;
     instabugCustomHttpClient.badCertificateCallback = f;
     verify(instabugCustomHttpClient.client.badCertificateCallback = f)
         .called(1);

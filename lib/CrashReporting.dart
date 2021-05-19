@@ -1,6 +1,8 @@
+// ignore_for_file: avoid_classes_with_only_static_members
+
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io' show Platform, exit;
+import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -11,10 +13,8 @@ import 'package:stack_trace/stack_trace.dart';
 class CrashReporting {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
   static bool enabled = true;
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
+  static Future<String> get platformVersion async =>
+      (await _channel.invokeMethod<String>('getPlatformVersion'))!;
 
   ///Enables and disables Enables and disables automatic crash reporting.
   /// [boolean] isEnabled
@@ -37,7 +37,7 @@ class CrashReporting {
   /// [dynamic] exception
   /// [StackTrace] stack
   static Future<void> reportHandledCrash(dynamic exception,
-      [StackTrace stack]) async {
+      [StackTrace? stack]) async {
     if (stack != null) {
       _sendCrash(exception, stack, true);
     } else {
@@ -57,9 +57,9 @@ class CrashReporting {
     for (int i = 0; i < trace.frames.length; i++) {
       frames.add(ExceptionData(
           trace.frames[i].uri.toString(),
-          trace.frames[i].member,
-          trace.frames[i].line,
-          trace.frames[i].column == null ? 0 : trace.frames[i].column));
+          trace.frames[i].member!,
+          trace.frames[i].line!,
+          trace.frames[i].column == null ? 0 : trace.frames[i].column!));
     }
     final CrashData crashData = CrashData(
         exception.toString(), Platform.operatingSystem.toString(), frames);
