@@ -19,7 +19,7 @@ void main() {
   });
 
   Instabug.start(
-      'efa41f402620b5654f2af2b86e387029', [InvocationEvent.floatingButton]);
+      'ed6f659591566da19b67857e1b9d40ab', [InvocationEvent.floatingButton]);
 }
 
 class MyApp extends StatelessWidget {
