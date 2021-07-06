@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 class Chats {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String> get platformVersion async =>
-      (await _channel.invokeMethod<String>('getPlatformVersion'))!;
+  static Future<String?> get platformVersion async =>
+      await _channel.invokeMethod<String>('getPlatformVersion');
 
   @deprecated
 

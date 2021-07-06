@@ -13,8 +13,8 @@ import 'package:stack_trace/stack_trace.dart';
 class CrashReporting {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
   static bool enabled = true;
-  static Future<String> get platformVersion async =>
-      (await _channel.invokeMethod<String>('getPlatformVersion'))!;
+  static Future<String?> get platformVersion async =>
+      await _channel.invokeMethod<String>('getPlatformVersion');
 
   ///Enables and disables Enables and disables automatic crash reporting.
   /// [boolean] isEnabled
