@@ -38,11 +38,7 @@ class CrashReporting {
   /// [StackTrace] stack
   static Future<void> reportHandledCrash(dynamic exception,
       [StackTrace? stack]) async {
-    if (stack != null) {
-      _sendCrash(exception, stack, true);
-    } else {
-      _sendCrash(exception, StackTrace.current, true);
-    }
+    _sendCrash(exception, stack ?? StackTrace.current, true);
   }
 
   static Future<void> _reportUnhandledCrash(
@@ -59,7 +55,7 @@ class CrashReporting {
           trace.frames[i].uri.toString(),
           trace.frames[i].member,
           trace.frames[i].line,
-          trace.frames[i].column == null ? 0 : trace.frames[i].column!));
+          trace.frames[i].column ?? 0));
     }
     final CrashData crashData = CrashData(
         exception.toString(), Platform.operatingSystem.toString(), frames);
