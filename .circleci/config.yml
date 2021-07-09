@@ -40,7 +40,7 @@ jobs:
           background: true
       - run:
           name: download flutter SDK
-          command: if ! test -f "~/flutter_sdk.zip"; then curl -o ~/flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_1.20.4-stable.zip; fi
+          command: if ! test -f "~/flutter_sdk.zip"; then curl -o ~/flutter_sdk.zip https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_2.2.3-stable.zip; fi
       - run:
           name: unzip flutter SDK
           command: unzip ~/flutter_sdk.zip -d ~
@@ -86,7 +86,7 @@ jobs:
           command: sudo gem install cocoapods
       - run:
           name: download flutter SDK
-          command: if ! test -f "~/flutter_sdk.zip"; then curl -o ~/flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_1.20.4-stable.zip; fi
+          command: if ! test -f "~/flutter_sdk.zip"; then curl -o ~/flutter_sdk.zip https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_2.2.3-stable.zip; fi
       - run:
           name: unzip flutter SDK
           command: unzip ~/flutter_sdk.zip -d ~
