@@ -1,3 +1,7 @@
+## master
+
+* Change all `void ... async` methods to `Future<void> ... async` so that callers can use `await`.
+
 ## v9.1.9 (2021-05-11)
 
 * Adds support for overriding the replies notification string values through `repliesNotificationTeamName`, `repliesNotificationReplyButton`, `repliesNotificationDismissButton`

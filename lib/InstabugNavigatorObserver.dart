@@ -23,19 +23,19 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         }
       });
     } catch (e) {
-      print("[INSTAUG] - Rporting screen failed");
+      print('[INSTABUG] - Reporting screen failed');
     }
   }
 
   @override
-  void didPop(Route route, Route previousRoute) {
+  void didPop(Route route, Route? previousRoute) {
     if (previousRoute != null) {
       screenChanged(previousRoute);
     }
   }
 
   @override
-  void didPush(Route route, Route previousRoute) {
+  void didPush(Route route, Route? previousRoute) {
     screenChanged(route);
   }
 }
