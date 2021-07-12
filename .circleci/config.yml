@@ -47,7 +47,7 @@ jobs:
       - run: flutter doctor
       - run: 
           name: Flutter build
-          command: cd ..; flutter build aot
+          command: cd ..; flutter build apk
       - run:
           name: Download Android Dependencies
           command: ./gradlew androidDependencies
@@ -98,9 +98,6 @@ jobs:
       - run:
           name: Install Pods
           command: cd ios && pod install --repo-update
-      - run: 
-          name: Flutter build
-          command: flutter build aot
       - run:
           name: Build and run tests
           command: cd ios && xcodebuild  -allowProvisioningUpdates   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone 12 Pro Max,OS=14.3'   test | xcpretty
