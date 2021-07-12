@@ -45,6 +45,9 @@ void main() {
     mockRequest = MockHttpClientRequest();
     mockResponse = MockHttpClientResponse();
 
+    expect(mockRequest, isInstanceOf<HttpClientRequest>());
+    expect(mockResponse, isInstanceOf<HttpClientResponse>());
+
     when<dynamic>(mockRequest.close()).thenAnswer((_) async => mockResponse);
   });
 
