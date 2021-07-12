@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/BugReporting.dart';
@@ -14,8 +15,9 @@ void main() {
 
   runZonedGuarded(() => runApp(MyApp()), CrashReporting.reportCrash);
 
-  Instabug.start(
-      'ed6f659591566da19b67857e1b9d40ab', [InvocationEvent.floatingButton]);
+  if (Platform.isIOS)
+    Instabug.start(
+        'ed6f659591566da19b67857e1b9d40ab', [InvocationEvent.floatingButton]);
 }
 
 class MyApp extends StatelessWidget {
@@ -64,6 +66,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late final List<String> list;
+
   void show() {
     Instabug.show();
   }
@@ -136,6 +140,38 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Text(
                   'Hello Instabug\'s awesome user! The purpose of this application is to show you the different options for customizing the SDK and how easy it is to integrate it to your existing app',
                   textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                // height: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    try {
+                      throw TypeError();
+                    } catch (e) {
+                      CrashReporting.reportHandledCrash(e);
+                    }
+                  },
+                  child: const Text('Report Handled Exception'),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.red)),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                // height: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    list.length.toString();
+                  },
+                  child: const Text('Throw Unhandled Exception'),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.red)),
                 ),
               ),
               Container(
