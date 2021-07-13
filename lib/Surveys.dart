@@ -1,9 +1,9 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
-import 'dart:io' show Platform;
 
 import 'package:flutter/services.dart';
+import 'package:instabug_flutter/utils/platform_manager.dart';
 
 class Surveys {
   static Function? _onShowCallback;
@@ -131,7 +131,7 @@ class Surveys {
   /// NPS Surveys or AppRating Surveys to AppStore to let users rate your app on AppStore itself.
   /// [appStoreURL] A String url for the published iOS app on AppStore
   static Future<void> setAppStoreURL(String appStoreURL) async {
-    if (Platform.isIOS) {
+    if (PlatformManager.instance.isIOS()) {
       final List<dynamic> params = <dynamic>[appStoreURL];
       await _channel.invokeMethod<Object>('setAppStoreURL:', params);
     }

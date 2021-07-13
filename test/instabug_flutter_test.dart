@@ -68,8 +68,7 @@ void main() {
     log.clear();
   });
 
-  test('startWithToken:invocationEvents: should be called on iOS',
-      () async {
+  test('startWithToken:invocationEvents: should be called on iOS', () async {
     when(mockPlatform.isIOS()).thenAnswer((_) => true);
 
     Instabug.start(appToken, invocationEvents);
@@ -433,6 +432,51 @@ void main() {
     ]);
   });
 
+  test('setShakingThresholdForiPhone: Test', () async {
+    const iPhoneShakingThreshold = 1.6;
+    final List<dynamic> args = <dynamic>[iPhoneShakingThreshold];
+
+    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+
+    BugReporting.setShakingThresholdForiPhone(iPhoneShakingThreshold);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setShakingThresholdForiPhone:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setShakingThresholdForiPad: Test', () async {
+    const iPadShakingThreshold = 1.6;
+    final List<dynamic> args = <dynamic>[iPadShakingThreshold];
+
+    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+
+    BugReporting.setShakingThresholdForiPad(iPadShakingThreshold);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setShakingThresholdForiPad:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setShakingThresholdForAndroid: Test', () async {
+    const androidThreshold = 1000;
+    final List<dynamic> args = <dynamic>[androidThreshold];
+
+    when(mockPlatform.isAndroid()).thenAnswer((_) => true);
+
+    BugReporting.setShakingThresholdForAndroid(androidThreshold);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setShakingThresholdForAndroid:',
+        arguments: args,
+      )
+    ]);
+  });
+
   test('setOnInvokeCallback Test', () async {
     BugReporting.setOnInvokeCallback(() => () {});
     expect(log, <Matcher>[
@@ -459,6 +503,17 @@ void main() {
     final List<dynamic> args = <dynamic>[
       <String>[InvocationEvent.floatingButton.toString()]
     ];
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setInvocationEvents:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setInvocationEvents Test', () async {
+    BugReporting.setInvocationEvents(null);
+    final List<dynamic> args = <dynamic>[<String>[]];
     expect(log, <Matcher>[
       isMethodCall(
         'setInvocationEvents:',
@@ -521,6 +576,17 @@ void main() {
     ]);
   });
 
+  test('setInvocationOptions Test: empty', () async {
+    BugReporting.setInvocationOptions(null);
+    final List<dynamic> args = <dynamic>[<String>[]];
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setInvocationOptions:',
+        arguments: args,
+      )
+    ]);
+  });
+
   test('showBugReportingWithReportTypeAndOptions:options Test', () async {
     BugReporting.show(
         ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
@@ -528,6 +594,18 @@ void main() {
       ReportType.bug.toString(),
       <String>[InvocationOption.emailFieldHidden.toString()]
     ];
+    expect(log, <Matcher>[
+      isMethodCall(
+        'showBugReportingWithReportTypeAndOptions:options:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('showBugReportingWithReportTypeAndOptions:options Test: empty options',
+      () async {
+    BugReporting.show(ReportType.bug, null);
+    final List<dynamic> args = <dynamic>[ReportType.bug.toString(), <String>[]];
     expect(log, <Matcher>[
       isMethodCall(
         'showBugReportingWithReportTypeAndOptions:options:',
@@ -626,6 +704,21 @@ void main() {
     ]);
   });
 
+  test('setAppStoreURL Test', () async {
+    const appStoreURL = 'appStoreURL';
+    final List<dynamic> args = <dynamic>[appStoreURL];
+
+    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+
+    Surveys.setAppStoreURL(appStoreURL);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setAppStoreURL:',
+        arguments: args,
+      )
+    ]);
+  });
+
   test('showFeatureRequests Test', () async {
     FeatureRequests.show();
     expect(
@@ -672,6 +765,21 @@ void main() {
     expect(log, <Matcher>[
       isMethodCall(
         'setRepliesEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setInAppNotificationSound: Test', () async {
+    const isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+
+    when(mockPlatform.isAndroid()).thenAnswer((_) => true);
+
+    Replies.setInAppNotificationSound(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setEnableInAppNotificationSound:',
         arguments: args,
       )
     ]);
@@ -751,17 +859,4 @@ void main() {
       ]);
     }
   });
-
-  ///Since the below method only runs on android and has the [Platform.isAndroid] condition in it, it will fail when running outside android,
-  /// therefore its commented.
-  // test('setEnableInAppNotificationSound: Test', () async {
-  //   bool isEnabled = false;
-  //   final List<dynamic> args = <dynamic>[isEnabled];
-  //   Replies.setInAppNotificationSound(isEnabled);
-  //   expect(log, <Matcher>[
-  //     isMethodCall('setEnableInAppNotificationSound:',
-  //       arguments: args,
-  //     )
-  //   ]);
-  // });
 }

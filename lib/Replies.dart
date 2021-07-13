@@ -1,9 +1,9 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
-import 'dart:io' show Platform;
 
 import 'package:flutter/services.dart';
+import 'package:instabug_flutter/utils/platform_manager.dart';
 
 class Replies {
   static Function? _hasChatsCallback;
@@ -78,7 +78,7 @@ class Replies {
   /// [isEnabled] A boolean to set whether notifications sound should be played.
   /// @android ONLY
   static Future<void> setInAppNotificationSound(bool isEnabled) async {
-    if (Platform.isAndroid) {
+    if (PlatformManager.instance.isAndroid()) {
       final List<dynamic> params = <dynamic>[isEnabled];
       await _channel.invokeMethod<Object>(
           'setEnableInAppNotificationSound:', params);

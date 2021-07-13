@@ -1,10 +1,10 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
-import 'dart:io' show Platform;
 
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/Instabug.dart';
+import 'package:instabug_flutter/utils/platform_manager.dart';
 
 enum InvocationOption {
   commentFieldRequired,
@@ -183,7 +183,7 @@ class BugReporting {
   /// [iPhoneShakingThreshold] iPhoneShakingThreshold double
   static Future<void> setShakingThresholdForiPhone(
       double iPhoneShakingThreshold) async {
-    if (Platform.isIOS) {
+    if (PlatformManager.instance.isIOS()) {
       final List<dynamic> params = <dynamic>[iPhoneShakingThreshold];
       await _channel.invokeMethod<Object>(
           'setShakingThresholdForiPhone:', params);
@@ -195,7 +195,7 @@ class BugReporting {
   /// [iPadShakingThreshold] iPhoneShakingThreshold double
   static Future<void> setShakingThresholdForiPad(
       double iPadShakingThreshold) async {
-    if (Platform.isIOS) {
+    if (PlatformManager.instance.isIOS()) {
       final List<dynamic> params = <dynamic>[iPadShakingThreshold];
       await _channel.invokeMethod<Object>(
           'setShakingThresholdForiPad:', params);
@@ -209,7 +209,7 @@ class BugReporting {
   /// [androidThreshold] iPhoneShakingThreshold int
   static Future<void> setShakingThresholdForAndroid(
       int androidThreshold) async {
-    if (Platform.isAndroid) {
+    if (PlatformManager.instance.isAndroid()) {
       final List<dynamic> params = <dynamic>[androidThreshold];
       await _channel.invokeMethod<Object>(
           'setShakingThresholdForAndroid:', params);
