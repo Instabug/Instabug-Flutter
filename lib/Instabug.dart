@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
+import 'package:instabug_flutter/utils/platform_manager.dart';
 
 enum InvocationEvent {
   shake,
@@ -102,11 +103,13 @@ class Instabug {
   /// the SDK's UI.
   static Future<void> start(
       String token, List<InvocationEvent> invocationEvents) async {
-    final List<String> invocationEventsStrings =
-        invocationEvents.map((e) => e.toString()).toList(growable: false);
-    final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
-    await _channel.invokeMethod<Object>(
-        'startWithToken:invocationEvents:', params);
+    if (PlatformManager.instance.isIOS()) {
+      final List<String> invocationEventsStrings =
+          invocationEvents.map((e) => e.toString()).toList(growable: false);
+      final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
+      await _channel.invokeMethod<Object>(
+          'startWithToken:invocationEvents:', params);
+    }
   }
 
   /// Shows the welcome message in a specific mode.
