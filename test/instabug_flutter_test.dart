@@ -704,6 +704,21 @@ void main() {
     ]);
   });
 
+  test('setAppStoreURL Test', () async {
+    const appStoreURL = 'appStoreURL';
+    final List<dynamic> args = <dynamic>[appStoreURL];
+
+    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+
+    Surveys.setAppStoreURL(appStoreURL);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setAppStoreURL:',
+        arguments: args,
+      )
+    ]);
+  });
+
   test('showFeatureRequests Test', () async {
     FeatureRequests.show();
     expect(
