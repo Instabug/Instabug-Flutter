@@ -68,8 +68,7 @@ void main() {
     log.clear();
   });
 
-  test('startWithToken:invocationEvents: should be called on iOS',
-      () async {
+  test('startWithToken:invocationEvents: should be called on iOS', () async {
     when(mockPlatform.isIOS()).thenAnswer((_) => true);
 
     Instabug.start(appToken, invocationEvents);
@@ -433,6 +432,51 @@ void main() {
     ]);
   });
 
+  test('setShakingThresholdForiPhone: Test', () async {
+    const iPhoneShakingThreshold = 1.6;
+    final List<dynamic> args = <dynamic>[iPhoneShakingThreshold];
+
+    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+
+    BugReporting.setShakingThresholdForiPhone(iPhoneShakingThreshold);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setShakingThresholdForiPhone:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setShakingThresholdForiPad: Test', () async {
+    const iPadShakingThreshold = 1.6;
+    final List<dynamic> args = <dynamic>[iPadShakingThreshold];
+
+    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+
+    BugReporting.setShakingThresholdForiPad(iPadShakingThreshold);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setShakingThresholdForiPad:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setShakingThresholdForAndroid: Test', () async {
+    const androidThreshold = 1000;
+    final List<dynamic> args = <dynamic>[androidThreshold];
+
+    when(mockPlatform.isAndroid()).thenAnswer((_) => true);
+
+    BugReporting.setShakingThresholdForAndroid(androidThreshold);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setShakingThresholdForAndroid:',
+        arguments: args,
+      )
+    ]);
+  });
+
   test('setOnInvokeCallback Test', () async {
     BugReporting.setOnInvokeCallback(() => () {});
     expect(log, <Matcher>[
@@ -459,6 +503,17 @@ void main() {
     final List<dynamic> args = <dynamic>[
       <String>[InvocationEvent.floatingButton.toString()]
     ];
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setInvocationEvents:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setInvocationEvents Test', () async {
+    BugReporting.setInvocationEvents(null);
+    final List<dynamic> args = <dynamic>[<String>[]];
     expect(log, <Matcher>[
       isMethodCall(
         'setInvocationEvents:',
@@ -521,6 +576,17 @@ void main() {
     ]);
   });
 
+  test('setInvocationOptions Test: empty', () async {
+    BugReporting.setInvocationOptions(null);
+    final List<dynamic> args = <dynamic>[<String>[]];
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setInvocationOptions:',
+        arguments: args,
+      )
+    ]);
+  });
+
   test('showBugReportingWithReportTypeAndOptions:options Test', () async {
     BugReporting.show(
         ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
@@ -528,6 +594,18 @@ void main() {
       ReportType.bug.toString(),
       <String>[InvocationOption.emailFieldHidden.toString()]
     ];
+    expect(log, <Matcher>[
+      isMethodCall(
+        'showBugReportingWithReportTypeAndOptions:options:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('showBugReportingWithReportTypeAndOptions:options Test: empty options',
+      () async {
+    BugReporting.show(ReportType.bug, null);
+    final List<dynamic> args = <dynamic>[ReportType.bug.toString(), <String>[]];
     expect(log, <Matcher>[
       isMethodCall(
         'showBugReportingWithReportTypeAndOptions:options:',
