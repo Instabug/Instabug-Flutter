@@ -1,11 +1,13 @@
 ## master
 
 * Change all `void ... async` methods to `Future<void> ... async` so that callers can use `await`.
+* Fixes a crash when Instabug.start API is called on Android.
 
 ## v9.1.9 (2021-05-11)
 
 * Adds support for overriding the replies notification string values through `repliesNotificationTeamName`, `repliesNotificationReplyButton`, `repliesNotificationDismissButton`
 * Removes the use of `android:requestLegacyExternalStorage` attribute on Android
+
 ## v9.1.8 (2021-02-17)
 
 * Fixes an issue with iOS invocation events causing the welcome message not to show.

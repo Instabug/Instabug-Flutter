@@ -16,8 +16,16 @@ import 'package:instabug_flutter/Replies.dart';
 import 'package:instabug_flutter/Surveys.dart';
 import 'package:instabug_flutter/models/crash_data.dart';
 import 'package:instabug_flutter/models/exception_data.dart';
+import 'package:instabug_flutter/utils/platform_manager.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:stack_trace/stack_trace.dart';
 
+import 'instabug_flutter_test.mocks.dart';
+
+@GenerateMocks([
+  PlatformManager,
+])
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   final List<MethodCall> log = <MethodCall>[];
@@ -32,6 +40,7 @@ void main() {
   const Map<String, String> userAttributePair = <String, String>{
     'gender': 'female'
   };
+  late MockPlatformManager mockPlatform;
 
   setUpAll(() async {
     const MethodChannel('instabug_flutter')
@@ -50,11 +59,19 @@ void main() {
     });
   });
 
+  setUp(() {
+    mockPlatform = MockPlatformManager();
+    PlatformManager.setPlatformInstance(mockPlatform);
+  });
+
   tearDown(() async {
     log.clear();
   });
 
-  test('startWithToken:invocationEvents: Test', () async {
+  test('startWithToken:invocationEvents: should be called on iOS',
+      () async {
+    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+
     Instabug.start(appToken, invocationEvents);
     final List<dynamic> args = <dynamic>[
       appToken,
