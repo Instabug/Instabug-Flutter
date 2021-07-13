@@ -43,8 +43,6 @@ FlutterMethodChannel* channel;
             [inv getReturnValue:&returnVal];
             NSObject *resultSet = (__bridge NSObject *)returnVal;
             result(resultSet);
-          } else {
-            result(nil);
           }
       }
     if (!isImplemented) {
