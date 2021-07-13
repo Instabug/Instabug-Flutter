@@ -1,7 +1,8 @@
-## master
+## v9.2.0-nullsafety.0 (2021-07-14)
 
-* Change all `void ... async` methods to `Future<void> ... async` so that callers can use `await`.
-* Fixes a crash when Instabug.start API is called on Android.
+* Adds null safety support.
+* Fixes a crash when Instabug.start API is called on Android without Platform check.
+* Changes all `void ... async` methods to `Future<void> ... async` so that callers can use `await`.
 
 ## v9.1.9 (2021-05-11)
 
