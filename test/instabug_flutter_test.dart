@@ -12,10 +12,12 @@ import 'package:instabug_flutter/CrashReporting.dart';
 import 'package:instabug_flutter/FeatureRequests.dart';
 import 'package:instabug_flutter/Instabug.dart';
 import 'package:instabug_flutter/InstabugLog.dart';
+import 'package:instabug_flutter/NetworkLogger.dart';
 import 'package:instabug_flutter/Replies.dart';
 import 'package:instabug_flutter/Surveys.dart';
 import 'package:instabug_flutter/models/crash_data.dart';
 import 'package:instabug_flutter/models/exception_data.dart';
+import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/utils/platform_manager.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -815,6 +817,18 @@ void main() {
     expect(log, <Matcher>[
       isMethodCall(
         'setChatNotificationEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('networkLog: Test', () async {
+    final data = NetworkData(method: 'method', url: 'url', startTime: DateTime.now());
+    final List<dynamic> args = <dynamic>[data.toMap()];
+    NetworkLogger.networkLog(data);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'networkLog:',
         arguments: args,
       )
     ]);
