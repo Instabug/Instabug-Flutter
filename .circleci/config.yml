@@ -71,6 +71,7 @@ jobs:
       - run: flutter test --coverage
       - run: bash <(curl -s https://codecov.io/bash)
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
+      - run: flutter pub publish --dry-run
 
    ios_tests:
     macos:
@@ -130,7 +131,7 @@ workflows:
           context: cross-platform
       - android_tests
       - ios_tests
-      - hold:
+      - hold_release:
           type: approval
           requires:
             - flutter_tests
@@ -142,7 +143,7 @@ workflows:
       - release:
           context: cross-platform
           requires:
-            - hold
+            - hold_release
           filters:
             branches:
               only: master
