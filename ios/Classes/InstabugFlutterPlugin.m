@@ -39,7 +39,7 @@ FlutterMethodChannel* channel;
           const char *type = [signature methodReturnType];
 
           if (strcmp(type, "v") != 0) {
-              void *returnVal;
+            void *returnVal;
             [inv getReturnValue:&returnVal];
             NSObject *resultSet = (__bridge NSObject *)returnVal;
             result(resultSet);

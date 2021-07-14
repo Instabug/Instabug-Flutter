@@ -1,21 +1,19 @@
+// ignore_for_file: avoid_classes_with_only_static_members
+
 import 'dart:async';
+
 import 'package:flutter/services.dart';
 
-enum ActionType {
-  requestNewFeature,
-  addCommentToFeature
-}
+enum ActionType { requestNewFeature, addCommentToFeature }
 
 class FeatureRequests {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
+  static Future<String?> get platformVersion async =>
+      await _channel.invokeMethod<String>('getPlatformVersion');
 
   ///Shows the UI for feature requests list
-  static void show() async {
+  static Future<void> show() async {
     await _channel.invokeMethod<Object>('showFeatureRequests');
   }
 
@@ -24,18 +22,11 @@ class FeatureRequests {
   /// [isEmailFieldRequired] A boolean to indicate whether email
   /// field is required or not.
   /// [actionTypes] An enum that indicates which action types will have the isEmailFieldRequired
-  static void setEmailFieldRequired(
-      bool isEmailFieldRequired, List<ActionType> actionTypes) async {
-    final List<String> actionTypesStrings = <String>[];
-    if (actionTypes != null) {
-      actionTypes.forEach((e) {
-        actionTypesStrings.add(e.toString());
-      });
-    }
-    final List<dynamic> params = <dynamic>[
-      isEmailFieldRequired,
-      actionTypesStrings
-    ];
+  static Future<void> setEmailFieldRequired(
+      bool isEmailFieldRequired, List<ActionType>? actionTypes) async {
+    final actionTypesStrings =
+        actionTypes?.map((e) => e.toString()).toList(growable: false) ?? [];
+    final params = <dynamic>[isEmailFieldRequired, actionTypesStrings];
     await _channel.invokeMethod<Object>(
         'setEmailFieldRequiredForFeatureRequests:forAction:', params);
   }
