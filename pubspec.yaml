@@ -9,6 +9,7 @@ documentation: https://github.com/Instabug/Instabug-Flutter#readme
 dependencies:
   flutter:
     sdk: flutter
+  meta: ^1.3.0
   stack_trace: ^1.10.0
 
 dev_dependencies:
