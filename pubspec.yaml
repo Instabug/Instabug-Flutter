@@ -1,5 +1,5 @@
 name: instabug_flutter
-version: 9.2.0-nullsafety.0
+version: 9.2.0
 description: >-
   Deliver the best user experience through a comprehensive platform that will 
   help you uncover, analyze and fix any app performance, quality or stability issues.
@@ -9,6 +9,7 @@ documentation: https://github.com/Instabug/Instabug-Flutter#readme
 dependencies:
   flutter:
     sdk: flutter
+  meta: ^1.3.0
   stack_trace: ^1.10.0
 
 dev_dependencies:
@@ -28,4 +29,4 @@ flutter:
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.17.0 <3.0.0"
+  flutter: ">=1.17.0"
