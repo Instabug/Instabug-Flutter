@@ -1,3 +1,7 @@
+## v10.0.0 (2021-08-04)
+
+* Bumps Instabug native SDKs to v10.8
+
 ## v9.2.0 (2021-08-02)
 
 * Adds null safety support.
