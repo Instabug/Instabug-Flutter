@@ -25,10 +25,10 @@ import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 import com.instabug.library.visualusersteps.State;
-import com.instabug.survey.OnDismissCallback;
-import com.instabug.survey.OnShowCallback;
+import com.instabug.survey.callbacks.*;
 import com.instabug.survey.Survey;
 import com.instabug.survey.Surveys;
+import com.instabug.apm.APM;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -137,6 +137,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         }
         new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).build();
         enableScreenShotByMediaProjection();
+
+        // Temporarily disabling APM
+        APM.setEnabled(false);
     }
 
     /**
