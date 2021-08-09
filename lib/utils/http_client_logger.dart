@@ -37,7 +37,7 @@ class HttpClientLogger {
       return;
     }
 
-    final responseHeaders = networkData.responseHeaders;
+    final responseHeaders = <String, dynamic>{};
     request.headers.forEach((String header, dynamic value) {
       responseHeaders[header] = value[0];
     });
