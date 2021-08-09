@@ -41,7 +41,7 @@ class NetworkData {
       NetworkData(
         url: url ?? this.url,
         method: method ?? this.method,
-        requestBody: requestBody ?? this.requestHeaders,
+        requestBody: requestBody ?? this.requestBody,
         responseBody: responseBody ?? this.responseBody,
         status: status ?? this.status,
         requestHeaders: requestHeaders ?? this.requestHeaders,
