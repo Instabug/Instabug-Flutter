@@ -71,13 +71,27 @@ allprojects {
 </application>
 ````
 
-3. In your newly created `CustomFlutterApplication` class, override `onCreate()` and add the following code.
+3. In your newly created `CustomFlutterApplication` class, add the following code.
 
 
 ```java
-ArrayList<String> invocationEvents = new ArrayList<>();
-invocationEvents.add(InstabugFlutterPlugin.INVOCATION_EVENT_SHAKE);
-new InstabugFlutterPlugin().start(CustomFlutterApplication.this, "APP_TOKEN", invocationEvents);
+package <Package-Name>;
+
+import io.flutter.app.FlutterApplication;
+import com.instabug.instabugflutter.InstabugFlutterPlugin;
+
+import java.util.ArrayList;
+
+public class CustomFlutterApplication extends FlutterApplication {
+  @Override
+  public void onCreate() {
+    super.onCreate();
+    ArrayList<String> invocation_events = new ArrayList<>();
+    InstabugFlutterPlugin instabug = new InstabugFlutterPlugin();
+    instabug.start(CustomFlutterApplication.this, "APP_TOKEN", invocation_events);
+  }
+}
+
 ```
 
 ## Crash reporting
@@ -99,7 +113,7 @@ import 'package:instabug_flutter/CrashReporting.dart';
 	```dart
 	void main() async {
 	  FlutterError.onError = (FlutterErrorDetails details) {
-	    Zone.current.handleUncaughtError(details.exception, details.stack);
+	    Zone.current.handleUncaughtError(details.exception, details.stack!);
 	  };
 	  runZonedGuarded<Future<void>>(() async {
 	    runApp(MyApp());
@@ -166,3 +180,9 @@ If your app doesn’t already access the microphone or photo library, we recomme
 * "`<app name>` needs access to your photo library for you to be able to attach images."
 
 **The permission alert for accessing the microphone/photo library will NOT appear unless users attempt to attach a voice note/photo while using Instabug.**
+
+
+## Documentation
+
+For more details about the supported APIs and how to use them, check our [**Documentation**](https://docs.instabug.com/docs/flutter-overview).
+
