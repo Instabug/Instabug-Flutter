@@ -19,7 +19,6 @@ import 'package:instabug_flutter/instabug_custom_http_client.dart';
 import 'package:instabug_flutter/models/crash_data.dart';
 import 'package:instabug_flutter/models/exception_data.dart';
 import 'package:instabug_flutter/models/network_data.dart';
-import 'package:instabug_flutter/utils/http_client_logger.dart';
 import 'package:instabug_flutter/utils/platform_manager.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -74,8 +73,6 @@ void main() {
     responseHeaders: responseHeaders,
     status: status,
   );
-
-  final HttpClientLogger logger = HttpClientLogger();
 
   setUpAll(() async {
     const MethodChannel('instabug_flutter')
