@@ -15,9 +15,11 @@ import 'package:instabug_flutter/InstabugLog.dart';
 import 'package:instabug_flutter/NetworkLogger.dart';
 import 'package:instabug_flutter/Replies.dart';
 import 'package:instabug_flutter/Surveys.dart';
+import 'package:instabug_flutter/instabug_custom_http_client.dart';
 import 'package:instabug_flutter/models/crash_data.dart';
 import 'package:instabug_flutter/models/exception_data.dart';
 import 'package:instabug_flutter/models/network_data.dart';
+import 'package:instabug_flutter/utils/http_client_logger.dart';
 import 'package:instabug_flutter/utils/platform_manager.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -72,6 +74,8 @@ void main() {
     responseHeaders: responseHeaders,
     status: status,
   );
+
+  final HttpClientLogger logger = HttpClientLogger();
 
   setUpAll(() async {
     const MethodChannel('instabug_flutter')
@@ -964,5 +968,15 @@ void main() {
     expect(newNetworkData.startTime, startDateCopy);
     expect(newNetworkData.endTime, endDateCopy);
     expect(newNetworkData.status, statusCopy);
+  });
+
+  test('Test Http client logger', () async {
+    final InstabugCustomHttpClient client = InstabugCustomHttpClient();
+    final HttpClientRequest request = await client
+        .getUrl(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
+    client.logger.onRequest(request);
+    final HttpClientResponse response = await request.close();
+    client.logger.onResponse(response, request);
+    expect(client.requests.length, 0);
   });
 }
