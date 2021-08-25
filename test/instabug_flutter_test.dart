@@ -15,6 +15,7 @@ import 'package:instabug_flutter/InstabugLog.dart';
 import 'package:instabug_flutter/NetworkLogger.dart';
 import 'package:instabug_flutter/Replies.dart';
 import 'package:instabug_flutter/Surveys.dart';
+import 'package:instabug_flutter/instabug_custom_http_client.dart';
 import 'package:instabug_flutter/models/crash_data.dart';
 import 'package:instabug_flutter/models/exception_data.dart';
 import 'package:instabug_flutter/models/network_data.dart';
@@ -43,6 +44,35 @@ void main() {
     'gender': 'female'
   };
   late MockPlatformManager mockPlatform;
+
+  const String url = 'https://jsonplaceholder.typicode.com';
+  const String method = 'POST';
+  final DateTime startDate = DateTime.now();
+  final DateTime endDate = DateTime.now().add(const Duration(hours: 1));
+  const dynamic requestBody = 'requestBody';
+  const dynamic responseBody = 'responseBody';
+  const int status = 200;
+  const Map<String, dynamic> requestHeaders = <String, dynamic>{
+    'request': 'request'
+  };
+  const Map<String, dynamic> responseHeaders = <String, dynamic>{
+    'response': 'response'
+  };
+  const int duration = 10;
+  const String contentType = 'contentType';
+  final NetworkData networkData = NetworkData(
+    url: url,
+    method: method,
+    startTime: startDate,
+    contentType: contentType,
+    duration: duration,
+    endTime: endDate,
+    requestBody: requestBody,
+    responseBody: responseBody,
+    requestHeaders: requestHeaders,
+    responseHeaders: responseHeaders,
+    status: status,
+  );
 
   setUpAll(() async {
     const MethodChannel('instabug_flutter')
@@ -823,7 +853,8 @@ void main() {
   });
 
   test('networkLog: Test', () async {
-    final data = NetworkData(method: 'method', url: 'url', startTime: DateTime.now());
+    final data =
+        NetworkData(method: 'method', url: 'url', startTime: DateTime.now());
     final List<dynamic> args = <dynamic>[data.toMap()];
     NetworkLogger.networkLog(data);
     expect(log, <Matcher>[
@@ -872,5 +903,77 @@ void main() {
         )
       ]);
     }
+  });
+  test('Test NetworkData model ToMap', () async {
+    final newNetworkData = networkData.toMap();
+    expect(networkData.url, newNetworkData['url']);
+    expect(networkData.method, newNetworkData['method']);
+    expect(networkData.contentType, newNetworkData['contentType']);
+    expect(networkData.duration, newNetworkData['duration']);
+    expect(networkData.requestBody, newNetworkData['requestBody']);
+    expect(networkData.responseBody, newNetworkData['responseBody']);
+    expect(networkData.requestHeaders, newNetworkData['requestHeaders']);
+    expect(networkData.responseHeaders, newNetworkData['responseHeaders']);
+  });
+  test('Test NetworkData model CopyWith empty', () async {
+    final newNetworkData = networkData.copyWith();
+    final newNetworkDataMap = newNetworkData.toMap();
+    final networkDataMap = networkData.toMap();
+    networkDataMap.forEach((key, dynamic value) {
+      expect(value, newNetworkDataMap[key]);
+    });
+  });
+
+  test('Test NetworkData model CopyWith', () async {
+    const String urlCopy = 'https://jsonplaceholder.typicode.comCopy';
+    const String methodCopy = 'POSTCopy';
+    const dynamic requestBodyCopy = 'requestBodyCopy';
+    const dynamic responseBodyCopy = 'responseBodyCopy';
+    const Map<String, dynamic> requestHeadersCopy = <String, dynamic>{
+      'requestCopy': 'requestCopy'
+    };
+    const Map<String, dynamic> responseHeadersCopy = <String, dynamic>{
+      'responseCopy': 'responseCopy'
+    };
+    const int durationCopy = 20;
+    const String contentTypeCopy = 'contentTypeCopy';
+    final DateTime startDateCopy = DateTime.now().add(const Duration(days: 1));
+    final DateTime endDateCopy = DateTime.now().add(const Duration(days: 2));
+    const int statusCopy = 300;
+
+    final newNetworkData = networkData.copyWith(
+        url: urlCopy,
+        method: methodCopy,
+        requestBody: requestBodyCopy,
+        requestHeaders: requestHeadersCopy,
+        responseBody: responseBodyCopy,
+        responseHeaders: responseHeadersCopy,
+        duration: durationCopy,
+        contentType: contentTypeCopy,
+        startTime: startDateCopy,
+        endTime: endDateCopy,
+        status: statusCopy);
+
+    expect(newNetworkData.url, urlCopy);
+    expect(newNetworkData.method, methodCopy);
+    expect(newNetworkData.requestBody, requestBodyCopy);
+    expect(newNetworkData.requestHeaders, requestHeadersCopy);
+    expect(newNetworkData.responseBody, responseBodyCopy);
+    expect(newNetworkData.responseHeaders, responseHeadersCopy);
+    expect(newNetworkData.duration, durationCopy);
+    expect(newNetworkData.contentType, contentTypeCopy);
+    expect(newNetworkData.startTime, startDateCopy);
+    expect(newNetworkData.endTime, endDateCopy);
+    expect(newNetworkData.status, statusCopy);
+  });
+
+  test('Test Http client logger', () async {
+    final InstabugCustomHttpClient client = InstabugCustomHttpClient();
+    final HttpClientRequest request = await client
+        .getUrl(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
+    client.logger.onRequest(request);
+    final HttpClientResponse response = await request.close();
+    client.logger.onResponse(response, request);
+    expect(client.requests.length, 0);
   });
 }

@@ -1,3 +1,7 @@
+## v10.0.1 (2021-08-25)
+
+* Fixes an issue with http client logger.
+
 ## v10.0.0 (2021-08-04)
 
 * Bumps Instabug native SDKs to v10.8
