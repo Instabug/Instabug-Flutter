@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:instabug_flutter/APM.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 
 class NetworkLogger {
@@ -13,6 +14,7 @@ class NetworkLogger {
 
   static Future<bool?> networkLog(NetworkData data) async {
     final params = <dynamic>[data.toMap()];
-    return await _channel.invokeMethod<bool>('networkLog:', params);
+    await _channel.invokeMethod<bool>('networkLog:', params);
+    await APM.networkLogAndroid(data);
   }
 }

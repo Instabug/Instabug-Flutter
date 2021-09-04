@@ -8,11 +8,13 @@
 
 
 FlutterMethodChannel* channel;
+NSMutableDictionary *traces;
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   channel = [FlutterMethodChannel
       methodChannelWithName:@"instabug_flutter"
             binaryMessenger:[registrar messenger]];
   InstabugFlutterPlugin* instance = [[InstabugFlutterPlugin alloc] init];
+  traces = [[NSMutableDictionary alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
 }
 
@@ -77,9 +79,6 @@ FlutterMethodChannel* channel;
         invocationEvents = IBGInvocationEventNone;
     }
     [Instabug startWithToken:token invocationEvents:invocationEvents];
-
-    // Temporarily disabling APM
-    IBGAPM.enabled = NO;
 }
 
 /**
@@ -745,20 +744,25 @@ FlutterMethodChannel* channel;
     NSString* requestBody = networkData[@"requestBody"];
     NSString* responseBody = networkData[@"responseBody"];
     int32_t responseCode = [networkData[@"responseCode"] integerValue];
+    int64_t requestBodySize = [networkData[@"requestBodySize"] integerValue];
+    int64_t responseBodySize = [networkData[@"responseBodySize"] integerValue];
+    int32_t errorCode = [networkData[@"errorCode"] integerValue];
+    NSString* errorDomain = networkData[@"errorDomain"];
     NSDictionary* requestHeaders = networkData[@"requestHeaders"];
     if ([requestHeaders count] == 0) {
         requestHeaders = @{};
     }
     NSDictionary* responseHeaders = networkData[@"responseHeaders"];
     NSString* contentType = @"application/json";
-    double duration = [networkData[@"duration"] doubleValue];
+    int64_t duration = [networkData[@"duration"] integerValue];
+    int64_t startTime = [networkData[@"startTime"] integerValue] * 1000;
 
     for(NSString *key in [requestHeaders allKeys]) {
         NSLog(@"key: %@", key);
         NSLog(@"value: %@",[requestHeaders objectForKey:key]);
     }
     
-    SEL networkLogSEL = NSSelectorFromString(@"addNetworkLogWithUrl:method:requestBody:responseBody:responseCode:requestHeaders:responseHeaders:contentType:duration:");
+    SEL networkLogSEL = NSSelectorFromString(@"addNetworkLogWithUrl:method:requestBody:requestBodySize:responseBody:responseBodySize:responseCode:requestHeaders:responseHeaders:contentType:errorDomain:errorCode:startTime:duration:");
 
     if([[IBGNetworkLogger class] respondsToSelector:networkLogSEL]) {
         NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[IBGNetworkLogger class] methodSignatureForSelector:networkLogSEL]];
@@ -768,12 +772,17 @@ FlutterMethodChannel* channel;
         [inv setArgument:&(url) atIndex:2];
         [inv setArgument:&(method) atIndex:3];
         [inv setArgument:&(requestBody) atIndex:4];
-        [inv setArgument:&(responseBody) atIndex:5];
-        [inv setArgument:&(responseCode) atIndex:6];
-        [inv setArgument:&(requestHeaders) atIndex:7];
-        [inv setArgument:&(responseHeaders) atIndex:8];
-        [inv setArgument:&(contentType) atIndex:9];
-        [inv setArgument:&(duration) atIndex:10];
+        [inv setArgument:&(requestBodySize) atIndex:5];
+        [inv setArgument:&(responseBody) atIndex:6];
+        [inv setArgument:&(responseBodySize) atIndex:7];
+        [inv setArgument:&(responseCode) atIndex:8];
+        [inv setArgument:&(requestHeaders) atIndex:9];
+        [inv setArgument:&(responseHeaders) atIndex:10];
+        [inv setArgument:&(contentType) atIndex:11];
+        [inv setArgument:&(errorDomain) atIndex:12];
+        [inv setArgument:&(errorCode) atIndex:13];
+        [inv setArgument:&(startTime) atIndex:14];
+        [inv setArgument:&(duration) atIndex:15];
 
         [inv invoke];
     }
@@ -801,7 +810,118 @@ FlutterMethodChannel* channel;
     
 }
 
-  /** Reports that the screen has been changed (Repro Steps) the screen sent to this method will be the 'current view' on the dashboard
+/**
+  * Enables and disables everything related to APM feature.
+  * @param {boolean} isEnabled
+  */
++ (void)setAPMEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGAPM.enabled = boolValue;
+}
+
+/**
+  * Sets the printed logs priority. Filter to one of the following levels:
+  *
+  * - logLevelNone disables all APM SDK console logs.
+  *
+  * - logLevelError prints errors only, we use this level to let you know if something goes wrong.
+  *
+  * - logLevelWarning displays warnings that will not necessarily lead to errors but should be addressed nonetheless.
+  *
+  * - logLevelInfo (default) logs information that we think is useful without being too verbose.
+  *
+  * - logLevelDebug use this in case you are debugging an issue. Not recommended for production use.
+  *
+  * - logLevelVerbose use this only if logLevelDebug was not enough and you need more visibility
+  * on what is going on under the hood.
+  *
+  * Similar to the logLevelDebug level, this is not meant to be used on production environments.
+  *
+  * Each log level will also include logs from all the levels above it. For instance,
+  * logLevelInfo will include logLevelInfo logs as well as logLevelWarning
+  * and logLevelError logs.
+
+  * @param {logLevel} the printed logs priority.
+  */
++ (void)setAPMLogLevel:(NSString *)_logLevel {
+  NSDictionary *constants = [self constants];
+  NSInteger _logLevelIntValue = ((NSNumber *) constants[_logLevel]).integerValue;
+    IBGAPM.logLevel = _logLevelIntValue;
+}
+
+/**
+  * Enables and disables cold app launch tracking.
+  * @param {boolean} isEnabled
+  */
++ (void)setColdAppLaunchEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGAPM.appLaunchEnabled = boolValue;
+}
+
+/**
+  * Starts an execution trace
+  * @param {string} name of the trace.
+  * @param {string} id of the trace.
+  */
++ (void)startExecutionTrace:(NSString *)name id:(NSString *)id {
+    IBGExecutionTrace *trace = [IBGAPM startExecutionTraceWithName:name];
+    if (trace != nil) {
+        [traces setObject: trace forKey: id];
+        [channel invokeMethod:@"startExecutionTraceCallBack" arguments:id];
+    } else {
+        [channel invokeMethod:@"startExecutionTraceCallBack" arguments:nil];
+    }
+}
+
+/**
+  * Sets an execution trace attribute
+  * @param {string} id of the trace.
+  * @param {string} key of the attribute.
+  * @param {string} value of the attribute.
+  */
++ (void)setExecutionTraceAttribute:(NSString *)id key:(NSString *)key value:(NSString *)value {
+    IBGExecutionTrace *trace = [traces objectForKey:id];
+    if (trace != nil) {
+        [trace setAttributeWithKey:key value:value];
+    }
+}
+
+/**
+  * End an execution trace
+  * @param {string} id of the trace.
+  */
++ (void)endExecutionTrace:(NSString *)id {
+    IBGExecutionTrace *trace = [traces objectForKey:id];
+    if (trace != nil) {
+        [trace end];
+    }
+}
+
+/**
+  * Enables or disables auto UI tracing.
+  * @param isEnabled boolean indicating enabled or disabled.
+  */
++ (void)setAutoUITraceEnabled:(NSNumber *)isEnabled {
+   BOOL boolValue = [isEnabled boolValue];
+   IBGAPM.autoUITraceEnabled = boolValue;
+}
+
+/**
+  * Start UI trace.
+  * @param name string holding the name of the trace.
+  */
++ (void)startUITrace:(NSString *)name {
+    [IBGAPM startUITraceWithName:name];
+}
+
+/**
+  * Ends UI trace.
+  */
++ (void)endUITrace {
+    [IBGAPM endUITrace];
+}
+
+/** Reports that the screen has been changed (Repro Steps) the screen sent to this method will be the 'current view' on the dashboard
   *
   * @param screenName string containing the screen name
   *
@@ -923,7 +1043,14 @@ FlutterMethodChannel* channel;
 
       @"ReproStepsMode.enabled": @(IBGUserStepsModeEnable),
       @"ReproStepsMode.disabled": @(IBGUserStepsModeDisable),
-      @"ReproStepsMode.enabledWithNoScreenshots": @(IBGUserStepsModeEnabledWithNoScreenshots)
+      @"ReproStepsMode.enabledWithNoScreenshots": @(IBGUserStepsModeEnabledWithNoScreenshots),
+
+      @"LogLevel.none": @(IBGLogLevelNone),
+      @"LogLevel.error": @(IBGLogLevelError),
+      @"LogLevel.warning": @(IBGLogLevelWarning),
+      @"LogLevel.info": @(IBGLogLevelInfo),
+      @"LogLevel.debug": @(IBGLogLevelDebug),
+      @"LogLevel.verbose": @(IBGLogLevelVerbose)
   };
 };
 

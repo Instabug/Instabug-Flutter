@@ -6,6 +6,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:instabug_flutter/APM.dart';
 import 'package:instabug_flutter/BugReporting.dart';
 import 'package:instabug_flutter/Chats.dart';
 import 'package:instabug_flutter/CrashReporting.dart';
@@ -18,11 +19,13 @@ import 'package:instabug_flutter/Surveys.dart';
 import 'package:instabug_flutter/instabug_custom_http_client.dart';
 import 'package:instabug_flutter/models/crash_data.dart';
 import 'package:instabug_flutter/models/exception_data.dart';
+import 'package:instabug_flutter/models/trace.dart' as execution_trace;
 import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/utils/platform_manager.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:stack_trace/stack_trace.dart';
+import 'package:clock/clock.dart';
 
 import 'instabug_flutter_test.mocks.dart';
 
@@ -975,5 +978,117 @@ void main() {
     final HttpClientResponse response = await request.close();
     client.logger.onResponse(response, request);
     expect(client.requests.length, 0);
+  });
+
+  test('setAPMEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    APM.setEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setAPMEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setAPMLogLevel: Test', () async {
+    LogLevel level = LogLevel.error;
+    final List<dynamic> args = <dynamic>[level.toString()];
+    APM.setLogLevel(level);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setAPMLogLevel:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setColdAppLaunchEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    APM.setColdAppLaunchEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setColdAppLaunchEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('startExecutionTrace: Test', () async {
+    withClock(Clock.fixed(DateTime(2000, 1, 1)), () {
+      const String name = 'test_trace';
+      final DateTime timestamp = clock.now();
+      final List<dynamic> args = <dynamic>[
+        name.toString(),
+        timestamp.toString()
+      ];
+      APM.startExecutionTrace(name);
+      expect(log, <Matcher>[
+        isMethodCall(
+          'startExecutionTrace:id:',
+          arguments: args,
+        )
+      ]);
+    });
+  });
+
+  test('setExecutionTraceAttribute: Test', () async {
+    const String name = 'test_trace';
+    const String id = '111';
+    const String key = 'key';
+    const String value = 'value';
+    final List<dynamic> args = <dynamic>[id, key, value];
+    final execution_trace.Trace trace = execution_trace.Trace(id, name);
+    trace.setAttribute(key, value);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setExecutionTraceAttribute:key:value:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setCrashReportingEnabled: Test', () async {
+    const bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    CrashReporting.setEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setCrashReportingEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('setAutoUITraceEnabled: Test', () async {
+    bool isEnabled = false;
+    final List<dynamic> args = <dynamic>[isEnabled];
+    APM.setAutoUITraceEnabled(isEnabled);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setAutoUITraceEnabled:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('startUITrace: Test', () async {
+    String name = 'UI_Trace';
+    final List<dynamic> args = <dynamic>[name];
+    APM.startUITrace(name);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'startUITrace:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test('endUITrace: Test', () async {
+    final List<dynamic> args = <dynamic>[null];
+    APM.endUITrace();
+    expect(log, <Matcher>[isMethodCall('endUITrace', arguments: null)]);
   });
 }

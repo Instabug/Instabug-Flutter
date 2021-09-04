@@ -24,7 +24,9 @@ class HttpClientLogger {
       url: request.uri.toString(),
       requestHeaders: requestHeaders,
       requestBody: requestBody ?? '',
+      requestBodySize: int.parse(requestHeaders['content-length'] ?? '0'),
     );
+
     requests[request.hashCode] = requestData;
   }
 
@@ -32,22 +34,25 @@ class HttpClientLogger {
       {dynamic responseBody}) {
     final DateTime endTime = DateTime.now();
     final networkData = _getRequestData(request.hashCode);
+    final responseHeaders = <String, dynamic>{};
 
     if (networkData == null) {
       return;
     }
 
-    final responseHeaders = <String, dynamic>{};
     request.headers.forEach((String header, dynamic value) {
       responseHeaders[header] = value[0];
     });
 
     NetworkLogger.networkLog(networkData.copyWith(
       status: response.statusCode,
-      duration: endTime.difference(networkData.startTime).inMilliseconds,
+      duration: endTime.difference(networkData.startTime).inMicroseconds,
       contentType: response.headers.contentType?.value,
       responseHeaders: responseHeaders,
       responseBody: responseBody,
+      errorCode: 0,
+      errorDomain: response.statusCode != 0 ? '' : 'ClientError',
+      responseBodySize: int.parse(responseHeaders['content-length'] ?? '0'),
     ));
   }
 }
