@@ -58,6 +58,14 @@ public class InstabugFlutterPluginTest {
     }
 
     /**
+     * (boolean)
+     */
+    @Test
+    public void testSetDebugEnabled() {
+        new OnMethodCallTests().testSetDebugEnabled();
+    }
+
+    /**
      * (long)
      */
     @Test
