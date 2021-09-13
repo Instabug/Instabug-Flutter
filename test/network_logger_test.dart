@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_custom_http_client.dart';
+import 'package:instabug_flutter/instabug_custom_http_client_request.dart';
 import 'package:instabug_flutter/utils/http_client_logger.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -27,6 +28,7 @@ void main() {
   const String path = '/posts';
 
   late InstabugCustomHttpClient instabugCustomHttpClient;
+  late InstabugCustomHttpClientRequest instabugCustomHttpClientRequest;
   late MockHttpClientRequest mockRequest;
   late MockHttpClientResponse mockResponse;
 
@@ -45,6 +47,15 @@ void main() {
     mockRequest = MockHttpClientRequest();
     mockResponse = MockHttpClientResponse();
 
+    when(mockRequest.bufferOutput).thenAnswer((_) => true);
+    when(mockRequest.contentLength).thenAnswer((_) => 100);
+    when(mockRequest.encoding).thenAnswer((_) => systemEncoding);
+    when(mockRequest.followRedirects).thenAnswer((_) => true);
+    when(mockRequest.maxRedirects).thenAnswer((_) => 5);
+    when(mockRequest.persistentConnection).thenAnswer((_) => true);
+    
+    instabugCustomHttpClientRequest = InstabugCustomHttpClientRequest(mockRequest, instabugCustomHttpClient.logger);
+
     expect(mockRequest, isInstanceOf<HttpClientRequest>());
     expect(mockResponse, isInstanceOf<HttpClientResponse>());
 
@@ -62,6 +73,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.getUrl(Uri.parse(url));
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -75,6 +87,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.get(url, port, path);
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -89,6 +102,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.deleteUrl(Uri.parse(url));
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -102,6 +116,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.delete(url, port, path);
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -115,6 +130,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.postUrl(Uri.parse(url));
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -128,6 +144,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.post(url, port, path);
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -141,6 +158,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.headUrl(Uri.parse(url));
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -154,6 +172,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.head(url, port, path);
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -167,6 +186,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.patchUrl(Uri.parse(url));
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -180,6 +200,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.patch(url, port, path);
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -193,6 +214,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.openUrl('GET', Uri.parse(url));
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -206,6 +228,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.open('GET', url, port, path);
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -219,6 +242,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.putUrl(Uri.parse(url));
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -232,6 +256,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.put(url, port, path);
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -245,6 +270,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.postUrl(Uri.parse(url));
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -258,6 +284,7 @@ void main() {
         .thenAnswer((_) async => mockRequest);
 
     await instabugCustomHttpClient.post(url, port, path);
+    await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
@@ -408,6 +435,7 @@ void main() {
 
     for (int i = 0; i < 10000; i++) {
       await instabugCustomHttpClient.getUrl(Uri.parse(url));
+      await instabugCustomHttpClientRequest.close();
     }
 
     verify((instabugCustomHttpClient.logger as MockHttpClientLogger)

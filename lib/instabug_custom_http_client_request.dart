@@ -57,7 +57,7 @@ class InstabugCustomHttpClientRequest implements HttpClientRequest {
 
   @override
   Future<HttpClientResponse> close() async {
-    var response = await _originalClientRequest.close();
+    final response = await _originalClientRequest.close();
     logger.onResponse(response, _originalClientRequest);
     return response;
   }
