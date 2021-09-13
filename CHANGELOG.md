@@ -1,3 +1,8 @@
+## v10.8.0 (2021-09-13)
+
+* Introduces Instabug's new App Performance Monitoring (APM)
+
+
 ## v10.0.1 (2021-08-25)
 
 * Fixes an issue with http client logger.
