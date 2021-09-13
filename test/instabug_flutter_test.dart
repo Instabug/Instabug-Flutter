@@ -168,6 +168,19 @@ void main() {
     ]);
   });
 
+  test('setSdkDebugLogsLevel:', () async {
+    Instabug.setSdkDebugLogsLevel(IBGSDKDebugLogsLevel.verbose);
+    final List<dynamic> args = <dynamic>[
+      IBGSDKDebugLogsLevel.verbose.toString()
+    ];
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setSdkDebugLogsLevel:',
+        arguments: args,
+      )
+    ]);
+  });
+
   test('logVerbose: Test', () async {
     InstabugLog.logVerbose(message);
     final List<dynamic> args = <dynamic>[message];

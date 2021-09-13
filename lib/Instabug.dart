@@ -44,6 +44,8 @@ enum IBGLocale {
   norwegian
 }
 
+enum IBGSDKDebugLogsLevel { verbose, debug, error, none }
+
 enum ColorTheme { dark, light }
 
 enum CustomTextPlaceHolderKey {
@@ -142,6 +144,14 @@ class Instabug {
   static Future<void> setLocale(IBGLocale locale) async {
     final List<dynamic> params = <dynamic>[locale.toString()];
     await _channel.invokeMethod<Object>('setLocale:', params);
+  }
+
+  /// Sets the verbosity level of logs used to debug The SDK. The defualt value in debug
+  /// mode is sdkDebugLogsLevelVerbose and in production is sdkDebugLogsLevelError.
+  static void setSdkDebugLogsLevel(
+      IBGSDKDebugLogsLevel sdkDebugLogsLevel) async {
+    final List<dynamic> params = <dynamic>[sdkDebugLogsLevel.toString()];
+    await _channel.invokeMethod<Object>('setSdkDebugLogsLevel:', params);
   }
 
   /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.

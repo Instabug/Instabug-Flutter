@@ -133,6 +133,18 @@ NSMutableDictionary *traces;
 }
 
 /**
+  * This API sets the verbosity level of logs used to debug The SDK. The defualt value in debug 
+  * mode is sdkDebugLogsLevelVerbose and in production is sdkDebugLogsLevelError.
+  *
+  * @param sdkDebugLogsLevel
+  */
++ (void)setSdkDebugLogsLevel:(NSString *)sdkDebugLogsLevel {
+    NSDictionary *constants = [self constants];
+    NSInteger sdkDebugLogsLevelInt = ((NSNumber *) constants[sdkDebugLogsLevel]).integerValue;
+    [Instabug setSdkDebugLogsLevel:sdkDebugLogsLevelInt];
+}
+
+/**
   * Appends a log message to Instabug internal log
   * These logs are then sent along the next uploaded report.
   * All log messages are timestamped 
@@ -991,6 +1003,11 @@ NSMutableDictionary *traces;
       @"IBGLocale.spanish": @(IBGLocaleSpanish),
       @"IBGLocale.swedish": @(IBGLocaleSwedish),
       @"IBGLocale.turkish": @(IBGLocaleTurkish),
+
+      @"IBGSDKDebugLogsLevel.verbose": @(IBGSDKDebugLogsLevelVerbose),
+      @"IBGSDKDebugLogsLevel.debug": @(IBGSDKDebugLogsLevelDebug),
+      @"IBGSDKDebugLogsLevel.error": @(IBGSDKDebugLogsLevelError),
+      @"IBGSDKDebugLogsLevel.none": @(IBGSDKDebugLogsLevelNone),
       
       @"CustomTextPlaceHolderKey.shakeHint": kIBGShakeStartAlertTextStringName,
       @"CustomTextPlaceHolderKey.swipeHint": kIBGEdgeSwipeStartAlertTextStringName,
