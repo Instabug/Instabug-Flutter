@@ -80,8 +80,6 @@ NSMutableDictionary *traces;
     }
     [Instabug startWithToken:token invocationEvents:invocationEvents];
     
-    // Temporarily disabling APM hot launches
-    IBGAPM.hotAppLaunchEnabled = NO;
 }
 
 /**

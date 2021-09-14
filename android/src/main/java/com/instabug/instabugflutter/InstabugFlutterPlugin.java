@@ -142,8 +142,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).build();
         enableScreenShotByMediaProjection();
 
-        // Temporarily disabling APM hot launches
-        APM.setHotAppLaunchEnabled(false);
     }
 
     /**
