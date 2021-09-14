@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/models/trace.dart';
-import 'package:clock/clock.dart';
 
 enum LogLevel {
   none,
@@ -58,7 +57,7 @@ class APM {
     final String TRACE_NOT_STARTED_APM_NOT_ENABLED = "Execution trace " +
         name +
         " wasn't created. Please make sure to enable APM first by following the instructions at this link: https://docs.instabug.com/reference#enable-or-disable-apm";
-    final DateTime id = clock.now();
+    final DateTime id = DateTime.now();
     final Completer completer = new Completer<Trace>();
     final List<dynamic> params = <dynamic>[name.toString(), id.toString()];
     _channel.setMethodCallHandler(_handleMethod);
