@@ -1,3 +1,7 @@
+## v10.8.1 (2021-09-14)
+
+* Fixes an issue with logged requests payload size
+
 ## v10.8.0 (2021-09-13)
 
 * Introduces Instabug's new App Performance Monitoring (APM)
