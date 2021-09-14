@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:instabug_flutter/instabug_custom_http_client_request.dart';
 import 'package:instabug_flutter/utils/http_client_logger.dart';
 import 'package:meta/meta.dart';
 
@@ -76,67 +77,76 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   void close({bool force = false}) => client.close(force: force);
 
   @override
-  Future<HttpClientRequest> delete(String host, int port, String path) =>
+  Future<InstabugCustomHttpClientRequest> delete(
+          String host, int port, String path) =>
       client.delete(host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> deleteUrl(Uri url) =>
+  Future<InstabugCustomHttpClientRequest> deleteUrl(Uri url) =>
       client.deleteUrl(url).then(_finish);
 
   @override
   set findProxy(String Function(Uri url)? f) => client.findProxy = f;
 
   @override
-  Future<HttpClientRequest> get(String host, int port, String path) =>
+  Future<InstabugCustomHttpClientRequest> get(
+          String host, int port, String path) =>
       client.get(host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> getUrl(Uri url) => client.getUrl(url).then(_finish);
+  Future<InstabugCustomHttpClientRequest> getUrl(Uri url) =>
+      client.getUrl(url).then(_finish);
 
   @override
-  Future<HttpClientRequest> head(String host, int port, String path) =>
+  Future<InstabugCustomHttpClientRequest> head(
+          String host, int port, String path) =>
       client.head(host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> headUrl(Uri url) =>
+  Future<InstabugCustomHttpClientRequest> headUrl(Uri url) =>
       client.headUrl(url).then(_finish);
 
   @override
-  Future<HttpClientRequest> open(
+  Future<InstabugCustomHttpClientRequest> open(
           String method, String host, int port, String path) =>
       client.open(method, host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> openUrl(String method, Uri url) =>
+  Future<InstabugCustomHttpClientRequest> openUrl(String method, Uri url) =>
       client.openUrl(method, url).then(_finish);
 
   @override
-  Future<HttpClientRequest> patch(String host, int port, String path) =>
+  Future<InstabugCustomHttpClientRequest> patch(
+          String host, int port, String path) =>
       client.patch(host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> patchUrl(Uri url) =>
+  Future<InstabugCustomHttpClientRequest> patchUrl(Uri url) =>
       client.patchUrl(url).then(_finish);
 
   @override
-  Future<HttpClientRequest> post(String host, int port, String path) =>
+  Future<InstabugCustomHttpClientRequest> post(
+          String host, int port, String path) =>
       client.post(host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> postUrl(Uri url) =>
+  Future<InstabugCustomHttpClientRequest> postUrl(Uri url) =>
       client.postUrl(url).then(_finish);
 
   @override
-  Future<HttpClientRequest> put(String host, int port, String path) =>
+  Future<InstabugCustomHttpClientRequest> put(
+          String host, int port, String path) =>
       client.put(host, port, path).then(_finish);
 
   @override
-  Future<HttpClientRequest> putUrl(Uri url) => client.putUrl(url).then(_finish);
+  Future<InstabugCustomHttpClientRequest> putUrl(Uri url) =>
+      client.putUrl(url).then(_finish);
 
-  Future<HttpClientRequest> _finish(HttpClientRequest request) async {
+  Future<InstabugCustomHttpClientRequest> _finish(
+      HttpClientRequest request) async {
     logger.onRequest(request);
-    final response = await request.close();
-    logger.onResponse(response, request);
-    return request;
+    final customRequest =
+        InstabugCustomHttpClientRequest(request, logger);
+    return customRequest;
   }
 }

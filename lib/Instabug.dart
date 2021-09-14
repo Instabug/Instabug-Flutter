@@ -44,6 +44,8 @@ enum IBGLocale {
   norwegian
 }
 
+enum IBGSDKDebugLogsLevel { verbose, debug, error, none }
+
 enum ColorTheme { dark, light }
 
 enum CustomTextPlaceHolderKey {
@@ -144,6 +146,14 @@ class Instabug {
     await _channel.invokeMethod<Object>('setLocale:', params);
   }
 
+  /// Sets the verbosity level of logs used to debug The SDK. The defualt value in debug
+  /// mode is sdkDebugLogsLevelVerbose and in production is sdkDebugLogsLevelError.
+  static void setSdkDebugLogsLevel(
+      IBGSDKDebugLogsLevel sdkDebugLogsLevel) async {
+    final List<dynamic> params = <dynamic>[sdkDebugLogsLevel.toString()];
+    await _channel.invokeMethod<Object>('setSdkDebugLogsLevel:', params);
+  }
+
   /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.
   /// It should be of type [ColorTheme].
   static Future<void> setColorTheme(ColorTheme colorTheme) async {
@@ -223,6 +233,16 @@ class Instabug {
       bool sessionProfilerEnabled) async {
     final List<dynamic> params = <dynamic>[sessionProfilerEnabled];
     await _channel.invokeMethod<Object>('setSessionProfilerEnabled:', params);
+  }
+
+  /// Android only
+  /// Enable/disable SDK logs
+  /// [debugEnabled] desired state of debug mode.
+  static void setDebugEnabled(bool debugEnabled) async {
+    if (PlatformManager.instance.isAndroid()) {
+      final List<dynamic> params = <dynamic>[debugEnabled];
+      await _channel.invokeMethod<Object>('setDebugEnabled:', params);
+    }
   }
 
   /// Sets the primary color of the SDK's UI.

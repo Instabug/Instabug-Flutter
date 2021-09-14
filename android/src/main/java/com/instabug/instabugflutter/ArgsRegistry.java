@@ -7,6 +7,7 @@ import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.visualusersteps.State;
+import com.instabug.apm.model.LogLevel;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -60,6 +61,7 @@ final class ArgsRegistry {
         registerInstabugExtendedBugReportModeArgs(ARGS);
         registerInstabugActionTypesArgs(ARGS);
         registerReproStepsModeArgs(ARGS);
+        registerLogLevelArgs(ARGS);
     }
 
     /**
@@ -215,6 +217,15 @@ final class ArgsRegistry {
         args.put("ReproStepsMode.enabled", State.ENABLED);
         args.put("ReproStepsMode.disabled", State.DISABLED);
         args.put("ReproStepsMode.enabledWithNoScreenshots",State.ENABLED_WITH_NO_SCREENSHOTS);
+    }
+
+    static void registerLogLevelArgs(Map<String, Object> args) {
+        args.put("logLevelNone", LogLevel.NONE);
+        args.put("logLevelError", LogLevel.ERROR);
+        args.put("logLevelWarning", LogLevel.WARNING);
+        args.put("logLevelInfo", LogLevel.INFO);
+        args.put("logLevelDebug", LogLevel.DEBUG);
+        args.put("logLevelVerbose", LogLevel.VERBOSE);
     }
 
 }
