@@ -40,7 +40,7 @@ class HttpClientLogger {
       return;
     }
 
-    request.headers.forEach((String header, dynamic value) {
+    response.headers.forEach((String header, dynamic value) {
       responseHeaders[header] = value[0];
     });
 
