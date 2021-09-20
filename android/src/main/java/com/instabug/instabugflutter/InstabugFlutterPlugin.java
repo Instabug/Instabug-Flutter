@@ -1123,6 +1123,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         final String requestContentType = (String) jsonObject.get("contentType");
         final String responseContentType = (String) jsonObject.get("responseContentType");
         //--------------------------------------------
+         final long requestBodySize = ((Number) jsonObject.get("requestBodySize")).longValue();
+         final long responseBodySize = ((Number) jsonObject.get("responseBodySize")).longValue();
+        //--------------------------------------------
         final String errorDomain = (String) jsonObject.get("errorDomain");
         final Integer statusCode = (Integer) jsonObject.get("responseCode");
         final long requestDuration = ((Number) jsonObject.get("duration")).longValue() / 1000;
@@ -1138,9 +1141,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
         }
 
         try {
-            Method method = getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, int.class, String.class, String.class);
+            Method method = getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class);
             if (method != null) {
-                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, statusCode, responseContentType, errorMessage);
+                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage);
             } else {
                 Log.e("IB-CP-Bridge", "apmNetworkLogByReflection was not found by reflection");
             }
