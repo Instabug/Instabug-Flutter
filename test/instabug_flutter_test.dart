@@ -32,6 +32,7 @@ import 'instabug_flutter_test.mocks.dart';
   PlatformManager,
 ])
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
   final List<MethodCall> log = <MethodCall>[];
   const appToken = '068ba9a8c3615035e163dc5f829c73be';
