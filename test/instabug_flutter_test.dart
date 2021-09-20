@@ -17,6 +17,7 @@ import 'package:instabug_flutter/NetworkLogger.dart';
 import 'package:instabug_flutter/Replies.dart';
 import 'package:instabug_flutter/Surveys.dart';
 import 'package:instabug_flutter/instabug_custom_http_client.dart';
+import 'package:instabug_flutter/instabug_custom_http_client_request.dart';
 import 'package:instabug_flutter/models/crash_data.dart';
 import 'package:instabug_flutter/models/exception_data.dart';
 import 'package:instabug_flutter/models/trace.dart' as execution_trace;
@@ -995,16 +996,6 @@ void main() {
     expect(newNetworkData.startTime, startDateCopy);
     expect(newNetworkData.endTime, endDateCopy);
     expect(newNetworkData.status, statusCopy);
-  });
-
-  test('Test Http client logger', () async {
-    final InstabugCustomHttpClient client = InstabugCustomHttpClient();
-    final HttpClientRequest request = await client
-        .getUrl(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
-    client.logger.onRequest(request);
-    final HttpClientResponse response = await request.close();
-    client.logger.onResponse(response, request);
-    expect(client.requests.length, 0);
   });
 
   test('setAPMEnabled: Test', () async {
