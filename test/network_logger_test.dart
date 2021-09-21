@@ -396,6 +396,7 @@ void main() {
       () async {
     final Future<bool> Function(Uri url, String scheme, String realm) f =
         (Uri url, String scheme, String? realm) async => true;
+
     instabugCustomHttpClient.authenticate =
         f as Future<bool> Function(Uri url, String scheme, String? realm);
     verify((instabugCustomHttpClient.client as MockHttpClient).authenticate = f)
