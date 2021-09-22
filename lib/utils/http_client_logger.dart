@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:instabug_flutter/NetworkLogger.dart';
@@ -30,6 +31,16 @@ class HttpClientLogger {
     requests[request.hashCode] = requestData;
   }
 
+  void onRequestUpdate(HttpClientRequest request, {dynamic requestBody}) {
+    final networkData = _getRequestData(request.hashCode);
+    if (networkData == null) {
+      return;
+    }
+    requests[request.hashCode] = networkData.copyWith(
+      requestBody: requestBody,
+    );
+  }
+
   void onResponse(HttpClientResponse response, HttpClientRequest request,
       {dynamic responseBody}) {
     final DateTime endTime = DateTime.now();
@@ -48,6 +59,9 @@ class HttpClientLogger {
       requestHeaders[header] = value[0];
     });
 
+    final int requestBodySize =
+        json.decode(json.encode(networkData.requestBody)).length;
+
     NetworkLogger.networkLog(networkData.copyWith(
       status: response.statusCode,
       duration: endTime.difference(networkData.startTime).inMicroseconds,
@@ -57,6 +71,7 @@ class HttpClientLogger {
       errorCode: 0,
       errorDomain: response.statusCode != 0 ? '' : 'ClientError',
       responseBodySize: int.parse(responseHeaders['content-length'] ?? '0'),
+      requestBodySize: requestBodySize,
       requestHeaders: requestHeaders,
     ));
   }
