@@ -35,6 +35,7 @@ class HttpClientLogger {
     final DateTime endTime = DateTime.now();
     final networkData = _getRequestData(request.hashCode);
     final responseHeaders = <String, dynamic>{};
+    final requestHeaders = <String, dynamic>{};
 
     if (networkData == null) {
       return;
@@ -42,6 +43,9 @@ class HttpClientLogger {
 
     response.headers.forEach((String header, dynamic value) {
       responseHeaders[header] = value[0];
+    });
+    request.headers.forEach((String header, dynamic value) {
+      requestHeaders[header] = value[0];
     });
 
     NetworkLogger.networkLog(networkData.copyWith(
@@ -53,6 +57,7 @@ class HttpClientLogger {
       errorCode: 0,
       errorDomain: response.statusCode != 0 ? '' : 'ClientError',
       responseBodySize: int.parse(responseHeaders['content-length'] ?? '0'),
+      requestHeaders: requestHeaders,
     ));
   }
 }
