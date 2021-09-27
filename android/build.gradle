@@ -16,6 +16,9 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
     }
 }
 
@@ -34,6 +37,6 @@ android {
     }
 }
 dependencies {
-    implementation 'com.instabug.library:instabug:10.9.0'
+    implementation 'com.instabug.library:instabug:10.9.0.3427-SNAPSHOT'
     testImplementation 'junit:junit:4.12'
 }
