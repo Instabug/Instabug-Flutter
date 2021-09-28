@@ -1,7 +1,11 @@
+## v10.9.0 (2021-09-28)
+
+* Migrates to Flutter Android embedding v2
+* Bumps Instabug native SDKs to v10.9
+
 ## v10.8.0 (2021-09-13)
 
 * Introduces Instabug's new App Performance Monitoring (APM)
-
 
 ## v10.0.1 (2021-08-25)
 

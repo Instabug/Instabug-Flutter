@@ -56,16 +56,14 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
       client.addProxyCredentials(host, port, realm, credentials);
 
   @override
-  set authenticate(
-          Future<bool> Function(Uri url, String scheme, String realm)? f) =>
-      client.authenticate = f;
+  set authenticate(f) {
+    client.authenticate = f;
+  }
 
   @override
-  set authenticateProxy(
-          Future<bool> Function(
-                  String host, int port, String scheme, String realm)?
-              f) =>
-      client.authenticateProxy = f;
+  set authenticateProxy(f) {
+    client.authenticateProxy = f;
+  }
 
   @override
   set badCertificateCallback(
@@ -145,8 +143,7 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
   Future<InstabugCustomHttpClientRequest> _finish(
       HttpClientRequest request) async {
     logger.onRequest(request);
-    final customRequest =
-        InstabugCustomHttpClientRequest(request, logger);
+    final customRequest = InstabugCustomHttpClientRequest(request, logger);
     return customRequest;
   }
 }
