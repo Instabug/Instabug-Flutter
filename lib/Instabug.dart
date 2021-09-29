@@ -148,7 +148,7 @@ class Instabug {
 
   /// Sets the verbosity level of logs used to debug The SDK. The defualt value in debug
   /// mode is sdkDebugLogsLevelVerbose and in production is sdkDebugLogsLevelError.
-  static void setSdkDebugLogsLevel(
+  static Future<void> setSdkDebugLogsLevel(
       IBGSDKDebugLogsLevel sdkDebugLogsLevel) async {
     final List<dynamic> params = <dynamic>[sdkDebugLogsLevel.toString()];
     await _channel.invokeMethod<Object>('setSdkDebugLogsLevel:', params);
@@ -238,7 +238,7 @@ class Instabug {
   /// Android only
   /// Enable/disable SDK logs
   /// [debugEnabled] desired state of debug mode.
-  static void setDebugEnabled(bool debugEnabled) async {
+  static Future<void> setDebugEnabled(bool debugEnabled) async {
     if (PlatformManager.instance.isAndroid()) {
       final List<dynamic> params = <dynamic>[debugEnabled];
       await _channel.invokeMethod<Object>('setDebugEnabled:', params);

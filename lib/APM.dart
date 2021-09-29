@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/models/trace.dart';
@@ -32,21 +33,21 @@ class APM {
 
   /// Enables or disables APM feature.
   /// [boolean] isEnabled
-  static void setEnabled(bool isEnabled) async {
+  static Future<void> setEnabled(bool isEnabled) async {
     final List<dynamic> params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>('setAPMEnabled:', params);
   }
 
   /// Sets log Level to determine level of details in a log
   /// [logLevel] Enum value to determine the level
-  static void setLogLevel(LogLevel logLevel) async {
+  static Future<void> setLogLevel(LogLevel logLevel) async {
     final List<dynamic> params = <dynamic>[logLevel.toString()];
     await _channel.invokeMethod<Object>('setAPMLogLevel:', params);
   }
 
   /// Enables or disables cold app launch tracking.
   /// [boolean] isEnabled
-  static void setColdAppLaunchEnabled(bool isEnabled) async {
+  static Future<void> setColdAppLaunchEnabled(bool isEnabled) async {
     final List<dynamic> params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>('setColdAppLaunchEnabled:', params);
   }
@@ -69,7 +70,7 @@ class APM {
       }
     };
     _startExecutionTraceCallback = callback;
-    _channel.invokeMethod<Object>('startExecutionTrace:id:', params);
+    await _channel.invokeMethod<Object>('startExecutionTrace:id:', params);
     return completer.future;
   }
 
@@ -77,7 +78,7 @@ class APM {
   /// [String] id of the trace.
   /// [String] key of attribute.
   /// [String] value of attribute.
-  static void setExecutionTraceAttribute(
+  static Future<void> setExecutionTraceAttribute(
       String id, String key, String value) async {
     final List<dynamic> params = <dynamic>[
       id.toString(),
@@ -90,27 +91,27 @@ class APM {
 
   /// Ends an execution trace.
   /// [String] id of the trace.
-  static void endExecutionTrace(String id) async {
+  static Future<void> endExecutionTrace(String id) async {
     final List<dynamic> params = <dynamic>[id];
     await _channel.invokeMethod<Object>('endExecutionTrace:', params);
   }
 
   /// Enables or disables auto UI tracing.
   /// [boolean] isEnabled
-  static void setAutoUITraceEnabled(bool isEnabled) async {
+  static Future<void> setAutoUITraceEnabled(bool isEnabled) async {
     final List<dynamic> params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>('setAutoUITraceEnabled:', params);
   }
 
   /// Starts UI trace.
   /// [String] name
-  static void startUITrace(String name) async {
+  static Future<void> startUITrace(String name) async {
     final List<dynamic> params = <dynamic>[name];
     await _channel.invokeMethod<Object>('startUITrace:', params);
   }
 
   /// Ends UI trace.
-  static void endUITrace() async {
+  static Future<void> endUITrace() async {
     await _channel.invokeMethod<Object>('endUITrace');
   }
   /// Ends UI trace.
