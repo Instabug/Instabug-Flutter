@@ -20,36 +20,38 @@ NSMutableDictionary *traces;
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     BOOL isImplemented = NO;
-      SEL method = NSSelectorFromString(call.method);
-      if([[InstabugFlutterPlugin class] respondsToSelector:method]) {
+    SEL method = NSSelectorFromString(call.method);
+    if ([[InstabugFlutterPlugin class] respondsToSelector:method]) {
         isImplemented = YES;
         NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[InstabugFlutterPlugin class] methodSignatureForSelector:method]];
         [inv setSelector:method];
         [inv setTarget:[InstabugFlutterPlugin class]];
         /*
          * Indices 0 and 1 indicate the hidden arguments self and _cmd,
-         * respectively; you should set these values directly with the target and selector properties. 
+         * respectively; you should set these values directly with the target and selector properties.
          * Use indices 2 and greater for the arguments normally passed in a message.
          */
         NSInteger index = 2;
         NSArray* argumentsArray = call.arguments;
         for (NSObject * argument in argumentsArray) {
-          [inv setArgument:&(argument) atIndex:index];
-          index++;
-        }      
+            [inv setArgument:&argument atIndex:index];
+            index++;
+        }
         [inv invoke];
-          NSMethodSignature *signature = [inv methodSignature];
-          const char *type = [signature methodReturnType];
+        NSMethodSignature *signature = [inv methodSignature];
+        const char *type = [signature methodReturnType];
 
-          if (strcmp(type, "v") != 0) {
+        if (strcmp(type, "v") != 0) {
             void *returnVal;
             [inv getReturnValue:&returnVal];
             NSObject *resultSet = (__bridge NSObject *)returnVal;
             result(resultSet);
-          }
-      }
+        } else {
+            result(nil);
+        }
+    }
     if (!isImplemented) {
-      result(FlutterMethodNotImplemented);
+        result(FlutterMethodNotImplemented);
     }
 }
 
