@@ -66,7 +66,8 @@ void main() {
     url: url,
     method: method,
     startTime: startDate,
-    contentType: contentType,
+    requestContentType: contentType,
+    responseContentType: contentType,
     duration: duration,
     endTime: endDate,
     requestBody: requestBody,
@@ -937,7 +938,10 @@ void main() {
     final newNetworkData = networkData.toMap();
     expect(networkData.url, newNetworkData['url']);
     expect(networkData.method, newNetworkData['method']);
-    expect(networkData.contentType, newNetworkData['contentType']);
+    expect(
+        networkData.requestContentType, newNetworkData['requestContentType']);
+    expect(
+        networkData.responseContentType, newNetworkData['responseContentType']);
     expect(networkData.duration, newNetworkData['duration']);
     expect(networkData.requestBody, newNetworkData['requestBody']);
     expect(networkData.responseBody, newNetworkData['responseBody']);
@@ -978,7 +982,8 @@ void main() {
         responseBody: responseBodyCopy,
         responseHeaders: responseHeadersCopy,
         duration: durationCopy,
-        contentType: contentTypeCopy,
+        requestContentType: contentTypeCopy,
+        responseContentType: contentTypeCopy,
         startTime: startDateCopy,
         endTime: endDateCopy,
         status: statusCopy);
@@ -990,7 +995,8 @@ void main() {
     expect(newNetworkData.responseBody, responseBodyCopy);
     expect(newNetworkData.responseHeaders, responseHeadersCopy);
     expect(newNetworkData.duration, durationCopy);
-    expect(newNetworkData.contentType, contentTypeCopy);
+    expect(newNetworkData.requestContentType, contentTypeCopy);
+    expect(newNetworkData.responseContentType, contentTypeCopy);
     expect(newNetworkData.startTime, startDateCopy);
     expect(newNetworkData.endTime, endDateCopy);
     expect(newNetworkData.status, statusCopy);

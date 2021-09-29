@@ -1121,7 +1121,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
             final String responseBody = (String) jsonObject.get("responseBody");
             final String requestMethod = (String) jsonObject.get("method");
             //--------------------------------------------
-            final String requestContentType = (String) jsonObject.get("contentType");
+            final String requestContentType = (String) jsonObject.get("requestContentType");
             final String responseContentType = (String) jsonObject.get("responseContentType");
             //--------------------------------------------
             final long requestBodySize = ((Number) jsonObject.get("requestBodySize")).longValue();

@@ -65,7 +65,8 @@ class HttpClientLogger {
     NetworkLogger.networkLog(networkData.copyWith(
       status: response.statusCode,
       duration: endTime.difference(networkData.startTime).inMicroseconds,
-      contentType: response.headers.contentType?.value,
+      responseContentType: response.headers.contentType?.value,
+      requestContentType: request.headers.contentType?.value,
       responseHeaders: responseHeaders,
       responseBody: responseBody,
       errorCode: 0,
