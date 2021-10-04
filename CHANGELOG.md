@@ -1,4 +1,4 @@
-## v10.8.1 (2021-09-14)
+## master
 
 * Fixes an issue with logged requests payload size
 
