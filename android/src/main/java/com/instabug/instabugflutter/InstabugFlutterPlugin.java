@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
@@ -48,6 +50,8 @@ import java.util.Locale;
 import java.util.Map;
 import com.instabug.library.Platform;
 
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -58,7 +62,7 @@ import io.reactivex.annotations.Nullable;
 /**
  * InstabugFlutterPlugin
  */
-public class InstabugFlutterPlugin implements MethodCallHandler {
+public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
 
     final public static String INVOCATION_EVENT_NONE = "InvocationEvent.none";
     final public static String INVOCATION_EVENT_SCREENSHOT = "InvocationEvent.screenshot";
@@ -75,7 +79,21 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
      * Plugin registration.
      */
     public static void registerWith(Registrar registrar) {
-        channel = new MethodChannel(registrar.messenger(), "instabug_flutter");
+        register(registrar.messenger());
+    }
+
+    @Override
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+        register(binding.getBinaryMessenger());
+    }
+
+    @Override
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+
+    }
+
+    private static void register(BinaryMessenger messenger){
+        channel = new MethodChannel(messenger, "instabug_flutter");
         channel.setMethodCallHandler(new InstabugFlutterPlugin());
     }
 
@@ -1222,5 +1240,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler {
     public void disable() {
         Instabug.disable();
     }
+
 
 }

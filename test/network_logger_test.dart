@@ -20,6 +20,7 @@ import 'network_logger_test.mocks.dart';
   HttpClientCredentials,
 ])
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
 
   final List<MethodCall> log = <MethodCall>[];
@@ -53,8 +54,9 @@ void main() {
     when(mockRequest.followRedirects).thenAnswer((_) => true);
     when(mockRequest.maxRedirects).thenAnswer((_) => 5);
     when(mockRequest.persistentConnection).thenAnswer((_) => true);
-    
-    instabugCustomHttpClientRequest = InstabugCustomHttpClientRequest(mockRequest, instabugCustomHttpClient.logger);
+
+    instabugCustomHttpClientRequest = InstabugCustomHttpClientRequest(
+        mockRequest, instabugCustomHttpClient.logger);
 
     expect(mockRequest, isInstanceOf<HttpClientRequest>());
     expect(mockResponse, isInstanceOf<HttpClientResponse>());
@@ -393,8 +395,10 @@ void main() {
   test('expect instabug custom http client to set client authenticate',
       () async {
     final Future<bool> Function(Uri url, String scheme, String realm) f =
-        (Uri url, String scheme, String realm) async => true;
-    instabugCustomHttpClient.authenticate = f;
+        (Uri url, String scheme, String? realm) async => true;
+
+    instabugCustomHttpClient.authenticate =
+        f as Future<bool> Function(Uri url, String scheme, String? realm);
     verify((instabugCustomHttpClient.client as MockHttpClient).authenticate = f)
         .called(1);
   });
@@ -403,8 +407,9 @@ void main() {
       () async {
     final Future<bool> Function(
             String host, int port, String scheme, String realm) f =
-        (String host, int port, String scheme, String realm) async => true;
-    instabugCustomHttpClient.authenticateProxy = f;
+        (String host, int port, String scheme, String? realm) async => true;
+    instabugCustomHttpClient.authenticateProxy = f as Future<bool> Function(
+        String host, int port, String scheme, String? realm);
     verify((instabugCustomHttpClient.client as MockHttpClient)
             .authenticateProxy = f)
         .called(1);

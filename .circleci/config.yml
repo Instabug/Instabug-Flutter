@@ -60,7 +60,7 @@ jobs:
 
    flutter_tests:
     docker:
-      - image: cirrusci/flutter:2.2.3
+      - image: cirrusci/flutter
     steps:
       - checkout
       - run: sudo gem install bundler:1.16.1
@@ -72,6 +72,18 @@ jobs:
       - run: bash <(curl -s https://codecov.io/bash)
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
       - run: flutter pub publish --dry-run
+
+   flutter_tests_2.2.3:
+    docker:
+      - image: cirrusci/flutter:2.2.3
+    steps:
+      - checkout
+      - run: sudo gem install bundler:1.16.1
+      - run: bundle check || sudo bundle install        
+      - run: bundle exec danger
+      - run: flutter doctor
+      - run: flutter packages get
+      - run: flutter test --coverage
 
    ios_tests:
     macos:
@@ -128,12 +140,14 @@ workflows:
   build-test-and-approval-deploy:
     jobs:
       - flutter_tests
+      - flutter_tests_2.2.3
       - android_tests
       - ios_tests
       - hold_pub_release:
           type: approval
           requires:
             - flutter_tests
+            - flutter_tests_2.2.3
             - android_tests
             - ios_tests
           filters:
@@ -149,6 +163,7 @@ workflows:
           type: approval
           requires:
             - flutter_tests
+            - flutter_tests_2.2.3
             - android_tests
             - ios_tests
           filters:
