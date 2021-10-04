@@ -766,7 +766,7 @@ NSMutableDictionary *traces;
         requestHeaders = @{};
     }
     NSDictionary* responseHeaders = networkData[@"responseHeaders"];
-    NSString* contentType = @"application/json";
+    NSString* contentType = networkData[@"responseContentType"];
     int64_t duration = [networkData[@"duration"] integerValue];
     int64_t startTime = [networkData[@"startTime"] integerValue] * 1000;
 
