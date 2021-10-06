@@ -493,4 +493,10 @@
   */
 + (void)endUITrace;
 
+/**
+  * Ends the current session’s App Launch. Calling this API is optional, App Launches will still be captured and ended automatically by the SDK;
+  * this API just allows you to change when an App Launch actually ends.
+  */
++ (void)endAppLaunch;
+
 @end
