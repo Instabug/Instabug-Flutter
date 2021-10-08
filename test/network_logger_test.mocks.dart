@@ -223,6 +223,12 @@ class MockHttpClientLogger extends _i1.Mock implements _i5.HttpClientLogger {
           Invocation.method(#onRequest, [request], {#requestBody: requestBody}),
           returnValueForMissingStub: null);
   @override
+  void onRequestUpdate(_i2.HttpClientRequest? request, {dynamic requestBody}) =>
+      super.noSuchMethod(
+          Invocation.method(
+              #onRequestUpdate, [request], {#requestBody: requestBody}),
+          returnValueForMissingStub: null);
+  @override
   void onResponse(
           _i2.HttpClientResponse? response, _i2.HttpClientRequest? request,
           {dynamic responseBody}) =>

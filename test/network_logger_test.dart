@@ -27,6 +27,12 @@ void main() {
   const String url = 'https://jsonplaceholder.typicode.com';
   const int port = 8888;
   const String path = '/posts';
+  const body = {'testKey': 'testValue'};
+  const listOfObjects = [
+    {'test1': 'test'},
+    {'test2': 'test'},
+    {'test3': 'test'}
+  ];
 
   late InstabugCustomHttpClient instabugCustomHttpClient;
   late InstabugCustomHttpClientRequest instabugCustomHttpClientRequest;
@@ -139,6 +145,67 @@ void main() {
         instabugCustomHttpClient.logger.onResponse(mockResponse, mockRequest));
   });
 
+  test(
+      'expect instabug custom http client request WRITE to call onRequestUpdate',
+      () async {
+    when<dynamic>(
+            (instabugCustomHttpClient.client as MockHttpClient).postUrl(any))
+        .thenAnswer((_) async => mockRequest);
+
+    await instabugCustomHttpClient.postUrl(Uri.parse(url));
+    instabugCustomHttpClientRequest.write(body.toString());
+    await instabugCustomHttpClientRequest.close();
+
+    verify(instabugCustomHttpClient.logger
+        .onRequestUpdate(mockRequest, requestBody: body.toString()));
+  });
+
+  test(
+      'expect instabug custom http client request WRITELN to call onRequestUpdate',
+      () async {
+    when<dynamic>(
+            (instabugCustomHttpClient.client as MockHttpClient).postUrl(any))
+        .thenAnswer((_) async => mockRequest);
+
+    await instabugCustomHttpClient.postUrl(Uri.parse(url));
+    instabugCustomHttpClientRequest.writeln(body.toString());
+    await instabugCustomHttpClientRequest.close();
+
+    verify(instabugCustomHttpClient.logger
+        .onRequestUpdate(mockRequest, requestBody: body.toString() + '\n'));
+  });
+
+  test(
+      'expect instabug custom http client request WRITE CHARCODE to call onRequestUpdate',
+      () async {
+    when<dynamic>(
+            (instabugCustomHttpClient.client as MockHttpClient).postUrl(any))
+        .thenAnswer((_) async => mockRequest);
+
+    await instabugCustomHttpClient.postUrl(Uri.parse(url));
+    instabugCustomHttpClientRequest.writeCharCode(97);
+    await instabugCustomHttpClientRequest.close();
+
+    verify(instabugCustomHttpClient.logger
+        .onRequestUpdate(mockRequest, requestBody: 'a'));
+  });
+
+  test(
+      'expect instabug custom http client request WRITE ALL to call onRequestUpdate',
+      () async {
+    when<dynamic>(
+            (instabugCustomHttpClient.client as MockHttpClient).postUrl(any))
+        .thenAnswer((_) async => mockRequest);
+
+    await instabugCustomHttpClient.postUrl(Uri.parse(url));
+    instabugCustomHttpClientRequest.writeAll(listOfObjects);
+    await instabugCustomHttpClientRequest.close();
+
+    verify(instabugCustomHttpClient.logger.onRequestUpdate(mockRequest,
+        requestBody: listOfObjects[0].toString() +
+            listOfObjects[1].toString() +
+            listOfObjects[2].toString()));
+  });
   test('expect instabug custom http client POST to return request and log',
       () async {
     when<dynamic>((instabugCustomHttpClient.client as MockHttpClient)
