@@ -1,3 +1,7 @@
+## master
+
+* Adds endAppLaunch API
+
 ## v10.9.0 (2021-09-28)
 
 * Migrates to Flutter Android embedding v2
