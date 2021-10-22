@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:instabug_flutter/NetworkLogger.dart';
 import 'package:instabug_flutter/instabug_custom_http_client.dart';
 import 'package:instabug_flutter/instabug_custom_http_client_request.dart';
+import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/utils/http_client_logger.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -18,6 +20,9 @@ import 'network_logger_test.mocks.dart';
   HttpClientRequest,
   HttpClientResponse,
   HttpClientCredentials,
+  NetworkLogger,
+  NetworkData,
+  HttpHeaders,
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +43,9 @@ void main() {
   late InstabugCustomHttpClientRequest instabugCustomHttpClientRequest;
   late MockHttpClientRequest mockRequest;
   late MockHttpClientResponse mockResponse;
+  late MockNetworkLogger mockNetworkLogger;
+  late MockNetworkData mockNetworkData;
+  late MockHttpHeaders mockHttpHeaders;
 
   setUpAll(() async {
     const MethodChannel('instabug_flutter')
@@ -53,6 +61,9 @@ void main() {
 
     mockRequest = MockHttpClientRequest();
     mockResponse = MockHttpClientResponse();
+    mockNetworkLogger = MockNetworkLogger();
+    mockNetworkData = MockNetworkData();
+    mockHttpHeaders = MockHttpHeaders();
 
     when(mockRequest.bufferOutput).thenAnswer((_) => true);
     when(mockRequest.contentLength).thenAnswer((_) => 100);
@@ -60,6 +71,13 @@ void main() {
     when(mockRequest.followRedirects).thenAnswer((_) => true);
     when(mockRequest.maxRedirects).thenAnswer((_) => 5);
     when(mockRequest.persistentConnection).thenAnswer((_) => true);
+    when(mockRequest.headers).thenAnswer((_) => mockHttpHeaders);
+    when(mockResponse.headers).thenAnswer((_) => mockHttpHeaders);
+    when(mockNetworkData.requestBody).thenAnswer((_) => '');
+    when(mockResponse.statusCode).thenAnswer((_) => 0);
+    when(mockNetworkData.startTime)
+        .thenAnswer((_) => DateTime.parse('2021-10-25'));
+    when(mockHttpHeaders.contentType).thenAnswer((_) => ContentType.json);
 
     instabugCustomHttpClientRequest = InstabugCustomHttpClientRequest(
         mockRequest, instabugCustomHttpClient.logger);
@@ -129,6 +147,37 @@ void main() {
     verify(instabugCustomHttpClient.logger.onRequest(mockRequest));
     verify(
         instabugCustomHttpClient.logger.onResponse(mockResponse, mockRequest));
+  });
+
+  test('expect onResponse to call networkLog method', () async {
+    final HttpClientLogger clientLogger = HttpClientLogger();
+    when<dynamic>(mockNetworkData.copyWith(
+      url: anyNamed('url'),
+      method: anyNamed('method'),
+      requestBody: anyNamed('requestBody'),
+      requestBodySize: anyNamed('requestBodySize'),
+      responseBodySize: anyNamed('responseBodySize'),
+      status: anyNamed('status'),
+      requestHeaders: anyNamed('requestHeaders'),
+      responseHeaders: anyNamed('responseHeaders'),
+      duration: anyNamed('duration'),
+      requestContentType: anyNamed('requestContentType'),
+      responseContentType: anyNamed('responseContentType'),
+      endTime: anyNamed('endTime'),
+      startTime: anyNamed('startTime'),
+      errorCode: anyNamed('errorCode'),
+      errorDomain: anyNamed('errorDomain'),
+    )).thenReturn(mockNetworkData);
+    when<dynamic>(mockNetworkData.toMap()).thenReturn(<String, dynamic>{});
+    when<dynamic>(mockNetworkLogger.networkLog(any))
+        .thenAnswer((realInvocation) => Future<bool>(() => true));
+
+    clientLogger.requests[mockRequest.hashCode] = mockNetworkData;
+    clientLogger.networkLogger = mockNetworkLogger;
+
+    clientLogger.onResponse(mockResponse, mockRequest);
+
+    verify(mockNetworkLogger.networkLog(any));
   });
 
   test('expect instabug custom http client POST URL to return request and log',

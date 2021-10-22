@@ -6,6 +6,7 @@ import 'package:instabug_flutter/models/network_data.dart';
 
 class HttpClientLogger {
   final requests = <int, NetworkData>{};
+  var networkLogger = NetworkLogger();
 
   NetworkData? _getRequestData(int requestHashCode) {
     if (requests[requestHashCode] != null) {
@@ -62,7 +63,7 @@ class HttpClientLogger {
     final int requestBodySize =
         json.decode(json.encode(networkData.requestBody)).length;
 
-    NetworkLogger.networkLog(networkData.copyWith(
+    networkLogger.networkLog(networkData.copyWith(
       status: response.statusCode,
       duration: endTime.difference(networkData.startTime).inMicroseconds,
       responseContentType: response.headers.contentType?.value,

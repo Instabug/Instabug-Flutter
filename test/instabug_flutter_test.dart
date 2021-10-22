@@ -886,7 +886,8 @@ void main() {
     final data =
         NetworkData(method: 'method', url: 'url', startTime: DateTime.now());
     final List<dynamic> args = <dynamic>[data.toMap()];
-    NetworkLogger.networkLog(data);
+    final networkLogger = NetworkLogger();
+    networkLogger.networkLog(data);
     expect(log, <Matcher>[
       isMethodCall(
         'networkLog:',
