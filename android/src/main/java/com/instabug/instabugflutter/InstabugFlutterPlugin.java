@@ -1132,41 +1132,55 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     }
 
     public void apmNetworkLogByReflection(HashMap<String, Object> jsonObject) throws JSONException {
-        APMNetworkLogger apmNetworkLogger = new APMNetworkLogger();
-        final String requestUrl = (String) jsonObject.get("url");
-        final String requestBody = (String) jsonObject.get("requestBody");
-        final String responseBody = (String) jsonObject.get("responseBody");
-        final String requestMethod = (String) jsonObject.get("method");
-        //--------------------------------------------
-        final String requestContentType = (String) jsonObject.get("contentType");
-        final String responseContentType = (String) jsonObject.get("responseContentType");
-        //--------------------------------------------
-        final String errorDomain = (String) jsonObject.get("errorDomain");
-        final Integer statusCode = (Integer) jsonObject.get("responseCode");
-        final long requestDuration = ((Number) jsonObject.get("duration")).longValue() / 1000;
-        final long requestStartTime = ((Number) jsonObject.get("startTime")).longValue() * 1000;
-        final String requestHeaders = (new JSONObject((HashMap<String, String>) jsonObject.get("requestHeaders"))).toString(4);
-        final String responseHeaders = (new JSONObject((HashMap<String, String>) jsonObject.get("responseHeaders"))).toString(4);
-        final String errorMessage;
-
-        if(errorDomain.equals("")) {
-            errorMessage = null;
-        } else {
-            errorMessage = errorDomain;
-        }
-
         try {
-            Method method = getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, int.class, String.class, String.class);
-            if (method != null) {
-                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, statusCode, responseContentType, errorMessage);
+            APMNetworkLogger apmNetworkLogger = new APMNetworkLogger();
+            final String requestUrl = (String) jsonObject.get("url");
+            final String requestBody = (String) jsonObject.get("requestBody");
+            final String responseBody = (String) jsonObject.get("responseBody");
+            final String requestMethod = (String) jsonObject.get("method");
+            //--------------------------------------------
+            final String requestContentType = (String) jsonObject.get("contentType");
+            final String responseContentType = (String) jsonObject.get("responseContentType");
+            //--------------------------------------------
+            final String errorDomain = (String) jsonObject.get("errorDomain");
+            final Integer statusCode = (Integer) jsonObject.get("responseCode");
+            final long requestDuration = ((Number) jsonObject.get("duration")).longValue() / 1000;
+            final long requestStartTime = ((Number) jsonObject.get("startTime")).longValue() * 1000;
+            final String requestHeaders = (new JSONObject((HashMap<String, String>) jsonObject.get("requestHeaders"))).toString(4);
+            final String responseHeaders = (new JSONObject((HashMap<String, String>) jsonObject.get("responseHeaders"))).toString(4);
+            final String errorMessage;
+
+            if (errorDomain.equals("")) {
+                errorMessage = null;
             } else {
-                Log.e("IB-CP-Bridge", "apmNetworkLogByReflection was not found by reflection");
+                errorMessage = errorDomain;
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+
+            String gqlQueryName = null;
+            String serverErrorMessage = "";
+            if (jsonObject.has("gqlQueryName")) {
+                gqlQueryName = (String) jsonObject.get("gqlQueryName");
+            }
+            if (jsonObject.has("serverErrorMessage")) {
+                serverErrorMessage = (String) jsonObject.get("serverErrorMessage");
+            }
+
+
+            try {
+                Method method = getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, int.class, String.class, String.class, String.class, String.class);
+                if (method != null) {
+                    method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage);
+                } else {
+                    Log.e("IB-CP-Bridge", "apmNetworkLogByReflection was not found by reflection");
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        } catch (Execption e) {
             e.printStackTrace();
         }
 
