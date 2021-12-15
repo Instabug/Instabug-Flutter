@@ -1131,6 +1131,22 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         });
     }
 
+    /**
+     * Ends app launch
+     */
+    public void endAppLaunch() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    APM.endAppLaunch();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     public void apmNetworkLogByReflection(HashMap<String, Object> jsonObject) throws JSONException {
         APMNetworkLogger apmNetworkLogger = new APMNetworkLogger();
         final String requestUrl = (String) jsonObject.get("url");

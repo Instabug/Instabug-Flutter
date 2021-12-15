@@ -934,6 +934,13 @@ NSMutableDictionary *traces;
     [IBGAPM endUITrace];
 }
 
+/**
+  * Ends app launch.
+  */
++ (void)endAppLaunch {
+    [IBGAPM endAppLaunch];
+}
+
 /** Reports that the screen has been changed (Repro Steps) the screen sent to this method will be the 'current view' on the dashboard
   *
   * @param screenName string containing the screen name

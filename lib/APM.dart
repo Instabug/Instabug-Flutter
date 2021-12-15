@@ -113,6 +113,10 @@ class APM {
   static void endUITrace() async {
     await _channel.invokeMethod<Object>('endUITrace');
   }
+  /// Ends UI trace.
+  static void endAppLaunch() async {
+    await _channel.invokeMethod<Object>('endAppLaunch');
+  }
 
   static Future<bool?> networkLogAndroid(NetworkData data) async {
     if (Platform.isAndroid) {

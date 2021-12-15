@@ -1102,4 +1102,10 @@ void main() {
     APM.endUITrace();
     expect(log, <Matcher>[isMethodCall('endUITrace', arguments: null)]);
   });
+
+    test('endAppLaunch: Test', () async {
+    final List<dynamic> args = <dynamic>[null];
+    APM.endAppLaunch();
+    expect(log, <Matcher>[isMethodCall('endAppLaunch', arguments: null)]);
+  });
 }
