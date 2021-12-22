@@ -10,7 +10,8 @@ class NetworkData {
       this.requestHeaders = const <String, dynamic>{},
       this.responseHeaders = const <String, dynamic>{},
       this.duration,
-      this.contentType = '',
+      this.requestContentType = '',
+      this.responseContentType = '',
       this.endTime,
       required this.startTime,
       this.errorCode = 0,
@@ -26,7 +27,8 @@ class NetworkData {
   final Map<String, dynamic> requestHeaders;
   final Map<String, dynamic> responseHeaders;
   final int? duration;
-  final String? contentType;
+  final String? requestContentType;
+  final String? responseContentType;
   final DateTime? endTime;
   final DateTime startTime;
   final int errorCode;
@@ -43,7 +45,8 @@ class NetworkData {
     Map<String, dynamic>? requestHeaders,
     Map<String, dynamic>? responseHeaders,
     int? duration,
-    String? contentType,
+    String? requestContentType,
+    String? responseContentType,
     DateTime? endTime,
     DateTime? startTime,
     int? errorCode,
@@ -60,7 +63,8 @@ class NetworkData {
         requestHeaders: requestHeaders ?? this.requestHeaders,
         responseHeaders: responseHeaders ?? this.responseHeaders,
         duration: duration ?? this.duration,
-        contentType: contentType ?? this.contentType,
+        requestContentType: requestContentType ?? this.requestContentType,
+        responseContentType: responseContentType ?? this.responseContentType,
         endTime: endTime ?? this.endTime,
         startTime: startTime ?? this.startTime,
         errorCode: errorCode ?? this.errorCode,
@@ -76,7 +80,8 @@ class NetworkData {
     map['responseCode'] = status;
     map['requestHeaders'] = requestHeaders;
     map['responseHeaders'] = responseHeaders;
-    map['contentType'] = contentType;
+    map['requestContentType'] = requestContentType;
+    map['responseContentType'] = responseContentType;
     map['duration'] = duration;
     map['startTime'] = startTime.millisecondsSinceEpoch;
     map['requestBodySize'] = requestBodySize;

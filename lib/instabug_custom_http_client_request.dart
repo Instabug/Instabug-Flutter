@@ -15,6 +15,8 @@ class InstabugCustomHttpClientRequest implements HttpClientRequest {
 
   HttpClientRequest _originalClientRequest;
 
+  StringBuffer _requestBody = StringBuffer();
+
   late HttpClientLogger logger;
 
   @override
@@ -89,20 +91,32 @@ class InstabugCustomHttpClientRequest implements HttpClientRequest {
   @override
   void write(Object? object) {
     _originalClientRequest.write(object);
+    _requestBody.write(object);
+    logger.onRequestUpdate(_originalClientRequest,
+        requestBody: _requestBody.toString());
   }
 
   @override
-  void writeAll(Iterable objects, [String separator = ""]) {
+  void writeAll(Iterable objects, [String separator = '']) {
     _originalClientRequest.writeAll(objects, separator);
+    _requestBody.writeAll(objects, separator);
+    logger.onRequestUpdate(_originalClientRequest,
+        requestBody: _requestBody.toString());
   }
 
   @override
   void writeCharCode(int charCode) {
     _originalClientRequest.writeCharCode(charCode);
+    _requestBody.writeCharCode(charCode);
+    logger.onRequestUpdate(_originalClientRequest,
+        requestBody: _requestBody.toString());
   }
 
   @override
-  void writeln([Object? object = ""]) {
+  void writeln([Object? object = '']) {
     _originalClientRequest.writeln(object);
+    _requestBody.writeln(object);
+    logger.onRequestUpdate(_originalClientRequest,
+        requestBody: _requestBody.toString());
   }
 }

@@ -766,7 +766,7 @@ NSMutableDictionary *traces;
         requestHeaders = @{};
     }
     NSDictionary* responseHeaders = networkData[@"responseHeaders"];
-    NSString* contentType = @"application/json";
+    NSString* contentType = networkData[@"responseContentType"];
     int64_t duration = [networkData[@"duration"] integerValue];
     int64_t startTime = [networkData[@"startTime"] integerValue] * 1000;
 
@@ -775,7 +775,16 @@ NSMutableDictionary *traces;
         NSLog(@"value: %@",[requestHeaders objectForKey:key]);
     }
     
-    SEL networkLogSEL = NSSelectorFromString(@"addNetworkLogWithUrl:method:requestBody:requestBodySize:responseBody:responseBodySize:responseCode:requestHeaders:responseHeaders:contentType:errorDomain:errorCode:startTime:duration:");
+    NSString* gqlQueryName = nil;
+    NSString* serverErrorMessage = nil;
+    if (networkData[@"gqlQueryName"] != [NSNull null]) {
+        gqlQueryName = networkData[@"gqlQueryName"];
+    }
+    if (networkData[@"serverErrorMessage"] != [NSNull null]) {
+        serverErrorMessage = networkData[@"serverErrorMessage"];
+    }
+    
+    SEL networkLogSEL = NSSelectorFromString(@"addNetworkLogWithUrl:method:requestBody:requestBodySize:responseBody:responseBodySize:responseCode:requestHeaders:responseHeaders:contentType:errorDomain:errorCode:startTime:duration:gqlQueryName:serverErrorMessage:");
 
     if([[IBGNetworkLogger class] respondsToSelector:networkLogSEL]) {
         NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[IBGNetworkLogger class] methodSignatureForSelector:networkLogSEL]];
@@ -796,6 +805,8 @@ NSMutableDictionary *traces;
         [inv setArgument:&(errorCode) atIndex:13];
         [inv setArgument:&(startTime) atIndex:14];
         [inv setArgument:&(duration) atIndex:15];
+        [inv setArgument:&(gqlQueryName) atIndex:16];
+        [inv setArgument:&(serverErrorMessage) atIndex:17];
 
         [inv invoke];
     }
