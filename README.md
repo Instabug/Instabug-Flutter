@@ -71,27 +71,13 @@ allprojects {
 </application>
 ````
 
-3. In your newly created `CustomFlutterApplication` class, add the following code.
+3. In your newly created `CustomFlutterApplication` class, override `onCreate()` and add the following code.
 
 
 ```java
-package <Package-Name>;
-
-import io.flutter.app.FlutterApplication;
-import com.instabug.instabugflutter.InstabugFlutterPlugin;
-
-import java.util.ArrayList;
-
-public class CustomFlutterApplication extends FlutterApplication {
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    ArrayList<String> invocation_events = new ArrayList<>();
-    InstabugFlutterPlugin instabug = new InstabugFlutterPlugin();
-    instabug.start(CustomFlutterApplication.this, "APP_TOKEN", invocation_events);
-  }
-}
-
+ArrayList<String> invocationEvents = new ArrayList<>();
+invocationEvents.add(InstabugFlutterPlugin.INVOCATION_EVENT_SHAKE);
+new InstabugFlutterPlugin().start(CustomFlutterApplication.this, "APP_TOKEN", invocationEvents);
 ```
 
 ## Crash reporting
