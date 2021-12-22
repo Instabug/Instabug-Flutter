@@ -1174,11 +1174,20 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             } else {
                 errorMessage = errorDomain;
             }
+            //--------------------------------------------------
+            String gqlQueryName = null;
+            if(jsonObject.containsKey("gqlQueryName")){
+                gqlQueryName = (String) jsonObject.get("gqlQueryName");
+            }
+            String serverErrorMessage = "";
+            if(jsonObject.containsKey("serverErrorMessage")){
+                serverErrorMessage = (String) jsonObject.get("serverErrorMessage");
+            }  
 
             try {
-                Method method = getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class);
+                Method method = getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class);
                 if (method != null) {
-                    method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage);
+                    method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage);
                 } else {
                     Log.e("IB-CP-Bridge", "apmNetworkLogByReflection was not found by reflection");
                 }
