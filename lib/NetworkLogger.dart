@@ -12,7 +12,7 @@ class NetworkLogger {
   static Future<String?> get platformVersion async =>
       await _channel.invokeMethod<String>('getPlatformVersion');
 
-  static Future<bool?> networkLog(NetworkData data) async {
+  Future<bool?> networkLog(NetworkData data) async {
     final params = <dynamic>[data.toMap()];
     await _channel.invokeMethod<bool>('networkLog:', params);
     await APM.networkLogAndroid(data);

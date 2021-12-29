@@ -1,3 +1,9 @@
+## v10.11.0 (2021-12-28)
+
+* Adds support for APM.endAppLaunch API
+* Bumps Instabug native SDKs to v10.11
+* Fixes an issue with APM logged requests payload size
+
 ## v10.9.1 (2021-10-13)
 
 * Bumps Instabug Android SDK to v10.9.1
