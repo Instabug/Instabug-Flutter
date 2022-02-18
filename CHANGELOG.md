@@ -1,3 +1,7 @@
+## v10.11.1 (2022-02-18)
+
+* Fixes iOS platform calls not completing with `void` return type
+
 ## v10.11.0 (2022-01-04)
 
 * Adds support for APM.endAppLaunch API
