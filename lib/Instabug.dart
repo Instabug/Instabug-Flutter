@@ -178,6 +178,23 @@ class Instabug {
     return tags?.cast<String>();
   }
 
+  /// Adds experiments to the next report.
+  static Future<void> addExperiments(List<String> experiments) async {
+    final params = <dynamic>[experiments];
+    await _channel.invokeMethod<Object>('addExperiments:', params);
+  }
+
+  /// Removes certain experiments from the next report.
+  static Future<void> removeExperiments(List<String> experiments) async {
+    final params = <dynamic>[experiments];
+    await _channel.invokeMethod<Object>('removeExperiments:', params);
+  }
+
+  /// Clears all experiments from the next report.
+  static Future<void> clearAllExperiments() async {
+    await _channel.invokeMethod<Object>('clearAllExperiments');
+  }
+
   /// Add custom user attribute [value] with a [key] that is going to be sent with each feedback, bug or crash.
   static Future<void> setUserAttribute(String value, String key) async {
     final List<dynamic> params = <dynamic>[value, key];
