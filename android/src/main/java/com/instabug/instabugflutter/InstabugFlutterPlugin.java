@@ -304,6 +304,31 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     }
 
     /**
+     * Adds experiments to the next report.
+     *
+     * @param experiments An array of experiments to add.
+     */
+    public void addExperiments(ArrayList<String> experiments) {
+        Instabug.addExperiments(experiments);
+    }
+
+    /**
+     * Removes certain experiments from the next report.
+     *
+     * @param experiments An array of experiments to remove.
+     */
+    public void removeExperiments(ArrayList<String> experiments) {
+        Instabug.removeExperiments(experiments);
+    }
+
+    /**
+     * Clears all experiments from the next report.
+     */
+    public void clearAllExperiments() {
+        Instabug.clearAllExperiments();
+    }
+
+    /**
      * Set custom user attributes that are going to be sent with each feedback, bug
      * or crash.
      *
