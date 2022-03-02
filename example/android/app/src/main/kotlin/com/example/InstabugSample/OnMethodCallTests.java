@@ -77,6 +77,37 @@ class OnMethodCallTests {
         verify(instabugMock).appendTags(tags);
     }
 
+    public void testAddExperiments() {
+        String methodName = "addExperiments";
+        ArrayList<Object> argsList = new ArrayList<>();
+        ArrayList<String> experiments = new ArrayList<>();
+        experiments.add("exp1");
+        experiments.add("exp2");
+        argsList.add(experiments);
+        Mockito.doNothing().when(instabugMock).addExperiments(any(ArrayList.class));
+        testMethodCall(methodName, argsList);
+        verify(instabugMock).addExperiments(experiments);
+    }
+
+    public void testRemoveExperiments() {
+        String methodName = "removeExperiments";
+        ArrayList<Object> argsList = new ArrayList<>();
+        ArrayList<String> experiments = new ArrayList<>();
+        experiments.add("exp1");
+        experiments.add("exp2");
+        argsList.add(experiments);
+        Mockito.doNothing().when(instabugMock).removeExperiments(any(ArrayList.class));
+        testMethodCall(methodName, argsList);
+        verify(instabugMock).removeExperiments(experiments);
+    }
+
+    public void testClearAllExperiments() {
+        String methodName = "clearAllExperiments";
+        Mockito.doNothing().when(instabugMock).clearAllExperiments();
+        testMethodCall(methodName, null);
+        verify(instabugMock).clearAllExperiments();
+    }
+
     public void testShowBugReportingWithReportTypeAndOptions() {
         String methodName = "showBugReportingWithReportTypeAndOptions";
         ArrayList<Object> argsList = new ArrayList<>();

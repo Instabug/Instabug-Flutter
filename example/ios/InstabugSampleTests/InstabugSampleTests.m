@@ -89,6 +89,61 @@ static const NSTimeInterval kTimeout = 30.0;
      [self waitForExpectationsWithTimeout:kTimeout handler:nil];
  }
 
+- (void)testAddExperiments {
+    id mock = OCMClassMock([InstabugFlutterPlugin class]);
+    InstabugFlutterPlugin *instabug = [[InstabugFlutterPlugin alloc] init];
+    
+    NSArray *experiments = [NSArray arrayWithObjects:@"exp1", @"exp2", nil];
+    NSArray *arguments = [NSArray arrayWithObjects: experiments, nil];
+    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"addExperiments:" arguments:arguments];
+    [[[mock stub] classMethod] addExperiments:experiments];
+
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Result is called"];
+    [instabug  handleMethodCall:call result:^(id _Nullable result) {
+         XCTAssertNil(result);
+         [expectation fulfill];
+     }];
+
+    [[[mock verify] classMethod] addExperiments:experiments];
+    [self waitForExpectationsWithTimeout:kTimeout handler:nil];
+}
+
+- (void)testRemoveExperiments {
+    id mock = OCMClassMock([InstabugFlutterPlugin class]);
+    InstabugFlutterPlugin *instabug = [[InstabugFlutterPlugin alloc] init];
+    
+    NSArray *experiments = [NSArray arrayWithObjects:@"exp1", @"exp2", nil];
+    NSArray *arguments = [NSArray arrayWithObjects: experiments, nil];
+    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"removeExperiments:" arguments:arguments];
+    [[[mock stub] classMethod] removeExperiments:experiments];
+
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Result is called"];
+    [instabug  handleMethodCall:call result:^(id _Nullable result) {
+         XCTAssertNil(result);
+         [expectation fulfill];
+     }];
+
+    [[[mock verify] classMethod] removeExperiments:experiments];
+    [self waitForExpectationsWithTimeout:kTimeout handler:nil];
+}
+
+- (void)testClearAllExperiments {
+    id mock = OCMClassMock([InstabugFlutterPlugin class]);
+    InstabugFlutterPlugin *instabug = [[InstabugFlutterPlugin alloc] init];
+    
+    FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"clearAllExperiments" arguments:NULL];
+    [[[mock stub] classMethod] clearAllExperiments];
+
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Result is called"];
+    [instabug  handleMethodCall:call result:^(id _Nullable result) {
+         XCTAssertNil(result);
+         [expectation fulfill];
+     }];
+
+    [[[mock verify] classMethod] clearAllExperiments];
+    [self waitForExpectationsWithTimeout:kTimeout handler:nil];
+}
+
  - (void)testShowBugReportingWithReportTypeAndOptions {
      id mock = OCMClassMock([InstabugFlutterPlugin class]);
      InstabugFlutterPlugin *instabug = [[InstabugFlutterPlugin alloc] init];
