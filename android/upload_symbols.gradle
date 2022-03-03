@@ -1,51 +1,54 @@
 import java.util.zip.ZipOutputStream
 import java.util.zip.ZipEntry
 
+ext.boundary = 'abcd' + Long.toString(System.currentTimeMillis()) * 2 + 'dcba'
+ext.lineEnd = '\r\n'
+
 /**
   * task to upload symbols to Instabug endpoint
 */
 task upload_symbols_task {
-    try {
-        // print environment variable INSTABUG_APP_TOKEN
-        println("INSTABUG_APP_TOKEN: ${System.getenv('INSTABUG_APP_TOKEN')}")
-        // If obfuscate flag not provided, exit the script
-        if (!project.hasProperty('dart-obfuscation') || project['dart-obfuscation'] == 'false') {
-            return
+    doLast {
+        try {
+            String symbolsPath
+            String applicationToken
+            String apiKey
+            List config
+
+            // If obfuscate flag not provided, exit the task
+            if (!project.hasProperty('dart-obfuscation') || project['dart-obfuscation'] == 'false') {
+                return
+            }
+
+            config = get_config()
+            if (!config) {
+                return
+            }
+            (symbolsPath, applicationToken, apiKey) = config
+
+            // Prepare zip file with symbols
+            File zipFile = prepare_zip_file(symbolsPath)
+            if (!zipFile) {
+                return
+            }
+
+            upload_symbols(zipFile, applicationToken, apiKey)
+        } catch (Exception e) {
+            println("Instabug err: uploading symbols: ${e.message}")
         }
-
-        // Get root host directory path
-        String rootProjectPath = project.properties['rootDir']
-        File rootFile = new File(rootProjectPath)
-
-        // Get the path of the symbols directory
-        String obfuscationPath = project['split-debug-info']
-        File obfuscationFile = new File(obfuscationPath)
-        String fullPath
-
-        // If the provided path is relative
-        // append the symbols directory to the root project path to get the full path
-        if (obfuscationFile.absolute) {
-            fullPath = obfuscationPath
-        } else {
-            fullPath = rootFile.parent + File.separator + obfuscationPath
-        }
-
-        doLast { upload_symbols(fullPath) }
-    } catch (Exception e) {
-        println("Instabug err: uploading symbols: ${e.message}")
     }
 }
-
 /**
-  * upload symbol files to Instabug endpoint
-  *
-  * @param symbolsPath the path of the symbols directory
-  * @return void
+    * get upload configs
+    * @return symbolsPath the path of the symbols directory
+    * @return applicationToken the application token
+    * @return apiKey the api key
 */
-ext.upload_symbols = { symbolsPath ->
+
+def get_config() {
     try {
-        String applicationToken;
-        String apiKey;
+        String applicationToken
+        String apiKey
 
         // Get local properties
         Properties properties = new Properties()
@@ -57,7 +60,7 @@ ext.upload_symbols = { symbolsPath ->
         // Get the app token if provided
         if (System.getenv('INSTABUG_APP_TOKEN') == null &&  properties.getProperty('INSTABUG_APP_TOKEN') == null) {
             println('Instabug: err: INSTABUG_APP_TOKEN not found. Make sure you\'ve added the environment variable INSTABUG_APP_TOKEN')
-            return
+            return null
         }
         applicationToken = System.getenv('INSTABUG_APP_TOKEN') != null ? System.getenv('INSTABUG_APP_TOKEN') : properties.getProperty('INSTABUG_APP_TOKEN')
         println('Instabug: INSTABUG_APP_TOKEN found')
@@ -65,127 +68,70 @@ ext.upload_symbols = { symbolsPath ->
         // Get the API KEY if provided
         if (System.getenv('INSTABUG_API_KEY') == null && properties.getProperty('INSTABUG_API_KEY') == null) {
             println('Instabug: err: INSTABUG_API_KEY not found. Make sure you\'ve added the environment variable INSTABUG_API_KEY')
-            return
+            return null
         }
-        apiKey = System.getenv('INSTABUG_API_KEY') != null ? System.getenv('INSTABUG_API_KEY') : properties.getProperty('INSTABUG_API_KEY')   
+        apiKey = System.getenv('INSTABUG_API_KEY') != null ? System.getenv('INSTABUG_API_KEY') : properties.getProperty('INSTABUG_API_KEY')
         println 'Instabug: INSTABUG_API_KEY found'
-        println 'Instabug: Uploading files...'
 
-        // Check if the symbols directory provided exists
-        File symbolsDir = new File(symbolsPath)
-        if (!symbolsDir.exists()) {
-            println 'Instabug: err: Symbols directory not found'
-            return
-        }
+        // Get root host directory path
+        String rootProjectPath = project.properties['rootDir']
+        File rootFile = new File(rootProjectPath)
 
-        // Search in symbolsPath for files with extension .symbols and add them to a list
-        List<File> symbolsFiles = symbolsDir.listFiles().findAll { file -> file.path.endsWith('.symbols') }
-        if (symbolsFiles.empty) {
-            println 'Instabug: err: No symbols files found'
-            return
-        }
-        println "Instabug: ${symbolsFiles.size()} Symbols files found"
+        // Get the path of the symbols directory
+        String obfuscationPath = project['split-debug-info']
+        File obfuscationFile = new File(obfuscationPath)
+        String symbolsPath
 
-        // Print list of symbols files
-        symbolsFiles.forEach { file ->
-            println "Instabug: ${file.path}"
-        }
-
-        // Create a zip file with the symbols files
-        File zipFile = zip_symbols(symbolsPath, symbolsFiles)
-
-        // Create a gradle post multipart/form-data request with file entry in the body
-        sendRequest(zipFile, applicationToken, apiKey)
-
-        // Delete the zip file
-        zipFile.delete()
-    } catch (Exception e) {
-        println("Instabug err: Uploading symbols: ${e.message}")
-    } catch (Exception e) {
-        println("Instabug err: uploading symbols: ${e.message}")
-    }
-}
-/**
-  * send a post request with the zip file as a multipart/form-data entry
-  * @param zipFile the zip file created
-*/
-ext.sendRequest = { zipFile, applicationToken, apiKey ->
-    String twoHyphens = '--'
-    String lineEnd = '\r\n'
-    String boundary =  'abcd' + Long.toString(System.currentTimeMillis()) * 2 + 'dcba'
-    int maxBufferSize = 1 * 1024 * 1024
-
-    // Initialize connection
-    String uploadUrl = 'https://backend-5659.instabug-dev.com/api/web/public/flutter-symbol-files/android'
-    HttpURLConnection connection = new URL(uploadUrl).openConnection() as HttpURLConnection
-
-    // Set connection headers and request method
-    connection.setRequestMethod('POST')
-    connection.setRequestProperty('Connection', 'Keep-Alive')
-    connection.setRequestProperty('Content-Type', "multipart/form-data;boundary=${boundary}")
-    connection.setRequestProperty('Accept-Encoding', 'gzip')
-    connection.setRequestProperty('Content-Length', "${zipFile.length()}")
-    connection.setDoOutput(true)
-
-    // Initialize output stream and writer
-    OutputStream outputStream = connection.getOutputStream();
-    String charset = "ISO-8859-1";
-    PrintWriter writer = new PrintWriter(new OutputStreamWriter(outputStream, charset), true);
-
-    // Write application_token in the request body
-    writer.append("--" + boundary).append(lineEnd)
-    writer.append("Content-Disposition: form-data; name=\"" + 'application_token' + "\"").append(lineEnd)
-    writer.append(lineEnd)
-    writer.append(applicationToken).append(lineEnd)
-    
-    // Write api_key in the request body
-    writer.append("--" + boundary).append(lineEnd)
-    writer.append("Content-Disposition: form-data; name=\"" + 'api_key' + "\"").append(lineEnd)
-    writer.append(lineEnd)
-    writer.append(apiKey).append(lineEnd)
-    writer.flush()
-
-    // Write zip file in the request body
-    String fileName = zipFile.getName();
-    writer.append("--" + boundary).append(lineEnd);
-    writer.append( "Content-Disposition: form-data; name=\"" + "file" + "\"; filename=\"" + fileName + "\"").append(lineEnd);
-    writer.append( "Content-Type: " + URLConnection.guessContentTypeFromName(fileName)).append(lineEnd);
-    writer.append(lineEnd);
-    writer.flush();
-    
-    FileInputStream inputStream = new FileInputStream(zipFile);
-    byte[] buffer = new byte[4096];
-    int bytesRead = -1;
-    while ((bytesRead = inputStream.read(buffer)) != -1) {
-        outputStream.write(buffer, 0, bytesRead);
-    }
-    outputStream.flush();
-    inputStream.close();
-    writer.append("--" + boundary).append(lineEnd);
-    writer.flush();
-
-    // Send the request
-    writer.close();
-
-    // Get the response
-    int responseCode = connection.getResponseCode()
-    println "Instabug: Response Code: ${responseCode}"
-    println "Instabug: Response Message: ${connection.getResponseMessage()}"
-    if (responseCode == 200) {
-        println 'Instabug: Upload successful'
+        // If the provided path is relative
+        // append the symbols directory to the root project path to get the full path
+        if (obfuscationFile.absolute) {
+            symbolsPath = obfuscationPath
         } else {
-        println 'Instabug: Upload failed'
+            symbolsPath = rootFile.parent + File.separator + obfuscationPath
+        }
+        return [symbolsPath, applicationToken, apiKey]
+    } catch (Exception e) {
+        println("Instabug err: getting config: ${e.message}")
     }
 }
 
 /**
-  * create a zip file with the symbols files
-  *
-  * @param symbolsPath the path of the symbols directory
-  * @param symbolsFiles the list of symbols files
-  * @return zipFile the zip file created
+    * search for the symbols files in the symbols directory
+    * and create a zip file with the symbols files
+    * @param symbolsPath the path of the symbols directory
+    * @return zipFile the zip file created
 */
-ext.zip_symbols = { symbolsPath, symbolsFiles ->
+
+File prepare_zip_file(String symbolsPath) {
+    // Check if the symbols directory provided exists
+    File symbolsDir = new File(symbolsPath)
+    if (!symbolsDir.exists()) {
+        println 'Instabug: err: Symbols directory not found'
+        return null
+    }
+
+    // Search in symbolsPath for files with extension .symbols and add them to a list
+    List<File> symbolsFiles = symbolsDir.listFiles().findAll { file -> file.path.endsWith('.symbols') }
+    if (symbolsFiles.empty) {
+        println 'Instabug: err: No symbols files found'
+        return null
+    }
+    println "Instabug: ${symbolsFiles.size()} Symbols files found"
+
+    // Create a zip file with the symbols files
+    File zipFile = zip_files(symbolsPath, symbolsFiles)
+
+    return zipFile
+}
+/**
+    * create a zip file with the symbols files
+    *
+    * @param symbolsPath the path of the symbols directory
+    * @param symbolsFiles the list of symbols files
+    * @return zipFile the zip file created
+*/
+
+File zip_files(String symbolsPath, List<File> symbolsFiles) {
     File zipFile = new File(symbolsPath + '.zip')
     ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(zipFile))
     symbolsFiles.forEach { file ->
@@ -205,4 +151,91 @@ ext.zip_symbols = { symbolsPath, symbolsFiles ->
     zipOutputStream.close()
     println "Instabug: Zip file created at ${zipFile.path}"
     return zipFile
+}
+/**
+    * upload symbol files to Instabug endpoint
+    *
+    * @param zipFile the zip file containing the symbols files
+    * @param applicationToken the app token
+    * @param apiKey the api key
+    * @return void
+*/
+def upload_symbols(File zipFile, String applicationToken, String apiKey) {
+    // Initialize connection
+    String uploadUrl = 'https://backend-5659.instabug-dev.com/api/web/public/flutter-symbol-files/android'
+    HttpURLConnection connection = new URL(uploadUrl).openConnection() as HttpURLConnection
+
+    // Set connection headers and request method
+    connection.setRequestMethod('POST')
+    connection.setRequestProperty('Connection', 'Keep-Alive')
+    connection.setRequestProperty('Content-Type', "multipart/form-data;boundary=${boundary}")
+    connection.setRequestProperty('Accept-Encoding', 'gzip')
+    connection.setRequestProperty('Content-Length', "${zipFile.length()}")
+    connection.setDoOutput(true)
+
+    // Initialize output stream and writer
+    OutputStream outputStream = connection.getOutputStream()
+    String charset = 'ISO-8859-1'
+    PrintWriter writer = new PrintWriter(new OutputStreamWriter(outputStream, charset), true)
+
+    // Write application_token in the request body
+    writeField(writer, 'application_token', applicationToken)
+
+    // Write api_key in the request body
+    writeField(writer, 'api_key', apiKey)
+
+    // Write zip file in the request body
+    String fileName = zipFile.getName()
+    writeFile(writer, fileName, zipFile, outputStream)
+
+    // Send the request
+    writer.close()
+
+    // Get the response
+    int responseCode = connection.getResponseCode()
+    println "Instabug: Response Code: ${responseCode}"
+    println "Instabug: Response Message: ${connection.getResponseMessage()}"
+    if (responseCode == 200) {
+        println 'Instabug: Upload successful'
+    } else {
+        println 'Instabug: Upload failed'
+    }
+}
+/**
+    * write a field in the request body
+    * @param writer the writer
+    * @param field the name of the field
+    * @param value the value of the field
+    * @return void
+*/
+def writeField(writer, field, value) {
+    writer.append('--' + boundary).append(lineEnd)
+    writer.append("Content-Disposition: form-data; name=\"" + field + "\"").append(lineEnd)
+    writer.append(lineEnd)
+    writer.append(value).append(lineEnd)
+}
+/**
+    * write a field in the request body
+    * @param writer the writer
+    * @param fileName the name of the file
+    * @param file the file to be uploaded
+    * @param outputStream the output stream
+    * @return void
+*/
+def writeFile(writer, fileName, file, outputStream) {
+    writer.append('--' + boundary).append(lineEnd)
+    writer.append( "Content-Disposition: form-data; name=\"" + 'file' + "\"; filename=\"" + fileName + "\"").append(lineEnd);
+    writer.append( 'Content-Type: ' + URLConnection.guessContentTypeFromName(fileName)).append(lineEnd)
+    writer.append(lineEnd)
+    writer.flush()
+    FileInputStream inputStream = new FileInputStream(file)
+    byte[] buffer = new byte[4096]
+    int bytesRead = -1
+    while ((bytesRead = inputStream.read(buffer)) != -1) {
+        outputStream.write(buffer, 0, bytesRead)
+    }
+    outputStream.flush()
+    inputStream.close()
+    writer.append('--' + boundary).append(lineEnd)
+    writer.flush()
 }
