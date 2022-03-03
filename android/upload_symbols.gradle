@@ -6,6 +6,8 @@ import java.util.zip.ZipEntry
 */
 task upload_symbols_task {
     try {
+        // print environment variable INSTABUG_APP_TOKEN
+        println("INSTABUG_APP_TOKEN: ${System.getenv('INSTABUG_APP_TOKEN')}")
         // If obfuscate flag not provided, exit the script
         if (!project.hasProperty('dart-obfuscation') || project['dart-obfuscation'] == 'false') {
             return
@@ -42,6 +44,9 @@ task upload_symbols_task {
 */
 ext.upload_symbols = { symbolsPath ->
     try {
+        String applicationToken;
+        String apiKey;
+
         // Get local properties
         Properties properties = new Properties()
         File propertiesFile = project.rootProject.file('local.properties')
@@ -54,6 +59,7 @@ ext.upload_symbols = { symbolsPath ->
             println('Instabug: err: INSTABUG_APP_TOKEN not found. Make sure you\'ve added the environment variable INSTABUG_APP_TOKEN')
             return
         }
+        applicationToken = System.getenv('INSTABUG_APP_TOKEN') != null ? System.getenv('INSTABUG_APP_TOKEN') : properties.getProperty('INSTABUG_APP_TOKEN')
         println('Instabug: INSTABUG_APP_TOKEN found')
 
         // Get the API KEY if provided
@@ -61,7 +67,7 @@ ext.upload_symbols = { symbolsPath ->
             println('Instabug: err: INSTABUG_API_KEY not found. Make sure you\'ve added the environment variable INSTABUG_API_KEY')
             return
         }
-
+        apiKey = System.getenv('INSTABUG_API_KEY') != null ? System.getenv('INSTABUG_API_KEY') : properties.getProperty('INSTABUG_API_KEY')   
         println 'Instabug: INSTABUG_API_KEY found'
         println 'Instabug: Uploading files...'
 
@@ -86,9 +92,89 @@ ext.upload_symbols = { symbolsPath ->
         }
 
         // Create a zip file with the symbols files
-        zip_symbols(symbolsPath, symbolsFiles)
+        File zipFile = zip_symbols(symbolsPath, symbolsFiles)
+
+        // Create a gradle post multipart/form-data request with file entry in the body
+        sendRequest(zipFile, applicationToken, apiKey)
+
+        // Delete the zip file
+        zipFile.delete()
+    } catch (Exception e) {
+        println("Instabug err: Uploading symbols: ${e.message}")
     } catch (Exception e) {
         println("Instabug err: uploading symbols: ${e.message}")
+    }
+}
+/**
+  * send a post request with the zip file as a multipart/form-data entry
+  * @param zipFile the zip file created
+*/
+ext.sendRequest = { zipFile, applicationToken, apiKey ->
+    String twoHyphens = '--'
+    String lineEnd = '\r\n'
+    String boundary =  'abcd' + Long.toString(System.currentTimeMillis()) * 2 + 'dcba'
+    int maxBufferSize = 1 * 1024 * 1024
+
+    // Initialize connection
+    String uploadUrl = 'https://backend-5659.instabug-dev.com/api/web/public/flutter-symbol-files/android'
+    HttpURLConnection connection = new URL(uploadUrl).openConnection() as HttpURLConnection
+
+    // Set connection headers and request method
+    connection.setRequestMethod('POST')
+    connection.setRequestProperty('Connection', 'Keep-Alive')
+    connection.setRequestProperty('Content-Type', "multipart/form-data;boundary=${boundary}")
+    connection.setRequestProperty('Accept-Encoding', 'gzip')
+    connection.setRequestProperty('Content-Length', "${zipFile.length()}")
+    connection.setDoOutput(true)
+
+    // Initialize output stream and writer
+    OutputStream outputStream = connection.getOutputStream();
+    String charset = "ISO-8859-1";
+    PrintWriter writer = new PrintWriter(new OutputStreamWriter(outputStream, charset), true);
+
+    // Write application_token in the request body
+    writer.append("--" + boundary).append(lineEnd)
+    writer.append("Content-Disposition: form-data; name=\"" + 'application_token' + "\"").append(lineEnd)
+    writer.append(lineEnd)
+    writer.append(applicationToken).append(lineEnd)
+    
+    // Write api_key in the request body
+    writer.append("--" + boundary).append(lineEnd)
+    writer.append("Content-Disposition: form-data; name=\"" + 'api_key' + "\"").append(lineEnd)
+    writer.append(lineEnd)
+    writer.append(apiKey).append(lineEnd)
+    writer.flush()
+
+    // Write zip file in the request body
+    String fileName = zipFile.getName();
+    writer.append("--" + boundary).append(lineEnd);
+    writer.append( "Content-Disposition: form-data; name=\"" + "file" + "\"; filename=\"" + fileName + "\"").append(lineEnd);
+    writer.append( "Content-Type: " + URLConnection.guessContentTypeFromName(fileName)).append(lineEnd);
+    writer.append(lineEnd);
+    writer.flush();
+    
+    FileInputStream inputStream = new FileInputStream(zipFile);
+    byte[] buffer = new byte[4096];
+    int bytesRead = -1;
+    while ((bytesRead = inputStream.read(buffer)) != -1) {
+        outputStream.write(buffer, 0, bytesRead);
+    }
+    outputStream.flush();
+    inputStream.close();
+    writer.append("--" + boundary).append(lineEnd);
+    writer.flush();
+
+    // Send the request
+    writer.close();
+
+    // Get the response
+    int responseCode = connection.getResponseCode()
+    println "Instabug: Response Code: ${responseCode}"
+    println "Instabug: Response Message: ${connection.getResponseMessage()}"
+    if (responseCode == 200) {
+        println 'Instabug: Upload successful'
+        } else {
+        println 'Instabug: Upload failed'
     }
 }
 
