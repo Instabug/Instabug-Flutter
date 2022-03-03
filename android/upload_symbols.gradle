@@ -200,6 +200,11 @@ def upload_symbols(File zipFile, String applicationToken, String apiKey) {
     } else {
         println 'Instabug: Upload failed'
     }
+
+    // Close the connection
+    connection.disconnect()
+    // Delete the zip file
+    zipFile.delete()
 }
 /**
     * write a field in the request body
