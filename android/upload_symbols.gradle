@@ -1,4 +1,3 @@
-
 import java.util.zip.ZipOutputStream
 import java.util.zip.ZipEntry
 
@@ -6,29 +5,33 @@ import java.util.zip.ZipEntry
   * task to upload symbols to Instabug endpoint
 */
 task upload_symbols_task {
-    // If obfuscate flag not provided, exit the script
-    if (!project.hasProperty('dart-obfuscation') || project['dart-obfuscation'] == 'false') {
-        return
+    try {
+        // If obfuscate flag not provided, exit the script
+        if (!project.hasProperty('dart-obfuscation') || project['dart-obfuscation'] == 'false') {
+            return
+        }
+
+        // Get root host directory path
+        String rootProjectPath = project.properties['rootDir']
+        File rootFile = new File(rootProjectPath)
+
+        // Get the path of the symbols directory
+        String obfuscationPath = project['split-debug-info']
+        File obfuscationFile = new File(obfuscationPath)
+        String fullPath
+
+        // If the provided path is relative
+        // append the symbols directory to the root project path to get the full path
+        if (obfuscationFile.absolute) {
+            fullPath = obfuscationPath
+        } else {
+            fullPath = rootFile.parent + File.separator + obfuscationPath
+        }
+
+        doLast { upload_symbols(fullPath) }
+    } catch (Exception e) {
+        println("Instabug err: uploading symbols: ${e.message}")
     }
-
-    // Get root host directory path
-    String rootProjectPath = project.properties['rootDir']
-    File rootFile = new File(rootProjectPath)
-
-    // Get the path of the symbols directory
-    String obfuscationPath = project['split-debug-info']
-    File obfuscationFile = new File(obfuscationPath)
-    String fullPath
-
-    // If the provided path is relative
-    // append the symbols directory to the root project path to get the full path
-    if (obfuscationFile.absolute) {
-        fullPath = obfuscationPath
-    } else {
-        fullPath = rootFile.parent + File.separator + obfuscationPath
-    }
-
-    doLast { upload_symbols(fullPath) }
 }
 
 /**
@@ -38,51 +41,55 @@ task upload_symbols_task {
   * @return void
 */
 ext.upload_symbols = { symbolsPath ->
-    // Get local properties
-    Properties properties = new Properties()
-    File propertiesFile = project.rootProject.file('local.properties')
-    if (propertiesFile.exists()) {
-        properties.load(propertiesFile.newDataInputStream())
+    try {
+        // Get local properties
+        Properties properties = new Properties()
+        File propertiesFile = project.rootProject.file('local.properties')
+        if (propertiesFile.exists()) {
+            properties.load(propertiesFile.newDataInputStream())
+        }
+
+        // Get the app token if provided
+        if (System.getenv('INSTABUG_APP_TOKEN') == null &&  properties.getProperty('INSTABUG_APP_TOKEN') == null) {
+            println('Instabug: err: INSTABUG_APP_TOKEN not found. Make sure you\'ve added the environment variable INSTABUG_APP_TOKEN')
+            return
+        }
+        println('Instabug: INSTABUG_APP_TOKEN found')
+
+        // Get the API KEY if provided
+        if (System.getenv('INSTABUG_API_KEY') == null && properties.getProperty('INSTABUG_API_KEY') == null) {
+            println('Instabug: err: INSTABUG_API_KEY not found. Make sure you\'ve added the environment variable INSTABUG_API_KEY')
+            return
+        }
+
+        println 'Instabug: INSTABUG_API_KEY found'
+        println 'Instabug: Uploading files...'
+
+        // Check if the symbols directory provided exists
+        File symbolsDir = new File(symbolsPath)
+        if (!symbolsDir.exists()) {
+            println 'Instabug: err: Symbols directory not found'
+            return
+        }
+
+        // Search in symbolsPath for files with extension .symbols and add them to a list
+        List<File> symbolsFiles = symbolsDir.listFiles().findAll { file -> file.path.endsWith('.symbols') }
+        if (symbolsFiles.empty) {
+            println 'Instabug: err: No symbols files found'
+            return
+        }
+        println "Instabug: ${symbolsFiles.size()} Symbols files found"
+
+        // Print list of symbols files
+        symbolsFiles.forEach { file ->
+            println "Instabug: ${file.path}"
+        }
+
+        // Create a zip file with the symbols files
+        zip_symbols(symbolsPath, symbolsFiles)
+    } catch (Exception e) {
+        println("Instabug err: uploading symbols: ${e.message}")
     }
-
-    // Get the app token if provided
-    if (System.getenv('INSTABUG_APP_TOKEN') == null &&  properties.getProperty('INSTABUG_APP_TOKEN') == null) {
-        println('Instabug: err: INSTABUG_APP_TOKEN not found. Make sure you\'ve added the environment variable INSTABUG_APP_TOKEN')
-        return
-    }
-    println('Instabug: Instabug: INSTABUG_APP_TOKEN found')
-
-    // Get the API KEY if provided
-    if (System.getenv('INSTABUG_API_KEY') == null && properties.getProperty('INSTABUG_API_KEY') == null) {
-        println('Instabug: err: INSTABUG_API_KEY not found. Make sure you\'ve added the environment variable INSTABUG_API_KEY')
-        return
-    }
-
-    println 'Instabug: Instabug: INSTABUG_API_KEY found'
-    println 'Instabug: Uploading files...'
-
-    // Check if the symbols directory provided exists
-    File symbolsDir = new File(symbolsPath)
-    if (!symbolsDir.exists()) {
-        println 'Instabug: err: Symbols directory not found'
-        return
-    }
-
-    // Search in symbolsPath for files with extension .symbols and add them to a list
-    List<File> symbolsFiles = symbolsDir.listFiles().findAll { file -> file.path.endsWith('.symbols') }
-    if (symbolsFiles.empty) {
-        println 'Instabug: err: No symbols files found'
-        return
-    }
-    println "Instabug: ${symbolsFiles.size()} Symbols files found"
-
-    // Print list of symbols files
-    symbolsFiles.forEach { file ->
-        println "Instabug: ${file.path}"
-    }
-
-    // Create a zip file with the symbols files
-    zip_symbols(symbolsPath, symbolsFiles)
 }
 
 /**
