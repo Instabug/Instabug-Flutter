@@ -5,8 +5,8 @@ ext.boundary = 'abcd' + Long.toString(System.currentTimeMillis()) * 2 + 'dcba'
 ext.lineEnd = '\r\n'
 
 /**
-  * task to upload symbols to Instabug endpoint
-*/
+ * task to upload symbols to Instabug endpoint
+ */
 task upload_symbols_task {
     doLast {
         try {
@@ -39,11 +39,11 @@ task upload_symbols_task {
     }
 }
 /**
-    * get upload configs
-    * @return symbolsPath the path of the symbols directory
-    * @return applicationToken the application token
-    * @return apiKey the api key
-*/
+ * get upload configs
+ * @return symbolsPath the path of the symbols directory
+ * @return applicationToken the application token
+ * @return apiKey the api key
+ */
 
 def get_config() {
     try {
@@ -58,7 +58,7 @@ def get_config() {
         }
 
         // Get the app token if provided
-        if (System.getenv('INSTABUG_APP_TOKEN') == null &&  properties.getProperty('INSTABUG_APP_TOKEN') == null) {
+        if (System.getenv('INSTABUG_APP_TOKEN') == null && properties.getProperty('INSTABUG_APP_TOKEN') == null) {
             println('Instabug: err: INSTABUG_APP_TOKEN not found. Make sure you\'ve added the environment variable INSTABUG_APP_TOKEN')
             return null
         }
@@ -96,11 +96,11 @@ def get_config() {
 }
 
 /**
-    * search for the symbols files in the symbols directory
-    * and create a zip file with the symbols files
-    * @param symbolsPath the path of the symbols directory
-    * @return zipFile the zip file created
-*/
+ * search for the symbols files in the symbols directory
+ * and create a zip file with the symbols files
+ * @param symbolsPath the path of the symbols directory
+ * @return zipFile the zip file created
+ */
 
 File prepare_zip_file(String symbolsPath) {
     // Check if the symbols directory provided exists
@@ -124,12 +124,12 @@ File prepare_zip_file(String symbolsPath) {
     return zipFile
 }
 /**
-    * create a zip file with the symbols files
-    *
-    * @param symbolsPath the path of the symbols directory
-    * @param symbolsFiles the list of symbols files
-    * @return zipFile the zip file created
-*/
+ * create a zip file with the symbols files
+ *
+ * @param symbolsPath the path of the symbols directory
+ * @param symbolsFiles the list of symbols files
+ * @return zipFile the zip file created
+ */
 
 File zip_files(String symbolsPath, List<File> symbolsFiles) {
     File zipFile = new File(symbolsPath + '.zip')
@@ -153,13 +153,13 @@ File zip_files(String symbolsPath, List<File> symbolsFiles) {
     return zipFile
 }
 /**
-    * upload symbol files to Instabug endpoint
-    *
-    * @param zipFile the zip file containing the symbols files
-    * @param applicationToken the app token
-    * @param apiKey the api key
-    * @return void
-*/
+ * upload symbol files to Instabug endpoint
+ *
+ * @param zipFile the zip file containing the symbols files
+ * @param applicationToken the app token
+ * @param apiKey the api key
+ * @return void
+ */
 def upload_symbols(File zipFile, String applicationToken, String apiKey) {
     // Initialize connection
     String uploadUrl = 'https://backend-5659.instabug-dev.com/api/web/public/flutter-symbol-files/android'
@@ -207,12 +207,12 @@ def upload_symbols(File zipFile, String applicationToken, String apiKey) {
     zipFile.delete()
 }
 /**
-    * write a field in the request body
-    * @param writer the writer
-    * @param field the name of the field
-    * @param value the value of the field
-    * @return void
-*/
+ * write a field in the request body
+ * @param writer the writer
+ * @param field the name of the field
+ * @param value the value of the field
+ * @return void
+ */
 def writeField(writer, field, value) {
     writer.append('--' + boundary).append(lineEnd)
     writer.append("Content-Disposition: form-data; name=\"" + field + "\"").append(lineEnd)
@@ -220,17 +220,17 @@ def writeField(writer, field, value) {
     writer.append(value).append(lineEnd)
 }
 /**
-    * write a field in the request body
-    * @param writer the writer
-    * @param fileName the name of the file
-    * @param file the file to be uploaded
-    * @param outputStream the output stream
-    * @return void
-*/
+ * write a field in the request body
+ * @param writer the writer
+ * @param fileName the name of the file
+ * @param file the file to be uploaded
+ * @param outputStream the output stream
+ * @return void
+ */
 def writeFile(writer, fileName, file, outputStream) {
     writer.append('--' + boundary).append(lineEnd)
-    writer.append( "Content-Disposition: form-data; name=\"" + 'file' + "\"; filename=\"" + fileName + "\"").append(lineEnd);
-    writer.append( 'Content-Type: ' + URLConnection.guessContentTypeFromName(fileName)).append(lineEnd)
+    writer.append("Content-Disposition: form-data; name=\"" + 'file' + "\"; filename=\"" + fileName + "\"").append(lineEnd);
+    writer.append('Content-Type: ' + URLConnection.guessContentTypeFromName(fileName)).append(lineEnd)
     writer.append(lineEnd)
     writer.flush()
     FileInputStream inputStream = new FileInputStream(file)
