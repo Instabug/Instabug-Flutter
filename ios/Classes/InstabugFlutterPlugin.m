@@ -41,15 +41,13 @@ NSMutableDictionary *traces;
         NSMethodSignature *signature = [inv methodSignature];
         const char *type = [signature methodReturnType];
 
-        if (result != nil) {
-            if (strcmp(type, "v") != 0) {
-                void *returnVal;
-                [inv getReturnValue:&returnVal];
-                NSObject *resultSet = (__bridge NSObject *)returnVal;
-                result(resultSet);
-            } else {
-                result(nil);
-            }
+        if (strcmp(type, "v") != 0) {
+            void *returnVal;
+            [inv getReturnValue:&returnVal];
+            NSObject *resultSet = (__bridge NSObject *)returnVal;
+            result(resultSet);
+        } else {
+            result(nil);
         }
     }
     if (!isImplemented) {
