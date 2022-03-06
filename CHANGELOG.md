@@ -1,4 +1,4 @@
-## v10.11.1 (2022-02-18)
+## master
 
 * Fixes iOS platform calls not completing with `void` return type
 
