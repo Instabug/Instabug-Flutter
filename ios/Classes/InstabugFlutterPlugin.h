@@ -428,7 +428,7 @@
   *
   * @param isEnabled whether chat notification is reburied or not
   */
-- (void)setChatNotificationEnabled:(NSNumber *)isEnabled;
++ (void)setChatNotificationEnabled:(NSNumber *)isEnabled;
 
 + (void)networkLog:(NSDictionary *)networkData;
 

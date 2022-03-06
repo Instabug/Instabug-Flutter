@@ -26,7 +26,7 @@ class CrashReporting {
 
   static Future<void> reportCrash(dynamic exception, StackTrace stack) async {
     if (kReleaseMode && enabled) {
-      _reportUnhandledCrash(exception, stack);
+      await _reportUnhandledCrash(exception, stack);
     } else {
       FlutterError.dumpErrorToConsole(
           FlutterErrorDetails(stack: stack, exception: exception));
@@ -38,12 +38,12 @@ class CrashReporting {
   /// [StackTrace] stack
   static Future<void> reportHandledCrash(dynamic exception,
       [StackTrace? stack]) async {
-    _sendCrash(exception, stack ?? StackTrace.current, true);
+    await _sendCrash(exception, stack ?? StackTrace.current, true);
   }
 
   static Future<void> _reportUnhandledCrash(
       dynamic exception, StackTrace stack) async {
-    _sendCrash(exception, stack, false);
+    await _sendCrash(exception, stack, false);
   }
 
   static Future<void> _sendCrash(
