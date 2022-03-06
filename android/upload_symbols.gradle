@@ -11,17 +11,27 @@ task upload_symbols_task {
     doLast {
         try {
             String symbolsPath
-            String applicationToken
-            String apiKey
-            List config
 
             // If obfuscate flag not provided, exit the task
             if (!project.hasProperty('dart-obfuscation') || project['dart-obfuscation'] == 'false') {
                 return
             }
 
-            config = get_config()
-            (symbolsPath, applicationToken, apiKey) = config
+            // Get upload configs
+            final kAppToken = "INSTABUG_APP_TOKEN";
+            final kApiKey = "INSTABUG_API_KEY";
+
+            // Get local properties
+            Properties properties = new Properties()
+            File propertiesFile = project.rootProject.file('local.properties')
+            if (propertiesFile.exists()) {
+                properties.load(propertiesFile.newDataInputStream())
+            }
+
+            // Get upload configs
+            final applicationToken = get_variable(properties, kAppToken);
+            final apiKey = get_variable(properties, kApiKey);
+            symbolsPath = get_symbols_path()
 
             // Prepare zip file with symbols
             File zipFile = prepare_zip_file(symbolsPath)
@@ -33,37 +43,26 @@ task upload_symbols_task {
     }
 }
 /**
- * get upload configs
- * @return symbolsPath the path of the symbols directory
- * @return applicationToken the application token
- * @return apiKey the api key
+ * get environment variable
+ * @param properties properties object
+ * @param name variable name
+ * @return variable environment variable for the given name
  */
-
-def get_config() {
-    final kAppToken = "INSTABUG_APP_TOKEN";
-    final kApiKey = "INSTABUG_API_KEY";
-
-    // Get local properties
-    Properties properties = new Properties()
-    File propertiesFile = project.rootProject.file('local.properties')
-    if (propertiesFile.exists()) {
-        properties.load(propertiesFile.newDataInputStream())
+def get_variable(properties, name) {
+    // Look for the variable in local properties and env variables
+    final variable = System.getenv(name) ?: properties.getProperty(name);
+    if (!variable) {
+        throw new Exception("$name not found. Make sure you've added the environment variable $name");
     }
+    println "Instabug: ${name} found"
+    return variable;
+}
 
-    // Get the app token if provided
-    final applicationToken = System.getenv(kAppToken) ?: properties.getProperty(kAppToken);
-    if (!applicationToken) {
-        throw new Exception("$kAppToken not found. Make sure you've added the environment variable $kAppToken");
-    }
-    println "Instabug: ${kAppToken} found"
-
-    // Get the API KEY if provided
-    final apiKey = System.getenv(kApiKey) ?: properties.getProperty(kApiKey);
-    if (!apiKey) {
-        throw new Exception("$kApiKey not found. Make sure you've added the environment variable $kApiKey");
-    }
-    println "Instabug: ${kApiKey} found"
-
+/**
+ * get symbols path
+ * @return symbolsPath the path of the symbols directory
+ */
+def get_symbols_path() {
     // Get root host directory path
     String rootProjectPath = project.properties['rootDir']
     File rootFile = new File(rootProjectPath)
@@ -80,7 +79,7 @@ def get_config() {
     } else {
         symbolsPath = rootFile.parent + File.separator + obfuscationPath
     }
-    return [symbolsPath, applicationToken, apiKey]
+    return symbolsPath
 }
 
 /**
