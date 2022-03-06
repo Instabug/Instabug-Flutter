@@ -21,16 +21,10 @@ task upload_symbols_task {
             }
 
             config = get_config()
-            if (!config) {
-                return
-            }
             (symbolsPath, applicationToken, apiKey) = config
 
             // Prepare zip file with symbols
             File zipFile = prepare_zip_file(symbolsPath)
-            if (!zipFile) {
-                return
-            }
 
             upload_symbols(zipFile, applicationToken, apiKey)
         } catch (Exception e) {
@@ -46,53 +40,47 @@ task upload_symbols_task {
  */
 
 def get_config() {
-    try {
-        String applicationToken
-        String apiKey
+    final kAppToken = "INSTABUG_APP_TOKEN";
+    final kApiKey = "INSTABUG_API_KEY";
 
-        // Get local properties
-        Properties properties = new Properties()
-        File propertiesFile = project.rootProject.file('local.properties')
-        if (propertiesFile.exists()) {
-            properties.load(propertiesFile.newDataInputStream())
-        }
-
-        // Get the app token if provided
-        if (System.getenv('INSTABUG_APP_TOKEN') == null && properties.getProperty('INSTABUG_APP_TOKEN') == null) {
-            println('Instabug: err: INSTABUG_APP_TOKEN not found. Make sure you\'ve added the environment variable INSTABUG_APP_TOKEN')
-            return null
-        }
-        applicationToken = System.getenv('INSTABUG_APP_TOKEN') != null ? System.getenv('INSTABUG_APP_TOKEN') : properties.getProperty('INSTABUG_APP_TOKEN')
-        println('Instabug: INSTABUG_APP_TOKEN found')
-
-        // Get the API KEY if provided
-        if (System.getenv('INSTABUG_API_KEY') == null && properties.getProperty('INSTABUG_API_KEY') == null) {
-            println('Instabug: err: INSTABUG_API_KEY not found. Make sure you\'ve added the environment variable INSTABUG_API_KEY')
-            return null
-        }
-        apiKey = System.getenv('INSTABUG_API_KEY') != null ? System.getenv('INSTABUG_API_KEY') : properties.getProperty('INSTABUG_API_KEY')
-        println 'Instabug: INSTABUG_API_KEY found'
-
-        // Get root host directory path
-        String rootProjectPath = project.properties['rootDir']
-        File rootFile = new File(rootProjectPath)
-
-        // Get the path of the symbols directory
-        String obfuscationPath = project['split-debug-info']
-        File obfuscationFile = new File(obfuscationPath)
-        String symbolsPath
-
-        // If the provided path is relative
-        // append the symbols directory to the root project path to get the full path
-        if (obfuscationFile.absolute) {
-            symbolsPath = obfuscationPath
-        } else {
-            symbolsPath = rootFile.parent + File.separator + obfuscationPath
-        }
-        return [symbolsPath, applicationToken, apiKey]
-    } catch (Exception e) {
-        println("Instabug err: getting config: ${e.message}")
+    // Get local properties
+    Properties properties = new Properties()
+    File propertiesFile = project.rootProject.file('local.properties')
+    if (propertiesFile.exists()) {
+        properties.load(propertiesFile.newDataInputStream())
     }
+
+    // Get the app token if provided
+    final applicationToken = System.getenv(kAppToken) ?: properties.getProperty(kAppToken);
+    if (!applicationToken) {
+        throw new Exception("$kAppToken not found. Make sure you've added the environment variable $kAppToken");
+    }
+    println "Instabug: ${kAppToken} found"
+
+    // Get the API KEY if provided
+    final apiKey = System.getenv(kApiKey) ?: properties.getProperty(kApiKey);
+    if (!apiKey) {
+        throw new Exception("$kApiKey not found. Make sure you've added the environment variable $kApiKey");
+    }
+    println "Instabug: ${kApiKey} found"
+
+    // Get root host directory path
+    String rootProjectPath = project.properties['rootDir']
+    File rootFile = new File(rootProjectPath)
+
+    // Get the path of the symbols directory
+    String obfuscationPath = project['split-debug-info']
+    File obfuscationFile = new File(obfuscationPath)
+    String symbolsPath
+
+    // If the provided path is relative
+    // append the symbols directory to the root project path to get the full path
+    if (obfuscationFile.absolute) {
+        symbolsPath = obfuscationPath
+    } else {
+        symbolsPath = rootFile.parent + File.separator + obfuscationPath
+    }
+    return [symbolsPath, applicationToken, apiKey]
 }
 
 /**
@@ -106,15 +94,13 @@ File prepare_zip_file(String symbolsPath) {
     // Check if the symbols directory provided exists
     File symbolsDir = new File(symbolsPath)
     if (!symbolsDir.exists()) {
-        println 'Instabug: err: Symbols directory not found'
-        return null
+        throw new Exception('Symbols directory not found')
     }
 
     // Search in symbolsPath for files with extension .symbols and add them to a list
     List<File> symbolsFiles = symbolsDir.listFiles().findAll { file -> file.path.endsWith('.symbols') }
     if (symbolsFiles.empty) {
-        println 'Instabug: err: No symbols files found'
-        return null
+        throw new Exception('No symbols files found')
     }
     println "Instabug: ${symbolsFiles.size()} Symbols files found"
 
