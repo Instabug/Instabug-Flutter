@@ -41,7 +41,7 @@ dependencies {
 // add upload_symbols task
 apply from: './upload_symbols.gradle'
 tasks.whenTaskAdded { task ->
-    if (task.name == 'assembleRelease')  {
+    if (task.name == 'assembleRelease' && (rootProject.hasProperty("instabugUploadEnable") ? rootProject.instabugUploadEnable : true)) {
         task.finalizedBy upload_symbols_task
     }
 }
