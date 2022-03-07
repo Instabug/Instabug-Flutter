@@ -77,7 +77,7 @@ def get_symbols_path() {
     if (obfuscationFile.absolute) {
         symbolsPath = obfuscationPath
     } else {
-        symbolsPath = rootFile.parent + File.separator + obfuscationPath
+        symbolsPath = new File(rootFile.parent, obfuscationPath)
     }
     return symbolsPath
 }
