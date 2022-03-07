@@ -10,32 +10,26 @@ ext.lineEnd = '\r\n'
 task upload_symbols_task {
     doLast {
         try {
-            String symbolsPath
-
             // If obfuscate flag not provided, exit the task
-            if (!project.hasProperty('dart-obfuscation') || project['dart-obfuscation'] == 'false') {
-                println "Instabug: instabugUploadEnable is false, skipping debug symbols upload"
+            if (project['dart-obfuscation'] != 'true') {
+                println "Instabug: skipping debug symbols upload"
                 return
             }
 
-            // Get upload configs
-            final kAppToken = "INSTABUG_APP_TOKEN";
-            final kApiKey = "INSTABUG_API_KEY";
-
             // Get local properties
-            Properties properties = new Properties()
-            File propertiesFile = project.rootProject.file('local.properties')
+            final properties = new Properties()
+            final propertiesFile = project.rootProject.file('local.properties')
             if (propertiesFile.exists()) {
                 properties.load(propertiesFile.newDataInputStream())
             }
 
             // Get upload configs
-            final applicationToken = get_variable(properties, kAppToken);
-            final apiKey = get_variable(properties, kApiKey);
-            symbolsPath = get_symbols_path()
+            final applicationToken = get_variable(properties, "INSTABUG_APP_TOKEN");
+            final apiKey = get_variable(properties, "INSTABUG_API_KEY");
+            final symbolsPath = get_symbols_path()
 
             // Prepare zip file with symbols
-            File zipFile = prepare_zip_file(symbolsPath)
+            final zipFile = prepare_zip_file(symbolsPath)
 
             upload_symbols(zipFile, applicationToken, apiKey)
         } catch (Exception e) {
@@ -49,7 +43,7 @@ task upload_symbols_task {
  * @param name variable name
  * @return variable environment variable for the given name
  */
-def get_variable(properties, name) {
+String get_variable(properties, name) {
     // Look for the variable in local properties and env variables
     final variable = System.getenv(name) ?: properties.getProperty(name);
     if (!variable) {
@@ -63,24 +57,21 @@ def get_variable(properties, name) {
  * get symbols path
  * @return symbolsPath the path of the symbols directory
  */
-def get_symbols_path() {
+String get_symbols_path() {
     // Get root host directory path
-    String rootProjectPath = project.properties['rootDir']
-    File rootFile = new File(rootProjectPath)
+    final rootFile = new File(project['rootDir'].toString())
 
     // Get the path of the symbols directory
-    String obfuscationPath = project['split-debug-info']
-    File obfuscationFile = new File(obfuscationPath)
-    String symbolsPath
+    final obfuscationPath = project['split-debug-info']
+    final obfuscationFile = new File(obfuscationPath)
 
     // If the provided path is relative
     // append the symbols directory to the root project path to get the full path
     if (obfuscationFile.absolute) {
-        symbolsPath = obfuscationPath
+        return obfuscationPath
     } else {
-        symbolsPath = new File(rootFile.parent, obfuscationPath)
+        return new File(rootFile.parent, obfuscationPath)
     }
-    return symbolsPath
 }
 
 /**
@@ -90,15 +81,15 @@ def get_symbols_path() {
  * @return zipFile the zip file created
  */
 
-File prepare_zip_file(String symbolsPath) {
+File prepare_zip_file(symbolsPath) {
     // Check if the symbols directory provided exists
-    File symbolsDir = new File(symbolsPath)
+    final symbolsDir = new File(symbolsPath)
     if (!symbolsDir.exists()) {
         throw new Exception('Symbols directory not found')
     }
 
     // Search in symbolsPath for files with extension .symbols and add them to a list
-    List<File> symbolsFiles = symbolsDir.listFiles().findAll { file -> file.path.endsWith('.symbols') }
+    final symbolsFiles = symbolsDir.listFiles().findAll { file -> file.path.endsWith('.symbols') }
     if (symbolsFiles.empty) {
         throw new Exception('No symbols files found')
     }
@@ -108,9 +99,9 @@ File prepare_zip_file(String symbolsPath) {
     symbolsFiles.forEach { file ->
         println "${file.path}"
     }
-    
+
     // Create a zip file with the symbols files
-    File zipFile = zip_files(symbolsPath, symbolsFiles)
+    final zipFile = zip_files(symbolsPath, symbolsFiles)
 
     return zipFile
 }
@@ -122,15 +113,15 @@ File prepare_zip_file(String symbolsPath) {
  * @return zipFile the zip file created
  */
 
-File zip_files(String symbolsPath, List<File> symbolsFiles) {
-    File zipFile = new File(symbolsPath + '.zip')
-    ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(zipFile))
+File zip_files(symbolsPath, symbolsFiles) {
+    final zipFile = new File(symbolsPath + '.zip')
+    final zipOutputStream = new ZipOutputStream(new FileOutputStream(zipFile))
     symbolsFiles.forEach { file ->
-        String fileName = file.path.substring(symbolsPath.length() + 1)
-        ZipEntry zipEntry = new ZipEntry(fileName)
+        final fileName = file.path.substring(symbolsPath.length() + 1)
+        final zipEntry = new ZipEntry(fileName)
         zipOutputStream.putNextEntry(zipEntry)
         FileInputStream fileInputStream = new FileInputStream(file)
-        byte[] buffer = new byte[1024]
+        final buffer = new byte[1024]
         int length = fileInputStream.read(buffer)
         while (length > 0) {
             zipOutputStream.write(buffer, 0, length)
@@ -151,10 +142,10 @@ File zip_files(String symbolsPath, List<File> symbolsFiles) {
  * @param apiKey the api key
  * @return void
  */
-def upload_symbols(File zipFile, String applicationToken, String apiKey) {
+void upload_symbols(zipFile, applicationToken, apiKey) {
     // Initialize connection
-    String uploadUrl = 'https://backend-5659.instabug-dev.com/api/web/public/flutter-symbol-files/android'
-    HttpURLConnection connection = new URL(uploadUrl).openConnection() as HttpURLConnection
+    final uploadUrl = 'https://backend-5659.instabug-dev.com/api/web/public/flutter-symbol-files/android'
+    final connection = new URL(uploadUrl).openConnection() as HttpURLConnection
 
     // Set connection headers and request method
     connection.setRequestMethod('POST')
@@ -165,9 +156,9 @@ def upload_symbols(File zipFile, String applicationToken, String apiKey) {
     connection.setDoOutput(true)
 
     // Initialize output stream and writer
-    OutputStream outputStream = connection.getOutputStream()
-    String charset = 'ISO-8859-1'
-    PrintWriter writer = new PrintWriter(new OutputStreamWriter(outputStream, charset), true)
+    final outputStream = connection.getOutputStream()
+    final charset = 'ISO-8859-1'
+    final writer = new PrintWriter(new OutputStreamWriter(outputStream, charset), true)
 
     // Write application_token in the request body
     writeField(writer, 'application_token', applicationToken)
@@ -176,14 +167,14 @@ def upload_symbols(File zipFile, String applicationToken, String apiKey) {
     writeField(writer, 'api_key', apiKey)
 
     // Write zip file in the request body
-    String fileName = zipFile.getName()
+    final fileName = zipFile.getName()
     writeFile(writer, fileName, zipFile, outputStream)
 
     // Send the request
     writer.close()
 
     // Get the response
-    int responseCode = connection.getResponseCode()
+    final responseCode = connection.getResponseCode()
     println "Instabug: Response Code: ${responseCode}"
     println "Instabug: Response Message: ${connection.getResponseMessage()}"
     if (responseCode == 200) {
@@ -204,7 +195,7 @@ def upload_symbols(File zipFile, String applicationToken, String apiKey) {
  * @param value the value of the field
  * @return void
  */
-def writeField(writer, field, value) {
+void writeField(writer, field, value) {
     writer.append('--' + boundary).append(lineEnd)
     writer.append("Content-Disposition: form-data; name=\"" + field + "\"").append(lineEnd)
     writer.append(lineEnd)
@@ -218,13 +209,14 @@ def writeField(writer, field, value) {
  * @param outputStream the output stream
  * @return void
  */
-def writeFile(writer, fileName, file, outputStream) {
+void writeFile(writer, fileName, file, outputStream) {
     writer.append('--' + boundary).append(lineEnd)
     writer.append("Content-Disposition: form-data; name=\"" + 'file' + "\"; filename=\"" + fileName + "\"").append(lineEnd);
     writer.append('Content-Type: ' + URLConnection.guessContentTypeFromName(fileName)).append(lineEnd)
     writer.append(lineEnd)
     writer.flush()
-    FileInputStream inputStream = new FileInputStream(file)
+
+    final inputStream = new FileInputStream(file)
     byte[] buffer = new byte[4096]
     int bytesRead = -1
     while ((bytesRead = inputStream.read(buffer)) != -1) {
@@ -232,6 +224,7 @@ def writeFile(writer, fileName, file, outputStream) {
     }
     outputStream.flush()
     inputStream.close()
+
     writer.append('--' + boundary).append(lineEnd)
     writer.flush()
 }
