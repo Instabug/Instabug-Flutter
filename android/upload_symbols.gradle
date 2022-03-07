@@ -14,6 +14,7 @@ task upload_symbols_task {
 
             // If obfuscate flag not provided, exit the task
             if (!project.hasProperty('dart-obfuscation') || project['dart-obfuscation'] == 'false') {
+                println "Instabug: instabugUploadEnable is false, skipping debug symbols upload"
                 return
             }
 
@@ -38,7 +39,7 @@ task upload_symbols_task {
 
             upload_symbols(zipFile, applicationToken, apiKey)
         } catch (Exception e) {
-            println("Instabug err: uploading symbols: ${e.message}")
+            println "Instabug err: uploading symbols: ${e.message}"
         }
     }
 }
@@ -101,8 +102,13 @@ File prepare_zip_file(String symbolsPath) {
     if (symbolsFiles.empty) {
         throw new Exception('No symbols files found')
     }
-    println "Instabug: ${symbolsFiles.size()} Symbols files found"
+    println "Instabug: ${symbolsFiles.size()} Symbols files found:"
 
+    // Print list of symbols files
+    symbolsFiles.forEach { file ->
+        println "${file.path}"
+    }
+    
     // Create a zip file with the symbols files
     File zipFile = zip_files(symbolsPath, symbolsFiles)
 
