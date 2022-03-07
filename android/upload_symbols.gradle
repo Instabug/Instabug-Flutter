@@ -44,8 +44,8 @@ task upload_symbols_task {
  * @return variable environment variable for the given name
  */
 String get_variable(properties, name) {
-    // Look for the variable in local properties and env variables
-    final variable = System.getenv(name) ?: properties.getProperty(name);
+    // Look for the variable in env variables, local properties and gradle properties
+    final variable = System.getenv(name) ?: properties.getProperty(name) ?: project.findProperty(name)
     if (!variable) {
         throw new Exception("$name not found. Make sure you've added the environment variable $name");
     }
