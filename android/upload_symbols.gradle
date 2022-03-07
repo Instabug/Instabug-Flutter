@@ -1,6 +1,9 @@
 import java.util.zip.ZipOutputStream
 import java.util.zip.ZipEntry
 
+// Constants
+final INSTABUG_APP_TOKEN = 'INSTABUG_APP_TOKEN'
+final INSTABUG_API_KEY = 'INSTABUG_API_KEY'
 ext.boundary = 'abcd' + Long.toString(System.currentTimeMillis()) * 2 + 'dcba'
 ext.lineEnd = '\r\n'
 
@@ -24,8 +27,8 @@ task upload_symbols_task {
             }
 
             // Get upload configs
-            final applicationToken = get_variable(properties, "INSTABUG_APP_TOKEN");
-            final apiKey = get_variable(properties, "INSTABUG_API_KEY");
+            final applicationToken = get_variable(properties, INSTABUG_APP_TOKEN);
+            final apiKey = get_variable(properties, INSTABUG_API_KEY);
             final symbolsPath = get_symbols_path()
 
             // Prepare zip file with symbols
@@ -144,7 +147,7 @@ File zip_files(symbolsPath, symbolsFiles) {
  */
 void upload_symbols(zipFile, applicationToken, apiKey) {
     // Initialize connection
-    final uploadUrl = 'https://backend-5659.instabug-dev.com/api/web/public/flutter-symbol-files/android'
+    final uploadUrl = project.findProperty('INSTABUG_UPLOAD_URL')
     final connection = new URL(uploadUrl).openConnection() as HttpURLConnection
 
     // Set connection headers and request method
