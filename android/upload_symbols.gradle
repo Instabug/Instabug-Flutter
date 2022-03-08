@@ -4,6 +4,7 @@ import java.util.zip.ZipEntry
 // Constants
 final INSTABUG_APP_TOKEN = 'INSTABUG_APP_TOKEN'
 final INSTABUG_API_KEY = 'INSTABUG_API_KEY'
+final UPLOAD_URL = 'https://api.instabug.com/api/web/public/flutter-symbol-files/android'
 ext.boundary = 'abcd' + Long.toString(System.currentTimeMillis()) * 2 + 'dcba'
 ext.lineEnd = '\r\n'
 
@@ -34,7 +35,7 @@ task upload_symbols_task {
             // Prepare zip file with symbols
             final zipFile = prepare_zip_file(symbolsPath)
 
-            upload_symbols(zipFile, applicationToken, apiKey)
+            upload_symbols(zipFile, applicationToken, apiKey, UPLOAD_URL)
         } catch (Exception e) {
             println "Instabug err: uploading symbols: ${e.message}"
         }
@@ -47,8 +48,8 @@ task upload_symbols_task {
  * @return variable environment variable for the given name
  */
 String get_variable(properties, name) {
-    // Look for the variable in env variables, local properties and gradle properties
-    final variable = System.getenv(name) ?: properties.getProperty(name) ?: project.findProperty(name)
+    // Look for the variable in local properties, gradle properties and env variables
+    final variable = properties.getProperty(name) ?: project.findProperty(name) ?: System.getenv(name)
     if (!variable) {
         throw new Exception("$name not found. Make sure you've added the environment variable $name");
     }
@@ -145,9 +146,8 @@ File zip_files(symbolsPath, symbolsFiles) {
  * @param apiKey the api key
  * @return void
  */
-void upload_symbols(zipFile, applicationToken, apiKey) {
+void upload_symbols(zipFile, applicationToken, apiKey, uploadUrl) {
     // Initialize connection
-    final uploadUrl = project.findProperty('INSTABUG_UPLOAD_URL')
     final connection = new URL(uploadUrl).openConnection() as HttpURLConnection
 
     // Set connection headers and request method
