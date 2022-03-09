@@ -8,7 +8,7 @@ class Trace {
       : this.attributes = listOfAttributes ?? new Map<String, dynamic>();
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = <String, dynamic>{};
+    final map = <String, dynamic>{};
     map['id'] = id;
     map['name'] = name;
     map['attributes'] = attributes;

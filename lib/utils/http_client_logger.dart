@@ -20,7 +20,7 @@ class HttpClientLogger {
     request.headers.forEach((String header, dynamic value) {
       requestHeaders[header] = value[0];
     });
-    final NetworkData requestData = NetworkData(
+    final requestData = NetworkData(
       startTime: DateTime.now(),
       method: request.method,
       url: request.uri.toString(),
@@ -44,7 +44,7 @@ class HttpClientLogger {
 
   void onResponse(HttpClientResponse response, HttpClientRequest request,
       {dynamic responseBody}) {
-    final DateTime endTime = DateTime.now();
+    final endTime = DateTime.now();
     final networkData = _getRequestData(request.hashCode);
     final responseHeaders = <String, dynamic>{};
     final requestHeaders = <String, dynamic>{};

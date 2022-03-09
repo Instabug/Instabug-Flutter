@@ -16,7 +16,7 @@ class CrashData {
       };
 
   Map<String, dynamic> toMap() {
-    final Map<String, dynamic> map = <String, dynamic>{};
+    final map = <String, dynamic>{};
     map['message'] = message;
     map['os'] = os;
     map['platform'] = platform;

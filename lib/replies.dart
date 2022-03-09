@@ -28,7 +28,7 @@ class Replies {
   /// Enables and disables everything related to receiving replies.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
-    final List<dynamic> params = <dynamic>[isEnabled];
+    final params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>('setRepliesEnabled:', params);
   }
 
@@ -67,7 +67,7 @@ class Replies {
   /// Enables/disables showing in-app notifications when the user receives a new message.
   /// [isEnabled] A boolean to set whether notifications are enabled or disabled.
   static Future<void> setInAppNotificationsEnabled(bool isEnabled) async {
-    final List<dynamic> params = <dynamic>[isEnabled];
+    final params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>('setChatNotificationEnabled:', params);
   }
 
@@ -76,7 +76,7 @@ class Replies {
   /// @android ONLY
   static Future<void> setInAppNotificationSound(bool isEnabled) async {
     if (PlatformManager.instance.isAndroid()) {
-      final List<dynamic> params = <dynamic>[isEnabled];
+      final params = <dynamic>[isEnabled];
       await _channel.invokeMethod<Object>(
           'setEnableInAppNotificationSound:', params);
     }

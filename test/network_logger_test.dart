@@ -26,10 +26,10 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
 
-  final List<MethodCall> log = <MethodCall>[];
-  const String url = 'https://jsonplaceholder.typicode.com';
-  const int port = 8888;
-  const String path = '/posts';
+  final log = <MethodCall>[];
+  const url = 'https://jsonplaceholder.typicode.com';
+  const port = 8888;
+  const path = '/posts';
   const body = {'testKey': 'testValue'};
   const listOfObjects = [
     {'test1': 'test'},
@@ -148,7 +148,7 @@ void main() {
   });
 
   test('expect onResponse to call networkLog method', () async {
-    final HttpClientLogger clientLogger = HttpClientLogger();
+    final clientLogger = HttpClientLogger();
     when<dynamic>(mockNetworkData.copyWith(
       url: anyNamed('url'),
       method: anyNamed('method'),
@@ -484,8 +484,8 @@ void main() {
 
   test('expect instabug custom http client to call client addClientCredentials',
       () async {
-    const String realm = 'realm string';
-    final MockHttpClientCredentials clientCredentials =
+    const realm = 'realm string';
+    final clientCredentials =
         MockHttpClientCredentials();
     instabugCustomHttpClient.addCredentials(
         Uri.parse(url), realm, clientCredentials);
@@ -496,8 +496,8 @@ void main() {
 
   test('expect instabug custom http client to call client addProxyCredentials',
       () async {
-    const String realm = 'realm string';
-    final MockHttpClientCredentials clientCredentials =
+    const realm = 'realm string';
+    final clientCredentials =
         MockHttpClientCredentials();
     instabugCustomHttpClient.addProxyCredentials(
         url, port, realm, clientCredentials);
@@ -532,7 +532,7 @@ void main() {
   test(
       'expect instabug custom http client to set client badCertificateCallback',
       () async {
-    final bool Function(X509Certificate cert, String host, int port) f =
+    final f =
         (X509Certificate cert, String host, int port) => true;
     instabugCustomHttpClient.badCertificateCallback = f;
     verify((instabugCustomHttpClient.client as MockHttpClient)
@@ -552,7 +552,7 @@ void main() {
             (instabugCustomHttpClient.client as MockHttpClient).getUrl(any))
         .thenAnswer((_) async => mockRequest);
 
-    for (int i = 0; i < 10000; i++) {
+    for (var i = 0; i < 10000; i++) {
       await instabugCustomHttpClient.getUrl(Uri.parse(url));
       await instabugCustomHttpClientRequest.close();
     }

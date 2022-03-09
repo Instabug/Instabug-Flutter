@@ -73,7 +73,7 @@ class BugReporting {
   ///Enables and disables manual invocation and prompt options for bug and feedback.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
-    final List<dynamic> params = <dynamic>[isEnabled];
+    final params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>('setBugReportingEnabled:', params);
   }
 
@@ -118,7 +118,7 @@ class BugReporting {
   /// [screenRecording] A boolean to enable or disable screen recording attachments.
   static Future<void> setEnabledAttachmentTypes(bool screenshot,
       bool extraScreenshot, bool galleryImage, bool screenRecording) async {
-    final List<dynamic> params = <dynamic>[
+    final params = <dynamic>[
       screenshot,
       extraScreenshot,
       galleryImage,
@@ -143,7 +143,7 @@ class BugReporting {
   /// [extendedBugReportMode] ExtendedBugReportMode enum
   static Future<void> setExtendedBugReportMode(
       ExtendedBugReportMode extendedBugReportMode) async {
-    final List<dynamic> params = <dynamic>[extendedBugReportMode.toString()];
+    final params = <dynamic>[extendedBugReportMode.toString()];
     await _channel.invokeMethod<Object>('setExtendedBugReportMode:', params);
   }
 
@@ -167,7 +167,7 @@ class BugReporting {
     final invocationOptionsStrings =
         invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
             [];
-    final List<dynamic> params = <dynamic>[
+    final params = <dynamic>[
       reportType.toString(),
       invocationOptionsStrings
     ];
@@ -181,7 +181,7 @@ class BugReporting {
   static Future<void> setShakingThresholdForiPhone(
       double iPhoneShakingThreshold) async {
     if (PlatformManager.instance.isIOS()) {
-      final List<dynamic> params = <dynamic>[iPhoneShakingThreshold];
+      final params = <dynamic>[iPhoneShakingThreshold];
       await _channel.invokeMethod<Object>(
           'setShakingThresholdForiPhone:', params);
     }
@@ -193,7 +193,7 @@ class BugReporting {
   static Future<void> setShakingThresholdForiPad(
       double iPadShakingThreshold) async {
     if (PlatformManager.instance.isIOS()) {
-      final List<dynamic> params = <dynamic>[iPadShakingThreshold];
+      final params = <dynamic>[iPadShakingThreshold];
       await _channel.invokeMethod<Object>(
           'setShakingThresholdForiPad:', params);
     }
@@ -207,7 +207,7 @@ class BugReporting {
   static Future<void> setShakingThresholdForAndroid(
       int androidThreshold) async {
     if (PlatformManager.instance.isAndroid()) {
-      final List<dynamic> params = <dynamic>[androidThreshold];
+      final params = <dynamic>[androidThreshold];
       await _channel.invokeMethod<Object>(
           'setShakingThresholdForAndroid:', params);
     }

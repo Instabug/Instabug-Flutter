@@ -32,36 +32,36 @@ import 'instabug_flutter_test.mocks.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
-  final List<MethodCall> log = <MethodCall>[];
+  final log = <MethodCall>[];
   const appToken = '068ba9a8c3615035e163dc5f829c73be';
-  final List<InvocationEvent> invocationEvents = <InvocationEvent>[
+  final invocationEvents = <InvocationEvent>[
     InvocationEvent.floatingButton
   ];
   const email = 's@nta.com';
   const name = 'santa';
   const message = 'Test Message';
-  const String userAttribute = '19';
-  const Map<String, String> userAttributePair = <String, String>{
+  const userAttribute = '19';
+  const userAttributePair = <String, String>{
     'gender': 'female'
   };
   late MockPlatformManager mockPlatform;
 
-  const String url = 'https://jsonplaceholder.typicode.com';
-  const String method = 'POST';
-  final DateTime startDate = DateTime.now();
-  final DateTime endDate = DateTime.now().add(const Duration(hours: 1));
+  const url = 'https://jsonplaceholder.typicode.com';
+  const method = 'POST';
+  final startDate = DateTime.now();
+  final endDate = DateTime.now().add(const Duration(hours: 1));
   const dynamic requestBody = 'requestBody';
   const dynamic responseBody = 'responseBody';
-  const int status = 200;
-  const Map<String, dynamic> requestHeaders = <String, dynamic>{
+  const status = 200;
+  const requestHeaders = <String, dynamic>{
     'request': 'request'
   };
-  const Map<String, dynamic> responseHeaders = <String, dynamic>{
+  const responseHeaders = <String, dynamic>{
     'response': 'response'
   };
-  const int duration = 10;
-  const String contentType = 'contentType';
-  final NetworkData networkData = NetworkData(
+  const duration = 10;
+  const contentType = 'contentType';
+  final networkData = NetworkData(
     url: url,
     method: method,
     startTime: startDate,
@@ -106,7 +106,7 @@ void main() {
     when(mockPlatform.isIOS()).thenAnswer((_) => true);
 
     Instabug.start(appToken, invocationEvents);
-    final List<dynamic> args = <dynamic>[
+    final args = <dynamic>[
       appToken,
       <String>[InvocationEvent.floatingButton.toString()]
     ];
@@ -120,7 +120,7 @@ void main() {
 
   test('showWelcomeMessageWithMode: Test', () async {
     Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
-    final List<dynamic> args = <dynamic>[WelcomeMessageMode.beta.toString()];
+    final args = <dynamic>[WelcomeMessageMode.beta.toString()];
     expect(log, <Matcher>[
       isMethodCall(
         'showWelcomeMessageWithMode:',
@@ -131,7 +131,7 @@ void main() {
 
   test('identifyUserWithEmail:name: Test', () async {
     Instabug.identifyUser(email, name);
-    final List<dynamic> args = <dynamic>[email, name];
+    final args = <dynamic>[email, name];
     expect(log, <Matcher>[
       isMethodCall(
         'identifyUserWithEmail:name:',
@@ -142,7 +142,7 @@ void main() {
 
   test('identifyUserWithEmail:name: Test Optional Parameter', () async {
     Instabug.identifyUser(email);
-    final List<dynamic> args = <dynamic>[email, null];
+    final args = <dynamic>[email, null];
     expect(log, <Matcher>[
       isMethodCall(
         'identifyUserWithEmail:name:',
@@ -158,7 +158,7 @@ void main() {
 
   test('setLocale:', () async {
     Instabug.setLocale(IBGLocale.german);
-    final List<dynamic> args = <dynamic>[IBGLocale.german.toString()];
+    final args = <dynamic>[IBGLocale.german.toString()];
     expect(log, <Matcher>[
       isMethodCall(
         'setLocale:',
@@ -169,7 +169,7 @@ void main() {
 
   test('setSdkDebugLogsLevel:', () async {
     Instabug.setSdkDebugLogsLevel(IBGSDKDebugLogsLevel.verbose);
-    final List<dynamic> args = <dynamic>[
+    final args = <dynamic>[
       IBGSDKDebugLogsLevel.verbose.toString()
     ];
     expect(log, <Matcher>[
@@ -182,7 +182,7 @@ void main() {
 
   test('logVerbose: Test', () async {
     InstabugLog.logVerbose(message);
-    final List<dynamic> args = <dynamic>[message];
+    final args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall(
         'logVerbose:',
@@ -193,7 +193,7 @@ void main() {
 
   test('logDebug: Test', () async {
     InstabugLog.logDebug(message);
-    final List<dynamic> args = <dynamic>[message];
+    final args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall(
         'logDebug:',
@@ -204,7 +204,7 @@ void main() {
 
   test('logInfo: Test', () async {
     InstabugLog.logInfo(message);
-    final List<dynamic> args = <dynamic>[message];
+    final args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall(
         'logInfo:',
@@ -220,7 +220,7 @@ void main() {
 
   test('logError: Test', () async {
     InstabugLog.logError(message);
-    final List<dynamic> args = <dynamic>[message];
+    final args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall(
         'logError:',
@@ -231,7 +231,7 @@ void main() {
 
   test('logWarn: Test', () async {
     InstabugLog.logWarn(message);
-    final List<dynamic> args = <dynamic>[message];
+    final args = <dynamic>[message];
     expect(log, <Matcher>[
       isMethodCall(
         'logWarn:',
@@ -242,9 +242,9 @@ void main() {
 
   test('test setColorTheme should be called with argument colorTheme',
       () async {
-    const ColorTheme colorTheme = ColorTheme.dark;
+    const colorTheme = ColorTheme.dark;
     Instabug.setColorTheme(colorTheme);
-    final List<dynamic> args = <dynamic>[colorTheme.toString()];
+    final args = <dynamic>[colorTheme.toString()];
     expect(log, <Matcher>[
       isMethodCall(
         'setColorTheme:',
@@ -255,9 +255,9 @@ void main() {
 
   test('test appendTags should be called with argument List of strings',
       () async {
-    const List<String> tags = ['tag1', 'tag2'];
+    const tags = <String>['tag1', 'tag2'];
     Instabug.appendTags(tags);
-    final List<dynamic> args = <dynamic>[tags];
+    final args = <dynamic>[tags];
     expect(log, <Matcher>[
       isMethodCall(
         'appendTags:',
@@ -282,10 +282,10 @@ void main() {
   test(
       'test setUserAttributeWithKey should be called with two string arguments',
       () async {
-    const String value = '19';
-    const String key = 'Age';
+    const value = '19';
+    const key = 'Age';
     Instabug.setUserAttribute(value, key);
-    final List<dynamic> args = <dynamic>[value, key];
+    final args = <dynamic>[value, key];
     expect(log, <Matcher>[
       isMethodCall(
         'setUserAttribute:withKey:',
@@ -296,9 +296,9 @@ void main() {
 
   test('test removeUserAttributeForKey should be called with a string argument',
       () async {
-    const String key = 'Age';
+    const key = 'Age';
     Instabug.removeUserAttribute(key);
-    final List<dynamic> args = <dynamic>[key];
+    final args = <dynamic>[key];
     expect(log, <Matcher>[
       isMethodCall(
         'removeUserAttributeForKey:',
@@ -310,7 +310,7 @@ void main() {
   test(
       'test getUserAttributeForKey should be called with a string argument and return a string',
       () async {
-    const String key = 'Age';
+    const key = 'Age';
     final value = await Instabug.getUserAttributeForKey(key);
     expect(log, <Matcher>[
       isMethodCall('getUserAttributeForKey:', arguments: <dynamic>[key])
@@ -321,7 +321,7 @@ void main() {
   test(
       'test getuserAttributes should be called with no arguments and returns a Map',
       () async {
-    final Map<String, String> result = await Instabug.getUserAttributes();
+    final result = await Instabug.getUserAttributes();
     expect(log, <Matcher>[isMethodCall('getUserAttributes', arguments: null)]);
     expect(result, userAttributePair);
   });
@@ -338,7 +338,7 @@ void main() {
 
   test('logUserEventWithName: Test', () async {
     Instabug.logUserEvent(name);
-    final List<dynamic> args = <dynamic>[name];
+    final args = <dynamic>[name];
     expect(log, <Matcher>[
       isMethodCall(
         'logUserEventWithName:',
@@ -349,10 +349,10 @@ void main() {
 
   test('test setValueForStringWithKey should be called with two arguments',
       () async {
-    const String value = 'Some key';
-    const CustomTextPlaceHolderKey key = CustomTextPlaceHolderKey.shakeHint;
+    const value = 'Some key';
+    const key = CustomTextPlaceHolderKey.shakeHint;
     Instabug.setValueForStringWithKey(value, key);
-    final List<dynamic> args = <dynamic>[value, key.toString()];
+    final args = <dynamic>[value, key.toString()];
     expect(log, <Matcher>[
       isMethodCall(
         'setValue:forStringWithKey:',
@@ -362,8 +362,8 @@ void main() {
   });
 
   test('setSessionProfilerEnabled: Test', () async {
-    const bool sessionProfilerEnabled = true;
-    final List<dynamic> args = <dynamic>[sessionProfilerEnabled];
+    const sessionProfilerEnabled = true;
+    final args = <dynamic>[sessionProfilerEnabled];
     Instabug.setSessionProfilerEnabled(sessionProfilerEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -376,8 +376,8 @@ void main() {
   test('setDebugEnabled: Test', () async {
     when(mockPlatform.isAndroid()).thenAnswer((_) => true);
 
-    const bool debugEnabled = true;
-    final List<dynamic> args = <dynamic>[debugEnabled];
+    const debugEnabled = true;
+    final args = <dynamic>[debugEnabled];
     Instabug.setDebugEnabled(debugEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -389,7 +389,7 @@ void main() {
 
   test('setPrimaryColor: Test', () async {
     const c = Color.fromRGBO(255, 0, 255, 1.0);
-    final List<dynamic> args = <dynamic>[c.value];
+    final args = <dynamic>[c.value];
     Instabug.setPrimaryColor(c);
     expect(log, <Matcher>[
       isMethodCall(
@@ -401,7 +401,7 @@ void main() {
 
   test('setUserData: Test', () async {
     const s = 'This is a String';
-    final List<dynamic> args = <dynamic>[s];
+    final args = <dynamic>[s];
     Instabug.setUserData(s);
     expect(log, <Matcher>[
       isMethodCall(
@@ -414,7 +414,7 @@ void main() {
   test('addFileAttachmentWithURL: Test', () async {
     const filePath = 'filePath';
     const fileName = 'fileName';
-    final List<dynamic> args = <dynamic>[filePath, fileName];
+    final args = <dynamic>[filePath, fileName];
     Instabug.addFileAttachmentWithURL(filePath, fileName);
     expect(log, <Matcher>[
       isMethodCall(
@@ -427,7 +427,7 @@ void main() {
   test('addFileAttachmentWithData: Test', () async {
     final bdata = Uint8List(10);
     const fileName = 'fileName';
-    final List<dynamic> args = <dynamic>[bdata, fileName];
+    final args = <dynamic>[bdata, fileName];
     Instabug.addFileAttachmentWithData(bdata, fileName);
     expect(log, <Matcher>[
       isMethodCall(
@@ -448,7 +448,7 @@ void main() {
   });
 
   test('setWelcomeMessageMode Test', () async {
-    final List<dynamic> args = <dynamic>[WelcomeMessageMode.live.toString()];
+    final args = <dynamic>[WelcomeMessageMode.live.toString()];
     Instabug.setWelcomeMessageMode(WelcomeMessageMode.live);
     expect(log, <Matcher>[
       isMethodCall(
@@ -459,8 +459,8 @@ void main() {
   });
 
   test('reportScreenChange Test', () async {
-    const String screenName = 'screen 1';
-    final List<dynamic> args = <dynamic>[screenName];
+    const screenName = 'screen 1';
+    final args = <dynamic>[screenName];
     Instabug.reportScreenChange(screenName);
     expect(log, <Matcher>[
       isMethodCall(
@@ -471,7 +471,7 @@ void main() {
   });
 
   test('setReproStepsMode Test', () async {
-    final List<dynamic> args = <dynamic>[ReproStepsMode.enabled.toString()];
+    final args = <dynamic>[ReproStepsMode.enabled.toString()];
     Instabug.setReproStepsMode(ReproStepsMode.enabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -483,7 +483,7 @@ void main() {
 
   test('setBugReportingEnabled: Test', () async {
     const isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    final args = <dynamic>[isEnabled];
     BugReporting.setEnabled(isEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -495,7 +495,7 @@ void main() {
 
   test('setShakingThresholdForiPhone: Test', () async {
     const iPhoneShakingThreshold = 1.6;
-    final List<dynamic> args = <dynamic>[iPhoneShakingThreshold];
+    final args = <dynamic>[iPhoneShakingThreshold];
 
     when(mockPlatform.isIOS()).thenAnswer((_) => true);
 
@@ -510,7 +510,7 @@ void main() {
 
   test('setShakingThresholdForiPad: Test', () async {
     const iPadShakingThreshold = 1.6;
-    final List<dynamic> args = <dynamic>[iPadShakingThreshold];
+    final args = <dynamic>[iPadShakingThreshold];
 
     when(mockPlatform.isIOS()).thenAnswer((_) => true);
 
@@ -525,7 +525,7 @@ void main() {
 
   test('setShakingThresholdForAndroid: Test', () async {
     const androidThreshold = 1000;
-    final List<dynamic> args = <dynamic>[androidThreshold];
+    final args = <dynamic>[androidThreshold];
 
     when(mockPlatform.isAndroid()).thenAnswer((_) => true);
 
@@ -561,7 +561,7 @@ void main() {
   test('setInvocationEvents Test', () async {
     BugReporting.setInvocationEvents(
         <InvocationEvent>[InvocationEvent.floatingButton]);
-    final List<dynamic> args = <dynamic>[
+    final args = <dynamic>[
       <String>[InvocationEvent.floatingButton.toString()]
     ];
     expect(log, <Matcher>[
@@ -574,7 +574,7 @@ void main() {
 
   test('setInvocationEvents Test', () async {
     BugReporting.setInvocationEvents(null);
-    final List<dynamic> args = <dynamic>[<String>[]];
+    final args = <dynamic>[<String>[]];
     expect(log, <Matcher>[
       isMethodCall(
         'setInvocationEvents:',
@@ -587,7 +587,7 @@ void main() {
       'setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording: Test',
       () async {
     BugReporting.setEnabledAttachmentTypes(false, false, false, false);
-    final List<dynamic> args = <dynamic>[false, false, false, false];
+    final args = <dynamic>[false, false, false, false];
     expect(log, <Matcher>[
       isMethodCall(
         'setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording:',
@@ -598,7 +598,7 @@ void main() {
 
   test('setInvocationEvents Test', () async {
     BugReporting.setReportTypes(<ReportType>[ReportType.feedback]);
-    final List<dynamic> args = <dynamic>[
+    final args = <dynamic>[
       <String>[ReportType.feedback.toString()]
     ];
     expect(log, <Matcher>[
@@ -612,7 +612,7 @@ void main() {
   test('setInvocationEvents Test', () async {
     BugReporting.setExtendedBugReportMode(
         ExtendedBugReportMode.enabledWithOptionalFields);
-    final List<dynamic> args = <dynamic>[
+    final args = <dynamic>[
       ExtendedBugReportMode.enabledWithOptionalFields.toString()
     ];
     expect(log, <Matcher>[
@@ -626,7 +626,7 @@ void main() {
   test('setInvocationOptions Test', () async {
     BugReporting.setInvocationOptions(
         <InvocationOption>[InvocationOption.emailFieldHidden]);
-    final List<dynamic> args = <dynamic>[
+    final args = <dynamic>[
       <String>[InvocationOption.emailFieldHidden.toString()]
     ];
     expect(log, <Matcher>[
@@ -639,7 +639,7 @@ void main() {
 
   test('setInvocationOptions Test: empty', () async {
     BugReporting.setInvocationOptions(null);
-    final List<dynamic> args = <dynamic>[<String>[]];
+    final args = <dynamic>[<String>[]];
     expect(log, <Matcher>[
       isMethodCall(
         'setInvocationOptions:',
@@ -651,7 +651,7 @@ void main() {
   test('showBugReportingWithReportTypeAndOptions:options Test', () async {
     BugReporting.show(
         ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
-    final List<dynamic> args = <dynamic>[
+    final args = <dynamic>[
       ReportType.bug.toString(),
       <String>[InvocationOption.emailFieldHidden.toString()]
     ];
@@ -666,7 +666,7 @@ void main() {
   test('showBugReportingWithReportTypeAndOptions:options Test: empty options',
       () async {
     BugReporting.show(ReportType.bug, null);
-    final List<dynamic> args = <dynamic>[ReportType.bug.toString(), <String>[]];
+    final args = <dynamic>[ReportType.bug.toString(), <String>[]];
     expect(log, <Matcher>[
       isMethodCall(
         'showBugReportingWithReportTypeAndOptions:options:',
@@ -677,7 +677,7 @@ void main() {
 
   test('setSurveysEnabled: Test', () async {
     const isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    final args = <dynamic>[isEnabled];
     Surveys.setEnabled(isEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -689,7 +689,7 @@ void main() {
 
   test('setAutoShowingSurveysEnabled: Test', () async {
     const isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    final args = <dynamic>[isEnabled];
     Surveys.setAutoShowingEnabled(isEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -721,7 +721,7 @@ void main() {
 
   test('setShouldShowSurveysWelcomeScreen: Test', () async {
     const isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    final args = <dynamic>[isEnabled];
     Surveys.setShouldShowWelcomeScreen(isEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -743,7 +743,7 @@ void main() {
 
   test('showSurveyWithToken Test', () async {
     const token = 'token';
-    final List<dynamic> args = <dynamic>[token];
+    final args = <dynamic>[token];
     Surveys.showSurvey(token);
     expect(log, <Matcher>[
       isMethodCall(
@@ -755,7 +755,7 @@ void main() {
 
   test('hasRespondedToSurvey Test', () async {
     const token = 'token';
-    final List<dynamic> args = <dynamic>[token];
+    final args = <dynamic>[token];
     Surveys.hasRespondedToSurvey(token, () => () {});
     expect(log, <Matcher>[
       isMethodCall(
@@ -767,7 +767,7 @@ void main() {
 
   test('setAppStoreURL Test', () async {
     const appStoreURL = 'appStoreURL';
-    final List<dynamic> args = <dynamic>[appStoreURL];
+    final args = <dynamic>[appStoreURL];
 
     when(mockPlatform.isIOS()).thenAnswer((_) => true);
 
@@ -788,7 +788,7 @@ void main() {
 
   test('setEmailFieldRequiredForFeatureRequests:forAction: Test', () async {
     const isEmailFieldRequired = false;
-    final List<dynamic> args = <dynamic>[
+    final args = <dynamic>[
       isEmailFieldRequired,
       <String>[ActionType.addCommentToFeature.toString()]
     ];
@@ -809,7 +809,7 @@ void main() {
 
   test('setChatsEnabled: Test', () async {
     const isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    final args = <dynamic>[isEnabled];
     Chats.setEnabled(isEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -821,7 +821,7 @@ void main() {
 
   test('setRepliesEnabled: Test', () async {
     const isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    final args = <dynamic>[isEnabled];
     Replies.setEnabled(isEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -833,7 +833,7 @@ void main() {
 
   test('setInAppNotificationSound: Test', () async {
     const isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    final args = <dynamic>[isEnabled];
 
     when(mockPlatform.isAndroid()).thenAnswer((_) => true);
 
@@ -871,7 +871,7 @@ void main() {
 
   test('setChatNotificationEnabled: Test', () async {
     const isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    final args = <dynamic>[isEnabled];
     Replies.setInAppNotificationsEnabled(isEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -884,7 +884,7 @@ void main() {
   test('networkLog: Test', () async {
     final data =
         NetworkData(method: 'method', url: 'url', startTime: DateTime.now());
-    final List<dynamic> args = <dynamic>[data.toMap()];
+    final args = <dynamic>[data.toMap()];
     final networkLogger = NetworkLogger();
     networkLogger.networkLog(data);
     expect(log, <Matcher>[
@@ -897,7 +897,7 @@ void main() {
 
   test('setCrashReportingEnabled: Test', () async {
     const isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    final args = <dynamic>[isEnabled];
     CrashReporting.setEnabled(isEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -909,13 +909,13 @@ void main() {
 
   test('sendJSCrashByReflection:handled: Test', () async {
     try {
-      final List<dynamic> params = <dynamic>[1, 2];
+      final params = <dynamic>[1, 2];
       params[5] = 2;
     } catch (exception, stack) {
-      const bool handled = true;
-      final Trace trace = Trace.from(stack);
-      final List<ExceptionData> frames = <ExceptionData>[];
-      for (int i = 0; i < trace.frames.length; i++) {
+      const handled = true;
+      final trace = Trace.from(stack);
+      final frames = <ExceptionData>[];
+      for (var i = 0; i < trace.frames.length; i++) {
         frames.add(ExceptionData(
             trace.frames[i].uri.toString(),
             trace.frames[i].member,
@@ -924,7 +924,7 @@ void main() {
       }
       final crashData = CrashData(
           exception.toString(), Platform.operatingSystem.toString(), frames);
-      final List<dynamic> args = <dynamic>[jsonEncode(crashData), handled];
+      final args = <dynamic>[jsonEncode(crashData), handled];
       CrashReporting.reportHandledCrash(exception, stack);
       expect(log, <Matcher>[
         isMethodCall(
@@ -958,21 +958,21 @@ void main() {
   });
 
   test('Test NetworkData model CopyWith', () async {
-    const String urlCopy = 'https://jsonplaceholder.typicode.comCopy';
-    const String methodCopy = 'POSTCopy';
+    const urlCopy = 'https://jsonplaceholder.typicode.comCopy';
+    const methodCopy = 'POSTCopy';
     const dynamic requestBodyCopy = 'requestBodyCopy';
     const dynamic responseBodyCopy = 'responseBodyCopy';
-    const Map<String, dynamic> requestHeadersCopy = <String, dynamic>{
+    const requestHeadersCopy = <String, dynamic>{
       'requestCopy': 'requestCopy'
     };
-    const Map<String, dynamic> responseHeadersCopy = <String, dynamic>{
+    const responseHeadersCopy = <String, dynamic>{
       'responseCopy': 'responseCopy'
     };
-    const int durationCopy = 20;
-    const String contentTypeCopy = 'contentTypeCopy';
-    final DateTime startDateCopy = DateTime.now().add(const Duration(days: 1));
-    final DateTime endDateCopy = DateTime.now().add(const Duration(days: 2));
-    const int statusCopy = 300;
+    const durationCopy = 20;
+    const contentTypeCopy = 'contentTypeCopy';
+    final startDateCopy = DateTime.now().add(const Duration(days: 1));
+    final endDateCopy = DateTime.now().add(const Duration(days: 2));
+    const statusCopy = 300;
 
     final newNetworkData = networkData.copyWith(
         url: urlCopy,
@@ -1003,8 +1003,8 @@ void main() {
   });
 
   test('setAPMEnabled: Test', () async {
-    bool isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    const isEnabled = false;
+    final args = <dynamic>[isEnabled];
     APM.setEnabled(isEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -1015,8 +1015,8 @@ void main() {
   });
 
   test('setAPMLogLevel: Test', () async {
-    LogLevel level = LogLevel.error;
-    final List<dynamic> args = <dynamic>[level.toString()];
+    const level = LogLevel.error;
+    final args = <dynamic>[level.toString()];
     APM.setLogLevel(level);
     expect(log, <Matcher>[
       isMethodCall(
@@ -1027,8 +1027,8 @@ void main() {
   });
 
   test('setColdAppLaunchEnabled: Test', () async {
-    bool isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    const isEnabled = false;
+    final args = <dynamic>[isEnabled];
     APM.setColdAppLaunchEnabled(isEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -1039,9 +1039,9 @@ void main() {
   });
 
   test('startExecutionTrace: Test', () async {
-    const String name = 'test_trace';
-    final DateTime timestamp = DateTime.now();
-    final List<dynamic> args = <dynamic>[name.toString(), timestamp.toString()];
+    const name = 'test_trace';
+    final timestamp = DateTime.now();
+    final args = <dynamic>[name.toString(), timestamp.toString()];
     APM.startExecutionTrace(name);
     expect(log, <Matcher>[
       isMethodCall(
@@ -1052,12 +1052,12 @@ void main() {
   }, skip: 'TODO: mock timestamp');
 
   test('setExecutionTraceAttribute: Test', () async {
-    const String name = 'test_trace';
-    const String id = '111';
-    const String key = 'key';
-    const String value = 'value';
-    final List<dynamic> args = <dynamic>[id, key, value];
-    final execution_trace.Trace trace = execution_trace.Trace(id, name);
+    const name = 'test_trace';
+    const id = '111';
+    const key = 'key';
+    const value = 'value';
+    final args = <dynamic>[id, key, value];
+    final trace = execution_trace.Trace(id, name);
     trace.setAttribute(key, value);
     expect(log, <Matcher>[
       isMethodCall(
@@ -1068,8 +1068,8 @@ void main() {
   }, skip: 'TODO: mock timestamp');
 
   test('setCrashReportingEnabled: Test', () async {
-    const bool isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    const isEnabled = false;
+    final args = <dynamic>[isEnabled];
     CrashReporting.setEnabled(isEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -1080,8 +1080,8 @@ void main() {
   });
 
   test('setAutoUITraceEnabled: Test', () async {
-    bool isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
+    const isEnabled = false;
+    final args = <dynamic>[isEnabled];
     APM.setAutoUITraceEnabled(isEnabled);
     expect(log, <Matcher>[
       isMethodCall(
@@ -1092,8 +1092,8 @@ void main() {
   });
 
   test('startUITrace: Test', () async {
-    String name = 'UI_Trace';
-    final List<dynamic> args = <dynamic>[name];
+    const name = 'UI_Trace';
+    final args = <dynamic>[name];
     APM.startUITrace(name);
     expect(log, <Matcher>[
       isMethodCall(
@@ -1104,13 +1104,13 @@ void main() {
   });
 
   test('endUITrace: Test', () async {
-    final List<dynamic> args = <dynamic>[null];
+    final args = <dynamic>[null];
     APM.endUITrace();
     expect(log, <Matcher>[isMethodCall('endUITrace', arguments: null)]);
   });
 
     test('endAppLaunch: Test', () async {
-    final List<dynamic> args = <dynamic>[null];
+    final args = <dynamic>[null];
     APM.endAppLaunch();
     expect(log, <Matcher>[isMethodCall('endAppLaunch', arguments: null)]);
   });
