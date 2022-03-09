@@ -13,3 +13,7 @@ linter:
     # Some public APIs require this (e.g. APM.setEnabled(bool))
     avoid_positional_boolean_parameters: false
 
+    # Gives more info about internal vs external imports
+    always_use_package_imports: false
+    prefer_relative_imports: true
+

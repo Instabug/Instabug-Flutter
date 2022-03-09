@@ -4,10 +4,11 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/utils/platform_manager.dart';
+
+import 'utils/platform_manager.dart';
 
 enum InvocationEvent {
-  shake,
+  shake,ß
   screenshot,
   twoFingersSwipeLeft,
   floatingButton,

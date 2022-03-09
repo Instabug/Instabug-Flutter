@@ -4,9 +4,10 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/models/crash_data.dart';
-import 'package:instabug_flutter/models/exception_data.dart';
 import 'package:stack_trace/stack_trace.dart';
+
+import 'models/crash_data.dart';
+import 'models/exception_data.dart';
 
 class CrashReporting {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');

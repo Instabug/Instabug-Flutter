@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/models/network_data.dart';
-import 'package:instabug_flutter/models/trace.dart';
+
+import 'models/network_data.dart';
+import 'models/trace.dart';
 
 enum LogLevel {
   none,

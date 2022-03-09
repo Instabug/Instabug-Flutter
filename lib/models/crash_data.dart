@@ -1,4 +1,4 @@
-import 'package:instabug_flutter/models/exception_data.dart';
+import 'exception_data.dart';
 
 class CrashData {
   CrashData(this.message, this.os, this.exception);

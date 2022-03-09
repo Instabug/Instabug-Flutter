@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:instabug_flutter/models/network_data.dart';
-import 'package:instabug_flutter/network_logger.dart';
+import '../models/network_data.dart';
+import '../network_logger.dart';
 
 class HttpClientLogger {
   final requests = <int, NetworkData>{};
