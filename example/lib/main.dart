@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:instabug_flutter/BugReporting.dart';
-import 'package:instabug_flutter/CrashReporting.dart';
-import 'package:instabug_flutter/FeatureRequests.dart';
-import 'package:instabug_flutter/Instabug.dart';
-import 'package:instabug_flutter/Surveys.dart';
+import 'package:instabug_flutter/bug_reporting.dart';
+import 'package:instabug_flutter/crash_reporting.dart';
+import 'package:instabug_flutter/feature_requests.dart';
+import 'package:instabug_flutter/instabug.dart';
+import 'package:instabug_flutter/surveys.dart';
 
 void main() {
   FlutterError.onError = (FlutterErrorDetails details) {

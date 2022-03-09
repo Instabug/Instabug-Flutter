@@ -7,7 +7,7 @@ import 'dart:convert' as _i3;
 import 'dart:io' as _i2;
 
 import 'package:instabug_flutter/models/network_data.dart' as _i5;
-import 'package:instabug_flutter/NetworkLogger.dart' as _i7;
+import 'package:instabug_flutter/network_logger.dart' as _i7;
 import 'package:instabug_flutter/utils/http_client_logger.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 

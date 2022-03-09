@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/Instabug.dart';
+import 'package:instabug_flutter/instabug.dart';
 import 'package:instabug_flutter/utils/platform_manager.dart';
 
 enum InvocationOption {
