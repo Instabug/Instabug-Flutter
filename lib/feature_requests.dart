@@ -9,9 +9,6 @@ enum ActionType { requestNewFeature, addCommentToFeature }
 class FeatureRequests {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String?> get platformVersion async =>
-      await _channel.invokeMethod<String>('getPlatformVersion');
-
   ///Shows the UI for feature requests list
   static Future<void> show() async {
     await _channel.invokeMethod<Object>('showFeatureRequests');

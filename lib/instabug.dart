@@ -93,9 +93,6 @@ enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 class Instabug {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String?> get platformVersion async =>
-      await _channel.invokeMethod<String>('getPlatformVersion');
-
   /// Starts the SDK.
   /// This is the main SDK method that does all the magic. This is the only
   /// method that SHOULD be called.

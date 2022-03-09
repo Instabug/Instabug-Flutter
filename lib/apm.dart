@@ -19,9 +19,6 @@ class APM {
   static Function _startExecutionTraceCallback = () {};
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String?> get platformVersion async =>
-      await _channel.invokeMethod<String>('getPlatformVersion');
-
   static Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
       case 'startExecutionTraceCallBack':
