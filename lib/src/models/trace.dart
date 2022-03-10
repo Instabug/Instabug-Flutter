@@ -1,4 +1,4 @@
-import '../apm.dart';
+import '../modules/apm.dart';
 
 class Trace {
   const Trace({

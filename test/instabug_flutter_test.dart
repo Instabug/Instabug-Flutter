@@ -5,24 +5,11 @@ import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:instabug_flutter/apm.dart';
-import 'package:instabug_flutter/bug_reporting.dart';
-import 'package:instabug_flutter/chats.dart';
-import 'package:instabug_flutter/crash_reporting.dart';
-import 'package:instabug_flutter/feature_requests.dart';
-import 'package:instabug_flutter/instabug.dart';
-import 'package:instabug_flutter/instabug_log.dart';
-import 'package:instabug_flutter/models/crash_data.dart';
-import 'package:instabug_flutter/models/exception_data.dart';
-import 'package:instabug_flutter/models/network_data.dart';
-import 'package:instabug_flutter/models/trace.dart' as execution_trace;
-import 'package:instabug_flutter/network_logger.dart';
-import 'package:instabug_flutter/replies.dart';
-import 'package:instabug_flutter/surveys.dart';
-import 'package:instabug_flutter/utils/platform_manager.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/utils/platform_manager.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:stack_trace/stack_trace.dart';
+import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
 import 'instabug_flutter_test.mocks.dart';
 
@@ -903,7 +890,7 @@ void main() {
       params[5] = 2;
     } catch (exception, stack) {
       const handled = true;
-      final trace = Trace.from(stack);
+      final trace = stack_trace.Trace.from(stack);
       final frames = <ExceptionData>[];
       for (var i = 0; i < trace.frames.length; i++) {
         frames.add(ExceptionData.fromFrame(trace.frames[i]));
@@ -1046,7 +1033,7 @@ void main() {
     const key = 'key';
     const value = 'value';
     final args = <dynamic>[id, key, value];
-    const trace = execution_trace.Trace(id: id, name: name);
+    const trace = Trace(id: id, name: name);
     trace.setAttribute(key, value);
     expect(log, <Matcher>[
       isMethodCall(

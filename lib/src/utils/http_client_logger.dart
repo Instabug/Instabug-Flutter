@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import '../models/network_data.dart';
-import '../network_logger.dart';
+import '../modules/network_logger.dart';
 
 class HttpClientLogger {
   final requests = <int, NetworkData>{};
-  var networkLogger = NetworkLogger();
+  final networkLogger = NetworkLogger();
 
   NetworkData? _getRequestData(int requestHashCode) {
     if (requests[requestHashCode] != null) {

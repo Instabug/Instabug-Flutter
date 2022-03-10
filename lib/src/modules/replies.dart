@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-import 'utils/platform_manager.dart';
+import '../utils/platform_manager.dart';
 
 class Replies {
   static Function? _hasChatsCallback;

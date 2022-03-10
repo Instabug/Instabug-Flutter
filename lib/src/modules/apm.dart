@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 
-import 'models/network_data.dart';
-import 'models/trace.dart';
+import '../models/network_data.dart';
+import '../models/trace.dart';
 
 enum LogLevel {
   none,

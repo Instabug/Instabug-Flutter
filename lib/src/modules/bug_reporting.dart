@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
+import '../utils/platform_manager.dart';
 import 'instabug.dart';
-import 'utils/platform_manager.dart';
 
 enum InvocationOption {
   commentFieldRequired,
