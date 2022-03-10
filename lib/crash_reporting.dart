@@ -12,6 +12,7 @@ import 'models/exception_data.dart';
 class CrashReporting {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
   static bool enabled = true;
+
   ///Enables and disables Enables and disables automatic crash reporting.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {

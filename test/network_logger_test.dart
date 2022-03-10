@@ -486,8 +486,7 @@ void main() {
   test('expect instabug custom http client to call client addClientCredentials',
       () async {
     const realm = 'realm string';
-    final clientCredentials =
-        MockHttpClientCredentials();
+    final clientCredentials = MockHttpClientCredentials();
     instabugCustomHttpClient.addCredentials(
         Uri.parse(url), realm, clientCredentials);
     verify(instabugCustomHttpClient.client
@@ -498,8 +497,7 @@ void main() {
   test('expect instabug custom http client to call client addProxyCredentials',
       () async {
     const realm = 'realm string';
-    final clientCredentials =
-        MockHttpClientCredentials();
+    final clientCredentials = MockHttpClientCredentials();
     instabugCustomHttpClient.addProxyCredentials(
         url, port, realm, clientCredentials);
     verify(instabugCustomHttpClient.client
@@ -533,8 +531,7 @@ void main() {
   test(
       'expect instabug custom http client to set client badCertificateCallback',
       () async {
-    final f =
-        (X509Certificate cert, String host, int port) => true;
+    final f = (X509Certificate cert, String host, int port) => true;
     instabugCustomHttpClient.badCertificateCallback = f;
     verify((instabugCustomHttpClient.client as MockHttpClient)
             .badCertificateCallback = f)

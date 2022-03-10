@@ -190,8 +190,7 @@ class Instabug {
   /// Returns the user attribute associated with a given [key].
   static Future<String?> getUserAttributeForKey(String key) async {
     final params = <dynamic>[key];
-    return _channel.invokeMethod<String>(
-        'getUserAttributeForKey:', params);
+    return _channel.invokeMethod<String>('getUserAttributeForKey:', params);
   }
 
   /// A new Map containing all the currently set user attributes, or an empty Map if no user attributes have been set.

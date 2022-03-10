@@ -166,10 +166,7 @@ class BugReporting {
     final invocationOptionsStrings =
         invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
             [];
-    final params = <dynamic>[
-      reportType.toString(),
-      invocationOptionsStrings
-    ];
+    final params = <dynamic>[reportType.toString(), invocationOptionsStrings];
     await _channel.invokeMethod<Object>(
         'showBugReportingWithReportTypeAndOptions:options:', params);
   }

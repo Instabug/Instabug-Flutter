@@ -34,16 +34,12 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   final log = <MethodCall>[];
   const appToken = '068ba9a8c3615035e163dc5f829c73be';
-  final invocationEvents = <InvocationEvent>[
-    InvocationEvent.floatingButton
-  ];
+  final invocationEvents = <InvocationEvent>[InvocationEvent.floatingButton];
   const email = 's@nta.com';
   const name = 'santa';
   const message = 'Test Message';
   const userAttribute = '19';
-  const userAttributePair = <String, String>{
-    'gender': 'female'
-  };
+  const userAttributePair = <String, String>{'gender': 'female'};
   late MockPlatformManager mockPlatform;
 
   const url = 'https://jsonplaceholder.typicode.com';
@@ -53,12 +49,8 @@ void main() {
   const dynamic requestBody = 'requestBody';
   const dynamic responseBody = 'responseBody';
   const status = 200;
-  const requestHeaders = <String, dynamic>{
-    'request': 'request'
-  };
-  const responseHeaders = <String, dynamic>{
-    'response': 'response'
-  };
+  const requestHeaders = <String, dynamic>{'request': 'request'};
+  const responseHeaders = <String, dynamic>{'response': 'response'};
   const duration = 10;
   const contentType = 'contentType';
   final networkData = NetworkData(
@@ -169,9 +161,7 @@ void main() {
 
   test('setSdkDebugLogsLevel:', () async {
     Instabug.setSdkDebugLogsLevel(IBGSDKDebugLogsLevel.verbose);
-    final args = <dynamic>[
-      IBGSDKDebugLogsLevel.verbose.toString()
-    ];
+    final args = <dynamic>[IBGSDKDebugLogsLevel.verbose.toString()];
     expect(log, <Matcher>[
       isMethodCall(
         'setSdkDebugLogsLevel:',
@@ -963,9 +953,7 @@ void main() {
     const methodCopy = 'POSTCopy';
     const dynamic requestBodyCopy = 'requestBodyCopy';
     const dynamic responseBodyCopy = 'responseBodyCopy';
-    const requestHeadersCopy = <String, dynamic>{
-      'requestCopy': 'requestCopy'
-    };
+    const requestHeadersCopy = <String, dynamic>{'requestCopy': 'requestCopy'};
     const responseHeadersCopy = <String, dynamic>{
       'responseCopy': 'responseCopy'
     };
@@ -1110,7 +1098,7 @@ void main() {
     expect(log, <Matcher>[isMethodCall('endUITrace', arguments: null)]);
   });
 
-    test('endAppLaunch: Test', () async {
+  test('endAppLaunch: Test', () async {
     final args = <dynamic>[null];
     APM.endAppLaunch();
     expect(log, <Matcher>[isMethodCall('endAppLaunch', arguments: null)]);
