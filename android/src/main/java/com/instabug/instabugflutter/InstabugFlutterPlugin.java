@@ -1,6 +1,7 @@
 package com.instabug.instabugflutter;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
@@ -73,26 +74,28 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     private InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
     HashMap<String, ExecutionTrace> traces = new HashMap<String, ExecutionTrace>();
 
+    private static Context context;
     static MethodChannel channel;
 
     /**
      * Plugin registration.
      */
     public static void registerWith(Registrar registrar) {
-        register(registrar.messenger());
+        register(registrar.context().getApplicationContext(), registrar.messenger());
     }
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-        register(binding.getBinaryMessenger());
+        register(binding.getApplicationContext(), binding.getBinaryMessenger());
     }
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-
+        context = null;
     }
 
-    private static void register(BinaryMessenger messenger){
+    private static void register(Context applicationContext, BinaryMessenger messenger){
+        context = applicationContext;
         channel = new MethodChannel(messenger, "instabug_flutter");
         channel.setMethodCallHandler(new InstabugFlutterPlugin());
     }
@@ -145,21 +148,24 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     /**
      * starts the SDK
      *
-     * @param application      the application Object
      * @param token            token The token that identifies the app, you can find
      *                         it on your dashboard.
      * @param invocationEvents invocationEvents The events that invoke the SDK's UI.
      */
-    public void start(Application application, String token, ArrayList<String> invocationEvents) {
+    public void startWithToken(String token, ArrayList<String> invocationEvents) {
         setCurrentPlatform();
         InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
         for (int i = 0; i < invocationEvents.size(); i++) {
             String key = invocationEvents.get(i);
             invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key, InstabugInvocationEvent.class);
         }
-        new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).build();
-        enableScreenShotByMediaProjection();
 
+        final Application application = (Application) context;
+        new Instabug.Builder(application, token)
+                .setInvocationEvents(invocationEventsArray)
+                .build();
+
+        enableScreenShotByMediaProjection();
     }
 
     /**
