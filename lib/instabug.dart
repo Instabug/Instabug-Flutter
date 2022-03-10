@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'utils/platform_manager.dart';
 
 enum InvocationEvent {
-  shake,ß
+  shake,
   screenshot,
   twoFingersSwipeLeft,
   floatingButton,
@@ -190,7 +190,7 @@ class Instabug {
   /// Returns the user attribute associated with a given [key].
   static Future<String?> getUserAttributeForKey(String key) async {
     final params = <dynamic>[key];
-    return await _channel.invokeMethod<String>(
+    return _channel.invokeMethod<String>(
         'getUserAttributeForKey:', params);
   }
 

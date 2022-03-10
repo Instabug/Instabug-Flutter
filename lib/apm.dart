@@ -51,20 +51,20 @@ class APM {
   /// Starts an execution trace.
   /// [String] name of the trace.
   static Future<dynamic> startExecutionTrace(String name) async {
-    final TRACE_NOT_STARTED_APM_NOT_ENABLED = "Execution trace " +
-        name +
-        " wasn't created. Please make sure to enable APM first by following the instructions at this link: https://docs.instabug.com/reference#enable-or-disable-apm";
     final id = DateTime.now();
-    final Completer completer = new Completer<Trace>();
-    final params = <dynamic>[name.toString(), id.toString()];
+    final completer = Completer<Trace>();
+    final params = <dynamic>[name, id.toString()];
     _channel.setMethodCallHandler(_handleMethod);
-    final Function callback = (String idBack) async {
+    final callback = (String? idBack) async {
       if (idBack != null) {
         completer.complete(Trace(id: idBack, name: name));
       } else {
-        completer.completeError(TRACE_NOT_STARTED_APM_NOT_ENABLED);
+        completer.completeError("Execution trace $name wasn't created. "
+            'Please make sure to enable APM first by following '
+            'the instructions at this link: https://docs.instabug.com/reference#enable-or-disable-apm');
       }
     };
+
     _startExecutionTraceCallback = callback;
     _channel.invokeMethod<Object>('startExecutionTrace:id:', params);
     return completer.future;
@@ -76,11 +76,8 @@ class APM {
   /// [String] value of attribute.
   static void setExecutionTraceAttribute(
       String id, String key, String value) async {
-    final params = <dynamic>[
-      id.toString(),
-      key.toString(),
-      value.toString(),
-    ];
+    final params = <dynamic>[id, key, value];
+
     await _channel.invokeMethod<Object>(
         'setExecutionTraceAttribute:key:value:', params);
   }
@@ -118,7 +115,7 @@ class APM {
   static Future<bool?> networkLogAndroid(NetworkData data) async {
     if (Platform.isAndroid) {
       final params = <dynamic>[data.toMap()];
-      return await _channel.invokeMethod<bool>(
+      return _channel.invokeMethod<bool>(
           'apmNetworkLogByReflection:', params);
     }
   }

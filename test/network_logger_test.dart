@@ -220,7 +220,7 @@ void main() {
     await instabugCustomHttpClientRequest.close();
 
     verify(instabugCustomHttpClient.logger
-        .onRequestUpdate(mockRequest, requestBody: body.toString() + '\n'));
+        .onRequestUpdate(mockRequest, requestBody: '$body\n'));
   });
 
   test(

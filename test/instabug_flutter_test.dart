@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -922,7 +921,7 @@ void main() {
 
       final crashData = CrashData(
         message: exception.toString(),
-        os: Platform.operatingSystem.toString(),
+        os: Platform.operatingSystem,
         exception: frames,
       );
 
@@ -1043,7 +1042,7 @@ void main() {
   test('startExecutionTrace: Test', () async {
     const name = 'test_trace';
     final timestamp = DateTime.now();
-    final args = <dynamic>[name.toString(), timestamp.toString()];
+    final args = <dynamic>[name, timestamp.toString()];
     APM.startExecutionTrace(name);
     expect(log, <Matcher>[
       isMethodCall(
