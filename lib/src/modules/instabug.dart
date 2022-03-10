@@ -104,9 +104,10 @@ class Instabug {
     if (PlatformManager.instance.isIOS()) {
       final invocationEventsStrings =
           invocationEvents.map((e) => e.toString()).toList(growable: false);
-      final params = <dynamic>[token, invocationEventsStrings];
-      await _channel.invokeMethod<Object>(
-          'startWithToken:invocationEvents:', params);
+      return _channel.invokeMethod(
+        'startWithToken:invocationEvents:',
+        [token, invocationEventsStrings],
+      );
     }
   }
 
@@ -114,8 +115,10 @@ class Instabug {
   /// [welcomeMessageMode] is an enum to set the welcome message mode to live, or beta.
   static Future<void> showWelcomeMessageWithMode(
       WelcomeMessageMode welcomeMessageMode) async {
-    final params = <dynamic>[welcomeMessageMode.toString()];
-    await _channel.invokeMethod<Object>('showWelcomeMessageWithMode:', params);
+    return _channel.invokeMethod(
+      'showWelcomeMessageWithMode:',
+      [welcomeMessageMode.toString()],
+    );
   }
 
   /// Sets the default value of the user's [email] and hides the email field from the reporting UI
@@ -123,8 +126,10 @@ class Instabug {
   /// It also reset the chats on device to that email and removes user attributes,
   /// user data and completed surveys.
   static Future<void> identifyUser(String email, [String? name]) async {
-    final params = <dynamic>[email, name];
-    await _channel.invokeMethod<Object>('identifyUserWithEmail:name:', params);
+    return _channel.invokeMethod(
+      'identifyUserWithEmail:name:',
+      [email, name],
+    );
   }
 
   /// Sets the default value of the user's email to nil and show email field and remove user name
@@ -138,29 +143,38 @@ class Instabug {
   /// Use to change the SDK's UI to different language.
   /// Defaults to the device's current locale.
   static Future<void> setLocale(IBGLocale locale) async {
-    final params = <dynamic>[locale.toString()];
-    await _channel.invokeMethod<Object>('setLocale:', params);
+    return _channel.invokeMethod(
+      'setLocale:',
+      [locale.toString()],
+    );
   }
 
   /// Sets the verbosity level of logs used to debug The SDK. The defualt value in debug
   /// mode is sdkDebugLogsLevelVerbose and in production is sdkDebugLogsLevelError.
-  static void setSdkDebugLogsLevel(
-      IBGSDKDebugLogsLevel sdkDebugLogsLevel) async {
-    final params = <dynamic>[sdkDebugLogsLevel.toString()];
-    await _channel.invokeMethod<Object>('setSdkDebugLogsLevel:', params);
+  static Future<void> setSdkDebugLogsLevel(
+    IBGSDKDebugLogsLevel sdkDebugLogsLevel,
+  ) async {
+    return _channel.invokeMethod(
+      'setSdkDebugLogsLevel:',
+      [sdkDebugLogsLevel.toString()],
+    );
   }
 
   /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.
   /// It should be of type [ColorTheme].
   static Future<void> setColorTheme(ColorTheme colorTheme) async {
-    final params = <dynamic>[colorTheme.toString()];
-    await _channel.invokeMethod<Object>('setColorTheme:', params);
+    return _channel.invokeMethod(
+      'setColorTheme:',
+      [colorTheme.toString()],
+    );
   }
 
   /// Appends a set of [tags] to previously added tags of reported feedback, bug or crash.
   static Future<void> appendTags(List<String> tags) async {
-    final params = <dynamic>[tags];
-    await _channel.invokeMethod<Object>('appendTags:', params);
+    return _channel.invokeMethod(
+      'appendTags:',
+      [tags],
+    );
   }
 
   /// Manually removes all tags of reported feedback, bug or crash.
@@ -176,27 +190,34 @@ class Instabug {
 
   /// Add custom user attribute [value] with a [key] that is going to be sent with each feedback, bug or crash.
   static Future<void> setUserAttribute(String value, String key) async {
-    final params = <dynamic>[value, key];
-    await _channel.invokeMethod<Object>('setUserAttribute:withKey:', params);
+    return _channel.invokeMethod(
+      'setUserAttribute:withKey:',
+      [value, key],
+    );
   }
 
   /// Removes a given [key] and its associated value from user attributes.
   /// Does nothing if a [key] does not exist.
   static Future<void> removeUserAttribute(String key) async {
-    final params = <dynamic>[key];
-    await _channel.invokeMethod<Object>('removeUserAttributeForKey:', params);
+    return _channel.invokeMethod(
+      'removeUserAttributeForKey:',
+      [key],
+    );
   }
 
   /// Returns the user attribute associated with a given [key].
   static Future<String?> getUserAttributeForKey(String key) async {
-    final params = <dynamic>[key];
-    return _channel.invokeMethod<String>('getUserAttributeForKey:', params);
+    return _channel.invokeMethod<String>(
+      'getUserAttributeForKey:',
+      [key],
+    );
   }
 
   /// A new Map containing all the currently set user attributes, or an empty Map if no user attributes have been set.
   static Future<Map<String, String>> getUserAttributes() async {
-    final userAttributes =
-        await _channel.invokeMethod<Map<dynamic, dynamic>>('getUserAttributes');
+    final userAttributes = await _channel.invokeMethod<Map<dynamic, dynamic>>(
+      'getUserAttributes',
+    );
     return userAttributes != null
         ? Map<String, String>.from(userAttributes)
         : <String, String>{};
@@ -204,39 +225,45 @@ class Instabug {
 
   /// invoke sdk manually
   static Future<void> show() async {
-    await _channel.invokeMethod<Object>('show');
+    return _channel.invokeMethod('show');
   }
 
   /// Logs a user event with [name] that happens through the lifecycle of the application.
   /// Logged user events are going to be sent with each report, as well as at the end of a session.
   static Future<void> logUserEvent(String name) async {
-    final params = <String>[name];
-    await _channel.invokeMethod<Object>('logUserEventWithName:', params);
+    return _channel.invokeMethod('logUserEventWithName:', [name]);
   }
 
   /// Overrides any of the strings shown in the SDK with custom ones.
   /// Allows you to customize a [value] shown to users in the SDK using a predefined [key].
   static Future<void> setValueForStringWithKey(
       String value, CustomTextPlaceHolderKey key) async {
-    final params = <dynamic>[value, key.toString()];
-    await _channel.invokeMethod<Object>('setValue:forStringWithKey:', params);
+    return _channel.invokeMethod(
+      'setValue:forStringWithKey:',
+      [value, key.toString()],
+    );
   }
 
   /// Enable/disable session profiler
   /// [sessionProfilerEnabled] desired state of the session profiler feature.
   static Future<void> setSessionProfilerEnabled(
-      bool sessionProfilerEnabled) async {
-    final params = <dynamic>[sessionProfilerEnabled];
-    await _channel.invokeMethod<Object>('setSessionProfilerEnabled:', params);
+    bool sessionProfilerEnabled,
+  ) async {
+    return _channel.invokeMethod(
+      'setSessionProfilerEnabled:',
+      [sessionProfilerEnabled],
+    );
   }
 
   /// Android only
   /// Enable/disable SDK logs
   /// [debugEnabled] desired state of debug mode.
-  static void setDebugEnabled(bool debugEnabled) async {
+  static Future<void> setDebugEnabled(bool debugEnabled) async {
     if (PlatformManager.instance.isAndroid()) {
-      final params = <dynamic>[debugEnabled];
-      await _channel.invokeMethod<Object>('setDebugEnabled:', params);
+      return _channel.invokeMethod(
+        'setDebugEnabled:',
+        [debugEnabled],
+      );
     }
   }
 
@@ -244,28 +271,38 @@ class Instabug {
   /// Sets the color of UI elements indicating interactivity or call to action.
   /// [color] primaryColor A color to set the UI elements of the SDK to.
   static Future<void> setPrimaryColor(Color color) async {
-    final params = <dynamic>[color.value];
-    await _channel.invokeMethod<Object>('setPrimaryColor:', params);
+    return _channel.invokeMethod(
+      'setPrimaryColor:',
+      [color.value],
+    );
   }
 
   /// Adds specific user data that you need to be added to the reports
   /// [userData] data to be added
   static Future<void> setUserData(String userData) async {
-    final params = <dynamic>[userData];
-    await _channel.invokeMethod<Object>('setUserData:', params);
+    return _channel.invokeMethod(
+      'setUserData:',
+      [userData],
+    );
   }
 
   ///Add file to be attached to the bug report.
   ///[filePath] of the file
   ///[fileName] of the file
   static Future<void> addFileAttachmentWithURL(
-      String filePath, String fileName) async {
+    String filePath,
+    String fileName,
+  ) async {
     if (Platform.isIOS) {
-      final params = <dynamic>[filePath];
-      await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params);
+      return _channel.invokeMethod(
+        'addFileAttachmentWithURL:',
+        [filePath],
+      );
     } else {
-      final params = <dynamic>[filePath, fileName];
-      await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params);
+      return _channel.invokeMethod(
+        'addFileAttachmentWithURL:',
+        [filePath, fileName],
+      );
     }
   }
 
@@ -273,49 +310,62 @@ class Instabug {
   ///[data] of the file
   ///[fileName] of the file
   static Future<void> addFileAttachmentWithData(
-      Uint8List data, String fileName) async {
+    Uint8List data,
+    String fileName,
+  ) async {
     if (Platform.isIOS) {
-      final params = <dynamic>[data];
-      await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params);
+      return _channel.invokeMethod(
+        'addFileAttachmentWithData:',
+        [data],
+      );
     } else {
-      final params = <dynamic>[data, fileName];
-      await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params);
+      return _channel.invokeMethod(
+        'addFileAttachmentWithData:',
+        [data, fileName],
+      );
     }
   }
 
   ///Clears all Uris of the attached files.
   ///The URIs which added via {@link Instabug#addFileAttachment} API not the physical files.
   static Future<void> clearFileAttachments() async {
-    await _channel.invokeMethod<Object>('clearFileAttachments');
+    return _channel.invokeMethod('clearFileAttachments');
   }
 
   ///Sets the welcome message mode to live, beta or disabled.
   ///[welcomeMessageMode] An enum to set the welcome message mode to live, beta or disabled.
   static Future<void> setWelcomeMessageMode(
-      WelcomeMessageMode welcomeMessageMode) async {
-    final params = <dynamic>[welcomeMessageMode.toString()];
-    await _channel.invokeMethod<Object>('setWelcomeMessageMode:', params);
+    WelcomeMessageMode welcomeMessageMode,
+  ) async {
+    return _channel.invokeMethod(
+      'setWelcomeMessageMode:',
+      [welcomeMessageMode.toString()],
+    );
   }
 
   ///Reports that the screen has been changed (repro steps)
   ///[screenName] String containing the screen name
   static Future<void> reportScreenChange(String screenName) async {
-    final params = <dynamic>[screenName];
-    await _channel.invokeMethod<Object>('reportScreenChange:', params);
+    return _channel.invokeMethod(
+      'reportScreenChange:',
+      [screenName],
+    );
   }
 
   ///Sets the repro steps mode
   ///[mode] repro steps mode
   static Future<void> setReproStepsMode(ReproStepsMode reproStepsMode) async {
-    final params = <dynamic>[reproStepsMode.toString()];
-    await _channel.invokeMethod<Object>('setReproStepsMode:', params);
+    return _channel.invokeMethod(
+      'setReproStepsMode:',
+      [reproStepsMode.toString()],
+    );
   }
 
   ///Android Only
   ///Enables all Instabug functionality
   static Future<void> enableAndroid() async {
     if (Platform.isAndroid) {
-      await _channel.invokeMethod<Object>('enable:');
+      return _channel.invokeMethod('enable:');
     }
   }
 
@@ -323,7 +373,7 @@ class Instabug {
   ///Disables all Instabug functionality
   static Future<void> disableAndroid() async {
     if (Platform.isAndroid) {
-      await _channel.invokeMethod<Object>('disable:');
+      return _channel.invokeMethod('disable:');
     }
   }
 }

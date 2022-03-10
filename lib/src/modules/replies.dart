@@ -27,13 +27,15 @@ class Replies {
   /// Enables and disables everything related to receiving replies.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setRepliesEnabled:', params);
+    return _channel.invokeMethod(
+      'setRepliesEnabled:',
+      [isEnabled],
+    );
   }
 
   ///Manual invocation for replies.
   static Future<void> show() async {
-    await _channel.invokeMethod<Object>('showReplies');
+    return _channel.invokeMethod('showReplies');
   }
 
   /// Tells whether the user has chats already or not.
@@ -66,8 +68,10 @@ class Replies {
   /// Enables/disables showing in-app notifications when the user receives a new message.
   /// [isEnabled] A boolean to set whether notifications are enabled or disabled.
   static Future<void> setInAppNotificationsEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setChatNotificationEnabled:', params);
+    return _channel.invokeMethod(
+      'setChatNotificationEnabled:',
+      [isEnabled],
+    );
   }
 
   /// Set whether new in app notification received will play a small sound notification or not (Default is {@code false})
@@ -75,9 +79,10 @@ class Replies {
   /// @android ONLY
   static Future<void> setInAppNotificationSound(bool isEnabled) async {
     if (PlatformManager.instance.isAndroid()) {
-      final params = <dynamic>[isEnabled];
-      await _channel.invokeMethod<Object>(
-          'setEnableInAppNotificationSound:', params);
+      return _channel.invokeMethod(
+        'setEnableInAppNotificationSound:',
+        [isEnabled],
+      );
     }
   }
 }

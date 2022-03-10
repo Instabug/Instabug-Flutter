@@ -41,17 +41,20 @@ class Surveys {
   /// Defaults to `true`.
   /// [isEnabled] A boolean to set whether Instabug Surveys is enabled or disabled.
   static Future<void> setEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setSurveysEnabled:', params);
+    return _channel.invokeMethod(
+      'setSurveysEnabled:',
+      [isEnabled],
+    );
   }
 
   ///Sets whether auto surveys showing are enabled or not.
   /// [isEnabled] A boolean to indicate whether the
   /// surveys auto showing are enabled or not.
   static Future<void> setAutoShowingEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>(
-        'setAutoShowingSurveysEnabled:', params);
+    return _channel.invokeMethod(
+      'setAutoShowingSurveysEnabled:',
+      [isEnabled],
+    );
   }
 
   /// Returns an array containing the available surveys.
@@ -87,9 +90,10 @@ class Surveys {
   /// [shouldShowWelcomeScreen] A boolean for setting whether the  welcome screen should show.
   static Future<void> setShouldShowWelcomeScreen(
       bool shouldShowWelcomeScreen) async {
-    final params = <dynamic>[shouldShowWelcomeScreen];
-    await _channel.invokeMethod<Object>(
-        'setShouldShowSurveysWelcomeScreen:', params);
+    return _channel.invokeMethod(
+      'setShouldShowSurveysWelcomeScreen:',
+      [shouldShowWelcomeScreen],
+    );
   }
 
   ///  Shows one of the surveys that were not shown before, that also have conditions
@@ -97,7 +101,7 @@ class Surveys {
   /// Does nothing if there are no available surveys or if a survey has already been shown
   /// in the current session.
   static Future<void> showSurveyIfAvailable() async {
-    await _channel.invokeMethod<Object>('showSurveysIfAvailable');
+    return _channel.invokeMethod('showSurveysIfAvailable');
   }
 
   /// Shows survey with a specific token.
@@ -105,8 +109,10 @@ class Surveys {
   /// Answered and cancelled surveys won't show up again.
   /// [surveyToken] - A String with a survey token.
   static Future<void> showSurvey(String surveyToken) async {
-    final params = <dynamic>[surveyToken];
-    await _channel.invokeMethod<Object>('showSurveyWithToken:', params);
+    return _channel.invokeMethod(
+      'showSurveyWithToken:',
+      [surveyToken],
+    );
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -117,9 +123,11 @@ class Surveys {
       String surveyToken, Function function) async {
     _channel.setMethodCallHandler(_handleMethod);
     _hasRespondedToSurveyCallback = function;
-    final params = <dynamic>[surveyToken];
+
     await _channel.invokeMethod<Object>(
-        'hasRespondedToSurveyWithToken:', params);
+      'hasRespondedToSurveyWithToken:',
+      [surveyToken],
+    );
   }
 
   /// iOS Only
@@ -128,8 +136,10 @@ class Surveys {
   /// [appStoreURL] A String url for the published iOS app on AppStore
   static Future<void> setAppStoreURL(String appStoreURL) async {
     if (PlatformManager.instance.isIOS()) {
-      final params = <dynamic>[appStoreURL];
-      await _channel.invokeMethod<Object>('setAppStoreURL:', params);
+      return _channel.invokeMethod(
+        'setAppStoreURL:',
+        [appStoreURL],
+      );
     }
   }
 }

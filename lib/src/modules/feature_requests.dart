@@ -9,7 +9,7 @@ class FeatureRequests {
 
   ///Shows the UI for feature requests list
   static Future<void> show() async {
-    await _channel.invokeMethod<Object>('showFeatureRequests');
+    return _channel.invokeMethod('showFeatureRequests');
   }
 
   /// Sets whether users are required to enter an email address or not when sending reports.
@@ -21,8 +21,10 @@ class FeatureRequests {
       bool isEmailFieldRequired, List<ActionType>? actionTypes) async {
     final actionTypesStrings =
         actionTypes?.map((e) => e.toString()).toList(growable: false) ?? [];
-    final params = <dynamic>[isEmailFieldRequired, actionTypesStrings];
-    await _channel.invokeMethod<Object>(
-        'setEmailFieldRequiredForFeatureRequests:forAction:', params);
+
+    return _channel.invokeMethod(
+      'setEmailFieldRequiredForFeatureRequests:forAction:',
+      [isEmailFieldRequired, actionTypesStrings],
+    );
   }
 }

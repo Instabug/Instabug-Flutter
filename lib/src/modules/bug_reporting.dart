@@ -72,8 +72,10 @@ class BugReporting {
   ///Enables and disables manual invocation and prompt options for bug and feedback.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setBugReportingEnabled:', params);
+    return _channel.invokeMethod(
+      'setBugReportingEnabled:',
+      [isEnabled],
+    );
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -104,8 +106,10 @@ class BugReporting {
     final invocationEventsStrings =
         invocationEvents?.map((e) => e.toString()).toList(growable: false) ??
             [];
-    final params = <dynamic>[invocationEventsStrings];
-    await _channel.invokeMethod<Object>('setInvocationEvents:', params);
+    return _channel.invokeMethod(
+      'setInvocationEvents:',
+      [invocationEventsStrings],
+    );
   }
 
   /// Sets whether attachments in bug reporting and in-app messaging are enabled or not.
@@ -115,17 +119,16 @@ class BugReporting {
   /// attachments. In iOS 10+,NSPhotoLibraryUsageDescription should be set in
   /// info.plist to enable gallery image attachments.
   /// [screenRecording] A boolean to enable or disable screen recording attachments.
-  static Future<void> setEnabledAttachmentTypes(bool screenshot,
-      bool extraScreenshot, bool galleryImage, bool screenRecording) async {
-    final params = <dynamic>[
-      screenshot,
-      extraScreenshot,
-      galleryImage,
-      screenRecording
-    ];
-    await _channel.invokeMethod<Object>(
-        'setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording:',
-        params);
+  static Future<void> setEnabledAttachmentTypes(
+    bool screenshot,
+    bool extraScreenshot,
+    bool galleryImage,
+    bool screenRecording,
+  ) async {
+    return _channel.invokeMethod(
+      'setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording:',
+      [screenshot, extraScreenshot, galleryImage, screenRecording],
+    );
   }
 
   ///Sets what type of reports, bug or feedback, should be invoked.
@@ -133,8 +136,10 @@ class BugReporting {
   static Future<void> setReportTypes(List<ReportType>? reportTypes) async {
     final reportTypesStrings =
         reportTypes?.map((e) => e.toString()).toList(growable: false) ?? [];
-    final params = <dynamic>[reportTypesStrings];
-    await _channel.invokeMethod<Object>('setReportTypes:', params);
+    return _channel.invokeMethod(
+      'setReportTypes:',
+      [reportTypesStrings],
+    );
   }
 
   /// Sets whether the extended bug report mode should be disabled, enabled with
@@ -142,8 +147,10 @@ class BugReporting {
   /// [extendedBugReportMode] ExtendedBugReportMode enum
   static Future<void> setExtendedBugReportMode(
       ExtendedBugReportMode extendedBugReportMode) async {
-    final params = <dynamic>[extendedBugReportMode.toString()];
-    await _channel.invokeMethod<Object>('setExtendedBugReportMode:', params);
+    return _channel.invokeMethod(
+      'setExtendedBugReportMode:',
+      [extendedBugReportMode.toString()],
+    );
   }
 
   /// Sets the invocation options.
@@ -154,8 +161,10 @@ class BugReporting {
     final invocationOptionsStrings =
         invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
             [];
-    final params = <dynamic>[invocationOptionsStrings];
-    await _channel.invokeMethod<Object>('setInvocationOptions:', params);
+    return _channel.invokeMethod(
+      'setInvocationOptions:',
+      [invocationOptionsStrings],
+    );
   }
 
   /// Invoke bug reporting with report type and options.
@@ -166,9 +175,10 @@ class BugReporting {
     final invocationOptionsStrings =
         invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
             [];
-    final params = <dynamic>[reportType.toString(), invocationOptionsStrings];
-    await _channel.invokeMethod<Object>(
-        'showBugReportingWithReportTypeAndOptions:options:', params);
+    return _channel.invokeMethod(
+      'showBugReportingWithReportTypeAndOptions:options:',
+      [reportType.toString(), invocationOptionsStrings],
+    );
   }
 
   /// Sets the threshold value of the shake gesture for iPhone/iPod Touch
@@ -177,9 +187,10 @@ class BugReporting {
   static Future<void> setShakingThresholdForiPhone(
       double iPhoneShakingThreshold) async {
     if (PlatformManager.instance.isIOS()) {
-      final params = <dynamic>[iPhoneShakingThreshold];
-      await _channel.invokeMethod<Object>(
-          'setShakingThresholdForiPhone:', params);
+      return _channel.invokeMethod(
+        'setShakingThresholdForiPhone:',
+        [iPhoneShakingThreshold],
+      );
     }
   }
 
@@ -187,11 +198,13 @@ class BugReporting {
   /// Default for iPhone is 0.6.
   /// [iPadShakingThreshold] iPhoneShakingThreshold double
   static Future<void> setShakingThresholdForiPad(
-      double iPadShakingThreshold) async {
+    double iPadShakingThreshold,
+  ) async {
     if (PlatformManager.instance.isIOS()) {
-      final params = <dynamic>[iPadShakingThreshold];
-      await _channel.invokeMethod<Object>(
-          'setShakingThresholdForiPad:', params);
+      return _channel.invokeMethod(
+        'setShakingThresholdForiPad:',
+        [iPadShakingThreshold],
+      );
     }
   }
 
@@ -201,11 +214,13 @@ class BugReporting {
   /// increasing the `350` value and vice versa
   /// [androidThreshold] iPhoneShakingThreshold int
   static Future<void> setShakingThresholdForAndroid(
-      int androidThreshold) async {
+    int androidThreshold,
+  ) async {
     if (PlatformManager.instance.isAndroid()) {
-      final params = <dynamic>[androidThreshold];
-      await _channel.invokeMethod<Object>(
-          'setShakingThresholdForAndroid:', params);
+      return _channel.invokeMethod(
+        'setShakingThresholdForAndroid:',
+        [androidThreshold],
+      );
     }
   }
 }

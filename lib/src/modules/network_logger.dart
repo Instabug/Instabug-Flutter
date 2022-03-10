@@ -9,8 +9,11 @@ class NetworkLogger {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
   Future<bool?> networkLog(NetworkData data) async {
-    final params = <dynamic>[data.toMap()];
-    await _channel.invokeMethod<bool>('networkLog:', params);
-    await APM.networkLogAndroid(data);
+    await _channel.invokeMethod<bool>(
+      'networkLog:',
+      [data.toMap()],
+    );
+    
+    return APM.networkLogAndroid(data);
   }
 }
