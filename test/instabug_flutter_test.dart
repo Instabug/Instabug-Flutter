@@ -916,14 +916,15 @@ void main() {
       final trace = Trace.from(stack);
       final frames = <ExceptionData>[];
       for (var i = 0; i < trace.frames.length; i++) {
-        frames.add(ExceptionData(
-            trace.frames[i].uri.toString(),
-            trace.frames[i].member,
-            trace.frames[i].line,
-            trace.frames[i].column == null ? 0 : trace.frames[i].column!));
+        frames.add(ExceptionData.fromFrame(trace.frames[i]));
       }
+
       final crashData = CrashData(
-          exception.toString(), Platform.operatingSystem.toString(), frames);
+        message: exception.toString(),
+        os: Platform.operatingSystem.toString(),
+        exception: frames,
+      );
+
       final args = <dynamic>[jsonEncode(crashData), handled];
       CrashReporting.reportHandledCrash(exception, stack);
       expect(log, <Matcher>[
@@ -1057,7 +1058,7 @@ void main() {
     const key = 'key';
     const value = 'value';
     final args = <dynamic>[id, key, value];
-    final trace = execution_trace.Trace(id, name);
+    const trace = execution_trace.Trace(id: id, name: name);
     trace.setAttribute(key, value);
     expect(log, <Matcher>[
       isMethodCall(

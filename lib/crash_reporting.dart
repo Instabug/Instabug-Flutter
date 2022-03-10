@@ -47,14 +47,15 @@ class CrashReporting {
     final trace = Trace.from(stack);
     final frames = <ExceptionData>[];
     for (var i = 0; i < trace.frames.length; i++) {
-      frames.add(ExceptionData(
-          trace.frames[i].uri.toString(),
-          trace.frames[i].member,
-          trace.frames[i].line,
-          trace.frames[i].column ?? 0));
+      frames.add(ExceptionData.fromFrame(trace.frames[i]));
     }
+
     final crashData = CrashData(
-        exception.toString(), Platform.operatingSystem.toString(), frames);
+      message: exception.toString(),
+      os: Platform.operatingSystem,
+      exception: frames,
+    );
+
     final params = <dynamic>[jsonEncode(crashData), handled];
     await _channel.invokeMethod<Object>(
         'sendJSCrashByReflection:handled:', params);

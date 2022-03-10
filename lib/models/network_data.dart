@@ -1,21 +1,22 @@
 class NetworkData {
-  const NetworkData(
-      {required this.url,
-      required this.method,
-      this.requestBody = '',
-      this.responseBody = '',
-      this.requestBodySize = 0,
-      this.responseBodySize = 0,
-      this.status,
-      this.requestHeaders = const <String, dynamic>{},
-      this.responseHeaders = const <String, dynamic>{},
-      this.duration,
-      this.requestContentType = '',
-      this.responseContentType = '',
-      this.endTime,
-      required this.startTime,
-      this.errorCode = 0,
-      this.errorDomain = ''});
+  const NetworkData({
+    required this.url,
+    required this.method,
+    this.requestBody = '',
+    this.responseBody = '',
+    this.requestBodySize = 0,
+    this.responseBodySize = 0,
+    this.status,
+    this.requestHeaders = const <String, dynamic>{},
+    this.responseHeaders = const <String, dynamic>{},
+    this.duration,
+    this.requestContentType = '',
+    this.responseContentType = '',
+    this.endTime,
+    required this.startTime,
+    this.errorCode = 0,
+    this.errorDomain = '',
+  });
 
   final String url;
   final String method;
@@ -71,23 +72,23 @@ class NetworkData {
         errorDomain: errorDomain ?? this.errorDomain,
       );
 
-  Map<String, dynamic> toMap() {
-    final map = <String, dynamic>{};
-    map['url'] = url;
-    map['method'] = method;
-    map['requestBody'] = requestBody;
-    map['responseBody'] = responseBody;
-    map['responseCode'] = status;
-    map['requestHeaders'] = requestHeaders;
-    map['responseHeaders'] = responseHeaders;
-    map['requestContentType'] = requestContentType;
-    map['responseContentType'] = responseContentType;
-    map['duration'] = duration;
-    map['startTime'] = startTime.millisecondsSinceEpoch;
-    map['requestBodySize'] = requestBodySize;
-    map['responseBodySize'] = responseBodySize;
-    map['errorDomain'] = errorDomain;
-    map['errorCode'] = errorCode;
-    return map;
-  }
+  Map<String, dynamic> toJson() => toMap();
+
+  Map<String, dynamic> toMap() => {
+        'url': url,
+        'method': method,
+        'requestBody': requestBody,
+        'responseBody': responseBody,
+        'responseCode': status,
+        'requestHeaders': requestHeaders,
+        'responseHeaders': responseHeaders,
+        'requestContentType': requestContentType,
+        'responseContentType': responseContentType,
+        'duration': duration,
+        'startTime': startTime.millisecondsSinceEpoch,
+        'requestBodySize': requestBodySize,
+        'responseBodySize': responseBodySize,
+        'errorDomain': errorDomain,
+        'errorCode': errorCode,
+      };
 }

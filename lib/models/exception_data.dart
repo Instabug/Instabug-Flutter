@@ -1,26 +1,34 @@
+import 'package:stack_trace/stack_trace.dart';
+
 class ExceptionData {
-  const ExceptionData(this.file, this.methodName, this.lineNumber, this.column);
+  const ExceptionData({
+    required this.file,
+    required this.methodName,
+    required this.lineNumber,
+    required this.column,
+  });
+
+  factory ExceptionData.fromFrame(Frame frame) {
+    return ExceptionData(
+      file: frame.uri.toString(),
+      methodName: frame.member,
+      lineNumber: frame.line,
+      column: frame.column ?? 0,
+    );
+  }
 
   final String file;
   final String? methodName;
   final int? lineNumber;
   final int column;
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
+  Map<String, dynamic> toJson() => toMap();
+
+  Map<String, dynamic> toMap() => {
         'file': file,
         'methodName': methodName,
-        'arguments': <dynamic>[],
+        'arguments': [],
         'lineNumber': lineNumber,
         'column': column,
       };
-
-  Map<String, dynamic> toMap() {
-    final map = <String, dynamic>{};
-    map['file'] = file;
-    map['methodName'] = methodName;
-    map['arguments'] = <dynamic>[];
-    map['lineNumber'] = lineNumber;
-    map['column'] = column;
-    return map;
-  }
 }

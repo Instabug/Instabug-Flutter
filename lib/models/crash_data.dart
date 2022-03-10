@@ -1,26 +1,24 @@
 import 'exception_data.dart';
 
 class CrashData {
-  CrashData(this.message, this.os, this.exception);
+  const CrashData({
+    required this.message,
+    required this.os,
+    required this.exception,
+  });
 
-  String message;
-  String os;
-  String platform = 'flutter';
-  List<ExceptionData> exception;
+  final String message;
+  final String os;
+  final List<ExceptionData> exception;
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
+  String get platform => 'flutter';
+
+  Map<String, dynamic> toJson() => toMap();
+
+  Map<String, dynamic> toMap() => {
         'message': message,
         'os': os,
-        'platform': platform,
         'exception': exception,
+        'platform': platform,
       };
-
-  Map<String, dynamic> toMap() {
-    final map = <String, dynamic>{};
-    map['message'] = message;
-    map['os'] = os;
-    map['platform'] = platform;
-    map['exception'] = exception;
-    return map;
-  }
 }

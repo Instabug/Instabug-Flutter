@@ -1,19 +1,15 @@
 import '../apm.dart';
 
 class Trace {
-  String id;
-  String name = '';
-  Map<String, dynamic> attributes;
-  Trace(this.id, this.name, {Map<String, dynamic>? listOfAttributes})
-      : this.attributes = listOfAttributes ?? new Map<String, dynamic>();
+  const Trace({
+    required this.id,
+    this.name = '',
+    Map<String, dynamic>? listOfAttributes,
+  }) : attributes = listOfAttributes ?? const <String, dynamic>{};
 
-  Map<String, dynamic> toMap() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['name'] = name;
-    map['attributes'] = attributes;
-    return map;
-  }
+  final String id;
+  final String name;
+  final Map<String, dynamic> attributes;
 
   void setAttribute(String key, String value) {
     APM.setExecutionTraceAttribute(id, key, value);
@@ -23,4 +19,12 @@ class Trace {
   void end() {
     APM.endExecutionTrace(id);
   }
+
+  Map<String, dynamic> toJson() => toMap();
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'name': name,
+        'attributes': attributes,
+      };
 }

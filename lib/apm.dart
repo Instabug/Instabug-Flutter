@@ -60,7 +60,7 @@ class APM {
     _channel.setMethodCallHandler(_handleMethod);
     final Function callback = (String idBack) async {
       if (idBack != null) {
-        completer.complete(Trace(idBack, name));
+        completer.complete(Trace(id: idBack, name: name));
       } else {
         completer.completeError(TRACE_NOT_STARTED_APM_NOT_ENABLED);
       }
