@@ -1,5 +1,15 @@
 version: 2
 jobs:
+   flutter_lint:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run: flutter pub get
+      - run: flutter format --set-exit-if-changed .
+      - run: flutter analyze .
+      - run: flutter pub publish --dry-run
+
    android_tests:
     working_directory: ~/project/example/android
     macos:
@@ -71,8 +81,6 @@ jobs:
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
       - run: bash <(curl -s https://codecov.io/bash)
-      - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-      - run: flutter pub publish --dry-run
 
    flutter_tests_2.2.3:
     docker:
@@ -141,6 +149,7 @@ workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
+      - flutter_lint
       - flutter_tests
       - flutter_tests_2.2.3
       - android_tests
@@ -148,6 +157,7 @@ workflows:
       - hold_pub_release:
           type: approval
           requires:
+            - flutter_lint
             - flutter_tests
             - flutter_tests_2.2.3
             - android_tests
@@ -164,6 +174,7 @@ workflows:
       - hold_gh_ibg_release:
           type: approval
           requires:
+            - flutter_lint
             - flutter_tests
             - flutter_tests_2.2.3
             - android_tests
