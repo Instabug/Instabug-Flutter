@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/APM.dart';
+import 'package:instabug_flutter/apm.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 
 class NetworkLogger {

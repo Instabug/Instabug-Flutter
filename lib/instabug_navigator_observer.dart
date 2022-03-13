@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instabug_flutter/Instabug.dart';
+import 'package:instabug_flutter/instabug.dart';
 
 class InstabugNavigatorObserver extends NavigatorObserver {
   final List<Route> _steps = <Route>[];
