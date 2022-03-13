@@ -40,7 +40,7 @@ flutter packages get
 To start using Instabug, import it into your Flutter app. 
 
 ```dart
-import 'package:instabug_flutter/Instabug.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 ```
 * #### iOS
      Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the device is shaken.
@@ -93,7 +93,7 @@ Instabug automatically captures every crash of your app and sends relevant detai
 1. Import the following into your `main.dart`:
 
 ```dart
-import 'package:instabug_flutter/CrashReporting.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 ```
 
 2. Replace `void main() => runApp(MyApp());` with the following snippet.
