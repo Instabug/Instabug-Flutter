@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/utils/ibg_build_info.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 
 enum InvocationEvent {
   shake,

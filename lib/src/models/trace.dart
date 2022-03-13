@@ -1,4 +1,4 @@
-import 'package:instabug_flutter/apm.dart';
+import 'package:instabug_flutter/src/modules/apm.dart';
 
 class Trace {
   String id;

@@ -4,11 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:instabug_flutter/network_logger.dart';
-import 'package:instabug_flutter/instabug_custom_http_client.dart';
-import 'package:instabug_flutter/instabug_custom_http_client_request.dart';
-import 'package:instabug_flutter/models/network_data.dart';
-import 'package:instabug_flutter/utils/http_client_logger.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 

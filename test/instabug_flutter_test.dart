@@ -4,24 +4,12 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:instabug_flutter/apm.dart';
-import 'package:instabug_flutter/bug_reporting.dart';
-import 'package:instabug_flutter/crash_reporting.dart';
-import 'package:instabug_flutter/feature_requests.dart';
-import 'package:instabug_flutter/instabug.dart';
-import 'package:instabug_flutter/instabug_log.dart';
-import 'package:instabug_flutter/network_logger.dart';
-import 'package:instabug_flutter/replies.dart';
-import 'package:instabug_flutter/surveys.dart';
-import 'package:instabug_flutter/models/crash_data.dart';
-import 'package:instabug_flutter/models/exception_data.dart';
-import 'package:instabug_flutter/models/network_data.dart';
-import 'package:instabug_flutter/models/trace.dart' as execution_trace;
-import 'package:instabug_flutter/utils/ibg_build_info.dart';
-import 'package:instabug_flutter/utils/ibg_date_time.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
+import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:stack_trace/stack_trace.dart';
+import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
 import 'instabug_flutter_test.mocks.dart';
 
@@ -966,7 +954,7 @@ void main() {
       params[5] = 2;
     } catch (exception, stack) {
       const bool handled = true;
-      final Trace trace = Trace.from(stack);
+      final stack_trace.Trace trace = stack_trace.Trace.from(stack);
       final List<ExceptionData> frames = <ExceptionData>[];
       for (int i = 0; i < trace.frames.length; i++) {
         frames.add(ExceptionData(
@@ -1120,7 +1108,7 @@ void main() {
     const String key = 'key';
     const String value = 'value';
     final List<dynamic> args = <dynamic>[id, key, value];
-    final execution_trace.Trace trace = execution_trace.Trace(id, name);
+    final Trace trace = Trace(id, name);
     trace.setAttribute(key, value);
     expect(log, <Matcher>[
       isMethodCall(
