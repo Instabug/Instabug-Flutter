@@ -1,5 +1,14 @@
 version: 2
+
 jobs:
+   danger:
+    docker:
+      - image: circleci/ruby:2.3
+    steps:
+      - checkout
+      - run: bundle install        
+      - run: bundle exec danger
+
    flutter_lint:
     docker:
       - image: cirrusci/flutter
@@ -73,9 +82,6 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - run: sudo gem install bundler:2.1.4
-      - run: bundle check || sudo bundle install        
-      - run: bundle exec danger
       - run: flutter doctor
       - run: flutter packages get
       - run: flutter pub run build_runner build --delete-conflicting-outputs
@@ -87,9 +93,6 @@ jobs:
       - image: cirrusci/flutter:2.2.3
     steps:
       - checkout
-      - run: sudo gem install bundler:2.1.4
-      - run: bundle check || sudo bundle install        
-      - run: bundle exec danger
       - run: flutter doctor
       - run: flutter packages get
       - run: flutter pub run build_runner build --delete-conflicting-outputs
@@ -149,6 +152,7 @@ workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
+      - danger
       - flutter_lint
       - flutter_tests
       - flutter_tests_2.2.3
@@ -157,6 +161,7 @@ workflows:
       - hold_pub_release:
           type: approval
           requires:
+            - danger
             - flutter_lint
             - flutter_tests
             - flutter_tests_2.2.3
@@ -174,6 +179,7 @@ workflows:
       - hold_gh_ibg_release:
           type: approval
           requires:
+            - danger
             - flutter_lint
             - flutter_tests
             - flutter_tests_2.2.3
