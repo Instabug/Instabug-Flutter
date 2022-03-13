@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 jobs:
    danger:
@@ -18,6 +18,21 @@ jobs:
       - run: flutter format --set-exit-if-changed .
       - run: flutter analyze .
       - run: flutter pub publish --dry-run
+
+   flutter_test:
+    parameters:
+      version:
+        type: string
+      codecov:
+        type: boolean
+    docker:
+      - image: cirrusci/flutter:<< parameters.version >>
+    steps:
+      - checkout
+      - run: flutter pub get
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
+      - run: flutter test --coverage
+      - run: if << parameters.codecov >>; then bash <(curl -s https://codecov.io/bash); fi
 
    android_tests:
     working_directory: ~/project/example/android
@@ -77,27 +92,6 @@ jobs:
       #     name: Run UI Tests
       #     command: ./gradlew app:connectedAndroidTest
 
-   flutter_tests:
-    docker:
-      - image: cirrusci/flutter
-    steps:
-      - checkout
-      - run: flutter doctor
-      - run: flutter packages get
-      - run: flutter pub run build_runner build --delete-conflicting-outputs
-      - run: flutter test --coverage
-      - run: bash <(curl -s https://codecov.io/bash)
-
-   flutter_tests_2.2.3:
-    docker:
-      - image: cirrusci/flutter:2.2.3
-    steps:
-      - checkout
-      - run: flutter doctor
-      - run: flutter packages get
-      - run: flutter pub run build_runner build --delete-conflicting-outputs
-      - run: flutter test --coverage
-
    ios_tests:
     macos:
       xcode: "12.3.0"
@@ -154,8 +148,14 @@ workflows:
     jobs:
       - danger
       - flutter_lint
-      - flutter_tests
-      - flutter_tests_2.2.3
+      - flutter_test:
+          name: flutter_test_stable
+          version: stable
+          codecov: true
+      - flutter_test:
+          name: flutter_test_2-2-3
+          version: 2.2.3
+          codecov: false
       - android_tests
       - ios_tests
       - hold_pub_release:
@@ -163,8 +163,8 @@ workflows:
           requires:
             - danger
             - flutter_lint
-            - flutter_tests
-            - flutter_tests_2.2.3
+            - flutter_test_stable
+            - flutter_test_2-2-3
             - android_tests
             - ios_tests
           filters:
@@ -181,8 +181,8 @@ workflows:
           requires:
             - danger
             - flutter_lint
-            - flutter_tests
-            - flutter_tests_2.2.3
+            - flutter_test_stable
+            - flutter_test_2-2-3
             - android_tests
             - ios_tests
           filters:
