@@ -1,14 +1,6 @@
 version: 2.1
 
 jobs:
-   danger:
-    docker:
-      - image: circleci/ruby:2.3
-    steps:
-      - checkout
-      - run: bundle install        
-      - run: bundle exec danger
-
    flutter_lint:
     docker:
       - image: cirrusci/flutter
@@ -146,7 +138,6 @@ workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
-      - danger
       - flutter_lint
       - flutter_test:
           name: flutter_test_stable
@@ -161,7 +152,6 @@ workflows:
       - hold_pub_release:
           type: approval
           requires:
-            - danger
             - flutter_lint
             - flutter_test_stable
             - flutter_test_2-2-3
@@ -179,7 +169,6 @@ workflows:
       - hold_gh_ibg_release:
           type: approval
           requires:
-            - danger
             - flutter_lint
             - flutter_test_stable
             - flutter_test_2-2-3
