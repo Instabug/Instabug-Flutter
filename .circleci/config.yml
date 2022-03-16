@@ -15,8 +15,6 @@ jobs:
     parameters:
       version:
         type: string
-      codecov:
-        type: boolean
     docker:
       - image: cirrusci/flutter:<< parameters.version >>
     steps:
@@ -24,7 +22,6 @@ jobs:
       - run: flutter pub get
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
-      - run: if << parameters.codecov >>; then bash <(curl -s https://codecov.io/bash); fi
 
    android_tests:
     working_directory: ~/project/example/android
@@ -140,21 +137,17 @@ workflows:
     jobs:
       - flutter_lint
       - flutter_test:
-          name: flutter_test_stable
-          version: stable
-          codecov: true
-      - flutter_test:
-          name: flutter_test_2-2-3
-          version: 2.2.3
-          codecov: false
+          matrix:
+            parameters:
+              version: ["stable", "2.2.3"]
       - android_tests
       - ios_tests
       - hold_pub_release:
           type: approval
           requires:
             - flutter_lint
-            - flutter_test_stable
-            - flutter_test_2-2-3
+            - flutter_test-stable
+            - flutter_test-2.2.3
             - android_tests
             - ios_tests
           filters:
@@ -170,8 +163,8 @@ workflows:
           type: approval
           requires:
             - flutter_lint
-            - flutter_test_stable
-            - flutter_test_2-2-3
+            - flutter_test-stable
+            - flutter_test-2.2.3
             - android_tests
             - ios_tests
           filters:
