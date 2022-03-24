@@ -20,6 +20,7 @@ import 'package:instabug_flutter/models/crash_data.dart';
 import 'package:instabug_flutter/models/exception_data.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/models/trace.dart' as execution_trace;
+import 'package:instabug_flutter/utils/insta_date_time.dart';
 import 'package:instabug_flutter/utils/platform_manager.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -29,6 +30,7 @@ import 'instabug_flutter_test.mocks.dart';
 
 @GenerateMocks([
   PlatformManager,
+  InstaDateTime,
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -84,6 +86,8 @@ void main() {
       switch (methodCall.method) {
         case 'getTags':
           return <String>['tag1', 'tag2'];
+        case 'startExecutionTrace:id:':
+          return methodCall.arguments[0];
         case 'getUserAttributeForKey:':
           return userAttribute;
         case 'getUserAttributes':
@@ -1083,17 +1087,23 @@ void main() {
   });
 
   test('startExecutionTrace: Test', () async {
-    const String name = 'test_trace';
+    const String name = 'test-trace';
     final DateTime timestamp = DateTime.now();
-    final List<dynamic> args = <dynamic>[name.toString(), timestamp.toString()];
+    final List<dynamic> args = <dynamic>[name, timestamp.toString()];
+
+    final mockDateTime = MockInstaDateTime();
+    InstaDateTime.setInstance(mockDateTime);
+    when(mockDateTime.now()).thenAnswer((_) => timestamp);
+
     await APM.startExecutionTrace(name);
+
     expect(log, <Matcher>[
       isMethodCall(
         'startExecutionTrace:id:',
         arguments: args,
       )
     ]);
-  }, skip: 'TODO: mock timestamp');
+  });
 
   test('setExecutionTraceAttribute: Test', () async {
     const String name = 'test_trace';
@@ -1109,7 +1119,7 @@ void main() {
         arguments: args,
       )
     ]);
-  }, skip: 'TODO: mock timestamp');
+  });
 
   test('setCrashReportingEnabled: Test', () async {
     const bool isEnabled = false;

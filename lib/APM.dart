@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/models/trace.dart';
+import 'package:instabug_flutter/utils/insta_date_time.dart';
 
 enum LogLevel {
   none,
@@ -47,14 +48,14 @@ class APM {
   /// Starts an execution trace.
   /// [String] name of the trace.
   static Future<Trace> startExecutionTrace(String name) async {
-    final DateTime id = DateTime.now();
-    final List<dynamic> params = <dynamic>[name.toString(), id.toString()];
+    final DateTime id = InstaDateTime.instance.now();
+    final List<dynamic> params = <dynamic>[name, id.toString()];
     final traceId =
         await _channel.invokeMethod<String?>('startExecutionTrace:id:', params);
 
     if (traceId == null) {
       return Future.error(
-        "Execution trace $name wasn't created. Please make sure to enable APM first by following"
+        "Execution trace $name wasn't created. Please make sure to enable APM first by following "
         'the instructions at this link: https://docs.instabug.com/reference#enable-or-disable-apm',
       );
     }
