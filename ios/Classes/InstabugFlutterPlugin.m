@@ -912,13 +912,13 @@ NSMutableDictionary *traces;
   * @param {string} name of the trace.
   * @param {string} id of the trace.
   */
-+ (void)startExecutionTrace:(NSString *)name id:(NSString *)id {
++ (NSString *)startExecutionTrace:(NSString *)name id:(NSString *)id {
     IBGExecutionTrace *trace = [IBGAPM startExecutionTraceWithName:name];
     if (trace != nil) {
         [traces setObject: trace forKey: id];
-        [channel invokeMethod:@"startExecutionTraceCallBack" arguments:id];
+        return id;
     } else {
-        [channel invokeMethod:@"startExecutionTraceCallBack" arguments:nil];
+        return nil;
     }
 }
 

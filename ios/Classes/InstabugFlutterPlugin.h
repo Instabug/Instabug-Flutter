@@ -487,7 +487,7 @@
   */
 + (void)setColdAppLaunchEnabled:(NSNumber *)isEnabled;
 
-+ (void)startExecutionTrace:(NSString *)name id:(NSString *)id;
++ (NSString *)startExecutionTrace:(NSString *)name id:(NSString *)id;
 
 + (void)setExecutionTraceAttribute:(NSString *)id key:(NSString *)key value:(NSString *)value;
 

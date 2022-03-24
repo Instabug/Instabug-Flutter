@@ -23,14 +23,6 @@ class APM {
   static Future<String?> get platformVersion async =>
       await _channel.invokeMethod<String>('getPlatformVersion');
 
-  static Future<dynamic> _handleMethod(MethodCall call) async {
-    switch (call.method) {
-      case 'startExecutionTraceCallBack':
-        _startExecutionTraceCallback(call.arguments);
-        return;
-    }
-  }
-
   /// Enables or disables APM feature.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
@@ -54,24 +46,20 @@ class APM {
 
   /// Starts an execution trace.
   /// [String] name of the trace.
-  static Future<dynamic> startExecutionTrace(String name) async {
-    final String TRACE_NOT_STARTED_APM_NOT_ENABLED = "Execution trace " +
-        name +
-        " wasn't created. Please make sure to enable APM first by following the instructions at this link: https://docs.instabug.com/reference#enable-or-disable-apm";
+  static Future<Trace> startExecutionTrace(String name) async {
     final DateTime id = DateTime.now();
-    final Completer completer = new Completer<Trace>();
     final List<dynamic> params = <dynamic>[name.toString(), id.toString()];
-    _channel.setMethodCallHandler(_handleMethod);
-    final Function callback = (String idBack) async {
-      if (idBack != null) {
-        completer.complete(Trace(idBack, name));
-      } else {
-        completer.completeError(TRACE_NOT_STARTED_APM_NOT_ENABLED);
-      }
-    };
-    _startExecutionTraceCallback = callback;
-    await _channel.invokeMethod<Object>('startExecutionTrace:id:', params);
-    return completer.future;
+    final traceId =
+        await _channel.invokeMethod<String?>('startExecutionTrace:id:', params);
+
+    if (traceId == null) {
+      return Future.error(
+        "Execution trace $name wasn't created. Please make sure to enable APM first by following"
+        'the instructions at this link: https://docs.instabug.com/reference#enable-or-disable-apm',
+      );
+    }
+
+    return Trace(traceId, name);
   }
 
   /// Sets attribute of an execution trace.
@@ -114,6 +102,7 @@ class APM {
   static Future<void> endUITrace() async {
     await _channel.invokeMethod<Object>('endUITrace');
   }
+
   /// Ends UI trace.
   static void endAppLaunch() async {
     await _channel.invokeMethod<Object>('endAppLaunch');
