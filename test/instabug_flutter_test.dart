@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -20,7 +18,7 @@ import 'package:instabug_flutter/models/exception_data.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/models/trace.dart' as execution_trace;
 import 'package:instabug_flutter/utils/ibg_date_time.dart';
-import 'package:instabug_flutter/utils/platform_manager.dart';
+import 'package:instabug_flutter/utils/insta_build_info.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:stack_trace/stack_trace.dart';
@@ -28,7 +26,7 @@ import 'package:stack_trace/stack_trace.dart';
 import 'instabug_flutter_test.mocks.dart';
 
 @GenerateMocks([
-  PlatformManager,
+  InstaBuildInfo,
   IBGDateTime,
 ])
 void main() {
@@ -46,7 +44,7 @@ void main() {
   const Map<String, String> userAttributePair = <String, String>{
     'gender': 'female'
   };
-  late MockPlatformManager mockPlatform;
+  late MockInstaBuildInfo mockInstaBuildInfo;
 
   const String url = 'https://jsonplaceholder.typicode.com';
   const String method = 'POST';
@@ -98,8 +96,8 @@ void main() {
   });
 
   setUp(() {
-    mockPlatform = MockPlatformManager();
-    PlatformManager.setPlatformInstance(mockPlatform);
+    mockInstaBuildInfo = MockInstaBuildInfo();
+    InstaBuildInfo.setInstance(mockInstaBuildInfo);
   });
 
   tearDown(() async {
@@ -419,7 +417,7 @@ void main() {
   });
 
   test('setDebugEnabled: Test', () async {
-    when(mockPlatform.isAndroid()).thenAnswer((_) => true);
+    when(mockInstaBuildInfo.isAndroid).thenReturn(true);
 
     const bool debugEnabled = true;
     final List<dynamic> args = <dynamic>[debugEnabled];
@@ -460,7 +458,10 @@ void main() {
     const filePath = 'filePath';
     const fileName = 'fileName';
     final List<dynamic> args = <dynamic>[filePath, fileName];
+
+    when(mockInstaBuildInfo.isIOS).thenReturn(false);
     await Instabug.addFileAttachmentWithURL(filePath, fileName);
+
     expect(log, <Matcher>[
       isMethodCall(
         'addFileAttachmentWithURL:',
@@ -473,7 +474,10 @@ void main() {
     final bdata = Uint8List(10);
     const fileName = 'fileName';
     final List<dynamic> args = <dynamic>[bdata, fileName];
+
+    when(mockInstaBuildInfo.isIOS).thenReturn(false);
     await Instabug.addFileAttachmentWithData(bdata, fileName);
+    
     expect(log, <Matcher>[
       isMethodCall(
         'addFileAttachmentWithData:',
@@ -542,7 +546,7 @@ void main() {
     const iPhoneShakingThreshold = 1.6;
     final List<dynamic> args = <dynamic>[iPhoneShakingThreshold];
 
-    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+    when(mockInstaBuildInfo.isIOS).thenReturn(true);
 
     await BugReporting.setShakingThresholdForiPhone(iPhoneShakingThreshold);
     expect(log, <Matcher>[
@@ -557,7 +561,7 @@ void main() {
     const iPadShakingThreshold = 1.6;
     final List<dynamic> args = <dynamic>[iPadShakingThreshold];
 
-    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+    when(mockInstaBuildInfo.isIOS).thenReturn(true);
 
     await BugReporting.setShakingThresholdForiPad(iPadShakingThreshold);
     expect(log, <Matcher>[
@@ -572,7 +576,7 @@ void main() {
     const androidThreshold = 1000;
     final List<dynamic> args = <dynamic>[androidThreshold];
 
-    when(mockPlatform.isAndroid()).thenAnswer((_) => true);
+    when(mockInstaBuildInfo.isAndroid).thenReturn(true);
 
     await BugReporting.setShakingThresholdForAndroid(androidThreshold);
     expect(log, <Matcher>[
@@ -814,7 +818,7 @@ void main() {
     const appStoreURL = 'appStoreURL';
     final List<dynamic> args = <dynamic>[appStoreURL];
 
-    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+    when(mockInstaBuildInfo.isIOS).thenReturn(true);
 
     await Surveys.setAppStoreURL(appStoreURL);
     expect(log, <Matcher>[
@@ -863,7 +867,7 @@ void main() {
     const isEnabled = false;
     final List<dynamic> args = <dynamic>[isEnabled];
 
-    when(mockPlatform.isAndroid()).thenAnswer((_) => true);
+    when(mockInstaBuildInfo.isAndroid).thenReturn(true);
 
     await Replies.setInAppNotificationSound(isEnabled);
     expect(log, <Matcher>[
@@ -914,7 +918,10 @@ void main() {
         NetworkData(method: 'method', url: 'url', startTime: DateTime.now());
     final List<dynamic> args = <dynamic>[data.toMap()];
     final networkLogger = NetworkLogger();
+
+    when(mockInstaBuildInfo.isAndroid).thenReturn(false);
     await networkLogger.networkLog(data);
+
     expect(log, <Matcher>[
       isMethodCall(
         'networkLog:',
@@ -950,8 +957,12 @@ void main() {
             trace.frames[i].line,
             trace.frames[i].column == null ? 0 : trace.frames[i].column!));
       }
+      when(mockInstaBuildInfo.operatingSystem).thenReturn('test');
       final crashData = CrashData(
-          exception.toString(), Platform.operatingSystem.toString(), frames);
+        exception.toString(),
+        InstaBuildInfo.instance.operatingSystem,
+        frames,
+      );
       final List<dynamic> args = <dynamic>[jsonEncode(crashData), handled];
       await CrashReporting.reportHandledCrash(exception, stack);
       expect(log, <Matcher>[

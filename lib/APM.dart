@@ -1,12 +1,12 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/models/trace.dart';
 import 'package:instabug_flutter/utils/ibg_date_time.dart';
+import 'package:instabug_flutter/utils/insta_build_info.dart';
 
 enum LogLevel {
   none,
@@ -110,7 +110,7 @@ class APM {
   }
 
   static Future<bool?> networkLogAndroid(NetworkData data) async {
-    if (Platform.isAndroid) {
+    if (InstaBuildInfo.instance.isAndroid) {
       final params = <dynamic>[data.toMap()];
       return await _channel.invokeMethod<bool>(
           'apmNetworkLogByReflection:', params);
