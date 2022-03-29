@@ -20,16 +20,9 @@ task upload_symbols_task {
                 return
             }
 
-            // Get local properties
-            final properties = new Properties()
-            final propertiesFile = project.rootProject.file('local.properties')
-            if (propertiesFile.exists()) {
-                properties.load(propertiesFile.newDataInputStream())
-            }
-
             // Get upload configs
-            final applicationToken = get_variable(properties, INSTABUG_APP_TOKEN);
-            final apiKey = get_variable(properties, INSTABUG_API_KEY);
+            final applicationToken = get_variable(INSTABUG_APP_TOKEN);
+            final apiKey = get_variable(INSTABUG_API_KEY);
             final symbolsPath = get_symbols_path()
 
             // Prepare zip file with symbols
@@ -42,16 +35,27 @@ task upload_symbols_task {
     }
 }
 /**
+ * load local properties into a global variable localProperties
+ */
+ext.loadLocalProperties = {
+    // Get local properties
+    final properties = new Properties()
+    final propertiesFile = project.rootProject.file('local.properties')
+    if (propertiesFile.exists()) {
+        properties.load(propertiesFile.newDataInputStream())
+    }
+    ext.localProperties = properties
+}
+/**
  * get environment variable
- * @param properties properties object
  * @param name variable name
  * @return variable environment variable for the given name
  */
-String get_variable(properties, name) {
+ext.get_variable = { name ->
     // Look for the variable in local properties, gradle properties and env variables
-    final variable = properties.getProperty(name) ?: project.findProperty(name) ?: System.getenv(name)
+    final variable = localProperties.getProperty(name) ?: project.findProperty(name) ?: System.getenv(name)
     if (!variable) {
-        throw new Exception("$name not found. Make sure you've added the environment variable $name");
+        throw new Exception("$name not found. Make sure you've added the environment variable $name")
     }
     println "Instabug: ${name} found"
     return variable;

@@ -37,11 +37,26 @@ dependencies {
     implementation 'com.instabug.library:instabug:10.11.1'
     testImplementation 'junit:junit:4.12'
 }
-
+/**
+ * get upload enable flag
+ * @return true if upload is enabled
+ */
+Boolean getUploadFlag() {
+    try {
+        final kFlag = 'instabugUploadEnable'
+        final flag = get_variable(kFlag)
+        println "$kFlag: $flag"
+        return flag?.toBoolean()
+    } catch (Exception e) {
+        println "Instabug err: uploading symbols: ${e.message}"
+    }
+}
 // add upload_symbols task
 apply from: './upload_symbols.gradle'
 tasks.whenTaskAdded { task ->
-    if (task.name == 'assembleRelease' && (rootProject.hasProperty("instabugUploadEnable") ? rootProject.instabugUploadEnable : false)) {
-        task.finalizedBy upload_symbols_task
+    if (task.name == 'assembleRelease') {
+        loadLocalProperties()
+        if (getUploadFlag())
+            task.finalizedBy upload_symbols_task
     }
 }
