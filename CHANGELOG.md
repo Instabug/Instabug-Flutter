@@ -1,6 +1,7 @@
 ## master
 
 * Fixes iOS platform calls not completing with `void` return type
+* Adds Experiments APIs.
 
 ## v10.11.0 (2022-01-04)
 

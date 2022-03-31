@@ -281,6 +281,49 @@ void main() {
   });
 
   test(
+    'test addExperiments should be called with argument List of strings',
+    () async {
+      const experiments = ['exp1', 'exp2'];
+      Instabug.addExperiments(experiments);
+      final args = <dynamic>[experiments];
+      expect(log, <Matcher>[
+        isMethodCall(
+          'addExperiments:',
+          arguments: args,
+        )
+      ]);
+    },
+  );
+
+  test(
+    'test removeExperiments should be called with argument List of strings',
+    () async {
+      const experiments = ['exp1', 'exp2'];
+      Instabug.removeExperiments(experiments);
+      final args = <dynamic>[experiments];
+      expect(log, <Matcher>[
+        isMethodCall(
+          'removeExperiments:',
+          arguments: args,
+        )
+      ]);
+    },
+  );
+
+  test(
+    'test clearAllExperiments should be called with no arguments',
+    () async {
+      Instabug.clearAllExperiments();
+      expect(log, <Matcher>[
+        isMethodCall(
+          'clearAllExperiments',
+          arguments: null,
+        )
+      ]);
+    },
+  );
+
+  test(
       'test setUserAttributeWithKey should be called with two string arguments',
       () async {
     const String value = '19';
