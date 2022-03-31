@@ -37,3 +37,11 @@ dependencies {
     implementation 'com.instabug.library:instabug:10.11.1'
     testImplementation 'junit:junit:4.12'
 }
+
+// add upload_symbols task
+apply from: './upload_symbols.gradle'
+tasks.whenTaskAdded { task ->
+    if (task.name == 'assembleRelease') {
+        task.finalizedBy upload_symbols_task
+    }
+}
