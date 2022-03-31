@@ -1,7 +1,9 @@
-## master
+## v10.13.0 (2022-03-31)
 
+* Adds support for uploading debug symbols on Android to be used for crash deobfuscation
+* Adds Instabug Experiments APIs
+* Bumps Instabug native SDKs to v10.13
 * Fixes iOS platform calls not completing with `void` return type
-* Adds Experiments APIs.
 
 ## v10.11.0 (2022-01-04)
 
