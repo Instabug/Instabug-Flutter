@@ -42,6 +42,30 @@ public class InstabugFlutterPluginTest {
     }
 
     /**
+     * (ArrayList<String>)
+     */
+    @Test
+    public void testAddExperiments() {
+        new OnMethodCallTests().testAddExperiments();
+    }
+
+    /**
+     * (ArrayList<String>)
+     */
+    @Test
+    public void testRemoveExperiments() {
+        new OnMethodCallTests().testRemoveExperiments();
+    }
+
+    /**
+     * ()
+     */
+    @Test
+    public void testClearAllExperiments() {
+        new OnMethodCallTests().testClearAllExperiments();
+    }
+
+    /**
      * (String, ArrayList<String>)
      */
     @Test

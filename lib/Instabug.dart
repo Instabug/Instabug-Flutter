@@ -148,7 +148,7 @@ class Instabug {
 
   /// Sets the verbosity level of logs used to debug The SDK. The defualt value in debug
   /// mode is sdkDebugLogsLevelVerbose and in production is sdkDebugLogsLevelError.
-  static void setSdkDebugLogsLevel(
+  static Future<void> setSdkDebugLogsLevel(
       IBGSDKDebugLogsLevel sdkDebugLogsLevel) async {
     final List<dynamic> params = <dynamic>[sdkDebugLogsLevel.toString()];
     await _channel.invokeMethod<Object>('setSdkDebugLogsLevel:', params);
@@ -176,6 +176,23 @@ class Instabug {
   static Future<List<String>?> getTags() async {
     final tags = await _channel.invokeMethod<List<dynamic>>('getTags');
     return tags?.cast<String>();
+  }
+
+  /// Adds experiments to the next report.
+  static Future<void> addExperiments(List<String> experiments) async {
+    final params = <dynamic>[experiments];
+    await _channel.invokeMethod<Object>('addExperiments:', params);
+  }
+
+  /// Removes certain experiments from the next report.
+  static Future<void> removeExperiments(List<String> experiments) async {
+    final params = <dynamic>[experiments];
+    await _channel.invokeMethod<Object>('removeExperiments:', params);
+  }
+
+  /// Clears all experiments from the next report.
+  static Future<void> clearAllExperiments() async {
+    await _channel.invokeMethod<Object>('clearAllExperiments');
   }
 
   /// Add custom user attribute [value] with a [key] that is going to be sent with each feedback, bug or crash.
@@ -238,7 +255,7 @@ class Instabug {
   /// Android only
   /// Enable/disable SDK logs
   /// [debugEnabled] desired state of debug mode.
-  static void setDebugEnabled(bool debugEnabled) async {
+  static Future<void> setDebugEnabled(bool debugEnabled) async {
     if (PlatformManager.instance.isAndroid()) {
       final List<dynamic> params = <dynamic>[debugEnabled];
       await _channel.invokeMethod<Object>('setDebugEnabled:', params);

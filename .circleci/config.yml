@@ -68,6 +68,7 @@ jobs:
       - run: bundle exec danger
       - run: flutter doctor
       - run: flutter packages get
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
       - run: bash <(curl -s https://codecov.io/bash)
       - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
@@ -83,6 +84,7 @@ jobs:
       - run: bundle exec danger
       - run: flutter doctor
       - run: flutter packages get
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
 
    ios_tests:

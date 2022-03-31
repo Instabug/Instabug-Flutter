@@ -38,6 +38,7 @@ analyzer:
     # see https://github.com/dart-lang/sdk/issues/28463
     - 'lib/i18n/stock_messages_*.dart'
     - 'lib/src/http/**'
+    - 'test/*.mocks.dart'
 
 linter:
   rules:
@@ -155,7 +156,7 @@ linter:
     - throw_in_finally
     # - type_annotate_public_apis # subset of always_specify_types
     - type_init_formals
-    # - unawaited_futures # too many false positives
+    - unawaited_futures
     # - unnecessary_await_in_return # not yet tested
     - unnecessary_brace_in_string_interps
     - unnecessary_const

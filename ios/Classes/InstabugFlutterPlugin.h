@@ -120,6 +120,23 @@
 + (NSArray *)getTags;
 
 /**
+ * Adds experiments to the next report.
+ * @param experiments An array of experiments to add.
+ */
++ (void)addExperiments:(NSArray *)experiments;
+
+/**
+ * Removes certain experiments from the next report.
+ * @param experiments An array of experiments to remove.
+ */
++ (void)removeExperiments:(NSArray *)experiments;
+
+/**
+ * Clears all experiments from the next report.
+ */
++ (void)clearAllExperiments;
+
+/**
  * Set custom user attributes that are going to be sent with each feedback, bug or crash.
  * @param value User attribute value.
  * @param key User attribute key.
@@ -428,7 +445,7 @@
   *
   * @param isEnabled whether chat notification is reburied or not
   */
-- (void)setChatNotificationEnabled:(NSNumber *)isEnabled;
++ (void)setChatNotificationEnabled:(NSNumber *)isEnabled;
 
 + (void)networkLog:(NSDictionary *)networkData;
 

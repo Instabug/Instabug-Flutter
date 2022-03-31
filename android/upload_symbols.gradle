@@ -1,0 +1,257 @@
+import java.util.zip.ZipOutputStream
+import java.util.zip.ZipEntry
+
+// Custom Exception for undefined variable
+public class VariableNotFoundException extends Exception {
+    public VariableNotFoundException(String errorMessage) {
+        super(errorMessage);
+    }
+}
+// Constants
+final INSTABUG_APP_TOKEN = 'INSTABUG_APP_TOKEN'
+final INSTABUG_API_KEY = 'INSTABUG_API_KEY'
+final UPLOAD_URL = 'https://api.instabug.com/api/web/public/flutter-symbol-files/android'
+final INSTABUG_AUTO_UPLOAD_ENABLE = 'INSTABUG_AUTO_UPLOAD_ENABLE'
+ext.boundary = 'abcd' + Long.toString(System.currentTimeMillis()) * 2 + 'dcba'
+ext.lineEnd = '\r\n'
+
+/**
+ * task to upload symbols to Instabug endpoint
+ */
+task upload_symbols_task {
+    doLast {
+        try {
+            // If obfuscate flag not provided, exit the task
+            if (project['dart-obfuscation'] != 'true') {
+                println "Instabug: obfuscate flag not used — skipping debug symbols upload"
+                return
+            }
+            // Load local properties
+            final localProperties = load_local_properties()
+
+            // If auto upload is disabled, exit the task
+            final uploadFlag = get_variable(INSTABUG_AUTO_UPLOAD_ENABLE, localProperties)
+            println "$INSTABUG_AUTO_UPLOAD_ENABLE: $uploadFlag"
+            if (!uploadFlag?.toBoolean()) {
+                println "Instabug: skipping debug symbols upload"
+                return
+            }
+
+            // Get upload configs
+            final applicationToken = get_variable(INSTABUG_APP_TOKEN, localProperties);
+            final apiKey = get_variable(INSTABUG_API_KEY, localProperties);
+            final symbolsPath = get_symbols_path()
+
+            // Prepare zip file with symbols
+            final zipFile = prepare_zip_file(symbolsPath)
+
+            upload_symbols(zipFile, applicationToken, apiKey, UPLOAD_URL)
+        } catch (VariableNotFoundException e) {
+            println "Instabug: uploading symbols: ${e.message}"
+        } catch (Exception e) {
+            println "Instabug err: uploading symbols: ${e.message}"
+        }
+    }
+}
+/**
+ * load local properties into a global variable localProperties
+ */
+def load_local_properties() {
+    // Get local properties
+    final properties = new Properties()
+    final propertiesFile = project.rootProject.file('local.properties')
+    if (propertiesFile.exists()) {
+        properties.load(propertiesFile.newDataInputStream())
+    }
+    return properties
+}
+/**
+ * get environment variable
+ * @param name variable name
+ * @param localProperties local properties object
+ * @return variable environment variable for the given name
+ */
+String get_variable(name, localProperties) {
+    // Look for the variable in local properties, gradle properties and env variables
+    final variable = localProperties.getProperty(name) ?: project.findProperty(name) ?: System.getenv(name)
+    if (!variable) {
+        throw new VariableNotFoundException("$name not found. Make sure you've added the environment variable $name")
+    }
+    println "Instabug: ${name} found"
+    return variable;
+}
+
+/**
+ * get symbols path
+ * @return symbolsPath the path of the symbols directory
+ */
+String get_symbols_path() {
+    // Get root host directory path
+    final rootFile = new File(project['rootDir'].toString())
+
+    // Get the path of the symbols directory
+    final obfuscationPath = project['split-debug-info']
+    final obfuscationFile = new File(obfuscationPath)
+
+    // If the provided path is relative
+    // append the symbols directory to the root project path to get the full path
+    if (obfuscationFile.absolute) {
+        return obfuscationPath
+    } else {
+        return new File(rootFile.parent, obfuscationPath)
+    }
+}
+
+/**
+ * search for the symbols files in the symbols directory
+ * and create a zip file with the symbols files
+ * @param symbolsPath the path of the symbols directory
+ * @return zipFile the zip file created
+ */
+
+File prepare_zip_file(symbolsPath) {
+    // Check if the symbols directory provided exists
+    final symbolsDir = new File(symbolsPath)
+    if (!symbolsDir.exists()) {
+        throw new Exception('Symbols directory not found')
+    }
+
+    // Search in symbolsPath for files with extension .symbols and add them to a list
+    final symbolsFiles = symbolsDir.listFiles().findAll { file -> file.path.endsWith('.symbols') }
+    if (symbolsFiles.empty) {
+        throw new Exception('No symbols files found')
+    }
+    println "Instabug: ${symbolsFiles.size()} Symbols files found:"
+
+    // Print list of symbols files
+    symbolsFiles.forEach { file ->
+        println "${file.path}"
+    }
+
+    // Create a zip file with the symbols files
+    final zipFile = zip_files(symbolsPath, symbolsFiles)
+
+    return zipFile
+}
+/**
+ * create a zip file with the symbols files
+ *
+ * @param symbolsPath the path of the symbols directory
+ * @param symbolsFiles the list of symbols files
+ * @return zipFile the zip file created
+ */
+
+File zip_files(symbolsPath, symbolsFiles) {
+    final zipFile = new File(symbolsPath + '.zip')
+    final zipOutputStream = new ZipOutputStream(new FileOutputStream(zipFile))
+    symbolsFiles.forEach { file ->
+        final fileName = file.path.substring(symbolsPath.length() + 1)
+        final zipEntry = new ZipEntry(fileName)
+        zipOutputStream.putNextEntry(zipEntry)
+        FileInputStream fileInputStream = new FileInputStream(file)
+        final buffer = new byte[1024]
+        int length = fileInputStream.read(buffer)
+        while (length > 0) {
+            zipOutputStream.write(buffer, 0, length)
+            length = fileInputStream.read(buffer)
+        }
+        fileInputStream.close()
+        zipOutputStream.closeEntry()
+    }
+    zipOutputStream.close()
+    println "Instabug: Zip file created at ${zipFile.path}"
+    return zipFile
+}
+/**
+ * upload symbol files to Instabug endpoint
+ *
+ * @param zipFile the zip file containing the symbols files
+ * @param applicationToken the app token
+ * @param apiKey the api key
+ * @return void
+ */
+void upload_symbols(zipFile, applicationToken, apiKey, uploadUrl) {
+    // Initialize connection
+    final connection = new URL(uploadUrl).openConnection() as HttpURLConnection
+
+    // Set connection headers and request method
+    connection.setRequestMethod('POST')
+    connection.setRequestProperty('Connection', 'Keep-Alive')
+    connection.setRequestProperty('Content-Type', "multipart/form-data;boundary=${boundary}")
+    connection.setRequestProperty('Accept-Encoding', 'gzip')
+    connection.setRequestProperty('Content-Length', "${zipFile.length()}")
+    connection.setDoOutput(true)
+
+    // Initialize output stream and writer
+    final outputStream = connection.getOutputStream()
+    final charset = 'ISO-8859-1'
+    final writer = new PrintWriter(new OutputStreamWriter(outputStream, charset), true)
+
+    // Write application_token in the request body
+    writeField(writer, 'application_token', applicationToken)
+
+    // Write api_key in the request body
+    writeField(writer, 'api_key', apiKey)
+
+    // Write zip file in the request body
+    final fileName = zipFile.getName()
+    writeFile(writer, fileName, zipFile, outputStream)
+
+    // Send the request
+    writer.close()
+
+    // Get the response
+    final responseCode = connection.getResponseCode()
+    println "Instabug: Response Code: ${responseCode}"
+    println "Instabug: Response Message: ${connection.getResponseMessage()}"
+    if (responseCode == 200) {
+        println 'Instabug: Upload successful'
+    } else {
+        println 'Instabug: Upload failed'
+    }
+
+    // Close the connection
+    connection.disconnect()
+    // Delete the zip file
+    zipFile.delete()
+}
+/**
+ * write a field in the request body
+ * @param writer the writer
+ * @param field the name of the field
+ * @param value the value of the field
+ * @return void
+ */
+void writeField(writer, field, value) {
+    writer.append('--' + boundary).append(lineEnd)
+    writer.append("Content-Disposition: form-data; name=\"" + field + "\"").append(lineEnd)
+    writer.append(lineEnd)
+    writer.append(value).append(lineEnd)
+}
+/**
+ * write a field in the request body
+ * @param writer the writer
+ * @param fileName the name of the file
+ * @param file the file to be uploaded
+ * @param outputStream the output stream
+ * @return void
+ */
+void writeFile(writer, fileName, file, outputStream) {
+    writer.append('--' + boundary).append(lineEnd)
+    writer.append("Content-Disposition: form-data; name=\"" + 'file' + "\"; filename=\"" + fileName + "\"").append(lineEnd);
+    writer.append('Content-Type: ' + URLConnection.guessContentTypeFromName(fileName)).append(lineEnd)
+    writer.append(lineEnd)
+    writer.flush()
+
+    final inputStream = new FileInputStream(file)
+    byte[] buffer = new byte[4096]
+    int bytesRead = -1
+    while ((bytesRead = inputStream.read(buffer)) != -1) {
+        outputStream.write(buffer, 0, bytesRead)
+    }
+    outputStream.flush()
+    inputStream.close()
+
+    writer.append('--' + boundary).append(lineEnd)
+    writer.flush()
+}
