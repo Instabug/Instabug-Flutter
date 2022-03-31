@@ -1,10 +1,17 @@
 import java.util.zip.ZipOutputStream
 import java.util.zip.ZipEntry
 
+// Custom Exception for undefined variable
+public class VariableNotFoundException extends Exception {
+    public VariableNotFoundException(String errorMessage) {
+        super(errorMessage);
+    }
+}
 // Constants
 final INSTABUG_APP_TOKEN = 'INSTABUG_APP_TOKEN'
 final INSTABUG_API_KEY = 'INSTABUG_API_KEY'
 final UPLOAD_URL = 'https://api.instabug.com/api/web/public/flutter-symbol-files/android'
+final INSTABUG_AUTO_UPLOAD_ENABLE = 'INSTABUG_AUTO_UPLOAD_ENABLE'
 ext.boundary = 'abcd' + Long.toString(System.currentTimeMillis()) * 2 + 'dcba'
 ext.lineEnd = '\r\n'
 
@@ -19,6 +26,16 @@ task upload_symbols_task {
                 println "Instabug: skipping debug symbols upload"
                 return
             }
+            // Load local properties
+            load_local_properties()
+
+            // If auto upload is disabled, exit the task
+            final uploadFlag = get_variable(INSTABUG_AUTO_UPLOAD_ENABLE)
+            println "$INSTABUG_AUTO_UPLOAD_ENABLE: $uploadFlag"
+            if (!uploadFlag?.toBoolean()) {
+                println "Instabug: skipping debug symbols upload"
+                return
+            }
 
             // Get upload configs
             final applicationToken = get_variable(INSTABUG_APP_TOKEN);
@@ -29,6 +46,8 @@ task upload_symbols_task {
             final zipFile = prepare_zip_file(symbolsPath)
 
             upload_symbols(zipFile, applicationToken, apiKey, UPLOAD_URL)
+        } catch (VariableNotFoundException e) {
+            println "Instabug: uploading symbols: ${e.message}"
         } catch (Exception e) {
             println "Instabug err: uploading symbols: ${e.message}"
         }
@@ -37,7 +56,7 @@ task upload_symbols_task {
 /**
  * load local properties into a global variable localProperties
  */
-ext.loadLocalProperties = {
+def load_local_properties() {
     // Get local properties
     final properties = new Properties()
     final propertiesFile = project.rootProject.file('local.properties')
@@ -51,11 +70,11 @@ ext.loadLocalProperties = {
  * @param name variable name
  * @return variable environment variable for the given name
  */
-ext.get_variable = { name ->
+String get_variable(name) {
     // Look for the variable in local properties, gradle properties and env variables
     final variable = localProperties.getProperty(name) ?: project.findProperty(name) ?: System.getenv(name)
     if (!variable) {
-        throw new Exception("$name not found. Make sure you've added the environment variable $name")
+        throw new VariableNotFoundException("$name not found. Make sure you've added the environment variable $name")
     }
     println "Instabug: ${name} found"
     return variable;
