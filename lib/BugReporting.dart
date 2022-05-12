@@ -23,6 +23,8 @@ enum ExtendedBugReportMode {
   disabled
 }
 
+enum FloatingButtonEdge { left, right }
+
 class BugReporting {
   static Function? _onInvokeCallback;
   static Function? _onDismissCallback;
@@ -160,6 +162,19 @@ class BugReporting {
             [];
     final params = <dynamic>[invocationOptionsStrings];
     await _channel.invokeMethod<Object>('setInvocationOptions:', params);
+  }
+
+  /// Sets the floating button position.
+  /// [floatingButtonEdge] FloatingButtonEdge enum - left or right edge of the screen.
+  /// [offsetFromTop] integer offset for the position on the y-axis.
+  static Future<void> setFloatingButtonEdge(
+      FloatingButtonEdge floatingButtonEdge, int offsetFromTop) async {
+    final List<dynamic> params = <dynamic>[
+      floatingButtonEdge.toString(),
+      offsetFromTop
+    ];
+    await _channel.invokeMethod<Object>(
+        'setFloatingButtonEdge:withTopOffset:', params);
   }
 
   /// Invoke bug reporting with report type and options.
