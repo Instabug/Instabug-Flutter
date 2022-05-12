@@ -4,6 +4,7 @@ import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
 import com.instabug.featuresrequest.ActionType;
 import com.instabug.library.InstabugColorTheme;
+import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.visualusersteps.State;
@@ -56,6 +57,7 @@ final class ArgsRegistry {
         registerColorThemeArgs(ARGS);
         registerLocaleArgs(ARGS);
         registerInvocationOptionsArgs(ARGS);
+        registerInstabugFloatingButtonEdgeArgs(ARGS);
         registerCustomTextPlaceHolderKeysArgs(ARGS);
         registerInstabugReportTypesArgs(ARGS);
         registerInstabugExtendedBugReportModeArgs(ARGS);
@@ -121,6 +123,11 @@ final class ArgsRegistry {
     static void registerColorThemeArgs(Map<String, Object> args) {
         args.put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
         args.put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
+    }
+
+    static void registerInstabugFloatingButtonEdgeArgs(Map<String, Object> args) {
+        args.put("FloatingButtonEdge.left", InstabugFloatingButtonEdge.LEFT);
+        args.put("FloatingButtonEdge.right", InstabugFloatingButtonEdge.RIGHT);
     }
 
     static void registerInvocationOptionsArgs(Map<String, Object> args) {

@@ -26,6 +26,7 @@ import com.instabug.library.OnSdkDismissCallback;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.OnInvokeCallback;
+import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
@@ -275,6 +276,19 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         if (resolvedTheme != null) {
             Instabug.setColorTheme(resolvedTheme);
         }
+    }
+
+    /**
+     * Sets the position of Instabug floating button on the screen.
+     * 
+     * @param floatingButtonEdge    left or right edge of the screen.
+     * @param floatingButtonOffset  offset for the position on the y-axis.
+     */
+    public void setFloatingButtonEdge(String floatingButtonEdge, int floatingButtonOffset) {
+        InstabugFloatingButtonEdge resolvedFloatingButtonEdge = ArgsRegistry.getDeserializedValue(floatingButtonEdge,
+                InstabugFloatingButtonEdge.class);
+        BugReporting.setFloatingButtonEdge(resolvedFloatingButtonEdge);
+        BugReporting.setFloatingButtonOffset(floatingButtonOffset);
     }
 
     /**
