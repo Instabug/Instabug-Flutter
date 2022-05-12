@@ -254,6 +254,24 @@ void main() {
     ]);
   });
 
+  test(
+      'test setFloatingButtonEdge should be called with arguments floatingButtonEdge and offsetFromTop',
+      () async {
+    const FloatingButtonEdge floatingButtonEdge = FloatingButtonEdge.left;
+    const int offsetFromTop = 300;
+    await BugReporting.setFloatingButtonEdge(floatingButtonEdge, offsetFromTop);
+    final List<dynamic> args = <dynamic>[
+      floatingButtonEdge.toString(),
+      offsetFromTop
+    ];
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setFloatingButtonEdge:withTopOffset:',
+        arguments: args,
+      )
+    ]);
+  });
+
   test('test appendTags should be called with argument List of strings',
       () async {
     const List<String> tags = ['tag1', 'tag2'];
@@ -1152,7 +1170,7 @@ void main() {
     expect(log, <Matcher>[isMethodCall('endUITrace', arguments: null)]);
   });
 
-    test('endAppLaunch: Test', () async {
+  test('endAppLaunch: Test', () async {
     final List<dynamic> args = <dynamic>[null];
     APM.endAppLaunch();
     expect(log, <Matcher>[isMethodCall('endAppLaunch', arguments: null)]);
