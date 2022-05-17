@@ -60,7 +60,7 @@ jobs:
 
    flutter_tests:
     docker:
-      - image: cirrusci/flutter
+      - image: cirrusci/flutter:2.10.5
     steps:
       - checkout
       - run: sudo gem install bundler:1.16.1
