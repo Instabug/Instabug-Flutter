@@ -2,6 +2,7 @@
 
 * Adds BugReporting.setFloatingButtonEdge API
 * Supports starting SDK from Dart only.
+* Fixes an issue with Android screenshots being black on release mode on SDK v10.13.0
 
 ## v10.13.0 (2022-03-31)
 
