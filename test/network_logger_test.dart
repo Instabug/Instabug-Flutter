@@ -542,6 +542,30 @@ void main() {
         .called(1);
   });
 
+  test('expect instabug custom http client to set client connectionFactory',
+      () async {
+    final Future<ConnectionTask<Socket>> Function(
+            Uri url, String proxyHost, int proxyPort) f =
+        (Uri url, String? proxyHost, int? proxyPort) async =>
+            Socket.startConnect(
+                InternetAddress('/var/run/docker.sock',
+                    type: InternetAddressType.unix),
+                0);
+    instabugCustomHttpClient.connectionFactory = f
+        as Future<ConnectionTask<Socket>> Function(
+            Uri url, String? proxyHost, int? proxyPort);
+    verify((instabugCustomHttpClient.client as MockHttpClient)
+            .connectionFactory = f)
+        .called(1);
+  });
+
+  test('expect instabug custom http client to set client keyLog', () async {
+    final dynamic Function(String line) f = (String line) => dynamic;
+    instabugCustomHttpClient.keyLog = f;
+    verify((instabugCustomHttpClient.client as MockHttpClient).keyLog = f)
+        .called(1);
+  });
+
   test('expect instabug custom http client to call client close', () async {
     instabugCustomHttpClient.close(force: true);
     verify((instabugCustomHttpClient.client as MockHttpClient)

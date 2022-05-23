@@ -72,6 +72,16 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
       client.badCertificateCallback = callback;
 
   @override
+  set connectionFactory(f) {
+    client.connectionFactory = f;
+  }
+
+  @override
+  set keyLog(callback) {
+    client.keyLog = callback;
+  }
+
+  @override
   void close({bool force = false}) => client.close(force: force);
 
   @override
