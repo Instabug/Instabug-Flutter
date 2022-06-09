@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/models/trace.dart';
-import 'package:instabug_flutter/utils/insta_date_time.dart';
+import 'package:instabug_flutter/utils/ibg_date_time.dart';
 
 enum LogLevel {
   none,
@@ -48,7 +48,7 @@ class APM {
   /// Starts an execution trace.
   /// [String] name of the trace.
   static Future<Trace> startExecutionTrace(String name) async {
-    final DateTime id = InstaDateTime.instance.now();
+    final DateTime id = IBGDateTime.instance.now();
     final List<dynamic> params = <dynamic>[name, id.toString()];
     final traceId =
         await _channel.invokeMethod<String?>('startExecutionTrace:id:', params);

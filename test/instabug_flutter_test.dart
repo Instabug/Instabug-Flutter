@@ -20,7 +20,7 @@ import 'package:instabug_flutter/models/crash_data.dart';
 import 'package:instabug_flutter/models/exception_data.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/models/trace.dart' as execution_trace;
-import 'package:instabug_flutter/utils/insta_date_time.dart';
+import 'package:instabug_flutter/utils/ibg_date_time.dart';
 import 'package:instabug_flutter/utils/platform_manager.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -30,7 +30,7 @@ import 'instabug_flutter_test.mocks.dart';
 
 @GenerateMocks([
   PlatformManager,
-  InstaDateTime,
+  IBGDateTime,
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -1091,8 +1091,8 @@ void main() {
     final DateTime timestamp = DateTime.now();
     final List<dynamic> args = <dynamic>[name, timestamp.toString()];
 
-    final mockDateTime = MockInstaDateTime();
-    InstaDateTime.setInstance(mockDateTime);
+    final mockDateTime = MockIBGDateTime();
+    IBGDateTime.setInstance(mockDateTime);
     when(mockDateTime.now()).thenAnswer((_) => timestamp);
 
     await APM.startExecutionTrace(name);
