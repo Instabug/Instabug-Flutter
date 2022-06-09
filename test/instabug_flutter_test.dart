@@ -17,8 +17,8 @@ import 'package:instabug_flutter/models/crash_data.dart';
 import 'package:instabug_flutter/models/exception_data.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/models/trace.dart' as execution_trace;
+import 'package:instabug_flutter/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/utils/ibg_date_time.dart';
-import 'package:instabug_flutter/utils/insta_build_info.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:stack_trace/stack_trace.dart';
@@ -26,7 +26,7 @@ import 'package:stack_trace/stack_trace.dart';
 import 'instabug_flutter_test.mocks.dart';
 
 @GenerateMocks([
-  InstaBuildInfo,
+  IBGBuildInfo,
   IBGDateTime,
 ])
 void main() {
@@ -44,7 +44,7 @@ void main() {
   const Map<String, String> userAttributePair = <String, String>{
     'gender': 'female'
   };
-  late MockInstaBuildInfo mockInstaBuildInfo;
+  late MockIBGBuildInfo mockBuildInfo;
 
   const String url = 'https://jsonplaceholder.typicode.com';
   const String method = 'POST';
@@ -96,8 +96,8 @@ void main() {
   });
 
   setUp(() {
-    mockInstaBuildInfo = MockInstaBuildInfo();
-    InstaBuildInfo.setInstance(mockInstaBuildInfo);
+    mockBuildInfo = MockIBGBuildInfo();
+    IBGBuildInfo.setInstance(mockBuildInfo);
   });
 
   tearDown(() async {
@@ -417,7 +417,7 @@ void main() {
   });
 
   test('setDebugEnabled: Test', () async {
-    when(mockInstaBuildInfo.isAndroid).thenReturn(true);
+    when(mockBuildInfo.isAndroid).thenReturn(true);
 
     const bool debugEnabled = true;
     final List<dynamic> args = <dynamic>[debugEnabled];
@@ -459,7 +459,7 @@ void main() {
     const fileName = 'fileName';
     final List<dynamic> args = <dynamic>[filePath, fileName];
 
-    when(mockInstaBuildInfo.isIOS).thenReturn(false);
+    when(mockBuildInfo.isIOS).thenReturn(false);
     await Instabug.addFileAttachmentWithURL(filePath, fileName);
 
     expect(log, <Matcher>[
@@ -475,7 +475,7 @@ void main() {
     const fileName = 'fileName';
     final List<dynamic> args = <dynamic>[bdata, fileName];
 
-    when(mockInstaBuildInfo.isIOS).thenReturn(false);
+    when(mockBuildInfo.isIOS).thenReturn(false);
     await Instabug.addFileAttachmentWithData(bdata, fileName);
     
     expect(log, <Matcher>[
@@ -546,7 +546,7 @@ void main() {
     const iPhoneShakingThreshold = 1.6;
     final List<dynamic> args = <dynamic>[iPhoneShakingThreshold];
 
-    when(mockInstaBuildInfo.isIOS).thenReturn(true);
+    when(mockBuildInfo.isIOS).thenReturn(true);
 
     await BugReporting.setShakingThresholdForiPhone(iPhoneShakingThreshold);
     expect(log, <Matcher>[
@@ -561,7 +561,7 @@ void main() {
     const iPadShakingThreshold = 1.6;
     final List<dynamic> args = <dynamic>[iPadShakingThreshold];
 
-    when(mockInstaBuildInfo.isIOS).thenReturn(true);
+    when(mockBuildInfo.isIOS).thenReturn(true);
 
     await BugReporting.setShakingThresholdForiPad(iPadShakingThreshold);
     expect(log, <Matcher>[
@@ -576,7 +576,7 @@ void main() {
     const androidThreshold = 1000;
     final List<dynamic> args = <dynamic>[androidThreshold];
 
-    when(mockInstaBuildInfo.isAndroid).thenReturn(true);
+    when(mockBuildInfo.isAndroid).thenReturn(true);
 
     await BugReporting.setShakingThresholdForAndroid(androidThreshold);
     expect(log, <Matcher>[
@@ -818,7 +818,7 @@ void main() {
     const appStoreURL = 'appStoreURL';
     final List<dynamic> args = <dynamic>[appStoreURL];
 
-    when(mockInstaBuildInfo.isIOS).thenReturn(true);
+    when(mockBuildInfo.isIOS).thenReturn(true);
 
     await Surveys.setAppStoreURL(appStoreURL);
     expect(log, <Matcher>[
@@ -867,7 +867,7 @@ void main() {
     const isEnabled = false;
     final List<dynamic> args = <dynamic>[isEnabled];
 
-    when(mockInstaBuildInfo.isAndroid).thenReturn(true);
+    when(mockBuildInfo.isAndroid).thenReturn(true);
 
     await Replies.setInAppNotificationSound(isEnabled);
     expect(log, <Matcher>[
@@ -919,7 +919,7 @@ void main() {
     final List<dynamic> args = <dynamic>[data.toMap()];
     final networkLogger = NetworkLogger();
 
-    when(mockInstaBuildInfo.isAndroid).thenReturn(false);
+    when(mockBuildInfo.isAndroid).thenReturn(false);
     await networkLogger.networkLog(data);
 
     expect(log, <Matcher>[
@@ -957,10 +957,10 @@ void main() {
             trace.frames[i].line,
             trace.frames[i].column == null ? 0 : trace.frames[i].column!));
       }
-      when(mockInstaBuildInfo.operatingSystem).thenReturn('test');
+      when(mockBuildInfo.operatingSystem).thenReturn('test');
       final crashData = CrashData(
         exception.toString(),
-        InstaBuildInfo.instance.operatingSystem,
+        IBGBuildInfo.instance.operatingSystem,
         frames,
       );
       final List<dynamic> args = <dynamic>[jsonEncode(crashData), handled];

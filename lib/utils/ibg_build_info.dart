@@ -4,14 +4,17 @@ import 'package:flutter/foundation.dart';
 
 /// Mockable class that contains info about the
 /// [Platform], the OS and build modes.
-class InstaBuildInfo {
-  InstaBuildInfo._();
+class IBGBuildInfo {
+  IBGBuildInfo._();
 
-  static InstaBuildInfo _instance = InstaBuildInfo._();
-  static InstaBuildInfo get instance => _instance;
+  static IBGBuildInfo _instance = IBGBuildInfo._();
+  static IBGBuildInfo get instance => _instance;
+
+  /// Shorthand for [instance]
+  static IBGBuildInfo get I => instance;
 
   @visibleForTesting
-  static void setInstance(InstaBuildInfo instance) {
+  static void setInstance(IBGBuildInfo instance) {
     _instance = instance;
   }
 

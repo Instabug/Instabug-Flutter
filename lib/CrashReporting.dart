@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/models/crash_data.dart';
 import 'package:instabug_flutter/models/exception_data.dart';
-import 'package:instabug_flutter/utils/insta_build_info.dart';
+import 'package:instabug_flutter/utils/ibg_build_info.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 class CrashReporting {
@@ -25,7 +25,7 @@ class CrashReporting {
   }
 
   static Future<void> reportCrash(dynamic exception, StackTrace stack) async {
-    if (InstaBuildInfo.instance.isReleaseMode && enabled) {
+    if (IBGBuildInfo.instance.isReleaseMode && enabled) {
       await _reportUnhandledCrash(exception, stack);
     } else {
       FlutterError.dumpErrorToConsole(
@@ -59,7 +59,7 @@ class CrashReporting {
     }
     final CrashData crashData = CrashData(
       exception.toString(),
-      InstaBuildInfo.instance.operatingSystem,
+      IBGBuildInfo.instance.operatingSystem,
       frames,
     );
     final List<dynamic> params = <dynamic>[jsonEncode(crashData), handled];

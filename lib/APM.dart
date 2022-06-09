@@ -5,8 +5,8 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 import 'package:instabug_flutter/models/trace.dart';
+import 'package:instabug_flutter/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/utils/ibg_date_time.dart';
-import 'package:instabug_flutter/utils/insta_build_info.dart';
 
 enum LogLevel {
   none,
@@ -110,7 +110,7 @@ class APM {
   }
 
   static Future<bool?> networkLogAndroid(NetworkData data) async {
-    if (InstaBuildInfo.instance.isAndroid) {
+    if (IBGBuildInfo.instance.isAndroid) {
       final params = <dynamic>[data.toMap()];
       return await _channel.invokeMethod<bool>(
           'apmNetworkLogByReflection:', params);
