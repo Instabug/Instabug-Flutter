@@ -679,22 +679,6 @@ NSMutableDictionary *traces;
 }
 
 /**
-  * Manual invocation for chats view. 
-  */
-+ (void)showChats {
-   [IBGChats show];
-}
-
-/**
-  * Enables and disables everything related to creating new chats.
-  * @param {boolean} isEnabled 
-  */
-+ (void)setChatsEnabled:(NSNumber *)isEnabled {
-   BOOL boolValue = [isEnabled boolValue];
-   IBGChats.enabled = boolValue;
-}
-
-/**
   * Enables and disables everything related to receiving replies.
   * @param {boolean} isEnabled 
   */
@@ -1055,7 +1039,6 @@ NSMutableDictionary *traces;
       @"CustomTextPlaceHolderKey.invalidEmailMessage": kIBGInvalidEmailMessageStringName,
       @"CustomTextPlaceHolderKey.invalidCommentMessage": kIBGInvalidCommentMessageStringName,
       @"CustomTextPlaceHolderKey.invocationHeader": kIBGInvocationTitleStringName,
-      @"CustomTextPlaceHolderKey.startChats": kIBGChatsTitleStringName,
       @"CustomTextPlaceHolderKey.reportQuestion": kIBGAskAQuestionStringName,
       @"CustomTextPlaceHolderKey.reportBug": kIBGReportBugStringName,
       @"CustomTextPlaceHolderKey.reportFeedback": kIBGReportFeedbackStringName,

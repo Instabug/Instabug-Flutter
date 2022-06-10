@@ -403,17 +403,6 @@
 + (void)setEmailFieldRequiredForFeatureRequests:(NSNumber *)isEmailFieldRequired forAction:(NSArray *)actionTypesArray;
 
 /**
-  * Manual invocation for chats view. 
-  */
-+ (void)showChats;
-
-/**
-  * Enables and disables everything related to creating new chats.
-  * @param isEnabled isEnabled 
-  */
-+ (void)setChatsEnabled:(NSNumber *)isEnabled;
-
-/**
   * Enables and disables everything related to receiving replies.
   * @param isEnabled isEnabled 
   */

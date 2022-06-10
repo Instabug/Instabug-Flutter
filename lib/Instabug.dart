@@ -54,7 +54,6 @@ enum CustomTextPlaceHolderKey {
   invalidEmailMessage,
   invalidCommentMessage,
   invocationHeader,
-  startChats,
   reportQuestion,
   reportBug,
   reportFeedback,
