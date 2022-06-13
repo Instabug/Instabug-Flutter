@@ -267,8 +267,6 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.CONVERSATIONS_LIST_TITLE);
         keys.add(InstabugCustomTextPlaceHolder.Key.AUDIO_RECORDING_PERMISSION_DENIED);
         keys.add(InstabugCustomTextPlaceHolder.Key.CONVERSATION_TEXT_FIELD_HINT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BUG_REPORT_HEADER);
-        keys.add(InstabugCustomTextPlaceHolder.Key.FEEDBACK_REPORT_HEADER);
         keys.add(InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD);
         keys.add(InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_RELEASE_TO_ATTACH);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);
@@ -307,8 +305,6 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.CONVERSATIONS_LIST_TITLE);
         keys.add(InstabugCustomTextPlaceHolder.Key.AUDIO_RECORDING_PERMISSION_DENIED);
         keys.add(InstabugCustomTextPlaceHolder.Key.CONVERSATION_TEXT_FIELD_HINT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BUG_REPORT_HEADER);
-        keys.add(InstabugCustomTextPlaceHolder.Key.FEEDBACK_REPORT_HEADER);
         keys.add(InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD);
         keys.add(InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_RELEASE_TO_ATTACH);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);

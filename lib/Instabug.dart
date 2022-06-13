@@ -67,8 +67,6 @@ enum CustomTextPlaceHolderKey {
   conversationsListTitle,
   audioRecordingPermissionDenied,
   conversationTextFieldHint,
-  bugReportHeader,
-  feedbackReportHeader,
   voiceMessagePressAndHoldToRecord,
   voiceMessageReleaseToAttach,
   reportSuccessfullySent,
