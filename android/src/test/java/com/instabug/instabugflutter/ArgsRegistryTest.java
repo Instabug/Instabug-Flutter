@@ -255,7 +255,6 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.INVALID_EMAIL_MESSAGE);
         keys.add(InstabugCustomTextPlaceHolder.Key.INVALID_COMMENT_MESSAGE);
         keys.add(InstabugCustomTextPlaceHolder.Key.INVOCATION_HEADER);
-        keys.add(InstabugCustomTextPlaceHolder.Key.START_CHATS);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_BUG);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK);
@@ -296,7 +295,6 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.INVALID_EMAIL_MESSAGE);
         keys.add(InstabugCustomTextPlaceHolder.Key.INVALID_COMMENT_MESSAGE);
         keys.add(InstabugCustomTextPlaceHolder.Key.INVOCATION_HEADER);
-        keys.add(InstabugCustomTextPlaceHolder.Key.START_CHATS);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_BUG);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK);

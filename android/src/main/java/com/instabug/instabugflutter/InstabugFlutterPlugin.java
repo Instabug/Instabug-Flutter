@@ -14,7 +14,6 @@ import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
-import com.instabug.chat.Chats;
 import com.instabug.chat.Replies;
 import com.instabug.crash.CrashReporting;
 import com.instabug.featuresrequest.FeatureRequests;
@@ -826,31 +825,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             actions[i] = ArgsRegistry.getDeserializedValue(actionTypes.get(i), Integer.class);
         }
         FeatureRequests.setEmailFieldRequired(isEmailRequired, actions);
-    }
-
-    /**
-     * Manual invocation for chats view.
-     */
-    public void showChats() {
-        Chats.show();
-    }
-
-    /**
-     * Enables and disables everything related to creating new chats.
-     * 
-     * @param {boolean} isEnabled
-     */
-    public void setChatsEnabled(final boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (isEnabled) {
-                    Chats.setState(Feature.State.ENABLED);
-                } else {
-                    Chats.setState(Feature.State.DISABLED);
-                }
-            }
-        });
     }
 
     /**

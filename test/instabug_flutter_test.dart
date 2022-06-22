@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/APM.dart';
 import 'package:instabug_flutter/BugReporting.dart';
-import 'package:instabug_flutter/Chats.dart';
 import 'package:instabug_flutter/CrashReporting.dart';
 import 'package:instabug_flutter/FeatureRequests.dart';
 import 'package:instabug_flutter/Instabug.dart';
@@ -846,23 +845,6 @@ void main() {
     ]);
   });
 
-  test('showChats Test', () async {
-    await Chats.show();
-    expect(log, <Matcher>[isMethodCall('showChats', arguments: null)]);
-  });
-
-  test('setChatsEnabled: Test', () async {
-    const isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
-    await Chats.setEnabled(isEnabled);
-    expect(log, <Matcher>[
-      isMethodCall(
-        'setChatsEnabled:',
-        arguments: args,
-      )
-    ]);
-  });
-
   test('setRepliesEnabled: Test', () async {
     const isEnabled = false;
     final List<dynamic> args = <dynamic>[isEnabled];
@@ -1152,7 +1134,7 @@ void main() {
     expect(log, <Matcher>[isMethodCall('endUITrace', arguments: null)]);
   });
 
-    test('endAppLaunch: Test', () async {
+  test('endAppLaunch: Test', () async {
     final List<dynamic> args = <dynamic>[null];
     APM.endAppLaunch();
     expect(log, <Matcher>[isMethodCall('endAppLaunch', arguments: null)]);
