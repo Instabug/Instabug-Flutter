@@ -649,9 +649,10 @@ NSMutableDictionary *traces;
   * @return the desired value of whether the user has responded to the survey or not.
   */
 + (void)hasRespondedToSurveyWithToken:(NSString *)surveyToken {
-    bool hasResponded = [IBGSurveys hasRespondedToSurveyWithToken:surveyToken];
-    NSNumber *boolNumber = [NSNumber numberWithBool:hasResponded];
-    [channel invokeMethod:@"hasRespondedToSurveyCallback" arguments:boolNumber];
+    [IBGSurveys hasRespondedToSurveyWithToken:surveyToken completionHandler:^(BOOL hasResponded){
+      NSNumber *boolNumber = [NSNumber numberWithBool:hasResponded];
+      [channel invokeMethod:@"hasRespondedToSurveyCallback" arguments:boolNumber];
+    }];
 }
 
 /**
@@ -1052,8 +1053,6 @@ NSMutableDictionary *traces;
       @"CustomTextPlaceHolderKey.conversationsListTitle": kIBGChatsTitleStringName,
       @"CustomTextPlaceHolderKey.audioRecordingPermissionDenied": kIBGAudioRecordingPermissionDeniedTitleStringName,
       @"CustomTextPlaceHolderKey.conversationTextFieldHint": kIBGChatReplyFieldPlaceholderStringName,
-      @"CustomTextPlaceHolderKey.bugReportHeader": kIBGReportBugStringName,
-      @"CustomTextPlaceHolderKey.feedbackReportHeader": kIBGReportFeedbackStringName,
       @"CustomTextPlaceHolderKey.voiceMessagePressAndHoldToRecord": kIBGRecordingMessageToHoldTextStringName,
       @"CustomTextPlaceHolderKey.voiceMessageReleaseToAttach": kIBGRecordingMessageToReleaseTextStringName,
       @"CustomTextPlaceHolderKey.reportSuccessfullySent": kIBGThankYouAlertMessageStringName,
