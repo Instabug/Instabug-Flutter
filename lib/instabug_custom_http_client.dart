@@ -72,13 +72,22 @@ class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
       client.badCertificateCallback = callback;
 
   @override
-  set connectionFactory(f) {
-    client.connectionFactory = f;
+  // ignore: override_on_non_overriding_member
+  set connectionFactory(
+      Future<ConnectionTask<Socket>> Function(
+              Uri url, String? proxyHost, int? proxyPort)?
+          f) {
+    try {
+      (client as dynamic).connectionFactory = f;
+    } on NoSuchMethodError catch (_) {}
   }
 
   @override
-  set keyLog(callback) {
-    client.keyLog = callback;
+  // ignore: override_on_non_overriding_member
+  set keyLog(Function(String line)? callback) {
+    try {
+      (client as dynamic).keyLog = callback;
+    } on NoSuchMethodError catch (_) {}
   }
 
   @override
