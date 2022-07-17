@@ -5,9 +5,9 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/models/crash_data.dart';
-import 'package:instabug_flutter/models/exception_data.dart';
-import 'package:instabug_flutter/utils/ibg_build_info.dart';
+import 'package:instabug_flutter/src/models/crash_data.dart';
+import 'package:instabug_flutter/src/models/exception_data.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 class CrashReporting {

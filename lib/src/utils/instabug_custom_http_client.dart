@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:instabug_flutter/instabug_custom_http_client_request.dart';
-import 'package:instabug_flutter/utils/http_client_logger.dart';
+import 'package:instabug_flutter/src/utils/http_client_logger.dart';
+import 'package:instabug_flutter/src/utils/instabug_custom_http_client_request.dart';
 import 'package:meta/meta.dart';
 
 class InstabugCustomHttpClient extends HttpClientLogger implements HttpClient {
