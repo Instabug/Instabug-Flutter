@@ -1,5 +1,6 @@
 ## master
 
+* Adds BugReporting.setFloatingButtonEdge API
 * Supports starting SDK from Dart only.
 
 ## v10.13.0 (2022-03-31)

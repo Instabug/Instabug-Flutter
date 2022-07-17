@@ -148,6 +148,16 @@ class OnMethodCallTests {
         verify(instabugMock).setPrimaryColor(12312331231233L);
     }
 
+    public void testSetFloatingButtonEdge(){
+        String methodName = "setFloatingButtonEdge";
+        ArrayList<Object> argsList = new ArrayList<>();
+        argsList.add("FloatingButtonEdge.left");
+        argsList.add(300);
+        Mockito.doNothing().when(instabugMock).setFloatingButtonEdge(any(String.class), any(Integer.class));
+        testMethodCall(methodName, argsList);
+        verify(instabugMock).setFloatingButtonEdge("FloatingButtonEdge.left", 300);
+    }
+
     public void testAddFileAttachmentWithData() {
         String methodName = "addFileAttachmentWithData";
         ArrayList<Object> argsList = new ArrayList<>();

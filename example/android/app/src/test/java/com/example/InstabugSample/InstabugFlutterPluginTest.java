@@ -98,6 +98,14 @@ public class InstabugFlutterPluginTest {
     }
 
     /**
+     * (String, int)
+     */
+    @Test
+    public void testSetFloatingButtonEdge() {
+        new OnMethodCallTests().testSetFloatingButtonEdge();
+    }
+
+    /**
      * (byte[], String)
      */
     @Test

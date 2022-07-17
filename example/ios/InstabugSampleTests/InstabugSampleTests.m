@@ -199,6 +199,24 @@ static const NSTimeInterval kTimeout = 30.0;
      [self waitForExpectationsWithTimeout:kTimeout handler:nil];
  }
 
+ - (void)testSetFloatingButtonEdge {
+     id mock = OCMClassMock([InstabugFlutterPlugin class]);
+     InstabugFlutterPlugin *instabug = [[InstabugFlutterPlugin alloc] init];
+     
+     NSArray *arguments = [NSArray arrayWithObjects:@"FloatingButtonEdge.left", @(300), nil];
+     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"setFloatingButtonEdge:withTopOffset:" arguments:arguments];
+     [[[mock stub] classMethod] setFloatingButtonEdge:@"FloatingButtonEdge.left"withTopOffset:@(300)];
+
+     XCTestExpectation *expectation = [self expectationWithDescription:@"Result is called"];
+     [instabug handleMethodCall:call result:^(id _Nullable result) {
+         XCTAssertNil(result);
+         [expectation fulfill];
+     }];
+
+     [[[mock verify] classMethod] setFloatingButtonEdge:@"FloatingButtonEdge.left"withTopOffset:@(300)];
+     [self waitForExpectationsWithTimeout:kTimeout handler:nil];
+ }
+
  - (void)testAddFileAttachmentWithData {
      id mock = OCMClassMock([InstabugFlutterPlugin class]);
      InstabugFlutterPlugin *instabug = [[InstabugFlutterPlugin alloc] init];

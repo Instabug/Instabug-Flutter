@@ -103,6 +103,13 @@
 + (void)setColorTheme:(NSString *)colorTheme;
 
 /**
+ * Sets the position of Instabug floating button on the screen.
+ * @param floatingButtonEdge  left or right edge of the screen.
+ * @param floatingButtonTopOffset offset for the position on the y-axis.
+ */
++ (void)setFloatingButtonEdge:(NSString *)floatingButtonEdge withTopOffset:(NSNumber *)floatingButtonTopOffset;
+
+/**
  * Appends a set of tags to previously added tags of reported feedback, bug or crash.
  * @param tags An array of tags to append to current tags.
  */

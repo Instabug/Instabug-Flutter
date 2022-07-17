@@ -213,6 +213,19 @@ NSMutableDictionary *traces;
 }
 
 /**
+ * Sets the position of Instabug floating button on the screen.
+ * @param floatingButtonEdge  left or right edge of the screen.
+ * @param floatingButtonTopOffset offset for the position on the y-axis.
+ */
++ (void)setFloatingButtonEdge:(NSString *)floatingButtonEdge withTopOffset:(NSNumber *)floatingButtonTopOffset {
+    NSDictionary *constants = [self constants];
+    CGRectEdge intFloatingButtonEdge = ((NSNumber *) constants[floatingButtonEdge]).doubleValue;
+    IBGBugReporting.floatingButtonEdge = intFloatingButtonEdge;
+    double offsetFromTop = [floatingButtonTopOffset doubleValue];
+    IBGBugReporting.floatingButtonTopOffset = offsetFromTop;
+}
+
+/**
  * Appends a set of tags to previously added tags of reported feedback, bug or crash.
  * @param tags An array of tags to append to current tags.
  */
@@ -1004,6 +1017,9 @@ NSMutableDictionary *traces;
       
       @"ColorTheme.dark": @(IBGColorThemeDark),
       @"ColorTheme.light": @(IBGColorThemeLight),
+
+      @"FloatingButtonEdge.left": @(CGRectMinXEdge),
+      @"FloatingButtonEdge.right": @(CGRectMaxXEdge),
 
       @"InvocationOption.commentFieldRequired": @(IBGBugReportingOptionCommentFieldRequired),
       @"InvocationOption.disablePostSendingDialog": @(IBGBugReportingOptionDisablePostSendingDialog),
