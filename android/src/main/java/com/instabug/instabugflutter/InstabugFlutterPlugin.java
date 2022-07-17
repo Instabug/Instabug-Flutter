@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
@@ -165,7 +166,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
                 .setInvocationEvents(invocationEventsArray)
                 .build();
 
-        enableScreenShotByMediaProjection();
+        enableScreenShotByMediaProjection(true);
     }
 
     /**
@@ -429,20 +430,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     /**
      * Enables taking screenshots by media projection.
      */
-    private void enableScreenShotByMediaProjection() {
-        try {
-            Method method = getMethod(Class.forName("com.instabug.bug.BugReporting"),
-                    "setScreenshotByMediaProjectionEnabled", boolean.class);
-            if (method != null) {
-                method.invoke(null, true);
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+    @VisibleForTesting
+    public static void enableScreenShotByMediaProjection(boolean isScreenshotByMediaProjectionEnabled) {
+        BugReporting.setScreenshotByMediaProjectionEnabled(isScreenshotByMediaProjectionEnabled);
     }
 
     /**
