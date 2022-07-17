@@ -1,3 +1,7 @@
+## master
+
+* Supports starting SDK from Dart only.
+
 ## v10.13.0 (2022-03-31)
 
 * Adds support for uploading debug symbols on Android to be used for crash deobfuscation

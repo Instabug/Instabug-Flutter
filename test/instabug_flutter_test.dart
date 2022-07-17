@@ -102,9 +102,7 @@ void main() {
     log.clear();
   });
 
-  test('startWithToken:invocationEvents: should be called on iOS', () async {
-    when(mockPlatform.isIOS()).thenAnswer((_) => true);
-
+  test('startWithToken:invocationEvents: should be called', () async {
     await Instabug.start(appToken, invocationEvents);
     final List<dynamic> args = <dynamic>[
       appToken,
