@@ -1031,23 +1031,19 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
      * Starts an execution trace
      * @param name string name of the trace.
      */
-    public void startExecutionTrace(final String name, final String id) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String result = null;
-                    ExecutionTrace trace = APM.startExecutionTrace(name);
-                    if (trace != null) {
-                        result = id;
-                        traces.put(id, trace);
-                    }
-                    channel.invokeMethod("startExecutionTraceCallBack", result);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+    public String startExecutionTrace(final String name, final String id) {
+        try {
+            String result = null;
+            ExecutionTrace trace = APM.startExecutionTrace(name);
+            if (trace != null) {
+                result = id;
+                traces.put(id, trace);
             }
-        });
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
   
     /**
