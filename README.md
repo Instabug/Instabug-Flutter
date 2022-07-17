@@ -62,23 +62,26 @@ allprojects {
 ```
 
 
-2. Create a new Java class that extends `FlutterApplication` and add it to your `AndroidManifest.xml`.
+2. **⚠️ For Instabug versions <= v10.11.0 only.**  
+   Initialize the android SDK: 
 
-```xml
-<application
-    android:name=".CustomFlutterApplication"
-    ...
-</application>
-````
+	1. Create a new Java class that extends `FlutterApplication` and add it to your `AndroidManifest.xml`.
 
-3. In your newly created `CustomFlutterApplication` class, override `onCreate()` and add the following code.
+		```xml
+		<application
+			android:name=".CustomFlutterApplication"
+			...
+		</application>
+		````
+
+	1. In your newly created `CustomFlutterApplication` class, override `onCreate()` and add the following code.
 
 
-```java
-ArrayList<String> invocationEvents = new ArrayList<>();
-invocationEvents.add(InstabugFlutterPlugin.INVOCATION_EVENT_SHAKE);
-new InstabugFlutterPlugin().start(CustomFlutterApplication.this, "APP_TOKEN", invocationEvents);
-```
+		```java
+		ArrayList<String> invocationEvents = new ArrayList<>();
+		invocationEvents.add(InstabugFlutterPlugin.INVOCATION_EVENT_SHAKE);
+		new InstabugFlutterPlugin().start(CustomFlutterApplication.this, "APP_TOKEN", invocationEvents);
+		```
 
 ## Crash reporting
 

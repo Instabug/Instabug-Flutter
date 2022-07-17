@@ -662,9 +662,10 @@ NSMutableDictionary *traces;
   * @return the desired value of whether the user has responded to the survey or not.
   */
 + (void)hasRespondedToSurveyWithToken:(NSString *)surveyToken {
-    bool hasResponded = [IBGSurveys hasRespondedToSurveyWithToken:surveyToken];
-    NSNumber *boolNumber = [NSNumber numberWithBool:hasResponded];
-    [channel invokeMethod:@"hasRespondedToSurveyCallback" arguments:boolNumber];
+    [IBGSurveys hasRespondedToSurveyWithToken:surveyToken completionHandler:^(BOOL hasResponded){
+      NSNumber *boolNumber = [NSNumber numberWithBool:hasResponded];
+      [channel invokeMethod:@"hasRespondedToSurveyCallback" arguments:boolNumber];
+    }];
 }
 
 /**
@@ -689,22 +690,6 @@ NSMutableDictionary *traces;
     }
     BOOL boolValue = [isEmailFieldRequired boolValue];
     [IBGFeatureRequests setEmailFieldRequired:boolValue forAction:actionTypes];
-}
-
-/**
-  * Manual invocation for chats view. 
-  */
-+ (void)showChats {
-   [IBGChats show];
-}
-
-/**
-  * Enables and disables everything related to creating new chats.
-  * @param {boolean} isEnabled 
-  */
-+ (void)setChatsEnabled:(NSNumber *)isEnabled {
-   BOOL boolValue = [isEnabled boolValue];
-   IBGChats.enabled = boolValue;
 }
 
 /**
@@ -925,13 +910,13 @@ NSMutableDictionary *traces;
   * @param {string} name of the trace.
   * @param {string} id of the trace.
   */
-+ (void)startExecutionTrace:(NSString *)name id:(NSString *)id {
++ (NSString *)startExecutionTrace:(NSString *)name id:(NSString *)id {
     IBGExecutionTrace *trace = [IBGAPM startExecutionTraceWithName:name];
     if (trace != nil) {
         [traces setObject: trace forKey: id];
-        [channel invokeMethod:@"startExecutionTraceCallBack" arguments:id];
+        return id;
     } else {
-        [channel invokeMethod:@"startExecutionTraceCallBack" arguments:nil];
+        return nil;
     }
 }
 
@@ -1071,7 +1056,6 @@ NSMutableDictionary *traces;
       @"CustomTextPlaceHolderKey.invalidEmailMessage": kIBGInvalidEmailMessageStringName,
       @"CustomTextPlaceHolderKey.invalidCommentMessage": kIBGInvalidCommentMessageStringName,
       @"CustomTextPlaceHolderKey.invocationHeader": kIBGInvocationTitleStringName,
-      @"CustomTextPlaceHolderKey.startChats": kIBGChatsTitleStringName,
       @"CustomTextPlaceHolderKey.reportQuestion": kIBGAskAQuestionStringName,
       @"CustomTextPlaceHolderKey.reportBug": kIBGReportBugStringName,
       @"CustomTextPlaceHolderKey.reportFeedback": kIBGReportFeedbackStringName,
@@ -1085,8 +1069,6 @@ NSMutableDictionary *traces;
       @"CustomTextPlaceHolderKey.conversationsListTitle": kIBGChatsTitleStringName,
       @"CustomTextPlaceHolderKey.audioRecordingPermissionDenied": kIBGAudioRecordingPermissionDeniedTitleStringName,
       @"CustomTextPlaceHolderKey.conversationTextFieldHint": kIBGChatReplyFieldPlaceholderStringName,
-      @"CustomTextPlaceHolderKey.bugReportHeader": kIBGReportBugStringName,
-      @"CustomTextPlaceHolderKey.feedbackReportHeader": kIBGReportFeedbackStringName,
       @"CustomTextPlaceHolderKey.voiceMessagePressAndHoldToRecord": kIBGRecordingMessageToHoldTextStringName,
       @"CustomTextPlaceHolderKey.voiceMessageReleaseToAttach": kIBGRecordingMessageToReleaseTextStringName,
       @"CustomTextPlaceHolderKey.reportSuccessfullySent": kIBGThankYouAlertMessageStringName,

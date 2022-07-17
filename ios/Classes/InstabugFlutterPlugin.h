@@ -410,17 +410,6 @@
 + (void)setEmailFieldRequiredForFeatureRequests:(NSNumber *)isEmailFieldRequired forAction:(NSArray *)actionTypesArray;
 
 /**
-  * Manual invocation for chats view. 
-  */
-+ (void)showChats;
-
-/**
-  * Enables and disables everything related to creating new chats.
-  * @param isEnabled isEnabled 
-  */
-+ (void)setChatsEnabled:(NSNumber *)isEnabled;
-
-/**
   * Enables and disables everything related to receiving replies.
   * @param isEnabled isEnabled 
   */
@@ -494,7 +483,7 @@
   */
 + (void)setColdAppLaunchEnabled:(NSNumber *)isEnabled;
 
-+ (void)startExecutionTrace:(NSString *)name id:(NSString *)id;
++ (NSString *)startExecutionTrace:(NSString *)name id:(NSString *)id;
 
 + (void)setExecutionTraceAttribute:(NSString *)id key:(NSString *)key value:(NSString *)value;
 
