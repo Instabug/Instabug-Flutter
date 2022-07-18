@@ -16,7 +16,4 @@ export 'src/modules/replies.dart';
 export 'src/modules/surveys.dart';
 
 // Utils
-export 'src/utils/http_client_logger.dart';
-export 'src/utils/instabug_custom_http_client.dart';
-export 'src/utils/instabug_custom_http_client_request.dart';
 export 'src/utils/instabug_navigator_observer.dart';
