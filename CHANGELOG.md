@@ -4,6 +4,7 @@
 * Supports starting SDK from Dart only.
 * Fixes an issue with Android screenshots being black on release mode on SDK v10.13.0
 * Changes the package importing style
+* Removes InstabugCustomHttpClient used for network logging when using the dart:io package HttpClient
 
 ## v10.13.0 (2022-03-31)
 
