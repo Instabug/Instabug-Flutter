@@ -1,34 +1,21 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:instabug_flutter/APM.dart';
-import 'package:instabug_flutter/BugReporting.dart';
-import 'package:instabug_flutter/Chats.dart';
-import 'package:instabug_flutter/CrashReporting.dart';
-import 'package:instabug_flutter/FeatureRequests.dart';
-import 'package:instabug_flutter/Instabug.dart';
-import 'package:instabug_flutter/InstabugLog.dart';
-import 'package:instabug_flutter/NetworkLogger.dart';
-import 'package:instabug_flutter/Replies.dart';
-import 'package:instabug_flutter/Surveys.dart';
-import 'package:instabug_flutter/models/crash_data.dart';
-import 'package:instabug_flutter/models/exception_data.dart';
-import 'package:instabug_flutter/models/network_data.dart';
-import 'package:instabug_flutter/models/trace.dart' as execution_trace;
-import 'package:instabug_flutter/utils/platform_manager.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
+import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:stack_trace/stack_trace.dart';
+import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
 import 'instabug_flutter_test.mocks.dart';
 
 @GenerateMocks([
-  PlatformManager,
+  IBGBuildInfo,
+  IBGDateTime,
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +32,7 @@ void main() {
   const Map<String, String> userAttributePair = <String, String>{
     'gender': 'female'
   };
-  late MockPlatformManager mockPlatform;
+  late MockIBGBuildInfo mockBuildInfo;
 
   const String url = 'https://jsonplaceholder.typicode.com';
   const String method = 'POST';
@@ -84,6 +71,8 @@ void main() {
       switch (methodCall.method) {
         case 'getTags':
           return <String>['tag1', 'tag2'];
+        case 'startExecutionTrace:id:':
+          return methodCall.arguments[0];
         case 'getUserAttributeForKey:':
           return userAttribute;
         case 'getUserAttributes':
@@ -95,17 +84,15 @@ void main() {
   });
 
   setUp(() {
-    mockPlatform = MockPlatformManager();
-    PlatformManager.setPlatformInstance(mockPlatform);
+    mockBuildInfo = MockIBGBuildInfo();
+    IBGBuildInfo.setInstance(mockBuildInfo);
   });
 
   tearDown(() async {
     log.clear();
   });
 
-  test('startWithToken:invocationEvents: should be called on iOS', () async {
-    when(mockPlatform.isIOS()).thenAnswer((_) => true);
-
+  test('startWithToken:invocationEvents: should be called', () async {
     await Instabug.start(appToken, invocationEvents);
     final List<dynamic> args = <dynamic>[
       appToken,
@@ -249,6 +236,24 @@ void main() {
     expect(log, <Matcher>[
       isMethodCall(
         'setColorTheme:',
+        arguments: args,
+      )
+    ]);
+  });
+
+  test(
+      'test setFloatingButtonEdge should be called with arguments floatingButtonEdge and offsetFromTop',
+      () async {
+    const FloatingButtonEdge floatingButtonEdge = FloatingButtonEdge.left;
+    const int offsetFromTop = 300;
+    await BugReporting.setFloatingButtonEdge(floatingButtonEdge, offsetFromTop);
+    final List<dynamic> args = <dynamic>[
+      floatingButtonEdge.toString(),
+      offsetFromTop
+    ];
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setFloatingButtonEdge:withTopOffset:',
         arguments: args,
       )
     ]);
@@ -418,7 +423,7 @@ void main() {
   });
 
   test('setDebugEnabled: Test', () async {
-    when(mockPlatform.isAndroid()).thenAnswer((_) => true);
+    when(mockBuildInfo.isAndroid).thenReturn(true);
 
     const bool debugEnabled = true;
     final List<dynamic> args = <dynamic>[debugEnabled];
@@ -459,7 +464,10 @@ void main() {
     const filePath = 'filePath';
     const fileName = 'fileName';
     final List<dynamic> args = <dynamic>[filePath, fileName];
+
+    when(mockBuildInfo.isIOS).thenReturn(false);
     await Instabug.addFileAttachmentWithURL(filePath, fileName);
+
     expect(log, <Matcher>[
       isMethodCall(
         'addFileAttachmentWithURL:',
@@ -472,7 +480,10 @@ void main() {
     final bdata = Uint8List(10);
     const fileName = 'fileName';
     final List<dynamic> args = <dynamic>[bdata, fileName];
+
+    when(mockBuildInfo.isIOS).thenReturn(false);
     await Instabug.addFileAttachmentWithData(bdata, fileName);
+    
     expect(log, <Matcher>[
       isMethodCall(
         'addFileAttachmentWithData:',
@@ -541,7 +552,7 @@ void main() {
     const iPhoneShakingThreshold = 1.6;
     final List<dynamic> args = <dynamic>[iPhoneShakingThreshold];
 
-    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+    when(mockBuildInfo.isIOS).thenReturn(true);
 
     await BugReporting.setShakingThresholdForiPhone(iPhoneShakingThreshold);
     expect(log, <Matcher>[
@@ -556,7 +567,7 @@ void main() {
     const iPadShakingThreshold = 1.6;
     final List<dynamic> args = <dynamic>[iPadShakingThreshold];
 
-    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+    when(mockBuildInfo.isIOS).thenReturn(true);
 
     await BugReporting.setShakingThresholdForiPad(iPadShakingThreshold);
     expect(log, <Matcher>[
@@ -571,7 +582,7 @@ void main() {
     const androidThreshold = 1000;
     final List<dynamic> args = <dynamic>[androidThreshold];
 
-    when(mockPlatform.isAndroid()).thenAnswer((_) => true);
+    when(mockBuildInfo.isAndroid).thenReturn(true);
 
     await BugReporting.setShakingThresholdForAndroid(androidThreshold);
     expect(log, <Matcher>[
@@ -813,7 +824,7 @@ void main() {
     const appStoreURL = 'appStoreURL';
     final List<dynamic> args = <dynamic>[appStoreURL];
 
-    when(mockPlatform.isIOS()).thenAnswer((_) => true);
+    when(mockBuildInfo.isIOS).thenReturn(true);
 
     await Surveys.setAppStoreURL(appStoreURL);
     expect(log, <Matcher>[
@@ -846,23 +857,6 @@ void main() {
     ]);
   });
 
-  test('showChats Test', () async {
-    await Chats.show();
-    expect(log, <Matcher>[isMethodCall('showChats', arguments: null)]);
-  });
-
-  test('setChatsEnabled: Test', () async {
-    const isEnabled = false;
-    final List<dynamic> args = <dynamic>[isEnabled];
-    await Chats.setEnabled(isEnabled);
-    expect(log, <Matcher>[
-      isMethodCall(
-        'setChatsEnabled:',
-        arguments: args,
-      )
-    ]);
-  });
-
   test('setRepliesEnabled: Test', () async {
     const isEnabled = false;
     final List<dynamic> args = <dynamic>[isEnabled];
@@ -879,7 +873,7 @@ void main() {
     const isEnabled = false;
     final List<dynamic> args = <dynamic>[isEnabled];
 
-    when(mockPlatform.isAndroid()).thenAnswer((_) => true);
+    when(mockBuildInfo.isAndroid).thenReturn(true);
 
     await Replies.setInAppNotificationSound(isEnabled);
     expect(log, <Matcher>[
@@ -930,7 +924,10 @@ void main() {
         NetworkData(method: 'method', url: 'url', startTime: DateTime.now());
     final List<dynamic> args = <dynamic>[data.toMap()];
     final networkLogger = NetworkLogger();
+
+    when(mockBuildInfo.isAndroid).thenReturn(false);
     await networkLogger.networkLog(data);
+
     expect(log, <Matcher>[
       isMethodCall(
         'networkLog:',
@@ -957,7 +954,7 @@ void main() {
       params[5] = 2;
     } catch (exception, stack) {
       const bool handled = true;
-      final Trace trace = Trace.from(stack);
+      final stack_trace.Trace trace = stack_trace.Trace.from(stack);
       final List<ExceptionData> frames = <ExceptionData>[];
       for (int i = 0; i < trace.frames.length; i++) {
         frames.add(ExceptionData(
@@ -966,8 +963,12 @@ void main() {
             trace.frames[i].line,
             trace.frames[i].column == null ? 0 : trace.frames[i].column!));
       }
+      when(mockBuildInfo.operatingSystem).thenReturn('test');
       final crashData = CrashData(
-          exception.toString(), Platform.operatingSystem.toString(), frames);
+        exception.toString(),
+        IBGBuildInfo.instance.operatingSystem,
+        frames,
+      );
       final List<dynamic> args = <dynamic>[jsonEncode(crashData), handled];
       await CrashReporting.reportHandledCrash(exception, stack);
       expect(log, <Matcher>[
@@ -1083,17 +1084,23 @@ void main() {
   });
 
   test('startExecutionTrace: Test', () async {
-    const String name = 'test_trace';
+    const String name = 'test-trace';
     final DateTime timestamp = DateTime.now();
-    final List<dynamic> args = <dynamic>[name.toString(), timestamp.toString()];
+    final List<dynamic> args = <dynamic>[name, timestamp.toString()];
+
+    final mockDateTime = MockIBGDateTime();
+    IBGDateTime.setInstance(mockDateTime);
+    when(mockDateTime.now()).thenAnswer((_) => timestamp);
+
     await APM.startExecutionTrace(name);
+
     expect(log, <Matcher>[
       isMethodCall(
         'startExecutionTrace:id:',
         arguments: args,
       )
     ]);
-  }, skip: 'TODO: mock timestamp');
+  });
 
   test('setExecutionTraceAttribute: Test', () async {
     const String name = 'test_trace';
@@ -1101,7 +1108,7 @@ void main() {
     const String key = 'key';
     const String value = 'value';
     final List<dynamic> args = <dynamic>[id, key, value];
-    final execution_trace.Trace trace = execution_trace.Trace(id, name);
+    final Trace trace = Trace(id, name);
     trace.setAttribute(key, value);
     expect(log, <Matcher>[
       isMethodCall(
@@ -1109,7 +1116,7 @@ void main() {
         arguments: args,
       )
     ]);
-  }, skip: 'TODO: mock timestamp');
+  });
 
   test('setCrashReportingEnabled: Test', () async {
     const bool isEnabled = false;
@@ -1152,7 +1159,7 @@ void main() {
     expect(log, <Matcher>[isMethodCall('endUITrace', arguments: null)]);
   });
 
-    test('endAppLaunch: Test', () async {
+  test('endAppLaunch: Test', () async {
     final List<dynamic> args = <dynamic>[null];
     APM.endAppLaunch();
     expect(log, <Matcher>[isMethodCall('endAppLaunch', arguments: null)]);

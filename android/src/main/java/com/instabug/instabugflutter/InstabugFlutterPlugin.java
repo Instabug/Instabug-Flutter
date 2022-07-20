@@ -1,6 +1,7 @@
 package com.instabug.instabugflutter;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
@@ -8,13 +9,13 @@ import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
-import com.instabug.chat.Chats;
 import com.instabug.chat.Replies;
 import com.instabug.crash.CrashReporting;
 import com.instabug.featuresrequest.FeatureRequests;
@@ -26,6 +27,7 @@ import com.instabug.library.OnSdkDismissCallback;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.OnInvokeCallback;
+import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
@@ -73,26 +75,28 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     private InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
     HashMap<String, ExecutionTrace> traces = new HashMap<String, ExecutionTrace>();
 
+    private static Context context;
     static MethodChannel channel;
 
     /**
      * Plugin registration.
      */
     public static void registerWith(Registrar registrar) {
-        register(registrar.messenger());
+        register(registrar.context().getApplicationContext(), registrar.messenger());
     }
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-        register(binding.getBinaryMessenger());
+        register(binding.getApplicationContext(), binding.getBinaryMessenger());
     }
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-
+        context = null;
     }
 
-    private static void register(BinaryMessenger messenger){
+    private static void register(Context applicationContext, BinaryMessenger messenger){
+        context = applicationContext;
         channel = new MethodChannel(messenger, "instabug_flutter");
         channel.setMethodCallHandler(new InstabugFlutterPlugin());
     }
@@ -145,21 +149,24 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     /**
      * starts the SDK
      *
-     * @param application      the application Object
      * @param token            token The token that identifies the app, you can find
      *                         it on your dashboard.
      * @param invocationEvents invocationEvents The events that invoke the SDK's UI.
      */
-    public void start(Application application, String token, ArrayList<String> invocationEvents) {
+    public void startWithToken(String token, ArrayList<String> invocationEvents) {
         setCurrentPlatform();
         InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
         for (int i = 0; i < invocationEvents.size(); i++) {
             String key = invocationEvents.get(i);
             invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key, InstabugInvocationEvent.class);
         }
-        new Instabug.Builder(application, token).setInvocationEvents(invocationEventsArray).build();
-        enableScreenShotByMediaProjection();
 
+        final Application application = (Application) context;
+        new Instabug.Builder(application, token)
+                .setInvocationEvents(invocationEventsArray)
+                .build();
+
+        enableScreenShotByMediaProjection(true);
     }
 
     /**
@@ -275,6 +282,19 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         if (resolvedTheme != null) {
             Instabug.setColorTheme(resolvedTheme);
         }
+    }
+
+    /**
+     * Sets the position of Instabug floating button on the screen.
+     * 
+     * @param floatingButtonEdge    left or right edge of the screen.
+     * @param floatingButtonOffset  offset for the position on the y-axis.
+     */
+    public void setFloatingButtonEdge(String floatingButtonEdge, int floatingButtonOffset) {
+        InstabugFloatingButtonEdge resolvedFloatingButtonEdge = ArgsRegistry.getDeserializedValue(floatingButtonEdge,
+                InstabugFloatingButtonEdge.class);
+        BugReporting.setFloatingButtonEdge(resolvedFloatingButtonEdge);
+        BugReporting.setFloatingButtonOffset(floatingButtonOffset);
     }
 
     /**
@@ -410,20 +430,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     /**
      * Enables taking screenshots by media projection.
      */
-    private void enableScreenShotByMediaProjection() {
-        try {
-            Method method = getMethod(Class.forName("com.instabug.bug.BugReporting"),
-                    "setScreenshotByMediaProjectionEnabled", boolean.class);
-            if (method != null) {
-                method.invoke(null, true);
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+    @VisibleForTesting
+    public static void enableScreenShotByMediaProjection(boolean isScreenshotByMediaProjectionEnabled) {
+        BugReporting.setScreenshotByMediaProjectionEnabled(isScreenshotByMediaProjectionEnabled);
     }
 
     /**
@@ -829,31 +838,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     }
 
     /**
-     * Manual invocation for chats view.
-     */
-    public void showChats() {
-        Chats.show();
-    }
-
-    /**
-     * Enables and disables everything related to creating new chats.
-     * 
-     * @param {boolean} isEnabled
-     */
-    public void setChatsEnabled(final boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (isEnabled) {
-                    Chats.setState(Feature.State.ENABLED);
-                } else {
-                    Chats.setState(Feature.State.DISABLED);
-                }
-            }
-        });
-    }
-
-    /**
      * Enables and disables everything related to receiving replies.
      * 
      * @param {boolean} isEnabled
@@ -1051,23 +1035,19 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
      * Starts an execution trace
      * @param name string name of the trace.
      */
-    public void startExecutionTrace(final String name, final String id) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String result = null;
-                    ExecutionTrace trace = APM.startExecutionTrace(name);
-                    if (trace != null) {
-                        result = id;
-                        traces.put(id, trace);
-                    }
-                    channel.invokeMethod("startExecutionTraceCallBack", result);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+    public String startExecutionTrace(final String name, final String id) {
+        try {
+            String result = null;
+            ExecutionTrace trace = APM.startExecutionTrace(name);
+            if (trace != null) {
+                result = id;
+                traces.put(id, trace);
             }
-        });
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
   
     /**

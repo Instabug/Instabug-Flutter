@@ -213,6 +213,19 @@ NSMutableDictionary *traces;
 }
 
 /**
+ * Sets the position of Instabug floating button on the screen.
+ * @param floatingButtonEdge  left or right edge of the screen.
+ * @param floatingButtonTopOffset offset for the position on the y-axis.
+ */
++ (void)setFloatingButtonEdge:(NSString *)floatingButtonEdge withTopOffset:(NSNumber *)floatingButtonTopOffset {
+    NSDictionary *constants = [self constants];
+    CGRectEdge intFloatingButtonEdge = ((NSNumber *) constants[floatingButtonEdge]).doubleValue;
+    IBGBugReporting.floatingButtonEdge = intFloatingButtonEdge;
+    double offsetFromTop = [floatingButtonTopOffset doubleValue];
+    IBGBugReporting.floatingButtonTopOffset = offsetFromTop;
+}
+
+/**
  * Appends a set of tags to previously added tags of reported feedback, bug or crash.
  * @param tags An array of tags to append to current tags.
  */
@@ -649,9 +662,10 @@ NSMutableDictionary *traces;
   * @return the desired value of whether the user has responded to the survey or not.
   */
 + (void)hasRespondedToSurveyWithToken:(NSString *)surveyToken {
-    bool hasResponded = [IBGSurveys hasRespondedToSurveyWithToken:surveyToken];
-    NSNumber *boolNumber = [NSNumber numberWithBool:hasResponded];
-    [channel invokeMethod:@"hasRespondedToSurveyCallback" arguments:boolNumber];
+    [IBGSurveys hasRespondedToSurveyWithToken:surveyToken completionHandler:^(BOOL hasResponded){
+      NSNumber *boolNumber = [NSNumber numberWithBool:hasResponded];
+      [channel invokeMethod:@"hasRespondedToSurveyCallback" arguments:boolNumber];
+    }];
 }
 
 /**
@@ -676,22 +690,6 @@ NSMutableDictionary *traces;
     }
     BOOL boolValue = [isEmailFieldRequired boolValue];
     [IBGFeatureRequests setEmailFieldRequired:boolValue forAction:actionTypes];
-}
-
-/**
-  * Manual invocation for chats view. 
-  */
-+ (void)showChats {
-   [IBGChats show];
-}
-
-/**
-  * Enables and disables everything related to creating new chats.
-  * @param {boolean} isEnabled 
-  */
-+ (void)setChatsEnabled:(NSNumber *)isEnabled {
-   BOOL boolValue = [isEnabled boolValue];
-   IBGChats.enabled = boolValue;
 }
 
 /**
@@ -912,13 +910,13 @@ NSMutableDictionary *traces;
   * @param {string} name of the trace.
   * @param {string} id of the trace.
   */
-+ (void)startExecutionTrace:(NSString *)name id:(NSString *)id {
++ (NSString *)startExecutionTrace:(NSString *)name id:(NSString *)id {
     IBGExecutionTrace *trace = [IBGAPM startExecutionTraceWithName:name];
     if (trace != nil) {
         [traces setObject: trace forKey: id];
-        [channel invokeMethod:@"startExecutionTraceCallBack" arguments:id];
+        return id;
     } else {
-        [channel invokeMethod:@"startExecutionTraceCallBack" arguments:nil];
+        return nil;
     }
 }
 
@@ -1020,6 +1018,9 @@ NSMutableDictionary *traces;
       @"ColorTheme.dark": @(IBGColorThemeDark),
       @"ColorTheme.light": @(IBGColorThemeLight),
 
+      @"FloatingButtonEdge.left": @(CGRectMinXEdge),
+      @"FloatingButtonEdge.right": @(CGRectMaxXEdge),
+
       @"InvocationOption.commentFieldRequired": @(IBGBugReportingOptionCommentFieldRequired),
       @"InvocationOption.disablePostSendingDialog": @(IBGBugReportingOptionDisablePostSendingDialog),
       @"InvocationOption.emailFieldHidden": @(IBGBugReportingOptionEmailFieldHidden),
@@ -1055,7 +1056,6 @@ NSMutableDictionary *traces;
       @"CustomTextPlaceHolderKey.invalidEmailMessage": kIBGInvalidEmailMessageStringName,
       @"CustomTextPlaceHolderKey.invalidCommentMessage": kIBGInvalidCommentMessageStringName,
       @"CustomTextPlaceHolderKey.invocationHeader": kIBGInvocationTitleStringName,
-      @"CustomTextPlaceHolderKey.startChats": kIBGChatsTitleStringName,
       @"CustomTextPlaceHolderKey.reportQuestion": kIBGAskAQuestionStringName,
       @"CustomTextPlaceHolderKey.reportBug": kIBGReportBugStringName,
       @"CustomTextPlaceHolderKey.reportFeedback": kIBGReportFeedbackStringName,
@@ -1069,8 +1069,6 @@ NSMutableDictionary *traces;
       @"CustomTextPlaceHolderKey.conversationsListTitle": kIBGChatsTitleStringName,
       @"CustomTextPlaceHolderKey.audioRecordingPermissionDenied": kIBGAudioRecordingPermissionDeniedTitleStringName,
       @"CustomTextPlaceHolderKey.conversationTextFieldHint": kIBGChatReplyFieldPlaceholderStringName,
-      @"CustomTextPlaceHolderKey.bugReportHeader": kIBGReportBugStringName,
-      @"CustomTextPlaceHolderKey.feedbackReportHeader": kIBGReportFeedbackStringName,
       @"CustomTextPlaceHolderKey.voiceMessagePressAndHoldToRecord": kIBGRecordingMessageToHoldTextStringName,
       @"CustomTextPlaceHolderKey.voiceMessageReleaseToAttach": kIBGRecordingMessageToReleaseTextStringName,
       @"CustomTextPlaceHolderKey.reportSuccessfullySent": kIBGThankYouAlertMessageStringName,

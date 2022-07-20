@@ -3,8 +3,8 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/APM.dart';
-import 'package:instabug_flutter/models/network_data.dart';
+import 'package:instabug_flutter/src/models/network_data.dart';
+import 'package:instabug_flutter/src/modules/apm.dart';
 
 class NetworkLogger {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');

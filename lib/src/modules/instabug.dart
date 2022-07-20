@@ -1,12 +1,11 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
-import 'dart:io' show Platform;
 import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/utils/platform_manager.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 
 enum InvocationEvent {
   shake,
@@ -54,7 +53,6 @@ enum CustomTextPlaceHolderKey {
   invalidEmailMessage,
   invalidCommentMessage,
   invocationHeader,
-  startChats,
   reportQuestion,
   reportBug,
   reportFeedback,
@@ -68,8 +66,6 @@ enum CustomTextPlaceHolderKey {
   conversationsListTitle,
   audioRecordingPermissionDenied,
   conversationTextFieldHint,
-  bugReportHeader,
-  feedbackReportHeader,
   voiceMessagePressAndHoldToRecord,
   voiceMessageReleaseToAttach,
   reportSuccessfullySent,
@@ -105,13 +101,10 @@ class Instabug {
   /// the SDK's UI.
   static Future<void> start(
       String token, List<InvocationEvent> invocationEvents) async {
-    if (PlatformManager.instance.isIOS()) {
-      final List<String> invocationEventsStrings =
-          invocationEvents.map((e) => e.toString()).toList(growable: false);
-      final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
-      await _channel.invokeMethod<Object>(
-          'startWithToken:invocationEvents:', params);
-    }
+    final List<String> invocationEventsStrings =
+        invocationEvents.map((e) => e.toString()).toList(growable: false);
+    final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
+    await _channel.invokeMethod<Object>('startWithToken:invocationEvents:', params);
   }
 
   /// Shows the welcome message in a specific mode.
@@ -256,7 +249,7 @@ class Instabug {
   /// Enable/disable SDK logs
   /// [debugEnabled] desired state of debug mode.
   static Future<void> setDebugEnabled(bool debugEnabled) async {
-    if (PlatformManager.instance.isAndroid()) {
+    if (IBGBuildInfo.instance.isAndroid) {
       final List<dynamic> params = <dynamic>[debugEnabled];
       await _channel.invokeMethod<Object>('setDebugEnabled:', params);
     }
@@ -282,7 +275,7 @@ class Instabug {
   ///[fileName] of the file
   static Future<void> addFileAttachmentWithURL(
       String filePath, String fileName) async {
-    if (Platform.isIOS) {
+    if (IBGBuildInfo.instance.isIOS) {
       final List<dynamic> params = <dynamic>[filePath];
       await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params);
     } else {
@@ -296,7 +289,7 @@ class Instabug {
   ///[fileName] of the file
   static Future<void> addFileAttachmentWithData(
       Uint8List data, String fileName) async {
-    if (Platform.isIOS) {
+    if (IBGBuildInfo.instance.isIOS) {
       final List<dynamic> params = <dynamic>[data];
       await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params);
     } else {
@@ -336,7 +329,7 @@ class Instabug {
   ///Android Only
   ///Enables all Instabug functionality
   static Future<void> enableAndroid() async {
-    if (Platform.isAndroid) {
+    if (IBGBuildInfo.instance.isAndroid) {
       await _channel.invokeMethod<Object>('enable:');
     }
   }
@@ -344,7 +337,7 @@ class Instabug {
   ///Android Only
   ///Disables all Instabug functionality
   static Future<void> disableAndroid() async {
-    if (Platform.isAndroid) {
+    if (IBGBuildInfo.instance.isAndroid) {
       await _channel.invokeMethod<Object>('disable:');
     }
   }

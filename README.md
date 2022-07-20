@@ -8,11 +8,12 @@ A Flutter plugin for [Instabug](https://instabug.com/).
 
 |      Feature                                              | Status  |
 |:---------------------------------------------------------:|:-------:|
-| [Bug Reporting](https://instabug.com/bug-reporting)       |    ✅   |
-| [Crash Reporting](https://instabug.com/crash-reporting)   |    ✅   |
-| [In-App Chat](https://instabug.com/in-app-chat)           |    ✅   |
-| [In-App Surveys](https://instabug.com/in-app-surveys)     |    ✅   |
-| [Feature Requests](https://instabug.com/feature-requests) |    ✅   |
+| [Bug Reporting](https://docs.instabug.com/docs/flutter-bug-reporting)               |    ✅   |
+| [Crash Reporting](https://docs.instabug.com/docs/flutter-crash-reporting)           |    ✅   |
+| [App Performance Monitoring](https://docs.instabug.com/docs/flutter-apm)            |    ✅   |
+| [In-App Replies](https://docs.instabug.com/docs/flutter-in-app-replies)             |    ✅   |
+| [In-App Surveys](https://docs.instabug.com/docs/flutter-in-app-surveys)             |    ✅   |
+| [Feature Requests](https://docs.instabug.com/docs/flutter-in-app-feature-requests)  |    ✅   |
 
 * ✅ Stable
 * ⚙️ Under active development
@@ -40,45 +41,16 @@ flutter packages get
 To start using Instabug, import it into your Flutter app. 
 
 ```dart
-import 'package:instabug_flutter/Instabug.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 ```
-* #### iOS
-     Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the device is shaken.
+
+Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the device is shaken.
 
 ```dart
 Instabug.start('APP_TOKEN', [InvocationEvent.shake]);
 ```
-* #### Android
-1. Add the following Maven repository to your project level `build.gradle`
 
-```dart
-allprojects {
-	repositories {
-	    maven {
-	        url "https://sdks.instabug.com/nexus/repository/instabug-cp"
-	    }
-	}
-}
-```
-
-
-2. Create a new Java class that extends `FlutterApplication` and add it to your `AndroidManifest.xml`.
-
-```xml
-<application
-    android:name=".CustomFlutterApplication"
-    ...
-</application>
-````
-
-3. In your newly created `CustomFlutterApplication` class, override `onCreate()` and add the following code.
-
-
-```java
-ArrayList<String> invocationEvents = new ArrayList<>();
-invocationEvents.add(InstabugFlutterPlugin.INVOCATION_EVENT_SHAKE);
-new InstabugFlutterPlugin().start(CustomFlutterApplication.this, "APP_TOKEN", invocationEvents);
-```
+> :warning:  If you're updating the SDK from versions prior to v11, please check our [migration guide](https://docs.instabug.com/docs/flutter-migration-guide).
 
 ## Crash reporting
 
@@ -87,41 +59,20 @@ Instabug automatically captures every crash of your app and sends relevant detai
 ⚠️ **Crashes will only be reported in release mode and not in debug mode.**
 
 
-1. Import the following into your `main.dart`:
+Replace `void main() => runApp(MyApp());` with the following snippet:
 
 ```dart
-import 'package:instabug_flutter/CrashReporting.dart';
+void main() async {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    Zone.current.handleUncaughtError(details.exception, details.stack);
+  };
+  runZonedGuarded<Future<void>>(() async {
+    runApp(MyApp());
+  }, (Object error, StackTrace stackTrace) {
+    CrashReporting.reportCrash(error, stackTrace);
+  });
+}
 ```
-
-2. Replace `void main() => runApp(MyApp());` with the following snippet.
-
-	Recommended:
-	```dart
-	void main() async {
-	  FlutterError.onError = (FlutterErrorDetails details) {
-	    Zone.current.handleUncaughtError(details.exception, details.stack);
-	  };
-	  runZonedGuarded<Future<void>>(() async {
-	    runApp(MyApp());
-	  }, (Object error, StackTrace stackTrace) {
-	    CrashReporting.reportCrash(error, stackTrace);
-	  });
-	}
-	```
-
-	For Flutter versions prior to 1.17:
-	```dart
-	void main() async {
-	  FlutterError.onError = (FlutterErrorDetails details) {
-	    Zone.current.handleUncaughtError(details.exception, details.stack);
-	  };
-	  runZoned<Future<void>>(() async {
-	    runApp(MyApp());
-	  }, onError: (dynamic error, StackTrace stackTrace) {
-	    CrashReporting.reportCrash(error, stackTrace);
-	  });
-	}
-	```
 
 ## Repro Steps
 Repro Steps list all of the actions an app user took before reporting a bug or crash, grouped by the screens they visited in your app.
@@ -136,18 +87,7 @@ Repro Steps list all of the actions an app user took before reporting a bug or c
 ⚠️  Screenshots in repro steps on android is not currently supported.
 
 ## Network Logging
-You can choose to attach all your network requests to the reports being sent to the dashboard. To enable the feature when using the `dart:io` package `HttpClient`, use the custom Instabug client:
-```
-InstabugCustomHttpClient client = InstabugCustomHttpClient();
-```
-
-and continue to use the package normally to make your network requests:
-
-```
-client.getUrl(Uri.parse(URL)).then((request) async {
-      var response = await request.close();
-});
-```
+You can choose to attach all your network requests to the reports being sent to the dashboard. To enable the feature when using the `dart:io` package `HttpClient`, please refer to the [Instabug Dart IO Http Client](https://github.com/Instabug/instabug-dart-io-http-client) repository.
 
 We also support the packages `http` and `dio`. For details on how to enable network logging for these external packages, refer to the [Instabug Dart Http Adapter](https://github.com/Instabug/Instabug-Dart-http-Adapter) and the [Instabug Dio Interceptor](https://github.com/Instabug/Instabug-Dio-Interceptor) repositories.
 

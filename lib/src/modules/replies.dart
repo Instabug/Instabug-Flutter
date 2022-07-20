@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/utils/platform_manager.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 
 class Replies {
   static Function? _hasChatsCallback;
@@ -78,7 +78,7 @@ class Replies {
   /// [isEnabled] A boolean to set whether notifications sound should be played.
   /// @android ONLY
   static Future<void> setInAppNotificationSound(bool isEnabled) async {
-    if (PlatformManager.instance.isAndroid()) {
+    if (IBGBuildInfo.instance.isAndroid) {
       final List<dynamic> params = <dynamic>[isEnabled];
       await _channel.invokeMethod<Object>(
           'setEnableInAppNotificationSound:', params);

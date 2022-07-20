@@ -16,6 +16,8 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.matcher.ViewMatchers.withResourceName;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import com.instabug.instabugflutter.InstabugFlutterPlugin;
+
 @RunWith(AndroidJUnit4.class)
 public class InvokeInstabugUITest {
 
@@ -37,18 +39,7 @@ public class InvokeInstabugUITest {
     }
 
     private void disableScreenShotByMediaProjection() {
-        try {
-            Method method = getMethod(Class.forName("com.instabug.bug.BugReporting"), "setScreenshotByMediaProjectionEnabled", boolean.class);
-            if (method != null) {
-                method.invoke(null, false);
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        InstabugFlutterPlugin.enableScreenShotByMediaProjection(false);
     }
 
     public static Method getMethod(Class clazz, String methodName, Class... parameterType) {

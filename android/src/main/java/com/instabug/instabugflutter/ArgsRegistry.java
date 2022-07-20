@@ -4,6 +4,7 @@ import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
 import com.instabug.featuresrequest.ActionType;
 import com.instabug.library.InstabugColorTheme;
+import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.visualusersteps.State;
@@ -56,6 +57,7 @@ final class ArgsRegistry {
         registerColorThemeArgs(ARGS);
         registerLocaleArgs(ARGS);
         registerInvocationOptionsArgs(ARGS);
+        registerInstabugFloatingButtonEdgeArgs(ARGS);
         registerCustomTextPlaceHolderKeysArgs(ARGS);
         registerInstabugReportTypesArgs(ARGS);
         registerInstabugExtendedBugReportModeArgs(ARGS);
@@ -123,6 +125,11 @@ final class ArgsRegistry {
         args.put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
     }
 
+    static void registerInstabugFloatingButtonEdgeArgs(Map<String, Object> args) {
+        args.put("FloatingButtonEdge.left", InstabugFloatingButtonEdge.LEFT);
+        args.put("FloatingButtonEdge.right", InstabugFloatingButtonEdge.RIGHT);
+    }
+
     static void registerInvocationOptionsArgs(Map<String, Object> args) {
         args.put("InvocationOption.commentFieldRequired", Option.COMMENT_FIELD_REQUIRED);
         args.put("InvocationOption.disablePostSendingDialog", Option.DISABLE_POST_SENDING_DIALOG);
@@ -162,7 +169,6 @@ final class ArgsRegistry {
         args.put("CustomTextPlaceHolderKey.invalidEmailMessage", InstabugCustomTextPlaceHolder.Key.INVALID_EMAIL_MESSAGE);
         args.put("CustomTextPlaceHolderKey.invalidCommentMessage", InstabugCustomTextPlaceHolder.Key.INVALID_COMMENT_MESSAGE);
         args.put("CustomTextPlaceHolderKey.invocationHeader", InstabugCustomTextPlaceHolder.Key.INVOCATION_HEADER);
-        args.put("CustomTextPlaceHolderKey.startChats", InstabugCustomTextPlaceHolder.Key.START_CHATS);
         args.put("CustomTextPlaceHolderKey.reportQuestion", InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION);
         args.put("CustomTextPlaceHolderKey.reportBug", InstabugCustomTextPlaceHolder.Key.REPORT_BUG);
         args.put("CustomTextPlaceHolderKey.reportFeedback", InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK);
@@ -176,8 +182,6 @@ final class ArgsRegistry {
         args.put("CustomTextPlaceHolderKey.conversationsListTitle", InstabugCustomTextPlaceHolder.Key.CONVERSATIONS_LIST_TITLE);
         args.put("CustomTextPlaceHolderKey.audioRecordingPermissionDenied", InstabugCustomTextPlaceHolder.Key.AUDIO_RECORDING_PERMISSION_DENIED);
         args.put("CustomTextPlaceHolderKey.conversationTextFieldHint", InstabugCustomTextPlaceHolder.Key.CONVERSATION_TEXT_FIELD_HINT);
-        args.put("CustomTextPlaceHolderKey.bugReportHeader", InstabugCustomTextPlaceHolder.Key.BUG_REPORT_HEADER);
-        args.put("CustomTextPlaceHolderKey.feedbackReportHeader", InstabugCustomTextPlaceHolder.Key.FEEDBACK_REPORT_HEADER);
         args.put("CustomTextPlaceHolderKey.voiceMessagePressAndHoldToRecord", InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD);
         args.put("CustomTextPlaceHolderKey.voiceMessageReleaseToAttach", InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_RELEASE_TO_ATTACH);
         args.put("CustomTextPlaceHolderKey.reportSuccessfullySent", InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);

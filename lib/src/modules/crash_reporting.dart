@@ -2,12 +2,12 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/models/crash_data.dart';
-import 'package:instabug_flutter/models/exception_data.dart';
+import 'package:instabug_flutter/src/models/crash_data.dart';
+import 'package:instabug_flutter/src/models/exception_data.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 class CrashReporting {
@@ -25,7 +25,7 @@ class CrashReporting {
   }
 
   static Future<void> reportCrash(dynamic exception, StackTrace stack) async {
-    if (kReleaseMode && enabled) {
+    if (IBGBuildInfo.instance.isReleaseMode && enabled) {
       await _reportUnhandledCrash(exception, stack);
     } else {
       FlutterError.dumpErrorToConsole(
@@ -58,7 +58,10 @@ class CrashReporting {
           trace.frames[i].column ?? 0));
     }
     final CrashData crashData = CrashData(
-        exception.toString(), Platform.operatingSystem.toString(), frames);
+      exception.toString(),
+      IBGBuildInfo.instance.operatingSystem,
+      frames,
+    );
     final List<dynamic> params = <dynamic>[jsonEncode(crashData), handled];
     await _channel.invokeMethod<Object>(
         'sendJSCrashByReflection:handled:', params);
