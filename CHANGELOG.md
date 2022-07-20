@@ -1,10 +1,15 @@
-## master
+## v11.0.0 (2022-07-20)
 
+* Bumps Instabug native SDKs to v11
+* Adds the ability to initialize the Android SDK from Dart. Check the migration guide referenced in our docs
+* Changes the package importing style for a more conventional use. Check the migration guide referenced in our docs
+* Moves InstabugCustomHttpClient used for network logging into a separate repo. Check the migration guide referenced in our docs
+* Flutter 3 compatibility
+* Bumps Gradle to 6.8 & Android Gradle plugin to 4.1
 * Adds BugReporting.setFloatingButtonEdge API
-* Supports starting SDK from Dart only.
+* Removes the string keys bugReportHeader and feedbackReportHeader. Check the migration guide referenced in our docs
+* Removes the deprecated APIs. Check the migration guide referenced in our docs
 * Fixes an issue with Android screenshots being black on release mode on SDK v10.13.0
-* Changes the package importing style
-* Removes InstabugCustomHttpClient used for network logging when using the dart:io package HttpClient
 
 ## v10.13.0 (2022-03-31)
 
