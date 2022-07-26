@@ -15,7 +15,7 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'Instabug', '11.0.2'
+  s.dependency 'Instabug', '11.1.0'
 
   s.ios.deployment_target = '10.0'
   s.pod_target_xcconfig = { 'OTHER_LDFLAGS' => '-framework "Flutter" -framework "Instabug"'}
