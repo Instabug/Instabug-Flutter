@@ -3,7 +3,7 @@ jobs:
    android_tests:
     working_directory: ~/project/example/android
     macos:
-      xcode: "12.3.0"
+      xcode: "13.4.1"
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
