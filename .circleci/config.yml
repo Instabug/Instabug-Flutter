@@ -127,7 +127,7 @@ jobs:
 
    gh_ibg_release:
     macos:
-      xcode: "12.5.1"
+      xcode: "13.4.1"
     working_directory: "~"
     steps:
       - checkout:
