@@ -136,6 +136,17 @@ jobs:
       - run: cd Escape && swift build -c release
       - run: cd Escape/.build/release && cp -f Escape /usr/local/bin/escape
       - run: cd project && Escape flutter publish
+
+   gh_ibg_release_replica:
+    macos:
+      xcode: "13.4.1"
+    working_directory: "~"
+    steps:
+      - checkout:
+          path: ~/project
+      - run: git clone https://InstabugCI:$RELEASE_GITHUB_TOKEN@github.com/Instabug/Escape.git
+      - run: cd Escape && swift build -c release
+      - run: cd Escape/.build/release && cp -f Escape /usr/local/bin/escape
       
 workflows:
   version: 2
@@ -145,6 +156,7 @@ workflows:
       - flutter_tests_2.2.3
       - android_tests
       - ios_tests
+      - gh_ibg_release_replica
       - hold_pub_release:
           type: approval
           requires:
