@@ -13,7 +13,7 @@ jobs:
       - run: bundle install        
       - run: bundle exec danger
 
-   flutter_lint:
+   lint_flutter:
     docker:
       - image: cirrusci/flutter
     steps:
@@ -23,7 +23,7 @@ jobs:
       - run: flutter analyze .
       - run: flutter pub publish --dry-run
 
-   flutter_test:
+   test_flutter:
     parameters:
       version:
         type: string
@@ -35,7 +35,7 @@ jobs:
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
 
-   android_test:
+   test_android:
     working_directory: ~/project/example/android
     executor:
       name: android/android-machine
@@ -55,7 +55,7 @@ jobs:
       - android/run-tests:
           test-command: ./gradlew test
   
-   ios_test:
+   test_ios:
     working_directory: ~/project/example/ios
     macos:
       xcode: 12.5.1
@@ -74,7 +74,7 @@ jobs:
                        -destination 'name=iPhone 12 Pro Max' \
                        test | xcpretty
 
-   pub_release:
+   release_pub:
     docker:
       - image: cirrusci/flutter
     steps:
@@ -82,7 +82,7 @@ jobs:
       - run: chmod +x ./release.sh
       - run: ./release.sh
 
-   gh_ibg_release:
+   release_gh_ibg:
     macos:
       xcode: "12.5.1"
     working_directory: "~"
@@ -99,46 +99,46 @@ workflows:
   build-test-and-approval-deploy:
     jobs:
       - danger
-      - flutter_lint
-      - flutter_test:
+      - lint_flutter
+      - test_flutter:
           matrix:
             parameters:
               version: [stable, 2.2.3]
-      - android_test
-      - ios_test
-      - hold_pub_release:
+      - test_android
+      - test_ios
+      - hold_release_pub:
           type: approval
           requires:
             - danger
-            - flutter_lint
-            - flutter_test-stable
-            - flutter_test-2.2.3
-            - android_test
-            - ios_test
+            - lint_flutter
+            - test_flutter-stable
+            - test_flutter-2.2.3
+            - test_android
+            - test_ios
           filters:
             branches:
               only: master
-      - pub_release:
+      - release_pub:
           requires:
-            - hold_pub_release
+            - hold_release_pub
           filters:
             branches:
               only: master
-      - hold_gh_ibg_release:
+      - hold_release_gh_ibg:
           type: approval
           requires:
             - danger
-            - flutter_lint
-            - flutter_test-stable
-            - flutter_test-2.2.3
-            - android_test
-            - ios_test
+            - lint_flutter
+            - test_flutter-stable
+            - test_flutter-2.2.3
+            - test_android
+            - test_ios
           filters:
             branches:
               only: master
-      - gh_ibg_release:
+      - release_gh_ibg:
           requires:
-            - hold_gh_ibg_release
+            - hold_release_gh_ibg
           filters:
             branches:
               only: master
