@@ -92,7 +92,7 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      - run: git clone https://InstabugCI:$RELEASE_GITHUB_TOKEN@github.com/Instabug/Escape.git
+      - run: git clone git@github.com:Instabug/Escape.git
       - run: cd Escape && swift build -c release
       - run: cd Escape/.build/release && cp -f Escape /usr/local/bin/escape
       - run: cd project && Escape flutter publish
