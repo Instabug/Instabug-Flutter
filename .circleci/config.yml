@@ -69,7 +69,6 @@ jobs:
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
       - run: bash <(curl -s https://codecov.io/bash)
-      - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
       - run: flutter pub publish --dry-run
 
   flutter_tests_2.2.3:
@@ -115,6 +114,20 @@ jobs:
           name: Build and run tests
           command: cd ios && xcodebuild  -allowProvisioningUpdates   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.5'   test | xcpretty
 
+  lint_flutter:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run: flutter pub get
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
+      - run:
+          name: Check Format
+          command: flutter format . --set-exit-if-changed
+      - run:
+          name: Perform Static Analysis
+          command: flutter analyze
+
   pub_release:
     docker:
       - image: cirrusci/flutter
@@ -143,6 +156,7 @@ workflows:
       - flutter_tests_2.2.3
       - android_tests
       - ios_tests
+      - lint_flutter
       - hold_pub_release:
           type: approval
           requires:
@@ -150,6 +164,7 @@ workflows:
             - flutter_tests_2.2.3
             - android_tests
             - ios_tests
+            - lint_flutter
           filters:
             branches:
               only: master
@@ -166,6 +181,7 @@ workflows:
             - flutter_tests_2.2.3
             - android_tests
             - ios_tests
+            - lint_flutter
           filters:
             branches:
               only: master
