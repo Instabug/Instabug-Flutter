@@ -70,9 +70,9 @@ jobs:
       - run: flutter test --coverage
       - run: bash <(curl -s https://codecov.io/bash)
 
-  flutter_tests_2.2.3:
+  flutter_tests_2.10.5:
     docker:
-      - image: cirrusci/flutter:2.2.3
+      - image: cirrusci/flutter:2.10.5
     steps:
       - checkout
       - run: sudo gem install bundler:2.1.4
@@ -163,7 +163,7 @@ workflows:
   build-test-and-approval-deploy:
     jobs:
       - flutter_tests
-      - flutter_tests_2.2.3
+      - flutter_tests_2.10.5
       - android_tests
       - ios_tests
       - lint_flutter
@@ -172,7 +172,7 @@ workflows:
           type: approval
           requires:
             - flutter_tests
-            - flutter_tests_2.2.3
+            - flutter_tests_2.10.5
             - android_tests
             - ios_tests
             - lint_flutter
@@ -190,7 +190,7 @@ workflows:
           type: approval
           requires:
             - flutter_tests
-            - flutter_tests_2.2.3
+            - flutter_tests_2.10.5
             - android_tests
             - ios_tests
             - lint_flutter
