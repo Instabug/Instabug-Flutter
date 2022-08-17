@@ -69,7 +69,6 @@ jobs:
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
       - run: bash <(curl -s https://codecov.io/bash)
-      - run: flutter pub publish --dry-run
 
   flutter_tests_2.2.3:
     docker:
@@ -128,6 +127,17 @@ jobs:
           name: Perform Static Analysis
           command: flutter analyze
 
+  verify_pub:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run: flutter pub get
+      - run:
+          name: Check Package Score
+          command: flutter pub run pana --no-warning --exit-code-threshold 0
+      - run: flutter pub publish --dry-run
+
   pub_release:
     docker:
       - image: cirrusci/flutter
@@ -157,6 +167,7 @@ workflows:
       - android_tests
       - ios_tests
       - lint_flutter
+      - verify_pub
       - hold_pub_release:
           type: approval
           requires:
@@ -165,6 +176,7 @@ workflows:
             - android_tests
             - ios_tests
             - lint_flutter
+            - verify_pub
           filters:
             branches:
               only: master
@@ -182,6 +194,7 @@ workflows:
             - android_tests
             - ios_tests
             - lint_flutter
+            - verify_pub
           filters:
             branches:
               only: master
