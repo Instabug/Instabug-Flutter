@@ -104,7 +104,8 @@ class Instabug {
     final List<String> invocationEventsStrings =
         invocationEvents.map((e) => e.toString()).toList(growable: false);
     final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
-    await _channel.invokeMethod<Object>('startWithToken:invocationEvents:', params);
+    await _channel.invokeMethod<Object>(
+        'startWithToken:invocationEvents:', params);
   }
 
   /// Shows the welcome message in a specific mode.

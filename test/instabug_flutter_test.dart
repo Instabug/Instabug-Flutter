@@ -483,7 +483,7 @@ void main() {
 
     when(mockBuildInfo.isIOS).thenReturn(false);
     await Instabug.addFileAttachmentWithData(bdata, fileName);
-    
+
     expect(log, <Matcher>[
       isMethodCall(
         'addFileAttachmentWithData:',
