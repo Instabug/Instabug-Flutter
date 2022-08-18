@@ -29,33 +29,44 @@ class CrashReporting {
       await _reportUnhandledCrash(exception, stack);
     } else {
       FlutterError.dumpErrorToConsole(
-          FlutterErrorDetails(stack: stack, exception: exception));
+        FlutterErrorDetails(stack: stack, exception: exception),
+      );
     }
   }
 
   /// Reports a handled crash to you dashboard
   /// [dynamic] exception
   /// [StackTrace] stack
-  static Future<void> reportHandledCrash(dynamic exception,
-      [StackTrace? stack]) async {
+  static Future<void> reportHandledCrash(
+    dynamic exception, [
+    StackTrace? stack,
+  ]) async {
     await _sendCrash(exception, stack ?? StackTrace.current, true);
   }
 
   static Future<void> _reportUnhandledCrash(
-      dynamic exception, StackTrace stack) async {
+    dynamic exception,
+    StackTrace stack,
+  ) async {
     await _sendCrash(exception, stack, false);
   }
 
   static Future<void> _sendCrash(
-      dynamic exception, StackTrace stack, bool handled) async {
+    dynamic exception,
+    StackTrace stack,
+    bool handled,
+  ) async {
     final Trace trace = Trace.from(stack);
     final List<ExceptionData> frames = <ExceptionData>[];
     for (int i = 0; i < trace.frames.length; i++) {
-      frames.add(ExceptionData(
+      frames.add(
+        ExceptionData(
           trace.frames[i].uri.toString(),
           trace.frames[i].member,
           trace.frames[i].line,
-          trace.frames[i].column ?? 0));
+          trace.frames[i].column ?? 0,
+        ),
+      );
     }
     final CrashData crashData = CrashData(
       exception.toString(),
@@ -64,6 +75,8 @@ class CrashReporting {
     );
     final List<dynamic> params = <dynamic>[jsonEncode(crashData), handled];
     await _channel.invokeMethod<Object>(
-        'sendJSCrashByReflection:handled:', params);
+      'sendJSCrashByReflection:handled:',
+      params,
+    );
   }
 }

@@ -68,14 +68,19 @@ class APM {
   /// [String] key of attribute.
   /// [String] value of attribute.
   static Future<void> setExecutionTraceAttribute(
-      String id, String key, String value) async {
+    String id,
+    String key,
+    String value,
+  ) async {
     final List<dynamic> params = <dynamic>[
       id.toString(),
       key.toString(),
       value.toString(),
     ];
     await _channel.invokeMethod<Object>(
-        'setExecutionTraceAttribute:key:value:', params);
+      'setExecutionTraceAttribute:key:value:',
+      params,
+    );
   }
 
   /// Ends an execution trace.
@@ -113,7 +118,9 @@ class APM {
     if (IBGBuildInfo.instance.isAndroid) {
       final params = <dynamic>[data.toMap()];
       return await _channel.invokeMethod<bool>(
-          'apmNetworkLogByReflection:', params);
+        'apmNetworkLogByReflection:',
+        params,
+      );
     }
   }
 }

@@ -81,7 +81,9 @@ class Replies {
     if (IBGBuildInfo.instance.isAndroid) {
       final List<dynamic> params = <dynamic>[isEnabled];
       await _channel.invokeMethod<Object>(
-          'setEnableInAppNotificationSound:', params);
+        'setEnableInAppNotificationSound:',
+        params,
+      );
     }
   }
 }

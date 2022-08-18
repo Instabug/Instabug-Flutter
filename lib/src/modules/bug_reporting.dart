@@ -106,7 +106,8 @@ class BugReporting {
   /// Default is set by `Instabug.startWithToken`.
   /// [invocationEvents] invocationEvent List of events that invokes the
   static Future<void> setInvocationEvents(
-      List<InvocationEvent>? invocationEvents) async {
+    List<InvocationEvent>? invocationEvents,
+  ) async {
     final invocationEventsStrings =
         invocationEvents?.map((e) => e.toString()).toList(growable: false) ??
             [];
@@ -121,8 +122,12 @@ class BugReporting {
   /// attachments. In iOS 10+,NSPhotoLibraryUsageDescription should be set in
   /// info.plist to enable gallery image attachments.
   /// [screenRecording] A boolean to enable or disable screen recording attachments.
-  static Future<void> setEnabledAttachmentTypes(bool screenshot,
-      bool extraScreenshot, bool galleryImage, bool screenRecording) async {
+  static Future<void> setEnabledAttachmentTypes(
+    bool screenshot,
+    bool extraScreenshot,
+    bool galleryImage,
+    bool screenRecording,
+  ) async {
     final List<dynamic> params = <dynamic>[
       screenshot,
       extraScreenshot,
@@ -130,8 +135,9 @@ class BugReporting {
       screenRecording
     ];
     await _channel.invokeMethod<Object>(
-        'setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording:',
-        params);
+      'setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording:',
+      params,
+    );
   }
 
   ///Sets what type of reports, bug or feedback, should be invoked.
@@ -147,7 +153,8 @@ class BugReporting {
   /// required fields or enabled with optional fields.
   /// [extendedBugReportMode] ExtendedBugReportMode enum
   static Future<void> setExtendedBugReportMode(
-      ExtendedBugReportMode extendedBugReportMode) async {
+    ExtendedBugReportMode extendedBugReportMode,
+  ) async {
     final List<dynamic> params = <dynamic>[extendedBugReportMode.toString()];
     await _channel.invokeMethod<Object>('setExtendedBugReportMode:', params);
   }
@@ -156,7 +163,8 @@ class BugReporting {
   /// Default is set by `Instabug.startWithToken`.
   /// [invocationOptions] List of invocation options
   static Future<void> setInvocationOptions(
-      List<InvocationOption>? invocationOptions) async {
+    List<InvocationOption>? invocationOptions,
+  ) async {
     final invocationOptionsStrings =
         invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
             [];
@@ -168,20 +176,26 @@ class BugReporting {
   /// [floatingButtonEdge] FloatingButtonEdge enum - left or right edge of the screen.
   /// [offsetFromTop] integer offset for the position on the y-axis.
   static Future<void> setFloatingButtonEdge(
-      FloatingButtonEdge floatingButtonEdge, int offsetFromTop) async {
+    FloatingButtonEdge floatingButtonEdge,
+    int offsetFromTop,
+  ) async {
     final List<dynamic> params = <dynamic>[
       floatingButtonEdge.toString(),
       offsetFromTop
     ];
     await _channel.invokeMethod<Object>(
-        'setFloatingButtonEdge:withTopOffset:', params);
+      'setFloatingButtonEdge:withTopOffset:',
+      params,
+    );
   }
 
   /// Invoke bug reporting with report type and options.
   /// [reportType] type
   /// [invocationOptions]  List of invocation options
   static Future<void> show(
-      ReportType reportType, List<InvocationOption>? invocationOptions) async {
+    ReportType reportType,
+    List<InvocationOption>? invocationOptions,
+  ) async {
     final invocationOptionsStrings =
         invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
             [];
@@ -190,18 +204,23 @@ class BugReporting {
       invocationOptionsStrings
     ];
     await _channel.invokeMethod<Object>(
-        'showBugReportingWithReportTypeAndOptions:options:', params);
+      'showBugReportingWithReportTypeAndOptions:options:',
+      params,
+    );
   }
 
   /// Sets the threshold value of the shake gesture for iPhone/iPod Touch
   /// Default for iPhone is 2.5.
   /// [iPhoneShakingThreshold] iPhoneShakingThreshold double
   static Future<void> setShakingThresholdForiPhone(
-      double iPhoneShakingThreshold) async {
+    double iPhoneShakingThreshold,
+  ) async {
     if (IBGBuildInfo.instance.isIOS) {
       final List<dynamic> params = <dynamic>[iPhoneShakingThreshold];
       await _channel.invokeMethod<Object>(
-          'setShakingThresholdForiPhone:', params);
+        'setShakingThresholdForiPhone:',
+        params,
+      );
     }
   }
 
@@ -209,11 +228,14 @@ class BugReporting {
   /// Default for iPhone is 0.6.
   /// [iPadShakingThreshold] iPhoneShakingThreshold double
   static Future<void> setShakingThresholdForiPad(
-      double iPadShakingThreshold) async {
+    double iPadShakingThreshold,
+  ) async {
     if (IBGBuildInfo.instance.isIOS) {
       final List<dynamic> params = <dynamic>[iPadShakingThreshold];
       await _channel.invokeMethod<Object>(
-          'setShakingThresholdForiPad:', params);
+        'setShakingThresholdForiPad:',
+        params,
+      );
     }
   }
 
@@ -223,11 +245,14 @@ class BugReporting {
   /// increasing the `350` value and vice versa
   /// [androidThreshold] iPhoneShakingThreshold int
   static Future<void> setShakingThresholdForAndroid(
-      int androidThreshold) async {
+    int androidThreshold,
+  ) async {
     if (IBGBuildInfo.instance.isAndroid) {
       final List<dynamic> params = <dynamic>[androidThreshold];
       await _channel.invokeMethod<Object>(
-          'setShakingThresholdForAndroid:', params);
+        'setShakingThresholdForAndroid:',
+        params,
+      );
     }
   }
 }

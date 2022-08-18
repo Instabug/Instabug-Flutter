@@ -55,7 +55,9 @@ class Surveys {
   static Future<void> setAutoShowingEnabled(bool isEnabled) async {
     final List<dynamic> params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>(
-        'setAutoShowingSurveysEnabled:', params);
+      'setAutoShowingSurveysEnabled:',
+      params,
+    );
   }
 
   /// Returns an array containing the available surveys.
@@ -90,10 +92,13 @@ class Surveys {
   /// Setting an option for all the surveys to show a welcome screen before
   /// [shouldShowWelcomeScreen] A boolean for setting whether the  welcome screen should show.
   static Future<void> setShouldShowWelcomeScreen(
-      bool shouldShowWelcomeScreen) async {
+    bool shouldShowWelcomeScreen,
+  ) async {
     final List<dynamic> params = <dynamic>[shouldShowWelcomeScreen];
     await _channel.invokeMethod<Object>(
-        'setShouldShowSurveysWelcomeScreen:', params);
+      'setShouldShowSurveysWelcomeScreen:',
+      params,
+    );
   }
 
   ///  Shows one of the surveys that were not shown before, that also have conditions
@@ -118,12 +123,16 @@ class Surveys {
   /// UI changes  after the survey's UI is dismissed.
   /// [function]  A callback that gets executed after the survey's UI is dismissed.
   static Future<void> hasRespondedToSurvey(
-      String surveyToken, Function function) async {
+    String surveyToken,
+    Function function,
+  ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _hasRespondedToSurveyCallback = function;
     final List<dynamic> params = <dynamic>[surveyToken];
     await _channel.invokeMethod<Object>(
-        'hasRespondedToSurveyWithToken:', params);
+      'hasRespondedToSurveyWithToken:',
+      params,
+    );
   }
 
   /// iOS Only

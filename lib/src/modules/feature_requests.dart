@@ -23,11 +23,15 @@ class FeatureRequests {
   /// field is required or not.
   /// [actionTypes] An enum that indicates which action types will have the isEmailFieldRequired
   static Future<void> setEmailFieldRequired(
-      bool isEmailFieldRequired, List<ActionType>? actionTypes) async {
+    bool isEmailFieldRequired,
+    List<ActionType>? actionTypes,
+  ) async {
     final actionTypesStrings =
         actionTypes?.map((e) => e.toString()).toList(growable: false) ?? [];
     final params = <dynamic>[isEmailFieldRequired, actionTypesStrings];
     await _channel.invokeMethod<Object>(
-        'setEmailFieldRequiredForFeatureRequests:forAction:', params);
+      'setEmailFieldRequiredForFeatureRequests:forAction:',
+      params,
+    );
   }
 }

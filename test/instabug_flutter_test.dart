@@ -615,7 +615,8 @@ void main() {
 
   test('setInvocationEvents Test', () async {
     await BugReporting.setInvocationEvents(
-        <InvocationEvent>[InvocationEvent.floatingButton]);
+      <InvocationEvent>[InvocationEvent.floatingButton],
+    );
     final List<dynamic> args = <dynamic>[
       <String>[InvocationEvent.floatingButton.toString()]
     ];
@@ -666,7 +667,8 @@ void main() {
 
   test('setInvocationEvents Test', () async {
     await BugReporting.setExtendedBugReportMode(
-        ExtendedBugReportMode.enabledWithOptionalFields);
+      ExtendedBugReportMode.enabledWithOptionalFields,
+    );
     final List<dynamic> args = <dynamic>[
       ExtendedBugReportMode.enabledWithOptionalFields.toString()
     ];
@@ -680,7 +682,8 @@ void main() {
 
   test('setInvocationOptions Test', () async {
     await BugReporting.setInvocationOptions(
-        <InvocationOption>[InvocationOption.emailFieldHidden]);
+      <InvocationOption>[InvocationOption.emailFieldHidden],
+    );
     final List<dynamic> args = <dynamic>[
       <String>[InvocationOption.emailFieldHidden.toString()]
     ];
@@ -705,7 +708,9 @@ void main() {
 
   test('showBugReportingWithReportTypeAndOptions:options Test', () async {
     await BugReporting.show(
-        ReportType.bug, <InvocationOption>[InvocationOption.emailFieldHidden]);
+      ReportType.bug,
+      <InvocationOption>[InvocationOption.emailFieldHidden],
+    );
     final List<dynamic> args = <dynamic>[
       ReportType.bug.toString(),
       <String>[InvocationOption.emailFieldHidden.toString()]
@@ -838,7 +843,9 @@ void main() {
   test('showFeatureRequests Test', () async {
     await FeatureRequests.show();
     expect(
-        log, <Matcher>[isMethodCall('showFeatureRequests', arguments: null)]);
+      log,
+      <Matcher>[isMethodCall('showFeatureRequests', arguments: null)],
+    );
   });
 
   test('setEmailFieldRequiredForFeatureRequests:forAction: Test', () async {
@@ -848,7 +855,9 @@ void main() {
       <String>[ActionType.addCommentToFeature.toString()]
     ];
     await FeatureRequests.setEmailFieldRequired(
-        isEmailFieldRequired, [ActionType.addCommentToFeature]);
+      isEmailFieldRequired,
+      [ActionType.addCommentToFeature],
+    );
     expect(log, <Matcher>[
       isMethodCall(
         'setEmailFieldRequiredForFeatureRequests:forAction:',
@@ -904,7 +913,9 @@ void main() {
   test('getUnreadRepliesCount Test', () async {
     await Replies.getUnreadRepliesCount(() => () {});
     expect(
-        log, <Matcher>[isMethodCall('getUnreadRepliesCount', arguments: null)]);
+      log,
+      <Matcher>[isMethodCall('getUnreadRepliesCount', arguments: null)],
+    );
   });
 
   test('setChatNotificationEnabled: Test', () async {
@@ -957,11 +968,14 @@ void main() {
       final stack_trace.Trace trace = stack_trace.Trace.from(stack);
       final List<ExceptionData> frames = <ExceptionData>[];
       for (int i = 0; i < trace.frames.length; i++) {
-        frames.add(ExceptionData(
+        frames.add(
+          ExceptionData(
             trace.frames[i].uri.toString(),
             trace.frames[i].member,
             trace.frames[i].line,
-            trace.frames[i].column == null ? 0 : trace.frames[i].column!));
+            trace.frames[i].column == null ? 0 : trace.frames[i].column!,
+          ),
+        );
       }
       when(mockBuildInfo.operatingSystem).thenReturn('test');
       final crashData = CrashData(
@@ -984,9 +998,13 @@ void main() {
     expect(networkData.url, newNetworkData['url']);
     expect(networkData.method, newNetworkData['method']);
     expect(
-        networkData.requestContentType, newNetworkData['requestContentType']);
+      networkData.requestContentType,
+      newNetworkData['requestContentType'],
+    );
     expect(
-        networkData.responseContentType, newNetworkData['responseContentType']);
+      networkData.responseContentType,
+      newNetworkData['responseContentType'],
+    );
     expect(networkData.duration, newNetworkData['duration']);
     expect(networkData.requestBody, newNetworkData['requestBody']);
     expect(networkData.responseBody, newNetworkData['responseBody']);
@@ -1020,18 +1038,19 @@ void main() {
     const int statusCopy = 300;
 
     final newNetworkData = networkData.copyWith(
-        url: urlCopy,
-        method: methodCopy,
-        requestBody: requestBodyCopy,
-        requestHeaders: requestHeadersCopy,
-        responseBody: responseBodyCopy,
-        responseHeaders: responseHeadersCopy,
-        duration: durationCopy,
-        requestContentType: contentTypeCopy,
-        responseContentType: contentTypeCopy,
-        startTime: startDateCopy,
-        endTime: endDateCopy,
-        status: statusCopy);
+      url: urlCopy,
+      method: methodCopy,
+      requestBody: requestBodyCopy,
+      requestHeaders: requestHeadersCopy,
+      responseBody: responseBodyCopy,
+      responseHeaders: responseHeadersCopy,
+      duration: durationCopy,
+      requestContentType: contentTypeCopy,
+      responseContentType: contentTypeCopy,
+      startTime: startDateCopy,
+      endTime: endDateCopy,
+      status: statusCopy,
+    );
 
     expect(newNetworkData.url, urlCopy);
     expect(newNetworkData.method, methodCopy);

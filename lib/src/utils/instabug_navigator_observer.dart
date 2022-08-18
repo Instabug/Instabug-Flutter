@@ -10,7 +10,8 @@ class InstabugNavigatorObserver extends NavigatorObserver {
       if (_steps.isNotEmpty) {
         // Report the last step and remove it from the list
         Instabug.reportScreenChange(
-            _steps[_steps.length - 1].settings.name.toString());
+          _steps[_steps.length - 1].settings.name.toString(),
+        );
         _steps.remove(_steps[_steps.length - 1]);
       }
       // Add the new step to the list
