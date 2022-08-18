@@ -11,12 +11,10 @@ jobs:
           path: ~/project
       - run:
           name: Install JAVA
-          command: |
-            HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask homebrew/cask-versions/adoptopenjdk8
+          command: brew install --cask homebrew/cask-versions/adoptopenjdk8
       - run:
           name: Install Android sdk
-          command: |
-            HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask android-sdk
+          command: brew install --cask android-sdk
       - run:
           name: Setup environment variables
           command: |
