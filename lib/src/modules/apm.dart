@@ -73,9 +73,9 @@ class APM {
     String value,
   ) async {
     final List<dynamic> params = <dynamic>[
-      id.toString(),
-      key.toString(),
-      value.toString(),
+      id,
+      key,
+      value,
     ];
     await _channel.invokeMethod<Object>(
       'setExecutionTraceAttribute:key:value:',
