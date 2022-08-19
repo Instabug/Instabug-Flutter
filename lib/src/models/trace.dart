@@ -5,7 +5,7 @@ class Trace {
   String name = '';
   Map<String, dynamic> attributes;
   Trace(this.id, this.name, {Map<String, dynamic>? listOfAttributes})
-      : this.attributes = listOfAttributes ?? new Map<String, dynamic>();
+      : attributes = listOfAttributes ?? new Map<String, dynamic>();
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = <String, dynamic>{};
