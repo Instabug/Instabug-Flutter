@@ -4,7 +4,7 @@ import 'package:instabug_flutter/src/modules/instabug.dart';
 class InstabugNavigatorObserver extends NavigatorObserver {
   final List<Route> _steps = <Route>[];
 
-  void screenChanged(final Route newRoute) {
+  void screenChanged(Route newRoute) {
     try {
       // If there is a step that hasn't been pushed yet
       if (_steps.isNotEmpty) {
