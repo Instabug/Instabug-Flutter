@@ -11,6 +11,7 @@ class IBGDateTime {
   static IBGDateTime get I => instance;
 
   @visibleForTesting
+  // ignore: use_setters_to_change_properties
   static void setInstance(IBGDateTime instance) {
     _instance = instance;
   }

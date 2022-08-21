@@ -14,6 +14,7 @@ class IBGBuildInfo {
   static IBGBuildInfo get I => instance;
 
   @visibleForTesting
+  // ignore: use_setters_to_change_properties
   static void setInstance(IBGBuildInfo instance) {
     _instance = instance;
   }
