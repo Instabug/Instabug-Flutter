@@ -24,7 +24,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         }
       });
     } catch (e) {
-      print('[INSTABUG] - Reporting screen failed');
+      debugPrint('[INSTABUG] - Reporting screen failed');
     }
   }
 
