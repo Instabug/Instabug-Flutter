@@ -9,8 +9,8 @@ import 'package:instabug_flutter/src/modules/apm.dart';
 class NetworkLogger {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String?> get platformVersion async =>
-      await _channel.invokeMethod<String>('getPlatformVersion');
+  static Future<String?> get platformVersion =>
+      _channel.invokeMethod<String>('getPlatformVersion');
 
   Future<bool?> networkLog(NetworkData data) async {
     final params = <dynamic>[data.toMap()];

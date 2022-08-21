@@ -89,8 +89,8 @@ enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 class Instabug {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String?> get platformVersion async =>
-      await _channel.invokeMethod<String>('getPlatformVersion');
+  static Future<String?> get platformVersion =>
+      _channel.invokeMethod<String>('getPlatformVersion');
 
   /// Starts the SDK.
   /// This is the main SDK method that does all the magic. This is the only
@@ -209,9 +209,9 @@ class Instabug {
   }
 
   /// Returns the user attribute associated with a given [key].
-  static Future<String?> getUserAttributeForKey(String key) async {
+  static Future<String?> getUserAttributeForKey(String key) {
     final List<dynamic> params = <dynamic>[key];
-    return await _channel.invokeMethod<String>(
+    return _channel.invokeMethod<String>(
       'getUserAttributeForKey:',
       params,
     );

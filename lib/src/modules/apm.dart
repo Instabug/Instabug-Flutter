@@ -21,8 +21,8 @@ class APM {
   static Function _startExecutionTraceCallback = () {};
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String?> get platformVersion async =>
-      await _channel.invokeMethod<String>('getPlatformVersion');
+  static Future<String?> get platformVersion =>
+      _channel.invokeMethod<String>('getPlatformVersion');
 
   /// Enables or disables APM feature.
   /// [boolean] isEnabled
