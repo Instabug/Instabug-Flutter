@@ -18,7 +18,6 @@ enum LogLevel {
 }
 
 class APM {
-  static Function _startExecutionTraceCallback = () {};
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
   static Future<String?> get platformVersion =>
