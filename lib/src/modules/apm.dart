@@ -109,8 +109,8 @@ class APM {
     await _channel.invokeMethod<Object>('endUITrace');
   }
 
-  /// Ends UI trace.
-  static void endAppLaunch() async {
+  /// Ends App Launch.
+  static Future<void> endAppLaunch() async {
     await _channel.invokeMethod<Object>('endAppLaunch');
   }
 
