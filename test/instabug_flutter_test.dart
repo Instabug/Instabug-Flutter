@@ -1179,7 +1179,6 @@ void main() {
   });
 
   test('endAppLaunch: Test', () async {
-    final List<dynamic> args = <dynamic>[null];
     await APM.endAppLaunch();
     expect(log, <Matcher>[isMethodCall('endAppLaunch', arguments: null)]);
   });
