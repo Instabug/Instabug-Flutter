@@ -38,8 +38,8 @@ void main() {
   const String method = 'POST';
   final DateTime startDate = DateTime.now();
   final DateTime endDate = DateTime.now().add(const Duration(hours: 1));
-  const dynamic requestBody = 'requestBody';
-  const dynamic responseBody = 'responseBody';
+  const String requestBody = 'requestBody';
+  const String responseBody = 'responseBody';
   const int status = 200;
   const Map<String, dynamic> requestHeaders = <String, dynamic>{
     'request': 'request'
@@ -1023,8 +1023,8 @@ void main() {
   test('Test NetworkData model CopyWith', () async {
     const String urlCopy = 'https://jsonplaceholder.typicode.comCopy';
     const String methodCopy = 'POSTCopy';
-    const dynamic requestBodyCopy = 'requestBodyCopy';
-    const dynamic responseBodyCopy = 'responseBodyCopy';
+    const String requestBodyCopy = 'requestBodyCopy';
+    const String responseBodyCopy = 'responseBodyCopy';
     const Map<String, dynamic> requestHeadersCopy = <String, dynamic>{
       'requestCopy': 'requestCopy'
     };

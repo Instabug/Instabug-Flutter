@@ -24,7 +24,7 @@ class CrashReporting {
     await _channel.invokeMethod<Object>('setCrashReportingEnabled:', params);
   }
 
-  static Future<void> reportCrash(dynamic exception, StackTrace stack) async {
+  static Future<void> reportCrash(Object exception, StackTrace stack) async {
     if (IBGBuildInfo.instance.isReleaseMode && enabled) {
       await _reportUnhandledCrash(exception, stack);
     } else {
@@ -35,24 +35,24 @@ class CrashReporting {
   }
 
   /// Reports a handled crash to you dashboard
-  /// [dynamic] exception
+  /// [Object] exception
   /// [StackTrace] stack
   static Future<void> reportHandledCrash(
-    dynamic exception, [
+    Object exception, [
     StackTrace? stack,
   ]) async {
     await _sendCrash(exception, stack ?? StackTrace.current, true);
   }
 
   static Future<void> _reportUnhandledCrash(
-    dynamic exception,
+    Object exception,
     StackTrace stack,
   ) async {
     await _sendCrash(exception, stack, false);
   }
 
   static Future<void> _sendCrash(
-    dynamic exception,
+    Object exception,
     StackTrace stack,
     bool handled,
   ) async {
