@@ -113,10 +113,10 @@ class APM {
     await _channel.invokeMethod<Object>('endAppLaunch');
   }
 
-  static Future<bool?> networkLogAndroid(NetworkData data) async {
+  static FutureOr<void> networkLogAndroid(NetworkData data) {
     if (IBGBuildInfo.instance.isAndroid) {
       final params = <dynamic>[data.toMap()];
-      return await _channel.invokeMethod<bool>(
+      return _channel.invokeMethod(
         'apmNetworkLogByReflection:',
         params,
       );
