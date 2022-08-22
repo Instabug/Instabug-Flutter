@@ -5,11 +5,16 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 
+typedef OnShowSurveyCallback = void Function();
+typedef OnDismissSurveyCallback = void Function();
+typedef AvailableSurveysCallback = void Function(List<String>);
+typedef HasRespondedToSurveyCallback = void Function(bool);
+
 class Surveys {
-  static Function? _onShowCallback;
-  static Function? _onDismissCallback;
-  static Function? _availableSurveysCallback;
-  static Function? _hasRespondedToSurveyCallback;
+  static OnShowSurveyCallback? _onShowCallback;
+  static OnDismissSurveyCallback? _onDismissCallback;
+  static AvailableSurveysCallback? _availableSurveysCallback;
+  static HasRespondedToSurveyCallback? _hasRespondedToSurveyCallback;
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
   static Future<String?> get platformVersion =>
@@ -32,7 +37,7 @@ class Surveys {
         _availableSurveysCallback?.call(params);
         return;
       case 'hasRespondedToSurveyCallback':
-        _hasRespondedToSurveyCallback?.call(call.arguments);
+        _hasRespondedToSurveyCallback?.call(call.arguments as bool);
         return;
     }
   }
@@ -63,7 +68,9 @@ class Surveys {
   /// Returns an array containing the available surveys.
   /// [function] availableSurveysCallback callback with
   /// argument available surveys
-  static Future<void> getAvailableSurveys(Function function) async {
+  static Future<void> getAvailableSurveys(
+    AvailableSurveysCallback function,
+  ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _availableSurveysCallback = function;
     await _channel.invokeMethod<Object>('getAvailableSurveys');
@@ -73,7 +80,7 @@ class Surveys {
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes before the survey's UI is shown.
   /// [function]  A callback that gets executed before presenting the survey's UI.
-  static Future<void> setOnShowCallback(Function function) async {
+  static Future<void> setOnShowCallback(OnShowSurveyCallback function) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onShowCallback = function;
     await _channel.invokeMethod<Object>('setOnShowSurveyCallback');
@@ -83,7 +90,9 @@ class Surveys {
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes  after the survey's UI is dismissed.
   /// [function]  A callback that gets executed after the survey's UI is dismissed.
-  static Future<void> setOnDismissCallback(Function function) async {
+  static Future<void> setOnDismissCallback(
+    OnDismissSurveyCallback function,
+  ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onDismissCallback = function;
     await _channel.invokeMethod<Object>('setOnDismissSurveyCallback');
@@ -124,7 +133,7 @@ class Surveys {
   /// [function]  A callback that gets executed after the survey's UI is dismissed.
   static Future<void> hasRespondedToSurvey(
     String surveyToken,
-    Function function,
+    HasRespondedToSurveyCallback function,
   ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _hasRespondedToSurveyCallback = function;

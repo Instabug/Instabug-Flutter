@@ -25,9 +25,12 @@ enum ExtendedBugReportMode {
 
 enum FloatingButtonEdge { left, right }
 
+typedef OnSDKInvokeCallback = void Function();
+typedef OnSDKDismissCallback = void Function(DismissType, ReportType);
+
 class BugReporting {
-  static Function? _onInvokeCallback;
-  static Function? _onDismissCallback;
+  static OnSDKInvokeCallback? _onInvokeCallback;
+  static OnSDKDismissCallback? _onDismissCallback;
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
   static Future<String?> get platformVersion =>
@@ -66,10 +69,8 @@ class BugReporting {
             reportType = ReportType.other;
             break;
         }
-        try {
+        if (dismissType != null && reportType != null) {
           _onDismissCallback?.call(dismissType, reportType);
-        } catch (exception) {
-          _onDismissCallback?.call();
         }
         return;
     }
@@ -86,7 +87,9 @@ class BugReporting {
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes before the SDK's UI is shown.
   /// [function]  A callback that gets executed before invoking the SDK
-  static Future<void> setOnInvokeCallback(Function function) async {
+  static Future<void> setOnInvokeCallback(
+    OnSDKInvokeCallback function,
+  ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onInvokeCallback = function;
     await _channel.invokeMethod<Object>('setOnInvokeCallback');
@@ -96,7 +99,9 @@ class BugReporting {
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes before the SDK's UI is shown.
   /// [function]  A callback that gets executed before invoking the SDK
-  static Future<void> setOnDismissCallback(Function function) async {
+  static Future<void> setOnDismissCallback(
+    OnSDKDismissCallback function,
+  ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onDismissCallback = function;
     await _channel.invokeMethod<Object>('setOnDismissCallback');

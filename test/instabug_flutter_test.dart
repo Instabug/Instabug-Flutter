@@ -72,7 +72,7 @@ void main() {
         case 'getTags':
           return <String>['tag1', 'tag2'];
         case 'startExecutionTrace:id:':
-          return methodCall.arguments[0];
+          return (methodCall.arguments as List<Object?>)[0];
         case 'getUserAttributeForKey:':
           return userAttribute;
         case 'getUserAttributes':
@@ -604,7 +604,7 @@ void main() {
   });
 
   test('setOnDismissCallback Test', () async {
-    await BugReporting.setOnDismissCallback(() => () {});
+    await BugReporting.setOnDismissCallback((dismissType, reportType) => () {});
     expect(log, <Matcher>[
       isMethodCall(
         'setOnDismissCallback',
@@ -816,7 +816,7 @@ void main() {
   test('hasRespondedToSurvey Test', () async {
     const token = 'token';
     final List<dynamic> args = <dynamic>[token];
-    await Surveys.hasRespondedToSurvey(token, () => () {});
+    await Surveys.hasRespondedToSurvey(token, (hasResponded) => () {});
     expect(log, <Matcher>[
       isMethodCall(
         'hasRespondedToSurveyWithToken:',
@@ -899,7 +899,7 @@ void main() {
   });
 
   test('hasChats Test', () async {
-    await Replies.hasChats(() => () {});
+    await Replies.hasChats((hasChats) => () {});
     expect(log, <Matcher>[isMethodCall('hasChats', arguments: null)]);
   });
 
@@ -911,7 +911,7 @@ void main() {
   });
 
   test('getUnreadRepliesCount Test', () async {
-    await Replies.getUnreadRepliesCount(() => () {});
+    await Replies.getUnreadRepliesCount((unreadRepliesCount) => () {});
     expect(
       log,
       <Matcher>[isMethodCall('getUnreadRepliesCount', arguments: null)],
