@@ -42,10 +42,10 @@ class BugReporting {
         _onInvokeCallback?.call();
         return;
       case 'onDismissCallback':
-        final Map<dynamic, dynamic> map = call.arguments;
+        final map = call.arguments as Map<dynamic, dynamic>;
         DismissType? dismissType;
         ReportType? reportType;
-        final String dismissTypeString = map['dismissType'].toUpperCase();
+        final dismissTypeString = (map['dismissType'] as String).toUpperCase();
         switch (dismissTypeString) {
           case 'CANCEL':
             dismissType = DismissType.cancel;
@@ -57,7 +57,7 @@ class BugReporting {
             dismissType = DismissType.addAttachment;
             break;
         }
-        final String reportTypeString = map['reportType'].toUpperCase();
+        final reportTypeString = (map['reportType'] as String).toUpperCase();
         switch (reportTypeString) {
           case 'BUG':
             reportType = ReportType.bug;

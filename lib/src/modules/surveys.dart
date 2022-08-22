@@ -29,7 +29,7 @@ class Surveys {
         _onDismissCallback?.call();
         return;
       case 'availableSurveysCallback':
-        final List<dynamic> result = call.arguments;
+        final result = call.arguments as List<dynamic>;
         final params = <String>[];
         for (int i = 0; i < result.length; i++) {
           params.add(result[i].toString());
