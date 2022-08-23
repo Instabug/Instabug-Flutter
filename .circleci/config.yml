@@ -113,7 +113,7 @@ jobs:
           name: Build and run tests
           command: cd ios && xcodebuild  -allowProvisioningUpdates   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.5'   test | xcpretty
 
-  lint_flutter:
+  format_flutter:
     docker:
       - image: cirrusci/flutter
     steps:
@@ -123,6 +123,14 @@ jobs:
       - run:
           name: Check Format
           command: flutter format . --set-exit-if-changed
+
+  lint_flutter:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run: flutter pub get
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run:
           name: Perform Static Analysis
           command: flutter analyze
@@ -166,8 +174,13 @@ workflows:
       - flutter_tests_2.10.5
       - android_tests
       - ios_tests
-      - lint_flutter
-      - verify_pub
+      - format_flutter
+      - lint_flutter:
+          requires:
+            - format_flutter
+      - verify_pub:
+          requires:
+            - lint_flutter
       - hold_pub_release:
           type: approval
           requires:
@@ -175,7 +188,6 @@ workflows:
             - flutter_tests_2.10.5
             - android_tests
             - ios_tests
-            - lint_flutter
             - verify_pub
           filters:
             branches:
@@ -193,7 +205,6 @@ workflows:
             - flutter_tests_2.10.5
             - android_tests
             - ios_tests
-            - lint_flutter
             - verify_pub
           filters:
             branches:
