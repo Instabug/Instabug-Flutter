@@ -1,21 +1,22 @@
 class NetworkData {
-  const NetworkData(
-      {required this.url,
-      required this.method,
-      this.requestBody = '',
-      this.responseBody = '',
-      this.requestBodySize = 0,
-      this.responseBodySize = 0,
-      this.status,
-      this.requestHeaders = const <String, dynamic>{},
-      this.responseHeaders = const <String, dynamic>{},
-      this.duration,
-      this.requestContentType = '',
-      this.responseContentType = '',
-      this.endTime,
-      required this.startTime,
-      this.errorCode = 0,
-      this.errorDomain = ''});
+  const NetworkData({
+    required this.url,
+    required this.method,
+    this.requestBody = '',
+    this.responseBody = '',
+    this.requestBodySize = 0,
+    this.responseBodySize = 0,
+    this.status,
+    this.requestHeaders = const <String, dynamic>{},
+    this.responseHeaders = const <String, dynamic>{},
+    this.duration,
+    this.requestContentType = '',
+    this.responseContentType = '',
+    this.endTime,
+    required this.startTime,
+    this.errorCode = 0,
+    this.errorDomain = '',
+  });
 
   final String url;
   final String method;

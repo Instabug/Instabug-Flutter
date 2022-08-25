@@ -4,13 +4,14 @@ import 'package:instabug_flutter/src/modules/instabug.dart';
 class InstabugNavigatorObserver extends NavigatorObserver {
   final List<Route> _steps = <Route>[];
 
-  void screenChanged(final Route newRoute) {
+  void screenChanged(Route newRoute) {
     try {
       // If there is a step that hasn't been pushed yet
       if (_steps.isNotEmpty) {
         // Report the last step and remove it from the list
         Instabug.reportScreenChange(
-            _steps[_steps.length - 1].settings.name.toString());
+          _steps[_steps.length - 1].settings.name.toString(),
+        );
         _steps.remove(_steps[_steps.length - 1]);
       }
       // Add the new step to the list
@@ -23,7 +24,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         }
       });
     } catch (e) {
-      print('[INSTABUG] - Reporting screen failed');
+      debugPrint('[INSTABUG] - Reporting screen failed');
     }
   }
 

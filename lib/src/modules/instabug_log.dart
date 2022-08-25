@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 class InstabugLog {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String?> get platformVersion async =>
-      await _channel.invokeMethod<String>('getPlatformVersion');
+  static Future<String?> get platformVersion =>
+      _channel.invokeMethod<String>('getPlatformVersion');
 
   /// Appends a log [message] to Instabug internal log
   /// These logs are then sent along the next uploaded report.

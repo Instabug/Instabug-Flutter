@@ -89,8 +89,8 @@ enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 class Instabug {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String?> get platformVersion async =>
-      await _channel.invokeMethod<String>('getPlatformVersion');
+  static Future<String?> get platformVersion =>
+      _channel.invokeMethod<String>('getPlatformVersion');
 
   /// Starts the SDK.
   /// This is the main SDK method that does all the magic. This is the only
@@ -100,17 +100,23 @@ class Instabug {
   /// The [invocationEvents] are the events that invoke
   /// the SDK's UI.
   static Future<void> start(
-      String token, List<InvocationEvent> invocationEvents) async {
+    String token,
+    List<InvocationEvent> invocationEvents,
+  ) async {
     final List<String> invocationEventsStrings =
         invocationEvents.map((e) => e.toString()).toList(growable: false);
     final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
-    await _channel.invokeMethod<Object>('startWithToken:invocationEvents:', params);
+    await _channel.invokeMethod<Object>(
+      'startWithToken:invocationEvents:',
+      params,
+    );
   }
 
   /// Shows the welcome message in a specific mode.
   /// [welcomeMessageMode] is an enum to set the welcome message mode to live, or beta.
   static Future<void> showWelcomeMessageWithMode(
-      WelcomeMessageMode welcomeMessageMode) async {
+    WelcomeMessageMode welcomeMessageMode,
+  ) async {
     final List<dynamic> params = <dynamic>[welcomeMessageMode.toString()];
     await _channel.invokeMethod<Object>('showWelcomeMessageWithMode:', params);
   }
@@ -142,7 +148,8 @@ class Instabug {
   /// Sets the verbosity level of logs used to debug The SDK. The defualt value in debug
   /// mode is sdkDebugLogsLevelVerbose and in production is sdkDebugLogsLevelError.
   static Future<void> setSdkDebugLogsLevel(
-      IBGSDKDebugLogsLevel sdkDebugLogsLevel) async {
+    IBGSDKDebugLogsLevel sdkDebugLogsLevel,
+  ) async {
     final List<dynamic> params = <dynamic>[sdkDebugLogsLevel.toString()];
     await _channel.invokeMethod<Object>('setSdkDebugLogsLevel:', params);
   }
@@ -202,10 +209,12 @@ class Instabug {
   }
 
   /// Returns the user attribute associated with a given [key].
-  static Future<String?> getUserAttributeForKey(String key) async {
+  static Future<String?> getUserAttributeForKey(String key) {
     final List<dynamic> params = <dynamic>[key];
-    return await _channel.invokeMethod<String>(
-        'getUserAttributeForKey:', params);
+    return _channel.invokeMethod<String>(
+      'getUserAttributeForKey:',
+      params,
+    );
   }
 
   /// A new Map containing all the currently set user attributes, or an empty Map if no user attributes have been set.
@@ -232,7 +241,9 @@ class Instabug {
   /// Overrides any of the strings shown in the SDK with custom ones.
   /// Allows you to customize a [value] shown to users in the SDK using a predefined [key].
   static Future<void> setValueForStringWithKey(
-      String value, CustomTextPlaceHolderKey key) async {
+    String value,
+    CustomTextPlaceHolderKey key,
+  ) async {
     final List<dynamic> params = <dynamic>[value, key.toString()];
     await _channel.invokeMethod<Object>('setValue:forStringWithKey:', params);
   }
@@ -240,7 +251,8 @@ class Instabug {
   /// Enable/disable session profiler
   /// [sessionProfilerEnabled] desired state of the session profiler feature.
   static Future<void> setSessionProfilerEnabled(
-      bool sessionProfilerEnabled) async {
+    bool sessionProfilerEnabled,
+  ) async {
     final List<dynamic> params = <dynamic>[sessionProfilerEnabled];
     await _channel.invokeMethod<Object>('setSessionProfilerEnabled:', params);
   }
@@ -274,7 +286,9 @@ class Instabug {
   ///[filePath] of the file
   ///[fileName] of the file
   static Future<void> addFileAttachmentWithURL(
-      String filePath, String fileName) async {
+    String filePath,
+    String fileName,
+  ) async {
     if (IBGBuildInfo.instance.isIOS) {
       final List<dynamic> params = <dynamic>[filePath];
       await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params);
@@ -288,7 +302,9 @@ class Instabug {
   ///[data] of the file
   ///[fileName] of the file
   static Future<void> addFileAttachmentWithData(
-      Uint8List data, String fileName) async {
+    Uint8List data,
+    String fileName,
+  ) async {
     if (IBGBuildInfo.instance.isIOS) {
       final List<dynamic> params = <dynamic>[data];
       await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params);
@@ -307,7 +323,8 @@ class Instabug {
   ///Sets the welcome message mode to live, beta or disabled.
   ///[welcomeMessageMode] An enum to set the welcome message mode to live, beta or disabled.
   static Future<void> setWelcomeMessageMode(
-      WelcomeMessageMode welcomeMessageMode) async {
+    WelcomeMessageMode welcomeMessageMode,
+  ) async {
     final List<dynamic> params = <dynamic>[welcomeMessageMode.toString()];
     await _channel.invokeMethod<Object>('setWelcomeMessageMode:', params);
   }

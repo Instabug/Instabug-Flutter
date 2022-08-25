@@ -13,8 +13,8 @@ import 'package:stack_trace/stack_trace.dart';
 class CrashReporting {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
   static bool enabled = true;
-  static Future<String?> get platformVersion async =>
-      await _channel.invokeMethod<String>('getPlatformVersion');
+  static Future<String?> get platformVersion =>
+      _channel.invokeMethod<String>('getPlatformVersion');
 
   ///Enables and disables Enables and disables automatic crash reporting.
   /// [boolean] isEnabled
@@ -24,38 +24,49 @@ class CrashReporting {
     await _channel.invokeMethod<Object>('setCrashReportingEnabled:', params);
   }
 
-  static Future<void> reportCrash(dynamic exception, StackTrace stack) async {
+  static Future<void> reportCrash(Object exception, StackTrace stack) async {
     if (IBGBuildInfo.instance.isReleaseMode && enabled) {
       await _reportUnhandledCrash(exception, stack);
     } else {
       FlutterError.dumpErrorToConsole(
-          FlutterErrorDetails(stack: stack, exception: exception));
+        FlutterErrorDetails(stack: stack, exception: exception),
+      );
     }
   }
 
   /// Reports a handled crash to you dashboard
-  /// [dynamic] exception
+  /// [Object] exception
   /// [StackTrace] stack
-  static Future<void> reportHandledCrash(dynamic exception,
-      [StackTrace? stack]) async {
+  static Future<void> reportHandledCrash(
+    Object exception, [
+    StackTrace? stack,
+  ]) async {
     await _sendCrash(exception, stack ?? StackTrace.current, true);
   }
 
   static Future<void> _reportUnhandledCrash(
-      dynamic exception, StackTrace stack) async {
+    Object exception,
+    StackTrace stack,
+  ) async {
     await _sendCrash(exception, stack, false);
   }
 
   static Future<void> _sendCrash(
-      dynamic exception, StackTrace stack, bool handled) async {
+    Object exception,
+    StackTrace stack,
+    bool handled,
+  ) async {
     final Trace trace = Trace.from(stack);
     final List<ExceptionData> frames = <ExceptionData>[];
     for (int i = 0; i < trace.frames.length; i++) {
-      frames.add(ExceptionData(
+      frames.add(
+        ExceptionData(
           trace.frames[i].uri.toString(),
           trace.frames[i].member,
           trace.frames[i].line,
-          trace.frames[i].column ?? 0));
+          trace.frames[i].column ?? 0,
+        ),
+      );
     }
     final CrashData crashData = CrashData(
       exception.toString(),
@@ -64,6 +75,8 @@ class CrashReporting {
     );
     final List<dynamic> params = <dynamic>[jsonEncode(crashData), handled];
     await _channel.invokeMethod<Object>(
-        'sendJSCrashByReflection:handled:', params);
+      'sendJSCrashByReflection:handled:',
+      params,
+    );
   }
 }

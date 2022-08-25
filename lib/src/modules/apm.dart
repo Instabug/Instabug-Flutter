@@ -18,11 +18,10 @@ enum LogLevel {
 }
 
 class APM {
-  static Function _startExecutionTraceCallback = () {};
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String?> get platformVersion async =>
-      await _channel.invokeMethod<String>('getPlatformVersion');
+  static Future<String?> get platformVersion =>
+      _channel.invokeMethod<String>('getPlatformVersion');
 
   /// Enables or disables APM feature.
   /// [boolean] isEnabled
@@ -68,14 +67,19 @@ class APM {
   /// [String] key of attribute.
   /// [String] value of attribute.
   static Future<void> setExecutionTraceAttribute(
-      String id, String key, String value) async {
+    String id,
+    String key,
+    String value,
+  ) async {
     final List<dynamic> params = <dynamic>[
-      id.toString(),
-      key.toString(),
-      value.toString(),
+      id,
+      key,
+      value,
     ];
     await _channel.invokeMethod<Object>(
-        'setExecutionTraceAttribute:key:value:', params);
+      'setExecutionTraceAttribute:key:value:',
+      params,
+    );
   }
 
   /// Ends an execution trace.
@@ -104,16 +108,18 @@ class APM {
     await _channel.invokeMethod<Object>('endUITrace');
   }
 
-  /// Ends UI trace.
-  static void endAppLaunch() async {
+  /// Ends App Launch.
+  static Future<void> endAppLaunch() async {
     await _channel.invokeMethod<Object>('endAppLaunch');
   }
 
-  static Future<bool?> networkLogAndroid(NetworkData data) async {
+  static FutureOr<void> networkLogAndroid(NetworkData data) {
     if (IBGBuildInfo.instance.isAndroid) {
       final params = <dynamic>[data.toMap()];
-      return await _channel.invokeMethod<bool>(
-          'apmNetworkLogByReflection:', params);
+      return _channel.invokeMethod(
+        'apmNetworkLogByReflection:',
+        params,
+      );
     }
   }
 }

@@ -5,25 +5,29 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 
+typedef HasChatsCallback = void Function(bool);
+typedef OnNewReplyReceivedCallback = void Function();
+typedef UnreadRepliesCountCallback = void Function(int);
+
 class Replies {
-  static Function? _hasChatsCallback;
-  static Function? _onNewReplyReceivedCallback;
-  static Function? _unreadRepliesCountCallback;
+  static HasChatsCallback? _hasChatsCallback;
+  static OnNewReplyReceivedCallback? _onNewReplyReceivedCallback;
+  static UnreadRepliesCountCallback? _unreadRepliesCountCallback;
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String?> get platformVersion async =>
-      await _channel.invokeMethod<String>('getPlatformVersion');
+  static Future<String?> get platformVersion =>
+      _channel.invokeMethod<String>('getPlatformVersion');
 
   static Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
       case 'hasChatsCallback':
-        _hasChatsCallback?.call(call.arguments);
+        _hasChatsCallback?.call(call.arguments as bool);
         return;
       case 'onNewReplyReceivedCallback':
         _onNewReplyReceivedCallback?.call();
         return;
       case 'unreadRepliesCountCallback':
-        _unreadRepliesCountCallback?.call(call.arguments);
+        _unreadRepliesCountCallback?.call(call.arguments as int);
         return;
     }
   }
@@ -42,7 +46,7 @@ class Replies {
 
   /// Tells whether the user has chats already or not.
   ///  [function] - callback that is invoked if chats exist
-  static Future<void> hasChats(Function function) async {
+  static Future<void> hasChats(HasChatsCallback function) async {
     _channel.setMethodCallHandler(_handleMethod);
     _hasChatsCallback = function;
     await _channel.invokeMethod<Object>('hasChats');
@@ -50,7 +54,9 @@ class Replies {
 
   ///  Sets a block of code that gets executed when a new message is received.
   ///  [function] -  A callback that gets executed when a new message is received.
-  static Future<void> setOnNewReplyReceivedCallback(Function function) async {
+  static Future<void> setOnNewReplyReceivedCallback(
+    OnNewReplyReceivedCallback function,
+  ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onNewReplyReceivedCallback = function;
     await _channel.invokeMethod<Object>('setOnNewReplyReceivedCallback');
@@ -61,7 +67,9 @@ class Replies {
   /// has, then possibly notify them about it with your own UI.
   /// [function] callback with argument
   /// Notifications count, or -1 in case the SDK has not been initialized.
-  static Future<void> getUnreadRepliesCount(Function function) async {
+  static Future<void> getUnreadRepliesCount(
+    UnreadRepliesCountCallback function,
+  ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _unreadRepliesCountCallback = function;
     await _channel.invokeMethod<Object>('getUnreadRepliesCount');
@@ -81,7 +89,9 @@ class Replies {
     if (IBGBuildInfo.instance.isAndroid) {
       final List<dynamic> params = <dynamic>[isEnabled];
       await _channel.invokeMethod<Object>(
-          'setEnableInAppNotificationSound:', params);
+        'setEnableInAppNotificationSound:',
+        params,
+      );
     }
   }
 }
