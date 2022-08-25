@@ -491,7 +491,7 @@ NSMutableDictionary *traces;
   */
 + (void)setInvocationEvents:(NSArray *)invocationEventsArray {
     NSDictionary *constants = [self constants];
-    NSInteger invocationEvents = IBGInvocationEventNone;
+    NSInteger invocationEvents = 0;
     for (NSString * invocationEvent in invocationEventsArray) {
         invocationEvents |= ((NSNumber *) constants[invocationEvent]).integerValue;
     }

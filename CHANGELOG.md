@@ -1,3 +1,7 @@
+## Unreleased
+
+* Fixes an issue with BugReporting.setInvocationEvents on iOS that always sets the event to none.
+
 ## v11.0.0 (2022-07-20)
 
 * Bumps Instabug native SDKs to v11
