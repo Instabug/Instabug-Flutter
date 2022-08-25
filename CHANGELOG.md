@@ -1,6 +1,6 @@
 ## Unreleased
 
-* Fixes BugReporting.setInvocationEvents always setting them to none.
+* Fixes an issue with BugReporting.setInvocationEvents on iOS that always sets the event to none.
 
 ## v11.0.0 (2022-07-20)
 
