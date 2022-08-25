@@ -1,6 +1,6 @@
 version: 2
 jobs:
-   android_tests:
+  android_tests:
     working_directory: ~/project/example/android
     macos:
       xcode: "13.4.1"
@@ -43,7 +43,7 @@ jobs:
           name: unzip flutter SDK
           command: unzip ~/flutter_sdk.zip -d ~
       - run: flutter doctor
-      - run: 
+      - run:
           name: Flutter build
           command: cd ..; flutter build apk
       - run:
@@ -56,36 +56,34 @@ jobs:
       #     name: Run UI Tests
       #     command: ./gradlew app:connectedAndroidTest
 
-   flutter_tests:
+  flutter_tests:
     docker:
       - image: cirrusci/flutter
     steps:
       - checkout
       - run: sudo gem install bundler:2.1.4
-      - run: bundle check || sudo bundle install        
+      - run: bundle check || sudo bundle install
       - run: bundle exec danger
       - run: flutter doctor
       - run: flutter packages get
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
       - run: bash <(curl -s https://codecov.io/bash)
-      - run: dartanalyzer --options analysis_options.yaml --fatal-warnings lib
-      - run: flutter pub publish --dry-run
 
-   flutter_tests_2.2.3:
+  flutter_tests_2.10.5:
     docker:
-      - image: cirrusci/flutter:2.2.3
+      - image: cirrusci/flutter:2.10.5
     steps:
       - checkout
       - run: sudo gem install bundler:2.1.4
-      - run: bundle check || sudo bundle install        
+      - run: bundle check || sudo bundle install
       - run: bundle exec danger
       - run: flutter doctor
       - run: flutter packages get
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
 
-   ios_tests:
+  ios_tests:
     macos:
       xcode: "13.4.1"
     working_directory: ~/project/example
@@ -115,7 +113,40 @@ jobs:
           name: Build and run tests
           command: cd ios && xcodebuild  -allowProvisioningUpdates   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.5'   test | xcpretty
 
-   pub_release:
+  format_flutter:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run: flutter pub get
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
+      - run:
+          name: Check Format
+          command: flutter format . --set-exit-if-changed
+
+  lint_flutter:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run: flutter pub get
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
+      - run:
+          name: Perform Static Analysis
+          command: flutter analyze
+
+  verify_pub:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run: flutter pub get
+      - run:
+          name: Check Package Score
+          command: flutter pub run pana --no-warning --exit-code-threshold 0
+      - run: flutter pub publish --dry-run
+
+  pub_release:
     docker:
       - image: cirrusci/flutter
     steps:
@@ -123,7 +154,7 @@ jobs:
       - run: chmod +x ./release.sh
       - run: ./release.sh
 
-   gh_ibg_release:
+  gh_ibg_release:
     macos:
       xcode: "13.4.1"
     working_directory: "~"
@@ -134,22 +165,30 @@ jobs:
       - run: cd Escape && swift build -c release
       - run: cd Escape/.build/release && cp -f Escape /usr/local/bin/escape
       - run: cd project && Escape flutter publish
-      
+
 workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
       - flutter_tests
-      - flutter_tests_2.2.3
+      - flutter_tests_2.10.5
       - android_tests
       - ios_tests
+      - format_flutter
+      - lint_flutter:
+          requires:
+            - format_flutter
+      - verify_pub:
+          requires:
+            - lint_flutter
       - hold_pub_release:
           type: approval
           requires:
             - flutter_tests
-            - flutter_tests_2.2.3
+            - flutter_tests_2.10.5
             - android_tests
             - ios_tests
+            - verify_pub
           filters:
             branches:
               only: master
@@ -163,9 +202,10 @@ workflows:
           type: approval
           requires:
             - flutter_tests
-            - flutter_tests_2.2.3
+            - flutter_tests_2.10.5
             - android_tests
             - ios_tests
+            - verify_pub
           filters:
             branches:
               only: master
@@ -175,4 +215,3 @@ workflows:
           filters:
             branches:
               only: master
-              
