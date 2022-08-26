@@ -773,8 +773,6 @@ NSMutableDictionary *traces;
  * @param networkData the NSDictionary containing all HTTP connection properties
  */
 + (void)networkLog:(NSDictionary *) networkData {
-    [IBGLog clearAllLogs];
-
     NSString* url = networkData[@"url"];
     NSString* method = networkData[@"method"];
     NSString* requestBody = networkData[@"requestBody"];
