@@ -1,6 +1,7 @@
 ## Unreleased
 
-* Fixes an issue with BugReporting.setInvocationEvents on iOS that always sets the event to none.
+* Fixes an issue with BugReporting.setInvocationEvents on iOS that always sets the event to none
+* Fixes an issue with network logging on iOS which caused the initial network requests logs to be skipped
 
 ## v11.0.0 (2022-07-20)
 
