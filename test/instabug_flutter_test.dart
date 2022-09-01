@@ -1,4 +1,6 @@
 import 'dart:convert';
+// to maintain supported versions prior to Flutter 3.3
+// ignore: unnecessary_import
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
