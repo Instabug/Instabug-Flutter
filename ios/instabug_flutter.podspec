@@ -1,23 +1,22 @@
-#
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
-#
 Pod::Spec.new do |s|
-  s.name             = 'instabug_flutter'
-  s.version          = '11.0.0'
-  s.summary          = 'A new flutter plugin project.'
-  s.description      = <<-DESC
-A new flutter plugin project.
-                       DESC
-  s.homepage         = 'http://example.com'
-  s.license          = { :file => '../LICENSE.md' }
-  s.author           = { 'Your Company' => 'email@example.com' }
-  s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.name              = 'instabug_flutter'
+  s.version           = '11.0.0'
+  s.summary           = 'Flutter plugin for integrating the Instabug SDK.'
+  s.author            = 'Instabug'
+  s.homepage          = 'https://www.instabug.com/platforms/flutter'
+  s.readme            = 'https://github.com/Instabug/Instabug-Flutter#readme'
+  s.changelog         = 'https://pub.dev/packages/instabug_flutter/changelog'
+  s.documentation_url = 'https://docs.instabug.com/docs/flutter-overview'
+  s.license           = { :file => '../LICENSE.md' }
+
+  s.source              = { :path => '.' }
+  s.source_files        = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
-  s.dependency 'Flutter'
-  s.dependency 'Instabug', '11.0.2'
 
   s.ios.deployment_target = '10.0'
-  s.pod_target_xcconfig = { 'OTHER_LDFLAGS' => '-framework "Flutter" -framework "Instabug"'}
+  s.pod_target_xcconfig   = { 'OTHER_LDFLAGS' => '-framework "Flutter" -framework "Instabug"'}
+
+  s.dependency 'Flutter'
+  s.dependency 'Instabug', '11.0.2'
 end
 
