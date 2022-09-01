@@ -1,10 +1,11 @@
 name: instabug_flutter
 version: 11.0.0
 description: >-
-  Deliver the best user experience through a comprehensive platform that will 
-  help you uncover, analyze and fix any app performance, quality or stability issues.
-homepage: https://github.com/Instabug/Instabug-Flutter#readme
-documentation: https://github.com/Instabug/Instabug-Flutter#readme
+  Instabug empowers mobile teams to monitor, prioritize, and debug 
+  performance and stability issues throughout the app development lifecycle. 
+homepage: https://www.instabug.com/platforms/flutter
+repository: https://github.com/Instabug/Instabug-Flutter
+documentation: https://docs.instabug.com/docs/flutter-overview
 
 dependencies:
   flutter:
