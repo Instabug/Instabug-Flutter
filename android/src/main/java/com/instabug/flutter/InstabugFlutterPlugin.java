@@ -1,4 +1,4 @@
-package com.instabug.instabugflutter;
+package com.instabug.flutter;
 
 import android.app.Application;
 import android.content.Context;

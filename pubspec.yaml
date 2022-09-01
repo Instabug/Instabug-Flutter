@@ -25,7 +25,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.instabug.instabugflutter
+        package: com.instabug.flutter
         pluginClass: InstabugFlutterPlugin
       ios:
         pluginClass: InstabugFlutterPlugin

@@ -1,4 +1,4 @@
-group 'com.instabug.instabugflutter'
+group 'com.instabug.flutter'
 version '1.0-SNAPSHOT'
 
 buildscript {

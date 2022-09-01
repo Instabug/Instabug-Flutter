@@ -1,4 +1,4 @@
-package com.instabug.instabugflutter;
+package com.instabug.flutter;
 
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;

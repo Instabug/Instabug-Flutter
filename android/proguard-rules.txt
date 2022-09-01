@@ -1,1 +1,1 @@
--keep class com.instabug.instabugflutter.** {*;}
+-keep class com.instabug.flutter.** {*;}
