@@ -1,61 +1,10 @@
-version: 2
-jobs:
-  android_tests:
-    working_directory: ~/project/example/android
-    macos:
-      xcode: "13.4.1"
-    environment:
-      JVM_OPTS: -Xmx3200m
-    steps:
-      - checkout:
-          path: ~/project
-      - run:
-          name: Install JAVA
-          command: brew install --cask homebrew/cask-versions/adoptopenjdk8
-      - run:
-          name: Install Android sdk
-          command: brew install --cask android-sdk
-      - run:
-          name: Setup environment variables
-          command: |
-            echo 'export PATH="$PATH:/usr/local/opt/node@8/bin:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin:/usr/local/share/android-sdk/tools/bin"' >> $BASH_ENV
-            echo 'export JAVA_HOME=`/usr/libexec/java_home -v 1.8`' >> $BASH_ENV
-            echo 'export ANDROID_HOME="/usr/local/share/android-sdk"' >> $BASH_ENV
-            echo 'export ANDROID_SDK_HOME="/usr/local/share/android-sdk"' >> $BASH_ENV
-            echo 'export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"' >> $BASH_ENV
-            echo 'export QEMU_AUDIO_DRV=none' >> $BASH_ENV
-            echo 'export PATH="$PATH:~/flutter/bin"'  >> $BASH_ENV
-      - run:
-          name: Install emulator dependencies
-          command: (yes | sdkmanager "platform-tools" "platforms;android-26" "extras;intel;Hardware_Accelerated_Execution_Manager" "build-tools;26.0.0" "system-images;android-26;google_apis;x86" "emulator" --verbose) || true
-      - run:
-          name: chmod permissions
-          command: chmod +x ./gradlew
-      - run: avdmanager create avd -n Pixel_2_API_26 -k "system-images;android-26;google_apis;x86" -g google_apis -d "Nexus 5"
-      - run:
-          name: Run emulator in background
-          command: /usr/local/share/android-sdk/tools/emulator @Pixel_2_API_26 -noaudio -no-boot-anim -no-window
-          background: true
-      - run:
-          name: download flutter SDK
-          command: if ! test -f "~/flutter_sdk.zip"; then curl -o ~/flutter_sdk.zip https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_2.2.3-stable.zip; fi
-      - run:
-          name: unzip flutter SDK
-          command: unzip ~/flutter_sdk.zip -d ~
-      - run: flutter doctor
-      - run:
-          name: Flutter build
-          command: cd ..; flutter build apk
-      - run:
-          name: Download Android Dependencies
-          command: ./gradlew androidDependencies
-      - run:
-          name: Run Unit Tests
-          command: ./gradlew test
-      # - run:
-      #     name: Run UI Tests
-      #     command: ./gradlew app:connectedAndroidTest
+version: 2.1
 
+orbs:
+  android: circleci/android@2.0
+  flutter: circleci/flutter@1.0
+
+jobs:
   flutter_tests:
     docker:
       - image: cirrusci/flutter
@@ -70,7 +19,7 @@ jobs:
       - run: flutter test --coverage
       - run: bash <(curl -s https://codecov.io/bash)
 
-  flutter_tests_2.10.5:
+  flutter_tests_2-10-5:
     docker:
       - image: cirrusci/flutter:2.10.5
     steps:
@@ -82,6 +31,28 @@ jobs:
       - run: flutter packages get
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
+
+  test_android:
+    working_directory: ~/project/example/android
+    executor:
+      name: android/android-machine
+      resource-class: xlarge
+      tag: 2022.04.1
+    steps:
+      - checkout:
+          path: ~/project
+      - flutter/install_sdk_and_pub:
+          flutter_version: 2.2.3
+          app-dir: ..
+      # UI Tests are disabled due to an issue with
+      # media projection prompt.
+      # - android/start-emulator-and-run-tests:
+      #     system-image: system-images;android-30;google_apis;x86
+      #     additional-avd-args: -d "Nexus 5"
+      #     post-emulator-launch-assemble-command: flutter build apk
+      #     test-command: ./gradlew app:connectedAndroidTest
+      - android/run-tests:
+          test-command: ./gradlew test
 
   ios_tests:
     macos:
@@ -171,8 +142,8 @@ workflows:
   build-test-and-approval-deploy:
     jobs:
       - flutter_tests
-      - flutter_tests_2.10.5
-      - android_tests
+      - flutter_tests_2-10-5
+      - test_android
       - ios_tests
       - format_flutter
       - lint_flutter:
@@ -185,8 +156,8 @@ workflows:
           type: approval
           requires:
             - flutter_tests
-            - flutter_tests_2.10.5
-            - android_tests
+            - flutter_tests_2-10-5
+            - test_android
             - ios_tests
             - verify_pub
           filters:
@@ -202,8 +173,8 @@ workflows:
           type: approval
           requires:
             - flutter_tests
-            - flutter_tests_2.10.5
-            - android_tests
+            - flutter_tests_2-10-5
+            - test_android
             - ios_tests
             - verify_pub
           filters:
