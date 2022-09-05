@@ -1,7 +1,11 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
+// to maintain supported versions prior to Flutter 3.3
+// ignore: unnecessary_import
 import 'dart:typed_data';
+// to maintain supported versions prior to Flutter 3.3
+// ignore: unnecessary_import
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
