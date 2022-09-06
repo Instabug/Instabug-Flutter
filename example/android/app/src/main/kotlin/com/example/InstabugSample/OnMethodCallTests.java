@@ -1,6 +1,6 @@
 package com.example.InstabugSample;
 
-import com.instabug.instabugflutter.InstabugFlutterPlugin;
+import com.instabug.flutter.InstabugFlutterPlugin;
 
 import org.mockito.Mockito;
 import org.mockito.Spy;

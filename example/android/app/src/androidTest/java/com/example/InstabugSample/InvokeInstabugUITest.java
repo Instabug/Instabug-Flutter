@@ -16,7 +16,7 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.matcher.ViewMatchers.withResourceName;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import com.instabug.instabugflutter.InstabugFlutterPlugin;
+import com.instabug.flutter.InstabugFlutterPlugin;
 
 @RunWith(AndroidJUnit4.class)
 public class InvokeInstabugUITest {
