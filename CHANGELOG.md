@@ -1,6 +1,7 @@
 ## Unreleased
 
 * Bumps Instabug Android SDK to v11.4.1
+* Bumps Instabug iOS SDK to v11.2.0
 * Fixes an issue with BugReporting.setInvocationEvents on iOS that always sets the event to none
 * Fixes an issue with network logging on iOS which caused the initial network requests logs to be skipped
 * Renames Android package from com.instabug.instabugFlutter to com.instabug.flutter
