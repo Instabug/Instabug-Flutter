@@ -1,4 +1,4 @@
-## Unreleased
+## 11.2.0 (2022-09-08)
 
 * Bumps Instabug Android SDK to v11.4.1
 * Bumps Instabug iOS SDK to v11.2.0
