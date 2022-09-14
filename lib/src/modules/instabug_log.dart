@@ -15,7 +15,7 @@ class InstabugLog {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logError(String message) async {
-    final List<dynamic> params = <dynamic>[message];
+    final params = <dynamic>[message];
     await _channel.invokeMethod<Object>('logError:', params);
   }
 
@@ -24,7 +24,7 @@ class InstabugLog {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logWarn(String message) async {
-    final List<dynamic> params = <dynamic>[message];
+    final params = <dynamic>[message];
     await _channel.invokeMethod<Object>('logWarn:', params);
   }
 
@@ -33,7 +33,7 @@ class InstabugLog {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logVerbose(String message) async {
-    final List<dynamic> params = <dynamic>[message];
+    final params = <dynamic>[message];
     await _channel.invokeMethod<Object>('logVerbose:', params);
   }
 
@@ -42,7 +42,7 @@ class InstabugLog {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logDebug(String message) async {
-    final List<dynamic> params = <dynamic>[message];
+    final params = <dynamic>[message];
     await _channel.invokeMethod<Object>('logDebug:', params);
   }
 
@@ -51,7 +51,7 @@ class InstabugLog {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logInfo(String message) async {
-    final List<dynamic> params = <dynamic>[message];
+    final params = <dynamic>[message];
     await _channel.invokeMethod<Object>('logInfo:', params);
   }
 

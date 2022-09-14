@@ -31,7 +31,7 @@ class Surveys {
       case 'availableSurveysCallback':
         final result = call.arguments as List<dynamic>;
         final params = <String>[];
-        for (int i = 0; i < result.length; i++) {
+        for (var i = 0; i < result.length; i++) {
           params.add(result[i].toString());
         }
         _availableSurveysCallback?.call(params);
@@ -50,7 +50,7 @@ class Surveys {
   /// Defaults to `true`.
   /// [isEnabled] A boolean to set whether Instabug Surveys is enabled or disabled.
   static Future<void> setEnabled(bool isEnabled) async {
-    final List<dynamic> params = <dynamic>[isEnabled];
+    final params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>('setSurveysEnabled:', params);
   }
 
@@ -58,7 +58,7 @@ class Surveys {
   /// [isEnabled] A boolean to indicate whether the
   /// surveys auto showing are enabled or not.
   static Future<void> setAutoShowingEnabled(bool isEnabled) async {
-    final List<dynamic> params = <dynamic>[isEnabled];
+    final params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>(
       'setAutoShowingSurveysEnabled:',
       params,
@@ -103,7 +103,7 @@ class Surveys {
   static Future<void> setShouldShowWelcomeScreen(
     bool shouldShowWelcomeScreen,
   ) async {
-    final List<dynamic> params = <dynamic>[shouldShowWelcomeScreen];
+    final params = <dynamic>[shouldShowWelcomeScreen];
     await _channel.invokeMethod<Object>(
       'setShouldShowSurveysWelcomeScreen:',
       params,
@@ -123,7 +123,7 @@ class Surveys {
   /// Answered and cancelled surveys won't show up again.
   /// [surveyToken] - A String with a survey token.
   static Future<void> showSurvey(String surveyToken) async {
-    final List<dynamic> params = <dynamic>[surveyToken];
+    final params = <dynamic>[surveyToken];
     await _channel.invokeMethod<Object>('showSurveyWithToken:', params);
   }
 
@@ -137,7 +137,7 @@ class Surveys {
   ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _hasRespondedToSurveyCallback = function;
-    final List<dynamic> params = <dynamic>[surveyToken];
+    final params = <dynamic>[surveyToken];
     await _channel.invokeMethod<Object>(
       'hasRespondedToSurveyWithToken:',
       params,
@@ -150,7 +150,7 @@ class Surveys {
   /// [appStoreURL] A String url for the published iOS app on AppStore
   static Future<void> setAppStoreURL(String appStoreURL) async {
     if (IBGBuildInfo.instance.isIOS) {
-      final List<dynamic> params = <dynamic>[appStoreURL];
+      final params = <dynamic>[appStoreURL];
       await _channel.invokeMethod<Object>('setAppStoreURL:', params);
     }
   }

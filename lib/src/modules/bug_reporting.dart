@@ -79,7 +79,7 @@ class BugReporting {
   ///Enables and disables manual invocation and prompt options for bug and feedback.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
-    final List<dynamic> params = <dynamic>[isEnabled];
+    final params = <dynamic>[isEnabled];
     await _channel.invokeMethod<Object>('setBugReportingEnabled:', params);
   }
 
@@ -133,7 +133,7 @@ class BugReporting {
     bool galleryImage,
     bool screenRecording,
   ) async {
-    final List<dynamic> params = <dynamic>[
+    final params = <dynamic>[
       screenshot,
       extraScreenshot,
       galleryImage,
@@ -160,7 +160,7 @@ class BugReporting {
   static Future<void> setExtendedBugReportMode(
     ExtendedBugReportMode extendedBugReportMode,
   ) async {
-    final List<dynamic> params = <dynamic>[extendedBugReportMode.toString()];
+    final params = <dynamic>[extendedBugReportMode.toString()];
     await _channel.invokeMethod<Object>('setExtendedBugReportMode:', params);
   }
 
@@ -184,10 +184,7 @@ class BugReporting {
     FloatingButtonEdge floatingButtonEdge,
     int offsetFromTop,
   ) async {
-    final List<dynamic> params = <dynamic>[
-      floatingButtonEdge.toString(),
-      offsetFromTop
-    ];
+    final params = <dynamic>[floatingButtonEdge.toString(), offsetFromTop];
     await _channel.invokeMethod<Object>(
       'setFloatingButtonEdge:withTopOffset:',
       params,
@@ -204,10 +201,7 @@ class BugReporting {
     final invocationOptionsStrings =
         invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
             [];
-    final List<dynamic> params = <dynamic>[
-      reportType.toString(),
-      invocationOptionsStrings
-    ];
+    final params = <dynamic>[reportType.toString(), invocationOptionsStrings];
     await _channel.invokeMethod<Object>(
       'showBugReportingWithReportTypeAndOptions:options:',
       params,
@@ -221,7 +215,7 @@ class BugReporting {
     double iPhoneShakingThreshold,
   ) async {
     if (IBGBuildInfo.instance.isIOS) {
-      final List<dynamic> params = <dynamic>[iPhoneShakingThreshold];
+      final params = <dynamic>[iPhoneShakingThreshold];
       await _channel.invokeMethod<Object>(
         'setShakingThresholdForiPhone:',
         params,
@@ -236,7 +230,7 @@ class BugReporting {
     double iPadShakingThreshold,
   ) async {
     if (IBGBuildInfo.instance.isIOS) {
-      final List<dynamic> params = <dynamic>[iPadShakingThreshold];
+      final params = <dynamic>[iPadShakingThreshold];
       await _channel.invokeMethod<Object>(
         'setShakingThresholdForiPad:',
         params,
@@ -253,7 +247,7 @@ class BugReporting {
     int androidThreshold,
   ) async {
     if (IBGBuildInfo.instance.isAndroid) {
-      final List<dynamic> params = <dynamic>[androidThreshold];
+      final params = <dynamic>[androidThreshold];
       await _channel.invokeMethod<Object>(
         'setShakingThresholdForAndroid:',
         params,

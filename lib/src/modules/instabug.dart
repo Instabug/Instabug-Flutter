@@ -107,9 +107,9 @@ class Instabug {
     String token,
     List<InvocationEvent> invocationEvents,
   ) async {
-    final List<String> invocationEventsStrings =
+    final invocationEventsStrings =
         invocationEvents.map((e) => e.toString()).toList(growable: false);
-    final List<dynamic> params = <dynamic>[token, invocationEventsStrings];
+    final params = <dynamic>[token, invocationEventsStrings];
     await _channel.invokeMethod<Object>(
       'startWithToken:invocationEvents:',
       params,
@@ -121,7 +121,7 @@ class Instabug {
   static Future<void> showWelcomeMessageWithMode(
     WelcomeMessageMode welcomeMessageMode,
   ) async {
-    final List<dynamic> params = <dynamic>[welcomeMessageMode.toString()];
+    final params = <dynamic>[welcomeMessageMode.toString()];
     await _channel.invokeMethod<Object>('showWelcomeMessageWithMode:', params);
   }
 
@@ -130,7 +130,7 @@ class Instabug {
   /// It also reset the chats on device to that email and removes user attributes,
   /// user data and completed surveys.
   static Future<void> identifyUser(String email, [String? name]) async {
-    final List<dynamic> params = <dynamic>[email, name];
+    final params = <dynamic>[email, name];
     await _channel.invokeMethod<Object>('identifyUserWithEmail:name:', params);
   }
 
@@ -145,7 +145,7 @@ class Instabug {
   /// Use to change the SDK's UI to different language.
   /// Defaults to the device's current locale.
   static Future<void> setLocale(IBGLocale locale) async {
-    final List<dynamic> params = <dynamic>[locale.toString()];
+    final params = <dynamic>[locale.toString()];
     await _channel.invokeMethod<Object>('setLocale:', params);
   }
 
@@ -154,20 +154,20 @@ class Instabug {
   static Future<void> setSdkDebugLogsLevel(
     IBGSDKDebugLogsLevel sdkDebugLogsLevel,
   ) async {
-    final List<dynamic> params = <dynamic>[sdkDebugLogsLevel.toString()];
+    final params = <dynamic>[sdkDebugLogsLevel.toString()];
     await _channel.invokeMethod<Object>('setSdkDebugLogsLevel:', params);
   }
 
   /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.
   /// It should be of type [ColorTheme].
   static Future<void> setColorTheme(ColorTheme colorTheme) async {
-    final List<dynamic> params = <dynamic>[colorTheme.toString()];
+    final params = <dynamic>[colorTheme.toString()];
     await _channel.invokeMethod<Object>('setColorTheme:', params);
   }
 
   /// Appends a set of [tags] to previously added tags of reported feedback, bug or crash.
   static Future<void> appendTags(List<String> tags) async {
-    final List<dynamic> params = <dynamic>[tags];
+    final params = <dynamic>[tags];
     await _channel.invokeMethod<Object>('appendTags:', params);
   }
 
@@ -201,20 +201,20 @@ class Instabug {
 
   /// Add custom user attribute [value] with a [key] that is going to be sent with each feedback, bug or crash.
   static Future<void> setUserAttribute(String value, String key) async {
-    final List<dynamic> params = <dynamic>[value, key];
+    final params = <dynamic>[value, key];
     await _channel.invokeMethod<Object>('setUserAttribute:withKey:', params);
   }
 
   /// Removes a given [key] and its associated value from user attributes.
   /// Does nothing if a [key] does not exist.
   static Future<void> removeUserAttribute(String key) async {
-    final List<dynamic> params = <dynamic>[key];
+    final params = <dynamic>[key];
     await _channel.invokeMethod<Object>('removeUserAttributeForKey:', params);
   }
 
   /// Returns the user attribute associated with a given [key].
   static Future<String?> getUserAttributeForKey(String key) {
-    final List<dynamic> params = <dynamic>[key];
+    final params = <dynamic>[key];
     return _channel.invokeMethod<String>(
       'getUserAttributeForKey:',
       params,
@@ -238,7 +238,7 @@ class Instabug {
   /// Logs a user event with [name] that happens through the lifecycle of the application.
   /// Logged user events are going to be sent with each report, as well as at the end of a session.
   static Future<void> logUserEvent(String name) async {
-    final List<String> params = <String>[name];
+    final params = <String>[name];
     await _channel.invokeMethod<Object>('logUserEventWithName:', params);
   }
 
@@ -248,7 +248,7 @@ class Instabug {
     String value,
     CustomTextPlaceHolderKey key,
   ) async {
-    final List<dynamic> params = <dynamic>[value, key.toString()];
+    final params = <dynamic>[value, key.toString()];
     await _channel.invokeMethod<Object>('setValue:forStringWithKey:', params);
   }
 
@@ -257,7 +257,7 @@ class Instabug {
   static Future<void> setSessionProfilerEnabled(
     bool sessionProfilerEnabled,
   ) async {
-    final List<dynamic> params = <dynamic>[sessionProfilerEnabled];
+    final params = <dynamic>[sessionProfilerEnabled];
     await _channel.invokeMethod<Object>('setSessionProfilerEnabled:', params);
   }
 
@@ -266,7 +266,7 @@ class Instabug {
   /// [debugEnabled] desired state of debug mode.
   static Future<void> setDebugEnabled(bool debugEnabled) async {
     if (IBGBuildInfo.instance.isAndroid) {
-      final List<dynamic> params = <dynamic>[debugEnabled];
+      final params = <dynamic>[debugEnabled];
       await _channel.invokeMethod<Object>('setDebugEnabled:', params);
     }
   }
@@ -275,14 +275,14 @@ class Instabug {
   /// Sets the color of UI elements indicating interactivity or call to action.
   /// [color] primaryColor A color to set the UI elements of the SDK to.
   static Future<void> setPrimaryColor(Color color) async {
-    final List<dynamic> params = <dynamic>[color.value];
+    final params = <dynamic>[color.value];
     await _channel.invokeMethod<Object>('setPrimaryColor:', params);
   }
 
   /// Adds specific user data that you need to be added to the reports
   /// [userData] data to be added
   static Future<void> setUserData(String userData) async {
-    final List<dynamic> params = <dynamic>[userData];
+    final params = <dynamic>[userData];
     await _channel.invokeMethod<Object>('setUserData:', params);
   }
 
@@ -294,10 +294,10 @@ class Instabug {
     String fileName,
   ) async {
     if (IBGBuildInfo.instance.isIOS) {
-      final List<dynamic> params = <dynamic>[filePath];
+      final params = <dynamic>[filePath];
       await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params);
     } else {
-      final List<dynamic> params = <dynamic>[filePath, fileName];
+      final params = <dynamic>[filePath, fileName];
       await _channel.invokeMethod<Object>('addFileAttachmentWithURL:', params);
     }
   }
@@ -310,10 +310,10 @@ class Instabug {
     String fileName,
   ) async {
     if (IBGBuildInfo.instance.isIOS) {
-      final List<dynamic> params = <dynamic>[data];
+      final params = <dynamic>[data];
       await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params);
     } else {
-      final List<dynamic> params = <dynamic>[data, fileName];
+      final params = <dynamic>[data, fileName];
       await _channel.invokeMethod<Object>('addFileAttachmentWithData:', params);
     }
   }
@@ -329,21 +329,21 @@ class Instabug {
   static Future<void> setWelcomeMessageMode(
     WelcomeMessageMode welcomeMessageMode,
   ) async {
-    final List<dynamic> params = <dynamic>[welcomeMessageMode.toString()];
+    final params = <dynamic>[welcomeMessageMode.toString()];
     await _channel.invokeMethod<Object>('setWelcomeMessageMode:', params);
   }
 
   ///Reports that the screen has been changed (repro steps)
   ///[screenName] String containing the screen name
   static Future<void> reportScreenChange(String screenName) async {
-    final List<dynamic> params = <dynamic>[screenName];
+    final params = <dynamic>[screenName];
     await _channel.invokeMethod<Object>('reportScreenChange:', params);
   }
 
   ///Sets the repro steps mode
   ///[mode] repro steps mode
   static Future<void> setReproStepsMode(ReproStepsMode reproStepsMode) async {
-    final List<dynamic> params = <dynamic>[reproStepsMode.toString()];
+    final params = <dynamic>[reproStepsMode.toString()];
     await _channel.invokeMethod<Object>('setReproStepsMode:', params);
   }
 
