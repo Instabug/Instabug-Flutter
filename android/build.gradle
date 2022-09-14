@@ -5,6 +5,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
     }
 
     dependencies {
@@ -16,6 +19,9 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
     }
 }
 
@@ -41,7 +47,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.instabug.library:instabug:11.4.1'
+    implementation 'com.instabug.library:instabug:11.5.0.4304-4-SNAPSHOT'
     testImplementation 'junit:junit:4.12'
 }
 
