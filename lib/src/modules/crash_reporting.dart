@@ -21,7 +21,7 @@ class CrashReporting {
   static Future<void> setEnabled(bool isEnabled) async {
     enabled = isEnabled;
     final params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setCrashReportingEnabled:', params);
+    return _channel.invokeMethod('setCrashReportingEnabled:', params);
   }
 
   static Future<void> reportCrash(Object exception, StackTrace stack) async {
@@ -74,7 +74,7 @@ class CrashReporting {
       frames,
     );
     final params = <dynamic>[jsonEncode(crashData), handled];
-    await _channel.invokeMethod<Object>(
+    return _channel.invokeMethod(
       'sendJSCrashByReflection:handled:',
       params,
     );

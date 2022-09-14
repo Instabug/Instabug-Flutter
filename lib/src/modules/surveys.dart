@@ -51,7 +51,7 @@ class Surveys {
   /// [isEnabled] A boolean to set whether Instabug Surveys is enabled or disabled.
   static Future<void> setEnabled(bool isEnabled) async {
     final params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setSurveysEnabled:', params);
+    return _channel.invokeMethod('setSurveysEnabled:', params);
   }
 
   ///Sets whether auto surveys showing are enabled or not.
@@ -59,7 +59,7 @@ class Surveys {
   /// surveys auto showing are enabled or not.
   static Future<void> setAutoShowingEnabled(bool isEnabled) async {
     final params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>(
+    return _channel.invokeMethod(
       'setAutoShowingSurveysEnabled:',
       params,
     );
@@ -73,7 +73,7 @@ class Surveys {
   ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _availableSurveysCallback = function;
-    await _channel.invokeMethod<Object>('getAvailableSurveys');
+    return _channel.invokeMethod('getAvailableSurveys');
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -83,7 +83,7 @@ class Surveys {
   static Future<void> setOnShowCallback(OnShowSurveyCallback function) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onShowCallback = function;
-    await _channel.invokeMethod<Object>('setOnShowSurveyCallback');
+    return _channel.invokeMethod('setOnShowSurveyCallback');
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -95,7 +95,7 @@ class Surveys {
   ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onDismissCallback = function;
-    await _channel.invokeMethod<Object>('setOnDismissSurveyCallback');
+    return _channel.invokeMethod('setOnDismissSurveyCallback');
   }
 
   /// Setting an option for all the surveys to show a welcome screen before
@@ -104,7 +104,7 @@ class Surveys {
     bool shouldShowWelcomeScreen,
   ) async {
     final params = <dynamic>[shouldShowWelcomeScreen];
-    await _channel.invokeMethod<Object>(
+    return _channel.invokeMethod(
       'setShouldShowSurveysWelcomeScreen:',
       params,
     );
@@ -115,7 +115,7 @@ class Surveys {
   /// Does nothing if there are no available surveys or if a survey has already been shown
   /// in the current session.
   static Future<void> showSurveyIfAvailable() async {
-    await _channel.invokeMethod<Object>('showSurveysIfAvailable');
+    return _channel.invokeMethod('showSurveysIfAvailable');
   }
 
   /// Shows survey with a specific token.
@@ -124,7 +124,7 @@ class Surveys {
   /// [surveyToken] - A String with a survey token.
   static Future<void> showSurvey(String surveyToken) async {
     final params = <dynamic>[surveyToken];
-    await _channel.invokeMethod<Object>('showSurveyWithToken:', params);
+    return _channel.invokeMethod('showSurveyWithToken:', params);
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -138,7 +138,7 @@ class Surveys {
     _channel.setMethodCallHandler(_handleMethod);
     _hasRespondedToSurveyCallback = function;
     final params = <dynamic>[surveyToken];
-    await _channel.invokeMethod<Object>(
+    return _channel.invokeMethod(
       'hasRespondedToSurveyWithToken:',
       params,
     );
@@ -151,7 +151,7 @@ class Surveys {
   static Future<void> setAppStoreURL(String appStoreURL) async {
     if (IBGBuildInfo.instance.isIOS) {
       final params = <dynamic>[appStoreURL];
-      await _channel.invokeMethod<Object>('setAppStoreURL:', params);
+      return _channel.invokeMethod('setAppStoreURL:', params);
     }
   }
 }

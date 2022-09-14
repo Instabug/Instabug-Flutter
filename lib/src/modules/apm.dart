@@ -27,21 +27,21 @@ class APM {
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
     final params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setAPMEnabled:', params);
+    return _channel.invokeMethod('setAPMEnabled:', params);
   }
 
   /// Sets log Level to determine level of details in a log
   /// [logLevel] Enum value to determine the level
   static Future<void> setLogLevel(LogLevel logLevel) async {
     final params = <dynamic>[logLevel.toString()];
-    await _channel.invokeMethod<Object>('setAPMLogLevel:', params);
+    return _channel.invokeMethod('setAPMLogLevel:', params);
   }
 
   /// Enables or disables cold app launch tracking.
   /// [boolean] isEnabled
   static Future<void> setColdAppLaunchEnabled(bool isEnabled) async {
     final params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setColdAppLaunchEnabled:', params);
+    return _channel.invokeMethod('setColdAppLaunchEnabled:', params);
   }
 
   /// Starts an execution trace.
@@ -76,7 +76,7 @@ class APM {
       key,
       value,
     ];
-    await _channel.invokeMethod<Object>(
+    return _channel.invokeMethod(
       'setExecutionTraceAttribute:key:value:',
       params,
     );
@@ -86,31 +86,31 @@ class APM {
   /// [String] id of the trace.
   static Future<void> endExecutionTrace(String id) async {
     final params = <dynamic>[id];
-    await _channel.invokeMethod<Object>('endExecutionTrace:', params);
+    return _channel.invokeMethod('endExecutionTrace:', params);
   }
 
   /// Enables or disables auto UI tracing.
   /// [boolean] isEnabled
   static Future<void> setAutoUITraceEnabled(bool isEnabled) async {
     final params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setAutoUITraceEnabled:', params);
+    return _channel.invokeMethod('setAutoUITraceEnabled:', params);
   }
 
   /// Starts UI trace.
   /// [String] name
   static Future<void> startUITrace(String name) async {
     final params = <dynamic>[name];
-    await _channel.invokeMethod<Object>('startUITrace:', params);
+    return _channel.invokeMethod('startUITrace:', params);
   }
 
   /// Ends UI trace.
   static Future<void> endUITrace() async {
-    await _channel.invokeMethod<Object>('endUITrace');
+    return _channel.invokeMethod('endUITrace');
   }
 
   /// Ends App Launch.
   static Future<void> endAppLaunch() async {
-    await _channel.invokeMethod<Object>('endAppLaunch');
+    return _channel.invokeMethod('endAppLaunch');
   }
 
   static FutureOr<void> networkLogAndroid(NetworkData data) {
