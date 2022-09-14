@@ -79,8 +79,8 @@ class BugReporting {
   ///Enables and disables manual invocation and prompt options for bug and feedback.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
-    final List<dynamic> params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setBugReportingEnabled:', params);
+    final params = <dynamic>[isEnabled];
+    return _channel.invokeMethod('setBugReportingEnabled:', params);
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -92,7 +92,7 @@ class BugReporting {
   ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onInvokeCallback = function;
-    await _channel.invokeMethod<Object>('setOnInvokeCallback');
+    return _channel.invokeMethod('setOnInvokeCallback');
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -104,7 +104,7 @@ class BugReporting {
   ) async {
     _channel.setMethodCallHandler(_handleMethod);
     _onDismissCallback = function;
-    await _channel.invokeMethod<Object>('setOnDismissCallback');
+    return _channel.invokeMethod('setOnDismissCallback');
   }
 
   /// Sets the events that invoke the feedback form.
@@ -117,7 +117,7 @@ class BugReporting {
         invocationEvents?.map((e) => e.toString()).toList(growable: false) ??
             [];
     final params = <dynamic>[invocationEventsStrings];
-    await _channel.invokeMethod<Object>('setInvocationEvents:', params);
+    return _channel.invokeMethod('setInvocationEvents:', params);
   }
 
   /// Sets whether attachments in bug reporting and in-app messaging are enabled or not.
@@ -133,13 +133,13 @@ class BugReporting {
     bool galleryImage,
     bool screenRecording,
   ) async {
-    final List<dynamic> params = <dynamic>[
+    final params = <dynamic>[
       screenshot,
       extraScreenshot,
       galleryImage,
       screenRecording
     ];
-    await _channel.invokeMethod<Object>(
+    return _channel.invokeMethod(
       'setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording:',
       params,
     );
@@ -151,7 +151,7 @@ class BugReporting {
     final reportTypesStrings =
         reportTypes?.map((e) => e.toString()).toList(growable: false) ?? [];
     final params = <dynamic>[reportTypesStrings];
-    await _channel.invokeMethod<Object>('setReportTypes:', params);
+    return _channel.invokeMethod('setReportTypes:', params);
   }
 
   /// Sets whether the extended bug report mode should be disabled, enabled with
@@ -160,8 +160,8 @@ class BugReporting {
   static Future<void> setExtendedBugReportMode(
     ExtendedBugReportMode extendedBugReportMode,
   ) async {
-    final List<dynamic> params = <dynamic>[extendedBugReportMode.toString()];
-    await _channel.invokeMethod<Object>('setExtendedBugReportMode:', params);
+    final params = <dynamic>[extendedBugReportMode.toString()];
+    return _channel.invokeMethod('setExtendedBugReportMode:', params);
   }
 
   /// Sets the invocation options.
@@ -174,7 +174,7 @@ class BugReporting {
         invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
             [];
     final params = <dynamic>[invocationOptionsStrings];
-    await _channel.invokeMethod<Object>('setInvocationOptions:', params);
+    return _channel.invokeMethod('setInvocationOptions:', params);
   }
 
   /// Sets the floating button position.
@@ -184,11 +184,8 @@ class BugReporting {
     FloatingButtonEdge floatingButtonEdge,
     int offsetFromTop,
   ) async {
-    final List<dynamic> params = <dynamic>[
-      floatingButtonEdge.toString(),
-      offsetFromTop
-    ];
-    await _channel.invokeMethod<Object>(
+    final params = <dynamic>[floatingButtonEdge.toString(), offsetFromTop];
+    return _channel.invokeMethod(
       'setFloatingButtonEdge:withTopOffset:',
       params,
     );
@@ -204,11 +201,8 @@ class BugReporting {
     final invocationOptionsStrings =
         invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
             [];
-    final List<dynamic> params = <dynamic>[
-      reportType.toString(),
-      invocationOptionsStrings
-    ];
-    await _channel.invokeMethod<Object>(
+    final params = <dynamic>[reportType.toString(), invocationOptionsStrings];
+    return _channel.invokeMethod(
       'showBugReportingWithReportTypeAndOptions:options:',
       params,
     );
@@ -221,8 +215,8 @@ class BugReporting {
     double iPhoneShakingThreshold,
   ) async {
     if (IBGBuildInfo.instance.isIOS) {
-      final List<dynamic> params = <dynamic>[iPhoneShakingThreshold];
-      await _channel.invokeMethod<Object>(
+      final params = <dynamic>[iPhoneShakingThreshold];
+      return _channel.invokeMethod(
         'setShakingThresholdForiPhone:',
         params,
       );
@@ -236,8 +230,8 @@ class BugReporting {
     double iPadShakingThreshold,
   ) async {
     if (IBGBuildInfo.instance.isIOS) {
-      final List<dynamic> params = <dynamic>[iPadShakingThreshold];
-      await _channel.invokeMethod<Object>(
+      final params = <dynamic>[iPadShakingThreshold];
+      return _channel.invokeMethod(
         'setShakingThresholdForiPad:',
         params,
       );
@@ -253,8 +247,8 @@ class BugReporting {
     int androidThreshold,
   ) async {
     if (IBGBuildInfo.instance.isAndroid) {
-      final List<dynamic> params = <dynamic>[androidThreshold];
-      await _channel.invokeMethod<Object>(
+      final params = <dynamic>[androidThreshold];
+      return _channel.invokeMethod(
         'setShakingThresholdForAndroid:',
         params,
       );

@@ -20,8 +20,8 @@ class CrashReporting {
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
     enabled = isEnabled;
-    final List<dynamic> params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setCrashReportingEnabled:', params);
+    final params = <dynamic>[isEnabled];
+    return _channel.invokeMethod('setCrashReportingEnabled:', params);
   }
 
   static Future<void> reportCrash(Object exception, StackTrace stack) async {
@@ -56,9 +56,9 @@ class CrashReporting {
     StackTrace stack,
     bool handled,
   ) async {
-    final Trace trace = Trace.from(stack);
-    final List<ExceptionData> frames = <ExceptionData>[];
-    for (int i = 0; i < trace.frames.length; i++) {
+    final trace = Trace.from(stack);
+    final frames = <ExceptionData>[];
+    for (var i = 0; i < trace.frames.length; i++) {
       frames.add(
         ExceptionData(
           trace.frames[i].uri.toString(),
@@ -68,13 +68,13 @@ class CrashReporting {
         ),
       );
     }
-    final CrashData crashData = CrashData(
+    final crashData = CrashData(
       exception.toString(),
       IBGBuildInfo.instance.operatingSystem,
       frames,
     );
-    final List<dynamic> params = <dynamic>[jsonEncode(crashData), handled];
-    await _channel.invokeMethod<Object>(
+    final params = <dynamic>[jsonEncode(crashData), handled];
+    return _channel.invokeMethod(
       'sendJSCrashByReflection:handled:',
       params,
     );

@@ -26,29 +26,29 @@ class APM {
   /// Enables or disables APM feature.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
-    final List<dynamic> params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setAPMEnabled:', params);
+    final params = <dynamic>[isEnabled];
+    return _channel.invokeMethod('setAPMEnabled:', params);
   }
 
   /// Sets log Level to determine level of details in a log
   /// [logLevel] Enum value to determine the level
   static Future<void> setLogLevel(LogLevel logLevel) async {
-    final List<dynamic> params = <dynamic>[logLevel.toString()];
-    await _channel.invokeMethod<Object>('setAPMLogLevel:', params);
+    final params = <dynamic>[logLevel.toString()];
+    return _channel.invokeMethod('setAPMLogLevel:', params);
   }
 
   /// Enables or disables cold app launch tracking.
   /// [boolean] isEnabled
   static Future<void> setColdAppLaunchEnabled(bool isEnabled) async {
-    final List<dynamic> params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setColdAppLaunchEnabled:', params);
+    final params = <dynamic>[isEnabled];
+    return _channel.invokeMethod('setColdAppLaunchEnabled:', params);
   }
 
   /// Starts an execution trace.
   /// [String] name of the trace.
   static Future<Trace> startExecutionTrace(String name) async {
-    final DateTime id = IBGDateTime.instance.now();
-    final List<dynamic> params = <dynamic>[name, id.toString()];
+    final id = IBGDateTime.instance.now();
+    final params = <dynamic>[name, id.toString()];
     final traceId =
         await _channel.invokeMethod<String?>('startExecutionTrace:id:', params);
 
@@ -71,12 +71,12 @@ class APM {
     String key,
     String value,
   ) async {
-    final List<dynamic> params = <dynamic>[
+    final params = <dynamic>[
       id,
       key,
       value,
     ];
-    await _channel.invokeMethod<Object>(
+    return _channel.invokeMethod(
       'setExecutionTraceAttribute:key:value:',
       params,
     );
@@ -85,32 +85,32 @@ class APM {
   /// Ends an execution trace.
   /// [String] id of the trace.
   static Future<void> endExecutionTrace(String id) async {
-    final List<dynamic> params = <dynamic>[id];
-    await _channel.invokeMethod<Object>('endExecutionTrace:', params);
+    final params = <dynamic>[id];
+    return _channel.invokeMethod('endExecutionTrace:', params);
   }
 
   /// Enables or disables auto UI tracing.
   /// [boolean] isEnabled
   static Future<void> setAutoUITraceEnabled(bool isEnabled) async {
-    final List<dynamic> params = <dynamic>[isEnabled];
-    await _channel.invokeMethod<Object>('setAutoUITraceEnabled:', params);
+    final params = <dynamic>[isEnabled];
+    return _channel.invokeMethod('setAutoUITraceEnabled:', params);
   }
 
   /// Starts UI trace.
   /// [String] name
   static Future<void> startUITrace(String name) async {
-    final List<dynamic> params = <dynamic>[name];
-    await _channel.invokeMethod<Object>('startUITrace:', params);
+    final params = <dynamic>[name];
+    return _channel.invokeMethod('startUITrace:', params);
   }
 
   /// Ends UI trace.
   static Future<void> endUITrace() async {
-    await _channel.invokeMethod<Object>('endUITrace');
+    return _channel.invokeMethod('endUITrace');
   }
 
   /// Ends App Launch.
   static Future<void> endAppLaunch() async {
-    await _channel.invokeMethod<Object>('endAppLaunch');
+    return _channel.invokeMethod('endAppLaunch');
   }
 
   static FutureOr<void> networkLogAndroid(NetworkData data) {

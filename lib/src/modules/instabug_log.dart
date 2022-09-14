@@ -15,8 +15,8 @@ class InstabugLog {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logError(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logError:', params);
+    final params = <dynamic>[message];
+    return _channel.invokeMethod('logError:', params);
   }
 
   /// Appends a log [message] to Instabug internal log
@@ -24,8 +24,8 @@ class InstabugLog {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logWarn(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logWarn:', params);
+    final params = <dynamic>[message];
+    return _channel.invokeMethod('logWarn:', params);
   }
 
   /// Appends a log [message] to Instabug internal log
@@ -33,8 +33,8 @@ class InstabugLog {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logVerbose(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logVerbose:', params);
+    final params = <dynamic>[message];
+    return _channel.invokeMethod('logVerbose:', params);
   }
 
   /// Appends a log [message] to Instabug internal log
@@ -42,8 +42,8 @@ class InstabugLog {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logDebug(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logDebug:', params);
+    final params = <dynamic>[message];
+    return _channel.invokeMethod('logDebug:', params);
   }
 
   /// Appends a log [message] to Instabug internal log
@@ -51,12 +51,12 @@ class InstabugLog {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logInfo(String message) async {
-    final List<dynamic> params = <dynamic>[message];
-    await _channel.invokeMethod<Object>('logInfo:', params);
+    final params = <dynamic>[message];
+    return _channel.invokeMethod('logInfo:', params);
   }
 
   /// Clears Instabug internal log
   static Future<void> clearAllLogs() async {
-    await _channel.invokeMethod<Object>('clearAllLogs');
+    return _channel.invokeMethod('clearAllLogs');
   }
 }
