@@ -226,6 +226,16 @@ NSMutableDictionary *traces;
 }
 
 /**
+ * Sets the position of the video recording button when using the screen recording attachment functionality.
+ * @param position Position of the video recording floating button on the screen.
+ */
++ (void)setVideoRecordingFloatingButtonPosition:(NSString *)position {
+    NSDictionary *constants = [self constants];
+    IBGPosition intPosition = ((NSNumber *) constants[position]).doubleValue;
+    IBGBugReporting.videoRecordingFloatingButtonPosition = intPosition;
+}
+
+/**
  * Appends a set of tags to previously added tags of reported feedback, bug or crash.
  * @param tags An array of tags to append to current tags.
  */
