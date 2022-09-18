@@ -1,6 +1,6 @@
 ## Unreleased
 
-* Adds `BugReporting.setVideoRecordingButtonPosition` API
+* Adds `BugReporting.setVideoRecordingFloatingButtonPosition` API
 
 ## 11.2.0 (2022-09-08)
 
