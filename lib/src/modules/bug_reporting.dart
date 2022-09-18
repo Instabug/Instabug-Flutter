@@ -198,6 +198,18 @@ class BugReporting {
     );
   }
 
+  /// Sets the position of the video recording button when using the screen recording attachment functionality.
+  /// [position] Position of the video recording floating button on the screen.
+  static Future<void> setVideoRecordingFloatingButtonPosition(
+    Position position,
+  ) async {
+    final params = <dynamic>[position.toString()];
+    return _channel.invokeMethod(
+      'setVideoRecordingFloatingButtonPosition:',
+      params,
+    );
+  }
+
   /// Invoke bug reporting with report type and options.
   /// [reportType] type
   /// [invocationOptions]  List of invocation options
