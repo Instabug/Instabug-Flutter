@@ -41,5 +41,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Instabug needs access to microphone for bug reporting</string>
 </dict>
 </plist>
