@@ -217,6 +217,24 @@ static const NSTimeInterval kTimeout = 30.0;
      [self waitForExpectationsWithTimeout:kTimeout handler:nil];
  }
 
+ - (void)testSetVideoRecordingFloatingButtonPosition {
+     id mock = OCMClassMock([InstabugFlutterPlugin class]);
+     InstabugFlutterPlugin *instabug = [[InstabugFlutterPlugin alloc] init];
+     
+     NSArray *arguments = [NSArray arrayWithObjects:@"Position.topRight", nil];
+     FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"setVideoRecordingFloatingButtonPosition:" arguments:arguments];
+     [[[mock stub] classMethod] setVideoRecordingFloatingButtonPosition:@"Position.topRight"];
+
+     XCTestExpectation *expectation = [self expectationWithDescription:@"Result is called"];
+     [instabug handleMethodCall:call result:^(id _Nullable result) {
+         XCTAssertNil(result);
+         [expectation fulfill];
+     }];
+
+     [[[mock verify] classMethod] setVideoRecordingFloatingButtonPosition:@"Position.topRight"];
+     [self waitForExpectationsWithTimeout:kTimeout handler:nil];
+ }
+
  - (void)testAddFileAttachmentWithData {
      id mock = OCMClassMock([InstabugFlutterPlugin class]);
      InstabugFlutterPlugin *instabug = [[InstabugFlutterPlugin alloc] init];
