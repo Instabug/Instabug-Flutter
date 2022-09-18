@@ -158,6 +158,15 @@ class OnMethodCallTests {
         verify(instabugMock).setFloatingButtonEdge("FloatingButtonEdge.left", 300);
     }
 
+    public void testSetVideoRecordingFloatingButtonPosition(){
+        String methodName = "setVideoRecordingFloatingButtonPosition";
+        ArrayList<Object> argsList = new ArrayList<>();
+        argsList.add("Position.topRight");
+        Mockito.doNothing().when(instabugMock).setVideoRecordingFloatingButtonPosition(any(String.class));
+        testMethodCall(methodName, argsList);
+        verify(instabugMock).setVideoRecordingFloatingButtonPosition("Position.topRight");
+    }
+
     public void testAddFileAttachmentWithData() {
         String methodName = "addFileAttachmentWithData";
         ArrayList<Object> argsList = new ArrayList<>();

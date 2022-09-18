@@ -106,6 +106,14 @@ public class InstabugFlutterPluginTest {
     }
 
     /**
+     * (String)
+     */
+    @Test
+    public void testSetVideoRecordingFloatingButtonPosition() {
+        new OnMethodCallTests().testSetVideoRecordingFloatingButtonPosition();
+    }
+
+    /**
      * (byte[], String)
      */
     @Test
