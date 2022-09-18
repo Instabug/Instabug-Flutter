@@ -248,6 +248,20 @@ void main() {
     ]);
   });
 
+  test(
+      'test setVideoRecordingFloatingButtonPosition should be called with argument position',
+      () async {
+    const position = Position.topRight;
+    await BugReporting.setVideoRecordingFloatingButtonPosition(position);
+    final args = <dynamic>[position.toString()];
+    expect(log, <Matcher>[
+      isMethodCall(
+        'setVideoRecordingFloatingButtonPosition:',
+        arguments: args,
+      )
+    ]);
+  });
+
   test('test appendTags should be called with argument List of strings',
       () async {
     const tags = ['tag1', 'tag2'];
