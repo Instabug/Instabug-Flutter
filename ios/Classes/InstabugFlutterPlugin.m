@@ -1018,6 +1018,11 @@ NSMutableDictionary *traces;
 
       @"FloatingButtonEdge.left": @(CGRectMinXEdge),
       @"FloatingButtonEdge.right": @(CGRectMaxXEdge),
+      
+      @"Position.topRight": @(IBGPositionTopRight),
+      @"Position.topLeft": @(IBGPositionTopLeft),
+      @"Position.bottomRight": @(IBGPositionBottomRight),
+      @"Position.bottomLeft": @(IBGPositionBottomLeft),
 
       @"InvocationOption.commentFieldRequired": @(IBGBugReportingOptionCommentFieldRequired),
       @"InvocationOption.disablePostSendingDialog": @(IBGBugReportingOptionDisablePostSendingDialog),

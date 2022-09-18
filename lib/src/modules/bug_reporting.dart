@@ -25,6 +25,13 @@ enum ExtendedBugReportMode {
 
 enum FloatingButtonEdge { left, right }
 
+enum Position {
+  topRight,
+  topLeft,
+  bottomRight,
+  bottomLeft,
+}
+
 typedef OnSDKInvokeCallback = void Function();
 typedef OnSDKDismissCallback = void Function(DismissType, ReportType);
 

@@ -5,6 +5,7 @@ import com.instabug.bug.invocation.Option;
 import com.instabug.featuresrequest.ActionType;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
+import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.visualusersteps.State;
@@ -58,6 +59,7 @@ final class ArgsRegistry {
         registerLocaleArgs(ARGS);
         registerInvocationOptionsArgs(ARGS);
         registerInstabugFloatingButtonEdgeArgs(ARGS);
+        registerInstabugVideoRecordingButtonPositionArgs(ARGS);
         registerCustomTextPlaceHolderKeysArgs(ARGS);
         registerInstabugReportTypesArgs(ARGS);
         registerInstabugExtendedBugReportModeArgs(ARGS);
@@ -128,6 +130,13 @@ final class ArgsRegistry {
     static void registerInstabugFloatingButtonEdgeArgs(Map<String, Object> args) {
         args.put("FloatingButtonEdge.left", InstabugFloatingButtonEdge.LEFT);
         args.put("FloatingButtonEdge.right", InstabugFloatingButtonEdge.RIGHT);
+    }
+
+    static void registerInstabugVideoRecordingButtonPositionArgs(Map<String, Object> args) {
+        args.put("Position.topRight", InstabugVideoRecordingButtonPosition.TOP_RIGHT);
+        args.put("Position.topLeft", InstabugVideoRecordingButtonPosition.TOP_LEFT);
+        args.put("Position.bottomRight", InstabugVideoRecordingButtonPosition.BOTTOM_RIGHT);
+        args.put("Position.bottomLeft", InstabugVideoRecordingButtonPosition.BOTTOM_LEFT);
     }
 
     static void registerInvocationOptionsArgs(Map<String, Object> args) {
