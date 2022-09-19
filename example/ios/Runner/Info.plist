@@ -42,8 +42,8 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Instabug needs access to microphone for bug reporting</string>
+	<string>Instabug needs access to your microphone so you can attach voice notes.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Instabug needs access to photo library for bug reporting</string>
+	<string>Instabug needs access to your photo library so you can attach images.</string>
 </dict>
 </plist>
