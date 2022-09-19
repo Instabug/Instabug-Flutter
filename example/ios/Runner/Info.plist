@@ -43,5 +43,7 @@
 	<false/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Instabug needs access to microphone for bug reporting</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Instabug needs access to photo library for bug reporting</string>
 </dict>
 </plist>
