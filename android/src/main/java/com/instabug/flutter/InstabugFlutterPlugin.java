@@ -28,6 +28,7 @@ import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
+import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
 import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
@@ -295,6 +296,16 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
                 InstabugFloatingButtonEdge.class);
         BugReporting.setFloatingButtonEdge(resolvedFloatingButtonEdge);
         BugReporting.setFloatingButtonOffset(floatingButtonOffset);
+    }
+
+    /**
+     * Sets the position of the video recording button when using the screen recording attachment functionality.
+     *
+     * @param videoRecordingButtonPosition position of the video recording floating button on the screen.
+     */
+    public void setVideoRecordingFloatingButtonPosition(String videoRecordingButtonPosition) {
+        InstabugVideoRecordingButtonPosition resolvedVideoRecordingButtonPosition = ArgsRegistry.getDeserializedValue(videoRecordingButtonPosition, InstabugVideoRecordingButtonPosition.class);
+        BugReporting.setVideoRecordingFloatingButtonPosition(resolvedVideoRecordingButtonPosition);
     }
 
     /**

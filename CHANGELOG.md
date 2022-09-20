@@ -1,3 +1,7 @@
+## Unreleased
+
+* Adds BugReporting.setVideoRecordingFloatingButtonPosition API
+
 ## 11.2.0 (2022-09-08)
 
 * Bumps Instabug Android SDK to v11.4.1

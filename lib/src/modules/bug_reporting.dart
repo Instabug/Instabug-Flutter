@@ -25,6 +25,13 @@ enum ExtendedBugReportMode {
 
 enum FloatingButtonEdge { left, right }
 
+enum Position {
+  topRight,
+  topLeft,
+  bottomRight,
+  bottomLeft,
+}
+
 typedef OnSDKInvokeCallback = void Function();
 typedef OnSDKDismissCallback = void Function(DismissType, ReportType);
 
@@ -187,6 +194,18 @@ class BugReporting {
     final params = <dynamic>[floatingButtonEdge.toString(), offsetFromTop];
     return _channel.invokeMethod(
       'setFloatingButtonEdge:withTopOffset:',
+      params,
+    );
+  }
+
+  /// Sets the position of the video recording button when using the screen recording attachment functionality.
+  /// [position] Position of the video recording floating button on the screen.
+  static Future<void> setVideoRecordingFloatingButtonPosition(
+    Position position,
+  ) async {
+    final params = <dynamic>[position.toString()];
+    return _channel.invokeMethod(
+      'setVideoRecordingFloatingButtonPosition:',
       params,
     );
   }
