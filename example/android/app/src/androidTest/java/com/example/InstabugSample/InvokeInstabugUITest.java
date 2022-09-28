@@ -3,6 +3,8 @@ package com.example.InstabugSample;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiSelector;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,6 +23,7 @@ import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class InvokeInstabugUITest {
+    UiDevice device = UiDevice.getInstance(getInstrumentation());
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule =
@@ -32,7 +35,9 @@ public class InvokeInstabugUITest {
         onView(withResourceName("instabug_floating_button")).perform(click());
         Thread.sleep(1000);
 
-        closeMediaProjectionDialog();
+        // Dismiss media projection prompt.
+        // This is a temporary solution as we are dropping media projection in a future release.
+        device.pressBack();
         Thread.sleep(1000);
 
         onView(withText("Report a bug")).perform(click());
@@ -46,12 +51,9 @@ public class InvokeInstabugUITest {
         ).perform(replaceText("inst@bug.com"));
 
         onView(withResourceName("instabug_bugreporting_send")).perform(click());
-        onView(withResourceName("instabug_success_dialog_container")).perform(click());
-    }
 
-    public static void closeMediaProjectionDialog() {
-        UiDevice device = UiDevice.getInstance(getInstrumentation());
-        device.pressBack();
+        UiObject successDialog = device.findObject(new UiSelector().resourceIdMatches(".*/id:instabug_success_dialog_container"));
+        successDialog.waitForExists(3000);
     }
 
     public static Method getMethod(Class clazz, String methodName, Class... parameterType) {
