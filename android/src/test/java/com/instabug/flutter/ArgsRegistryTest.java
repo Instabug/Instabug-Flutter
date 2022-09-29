@@ -67,7 +67,7 @@ public class ArgsRegistryTest {
     public void givenFabInvocationIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale() {
         // when
         InstabugInvocationEvent deserializedValue = ArgsRegistry.getDeserializedValue(
-                "InvocationEvent.floatingButton", InstabugInvocationEvent.class);
+                "InvocationEvent.floatingButton");
         // then
         Assert.assertNotNull(deserializedValue);
         Assert.assertEquals(InstabugInvocationEvent.FLOATING_BUTTON, deserializedValue);
@@ -77,7 +77,7 @@ public class ArgsRegistryTest {
     public void givenWelcomeMessageBetaIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale() {
         // when
         WelcomeMessage.State deserializedValue = ArgsRegistry.getDeserializedValue(
-                "WelcomeMessageMode.beta", WelcomeMessage.State.class);
+                "WelcomeMessageMode.beta");
         // then
         Assert.assertNotNull(deserializedValue);
         Assert.assertEquals(WelcomeMessage.State.BETA, deserializedValue);
@@ -86,7 +86,7 @@ public class ArgsRegistryTest {
     @Test
     public void givenEnglishLocaleIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale() {
         // when
-        Locale actualLocale = ArgsRegistry.getDeserializedValue("IBGLocale.english", Locale.class);
+        Locale actualLocale = ArgsRegistry.getDeserializedValue("IBGLocale.english");
         // then
         Assert.assertNotNull(actualLocale);
         Assert.assertEquals("en", actualLocale.getLanguage());
@@ -105,8 +105,8 @@ public class ArgsRegistryTest {
     @Test
     public void givenShakeHintIsPresent_when$getDeserializedValue_thenShouldReturnNonNullKey() {
         // when
-        InstabugCustomTextPlaceHolder.Key actualKey =
-                ArgsRegistry.getDeserializedValue("CustomTextPlaceHolderKey.shakeHint", InstabugCustomTextPlaceHolder.Key.class);
+        InstabugCustomTextPlaceHolder.Key actualKey = ArgsRegistry
+                .getDeserializedValue("CustomTextPlaceHolderKey.shakeHint");
         // then
         Assert.assertNotNull(actualKey);
         Assert.assertEquals(InstabugCustomTextPlaceHolder.Key.SHAKE_HINT, actualKey);
@@ -147,8 +147,6 @@ public class ArgsRegistryTest {
         Assert.assertTrue(map.containsValue(WelcomeMessage.State.BETA));
         Assert.assertTrue(map.containsValue(WelcomeMessage.State.DISABLED));
     }
-
-
 
     private void assertAllSupportedLocalesArePresent(Map<String, Object> map) {
         // source of truth
@@ -193,7 +191,8 @@ public class ArgsRegistryTest {
         Assert.assertTrue(map.containsValue(Option.EMAIL_FIELD_OPTIONAL));
     }
 
-    private void assertAllSupportedCustomTextPlaceHolderKeysArePresent(Map<String, Object> map, List<InstabugCustomTextPlaceHolder.Key> expectedKeys) {
+    private void assertAllSupportedCustomTextPlaceHolderKeysArePresent(Map<String, Object> map,
+            List<InstabugCustomTextPlaceHolder.Key> expectedKeys) {
         // actual
         List<InstabugCustomTextPlaceHolder.Key> actualKeys = new ArrayList<>();
         for (Map.Entry m : map.entrySet()) {

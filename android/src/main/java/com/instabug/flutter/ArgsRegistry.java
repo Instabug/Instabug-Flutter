@@ -74,17 +74,14 @@ final class ArgsRegistry {
      * - {@code key} is not null
      * - {@code key} does exist in the registry
      * - The value assigned to the {@code key} is not null
-     * - The value assigned to the {@code key} is assignable from and can be casted to {@code clazz}
-     * (i.e. Foo value = getDeserializedValue("key", Foo.class))
      *
      * @param key   the key whose associated value is to be returned
-     * @param clazz the type in which the value should be deserialized to
      * @return the value deserialized if all the assertions were successful, null otherwise
      */
-    static <T> T getDeserializedValue(String key, Class<T> clazz) {
+    static <T> T getDeserializedValue(String key) {
         if (key != null && ARGS.containsKey(key)) {
             Object constant = ARGS.get(key);
-            if (constant != null && constant.getClass().isAssignableFrom(clazz)) {
+            if (constant != null) {
                 return (T) constant;
             }
         }
