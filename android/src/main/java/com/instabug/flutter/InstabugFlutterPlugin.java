@@ -159,7 +159,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
         for (int i = 0; i < invocationEvents.size(); i++) {
             String key = invocationEvents.get(i);
-            invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key, InstabugInvocationEvent.class);
+            invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key);
         }
 
         final Application application = (Application) context;
@@ -177,8 +177,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
      *                           beta.
      */
     public void showWelcomeMessageWithMode(String welcomeMessageMode) {
-        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(welcomeMessageMode,
-                WelcomeMessage.State.class);
+        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(welcomeMessageMode);
         Instabug.showWelcomeMessage(resolvedWelcomeMessageMode);
     }
 
@@ -207,7 +206,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
      * @param instabugLocale
      */
     public void setLocale(String instabugLocale) {
-        Locale resolvedLocale = ArgsRegistry.getDeserializedValue(instabugLocale, Locale.class);
+        Locale resolvedLocale = ArgsRegistry.getDeserializedValue(instabugLocale);
         Instabug.setLocale(resolvedLocale);
     }
 
@@ -279,7 +278,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
      * @param colorTheme an InstabugColorTheme to set the SDK's UI to.
      */
     public void setColorTheme(String colorTheme) {
-        InstabugColorTheme resolvedTheme = ArgsRegistry.getDeserializedValue(colorTheme, InstabugColorTheme.class);
+        InstabugColorTheme resolvedTheme = ArgsRegistry.getDeserializedValue(colorTheme);
         if (resolvedTheme != null) {
             Instabug.setColorTheme(resolvedTheme);
         }
@@ -292,8 +291,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
      * @param floatingButtonOffset  offset for the position on the y-axis.
      */
     public void setFloatingButtonEdge(String floatingButtonEdge, int floatingButtonOffset) {
-        InstabugFloatingButtonEdge resolvedFloatingButtonEdge = ArgsRegistry.getDeserializedValue(floatingButtonEdge,
-                InstabugFloatingButtonEdge.class);
+        InstabugFloatingButtonEdge resolvedFloatingButtonEdge = ArgsRegistry.getDeserializedValue(floatingButtonEdge);
         BugReporting.setFloatingButtonEdge(resolvedFloatingButtonEdge);
         BugReporting.setFloatingButtonOffset(floatingButtonOffset);
     }
@@ -304,7 +302,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
      * @param videoRecordingButtonPosition position of the video recording floating button on the screen.
      */
     public void setVideoRecordingFloatingButtonPosition(String videoRecordingButtonPosition) {
-        InstabugVideoRecordingButtonPosition resolvedVideoRecordingButtonPosition = ArgsRegistry.getDeserializedValue(videoRecordingButtonPosition, InstabugVideoRecordingButtonPosition.class);
+        InstabugVideoRecordingButtonPosition resolvedVideoRecordingButtonPosition = ArgsRegistry.getDeserializedValue(videoRecordingButtonPosition);
         BugReporting.setVideoRecordingFloatingButtonPosition(resolvedVideoRecordingButtonPosition);
     }
 
@@ -432,8 +430,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
      * @param forStringWithKey Key of string to override.
      */
     public void setValue(String value, String forStringWithKey) {
-        InstabugCustomTextPlaceHolder.Key key = ArgsRegistry.getDeserializedValue(forStringWithKey,
-                InstabugCustomTextPlaceHolder.Key.class);
+        InstabugCustomTextPlaceHolder.Key key = ArgsRegistry.getDeserializedValue(forStringWithKey);
         placeHolder.set(key, value);
         Instabug.setCustomTextPlaceHolders(placeHolder);
     }
@@ -560,8 +557,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
      *                           beta or disabled.
      */
     public void setWelcomeMessageMode(String welcomeMessageMode) {
-        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(welcomeMessageMode,
-                WelcomeMessage.State.class);
+        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(welcomeMessageMode);
         Instabug.setWelcomeMessageState(resolvedWelcomeMessageMode);
     }
 
@@ -627,7 +623,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
                 InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
                 for (int i = 0; i < invocationEvents.size(); i++) {
                     String key = invocationEvents.get(i);
-                    invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key, InstabugInvocationEvent.class);
+                    invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key);
                 }
                 BugReporting.setInvocationEvents(invocationEventsArray);
             }
@@ -663,7 +659,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
                 int[] reportTypesArray = new int[reportTypes.size()];
                 for (int i = 0; i < reportTypes.size(); i++) {
                     String key = reportTypes.get(i);
-                    reportTypesArray[i] = ArgsRegistry.getDeserializedValue(key, Integer.class);
+                    reportTypesArray[i] = ArgsRegistry.getDeserializedValue(key);
                 }
                 BugReporting.setReportTypes(reportTypesArray);
             }
@@ -677,8 +673,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
      * @param extendedBugReportMode
      */
     public void setExtendedBugReportMode(String extendedBugReportMode) {
-        ExtendedBugReport.State extendedBugReport = ArgsRegistry.getDeserializedValue(extendedBugReportMode,
-                ExtendedBugReport.State.class);
+        ExtendedBugReport.State extendedBugReport = ArgsRegistry.getDeserializedValue(extendedBugReportMode);
         BugReporting.setExtendedBugReportState(extendedBugReport);
     }
 
@@ -690,7 +685,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     public void setInvocationOptions(List<String> invocationOptions) {
         int[] options = new int[invocationOptions.size()];
         for (int i = 0; i < invocationOptions.size(); i++) {
-            options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i), Integer.class);
+            options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i));
         }
         BugReporting.setOptions(options);
     }
@@ -705,9 +700,9 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             final List<String> invocationOptions) {
         int[] options = new int[invocationOptions.size()];
         for (int i = 0; i < invocationOptions.size(); i++) {
-            options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i), Integer.class);
+            options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i));
         }
-        int reportTypeInt = ArgsRegistry.getDeserializedValue(reportType, Integer.class);
+        int reportTypeInt = ArgsRegistry.getDeserializedValue(reportType);
         BugReporting.show(reportTypeInt, options);
     }
 
@@ -843,7 +838,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     public void setEmailFieldRequiredForFeatureRequests(final Boolean isEmailRequired, final List<String> actionTypes) {
         int[] actions = new int[actionTypes.size()];
         for (int i = 0; i < actionTypes.size(); i++) {
-            actions[i] = ArgsRegistry.getDeserializedValue(actionTypes.get(i), Integer.class);
+            actions[i] = ArgsRegistry.getDeserializedValue(actionTypes.get(i));
         }
         FeatureRequests.setEmailFieldRequired(isEmailRequired, actions);
     }
@@ -1015,7 +1010,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             @Override
             public void run() {
                 try {
-                    if (ArgsRegistry.getDeserializedValue(logLevel, Integer.class) == null) {
+                    if (ArgsRegistry.getDeserializedValue(logLevel) == null) {
                         return;
                     }
                     APM.setLogLevel((int) ArgsRegistry.getRawValue(logLevel));
@@ -1251,7 +1246,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
      */
     public void setReproStepsMode(String reproStepsMode) {
         try {
-            Instabug.setReproStepsState(ArgsRegistry.getDeserializedValue(reproStepsMode, State.class));
+            Instabug.setReproStepsState(ArgsRegistry.getDeserializedValue(reproStepsMode));
         } catch (Exception e) {
             e.printStackTrace();
         }
