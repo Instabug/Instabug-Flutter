@@ -1,6 +1,7 @@
 ## Unreleased
 
 * Adds BugReporting.setVideoRecordingFloatingButtonPosition API
+* Adss missing mapping for portuguesePortugal locale on iOS
 
 ## 11.2.0 (2022-09-08)
 
