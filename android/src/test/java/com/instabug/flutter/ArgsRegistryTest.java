@@ -271,6 +271,7 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);
         keys.add(InstabugCustomTextPlaceHolder.Key.SUCCESS_DIALOG_HEADER);
         keys.add(InstabugCustomTextPlaceHolder.Key.ADD_VIDEO);
+        keys.add(InstabugCustomTextPlaceHolder.Key.VIDEO_RECORDING_FAB_BUBBLE_HINT);
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE);
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT);
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE);
@@ -282,6 +283,24 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.CHATS_TEAM_STRING_NAME);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_REPLY_BUTTON);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_DISMISS_BUTTON);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_SUBTITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_BUG_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REQUEST_FEATURE_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_BODY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_NEGATIVE_ACTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_POSITIVE_ACTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_ADD_ATTACHMENT_HEADER);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_BODY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_LINK);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_PROGRESS_DIALOG_BODY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_HEADER);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_EMPTY_STATE_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_ITEM_NUMBERING_TITLE);
         return keys;
     }
 
@@ -309,6 +328,7 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);
         keys.add(InstabugCustomTextPlaceHolder.Key.SUCCESS_DIALOG_HEADER);
         keys.add(InstabugCustomTextPlaceHolder.Key.ADD_VIDEO);
+        keys.add(InstabugCustomTextPlaceHolder.Key.VIDEO_RECORDING_FAB_BUBBLE_HINT);
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE);
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT);
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE);
@@ -328,6 +348,24 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.CHATS_TEAM_STRING_NAME);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_REPLY_BUTTON);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_DISMISS_BUTTON);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_SUBTITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_BUG_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REQUEST_FEATURE_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_BODY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_NEGATIVE_ACTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_POSITIVE_ACTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_ADD_ATTACHMENT_HEADER);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_BODY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_LINK);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_PROGRESS_DIALOG_BODY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_HEADER);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_EMPTY_STATE_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_ITEM_NUMBERING_TITLE);
         return keys;
     }
 }

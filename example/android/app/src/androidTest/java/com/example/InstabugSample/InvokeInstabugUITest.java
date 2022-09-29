@@ -10,8 +10,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.lang.reflect.Method;
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
@@ -54,26 +52,6 @@ public class InvokeInstabugUITest {
 
         UiObject successDialog = device.findObject(new UiSelector().resourceIdMatches(".*/id:instabug_success_dialog_container"));
         successDialog.waitForExists(3000);
-    }
-
-    public static Method getMethod(Class clazz, String methodName, Class... parameterType) {
-        final Method[] methods = clazz.getDeclaredMethods();
-        for (Method method : methods) {
-            if (method.getName().equals(methodName) && method.getParameterTypes().length ==
-                    parameterType.length) {
-                for (int i = 0; i < parameterType.length; i++) {
-                    if (method.getParameterTypes()[i] == parameterType[i]) {
-                        if (i == method.getParameterTypes().length - 1) {
-                            method.setAccessible(true);
-                            return method;
-                        }
-                    } else {
-                        break;
-                    }
-                }
-            }
-        }
-        return null;
     }
 }
 
