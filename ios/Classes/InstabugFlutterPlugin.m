@@ -1054,6 +1054,7 @@ NSMutableDictionary *traces;
       @"IBGLocale.korean": @(IBGLocaleKorean),
       @"IBGLocale.polish": @(IBGLocalePolish),
       @"IBGLocale.portugueseBrazil": @(IBGLocalePortugueseBrazil),
+      @"IBGLocale.portuguesePortugal": @(IBGLocalePortuguese),
       @"IBGLocale.russian": @(IBGLocaleRussian),
       @"IBGLocale.spanish": @(IBGLocaleSpanish),
       @"IBGLocale.swedish": @(IBGLocaleSwedish),
