@@ -1,5 +1,6 @@
 ## Unreleased
 
+* Bumps Instabug iOS SDK to v11.3.0
 * Adds BugReporting.setVideoRecordingFloatingButtonPosition API
 
 ## 11.2.0 (2022-09-08)
