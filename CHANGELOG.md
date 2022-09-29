@@ -1,6 +1,7 @@
 ## Unreleased
 
 * Adds BugReporting.setVideoRecordingFloatingButtonPosition API
+* Adds some missing string keys
 
 ## 11.2.0 (2022-09-08)
 
