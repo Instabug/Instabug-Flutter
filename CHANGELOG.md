@@ -1,7 +1,9 @@
 ## Unreleased
 
 * Adds BugReporting.setVideoRecordingFloatingButtonPosition API
-* Adss missing mapping for portuguesePortugal locale on iOS
+* Adds some missing string keys and their mappings on iOS and Android
+* Adds missing mapping for portuguesePortugal locale on iOS
+* Fixes an issue with some string keys not working on Android
 
 ## 11.2.0 (2022-09-08)
 

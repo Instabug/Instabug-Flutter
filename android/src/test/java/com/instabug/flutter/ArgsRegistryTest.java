@@ -67,7 +67,7 @@ public class ArgsRegistryTest {
     public void givenFabInvocationIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale() {
         // when
         InstabugInvocationEvent deserializedValue = ArgsRegistry.getDeserializedValue(
-                "InvocationEvent.floatingButton", InstabugInvocationEvent.class);
+                "InvocationEvent.floatingButton");
         // then
         Assert.assertNotNull(deserializedValue);
         Assert.assertEquals(InstabugInvocationEvent.FLOATING_BUTTON, deserializedValue);
@@ -77,7 +77,7 @@ public class ArgsRegistryTest {
     public void givenWelcomeMessageBetaIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale() {
         // when
         WelcomeMessage.State deserializedValue = ArgsRegistry.getDeserializedValue(
-                "WelcomeMessageMode.beta", WelcomeMessage.State.class);
+                "WelcomeMessageMode.beta");
         // then
         Assert.assertNotNull(deserializedValue);
         Assert.assertEquals(WelcomeMessage.State.BETA, deserializedValue);
@@ -86,7 +86,7 @@ public class ArgsRegistryTest {
     @Test
     public void givenEnglishLocaleIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale() {
         // when
-        Locale actualLocale = ArgsRegistry.getDeserializedValue("IBGLocale.english", Locale.class);
+        Locale actualLocale = ArgsRegistry.getDeserializedValue("IBGLocale.english");
         // then
         Assert.assertNotNull(actualLocale);
         Assert.assertEquals("en", actualLocale.getLanguage());
@@ -105,8 +105,8 @@ public class ArgsRegistryTest {
     @Test
     public void givenShakeHintIsPresent_when$getDeserializedValue_thenShouldReturnNonNullKey() {
         // when
-        InstabugCustomTextPlaceHolder.Key actualKey =
-                ArgsRegistry.getDeserializedValue("CustomTextPlaceHolderKey.shakeHint", InstabugCustomTextPlaceHolder.Key.class);
+        InstabugCustomTextPlaceHolder.Key actualKey = ArgsRegistry
+                .getDeserializedValue("CustomTextPlaceHolderKey.shakeHint");
         // then
         Assert.assertNotNull(actualKey);
         Assert.assertEquals(InstabugCustomTextPlaceHolder.Key.SHAKE_HINT, actualKey);
@@ -147,8 +147,6 @@ public class ArgsRegistryTest {
         Assert.assertTrue(map.containsValue(WelcomeMessage.State.BETA));
         Assert.assertTrue(map.containsValue(WelcomeMessage.State.DISABLED));
     }
-
-
 
     private void assertAllSupportedLocalesArePresent(Map<String, Object> map) {
         // source of truth
@@ -193,7 +191,8 @@ public class ArgsRegistryTest {
         Assert.assertTrue(map.containsValue(Option.EMAIL_FIELD_OPTIONAL));
     }
 
-    private void assertAllSupportedCustomTextPlaceHolderKeysArePresent(Map<String, Object> map, List<InstabugCustomTextPlaceHolder.Key> expectedKeys) {
+    private void assertAllSupportedCustomTextPlaceHolderKeysArePresent(Map<String, Object> map,
+            List<InstabugCustomTextPlaceHolder.Key> expectedKeys) {
         // actual
         List<InstabugCustomTextPlaceHolder.Key> actualKeys = new ArrayList<>();
         for (Map.Entry m : map.entrySet()) {
@@ -272,6 +271,7 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);
         keys.add(InstabugCustomTextPlaceHolder.Key.SUCCESS_DIALOG_HEADER);
         keys.add(InstabugCustomTextPlaceHolder.Key.ADD_VIDEO);
+        keys.add(InstabugCustomTextPlaceHolder.Key.VIDEO_RECORDING_FAB_BUBBLE_HINT);
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE);
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT);
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE);
@@ -283,6 +283,24 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.CHATS_TEAM_STRING_NAME);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_REPLY_BUTTON);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_DISMISS_BUTTON);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_SUBTITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_BUG_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REQUEST_FEATURE_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_BODY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_NEGATIVE_ACTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_POSITIVE_ACTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_ADD_ATTACHMENT_HEADER);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_BODY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_LINK);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_PROGRESS_DIALOG_BODY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_HEADER);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_EMPTY_STATE_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_ITEM_NUMBERING_TITLE);
         return keys;
     }
 
@@ -310,6 +328,7 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);
         keys.add(InstabugCustomTextPlaceHolder.Key.SUCCESS_DIALOG_HEADER);
         keys.add(InstabugCustomTextPlaceHolder.Key.ADD_VIDEO);
+        keys.add(InstabugCustomTextPlaceHolder.Key.VIDEO_RECORDING_FAB_BUBBLE_HINT);
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE);
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT);
         keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE);
@@ -329,6 +348,24 @@ public class ArgsRegistryTest {
         keys.add(InstabugCustomTextPlaceHolder.Key.CHATS_TEAM_STRING_NAME);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_REPLY_BUTTON);
         keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_DISMISS_BUTTON);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_SUBTITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_BUG_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REQUEST_FEATURE_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_TITLE);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_BODY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_NEGATIVE_ACTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_POSITIVE_ACTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_ADD_ATTACHMENT_HEADER);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_BODY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_LINK);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_PROGRESS_DIALOG_BODY);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_HEADER);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_EMPTY_STATE_DESCRIPTION);
+        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_ITEM_NUMBERING_TITLE);
         return keys;
     }
 }

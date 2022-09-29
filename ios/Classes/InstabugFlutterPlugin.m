@@ -1088,6 +1088,7 @@ NSMutableDictionary *traces;
       @"CustomTextPlaceHolderKey.reportSuccessfullySent": kIBGThankYouAlertMessageStringName,
       @"CustomTextPlaceHolderKey.successDialogHeader": kIBGThankYouAlertTitleStringName,
       @"CustomTextPlaceHolderKey.addVideo": kIBGAddScreenRecordingMessageStringName,
+      @"CustomTextPlaceHolderKey.videoPressRecord": kIBGVideoPressRecordTitle,
       @"CustomTextPlaceHolderKey.betaWelcomeMessageWelcomeStepTitle": kIBGBetaWelcomeMessageWelcomeStepTitle,
       @"CustomTextPlaceHolderKey.betaWelcomeMessageWelcomeStepContent": kIBGBetaWelcomeMessageWelcomeStepContent,
       @"CustomTextPlaceHolderKey.betaWelcomeMessageHowToReportStepTitle": kIBGBetaWelcomeMessageHowToReportStepTitle,
@@ -1100,6 +1101,28 @@ NSMutableDictionary *traces;
       @"CustomTextPlaceHolderKey.repliesNotificationTeamName": kIBGTeamStringName,
       @"CustomTextPlaceHolderKey.repliesNotificationReplyButton": kIBGReplyButtonTitleStringName,
       @"CustomTextPlaceHolderKey.repliesNotificationDismissButton": kIBGDismissButtonTitleStringName,
+
+      @"CustomTextPlaceHolderKey.surveysStoreRatingThanksTitle": kIBGStoreRatingThankYouTitleText,
+      @"CustomTextPlaceHolderKey.surveysStoreRatingThanksSubtitle": kIBGStoreRatingThankYouDescriptionText,
+
+      @"CustomTextPlaceHolderKey.reportBugDescription": kIBGReportBugDescriptionStringName,
+      @"CustomTextPlaceHolderKey.reportFeedbackDescription": kIBGReportFeedbackDescriptionStringName,
+      @"CustomTextPlaceHolderKey.reportQuestionDescription": kIBGReportQuestionDescriptionStringName,
+      @"CustomTextPlaceHolderKey.requestFeatureDescription": kIBGRequestFeatureDescriptionStringName,
+
+      @"CustomTextPlaceHolderKey.discardAlertTitle": kIBGDiscardAlertTitle,
+      @"CustomTextPlaceHolderKey.discardAlertMessage": kIBGDiscardAlertMessage,
+      @"CustomTextPlaceHolderKey.discardAlertCancel": kIBGDiscardAlertCancel,
+      @"CustomTextPlaceHolderKey.discardAlertAction": kIBGDiscardAlertAction,
+      @"CustomTextPlaceHolderKey.addAttachmentButtonTitleStringName": kIBGAddAttachmentButtonTitleStringName,
+
+      @"CustomTextPlaceHolderKey.reportReproStepsDisclaimerBody": kIBGReproStepsDisclaimerBody,
+      @"CustomTextPlaceHolderKey.reportReproStepsDisclaimerLink": kIBGReproStepsDisclaimerLink,
+      @"CustomTextPlaceHolderKey.reproStepsProgressDialogBody": kIBGProgressViewTitle,
+      @"CustomTextPlaceHolderKey.reproStepsListHeader": kIBGReproStepsListTitle,
+      @"CustomTextPlaceHolderKey.reproStepsListDescription": kIBGReproStepsListHeader,
+      @"CustomTextPlaceHolderKey.reproStepsListEmptyStateDescription": kIBGReproStepsListEmptyStateLabel,
+      @"CustomTextPlaceHolderKey.reproStepsListItemTitle": kIBGReproStepsListItemName,
 
       @"ReportType.bug": @(IBGBugReportingReportTypeBug),
       @"ReportType.feedback": @(IBGBugReportingReportTypeFeedback),
