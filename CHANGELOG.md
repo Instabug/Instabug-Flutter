@@ -1,6 +1,7 @@
 ## Unreleased
 
 * Adds BugReporting.setVideoRecordingFloatingButtonPosition API
+* Fixes an issue with some string keys not working on Android
 
 ## 11.2.0 (2022-09-08)
 
