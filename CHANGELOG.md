@@ -1,5 +1,6 @@
 ## Unreleased
 
+* Bumps Instabug iOS SDK to v11.3.0
 * Adds BugReporting.setVideoRecordingFloatingButtonPosition API
 * Adds some missing string keys and their mappings on iOS and Android
 * Adds missing mapping for portuguesePortugal locale on iOS
