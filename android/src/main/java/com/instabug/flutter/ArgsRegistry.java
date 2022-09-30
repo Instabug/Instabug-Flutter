@@ -74,17 +74,14 @@ final class ArgsRegistry {
      * - {@code key} is not null
      * - {@code key} does exist in the registry
      * - The value assigned to the {@code key} is not null
-     * - The value assigned to the {@code key} is assignable from and can be casted to {@code clazz}
-     * (i.e. Foo value = getDeserializedValue("key", Foo.class))
      *
      * @param key   the key whose associated value is to be returned
-     * @param clazz the type in which the value should be deserialized to
      * @return the value deserialized if all the assertions were successful, null otherwise
      */
-    static <T> T getDeserializedValue(String key, Class<T> clazz) {
+    static <T> T getDeserializedValue(String key) {
         if (key != null && ARGS.containsKey(key)) {
             Object constant = ARGS.get(key);
-            if (constant != null && constant.getClass().isAssignableFrom(clazz)) {
+            if (constant != null) {
                 return (T) constant;
             }
         }
@@ -196,6 +193,7 @@ final class ArgsRegistry {
         args.put("CustomTextPlaceHolderKey.reportSuccessfullySent", InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);
         args.put("CustomTextPlaceHolderKey.successDialogHeader", InstabugCustomTextPlaceHolder.Key.SUCCESS_DIALOG_HEADER);
         args.put("CustomTextPlaceHolderKey.addVideo", InstabugCustomTextPlaceHolder.Key.ADD_VIDEO);
+        args.put("CustomTextPlaceHolderKey.videoPressRecord", InstabugCustomTextPlaceHolder.Key.VIDEO_RECORDING_FAB_BUBBLE_HINT);
         args.put("CustomTextPlaceHolderKey.betaWelcomeMessageWelcomeStepTitle", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE);
         args.put("CustomTextPlaceHolderKey.betaWelcomeMessageWelcomeStepContent", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT);
         args.put("CustomTextPlaceHolderKey.betaWelcomeMessageHowToReportStepTitle", InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE);
@@ -207,6 +205,24 @@ final class ArgsRegistry {
         args.put("CustomTextPlaceHolderKey.repliesNotificationTeamName", InstabugCustomTextPlaceHolder.Key.CHATS_TEAM_STRING_NAME);
         args.put("CustomTextPlaceHolderKey.repliesNotificationReplyButton", InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_REPLY_BUTTON);
         args.put("CustomTextPlaceHolderKey.repliesNotificationDismissButton", InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_DISMISS_BUTTON);
+        args.put("CustomTextPlaceHolderKey.surveysStoreRatingThanksTitle", InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_TITLE);
+        args.put("CustomTextPlaceHolderKey.surveysStoreRatingThanksSubtitle", InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_SUBTITLE);
+        args.put("CustomTextPlaceHolderKey.reportBugDescription", InstabugCustomTextPlaceHolder.Key.REPORT_BUG_DESCRIPTION);
+        args.put("CustomTextPlaceHolderKey.reportFeedbackDescription", InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK_DESCRIPTION);
+        args.put("CustomTextPlaceHolderKey.reportQuestionDescription", InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION_DESCRIPTION);
+        args.put("CustomTextPlaceHolderKey.requestFeatureDescription", InstabugCustomTextPlaceHolder.Key.REQUEST_FEATURE_DESCRIPTION);
+        args.put("CustomTextPlaceHolderKey.discardAlertTitle", InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_TITLE);
+        args.put("CustomTextPlaceHolderKey.discardAlertMessage", InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_BODY);
+        args.put("CustomTextPlaceHolderKey.discardAlertCancel", InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_NEGATIVE_ACTION);
+        args.put("CustomTextPlaceHolderKey.discardAlertAction", InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_POSITIVE_ACTION);
+        args.put("CustomTextPlaceHolderKey.addAttachmentButtonTitleStringName", InstabugCustomTextPlaceHolder.Key.REPORT_ADD_ATTACHMENT_HEADER);
+        args.put("CustomTextPlaceHolderKey.reportReproStepsDisclaimerBody", InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_BODY);
+        args.put("CustomTextPlaceHolderKey.reportReproStepsDisclaimerLink", InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_LINK);
+        args.put("CustomTextPlaceHolderKey.reproStepsProgressDialogBody", InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_PROGRESS_DIALOG_BODY);
+        args.put("CustomTextPlaceHolderKey.reproStepsListHeader", InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_HEADER);
+        args.put("CustomTextPlaceHolderKey.reproStepsListDescription", InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_DESCRIPTION);
+        args.put("CustomTextPlaceHolderKey.reproStepsListEmptyStateDescription", InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_EMPTY_STATE_DESCRIPTION);
+        args.put("CustomTextPlaceHolderKey.reproStepsListItemTitle", InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_ITEM_NUMBERING_TITLE);
     }
 
     static void registerInstabugReportTypesArgs(Map<String, Object> args) {
