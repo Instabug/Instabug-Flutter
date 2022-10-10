@@ -5,14 +5,6 @@
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result;
 
 /**
-  * starts the SDK
-  * @param token token The token that identifies the app
-  * @param invocationEventsArray invocationEvents The events that invoke
-  * the SDK's UI.
-  */
-+ (void)startWithToken:(NSString *)token invocationEvents:(NSArray *)invocationEventsArray;
-
-/**
   * Shows the welcome message in a specific mode.
   *
   * @param welcomeMessageMode An enum to set the welcome message mode to

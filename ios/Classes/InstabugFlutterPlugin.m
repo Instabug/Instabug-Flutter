@@ -1,6 +1,8 @@
 #import "InstabugFlutterPlugin.h"
 #import "Instabug.h"
 #import "IBGAPM.h"
+#import "Generated/InstabugPigeon.h"
+#import "InstabugApiImpl.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:((float)((rgbValue & 0xFF000000) >> 24))/255.0 ];
 
@@ -16,6 +18,7 @@ NSMutableDictionary *traces;
   InstabugFlutterPlugin* instance = [[InstabugFlutterPlugin alloc] init];
   traces = [[NSMutableDictionary alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
+  InstabugApiSetup([registrar messenger], [[InstabugApiImpl alloc] init]);
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -53,35 +56,6 @@ NSMutableDictionary *traces;
     if (!isImplemented) {
         result(FlutterMethodNotImplemented);
     }
-}
-
-/**
-  * starts the SDK
-  * @param token token The token that identifies the app
-  * @param invocationEvents invocationEvents The events that invoke
-  * the SDK's UI.
-  */
-+ (void)startWithToken:(NSString *)token invocationEvents:(NSArray*)invocationEventsArray {
-    SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
-    if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
-        NSInteger *platformID = IBGPlatformFlutter;
-        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
-        [inv setSelector:setPrivateApiSEL];
-        [inv setTarget:[Instabug class]];
-        [inv setArgument:&(platformID) atIndex:2];
-        [inv invoke];
-    }
-
-    NSDictionary *constants = [self constants];
-    NSInteger invocationEvents = 0;
-    for (NSString * invocationEvent in invocationEventsArray) {
-        invocationEvents |= ((NSNumber *) constants[invocationEvent]).integerValue;
-    }
-    if (invocationEvents == 0) {
-        invocationEvents = IBGInvocationEventNone;
-    }
-    [Instabug startWithToken:token invocationEvents:invocationEvents];
-    
 }
 
 /**

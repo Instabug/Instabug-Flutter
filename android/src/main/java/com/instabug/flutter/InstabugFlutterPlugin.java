@@ -19,6 +19,7 @@ import com.instabug.bug.invocation.Option;
 import com.instabug.chat.Replies;
 import com.instabug.crash.CrashReporting;
 import com.instabug.featuresrequest.FeatureRequests;
+import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
@@ -100,6 +101,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         context = applicationContext;
         channel = new MethodChannel(messenger, "instabug_flutter");
         channel.setMethodCallHandler(new InstabugFlutterPlugin());
+        InstabugPigeon.InstabugApi.setup(messenger, new InstabugApiImpl(context));
     }
 
     @Override
@@ -131,43 +133,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         if (!isImplemented) {
             result.notImplemented();
         }
-    }
-
-    private void setCurrentPlatform() {
-        try {
-            Method method = getMethod(Class.forName("com.instabug.library.Instabug"), "setCurrentPlatform", int.class);
-            if (method != null) {
-                Log.i("IB-CP-Bridge", "invoking setCurrentPlatform with platform: " + Platform.FLUTTER);
-                method.invoke(null, Platform.FLUTTER);
-            } else {
-                Log.e("IB-CP-Bridge", "setCurrentPlatform was not found by reflection");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * starts the SDK
-     *
-     * @param token            token The token that identifies the app, you can find
-     *                         it on your dashboard.
-     * @param invocationEvents invocationEvents The events that invoke the SDK's UI.
-     */
-    public void startWithToken(String token, ArrayList<String> invocationEvents) {
-        setCurrentPlatform();
-        InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
-        for (int i = 0; i < invocationEvents.size(); i++) {
-            String key = invocationEvents.get(i);
-            invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key);
-        }
-
-        final Application application = (Application) context;
-        new Instabug.Builder(application, token)
-                .setInvocationEvents(invocationEventsArray)
-                .build();
-
-        enableScreenShotByMediaProjection(true);
     }
 
     /**
@@ -433,14 +398,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         InstabugCustomTextPlaceHolder.Key key = ArgsRegistry.getDeserializedValue(forStringWithKey);
         placeHolder.set(key, value);
         Instabug.setCustomTextPlaceHolders(placeHolder);
-    }
-
-    /**
-     * Enables taking screenshots by media projection.
-     */
-    @VisibleForTesting
-    public static void enableScreenShotByMediaProjection(boolean isScreenshotByMediaProjectionEnabled) {
-        BugReporting.setScreenshotByMediaProjectionEnabled(isScreenshotByMediaProjectionEnabled);
     }
 
     /**

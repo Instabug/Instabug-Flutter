@@ -9,6 +9,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
+import 'package:instabug_flutter/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 
 enum InvocationEvent {
@@ -111,6 +112,7 @@ enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 
 class Instabug {
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
+  static final native = InstabugApi();
 
   static Future<String?> get platformVersion =>
       _channel.invokeMethod<String>('getPlatformVersion');
@@ -127,12 +129,8 @@ class Instabug {
     List<InvocationEvent> invocationEvents,
   ) async {
     final invocationEventsStrings =
-        invocationEvents.map((e) => e.toString()).toList(growable: false);
-    final params = <dynamic>[token, invocationEventsStrings];
-    return _channel.invokeMethod(
-      'startWithToken:invocationEvents:',
-      params,
-    );
+        invocationEvents.map((e) => e.toString()).toList();
+    return native.start(token, invocationEventsStrings);
   }
 
   /// Shows the welcome message in a specific mode.
