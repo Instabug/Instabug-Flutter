@@ -2,39 +2,17 @@
 
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:instabug_flutter/generated/instabug_log.api.g.dart';
 
 class InstabugLog {
-  static const MethodChannel _channel = MethodChannel('instabug_flutter');
-
-  static Future<String?> get platformVersion =>
-      _channel.invokeMethod<String>('getPlatformVersion');
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static Future<void> logError(String message) async {
-    final params = <dynamic>[message];
-    return _channel.invokeMethod('logError:', params);
-  }
-
-  /// Appends a log [message] to Instabug internal log
-  /// These logs are then sent along the next uploaded report.
-  /// All log messages are timestamped
-  /// Note: logs passed to this method are NOT printed to console
-  static Future<void> logWarn(String message) async {
-    final params = <dynamic>[message];
-    return _channel.invokeMethod('logWarn:', params);
-  }
+  static final _native = InstabugLogApi();
 
   /// Appends a log [message] to Instabug internal log
   /// These logs are then sent along the next uploaded report.
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logVerbose(String message) async {
-    final params = <dynamic>[message];
-    return _channel.invokeMethod('logVerbose:', params);
+    return _native.logVerbose(message);
   }
 
   /// Appends a log [message] to Instabug internal log
@@ -42,8 +20,7 @@ class InstabugLog {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logDebug(String message) async {
-    final params = <dynamic>[message];
-    return _channel.invokeMethod('logDebug:', params);
+    return _native.logDebug(message);
   }
 
   /// Appends a log [message] to Instabug internal log
@@ -51,12 +28,27 @@ class InstabugLog {
   /// All log messages are timestamped
   /// Note: logs passed to this method are NOT printed to console
   static Future<void> logInfo(String message) async {
-    final params = <dynamic>[message];
-    return _channel.invokeMethod('logInfo:', params);
+    return _native.logInfo(message);
+  }
+
+  /// Appends a log [message] to Instabug internal log
+  /// These logs are then sent along the next uploaded report.
+  /// All log messages are timestamped
+  /// Note: logs passed to this method are NOT printed to console
+  static Future<void> logWarn(String message) async {
+    return _native.logWarn(message);
+  }
+
+  /// Appends a log [message] to Instabug internal log
+  /// These logs are then sent along the next uploaded report.
+  /// All log messages are timestamped
+  /// Note: logs passed to this method are NOT printed to console
+  static Future<void> logError(String message) async {
+    return _native.logError(message);
   }
 
   /// Clears Instabug internal log
   static Future<void> clearAllLogs() async {
-    return _channel.invokeMethod('clearAllLogs');
+    return _native.clearAllLogs();
   }
 }

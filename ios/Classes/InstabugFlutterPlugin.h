@@ -5,51 +5,6 @@
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result;
 
 /**
-  * Appends a log message to Instabug internal log
-  * These logs are then sent along the next uploaded report.
-  * All log messages are timestamped 
-  * @param log the message
-  */
-+ (void)logVerbose:(NSString *)log;
-
-/**
-  * Appends a log message to Instabug internal log
-  * These logs are then sent along the next uploaded report.
-  * All log messages are timestamped 
-  * @param log the message
-  */
-+ (void)logDebug:(NSString *)log;
-
-/**
-  * Appends a log message to Instabug internal log
-  * These logs are then sent along the next uploaded report.
-  * All log messages are timestamped 
-  * @param log the message
-  */
-+ (void)logInfo:(NSString *)log;
-
-/**
-  * Clears Instabug internal log
-  */
-+ (void)clearAllLogs;
-
-/**
-  * Appends a log message to Instabug internal log
-  * These logs are then sent along the next uploaded report.
-  * All log messages are timestamped 
-  * @param log the message
-  */
-+ (void)logError:(NSString *)log;
-
-/**
-  * Appends a log message to Instabug internal log
-  * These logs are then sent along the next uploaded report.
-  * All log messages are timestamped 
-  * @param log the message
-  */
-+ (void)logWarn:(NSString *)log;
-
-/**
  * Sets the position of Instabug floating button on the screen.
  * @param floatingButtonEdge  left or right edge of the screen.
  * @param floatingButtonTopOffset offset for the position on the y-axis.

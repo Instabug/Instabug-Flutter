@@ -2,7 +2,9 @@
 #import "Instabug.h"
 #import "IBGAPM.h"
 #import "Generated/InstabugPigeon.h"
+#import "Generated/InstabugLogPigeon.h"
 #import "InstabugApiImpl.h"
+#import "InstabugLogApiImpl.h"
 
 
 @implementation InstabugFlutterPlugin
@@ -18,6 +20,7 @@ NSMutableDictionary *traces;
   traces = [[NSMutableDictionary alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
   InstabugApiSetup([registrar messenger], [[InstabugApiImpl alloc] init]);
+  InstabugLogApiSetup([registrar messenger], [[InstabugLogApiImpl alloc] init]);
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -55,64 +58,6 @@ NSMutableDictionary *traces;
     if (!isImplemented) {
         result(FlutterMethodNotImplemented);
     }
-}
-
-/**
-  * Appends a log message to Instabug internal log
-  * These logs are then sent along the next uploaded report.
-  * All log messages are timestamped 
-  * @param log the message
-  */
-+ (void)logVerbose:(NSString *)log {
-  [IBGLog logVerbose:log];
-}
-
-/**
-  * Appends a log message to Instabug internal log
-  * These logs are then sent along the next uploaded report.
-  * All log messages are timestamped 
-  * @param log the message
-  */
-+ (void)logDebug:(NSString *)log {
-  [IBGLog logDebug:log];
-}
-
-/**
-  * Appends a log message to Instabug internal log
-  * These logs are then sent along the next uploaded report.
-  * All log messages are timestamped 
-  * @param log the message
-  */
-+ (void)logInfo:(NSString *)log {
-  [IBGLog logInfo:log];
-}
-
-/**
-  * Clears Instabug internal log
-  */
-+ (void)clearAllLogs {
-  [IBGLog clearAllLogs];
-}
-
-/**
-  * Appends a log message to Instabug internal log
-  * These logs are then sent along the next uploaded report.
-  * All log messages are timestamped 
-  * @param log the message
-  */
-+ (void)logError:(NSString *)log {
-  [IBGLog logError:log];
-}
-
-
-/**
-  * Appends a log message to Instabug internal log
-  * These logs are then sent along the next uploaded report.
-  * All log messages are timestamped 
-  * @param log the message
-  */
-+ (void)logWarn:(NSString *)log {
-  [IBGLog logWarn:log];
 }
 
 /**

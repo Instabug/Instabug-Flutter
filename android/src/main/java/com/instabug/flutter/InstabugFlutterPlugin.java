@@ -1,58 +1,43 @@
 package com.instabug.flutter;
 
-import android.app.Application;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.bug.BugReporting;
-import com.instabug.bug.invocation.Option;
 import com.instabug.chat.Replies;
 import com.instabug.crash.CrashReporting;
 import com.instabug.featuresrequest.FeatureRequests;
+import com.instabug.flutter.generated.InstabugLogPigeon;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
-import com.instabug.library.InstabugColorTheme;
-import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.OnSdkDismissCallback;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
 import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
-import com.instabug.library.logging.InstabugLog;
 import com.instabug.library.model.NetworkLog;
-import com.instabug.library.ui.onboarding.WelcomeMessage;
-import com.instabug.library.visualusersteps.State;
-import com.instabug.survey.callbacks.*;
 import com.instabug.survey.Survey;
 import com.instabug.survey.Surveys;
-import com.instabug.apm.APM;
+import com.instabug.survey.callbacks.OnDismissCallback;
+import com.instabug.survey.callbacks.OnShowCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import com.instabug.library.Platform;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BinaryMessenger;
@@ -61,7 +46,6 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
-import io.reactivex.annotations.Nullable;
 
 /**
  * InstabugFlutterPlugin
@@ -101,6 +85,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         channel = new MethodChannel(messenger, "instabug_flutter");
         channel.setMethodCallHandler(new InstabugFlutterPlugin());
         InstabugPigeon.InstabugApi.setup(messenger, new InstabugApiImpl(context));
+        InstabugLogPigeon.InstabugLogApi.setup(messenger, new InstabugLogApiImpl());
     }
 
     @Override
@@ -132,68 +117,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         if (!isImplemented) {
             result.notImplemented();
         }
-    }
-
-    /**
-     * Appends a log message to Instabug internal log These logs are then sent along
-     * the next uploaded report. All log messages are timestamped Note: logs passed
-     * to this method are NOT printed to Logcat
-     *
-     * @param message the message
-     */
-    public void logVerbose(String message) {
-        InstabugLog.v(message);
-    }
-
-    /**
-     * Appends a log message to Instabug internal log These logs are then sent along
-     * the next uploaded report. All log messages are timestamped Note: logs passed
-     * to this method are NOT printed to Logcat
-     *
-     * @param message the message
-     */
-    public void logDebug(String message) {
-        InstabugLog.d(message);
-    }
-
-    /**
-     * Appends a log message to Instabug internal log These logs are then sent along
-     * the next uploaded report. All log messages are timestamped Note: logs passed
-     * to this method are NOT printed to Logcat
-     *
-     * @param message the message
-     */
-    public void logInfo(String message) {
-        InstabugLog.i(message);
-    }
-
-    /**
-     * Appends a log message to Instabug internal log These logs are then sent along
-     * the next uploaded report. All log messages are timestamped Note: logs passed
-     * to this method are NOT printed to Logcat
-     *
-     * @param message the message
-     */
-    public void logError(String message) {
-        InstabugLog.e(message);
-    }
-
-    /**
-     * Appends a log message to Instabug internal log These logs are then sent along
-     * the next uploaded report. All log messages are timestamped Note: logs passed
-     * to this method are NOT printed to Logcat
-     *
-     * @param message the message
-     */
-    public void logWarn(String message) {
-        InstabugLog.w(message);
-    }
-
-    /**
-     * Clears Instabug internal log
-     */
-    public void clearAllLogs() {
-        InstabugLog.clearLogs();
     }
 
     /**
