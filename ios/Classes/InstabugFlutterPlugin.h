@@ -5,46 +5,6 @@
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result;
 
 /**
-  * Shows the welcome message in a specific mode.
-  *
-  * @param welcomeMessageMode An enum to set the welcome message mode to
-  *                          live, or beta.
-  */
-+ (void)showWelcomeMessageWithMode:(NSString *)welcomeMessageMode;
-
-/**
-  * Set the user identity.
-  * Instabug will pre-fill the user email in reports.
-  *
-  * @param name  Username.
-  * @param email User's default email
-  */
-+ (void)identifyUserWithEmail:(NSString *)email name:(NSString *)name;
-
-/**
-  * Sets the default value of the user's email to null and show email field and remove user
-  * name from all reports
-  * It also reset the chats on device and removes user attributes, user data and completed
-  * surveys.
-  */
-+ (void)logOut;
-
-/**
-  * Change Locale of Instabug UI elements(defaults to English)
-  *
-  * @param locale locale
-  */
-+ (void)setLocale:(NSString *)locale;
-
-/**
-  * This API sets the verbosity level of logs used to debug The SDK. The defualt value in debug 
-  * mode is sdkDebugLogsLevelVerbose and in production is sdkDebugLogsLevelError.
-  *
-  * @param sdkDebugLogsLevel
-  */
-+ (void)setSdkDebugLogsLevel:(NSString *)sdkDebugLogsLevel;
-
-/**
   * Appends a log message to Instabug internal log
   * These logs are then sent along the next uploaded report.
   * All log messages are timestamped 
@@ -88,11 +48,6 @@
   * @param log the message
   */
 + (void)logWarn:(NSString *)log;
-/**
- * Sets the color theme of the SDK's whole UI.
- * @param colorTheme An `IBGColorTheme` to set the SDK's UI to.
- */
-+ (void)setColorTheme:(NSString *)colorTheme;
 
 /**
  * Sets the position of Instabug floating button on the screen.
@@ -108,145 +63,12 @@
 + (void)setVideoRecordingFloatingButtonPosition:(NSString *)position;
 
 /**
- * Appends a set of tags to previously added tags of reported feedback, bug or crash.
- * @param tags An array of tags to append to current tags.
- */
-+ (void)appendTags:(NSArray *)tags;
-
-/**
- * Manually removes all tags of reported feedback, bug or crash.
- */
-+ (void)resetTags;
-
-/**
- * Gets all tags of reported feedback, bug or crash.
- * @return An array of tags.
- */
-+ (NSArray *)getTags;
-
-/**
- * Adds experiments to the next report.
- * @param experiments An array of experiments to add.
- */
-+ (void)addExperiments:(NSArray *)experiments;
-
-/**
- * Removes certain experiments from the next report.
- * @param experiments An array of experiments to remove.
- */
-+ (void)removeExperiments:(NSArray *)experiments;
-
-/**
- * Clears all experiments from the next report.
- */
-+ (void)clearAllExperiments;
-
-/**
- * Set custom user attributes that are going to be sent with each feedback, bug or crash.
- * @param value User attribute value.
- * @param key User attribute key.
- */
-+ (void)setUserAttribute:(NSString *)value withKey:(NSString *)key;
-
-/**
- * Removes a given key and its associated value from user attributes.
- * Does nothing if a key does not exist.
- * @param key The key to remove.
- */
-+ (void)removeUserAttributeForKey:(NSString *)key;
-
-/**
- * Returns the user attribute associated with a given key.
- * @param key The key for which to return the corresponding value.
- * @return The value associated with aKey, or nil if no value is associated with aKey.
- */
-+ (NSString *)getUserAttributeForKey:(NSString *)key;
-
-/**
- * Returns all user attributes.
- * @return A new dictionary containing all the currently set user attributes, or an empty dictionary if no user attributes have been set.
- */
-+ (NSDictionary *)getUserAttributes;
-
-/**
- * invoke sdk manually
- */
-+ (void)show;
-
-/**
   * invoke sdk manually with desire invocation mode
   *
   * @param invocationMode the invocation mode
   * @param invocationOptionsArray the array of invocation options
   */
 + (void)invokeWithMode:(NSString *)invocationMode options:(NSArray *)invocationOptionsArray;
-
-/**
-  * Logs a user event that happens through the lifecycle of the application.
-  * Logged user events are going to be sent with each report, as well as at the end of a session.
-  *
-  * @param name Event name.
-  */
-+ (void)logUserEventWithName:(NSString *)name;
-
-/**
- * Overrides any of the strings shown in the SDK with custom ones.
- * Allows you to customize any of the strings shown to users in the SDK.
- * @param value String value to override the default one.
- * @param key Key of string to override. Use predefined keys like kIBGShakeStartAlertTextStringName,
- * kIBGEmailFieldPlaceholderStringName, etc.
- */
-+ (void)setValue:(NSString *)value forStringWithKey:(NSString *)key;
-
-/**
-  * Enable/disable session profiler
-  *
-  * @param sessionProfilerEnabled desired state of the session profiler feature
-  */
-+ (void)setSessionProfilerEnabled:(NSNumber *)sessionProfilerEnabled;
-
-/**
-  * Set the primary color that the SDK will use to tint certain UI elements in the SDK
-  *
-  * @param color The value of the primary color 
-  */
-+ (void)setPrimaryColor:(NSNumber *)color;
-/**
-  * Adds specific user data that you need to be added to the reports
-  *
-  * @param userData user data
-  */
-+ (void)setUserData:(NSString *)userData;
-
-/**
-  * The file at filePath will be uploaded along upcoming reports with the name
-  * fileNameWithExtension
-  *
-  * @param fileURLString the file uri
-  */
-+ (void)addFileAttachmentWithURL:(NSString *)fileURLString;
-
-/**
-  * The file at filePath will be uploaded along upcoming reports with the name
-  * fileNameWithExtension
-  *
-  * @param data               the file data
-  */
-+ (void)addFileAttachmentWithData:(FlutterStandardTypedData *)data;
-
-/**
-  * Clears all Uris of the attached files.
-  * The URIs which added via {@link Instabug#addFileAttachment} API not the physical files.
-  */
-+ (void)clearFileAttachments;
-
-/**
-  * Sets the welcome message mode to live, beta or disabled.
-  *
-  * @param welcomeMessageMode An enum to set the welcome message mode to
-  *                          live, beta or disabled.
-  */
-+ (void)setWelcomeMessageMode:(NSString *)welcomeMessageMode;
 
 /**
   * Enables and disables manual invocation and prompt options for bug and feedback.
@@ -510,4 +332,5 @@
   */
 + (void)endAppLaunch;
 
++ (NSDictionary *)constants;
 @end

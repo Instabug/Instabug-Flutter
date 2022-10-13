@@ -74,7 +74,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     final public static String INVOCATION_EVENT_FLOATING_BUTTON = "InvocationEvent.floatingButton";
     final public static String INVOCATION_EVENT_SHAKE = "InvocationEvent.shake";
 
-    private InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
     HashMap<String, ExecutionTrace> traces = new HashMap<String, ExecutionTrace>();
 
     private static Context context;
@@ -133,46 +132,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         if (!isImplemented) {
             result.notImplemented();
         }
-    }
-
-    /**
-     * Shows the welcome message in a specific mode.
-     *
-     * @param welcomeMessageMode An enum to set the welcome message mode to live, or
-     *                           beta.
-     */
-    public void showWelcomeMessageWithMode(String welcomeMessageMode) {
-        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(welcomeMessageMode);
-        Instabug.showWelcomeMessage(resolvedWelcomeMessageMode);
-    }
-
-    /**
-     * Set the user identity.
-     *
-     * @param userName  Username.
-     * @param userEmail User's default email
-     */
-    public void identifyUserWithEmail(String userEmail, String userName) {
-        Instabug.identifyUser(userName, userEmail);
-    }
-
-    /**
-     * Sets the default value of the user's email to null and show email field and
-     * remove user name from all reports It also reset the chats on device and
-     * removes user attributes, user data and completed surveys.
-     */
-    public void logOut() {
-        Instabug.logoutUser();
-    }
-
-    /**
-     * Change Locale of Instabug UI elements(defaults to English)
-     *
-     * @param instabugLocale
-     */
-    public void setLocale(String instabugLocale) {
-        Locale resolvedLocale = ArgsRegistry.getDeserializedValue(instabugLocale);
-        Instabug.setLocale(resolvedLocale);
     }
 
     /**
@@ -238,18 +197,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     }
 
     /**
-     * Sets the color theme of the SDK's whole UI.
-     *
-     * @param colorTheme an InstabugColorTheme to set the SDK's UI to.
-     */
-    public void setColorTheme(String colorTheme) {
-        InstabugColorTheme resolvedTheme = ArgsRegistry.getDeserializedValue(colorTheme);
-        if (resolvedTheme != null) {
-            Instabug.setColorTheme(resolvedTheme);
-        }
-    }
-
-    /**
      * Sets the position of Instabug floating button on the screen.
      * 
      * @param floatingButtonEdge    left or right edge of the screen.
@@ -269,135 +216,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     public void setVideoRecordingFloatingButtonPosition(String videoRecordingButtonPosition) {
         InstabugVideoRecordingButtonPosition resolvedVideoRecordingButtonPosition = ArgsRegistry.getDeserializedValue(videoRecordingButtonPosition);
         BugReporting.setVideoRecordingFloatingButtonPosition(resolvedVideoRecordingButtonPosition);
-    }
-
-    /**
-     * Appends a set of tags to previously added tags of reported feedback, bug or
-     * crash.
-     *
-     * @param tags An array of tags to append to current tags.
-     */
-    public void appendTags(ArrayList<String> tags) {
-        Instabug.addTags(tags.toArray(new String[0]));
-    }
-
-    /**
-     * Manually removes all tags of reported feedback, bug or crash.
-     */
-    public void resetTags() {
-        Instabug.resetTags();
-    }
-
-    /**
-     * Gets all tags of reported feedback, bug or crash.
-     *
-     * @return An array of tags.
-     */
-    public ArrayList<String> getTags() {
-        return Instabug.getTags();
-    }
-
-    /**
-     * Adds experiments to the next report.
-     *
-     * @param experiments An array of experiments to add.
-     */
-    public void addExperiments(ArrayList<String> experiments) {
-        Instabug.addExperiments(experiments);
-    }
-
-    /**
-     * Removes certain experiments from the next report.
-     *
-     * @param experiments An array of experiments to remove.
-     */
-    public void removeExperiments(ArrayList<String> experiments) {
-        Instabug.removeExperiments(experiments);
-    }
-
-    /**
-     * Clears all experiments from the next report.
-     */
-    public void clearAllExperiments() {
-        Instabug.clearAllExperiments();
-    }
-
-    /**
-     * Set custom user attributes that are going to be sent with each feedback, bug
-     * or crash.
-     *
-     * @param value User attribute value.
-     * @param key   User attribute key.
-     */
-    public void setUserAttribute(String value, String key) {
-        Instabug.setUserAttribute(key, value);
-    }
-
-    /**
-     * Removes a given key and its associated value from user attributes. Does
-     * nothing if a key does not exist.
-     *
-     * @param key The key to remove.
-     */
-    public void removeUserAttributeForKey(String key) {
-        Instabug.removeUserAttribute(key);
-    }
-
-    /**
-     * Returns the user attribute associated with a given key.
-     * 
-     * @param key The key for which to return the corresponding value.
-     * @return The value associated with aKey, or null if no value is associated
-     *         with aKey.
-     */
-    public String getUserAttributeForKey(String key) {
-        return Instabug.getUserAttribute(key);
-    }
-
-    /**
-     * Returns all user attributes.
-     * 
-     * @return A new HashMap containing all the currently set user attributes, or an
-     *         empty HashMap if no user attributes have been set.
-     */
-    public HashMap<String, String> getUserAttributes() {
-        return Instabug.getAllUserAttributes();
-    }
-
-    /**
-     * invoke sdk manually
-     */
-    public void show() {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                Instabug.show();
-            }
-        });
-    }
-
-    /**
-     * Logs a user event that happens through the lifecycle of the application.
-     * Logged user events are going to be sent with each report, as well as at the
-     * end of a session.
-     *
-     * @param name Event name.
-     */
-    public void logUserEventWithName(String name) {
-        Instabug.logUserEvent(name);
-    }
-
-    /**
-     * Overrides any of the strings shown in the SDK with custom ones.
-     * 
-     * @param value            String value to override the default one.
-     * @param forStringWithKey Key of string to override.
-     */
-    public void setValue(String value, String forStringWithKey) {
-        InstabugCustomTextPlaceHolder.Key key = ArgsRegistry.getDeserializedValue(forStringWithKey);
-        placeHolder.set(key, value);
-        Instabug.setCustomTextPlaceHolders(placeHolder);
     }
 
     /**
@@ -426,96 +244,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             }
         }
         return null;
-    }
-
-    /**
-     * Enable/disable session profiler
-     *
-     * @param sessionProfilerEnabled desired state of the session profiler feature
-     */
-    public void setSessionProfilerEnabled(boolean sessionProfilerEnabled) {
-        if (sessionProfilerEnabled) {
-            Instabug.setSessionProfilerState(Feature.State.ENABLED);
-        } else {
-            Instabug.setSessionProfilerState(Feature.State.DISABLED);
-        }
-    }
-
-    /**
-     * Enable/disable SDK logs
-     *
-     * @param debugEnabled desired state of debug mode
-     */
-    public void setDebugEnabled(boolean debugEnabled) {
-        Instabug.setDebugEnabled(debugEnabled);
-    }
-
-    /**
-     * Set the primary color that the SDK will use to tint certain UI elements in
-     * the SDK
-     *
-     * @param primaryColor The value of the primary color
-     */
-    public void setPrimaryColor(final long primaryColor) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                Instabug.setPrimaryColor((int) primaryColor);
-            }
-        });
-    }
-
-    /**
-     * Adds specific user data that you need to be added to the reports
-     *
-     * @param userData
-     */
-    public void setUserData(String userData) {
-        Instabug.setUserData(userData);
-    }
-
-    /**
-     * The file at filePath will be uploaded along upcoming reports with the name
-     * fileNameWithExtension
-     *
-     * @param fileUri               the file uri
-     * @param fileNameWithExtension the file name with extension
-     */
-    public void addFileAttachmentWithURL(String fileUri, String fileNameWithExtension) {
-        File file = new File(fileUri);
-        if (file.exists()) {
-            Instabug.addFileAttachment(Uri.fromFile(file), fileNameWithExtension);
-        }
-    }
-
-    /**
-     * The file at filePath will be uploaded along upcoming reports with the name
-     * fileNameWithExtension
-     *
-     * @param data                  the data of the file
-     * @param fileNameWithExtension the file name with extension
-     */
-    public void addFileAttachmentWithData(byte[] data, String fileNameWithExtension) {
-        Instabug.addFileAttachment(data, fileNameWithExtension);
-    }
-
-    /**
-     * Clears all Uris of the attached files. The URIs which added via
-     * {@link Instabug#addFileAttachment} API not the physical files.
-     */
-    public void clearFileAttachments() {
-        Instabug.clearFileAttachment();
-    }
-
-    /**
-     * Sets the welcome message mode to live, beta or disabled.
-     *
-     * @param welcomeMessageMode An enum to set the welcome message mode to live,
-     *                           beta or disabled.
-     */
-    public void setWelcomeMessageMode(String welcomeMessageMode) {
-        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(welcomeMessageMode);
-        Instabug.setWelcomeMessageState(resolvedWelcomeMessageMode);
     }
 
     /**
@@ -1166,44 +894,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /*
-     * 
-     * Reports that the screen has been
-     * 
-     * changed (Repro Steps) the screen sent to this method will be the 'current
-     * view' on the dashboard
-     *
-     * @param screenName string containing the screen name
-     *
-     */
-
-    public void reportScreenChange(String screenName) {
-        try {
-            Method method = getMethod(Class.forName("com.instabug.library.Instabug"), "reportScreenChange",
-                    Bitmap.class, String.class);
-            if (method != null) {
-                method.invoke(null, null, screenName);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Sets the Repro Steps mode
-     *
-     * @param reproStepsMode string repro step mode
-     *
-     */
-    public void setReproStepsMode(String reproStepsMode) {
-        try {
-            Instabug.setReproStepsState(ArgsRegistry.getDeserializedValue(reproStepsMode));
         } catch (Exception e) {
             e.printStackTrace();
         }
