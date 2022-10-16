@@ -5,20 +5,6 @@
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result;
 
 /**
-  * Sets a block of code to be executed just before the SDK's UI is presented.
-  * This block is executed on the UI thread. Could be used for performing any
-  * UI changes before the SDK's UI is shown.
-  */
-+ (void)setOnInvokeCallback;
-
-/**
-  * Sets a block of code to be executed right after the SDK's UI is dismissed.
-  * This block is executed on the UI thread. Could be used for performing any
-  * UI changes after the SDK's UI is dismissed.
-  */
-+ (void)setOnDismissCallback;
-
-/**
   * Show any valid survey if exist
   *
   * @param isEnabled boolean

@@ -5,6 +5,12 @@
 
 @implementation BugReportingApiImpl
 
+- (BugReportingApiImpl *)initWithFlutterApi:(BugReportingFlutterApi *)api {
+    self = [super init];
+    self.flutterApi = api;
+    return self;
+}
+
 - (void)setEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
     BOOL boolValue = [isEnabled boolValue];
     IBGBugReporting.enabled = boolValue;
@@ -96,6 +102,38 @@
       }
 
       IBGBugReporting.enabledAttachmentTypes = attachmentTypes;
+}
+
+- (void)bindOnInvokeCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
+    IBGBugReporting.willInvokeHandler = ^{
+        [self->_flutterApi onSdkInvokeWithCompletion:^(NSError * _Nullable _) {}];
+    };
+}
+
+- (void)bindOnDismissCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
+    IBGBugReporting.didDismissHandler = ^(IBGDismissType dismissType, IBGReportType reportType) {
+        // Parse dismiss type enum
+        NSString* dismissTypeString;
+        if (dismissType == IBGDismissTypeCancel) {
+            dismissTypeString = @"CANCEL";
+        } else if (dismissType == IBGDismissTypeSubmit) {
+            dismissTypeString = @"SUBMIT";
+        } else if (dismissType == IBGDismissTypeAddAttachment) {
+            dismissTypeString = @"ADD_ATTACHMENT";
+        }
+        
+        // Parse report type enum
+        NSString* reportTypeString;
+        if (reportType == IBGReportTypeBug) {
+            reportTypeString = @"bug";
+        } else if (reportType == IBGReportTypeFeedback) {
+            reportTypeString = @"feedback";
+        } else {
+            reportTypeString = @"other";
+        }
+        
+        [self->_flutterApi onSdkDismissDismissType:dismissTypeString reportType:reportTypeString completion:^(NSError * _Nullable _) {}];
+    };
 }
 
 @end

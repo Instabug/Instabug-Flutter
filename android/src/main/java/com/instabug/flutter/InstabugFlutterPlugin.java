@@ -19,9 +19,6 @@ import com.instabug.flutter.generated.InstabugLogPigeon;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
-import com.instabug.library.OnSdkDismissCallback;
-import com.instabug.library.extendedbugreport.ExtendedBugReport;
-import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.survey.Survey;
 import com.instabug.survey.Surveys;
@@ -82,9 +79,10 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         context = applicationContext;
         channel = new MethodChannel(messenger, "instabug_flutter");
         channel.setMethodCallHandler(new InstabugFlutterPlugin());
+
         InstabugPigeon.InstabugApi.setup(messenger, new InstabugApiImpl(context));
         InstabugLogPigeon.InstabugLogApi.setup(messenger, new InstabugLogApiImpl());
-        BugReportingPigeon.BugReportingApi.setup(messenger, new BugReportingApiImpl());
+        BugReportingPigeon.BugReportingApi.setup(messenger, new BugReportingApiImpl(messenger));
     }
 
     @Override
@@ -144,48 +142,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             }
         }
         return null;
-    }
-
-    /**
-     * Sets a block of code to be executed just before the SDK's UI is presented.
-     * This block is executed on the UI thread. Could be used for performing any UI
-     * changes before the SDK's UI is shown.
-     */
-    public void setOnInvokeCallback() {
-        BugReporting.setOnInvokeCallback(new OnInvokeCallback() {
-            @Override
-            public void onInvoke() {
-                channel.invokeMethod("onInvokeCallback", "a");
-            }
-        });
-    }
-
-    /**
-     * Sets a block of code to be executed right after the SDK's UI is dismissed.
-     * This block is executed on the UI thread. Could be used for performing any UI
-     * changes after the SDK's UI is dismissed.
-     */
-    public void setOnDismissCallback() {
-        BugReporting.setOnDismissCallback(new OnSdkDismissCallback() {
-            @Override
-            public void call(DismissType dismissType, ReportType reportType) {
-                HashMap<String, String> params = new HashMap<>();
-                params.put("dismissType", dismissType.toString());
-                params.put("reportType", reportType.toString());
-                channel.invokeMethod("onDismissCallback", params);
-            }
-        });
-    }
-
-    /**
-     * Sets whether the extended bug report mode should be disabled, enabled with
-     * required fields, or enabled with optional fields.
-     *
-     * @param extendedBugReportMode
-     */
-    public void setExtendedBugReportMode(String extendedBugReportMode) {
-        ExtendedBugReport.State extendedBugReport = ArgsRegistry.getDeserializedValue(extendedBugReportMode);
-        BugReporting.setExtendedBugReportState(extendedBugReport);
     }
 
     /**

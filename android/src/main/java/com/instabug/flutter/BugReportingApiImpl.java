@@ -16,8 +16,15 @@ import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition
 
 import java.util.List;
 
+import io.flutter.plugin.common.BinaryMessenger;
+
 public class BugReportingApiImpl implements BugReportingPigeon.BugReportingApi {
     private final String TAG = BugReportingApiImpl.class.getName();
+    private final BugReportingPigeon.BugReportingFlutterApi flutterApi;
+
+    public BugReportingApiImpl(BinaryMessenger messenger) {
+        flutterApi = new BugReportingPigeon.BugReportingFlutterApi(messenger);
+    }
 
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {
@@ -119,5 +126,19 @@ public class BugReportingApiImpl implements BugReportingPigeon.BugReportingApi {
     @Override
     public void setEnabledAttachmentTypes(@NonNull Boolean screenshot, @NonNull Boolean extraScreenshot, @NonNull Boolean galleryImage, @NonNull Boolean screenRecording) {
         BugReporting.setAttachmentTypesEnabled(screenshot, extraScreenshot, galleryImage, screenRecording);
+    }
+
+    @Override
+    public void bindOnInvokeCallback() {
+        BugReporting.setOnInvokeCallback(() -> {
+            flutterApi.onSdkInvoke((reply) -> {});
+        });
+    }
+
+    @Override
+    public void bindOnDismissCallback() {
+        BugReporting.setOnDismissCallback((dismissType, reportType) -> {
+            flutterApi.onSdkDismiss(dismissType.toString(), reportType.toString(), (reply) -> {});
+        });
     }
 }

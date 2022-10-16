@@ -11,9 +11,9 @@
 
 @implementation InstabugFlutterPlugin
 
-
 FlutterMethodChannel* channel;
 NSMutableDictionary *traces;
+
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   channel = [FlutterMethodChannel
       methodChannelWithName:@"instabug_flutter"
@@ -22,9 +22,12 @@ NSMutableDictionary *traces;
   traces = [[NSMutableDictionary alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
 
+  BugReportingFlutterApi *flutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
+  BugReportingApiImpl *bugReportingApi = [[BugReportingApiImpl alloc] initWithFlutterApi:flutterApi];
+
   InstabugApiSetup([registrar messenger], [[InstabugApiImpl alloc] init]);
   InstabugLogApiSetup([registrar messenger], [[InstabugLogApiImpl alloc] init]);
-  BugReportingApiSetup([registrar messenger], [[BugReportingApiImpl alloc] init]);
+  BugReportingApiSetup([registrar messenger], bugReportingApi);
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -62,50 +65,6 @@ NSMutableDictionary *traces;
     if (!isImplemented) {
         result(FlutterMethodNotImplemented);
     }
-}
-
-
-
-/**
-  * Sets a block of code to be executed just before the SDK's UI is presented.
-  * This block is executed on the UI thread. Could be used for performing any
-  * UI changes before the SDK's UI is shown.
-  */
-+ (void)setOnInvokeCallback {
-   IBGBugReporting.willInvokeHandler = ^{
-             [channel invokeMethod:@"onInvokeCallback" arguments:nil];
-        };
-}
-
-/**
-  * Sets a block of code to be executed right after the SDK's UI is dismissed.
-  * This block is executed on the UI thread. Could be used for performing any
-  * UI changes after the SDK's UI is dismissed.
-  */
-+ (void)setOnDismissCallback {
-   IBGBugReporting.didDismissHandler = ^(IBGDismissType dismissType, IBGReportType reportType) {            
-            //parse dismiss type enum
-            NSString* dismissTypeString;
-            if (dismissType == IBGDismissTypeCancel) {
-                dismissTypeString = @"CANCEL";
-            } else if (dismissType == IBGDismissTypeSubmit) {
-                dismissTypeString = @"SUBMIT";
-            } else if (dismissType == IBGDismissTypeAddAttachment) {
-                dismissTypeString = @"ADD_ATTACHMENT";
-            }
-            //parse report type enum
-            NSString* reportTypeString;
-            if (reportType == IBGReportTypeBug) {
-                reportTypeString = @"bug";
-            } else if (reportType == IBGReportTypeFeedback) {
-                reportTypeString = @"feedback";
-            } else {
-                reportTypeString = @"other";
-            }
-            NSDictionary *result = @{ @"dismissType": dismissTypeString,
-                                     @"reportType": reportTypeString};
-             [channel invokeMethod:@"onDismissCallback" arguments:result];
-        };
 }
 
 /**

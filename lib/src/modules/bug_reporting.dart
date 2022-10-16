@@ -2,10 +2,10 @@
 
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:instabug_flutter/generated/bug_reporting.api.g.dart';
 import 'package:instabug_flutter/src/modules/instabug.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
+import 'package:meta/meta.dart';
 
 enum InvocationOption {
   commentFieldRequired,
@@ -36,50 +36,46 @@ enum Position {
 typedef OnSDKInvokeCallback = void Function();
 typedef OnSDKDismissCallback = void Function(DismissType, ReportType);
 
-class BugReporting {
+class BugReporting implements BugReportingFlutterApi {
   static final BugReportingApi _native = BugReportingApi();
-  static const MethodChannel _channel = MethodChannel('instabug_flutter');
+  static final _instance = BugReporting();
 
   static OnSDKInvokeCallback? _onInvokeCallback;
   static OnSDKDismissCallback? _onDismissCallback;
 
-  static Future<dynamic> _handleMethod(MethodCall call) async {
-    switch (call.method) {
-      case 'onInvokeCallback':
-        _onInvokeCallback?.call();
-        return;
-      case 'onDismissCallback':
-        final map = call.arguments as Map<dynamic, dynamic>;
-        DismissType? dismissType;
-        ReportType? reportType;
-        final dismissTypeString = (map['dismissType'] as String).toUpperCase();
-        switch (dismissTypeString) {
-          case 'CANCEL':
-            dismissType = DismissType.cancel;
-            break;
-          case 'SUBMIT':
-            dismissType = DismissType.submit;
-            break;
-          case 'ADD_ATTACHMENT':
-            dismissType = DismissType.addAttachment;
-            break;
-        }
-        final reportTypeString = (map['reportType'] as String).toUpperCase();
-        switch (reportTypeString) {
-          case 'BUG':
-            reportType = ReportType.bug;
-            break;
-          case 'FEEDBACK':
-            reportType = ReportType.feedback;
-            break;
-          case 'OTHER':
-            reportType = ReportType.other;
-            break;
-        }
-        if (dismissType != null && reportType != null) {
-          _onDismissCallback?.call(dismissType, reportType);
-        }
-        return;
+  @internal
+  static void init() {
+    BugReportingFlutterApi.setup(_instance);
+  }
+
+  @override
+  void onSdkInvoke() {
+    _onInvokeCallback?.call();
+  }
+
+  @override
+  void onSdkDismiss(String dismissType, String reportType) {
+    final dismissTypeKey = dismissType.toUpperCase();
+    final reportTypeKey = reportType.toUpperCase();
+
+    const dismissTypeMapper = {
+      'CANCEL': DismissType.cancel,
+      'SUBMIT': DismissType.submit,
+      'ADD_ATTACHMENT': DismissType.addAttachment,
+    };
+
+    const reportTypeMapper = {
+      'BUG': ReportType.bug,
+      'FEEDBACK': ReportType.feedback,
+      'OTHER': ReportType.other,
+    };
+
+    if (dismissTypeMapper.containsKey(dismissTypeKey) &&
+        reportTypeMapper.containsKey(reportTypeKey)) {
+      _onDismissCallback?.call(
+        dismissTypeMapper[dismissTypeKey]!,
+        reportTypeMapper[reportTypeKey]!,
+      );
     }
   }
 
@@ -92,25 +88,23 @@ class BugReporting {
   /// Sets a block of code to be executed just before the SDK's UI is presented.
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes before the SDK's UI is shown.
-  /// [function]  A callback that gets executed before invoking the SDK
+  /// [callback]  A callback that gets executed before invoking the SDK
   static Future<void> setOnInvokeCallback(
-    OnSDKInvokeCallback function,
+    OnSDKInvokeCallback callback,
   ) async {
-    _channel.setMethodCallHandler(_handleMethod);
-    _onInvokeCallback = function;
-    return _channel.invokeMethod('setOnInvokeCallback');
+    _onInvokeCallback = callback;
+    return _native.bindOnInvokeCallback();
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes before the SDK's UI is shown.
-  /// [function]  A callback that gets executed before invoking the SDK
+  /// [callback]  A callback that gets executed before invoking the SDK
   static Future<void> setOnDismissCallback(
-    OnSDKDismissCallback function,
+    OnSDKDismissCallback callback,
   ) async {
-    _channel.setMethodCallHandler(_handleMethod);
-    _onDismissCallback = function;
-    return _channel.invokeMethod('setOnDismissCallback');
+    _onDismissCallback = callback;
+    return _native.bindOnDismissCallback();
   }
 
   /// Sets the events that invoke the feedback form.

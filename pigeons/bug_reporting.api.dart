@@ -1,5 +1,11 @@
 import 'package:pigeon/pigeon.dart';
 
+@FlutterApi()
+abstract class BugReportingFlutterApi {
+  void onSdkInvoke();
+  void onSdkDismiss(String dismissType, String reportType);
+}
+
 @HostApi()
 abstract class BugReportingApi {
   void setEnabled(bool isEnabled);
@@ -19,4 +25,6 @@ abstract class BugReportingApi {
     bool galleryImage,
     bool screenRecording,
   );
+  void bindOnInvokeCallback();
+  void bindOnDismissCallback();
 }

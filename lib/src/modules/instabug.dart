@@ -10,6 +10,7 @@ import 'dart:ui';
 
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/generated/instabug.api.g.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 
 enum InvocationEvent {
@@ -124,6 +125,8 @@ class Instabug {
     String token,
     List<InvocationEvent> invocationEvents,
   ) async {
+    BugReporting.init();
+    
     final invocationEventsStrings =
         invocationEvents.map((e) => e.toString()).toList();
     return _native.start(token, invocationEventsStrings);
