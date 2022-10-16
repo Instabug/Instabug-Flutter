@@ -14,16 +14,14 @@ import com.instabug.bug.BugReporting;
 import com.instabug.chat.Replies;
 import com.instabug.crash.CrashReporting;
 import com.instabug.featuresrequest.FeatureRequests;
+import com.instabug.flutter.generated.BugReportingPigeon;
 import com.instabug.flutter.generated.InstabugLogPigeon;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.OnSdkDismissCallback;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
-import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.OnInvokeCallback;
-import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
-import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.survey.Survey;
 import com.instabug.survey.Surveys;
@@ -86,6 +84,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         channel.setMethodCallHandler(new InstabugFlutterPlugin());
         InstabugPigeon.InstabugApi.setup(messenger, new InstabugApiImpl(context));
         InstabugLogPigeon.InstabugLogApi.setup(messenger, new InstabugLogApiImpl());
+        BugReportingPigeon.BugReportingApi.setup(messenger, new BugReportingApiImpl());
     }
 
     @Override
@@ -120,28 +119,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     }
 
     /**
-     * Sets the position of Instabug floating button on the screen.
-     * 
-     * @param floatingButtonEdge    left or right edge of the screen.
-     * @param floatingButtonOffset  offset for the position on the y-axis.
-     */
-    public void setFloatingButtonEdge(String floatingButtonEdge, int floatingButtonOffset) {
-        InstabugFloatingButtonEdge resolvedFloatingButtonEdge = ArgsRegistry.getDeserializedValue(floatingButtonEdge);
-        BugReporting.setFloatingButtonEdge(resolvedFloatingButtonEdge);
-        BugReporting.setFloatingButtonOffset(floatingButtonOffset);
-    }
-
-    /**
-     * Sets the position of the video recording button when using the screen recording attachment functionality.
-     *
-     * @param videoRecordingButtonPosition position of the video recording floating button on the screen.
-     */
-    public void setVideoRecordingFloatingButtonPosition(String videoRecordingButtonPosition) {
-        InstabugVideoRecordingButtonPosition resolvedVideoRecordingButtonPosition = ArgsRegistry.getDeserializedValue(videoRecordingButtonPosition);
-        BugReporting.setVideoRecordingFloatingButtonPosition(resolvedVideoRecordingButtonPosition);
-    }
-
-    /**
      * Gets the private method that matches the class, method name and parameter
      * types given and making it accessible. For private use only.
      * 
@@ -167,25 +144,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             }
         }
         return null;
-    }
-
-    /**
-     * Enables and disables manual invocation and prompt options for bug and
-     * feedback.
-     * 
-     * @param {boolean} isEnabled
-     */
-    public void setBugReportingEnabled(final boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (isEnabled) {
-                    BugReporting.setState(Feature.State.ENABLED);
-                } else {
-                    BugReporting.setState(Feature.State.DISABLED);
-                }
-            }
-        });
     }
 
     /**
@@ -220,61 +178,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     }
 
     /**
-     * Sets the event used to invoke Instabug SDK
-     *
-     * @param invocationEvents ArrayList of invocation events
-     */
-    public void setInvocationEvents(final ArrayList<String> invocationEvents) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
-                for (int i = 0; i < invocationEvents.size(); i++) {
-                    String key = invocationEvents.get(i);
-                    invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key);
-                }
-                BugReporting.setInvocationEvents(invocationEventsArray);
-            }
-        });
-    }
-
-    /**
-     * Sets whether attachments in bug reporting and in-app messaging are enabled or
-     * not.
-     *
-     * @param screenshot A boolean to enable or disable screenshot attachments.
-     * @param {boolean}  extraScreenShot A boolean to enable or disable extra
-     *                   screenshot attachments.
-     * @param {boolean}  galleryImage A boolean to enable or disable gallery image
-     *                   attachments.
-     * @param {boolean}  screenRecording A boolean to enable or disable screen
-     *                   recording attachments.
-     */
-    public void setEnabledAttachmentTypes(boolean screenshot, boolean extraScreenshot, boolean galleryImage,
-            boolean screenRecording) {
-        BugReporting.setAttachmentTypesEnabled(screenshot, extraScreenshot, galleryImage, screenRecording);
-    }
-
-    /**
-     * Sets what type of reports, bug or feedback, should be invoked.
-     * 
-     * @param {array} reportTypes - Array of reportTypes
-     */
-    public void setReportTypes(final ArrayList<String> reportTypes) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                int[] reportTypesArray = new int[reportTypes.size()];
-                for (int i = 0; i < reportTypes.size(); i++) {
-                    String key = reportTypes.get(i);
-                    reportTypesArray[i] = ArgsRegistry.getDeserializedValue(key);
-                }
-                BugReporting.setReportTypes(reportTypesArray);
-            }
-        });
-    }
-
-    /**
      * Sets whether the extended bug report mode should be disabled, enabled with
      * required fields, or enabled with optional fields.
      *
@@ -283,35 +186,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     public void setExtendedBugReportMode(String extendedBugReportMode) {
         ExtendedBugReport.State extendedBugReport = ArgsRegistry.getDeserializedValue(extendedBugReportMode);
         BugReporting.setExtendedBugReportState(extendedBugReport);
-    }
-
-    /**
-     * Sets the invocation options
-     *
-     * @param invocationOptions the array of invocation options
-     */
-    public void setInvocationOptions(List<String> invocationOptions) {
-        int[] options = new int[invocationOptions.size()];
-        for (int i = 0; i < invocationOptions.size(); i++) {
-            options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i));
-        }
-        BugReporting.setOptions(options);
-    }
-
-    /**
-     * Invoke bug reporting with report type and options.
-     * 
-     * @param {reportType}        type
-     * @param {invocationOptions} options
-     */
-    public void showBugReportingWithReportTypeAndOptions(final String reportType,
-            final List<String> invocationOptions) {
-        int[] options = new int[invocationOptions.size()];
-        for (int i = 0; i < invocationOptions.size(); i++) {
-            options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i));
-        }
-        int reportTypeInt = ArgsRegistry.getDeserializedValue(reportType);
-        BugReporting.show(reportTypeInt, options);
     }
 
     /**

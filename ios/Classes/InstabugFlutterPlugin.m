@@ -1,8 +1,10 @@
 #import "InstabugFlutterPlugin.h"
 #import "Instabug.h"
 #import "IBGAPM.h"
+#import "Generated/BugReportingPigeon.h"
 #import "Generated/InstabugPigeon.h"
 #import "Generated/InstabugLogPigeon.h"
+#import "BugReportingApiImpl.h"
 #import "InstabugApiImpl.h"
 #import "InstabugLogApiImpl.h"
 
@@ -19,8 +21,10 @@ NSMutableDictionary *traces;
   InstabugFlutterPlugin* instance = [[InstabugFlutterPlugin alloc] init];
   traces = [[NSMutableDictionary alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
+
   InstabugApiSetup([registrar messenger], [[InstabugApiImpl alloc] init]);
   InstabugLogApiSetup([registrar messenger], [[InstabugLogApiImpl alloc] init]);
+  BugReportingApiSetup([registrar messenger], [[BugReportingApiImpl alloc] init]);
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -60,37 +64,7 @@ NSMutableDictionary *traces;
     }
 }
 
-/**
- * Sets the position of Instabug floating button on the screen.
- * @param floatingButtonEdge  left or right edge of the screen.
- * @param floatingButtonTopOffset offset for the position on the y-axis.
- */
-+ (void)setFloatingButtonEdge:(NSString *)floatingButtonEdge withTopOffset:(NSNumber *)floatingButtonTopOffset {
-    NSDictionary *constants = [self constants];
-    CGRectEdge intFloatingButtonEdge = ((NSNumber *) constants[floatingButtonEdge]).doubleValue;
-    IBGBugReporting.floatingButtonEdge = intFloatingButtonEdge;
-    double offsetFromTop = [floatingButtonTopOffset doubleValue];
-    IBGBugReporting.floatingButtonTopOffset = offsetFromTop;
-}
 
-/**
- * Sets the position of the video recording button when using the screen recording attachment functionality.
- * @param position Position of the video recording floating button on the screen.
- */
-+ (void)setVideoRecordingFloatingButtonPosition:(NSString *)position {
-    NSDictionary *constants = [self constants];
-    IBGPosition intPosition = ((NSNumber *) constants[position]).doubleValue;
-    IBGBugReporting.videoRecordingFloatingButtonPosition = intPosition;
-}
-
-/**
-  * Enables and disables manual invocation and prompt options for bug and feedback.
-  * @param {boolean} isEnabled
-  */
-+ (void)setBugReportingEnabled:(NSNumber *)isEnabled {
-   BOOL boolValue = [isEnabled boolValue];
-   IBGBugReporting.enabled = boolValue;
-}
 
 /**
   * Sets a block of code to be executed just before the SDK's UI is presented.
@@ -132,106 +106,6 @@ NSMutableDictionary *traces;
                                      @"reportType": reportTypeString};
              [channel invokeMethod:@"onDismissCallback" arguments:result];
         };
-}
-
-/**
-  * Sets whether attachments in bug reporting and in-app messaging are enabled or not.
-  *
-  * @param  screenshot A boolean to enable or disable screenshot attachments.
-  * @param  extraScreenShot A boolean to enable or disable extra screenshot attachments.
-  * @param  galleryImage A boolean to enable or disable gallery image attachments.
-  * @param  screenRecording A boolean to enable or disable screen recording attachments.
-  */
-+ (void)setEnabledAttachmentTypes:(NSNumber *)screenShot
-                    extraScreenShot:(NSNumber *)extraScreenShot
-                    galleryImage:(NSNumber *)galleryImage
-                    screenRecording:(NSNumber *)screenRecording {
-   IBGAttachmentType attachmentTypes = 0;
-     if([screenShot boolValue]) {
-         attachmentTypes = IBGAttachmentTypeScreenShot;
-     }
-     if([extraScreenShot boolValue]) {
-         attachmentTypes |= IBGAttachmentTypeExtraScreenShot;
-     }
-     if([galleryImage boolValue]) {
-         attachmentTypes |= IBGAttachmentTypeGalleryImage;
-     }
-     if([screenRecording boolValue]) {
-         attachmentTypes |= IBGAttachmentTypeScreenRecording;
-     }
-
-     IBGBugReporting.enabledAttachmentTypes = attachmentTypes;
-}
-
-/**
-  * Sets the events that invoke the feedback form.
-  * Default is set by `Instabug.startWithToken`.
-  * @param {invocationEvent} invocationEvent Array of events that invokes the
-  * feedback form.
-  */
-+ (void)setInvocationEvents:(NSArray *)invocationEventsArray {
-    NSDictionary *constants = [self constants];
-    NSInteger invocationEvents = 0;
-    for (NSString * invocationEvent in invocationEventsArray) {
-        invocationEvents |= ((NSNumber *) constants[invocationEvent]).integerValue;
-    }
-    IBGBugReporting.invocationEvents = invocationEvents;
-}
-
-/**
-  * Sets the events that invoke the feedback form.
-  * Default is set by `Instabug.startWithToken`.
-  * @param {invocationEvent} invocationEvent Array of events that invokes the
-  * feedback form.
-  */
-+ (void)setReportTypes:(NSArray*)reportTypesArray {
-    NSDictionary *constants = [self constants];
-    NSInteger reportTypes = 0;
-    for (NSString * reportType in reportTypesArray) {
-        reportTypes |= ((NSNumber *) constants[reportType]).integerValue;
-    }
-   [IBGBugReporting setPromptOptionsEnabledReportTypes: reportTypes];
-}
-
-/**
-  * Sets whether the extended bug report mode should be disabled,
-  * enabled with required fields,  or enabled with optional fields.
-  *
-  * @param extendedBugReportMode
-  */
-+ (void)setExtendedBugReportMode:(NSString *)extendedBugReportMode {
-    NSDictionary *constants = [self constants];
-    NSInteger extendedBugReportModeInt = ((NSNumber *) constants[extendedBugReportMode]).integerValue;
-    IBGBugReporting.extendedBugReportMode = extendedBugReportModeInt;
-}
-
-/**
-  * Sets the invocation options
-  *
-  * @param invocationOptions the array of invocation options
-  */
-+ (void)setInvocationOptions:(NSArray *)invocationOptionsArray {
-    NSDictionary *constants = [self constants];
-    NSInteger invocationOptions = 0;
-    for (NSString * invocationOption in invocationOptionsArray) {
-        invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
-    }
-    IBGBugReporting.bugReportingOptions = invocationOptions;
-}
-
-/**
-  * Sets the invocation options
-  *
-  * @param invocationOptions the array of invocation options
-  */
-+ (void)showBugReportingWithReportTypeAndOptions:(NSString*)reportType options:(NSArray *)invocationOptionsArray  {
-    NSDictionary *constants = [self constants];
-    NSInteger invocationOptions = 0;
-    for (NSString * invocationOption in invocationOptionsArray) {
-        invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
-    }
-    NSInteger reportTypeInt = ((NSNumber *) constants[reportType]).integerValue;
-    [IBGBugReporting showWithReportType:reportTypeInt options:invocationOptions];
 }
 
 /**
@@ -423,28 +297,6 @@ NSMutableDictionary *traces;
 + (void)setChatNotificationEnabled:(NSNumber *)isEnabled {
    BOOL boolValue = [isEnabled boolValue];
    IBGReplies.inAppNotificationsEnabled = boolValue;
-}
-
-
-/**
- * Sets the threshold value of the shake gesture for iPhone/iPod Touch
- * Default for iPhone is 2.5.
- * @param  iPhoneShakingThreshold Threshold for iPhone.
- */
-+ (void)setShakingThresholdForiPhone:(NSNumber *)iPhoneShakingThreshold {
-    double threshold = [iPhoneShakingThreshold doubleValue];
-    IBGBugReporting.shakingThresholdForiPhone = threshold;
-
-}
-
-/**
- * Sets the threshold value of the shake gesture for iPad.
- * Default for iPad is 0.6.
- * @param iPadShakingThreshold Threshold for iPad.
- */
-+ (void)setShakingThresholdForiPad:(NSNumber *)iPadShakingThreshold {
-    double threshold = [iPadShakingThreshold doubleValue];
-    IBGBugReporting.shakingThresholdForiPad = threshold;
 }
 
 /**

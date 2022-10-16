@@ -5,33 +5,6 @@
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result;
 
 /**
- * Sets the position of Instabug floating button on the screen.
- * @param floatingButtonEdge  left or right edge of the screen.
- * @param floatingButtonTopOffset offset for the position on the y-axis.
- */
-+ (void)setFloatingButtonEdge:(NSString *)floatingButtonEdge withTopOffset:(NSNumber *)floatingButtonTopOffset;
-
-/**
- * Sets the position of the video recording button when using the screen recording attachment functionality.
- * @param position Position of the video recording floating button on the screen.
- */
-+ (void)setVideoRecordingFloatingButtonPosition:(NSString *)position;
-
-/**
-  * invoke sdk manually with desire invocation mode
-  *
-  * @param invocationMode the invocation mode
-  * @param invocationOptionsArray the array of invocation options
-  */
-+ (void)invokeWithMode:(NSString *)invocationMode options:(NSArray *)invocationOptionsArray;
-
-/**
-  * Enables and disables manual invocation and prompt options for bug and feedback.
-  * @param isEnabled enabled
-  */
-+ (void)setBugReportingEnabled:(NSNumber *)isEnabled;
-
-/**
   * Sets a block of code to be executed just before the SDK's UI is presented.
   * This block is executed on the UI thread. Could be used for performing any
   * UI changes before the SDK's UI is shown.
@@ -44,56 +17,6 @@
   * UI changes after the SDK's UI is dismissed.
   */
 + (void)setOnDismissCallback;
-
-/**
-  * Sets whether attachments in bug reporting and in-app messaging are enabled or not.
-  *
-  * @param  screenShot A boolean to enable or disable screenshot attachments.
-  * @param  extraScreenShot A boolean to enable or disable extra screenshot attachments.
-  * @param  galleryImage A boolean to enable or disable gallery image attachments.
-  * @param  screenRecording A boolean to enable or disable screen recording attachments.
-  */
-+ (void)setEnabledAttachmentTypes:(NSNumber *)screenShot
-                  extraScreenShot:(NSNumber *)extraScreenShot
-                     galleryImage:(NSNumber *)galleryImage
-                  screenRecording:(NSNumber *)screenRecording;
-
-/**
-  * Sets the events that invoke the feedback form.
-  * Default is set by `Instabug.startWithToken`.
-  * @param invocationEventsArray invocationEvent Array of events that invokes the
-  * feedback form.
-  */
-+ (void)setInvocationEvents:(NSArray *)invocationEventsArray;
-
-/**
-  * Sets the reports types.
-  * Default is set by `Instabug.startWithToken`.
-  * @param reportTypesArray report types array
-  */
-+ (void)setReportTypes:(NSArray *)reportTypesArray;
-
-/**
-  * Sets whether the extended bug report mode should be disabled,
-  * enabled with required fields,  or enabled with optional fields.
-  *
-  * @param extendedBugReportMode extendedBugReportMode
-  */
-+ (void)setExtendedBugReportMode:(NSString *)extendedBugReportMode;
-
-/**
-  * Sets the invocation options
-  *
-  * @param invocationOptionsArray the array of invocation options
-  */
-+ (void)setInvocationOptions:(NSArray *)invocationOptionsArray;
-/**
-  * Sets the invocation options
-  *
-  * @param reportType reportType
-  * @param invocationOptionsArray the array of invocation options
-  */
-+ (void)showBugReportingWithReportTypeAndOptions:(NSString *)reportType options:(NSArray *)invocationOptionsArray;
 
 /**
   * Show any valid survey if exist

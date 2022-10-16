@@ -1,0 +1,123 @@
+package com.instabug.flutter;
+
+import android.os.Handler;
+import android.os.Looper;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.instabug.bug.BugReporting;
+import com.instabug.flutter.generated.BugReportingPigeon;
+import com.instabug.library.Feature;
+import com.instabug.library.extendedbugreport.ExtendedBugReport;
+import com.instabug.library.invocation.InstabugInvocationEvent;
+import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
+import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
+
+import java.util.List;
+
+public class BugReportingApiImpl implements BugReportingPigeon.BugReportingApi {
+    private final String TAG = BugReportingApiImpl.class.getName();
+
+    @Override
+    public void setEnabled(@NonNull Boolean isEnabled) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (isEnabled) {
+                    BugReporting.setState(Feature.State.ENABLED);
+                } else {
+                    BugReporting.setState(Feature.State.DISABLED);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void show(@NonNull String reportType, @Nullable List<String> invocationOptions) {
+        int[] options = new int[invocationOptions.size()];
+        for (int i = 0; i < invocationOptions.size(); i++) {
+            options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i));
+        }
+        int reportTypeInt = ArgsRegistry.getDeserializedValue(reportType);
+        BugReporting.show(reportTypeInt, options);
+    }
+
+    @Override
+    public void setInvocationEvents(@NonNull List<String> events) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[events.size()];
+                for (int i = 0; i < events.size(); i++) {
+                    String key = events.get(i);
+                    invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key);
+                }
+                BugReporting.setInvocationEvents(invocationEventsArray);
+            }
+        });
+    }
+
+    @Override
+    public void setReportTypes(@NonNull List<String> types) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                int[] reportTypesArray = new int[types.size()];
+                for (int i = 0; i < types.size(); i++) {
+                    String key = types.get(i);
+                    reportTypesArray[i] = ArgsRegistry.getDeserializedValue(key);
+                }
+                BugReporting.setReportTypes(reportTypesArray);
+            }
+        });
+    }
+
+    @Override
+    public void setExtendedBugReportMode(@NonNull String mode) {
+        final ExtendedBugReport.State resolvedMode = ArgsRegistry.getDeserializedValue(mode);
+        BugReporting.setExtendedBugReportState(resolvedMode);
+    }
+
+    @Override
+    public void setInvocationOptions(@NonNull List<String> options) {
+        int[] resolvedOptions = new int[options.size()];
+        for (int i = 0; i < options.size(); i++) {
+            resolvedOptions[i] = ArgsRegistry.getDeserializedValue(options.get(i));
+        }
+        BugReporting.setOptions(resolvedOptions);
+    }
+
+    @Override
+    public void setFloatingButtonEdge(@NonNull String edge, @NonNull Long offset) {
+        final InstabugFloatingButtonEdge resolvedEdge = ArgsRegistry.getDeserializedValue(edge);
+        BugReporting.setFloatingButtonEdge(resolvedEdge);
+        BugReporting.setFloatingButtonOffset(offset.intValue());
+    }
+
+    @Override
+    public void setVideoRecordingFloatingButtonPosition(@NonNull String position) {
+        final InstabugVideoRecordingButtonPosition resolvedPosition = ArgsRegistry.getDeserializedValue(position);
+        BugReporting.setVideoRecordingFloatingButtonPosition(resolvedPosition);
+    }
+
+    @Override
+    public void setShakingThresholdForiPhone(@NonNull Double threshold) {
+        // iOS Only
+    }
+
+    @Override
+    public void setShakingThresholdForiPad(@NonNull Double threshold) {
+        // iOS Only
+    }
+
+    @Override
+    public void setShakingThresholdForAndroid(@NonNull Long threshold) {
+        BugReporting.setShakingThreshold(threshold.intValue());
+    }
+
+    @Override
+    public void setEnabledAttachmentTypes(@NonNull Boolean screenshot, @NonNull Boolean extraScreenshot, @NonNull Boolean galleryImage, @NonNull Boolean screenRecording) {
+        BugReporting.setAttachmentTypesEnabled(screenshot, extraScreenshot, galleryImage, screenRecording);
+    }
+}

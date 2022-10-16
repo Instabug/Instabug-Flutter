@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:instabug_flutter/generated/bug_reporting.api.g.dart';
 import 'package:instabug_flutter/src/modules/instabug.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 
@@ -36,12 +37,11 @@ typedef OnSDKInvokeCallback = void Function();
 typedef OnSDKDismissCallback = void Function(DismissType, ReportType);
 
 class BugReporting {
-  static OnSDKInvokeCallback? _onInvokeCallback;
-  static OnSDKDismissCallback? _onDismissCallback;
+  static final BugReportingApi _native = BugReportingApi();
   static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String?> get platformVersion =>
-      _channel.invokeMethod<String>('getPlatformVersion');
+  static OnSDKInvokeCallback? _onInvokeCallback;
+  static OnSDKDismissCallback? _onDismissCallback;
 
   static Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
@@ -83,11 +83,10 @@ class BugReporting {
     }
   }
 
-  ///Enables and disables manual invocation and prompt options for bug and feedback.
+  /// Enables and disables manual invocation and prompt options for bug and feedback.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    return _channel.invokeMethod('setBugReportingEnabled:', params);
+    return _native.setEnabled(isEnabled);
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -120,11 +119,8 @@ class BugReporting {
   static Future<void> setInvocationEvents(
     List<InvocationEvent>? invocationEvents,
   ) async {
-    final invocationEventsStrings =
-        invocationEvents?.map((e) => e.toString()).toList(growable: false) ??
-            [];
-    final params = <dynamic>[invocationEventsStrings];
-    return _channel.invokeMethod('setInvocationEvents:', params);
+    final eventsStrings = invocationEvents?.map((e) => e.toString()).toList();
+    return _native.setInvocationEvents(eventsStrings ?? []);
   }
 
   /// Sets whether attachments in bug reporting and in-app messaging are enabled or not.
@@ -140,25 +136,19 @@ class BugReporting {
     bool galleryImage,
     bool screenRecording,
   ) async {
-    final params = <dynamic>[
+    return _native.setEnabledAttachmentTypes(
       screenshot,
       extraScreenshot,
       galleryImage,
-      screenRecording
-    ];
-    return _channel.invokeMethod(
-      'setEnabledAttachmentTypes:extraScreenShot:galleryImage:screenRecording:',
-      params,
+      screenRecording,
     );
   }
 
-  ///Sets what type of reports, bug or feedback, should be invoked.
+  /// Sets what type of reports, bug or feedback, should be invoked.
   /// [reportTypes] - List of reportTypes
   static Future<void> setReportTypes(List<ReportType>? reportTypes) async {
-    final reportTypesStrings =
-        reportTypes?.map((e) => e.toString()).toList(growable: false) ?? [];
-    final params = <dynamic>[reportTypesStrings];
-    return _channel.invokeMethod('setReportTypes:', params);
+    final typesStrings = reportTypes?.map((e) => e.toString()).toList();
+    return _native.setReportTypes(typesStrings ?? []);
   }
 
   /// Sets whether the extended bug report mode should be disabled, enabled with
@@ -167,8 +157,7 @@ class BugReporting {
   static Future<void> setExtendedBugReportMode(
     ExtendedBugReportMode extendedBugReportMode,
   ) async {
-    final params = <dynamic>[extendedBugReportMode.toString()];
-    return _channel.invokeMethod('setExtendedBugReportMode:', params);
+    return _native.setExtendedBugReportMode(extendedBugReportMode.toString());
   }
 
   /// Sets the invocation options.
@@ -177,11 +166,8 @@ class BugReporting {
   static Future<void> setInvocationOptions(
     List<InvocationOption>? invocationOptions,
   ) async {
-    final invocationOptionsStrings =
-        invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
-            [];
-    final params = <dynamic>[invocationOptionsStrings];
-    return _channel.invokeMethod('setInvocationOptions:', params);
+    final optionsStrings = invocationOptions?.map((e) => e.toString()).toList();
+    return _native.setInvocationOptions(optionsStrings ?? []);
   }
 
   /// Sets the floating button position.
@@ -191,10 +177,9 @@ class BugReporting {
     FloatingButtonEdge floatingButtonEdge,
     int offsetFromTop,
   ) async {
-    final params = <dynamic>[floatingButtonEdge.toString(), offsetFromTop];
-    return _channel.invokeMethod(
-      'setFloatingButtonEdge:withTopOffset:',
-      params,
+    return _native.setFloatingButtonEdge(
+      floatingButtonEdge.toString(),
+      offsetFromTop,
     );
   }
 
@@ -203,11 +188,7 @@ class BugReporting {
   static Future<void> setVideoRecordingFloatingButtonPosition(
     Position position,
   ) async {
-    final params = <dynamic>[position.toString()];
-    return _channel.invokeMethod(
-      'setVideoRecordingFloatingButtonPosition:',
-      params,
-    );
+    return _native.setVideoRecordingFloatingButtonPosition(position.toString());
   }
 
   /// Invoke bug reporting with report type and options.
@@ -217,43 +198,25 @@ class BugReporting {
     ReportType reportType,
     List<InvocationOption>? invocationOptions,
   ) async {
-    final invocationOptionsStrings =
-        invocationOptions?.map((e) => e.toString()).toList(growable: false) ??
-            [];
-    final params = <dynamic>[reportType.toString(), invocationOptionsStrings];
-    return _channel.invokeMethod(
-      'showBugReportingWithReportTypeAndOptions:options:',
-      params,
-    );
+    final optionsStrings = invocationOptions?.map((e) => e.toString()).toList();
+    return _native.show(reportType.toString(), optionsStrings ?? []);
   }
 
   /// Sets the threshold value of the shake gesture for iPhone/iPod Touch
   /// Default for iPhone is 2.5.
-  /// [iPhoneShakingThreshold] iPhoneShakingThreshold double
-  static Future<void> setShakingThresholdForiPhone(
-    double iPhoneShakingThreshold,
-  ) async {
+  /// [threshold] iPhoneShakingThreshold double
+  static Future<void> setShakingThresholdForiPhone(double threshold) async {
     if (IBGBuildInfo.instance.isIOS) {
-      final params = <dynamic>[iPhoneShakingThreshold];
-      return _channel.invokeMethod(
-        'setShakingThresholdForiPhone:',
-        params,
-      );
+      return _native.setShakingThresholdForiPhone(threshold);
     }
   }
 
   /// Sets the threshold value of the shake gesture for iPad
   /// Default for iPhone is 0.6.
-  /// [iPadShakingThreshold] iPhoneShakingThreshold double
-  static Future<void> setShakingThresholdForiPad(
-    double iPadShakingThreshold,
-  ) async {
+  /// [threshold] iPhoneShakingThreshold double
+  static Future<void> setShakingThresholdForiPad(double threshold) async {
     if (IBGBuildInfo.instance.isIOS) {
-      final params = <dynamic>[iPadShakingThreshold];
-      return _channel.invokeMethod(
-        'setShakingThresholdForiPad:',
-        params,
-      );
+      return _native.setShakingThresholdForiPad(threshold);
     }
   }
 
@@ -261,16 +224,10 @@ class BugReporting {
   /// Default for android is an integer value equals 350.
   /// you could increase the shaking difficulty level by
   /// increasing the `350` value and vice versa
-  /// [androidThreshold] iPhoneShakingThreshold int
-  static Future<void> setShakingThresholdForAndroid(
-    int androidThreshold,
-  ) async {
+  /// [threshold] iPhoneShakingThreshold int
+  static Future<void> setShakingThresholdForAndroid(int threshold) async {
     if (IBGBuildInfo.instance.isAndroid) {
-      final params = <dynamic>[androidThreshold];
-      return _channel.invokeMethod(
-        'setShakingThresholdForAndroid:',
-        params,
-      );
+      return _native.setShakingThresholdForAndroid(threshold);
     }
   }
 }
