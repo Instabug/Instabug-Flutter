@@ -11,6 +11,14 @@ flutter pub run pigeon \
   --java_package "com.instabug.flutter.generated"
 
 flutter pub run pigeon \
+  --input pigeons/crash_reporting.api.dart \
+  --dart_out lib/generated/crash_reporting.api.g.dart \
+  --objc_header_out ios/Classes/Generated/CrashReportingPigeon.h \
+  --objc_source_out ios/Classes/Generated/CrashReportingPigeon.m \
+  --java_out ./android/src/main/java/com/instabug/flutter/generated/CrashReportingPigeon.java \
+  --java_package "com.instabug.flutter.generated"
+
+flutter pub run pigeon \
   --input pigeons/feature_requests.api.dart \
   --dart_out lib/generated/feature_requests.api.g.dart \
   --objc_header_out ios/Classes/Generated/FeatureRequestsPigeon.h \

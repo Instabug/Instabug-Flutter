@@ -4,24 +4,21 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
+import 'package:instabug_flutter/generated/crash_reporting.api.g.dart';
 import 'package:instabug_flutter/src/models/crash_data.dart';
 import 'package:instabug_flutter/src/models/exception_data.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 class CrashReporting {
-  static const MethodChannel _channel = MethodChannel('instabug_flutter');
+  static final _native = CrashReportingApi();
   static bool enabled = true;
-  static Future<String?> get platformVersion =>
-      _channel.invokeMethod<String>('getPlatformVersion');
 
-  ///Enables and disables Enables and disables automatic crash reporting.
+  /// Enables and disables Enables and disables automatic crash reporting.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
     enabled = isEnabled;
-    final params = <dynamic>[isEnabled];
-    return _channel.invokeMethod('setCrashReportingEnabled:', params);
+    return _native.setEnabled(isEnabled);
   }
 
   static Future<void> reportCrash(Object exception, StackTrace stack) async {
@@ -58,6 +55,7 @@ class CrashReporting {
   ) async {
     final trace = Trace.from(stack);
     final frames = <ExceptionData>[];
+
     for (var i = 0; i < trace.frames.length; i++) {
       frames.add(
         ExceptionData(
@@ -68,15 +66,13 @@ class CrashReporting {
         ),
       );
     }
+
     final crashData = CrashData(
       exception.toString(),
       IBGBuildInfo.instance.operatingSystem,
       frames,
     );
-    final params = <dynamic>[jsonEncode(crashData), handled];
-    return _channel.invokeMethod(
-      'sendJSCrashByReflection:handled:',
-      params,
-    );
+
+    return _native.send(jsonEncode(crashData), handled);
   }
 }

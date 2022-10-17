@@ -3,12 +3,14 @@
 #import "IBGAPM.h"
 
 #import "Generated/BugReportingPigeon.h"
+#import "Generated/CrashReportingPigeon.h"
 #import "Generated/FeatureRequestsPigeon.h"
 #import "Generated/InstabugPigeon.h"
 #import "Generated/InstabugLogPigeon.h"
 #import "Generated/SurveysPigeon.h"
 
 #import "BugReportingApiImpl.h"
+#import "CrashReportingApiImpl.h"
 #import "FeatureRequestsApiImpl.h"
 #import "InstabugApiImpl.h"
 #import "InstabugLogApiImpl.h"
@@ -36,6 +38,7 @@ NSMutableDictionary *traces;
 
   InstabugApiSetup([registrar messenger], [[InstabugApiImpl alloc] init]);
   InstabugLogApiSetup([registrar messenger], [[InstabugLogApiImpl alloc] init]);
+  CrashReportingApiSetup([registrar messenger], [[CrashReportingApiImpl alloc] init]);
   FeatureRequestsApiSetup([registrar messenger], [[FeatureRequestsApiImpl alloc] init]);
   BugReportingApiSetup([registrar messenger], bugReportingApi);
   SurveysApiSetup([registrar messenger], surveysApi);
@@ -207,28 +210,6 @@ NSMutableDictionary *traces;
 
         [inv invoke];
     }
-}
-
-/**
-  * Enables and disables automatic crash reporting.
-  * @param {boolean} isEnabled
-  */
-+ (void)setCrashReportingEnabled:(NSNumber *)isEnabled {
-   BOOL boolValue = [isEnabled boolValue];
-   IBGCrashReporting.enabled = boolValue;
-}
-
-+ (void)sendJSCrashByReflection:(NSString *) jsonString handled: (NSNumber *) isHandled{
-     NSError *jsonError;
-     NSData *objectData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-     NSDictionary *stackTrace = [NSJSONSerialization JSONObjectWithData:objectData
-                                                          options:NSJSONReadingMutableContainers
-                                                            error:&jsonError];
-    SEL reportCrashWithStackTraceSEL = NSSelectorFromString(@"reportCrashWithStackTrace:handled:");
-      if ([[Instabug class] respondsToSelector:reportCrashWithStackTraceSEL]) {
-            [[Instabug class] performSelector:reportCrashWithStackTraceSEL withObject:stackTrace withObject:isHandled];
-        }
-    
 }
 
 /**

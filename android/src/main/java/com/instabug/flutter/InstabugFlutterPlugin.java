@@ -12,8 +12,8 @@ import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.bug.BugReporting;
 import com.instabug.chat.Replies;
-import com.instabug.crash.CrashReporting;
 import com.instabug.flutter.generated.BugReportingPigeon;
+import com.instabug.flutter.generated.CrashReportingPigeon;
 import com.instabug.flutter.generated.FeatureRequestsPigeon;
 import com.instabug.flutter.generated.InstabugLogPigeon;
 import com.instabug.flutter.generated.InstabugPigeon;
@@ -79,6 +79,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         InstabugPigeon.InstabugApi.setup(messenger, new InstabugApiImpl(context));
         InstabugLogPigeon.InstabugLogApi.setup(messenger, new InstabugLogApiImpl());
         BugReportingPigeon.BugReportingApi.setup(messenger, new BugReportingApiImpl(messenger));
+        CrashReportingPigeon.CrashReportingApi.setup(messenger, new CrashReportingApiImpl());
         FeatureRequestsPigeon.FeatureRequestsApi.setup(messenger, new FeatureRequestsApiImpl());
         SurveysPigeon.SurveysApi.setup(messenger, new SurveysApiImpl(messenger));
     }
@@ -242,43 +243,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
                 (new JSONObject((HashMap<String, String>) jsonObject.get("responseHeaders"))).toString(4));
         networkLog.setTotalDuration(((Number) jsonObject.get("duration")).longValue() / 1000);
         networkLog.insert();
-    }
-
-    /**
-     * Enables and disables automatic crash reporting.
-     * 
-     * @param {boolean} isEnabled
-     */
-    public void setCrashReportingEnabled(final boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (isEnabled) {
-                    CrashReporting.setState(Feature.State.ENABLED);
-                } else {
-                    CrashReporting.setState(Feature.State.DISABLED);
-                }
-            }
-        });
-    }
-
-    public void sendJSCrashByReflection(final String map, final boolean isHandled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    final JSONObject exceptionObject = new JSONObject(map);
-                    Method method = getMethod(Class.forName("com.instabug.crash.CrashReporting"), "reportException",
-                            JSONObject.class, boolean.class);
-                    if (method != null) {
-                        method.invoke(null, exceptionObject, isHandled);
-                        Log.e("IBG-Flutter", exceptionObject.toString());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     /**
