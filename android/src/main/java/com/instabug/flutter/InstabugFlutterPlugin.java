@@ -17,13 +17,10 @@ import com.instabug.featuresrequest.FeatureRequests;
 import com.instabug.flutter.generated.BugReportingPigeon;
 import com.instabug.flutter.generated.InstabugLogPigeon;
 import com.instabug.flutter.generated.InstabugPigeon;
+import com.instabug.flutter.generated.SurveysPigeon;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.model.NetworkLog;
-import com.instabug.survey.Survey;
-import com.instabug.survey.Surveys;
-import com.instabug.survey.callbacks.OnDismissCallback;
-import com.instabug.survey.callbacks.OnShowCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,6 +80,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         InstabugPigeon.InstabugApi.setup(messenger, new InstabugApiImpl(context));
         InstabugLogPigeon.InstabugLogApi.setup(messenger, new InstabugLogApiImpl());
         BugReportingPigeon.BugReportingApi.setup(messenger, new BugReportingApiImpl(messenger));
+        SurveysPigeon.SurveysApi.setup(messenger, new SurveysApiImpl(messenger));
     }
 
     @Override
@@ -142,65 +140,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             }
         }
         return null;
-    }
-
-
-    /**
-     * Sets the runnable that gets executed just before showing any valid
-     * survey<br/>
-     * WARNING: This runs on your application's main UI thread. Please do not
-     * include any blocking operations to avoid ANRs.
-     */
-    public void setOnShowSurveyCallback() {
-        Surveys.setOnShowCallback(new OnShowCallback() {
-            @Override
-            public void onShow() {
-                channel.invokeMethod("onShowSurveyCallback", null);
-            }
-        });
-    }
-
-    /**
-     * Sets the runnable that gets executed just after showing any valid survey<br/>
-     * WARNING: This runs on your application's main UI thread. Please do not
-     * include any blocking operations to avoid ANRs.
-     *
-     */
-    public void setOnDismissSurveyCallback() {
-
-        Surveys.setOnDismissCallback(new OnDismissCallback() {
-            @Override
-            public void onDismiss() {
-                channel.invokeMethod("onDismissSurveyCallback", null);
-            }
-        });
-    }
-
-    /**
-     * Returns an array containing the available surveys.*
-     */
-    public void getAvailableSurveys() {
-        List<Survey> availableSurveys = Surveys.getAvailableSurveys();
-        ArrayList<String> result = new ArrayList<>();
-        for (Survey obj : availableSurveys) {
-            result.add(obj.getTitle());
-        }
-        channel.invokeMethod("availableSurveysCallback", result);
-    }
-
-    /**
-     * Returns true if the survey with a specific token was answered before. Will
-     * return false if the token does not exist or if the survey was not answered
-     * before.
-     *
-     * @param surveyToken the attribute key as string
-     * @return the desired value of whether the user has responded to the survey or
-     *         not.
-     */
-    public void hasRespondedToSurveyWithToken(String surveyToken) {
-        boolean hasResponded;
-        hasResponded = Surveys.hasRespondToSurvey(surveyToken);
-        channel.invokeMethod("hasRespondedToSurveyCallback", hasResponded);
     }
 
     /**

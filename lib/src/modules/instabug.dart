@@ -126,6 +126,7 @@ class Instabug {
     List<InvocationEvent> invocationEvents,
   ) async {
     BugReporting.init();
+    Surveys.init();
     
     final invocationEventsStrings =
         invocationEvents.map((e) => e.toString()).toList();

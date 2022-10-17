@@ -24,13 +24,16 @@ NSMutableDictionary *traces;
   traces = [[NSMutableDictionary alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
 
-  BugReportingFlutterApi *flutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
-  BugReportingApiImpl *bugReportingApi = [[BugReportingApiImpl alloc] initWithFlutterApi:flutterApi];
+  BugReportingFlutterApi *bugReportingFlutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
+  BugReportingApiImpl *bugReportingApi = [[BugReportingApiImpl alloc] initWithFlutterApi:bugReportingFlutterApi];
+
+  SurveysFlutterApi *surveysFlutterApi = [[SurveysFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
+  SurveysApiImpl *surveysApi = [[SurveysApiImpl alloc] initWithFlutterApi:surveysFlutterApi];
 
   InstabugApiSetup([registrar messenger], [[InstabugApiImpl alloc] init]);
   InstabugLogApiSetup([registrar messenger], [[InstabugLogApiImpl alloc] init]);
   BugReportingApiSetup([registrar messenger], bugReportingApi);
-  SurveysApiSetup([registrar messenger], [[SurveysApiImpl alloc] init]);
+  SurveysApiSetup([registrar messenger], surveysApi);
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -80,48 +83,6 @@ NSMutableDictionary *traces;
   IBGSurveys.willShowSurveyHandler = ^{
            [channel invokeMethod:@"onShowSurveyCallback" arguments:nil];
         };
-}
-
-/**
-  * Sets the runnable that gets executed just after showing any valid survey<br/>
-  * WARNING: This runs on your application's main UI thread. Please do not include
-  * any blocking operations to avoid ANRs.
-  *
-  */
-+ (void)setOnDismissSurveyCallback {
-  IBGSurveys.didDismissSurveyHandler = ^{
-            [channel invokeMethod:@"onDismissSurveyCallback" arguments:nil];
-        };
-}
-
-/**
-  * Sets a block of code to be executed right after the SDK's UI is dismissed.
-  * This block is executed on the UI thread. Could be used for performing any
-  * UI changes after the SDK's UI is dismissed.
-  */
-+ (void)getAvailableSurveys {
-    [IBGSurveys availableSurveysWithCompletionHandler:^(NSArray<IBGSurvey *> *availableSurveys) {
-        NSMutableArray<NSDictionary*>* mappedSurveys = [[NSMutableArray alloc] init];
-        for (IBGSurvey* survey in availableSurveys) {
-            [mappedSurveys addObject:@{@"title": survey.title }];
-        }
-        NSArray *result = [mappedSurveys copy];
-        [channel invokeMethod:@"availableSurveysCallback" arguments:result];
-    }];
-}
-
-/**
-  * Returns true if the survey with a specific token was answered before.
-  * Will return false if the token does not exist or if the survey was not answered before.
-  *
-  * @param surveyToken          the attribute key as string
-  * @return the desired value of whether the user has responded to the survey or not.
-  */
-+ (void)hasRespondedToSurveyWithToken:(NSString *)surveyToken {
-    [IBGSurveys hasRespondedToSurveyWithToken:surveyToken completionHandler:^(BOOL hasResponded){
-      NSNumber *boolNumber = [NSNumber numberWithBool:hasResponded];
-      [channel invokeMethod:@"hasRespondedToSurveyCallback" arguments:boolNumber];
-    }];
 }
 
 /**

@@ -7,9 +7,21 @@ import androidx.annotation.NonNull;
 
 import com.instabug.flutter.generated.SurveysPigeon;
 import com.instabug.library.Feature;
+import com.instabug.survey.Survey;
 import com.instabug.survey.Surveys;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.flutter.plugin.common.BinaryMessenger;
+
 public class SurveysApiImpl implements SurveysPigeon.SurveysApi {
+    private final SurveysPigeon.SurveysFlutterApi flutterApi;
+
+    public SurveysApiImpl(BinaryMessenger messenger) {
+        flutterApi = new SurveysPigeon.SurveysFlutterApi(messenger);
+    }
+
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -47,5 +59,33 @@ public class SurveysApiImpl implements SurveysPigeon.SurveysApi {
     @Override
     public void setAppStoreURL(@NonNull String appStoreURL) {
         // iOS Only
+    }
+
+    @Override
+    public void hasRespondedToSurvey(@NonNull String surveyToken, SurveysPigeon.Result<Boolean> result) {
+        final boolean hasResponded = Surveys.hasRespondToSurvey(surveyToken);
+        result.success(hasResponded);
+    }
+
+    @Override
+    public void getAvailableSurveys(SurveysPigeon.Result<List<String>> result) {
+        List<Survey> surveys = Surveys.getAvailableSurveys();
+
+        ArrayList<String> titles = new ArrayList<>();
+        for (Survey survey : surveys != null ? surveys : new ArrayList<Survey>()) {
+            titles.add(survey.getTitle());
+        }
+
+        result.success(titles);
+    }
+
+    @Override
+    public void bindOnShowSurveyCallback() {
+        Surveys.setOnShowCallback(() -> flutterApi.onShowSurvey(reply -> {}));
+    }
+
+    @Override
+    public void bindOnDismissSurveyCallback() {
+        Surveys.setOnDismissCallback(() -> flutterApi.onDismissSurvey(reply -> {}));
     }
 }

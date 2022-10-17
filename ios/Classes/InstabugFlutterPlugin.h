@@ -4,38 +4,6 @@
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result;
 
-
-/**
-  * Sets the runnable that gets executed just before showing any valid survey<br/>
-  * WARNING: This runs on your application's main UI thread. Please do not include
-  * any blocking operations to avoid ANRs.
-  */
-+ (void)setOnShowSurveyCallback;
-
-/**
-  * Sets the runnable that gets executed just after showing any valid survey<br/>
-  * WARNING: This runs on your application's main UI thread. Please do not include
-  * any blocking operations to avoid ANRs.
-  *
-  */
-+ (void)setOnDismissSurveyCallback;
-
-/**
-  * Sets a block of code to be executed right after the SDK's UI is dismissed.
-  * This block is executed on the UI thread. Could be used for performing any
-  * UI changes after the SDK's UI is dismissed.
-  */
-+ (void)getAvailableSurveys;
-
-/**
-  * Returns true if the survey with a specific token was answered before.
-  * Will return false if the token does not exist or if the survey was not answered before.
-  *
-  * @param surveyToken the attribute key as string
-  * @return the desired value of whether the user has responded to the survey or not.
-  */
-+ (void)hasRespondedToSurveyWithToken:(NSString *)surveyToken;
-
 /**
   * Shows the UI for feature requests list
   */

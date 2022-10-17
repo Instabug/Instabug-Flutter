@@ -1,5 +1,11 @@
 import 'package:pigeon/pigeon.dart';
 
+@FlutterApi()
+abstract class SurveysFlutterApi {
+  void onShowSurvey();
+  void onDismissSurvey();
+}
+
 @HostApi()
 abstract class SurveysApi {
   void setEnabled(bool isEnabled);
@@ -8,4 +14,8 @@ abstract class SurveysApi {
   void setAutoShowingEnabled(bool isEnabled);
   void setShouldShowWelcomeScreen(bool shouldShowWelcomeScreen);
   void setAppStoreURL(String appStoreURL);
+  @async bool hasRespondedToSurvey(String surveyToken);
+  @async List<String> getAvailableSurveys();
+  void bindOnShowSurveyCallback();
+  void bindOnDismissSurveyCallback();
 }
