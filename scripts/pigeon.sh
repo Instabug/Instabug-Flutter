@@ -51,6 +51,14 @@ flutter pub run pigeon \
   --java_package "com.instabug.flutter.generated"
 
 flutter pub run pigeon \
+  --input pigeons/replies.api.dart \
+  --dart_out lib/generated/replies.api.g.dart \
+  --objc_header_out ios/Classes/Generated/RepliesPigeon.h \
+  --objc_source_out ios/Classes/Generated/RepliesPigeon.m \
+  --java_out ./android/src/main/java/com/instabug/flutter/generated/RepliesPigeon.java \
+  --java_package "com.instabug.flutter.generated"
+
+flutter pub run pigeon \
   --input pigeons/surveys.api.dart \
   --dart_out lib/generated/surveys.api.g.dart \
   --objc_header_out ios/Classes/Generated/SurveysPigeon.h \

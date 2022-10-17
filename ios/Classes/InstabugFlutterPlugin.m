@@ -8,6 +8,7 @@
 #import "Generated/FeatureRequestsPigeon.h"
 #import "Generated/InstabugPigeon.h"
 #import "Generated/InstabugLogPigeon.h"
+#import "Generated/RepliesPigeon.h"
 #import "Generated/SurveysPigeon.h"
 
 #import "ApmApiImpl.h"
@@ -16,6 +17,7 @@
 #import "FeatureRequestsApiImpl.h"
 #import "InstabugApiImpl.h"
 #import "InstabugLogApiImpl.h"
+#import "RepliesApiImpl.h"
 #import "SurveysApiImpl.h"
 
 
@@ -42,6 +44,7 @@ FlutterMethodChannel* channel;
   CrashReportingApiSetup([registrar messenger], [[CrashReportingApiImpl alloc] init]);
   FeatureRequestsApiSetup([registrar messenger], [[FeatureRequestsApiImpl alloc] init]);
   BugReportingApiSetup([registrar messenger], bugReportingApi);
+  RepliesApiSetup([registrar messenger], [[RepliesApiImpl alloc] init]);
   SurveysApiSetup([registrar messenger], surveysApi);
 }
 
@@ -95,22 +98,6 @@ FlutterMethodChannel* channel;
 }
 
 /**
-  * Enables and disables everything related to receiving replies.
-  * @param {boolean} isEnabled 
-  */
-+ (void)setRepliesEnabled:(NSNumber *)isEnabled {
-   BOOL boolValue = [isEnabled boolValue];
-   IBGReplies.enabled = boolValue;
-}
-
-/**
-  * Manual invocation for replies.
-  */
-+ (void)showReplies {
-   [IBGReplies show];
-}
-
-/**
   * Tells whether the user has chats already or not.
   */
 + (void)hasChats {
@@ -135,16 +122,6 @@ FlutterMethodChannel* channel;
   */
 + (void)getUnreadRepliesCount {
     [channel invokeMethod:@"unreadRepliesCountCallback" arguments:@(IBGReplies.unreadRepliesCount)];
-}
-
-/**
-  * Enabled/disable chat notification
-  *
-  * @param isEnabled whether chat notification is reburied or not
-  */
-+ (void)setChatNotificationEnabled:(NSNumber *)isEnabled {
-   BOOL boolValue = [isEnabled boolValue];
-   IBGReplies.inAppNotificationsEnabled = boolValue;
 }
 
 /**

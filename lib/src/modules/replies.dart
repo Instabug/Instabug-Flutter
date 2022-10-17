@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:instabug_flutter/generated/replies.api.g.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 
 typedef HasChatsCallback = void Function(bool);
@@ -10,13 +11,12 @@ typedef OnNewReplyReceivedCallback = void Function();
 typedef UnreadRepliesCountCallback = void Function(int);
 
 class Replies {
+  static const MethodChannel _channel = MethodChannel('instabug_flutter');
+  static final _native = RepliesApi();
+
   static HasChatsCallback? _hasChatsCallback;
   static OnNewReplyReceivedCallback? _onNewReplyReceivedCallback;
   static UnreadRepliesCountCallback? _unreadRepliesCountCallback;
-  static const MethodChannel _channel = MethodChannel('instabug_flutter');
-
-  static Future<String?> get platformVersion =>
-      _channel.invokeMethod<String>('getPlatformVersion');
 
   static Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
@@ -35,13 +35,12 @@ class Replies {
   /// Enables and disables everything related to receiving replies.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    return _channel.invokeMethod('setRepliesEnabled:', params);
+    return _native.setEnabled(isEnabled);
   }
 
   ///Manual invocation for replies.
   static Future<void> show() async {
-    return _channel.invokeMethod('showReplies');
+    return _native.show();
   }
 
   /// Tells whether the user has chats already or not.
@@ -78,8 +77,7 @@ class Replies {
   /// Enables/disables showing in-app notifications when the user receives a new message.
   /// [isEnabled] A boolean to set whether notifications are enabled or disabled.
   static Future<void> setInAppNotificationsEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    return _channel.invokeMethod('setChatNotificationEnabled:', params);
+    return _native.setInAppNotificationsEnabled(isEnabled);
   }
 
   /// Set whether new in app notification received will play a small sound notification or not (Default is {@code false})
@@ -87,11 +85,7 @@ class Replies {
   /// @android ONLY
   static Future<void> setInAppNotificationSound(bool isEnabled) async {
     if (IBGBuildInfo.instance.isAndroid) {
-      final params = <dynamic>[isEnabled];
-      return _channel.invokeMethod(
-        'setEnableInAppNotificationSound:',
-        params,
-      );
+      return _native.setInAppNotificationsEnabled(isEnabled);
     }
   }
 }

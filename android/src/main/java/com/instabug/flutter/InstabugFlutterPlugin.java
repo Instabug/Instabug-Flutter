@@ -1,8 +1,6 @@
 package com.instabug.flutter;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 
 import androidx.annotation.NonNull;
 
@@ -14,8 +12,8 @@ import com.instabug.flutter.generated.CrashReportingPigeon;
 import com.instabug.flutter.generated.FeatureRequestsPigeon;
 import com.instabug.flutter.generated.InstabugLogPigeon;
 import com.instabug.flutter.generated.InstabugPigeon;
+import com.instabug.flutter.generated.RepliesPigeon;
 import com.instabug.flutter.generated.SurveysPigeon;
-import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.model.NetworkLog;
 
@@ -77,6 +75,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         BugReportingPigeon.BugReportingApi.setup(messenger, new BugReportingApiImpl(messenger));
         CrashReportingPigeon.CrashReportingApi.setup(messenger, new CrashReportingApiImpl());
         FeatureRequestsPigeon.FeatureRequestsApi.setup(messenger, new FeatureRequestsApiImpl());
+        RepliesPigeon.RepliesApi.setup(messenger, new RepliesApiImpl());
         SurveysPigeon.SurveysApi.setup(messenger, new SurveysApiImpl(messenger));
     }
 
@@ -140,31 +139,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     }
 
     /**
-     * Enables and disables everything related to receiving replies.
-     * 
-     * @param {boolean} isEnabled
-     */
-    public void setRepliesEnabled(final boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (isEnabled) {
-                    Replies.setState(Feature.State.ENABLED);
-                } else {
-                    Replies.setState(Feature.State.DISABLED);
-                }
-            }
-        });
-    }
-
-    /**
-     * Manual invocation for replies.
-     */
-    public void showReplies() {
-        Replies.show();
-    }
-
-    /**
      * Tells whether the user has chats already or not.
      */
     public void hasChats() {
@@ -193,26 +167,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     public void getUnreadRepliesCount() {
         int unreadMessages = Replies.getUnreadRepliesCount();
         channel.invokeMethod("unreadRepliesCountCallback", unreadMessages);
-    }
-
-    /**
-     * Enabled/disable chat notification
-     *
-     * @param isChatNotificationEnable whether chat notification is reburied or not
-     */
-    public void setChatNotificationEnabled(boolean isChatNotificationEnable) {
-        Replies.setInAppNotificationEnabled(isChatNotificationEnable);
-    }
-
-    /**
-     * Set whether new in app notification received will play a small sound
-     * notification or not (Default is {@code false})
-     *
-     * @param shouldPlaySound desired state of conversation sounds
-     * @since 4.1.0
-     */
-    public void setEnableInAppNotificationSound(boolean shouldPlaySound) {
-        Replies.setInAppNotificationSound(shouldPlaySound);
     }
 
     /**
