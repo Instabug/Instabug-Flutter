@@ -3,6 +3,14 @@ mkdir -p android/src/main/java/com/instabug/flutter/generated
 mkdir -p ios/Classes/Generated
 
 flutter pub run pigeon \
+  --input pigeons/apm.api.dart \
+  --dart_out lib/generated/apm.api.g.dart \
+  --objc_header_out ios/Classes/Generated/ApmPigeon.h \
+  --objc_source_out ios/Classes/Generated/ApmPigeon.m \
+  --java_out ./android/src/main/java/com/instabug/flutter/generated/ApmPigeon.java \
+  --java_package "com.instabug.flutter.generated"
+
+flutter pub run pigeon \
   --input pigeons/bug_reporting.api.dart \
   --dart_out lib/generated/bug_reporting.api.g.dart \
   --objc_header_out ios/Classes/Generated/BugReportingPigeon.h \

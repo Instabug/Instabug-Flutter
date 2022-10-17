@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:instabug_flutter/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/models/trace.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
@@ -18,39 +18,31 @@ enum LogLevel {
 }
 
 class APM {
-  static const MethodChannel _channel = MethodChannel('instabug_flutter');
-
-  static Future<String?> get platformVersion =>
-      _channel.invokeMethod<String>('getPlatformVersion');
+  static final _native = ApmApi();
 
   /// Enables or disables APM feature.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    return _channel.invokeMethod('setAPMEnabled:', params);
+    return _native.setEnabled(isEnabled);
   }
 
   /// Sets log Level to determine level of details in a log
   /// [logLevel] Enum value to determine the level
   static Future<void> setLogLevel(LogLevel logLevel) async {
-    final params = <dynamic>[logLevel.toString()];
-    return _channel.invokeMethod('setAPMLogLevel:', params);
+    return _native.setLogLevel(logLevel.toString());
   }
 
   /// Enables or disables cold app launch tracking.
   /// [boolean] isEnabled
   static Future<void> setColdAppLaunchEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    return _channel.invokeMethod('setColdAppLaunchEnabled:', params);
+    return _native.setColdAppLaunchEnabled(isEnabled);
   }
 
   /// Starts an execution trace.
   /// [String] name of the trace.
   static Future<Trace> startExecutionTrace(String name) async {
     final id = IBGDateTime.instance.now();
-    final params = <dynamic>[name, id.toString()];
-    final traceId =
-        await _channel.invokeMethod<String?>('startExecutionTrace:id:', params);
+    final traceId = await _native.startExecutionTrace(id.toString(), name);
 
     if (traceId == null) {
       return Future.error(
@@ -71,55 +63,40 @@ class APM {
     String key,
     String value,
   ) async {
-    final params = <dynamic>[
-      id,
-      key,
-      value,
-    ];
-    return _channel.invokeMethod(
-      'setExecutionTraceAttribute:key:value:',
-      params,
-    );
+    return _native.setExecutionTraceAttribute(id, key, value);
   }
 
   /// Ends an execution trace.
   /// [String] id of the trace.
   static Future<void> endExecutionTrace(String id) async {
-    final params = <dynamic>[id];
-    return _channel.invokeMethod('endExecutionTrace:', params);
+    return _native.endExecutionTrace(id);
   }
 
   /// Enables or disables auto UI tracing.
   /// [boolean] isEnabled
   static Future<void> setAutoUITraceEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    return _channel.invokeMethod('setAutoUITraceEnabled:', params);
+    return _native.setAutoUITraceEnabled(isEnabled);
   }
 
   /// Starts UI trace.
   /// [String] name
   static Future<void> startUITrace(String name) async {
-    final params = <dynamic>[name];
-    return _channel.invokeMethod('startUITrace:', params);
+    return _native.startUITrace(name);
   }
 
   /// Ends UI trace.
   static Future<void> endUITrace() async {
-    return _channel.invokeMethod('endUITrace');
+    return _native.endUITrace();
   }
 
   /// Ends App Launch.
   static Future<void> endAppLaunch() async {
-    return _channel.invokeMethod('endAppLaunch');
+    return _native.endAppLaunch();
   }
 
   static FutureOr<void> networkLogAndroid(NetworkData data) {
     if (IBGBuildInfo.instance.isAndroid) {
-      final params = <dynamic>[data.toMap()];
-      return _channel.invokeMethod(
-        'apmNetworkLogByReflection:',
-        params,
-      );
+      return _native.networkLogAndroid(data.toMap());
     }
   }
 }

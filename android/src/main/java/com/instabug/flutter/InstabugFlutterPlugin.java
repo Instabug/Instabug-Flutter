@@ -3,15 +3,12 @@ package com.instabug.flutter;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.instabug.apm.APM;
-import com.instabug.apm.model.ExecutionTrace;
-import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.bug.BugReporting;
 import com.instabug.chat.Replies;
+import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.generated.BugReportingPigeon;
 import com.instabug.flutter.generated.CrashReportingPigeon;
 import com.instabug.flutter.generated.FeatureRequestsPigeon;
@@ -25,7 +22,6 @@ import com.instabug.library.model.NetworkLog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +45,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
     final public static String INVOCATION_EVENT_FLOATING_BUTTON = "InvocationEvent.floatingButton";
     final public static String INVOCATION_EVENT_SHAKE = "InvocationEvent.shake";
 
-    HashMap<String, ExecutionTrace> traces = new HashMap<String, ExecutionTrace>();
 
     private static Context context;
     static MethodChannel channel;
@@ -78,6 +73,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
 
         InstabugPigeon.InstabugApi.setup(messenger, new InstabugApiImpl(context));
         InstabugLogPigeon.InstabugLogApi.setup(messenger, new InstabugLogApiImpl());
+        ApmPigeon.ApmApi.setup(messenger, new ApmApiImpl());
         BugReportingPigeon.BugReportingApi.setup(messenger, new BugReportingApiImpl(messenger));
         CrashReportingPigeon.CrashReportingApi.setup(messenger, new CrashReportingApiImpl());
         FeatureRequestsPigeon.FeatureRequestsApi.setup(messenger, new FeatureRequestsApiImpl());
@@ -243,238 +239,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
                 (new JSONObject((HashMap<String, String>) jsonObject.get("responseHeaders"))).toString(4));
         networkLog.setTotalDuration(((Number) jsonObject.get("duration")).longValue() / 1000);
         networkLog.insert();
-    }
-
-    /**
-     * Enables and disables everything related to APM feature.
-     * 
-     * @param {boolean} isEnabled
-     */
-    public void setAPMEnabled(final boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    APM.setEnabled(isEnabled);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Sets the printed logs priority. Filter to one of the following levels.
-     *
-     * @param {String} logLevel.
-     */
-    public void setAPMLogLevel(final String logLevel) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (ArgsRegistry.getDeserializedValue(logLevel) == null) {
-                        return;
-                    }
-                    APM.setLogLevel((int) ArgsRegistry.getRawValue(logLevel));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-  
-    /**
-     * Enables or disables cold app launch tracking.
-     * @param isEnabled boolean indicating enabled or disabled.
-     */
-    public void setColdAppLaunchEnabled(final boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    APM.setAppLaunchEnabled(isEnabled);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-    /**
-     * Starts an execution trace
-     * @param name string name of the trace.
-     */
-    public String startExecutionTrace(final String name, final String id) {
-        try {
-            String result = null;
-            ExecutionTrace trace = APM.startExecutionTrace(name);
-            if (trace != null) {
-                result = id;
-                traces.put(id, trace);
-            }
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-  
-    /**
-     * Sets an execution trace attribute
-     * @param id string id of the trace.
-     * @param key string key of the attribute.
-     * @param value string value of the attribute.
-     */
-    public void setExecutionTraceAttribute(final String id, final String key, final String value) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    traces.get(id).setAttribute(key, value);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-  
-    /**
-     * Ends an execution trace
-     * @param id string id of the trace.
-     */
-    public void endExecutionTrace(final String id) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    traces.get(id).end();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-  
-    /**
-     * Enables or disables auto UI tracing
-     * @param isEnabled boolean indicating enabled or disabled.
-     */
-    public void setAutoUITraceEnabled(final boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    APM.setAutoUITraceEnabled(isEnabled);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Starts a UI trace
-     * @param name string name of the UI trace.
-     */
-    public void startUITrace(final String name) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    APM.startUITrace(name);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Ends the current running UI trace
-     */
-    public void endUITrace() {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    APM.endUITrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Ends app launch
-     */
-    public void endAppLaunch() {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    APM.endAppLaunch();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void apmNetworkLogByReflection(HashMap<String, Object> jsonObject) throws JSONException {
-        try {
-            APMNetworkLogger apmNetworkLogger = new APMNetworkLogger();
-            final String requestUrl = (String) jsonObject.get("url");
-            final String requestBody = (String) jsonObject.get("requestBody");
-            final String responseBody = (String) jsonObject.get("responseBody");
-            final String requestMethod = (String) jsonObject.get("method");
-            //--------------------------------------------
-            final String requestContentType = (String) jsonObject.get("requestContentType");
-            final String responseContentType = (String) jsonObject.get("responseContentType");
-            //--------------------------------------------
-            final long requestBodySize = ((Number) jsonObject.get("requestBodySize")).longValue();
-            final long responseBodySize = ((Number) jsonObject.get("responseBodySize")).longValue();
-            //--------------------------------------------
-            final String errorDomain = (String) jsonObject.get("errorDomain");
-            final Integer statusCode = (Integer) jsonObject.get("responseCode");
-            final long requestDuration = ((Number) jsonObject.get("duration")).longValue() / 1000;
-            final long requestStartTime = ((Number) jsonObject.get("startTime")).longValue() * 1000;
-            final String requestHeaders = (new JSONObject((HashMap<String, String>) jsonObject.get("requestHeaders"))).toString(4);
-            final String responseHeaders = (new JSONObject((HashMap<String, String>) jsonObject.get("responseHeaders"))).toString(4);
-            final String errorMessage;
-
-            if(errorDomain.equals("")) {
-                errorMessage = null;
-            } else {
-                errorMessage = errorDomain;
-            }
-            //--------------------------------------------------
-            String gqlQueryName = null;
-            if(jsonObject.containsKey("gqlQueryName")){
-                gqlQueryName = (String) jsonObject.get("gqlQueryName");
-            }
-            String serverErrorMessage = "";
-            if(jsonObject.containsKey("serverErrorMessage")){
-                serverErrorMessage = (String) jsonObject.get("serverErrorMessage");
-            }  
-
-            try {
-                Method method = getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class);
-                if (method != null) {
-                    method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage);
-                } else {
-                    Log.e("IB-CP-Bridge", "apmNetworkLogByReflection was not found by reflection");
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**

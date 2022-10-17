@@ -2,6 +2,7 @@
 #import "Instabug.h"
 #import "IBGAPM.h"
 
+#import "Generated/ApmPigeon.h"
 #import "Generated/BugReportingPigeon.h"
 #import "Generated/CrashReportingPigeon.h"
 #import "Generated/FeatureRequestsPigeon.h"
@@ -9,6 +10,7 @@
 #import "Generated/InstabugLogPigeon.h"
 #import "Generated/SurveysPigeon.h"
 
+#import "ApmApiImpl.h"
 #import "BugReportingApiImpl.h"
 #import "CrashReportingApiImpl.h"
 #import "FeatureRequestsApiImpl.h"
@@ -20,14 +22,12 @@
 @implementation InstabugFlutterPlugin
 
 FlutterMethodChannel* channel;
-NSMutableDictionary *traces;
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   channel = [FlutterMethodChannel
       methodChannelWithName:@"instabug_flutter"
             binaryMessenger:[registrar messenger]];
   InstabugFlutterPlugin* instance = [[InstabugFlutterPlugin alloc] init];
-  traces = [[NSMutableDictionary alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
 
   BugReportingFlutterApi *bugReportingFlutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
@@ -36,6 +36,7 @@ NSMutableDictionary *traces;
   SurveysFlutterApi *surveysFlutterApi = [[SurveysFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
   SurveysApiImpl *surveysApi = [[SurveysApiImpl alloc] initWithFlutterApi:surveysFlutterApi];
 
+  ApmApiSetup([registrar messenger], [[ApmApiImpl alloc] init]);
   InstabugApiSetup([registrar messenger], [[InstabugApiImpl alloc] init]);
   InstabugLogApiSetup([registrar messenger], [[InstabugLogApiImpl alloc] init]);
   CrashReportingApiSetup([registrar messenger], [[CrashReportingApiImpl alloc] init]);
@@ -210,124 +211,6 @@ NSMutableDictionary *traces;
 
         [inv invoke];
     }
-}
-
-/**
-  * Enables and disables everything related to APM feature.
-  * @param {boolean} isEnabled
-  */
-+ (void)setAPMEnabled:(NSNumber *)isEnabled {
-   BOOL boolValue = [isEnabled boolValue];
-   IBGAPM.enabled = boolValue;
-}
-
-/**
-  * Sets the printed logs priority. Filter to one of the following levels:
-  *
-  * - logLevelNone disables all APM SDK console logs.
-  *
-  * - logLevelError prints errors only, we use this level to let you know if something goes wrong.
-  *
-  * - logLevelWarning displays warnings that will not necessarily lead to errors but should be addressed nonetheless.
-  *
-  * - logLevelInfo (default) logs information that we think is useful without being too verbose.
-  *
-  * - logLevelDebug use this in case you are debugging an issue. Not recommended for production use.
-  *
-  * - logLevelVerbose use this only if logLevelDebug was not enough and you need more visibility
-  * on what is going on under the hood.
-  *
-  * Similar to the logLevelDebug level, this is not meant to be used on production environments.
-  *
-  * Each log level will also include logs from all the levels above it. For instance,
-  * logLevelInfo will include logLevelInfo logs as well as logLevelWarning
-  * and logLevelError logs.
-
-  * @param {logLevel} the printed logs priority.
-  */
-+ (void)setAPMLogLevel:(NSString *)_logLevel {
-  NSDictionary *constants = [self constants];
-  NSInteger _logLevelIntValue = ((NSNumber *) constants[_logLevel]).integerValue;
-    IBGAPM.logLevel = _logLevelIntValue;
-}
-
-/**
-  * Enables and disables cold app launch tracking.
-  * @param {boolean} isEnabled
-  */
-+ (void)setColdAppLaunchEnabled:(NSNumber *)isEnabled {
-   BOOL boolValue = [isEnabled boolValue];
-   IBGAPM.appLaunchEnabled = boolValue;
-}
-
-/**
-  * Starts an execution trace
-  * @param {string} name of the trace.
-  * @param {string} id of the trace.
-  */
-+ (NSString *)startExecutionTrace:(NSString *)name id:(NSString *)id {
-    IBGExecutionTrace *trace = [IBGAPM startExecutionTraceWithName:name];
-    if (trace != nil) {
-        [traces setObject: trace forKey: id];
-        return id;
-    } else {
-        return nil;
-    }
-}
-
-/**
-  * Sets an execution trace attribute
-  * @param {string} id of the trace.
-  * @param {string} key of the attribute.
-  * @param {string} value of the attribute.
-  */
-+ (void)setExecutionTraceAttribute:(NSString *)id key:(NSString *)key value:(NSString *)value {
-    IBGExecutionTrace *trace = [traces objectForKey:id];
-    if (trace != nil) {
-        [trace setAttributeWithKey:key value:value];
-    }
-}
-
-/**
-  * End an execution trace
-  * @param {string} id of the trace.
-  */
-+ (void)endExecutionTrace:(NSString *)id {
-    IBGExecutionTrace *trace = [traces objectForKey:id];
-    if (trace != nil) {
-        [trace end];
-    }
-}
-
-/**
-  * Enables or disables auto UI tracing.
-  * @param isEnabled boolean indicating enabled or disabled.
-  */
-+ (void)setAutoUITraceEnabled:(NSNumber *)isEnabled {
-   BOOL boolValue = [isEnabled boolValue];
-   IBGAPM.autoUITraceEnabled = boolValue;
-}
-
-/**
-  * Start UI trace.
-  * @param name string holding the name of the trace.
-  */
-+ (void)startUITrace:(NSString *)name {
-    [IBGAPM startUITraceWithName:name];
-}
-
-/**
-  * Ends UI trace.
-  */
-+ (void)endUITrace {
-    [IBGAPM endUITrace];
-}
-
-/**
-  * Ends app launch.
-  */
-+ (void)endAppLaunch {
-    [IBGAPM endAppLaunch];
 }
 
 
