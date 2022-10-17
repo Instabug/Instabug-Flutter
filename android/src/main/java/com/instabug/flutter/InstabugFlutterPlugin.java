@@ -13,8 +13,8 @@ import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.bug.BugReporting;
 import com.instabug.chat.Replies;
 import com.instabug.crash.CrashReporting;
-import com.instabug.featuresrequest.FeatureRequests;
 import com.instabug.flutter.generated.BugReportingPigeon;
+import com.instabug.flutter.generated.FeatureRequestsPigeon;
 import com.instabug.flutter.generated.InstabugLogPigeon;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.generated.SurveysPigeon;
@@ -29,7 +29,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BinaryMessenger;
@@ -80,6 +79,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         InstabugPigeon.InstabugApi.setup(messenger, new InstabugApiImpl(context));
         InstabugLogPigeon.InstabugLogApi.setup(messenger, new InstabugLogApiImpl());
         BugReportingPigeon.BugReportingApi.setup(messenger, new BugReportingApiImpl(messenger));
+        FeatureRequestsPigeon.FeatureRequestsApi.setup(messenger, new FeatureRequestsApiImpl());
         SurveysPigeon.SurveysApi.setup(messenger, new SurveysApiImpl(messenger));
     }
 
@@ -140,28 +140,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             }
         }
         return null;
-    }
-
-    /**
-     * Shows the UI for feature requests list
-     */
-    public void showFeatureRequests() {
-        FeatureRequests.show();
-    }
-
-    /**
-     * Sets whether email field is required or not when submitting
-     * new-feature-request/new-comment-on-feature
-     *
-     * @param isEmailRequired set true to make email field required
-     * @param actionTypes     Bitwise-or of actions
-     */
-    public void setEmailFieldRequiredForFeatureRequests(final Boolean isEmailRequired, final List<String> actionTypes) {
-        int[] actions = new int[actionTypes.size()];
-        for (int i = 0; i < actionTypes.size(); i++) {
-            actions[i] = ArgsRegistry.getDeserializedValue(actionTypes.get(i));
-        }
-        FeatureRequests.setEmailFieldRequired(isEmailRequired, actions);
     }
 
     /**

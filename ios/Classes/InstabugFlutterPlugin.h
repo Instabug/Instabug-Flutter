@@ -5,20 +5,6 @@
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result;
 
 /**
-  * Shows the UI for feature requests list
-  */
-+ (void)showFeatureRequests;
-
-/**
-  * Sets whether email field is required or not when submitting
-  * new-feature-request/new-comment-on-feature
-  *
-  * @param isEmailFieldRequired set true to make email field required
-  * @param actionTypesArray Bitwise-or of actions
-  */
-+ (void)setEmailFieldRequiredForFeatureRequests:(NSNumber *)isEmailFieldRequired forAction:(NSArray *)actionTypesArray;
-
-/**
   * Enables and disables everything related to receiving replies.
   * @param isEnabled isEnabled 
   */

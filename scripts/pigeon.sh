@@ -11,6 +11,14 @@ flutter pub run pigeon \
   --java_package "com.instabug.flutter.generated"
 
 flutter pub run pigeon \
+  --input pigeons/feature_requests.api.dart \
+  --dart_out lib/generated/feature_requests.api.g.dart \
+  --objc_header_out ios/Classes/Generated/FeatureRequestsPigeon.h \
+  --objc_source_out ios/Classes/Generated/FeatureRequestsPigeon.m \
+  --java_out ./android/src/main/java/com/instabug/flutter/generated/FeatureRequestsPigeon.java \
+  --java_package "com.instabug.flutter.generated"
+
+flutter pub run pigeon \
   --input pigeons/instabug.api.dart \
   --dart_out lib/generated/instabug.api.g.dart \
   --objc_header_out ios/Classes/Generated/InstabugPigeon.h \

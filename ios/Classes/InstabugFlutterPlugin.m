@@ -1,11 +1,15 @@
 #import "InstabugFlutterPlugin.h"
 #import "Instabug.h"
 #import "IBGAPM.h"
+
 #import "Generated/BugReportingPigeon.h"
+#import "Generated/FeatureRequestsPigeon.h"
 #import "Generated/InstabugPigeon.h"
 #import "Generated/InstabugLogPigeon.h"
 #import "Generated/SurveysPigeon.h"
+
 #import "BugReportingApiImpl.h"
+#import "FeatureRequestsApiImpl.h"
 #import "InstabugApiImpl.h"
 #import "InstabugLogApiImpl.h"
 #import "SurveysApiImpl.h"
@@ -32,6 +36,7 @@ NSMutableDictionary *traces;
 
   InstabugApiSetup([registrar messenger], [[InstabugApiImpl alloc] init]);
   InstabugLogApiSetup([registrar messenger], [[InstabugLogApiImpl alloc] init]);
+  FeatureRequestsApiSetup([registrar messenger], [[FeatureRequestsApiImpl alloc] init]);
   BugReportingApiSetup([registrar messenger], bugReportingApi);
   SurveysApiSetup([registrar messenger], surveysApi);
 }
@@ -83,30 +88,6 @@ NSMutableDictionary *traces;
   IBGSurveys.willShowSurveyHandler = ^{
            [channel invokeMethod:@"onShowSurveyCallback" arguments:nil];
         };
-}
-
-/**
-  * Shows the UI for feature requests list
-  */
-+ (void)showFeatureRequests {
-   [IBGFeatureRequests show];
-}
-
-/**
-  * Sets whether email field is required or not when submitting
-  * new-feature-request/new-comment-on-feature
-  *
-  * @param isEmailRequired set true to make email field required
-  * @param actionTypes Bitwise-or of actions
-  */
-+ (void)setEmailFieldRequiredForFeatureRequests:(NSNumber*)isEmailFieldRequired forAction:(NSArray *)actionTypesArray  {
-    NSDictionary *constants = [self constants];
-    NSInteger actionTypes = 0;
-    for (NSString * actionType in actionTypesArray) {
-        actionTypes |= ((NSNumber *) constants[actionType]).integerValue;
-    }
-    BOOL boolValue = [isEmailFieldRequired boolValue];
-    [IBGFeatureRequests setEmailFieldRequired:boolValue forAction:actionTypes];
 }
 
 /**
