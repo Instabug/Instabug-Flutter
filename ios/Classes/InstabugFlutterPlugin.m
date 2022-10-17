@@ -4,9 +4,11 @@
 #import "Generated/BugReportingPigeon.h"
 #import "Generated/InstabugPigeon.h"
 #import "Generated/InstabugLogPigeon.h"
+#import "Generated/SurveysPigeon.h"
 #import "BugReportingApiImpl.h"
 #import "InstabugApiImpl.h"
 #import "InstabugLogApiImpl.h"
+#import "SurveysApiImpl.h"
 
 
 @implementation InstabugFlutterPlugin
@@ -28,6 +30,7 @@ NSMutableDictionary *traces;
   InstabugApiSetup([registrar messenger], [[InstabugApiImpl alloc] init]);
   InstabugLogApiSetup([registrar messenger], [[InstabugLogApiImpl alloc] init]);
   BugReportingApiSetup([registrar messenger], bugReportingApi);
+  SurveysApiSetup([registrar messenger], [[SurveysApiImpl alloc] init]);
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -65,35 +68,6 @@ NSMutableDictionary *traces;
     if (!isImplemented) {
         result(FlutterMethodNotImplemented);
     }
-}
-
-/**
-  * Show any valid survey if exist
-  *
-  * @param {isEnabled} boolean
-  */
-+ (void)setSurveysEnabled:(NSNumber *)isEnabled {
-   BOOL boolValue = [isEnabled boolValue];
-   IBGSurveys.enabled = boolValue;
-}
-
-/**
-  * Sets url for the published iOS app on AppStore
-  *
-  * @param {appStoreURL} String
-  */
-+ (void)setAppStoreURL:(NSString *)appStoreURL {
-   IBGSurveys.appStoreURL = appStoreURL;
-}
-
-/**
-  * Set Surveys auto-showing state, default state auto-showing enabled
-  *
-  * @param {isEnabled} whether Surveys should be auto-showing or not
-  */
-+ (void)setAutoShowingSurveysEnabled:(NSNumber *)isEnabled {
-   BOOL boolValue = [isEnabled boolValue];
-   IBGSurveys.autoShowingEnabled = boolValue;
 }
 
 
@@ -134,37 +108,6 @@ NSMutableDictionary *traces;
         NSArray *result = [mappedSurveys copy];
         [channel invokeMethod:@"availableSurveysCallback" arguments:result];
     }];
-}
-
-
-/**
-  * Set Surveys auto-showing state, default state auto-showing enabled
-  *
-  * @param {isEnabled} whether Surveys should be auto-showing or not
-  */
-+ (void)setShouldShowSurveysWelcomeScreen:(NSNumber *)shouldShowWelcomeScreen {
-   BOOL boolValue = [shouldShowWelcomeScreen boolValue];
-   IBGSurveys.shouldShowWelcomeScreen = boolValue;
-}
-
-/**
-  * Show any valid survey if exist
-  *
-  * @return true if a valid survey was shown otherwise false
-  */
-+ (void)showSurveysIfAvailable {
-   [IBGSurveys showSurveyIfAvailable];
-}
-
-/**
-  * Shows survey with a specific token.
-  * Does nothing if there are no available surveys with that specific token.
-  * Answered and cancelled surveys won't show up again.
-  *
-  * @param surveyToken A String with a survey token.
-  */
-+ (void)showSurveyWithToken:(NSString *)surveyToken {
-   [IBGSurveys showSurveyWithToken:surveyToken];
 }
 
 /**

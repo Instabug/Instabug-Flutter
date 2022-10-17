@@ -4,26 +4,6 @@
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result;
 
-/**
-  * Show any valid survey if exist
-  *
-  * @param isEnabled boolean
-  */
-+ (void)setSurveysEnabled:(NSNumber *)isEnabled;
-
-/**
-  * Sets url for the published iOS app on AppStore
-  *
-  * @param appStoreURL String
-  */
-+ (void)setAppStoreURL:(NSString *)appStoreURL;
-
-/**
-  * Set Surveys auto-showing state, default state auto-showing enabled
-  *
-  * @param isEnabled whether Surveys should be auto-showing or not
-  */
-+ (void)setAutoShowingSurveysEnabled:(NSNumber *)isEnabled;
 
 /**
   * Sets the runnable that gets executed just before showing any valid survey<br/>
@@ -46,29 +26,6 @@
   * UI changes after the SDK's UI is dismissed.
   */
 + (void)getAvailableSurveys;
-
-/**
-  * Set Surveys auto-showing state, default state auto-showing enabled
-  *
-  * @param shouldShowWelcomeScreen whether Surveys should be auto-showing or not
-  */
-+ (void)setShouldShowSurveysWelcomeScreen:(NSNumber *)shouldShowWelcomeScreen;
-
-/**
-  * Show any valid survey if exist
-  *
-  * @return true if a valid survey was shown otherwise false
-  */
-+ (void)showSurveysIfAvailable;
-
-/**
-  * Shows survey with a specific token.
-  * Does nothing if there are no available surveys with that specific token.
-  * Answered and cancelled surveys won't show up again.
-  *
-  * @param surveyToken A String with a survey token.
-  */
-+ (void)showSurveyWithToken:(NSString *)surveyToken;
 
 /**
   * Returns true if the survey with a specific token was answered before.

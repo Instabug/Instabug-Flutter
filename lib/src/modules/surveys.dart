@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:instabug_flutter/generated/surveys.api.g.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 
 typedef OnShowSurveyCallback = void Function();
@@ -11,14 +12,13 @@ typedef AvailableSurveysCallback = void Function(List<String>);
 typedef HasRespondedToSurveyCallback = void Function(bool);
 
 class Surveys {
+  static final _native = SurveysApi();
+  static const MethodChannel _channel = MethodChannel('instabug_flutter');
+
   static OnShowSurveyCallback? _onShowCallback;
   static OnDismissSurveyCallback? _onDismissCallback;
   static AvailableSurveysCallback? _availableSurveysCallback;
   static HasRespondedToSurveyCallback? _hasRespondedToSurveyCallback;
-  static const MethodChannel _channel = MethodChannel('instabug_flutter');
-
-  static Future<String?> get platformVersion =>
-      _channel.invokeMethod<String>('getPlatformVersion');
 
   static Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
@@ -50,19 +50,14 @@ class Surveys {
   /// Defaults to `true`.
   /// [isEnabled] A boolean to set whether Instabug Surveys is enabled or disabled.
   static Future<void> setEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    return _channel.invokeMethod('setSurveysEnabled:', params);
+    return _native.setEnabled(isEnabled);
   }
 
   ///Sets whether auto surveys showing are enabled or not.
   /// [isEnabled] A boolean to indicate whether the
   /// surveys auto showing are enabled or not.
   static Future<void> setAutoShowingEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    return _channel.invokeMethod(
-      'setAutoShowingSurveysEnabled:',
-      params,
-    );
+    return _native.setAutoShowingEnabled(isEnabled);
   }
 
   /// Returns an array containing the available surveys.
@@ -103,11 +98,7 @@ class Surveys {
   static Future<void> setShouldShowWelcomeScreen(
     bool shouldShowWelcomeScreen,
   ) async {
-    final params = <dynamic>[shouldShowWelcomeScreen];
-    return _channel.invokeMethod(
-      'setShouldShowSurveysWelcomeScreen:',
-      params,
-    );
+    return _native.setShouldShowWelcomeScreen(shouldShowWelcomeScreen);
   }
 
   ///  Shows one of the surveys that were not shown before, that also have conditions
@@ -115,7 +106,7 @@ class Surveys {
   /// Does nothing if there are no available surveys or if a survey has already been shown
   /// in the current session.
   static Future<void> showSurveyIfAvailable() async {
-    return _channel.invokeMethod('showSurveysIfAvailable');
+    return _native.showSurveyIfAvailable();
   }
 
   /// Shows survey with a specific token.
@@ -123,8 +114,7 @@ class Surveys {
   /// Answered and cancelled surveys won't show up again.
   /// [surveyToken] - A String with a survey token.
   static Future<void> showSurvey(String surveyToken) async {
-    final params = <dynamic>[surveyToken];
-    return _channel.invokeMethod('showSurveyWithToken:', params);
+    return _native.showSurvey(surveyToken);
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -145,13 +135,12 @@ class Surveys {
   }
 
   /// iOS Only
-  /// @summary Sets url for the published iOS app on AppStore, You can redirect
+  /// Sets url for the published iOS app on AppStore, You can redirect
   /// NPS Surveys or AppRating Surveys to AppStore to let users rate your app on AppStore itself.
   /// [appStoreURL] A String url for the published iOS app on AppStore
   static Future<void> setAppStoreURL(String appStoreURL) async {
     if (IBGBuildInfo.instance.isIOS) {
-      final params = <dynamic>[appStoreURL];
-      return _channel.invokeMethod('setAppStoreURL:', params);
+      return _native.setAppStoreURL(appStoreURL);
     }
   }
 }

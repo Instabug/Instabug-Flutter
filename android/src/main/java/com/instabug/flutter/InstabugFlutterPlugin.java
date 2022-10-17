@@ -144,32 +144,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         return null;
     }
 
-    /**
-     * Show any valid survey if exist
-     *
-     * @param {isEnabled} boolean
-     */
-    public void setSurveysEnabled(final boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (isEnabled) {
-                    Surveys.setState(Feature.State.ENABLED);
-                } else {
-                    Surveys.setState(Feature.State.DISABLED);
-                }
-            }
-        });
-    }
-
-    /**
-     * Set Surveys auto-showing state, default state auto-showing enabled
-     *
-     * @param isEnabled whether Surveys should be auto-showing or not
-     */
-    public void setAutoShowingSurveysEnabled(boolean isEnabled) {
-        Surveys.setAutoShowingEnabled(isEnabled);
-    }
 
     /**
      * Sets the runnable that gets executed just before showing any valid
@@ -212,36 +186,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             result.add(obj.getTitle());
         }
         channel.invokeMethod("availableSurveysCallback", result);
-    }
-
-    /**
-     * Set Surveys welcome screen enabled, default value is false
-     *
-     * @param shouldShow shouldShow whether should a welcome screen be shown before
-     *                   taking surveys or not
-     */
-    public void setShouldShowSurveysWelcomeScreen(boolean shouldShow) {
-        Surveys.setShouldShowWelcomeScreen(shouldShow);
-    }
-
-    /**
-     * Show any valid survey if exist
-     *
-     * @return true if a valid survey was shown otherwise false
-     */
-    public void showSurveysIfAvailable() {
-        Surveys.showSurveyIfAvailable();
-    }
-
-    /**
-     * Shows survey with a specific token. Does nothing if there are no available
-     * surveys with that specific token. Answered and cancelled surveys won't show
-     * up again.
-     *
-     * @param surveyToken A String with a survey token.
-     */
-    public void showSurveyWithToken(String surveyToken) {
-        Surveys.showSurvey(surveyToken);
     }
 
     /**
