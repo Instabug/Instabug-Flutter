@@ -1,4 +1,3 @@
-#import "Generated/InstabugLogPigeon.h"
 #import "Instabug.h"
 #import "InstabugLogApiImpl.h"
 

@@ -2,15 +2,6 @@
 #import "Instabug.h"
 #import "IBGAPM.h"
 
-#import "Generated/ApmPigeon.h"
-#import "Generated/BugReportingPigeon.h"
-#import "Generated/CrashReportingPigeon.h"
-#import "Generated/FeatureRequestsPigeon.h"
-#import "Generated/InstabugPigeon.h"
-#import "Generated/InstabugLogPigeon.h"
-#import "Generated/RepliesPigeon.h"
-#import "Generated/SurveysPigeon.h"
-
 #import "ApmApiImpl.h"
 #import "BugReportingApiImpl.h"
 #import "CrashReportingApiImpl.h"

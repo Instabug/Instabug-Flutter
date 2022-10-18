@@ -1,4 +1,3 @@
-#import "Generated/ApmPigeon.h"
 #import "Instabug.h"
 #import "ApmApiImpl.h"
 #import "InstabugFlutterPlugin.h"

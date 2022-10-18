@@ -1,4 +1,3 @@
-#import "Generated/FeatureRequestsPigeon.h"
 #import "Instabug.h"
 #import "FeatureRequestsApiImpl.h"
 #import "InstabugFlutterPlugin.h"

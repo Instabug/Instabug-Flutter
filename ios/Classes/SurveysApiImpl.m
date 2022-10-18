@@ -1,4 +1,4 @@
-#import "Generated/SurveysPigeon.h"
+#import <Flutter/Flutter.h>
 #import "Instabug.h"
 #import "SurveysApiImpl.h"
 

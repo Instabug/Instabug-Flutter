@@ -1,4 +1,3 @@
-#import "Generated/RepliesPigeon.h"
 #import "Instabug.h"
 #import "RepliesApiImpl.h"
 

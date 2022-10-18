@@ -1,4 +1,4 @@
-#import <Flutter/Flutter.h>
+#import "BugReportingPigeon.h"
 
 @interface BugReportingApiImpl : NSObject <BugReportingApi>
 

@@ -1,4 +1,4 @@
-#import <Flutter/Flutter.h>
+#import "InstabugPigeon.h"
 
 @interface InstabugApiImpl : NSObject <InstabugApi>
 @end

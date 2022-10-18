@@ -1,4 +1,4 @@
-#import "Generated/BugReportingPigeon.h"
+#import <Flutter/Flutter.h>
 #import "Instabug.h"
 #import "BugReportingApiImpl.h"
 #import "InstabugFlutterPlugin.h"

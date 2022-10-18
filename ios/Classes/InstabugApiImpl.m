@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "Generated/InstabugPigeon.h"
+#import <Flutter/Flutter.h>
 #import "Instabug.h"
 #import "InstabugApiImpl.h"
 #import "InstabugFlutterPlugin.h"

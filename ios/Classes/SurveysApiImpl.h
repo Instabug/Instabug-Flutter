@@ -1,4 +1,4 @@
-#import <Flutter/Flutter.h>
+#import "SurveysPigeon.h"
 
 @interface SurveysApiImpl : NSObject <SurveysApi>
 

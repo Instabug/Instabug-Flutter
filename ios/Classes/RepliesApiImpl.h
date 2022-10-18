@@ -1,3 +1,5 @@
+#import "RepliesPigeon.h"
+
 @interface RepliesApiImpl : NSObject <RepliesApi>
 
 @property (nonatomic, strong) RepliesFlutterApi* flutterApi;

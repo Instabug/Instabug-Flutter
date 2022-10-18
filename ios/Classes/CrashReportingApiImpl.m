@@ -1,4 +1,3 @@
-#import "Generated/CrashReportingPigeon.h"
 #import "Instabug.h"
 #import "CrashReportingApiImpl.h"
 

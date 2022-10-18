@@ -1,2 +1,4 @@
-@interface InstabugLogApiImpl : NSObject <InstabugLogApi>
+#import "InstabugLogPigeon.h"
+@
+interface InstabugLogApiImpl : NSObject <InstabugLogApi>
 @end
