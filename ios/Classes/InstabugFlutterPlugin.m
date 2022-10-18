@@ -14,15 +14,8 @@
 
 @implementation InstabugFlutterPlugin
 
-FlutterMethodChannel* channel;
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  channel = [FlutterMethodChannel
-      methodChannelWithName:@"instabug_flutter"
-            binaryMessenger:[registrar messenger]];
-  InstabugFlutterPlugin* instance = [[InstabugFlutterPlugin alloc] init];
-  [registrar addMethodCallDelegate:instance channel:channel];
-
   BugReportingFlutterApi *bugReportingFlutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
   BugReportingApiImpl *bugReportingApi = [[BugReportingApiImpl alloc] initWithFlutterApi:bugReportingFlutterApi];
     
@@ -40,55 +33,6 @@ FlutterMethodChannel* channel;
   BugReportingApiSetup([registrar messenger], bugReportingApi);
   RepliesApiSetup([registrar messenger], repliesApi);
   SurveysApiSetup([registrar messenger], surveysApi);
-}
-
-- (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    BOOL isImplemented = NO;
-    SEL method = NSSelectorFromString(call.method);
-    if ([[InstabugFlutterPlugin class] respondsToSelector:method]) {
-        isImplemented = YES;
-        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[InstabugFlutterPlugin class] methodSignatureForSelector:method]];
-        [inv setSelector:method];
-        [inv setTarget:[InstabugFlutterPlugin class]];
-        /*
-         * Indices 0 and 1 indicate the hidden arguments self and _cmd,
-         * respectively; you should set these values directly with the target and selector properties.
-         * Use indices 2 and greater for the arguments normally passed in a message.
-         */
-        NSInteger index = 2;
-        NSArray* argumentsArray = call.arguments;
-        for (NSObject * argument in argumentsArray) {
-            [inv setArgument:&argument atIndex:index];
-            index++;
-        }
-        [inv invoke];
-        NSMethodSignature *signature = [inv methodSignature];
-        const char *type = [signature methodReturnType];
-
-        if (strcmp(type, "v") != 0) {
-            void *returnVal;
-            [inv getReturnValue:&returnVal];
-            NSObject *resultSet = (__bridge NSObject *)returnVal;
-            result(resultSet);
-        } else {
-            result(nil);
-        }
-    }
-    if (!isImplemented) {
-        result(FlutterMethodNotImplemented);
-    }
-}
-
-
-/**
-  * Sets the runnable that gets executed just before showing any valid survey<br/>
-  * WARNING: This runs on your application's main UI thread. Please do not include
-  * any blocking operations to avoid ANRs.
-  */
-+ (void)setOnShowSurveyCallback {
-  IBGSurveys.willShowSurveyHandler = ^{
-           [channel invokeMethod:@"onShowSurveyCallback" arguments:nil];
-        };
 }
 
 + (NSDictionary *)constants {

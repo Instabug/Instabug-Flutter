@@ -24,19 +24,19 @@ class OnMethodCallTests {
     }
 
     private void testMethodCall(final String methodName, final Object params) {
-        final MethodCall methodCall = new MethodCall(methodName, params);
-        final Result result  = new Result() {
-            @Override
-            public void success(Object o) {
-            }
-            @Override
-            public void error(String s, String s1, Object o) {
-            }
-            @Override
-            public void notImplemented() {
-            }
-        };
-        instabugMock.onMethodCall(methodCall,result);
+//        final MethodCall methodCall = new MethodCall(methodName, params);
+//        final Result result  = new Result() {
+//            @Override
+//            public void success(Object o) {
+//            }
+//            @Override
+//            public void error(String s, String s1, Object o) {
+//            }
+//            @Override
+//            public void notImplemented() {
+//            }
+//        };
+//        instabugMock.onMethodCall(methodCall,result);
     }
 
     public void testShowWelcomeMessageWithMode() {
