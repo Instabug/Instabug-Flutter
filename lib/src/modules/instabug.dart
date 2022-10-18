@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:instabug_flutter/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
+import 'package:meta/meta.dart';
 
 enum InvocationEvent {
   shake,
@@ -114,6 +115,13 @@ enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 class Instabug {
   static final _native = InstabugApi();
 
+  @internal
+  static void init() {
+    BugReporting.init();
+    Replies.init();
+    Surveys.init();
+  }
+  
   /// Starts the SDK.
   /// This is the main SDK method that does all the magic. This is the only
   /// method that SHOULD be called.
@@ -125,8 +133,7 @@ class Instabug {
     String token,
     List<InvocationEvent> invocationEvents,
   ) async {
-    BugReporting.init();
-    Surveys.init();
+    init();
     
     final invocationEventsStrings =
         invocationEvents.map((e) => e.toString()).toList();

@@ -2,34 +2,28 @@
 
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:instabug_flutter/generated/replies.api.g.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
+import 'package:meta/meta.dart';
 
 typedef HasChatsCallback = void Function(bool);
 typedef OnNewReplyReceivedCallback = void Function();
 typedef UnreadRepliesCountCallback = void Function(int);
 
-class Replies {
-  static const MethodChannel _channel = MethodChannel('instabug_flutter');
+class Replies implements RepliesFlutterApi {
   static final _native = RepliesApi();
+  static final _instance = Replies();
 
-  static HasChatsCallback? _hasChatsCallback;
   static OnNewReplyReceivedCallback? _onNewReplyReceivedCallback;
-  static UnreadRepliesCountCallback? _unreadRepliesCountCallback;
 
-  static Future<dynamic> _handleMethod(MethodCall call) async {
-    switch (call.method) {
-      case 'hasChatsCallback':
-        _hasChatsCallback?.call(call.arguments as bool);
-        return;
-      case 'onNewReplyReceivedCallback':
-        _onNewReplyReceivedCallback?.call();
-        return;
-      case 'unreadRepliesCountCallback':
-        _unreadRepliesCountCallback?.call(call.arguments as int);
-        return;
-    }
+  @internal
+  static void init() {
+    RepliesFlutterApi.setup(_instance);
+  }
+
+  @override
+  void onNewReply() {
+    _onNewReplyReceivedCallback?.call();
   }
 
   /// Enables and disables everything related to receiving replies.
@@ -38,27 +32,26 @@ class Replies {
     return _native.setEnabled(isEnabled);
   }
 
-  ///Manual invocation for replies.
+  /// Manual invocation for replies.
   static Future<void> show() async {
     return _native.show();
   }
 
   /// Tells whether the user has chats already or not.
-  ///  [function] - callback that is invoked if chats exist
-  static Future<void> hasChats(HasChatsCallback function) async {
-    _channel.setMethodCallHandler(_handleMethod);
-    _hasChatsCallback = function;
-    return _channel.invokeMethod('hasChats');
+  /// [callback] - callback that is invoked if chats exist
+  static Future<void> hasChats(HasChatsCallback callback) async {
+    // TODO: return directly without callback
+    final hasChats = await _native.hasChats();
+    callback(hasChats);
   }
 
-  ///  Sets a block of code that gets executed when a new message is received.
-  ///  [function] -  A callback that gets executed when a new message is received.
+  /// Sets a block of code that gets executed when a new message is received.
+  /// [callback] - A callback that gets executed when a new message is received.
   static Future<void> setOnNewReplyReceivedCallback(
-    OnNewReplyReceivedCallback function,
+    OnNewReplyReceivedCallback callback,
   ) async {
-    _channel.setMethodCallHandler(_handleMethod);
-    _onNewReplyReceivedCallback = function;
-    return _channel.invokeMethod('setOnNewReplyReceivedCallback');
+    _onNewReplyReceivedCallback = callback;
+    return _native.bindOnNewReplyCallback();
   }
 
   /// Returns the number of unread messages the user currently has.
@@ -67,11 +60,11 @@ class Replies {
   /// [function] callback with argument
   /// Notifications count, or -1 in case the SDK has not been initialized.
   static Future<void> getUnreadRepliesCount(
-    UnreadRepliesCountCallback function,
+    UnreadRepliesCountCallback callback,
   ) async {
-    _channel.setMethodCallHandler(_handleMethod);
-    _unreadRepliesCountCallback = function;
-    return _channel.invokeMethod('getUnreadRepliesCount');
+    // TODO: return directly without callback
+    final count = await _native.getUnreadRepliesCount();
+    callback(count);
   }
 
   /// Enables/disables showing in-app notifications when the user receives a new message.

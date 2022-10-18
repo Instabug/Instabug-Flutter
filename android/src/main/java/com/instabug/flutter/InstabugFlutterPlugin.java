@@ -75,7 +75,7 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
         BugReportingPigeon.BugReportingApi.setup(messenger, new BugReportingApiImpl(messenger));
         CrashReportingPigeon.CrashReportingApi.setup(messenger, new CrashReportingApiImpl());
         FeatureRequestsPigeon.FeatureRequestsApi.setup(messenger, new FeatureRequestsApiImpl());
-        RepliesPigeon.RepliesApi.setup(messenger, new RepliesApiImpl());
+        RepliesPigeon.RepliesApi.setup(messenger, new RepliesApiImpl(messenger));
         SurveysPigeon.SurveysApi.setup(messenger, new SurveysApiImpl(messenger));
     }
 
@@ -136,37 +136,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             }
         }
         return null;
-    }
-
-    /**
-     * Tells whether the user has chats already or not.
-     */
-    public void hasChats() {
-        boolean hasChats = Replies.hasChats();
-        channel.invokeMethod("hasChatsCallback", hasChats);
-    }
-
-    /**
-     * Sets a block of code that gets executed when a new message is received.
-     */
-    public void setOnNewReplyReceivedCallback() {
-        Runnable onNewMessageRunnable = new Runnable() {
-            @Override
-            public void run() {
-                channel.invokeMethod("onNewReplyReceivedCallback", null);
-            }
-        };
-        Replies.setOnNewReplyReceivedCallback(onNewMessageRunnable);
-    }
-
-    /**
-     * Get current unread count of messages for this user
-     *
-     * @return number of messages that are unread for this user
-     */
-    public void getUnreadRepliesCount() {
-        int unreadMessages = Replies.getUnreadRepliesCount();
-        channel.invokeMethod("unreadRepliesCountCallback", unreadMessages);
     }
 
     /**

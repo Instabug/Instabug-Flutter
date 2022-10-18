@@ -34,6 +34,9 @@ FlutterMethodChannel* channel;
 
   BugReportingFlutterApi *bugReportingFlutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
   BugReportingApiImpl *bugReportingApi = [[BugReportingApiImpl alloc] initWithFlutterApi:bugReportingFlutterApi];
+    
+  RepliesFlutterApi *repliesFlutterApi = [[RepliesFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
+  RepliesApiImpl *repliesApi = [[RepliesApiImpl alloc] initWithFlutterApi:repliesFlutterApi];
 
   SurveysFlutterApi *surveysFlutterApi = [[SurveysFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
   SurveysApiImpl *surveysApi = [[SurveysApiImpl alloc] initWithFlutterApi:surveysFlutterApi];
@@ -44,7 +47,7 @@ FlutterMethodChannel* channel;
   CrashReportingApiSetup([registrar messenger], [[CrashReportingApiImpl alloc] init]);
   FeatureRequestsApiSetup([registrar messenger], [[FeatureRequestsApiImpl alloc] init]);
   BugReportingApiSetup([registrar messenger], bugReportingApi);
-  RepliesApiSetup([registrar messenger], [[RepliesApiImpl alloc] init]);
+  RepliesApiSetup([registrar messenger], repliesApi);
   SurveysApiSetup([registrar messenger], surveysApi);
 }
 
@@ -95,33 +98,6 @@ FlutterMethodChannel* channel;
   IBGSurveys.willShowSurveyHandler = ^{
            [channel invokeMethod:@"onShowSurveyCallback" arguments:nil];
         };
-}
-
-/**
-  * Tells whether the user has chats already or not.
-  */
-+ (void)hasChats {
-    BOOL hasChats = IBGReplies.hasChats;
-    NSNumber *boolNumber = [NSNumber numberWithBool:hasChats];
-    [channel invokeMethod:@"hasChatsCallback" arguments:boolNumber];
-}
-
-/**
-  * Sets a block of code that gets executed when a new message is received.
-  */
-+ (void)setOnNewReplyReceivedCallback {
-  IBGReplies.didReceiveReplyHandler = ^{
-          [channel invokeMethod:@"onNewReplyReceivedCallback" arguments:nil];
-        };
-}
-
-/**
-  * Get current unread count of messages for this user
-  *
-  * @return number of messages that are unread for this user
-  */
-+ (void)getUnreadRepliesCount {
-    [channel invokeMethod:@"unreadRepliesCountCallback" arguments:@(IBGReplies.unreadRepliesCount)];
 }
 
 /**
