@@ -23,16 +23,22 @@ import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.Platform;
 import com.instabug.library.invocation.InstabugInvocationEvent;
+import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 public class InstabugApiImpl implements InstabugPigeon.InstabugApi {
     private final String TAG = InstabugApiImpl.class.getName();
+
     private final Context context;
     private final InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
 
@@ -272,5 +278,27 @@ public class InstabugApiImpl implements InstabugPigeon.InstabugApi {
     @Override
     public void disableAndroid() {
         Instabug.disable();
+    }
+
+    @Override
+    public void networkLog(@NonNull Map<String, Object> data) {
+        try {
+            NetworkLog networkLog = new NetworkLog();
+            String date = System.currentTimeMillis() + "";
+
+            networkLog.setDate(date);
+            networkLog.setUrl((String) data.get("url"));
+            networkLog.setRequest((String) data.get("requestBody"));
+            networkLog.setResponse((String) data.get("responseBody"));
+            networkLog.setMethod((String) data.get("method"));
+            networkLog.setResponseCode((Integer) data.get("responseCode"));
+            networkLog.setRequestHeaders((new JSONObject((HashMap<String, String>) data.get("requestHeaders"))).toString(4));
+            networkLog.setResponseHeaders((new JSONObject((HashMap<String, String>) data.get("responseHeaders"))).toString(4));
+            networkLog.setTotalDuration(((Number) data.get("duration")).longValue() / 1000);
+
+            networkLog.insert();
+        } catch (Exception e) {
+            Log.e(TAG, "Network logging failed");
+        }
     }
 }

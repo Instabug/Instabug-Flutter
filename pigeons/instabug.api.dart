@@ -44,4 +44,6 @@ abstract class InstabugApi {
 
   void enableAndroid();
   void disableAndroid();
+
+  void networkLog(Map<String, Object> data);
 }

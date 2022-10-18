@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.instabug.bug.BugReporting;
-import com.instabug.chat.Replies;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.generated.BugReportingPigeon;
 import com.instabug.flutter.generated.CrashReportingPigeon;
@@ -15,14 +14,9 @@ import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.generated.RepliesPigeon;
 import com.instabug.flutter.generated.SurveysPigeon;
 import com.instabug.library.Instabug;
-import com.instabug.library.model.NetworkLog;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BinaryMessenger;
@@ -136,32 +130,6 @@ public class InstabugFlutterPlugin implements MethodCallHandler, FlutterPlugin {
             }
         }
         return null;
-    }
-
-    /**
-     * Extracts HTTP connection properties. Request method, Headers, Date, Url and
-     * Response code
-     *
-     * @param jsonObject the JSON object containing all HTTP connection properties
-     */
-    public void networkLog(HashMap<String, Object> jsonObject) throws JSONException {
-
-        int responseCode = 0;
-
-        NetworkLog networkLog = new NetworkLog();
-        String date = System.currentTimeMillis() + "";
-        networkLog.setDate(date);
-        networkLog.setUrl((String) jsonObject.get("url"));
-        networkLog.setRequest((String) jsonObject.get("requestBody"));
-        networkLog.setResponse((String) jsonObject.get("responseBody"));
-        networkLog.setMethod((String) jsonObject.get("method"));
-        networkLog.setResponseCode((Integer) jsonObject.get("responseCode"));
-        networkLog.setRequestHeaders(
-                (new JSONObject((HashMap<String, String>) jsonObject.get("requestHeaders"))).toString(4));
-        networkLog.setResponseHeaders(
-                (new JSONObject((HashMap<String, String>) jsonObject.get("responseHeaders"))).toString(4));
-        networkLog.setTotalDuration(((Number) jsonObject.get("duration")).longValue() / 1000);
-        networkLog.insert();
     }
 
     /**

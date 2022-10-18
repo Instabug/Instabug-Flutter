@@ -180,4 +180,66 @@
     // Android Only
 }
 
+
+- (void)networkLogData:(NSDictionary<NSString *, id> *)data error:(FlutterError *_Nullable *_Nonnull)error {
+    NSString* url = data[@"url"];
+    NSString* method = data[@"method"];
+    NSString* requestBody = data[@"requestBody"];
+    NSString* responseBody = data[@"responseBody"];
+    int32_t responseCode = [data[@"responseCode"] integerValue];
+    int64_t requestBodySize = [data[@"requestBodySize"] integerValue];
+    int64_t responseBodySize = [data[@"responseBodySize"] integerValue];
+    int32_t errorCode = [data[@"errorCode"] integerValue];
+    NSString* errorDomain = data[@"errorDomain"];
+    NSDictionary* requestHeaders = data[@"requestHeaders"];
+    if ([requestHeaders count] == 0) {
+        requestHeaders = @{};
+    }
+    NSDictionary* responseHeaders = data[@"responseHeaders"];
+    NSString* contentType = data[@"responseContentType"];
+    int64_t duration = [data[@"duration"] integerValue];
+    int64_t startTime = [data[@"startTime"] integerValue] * 1000;
+
+    for(NSString *key in [requestHeaders allKeys]) {
+        NSLog(@"key: %@", key);
+        NSLog(@"value: %@",[requestHeaders objectForKey:key]);
+    }
+    
+    NSString* gqlQueryName = nil;
+    NSString* serverErrorMessage = nil;
+    if (data[@"gqlQueryName"] != [NSNull null]) {
+        gqlQueryName = data[@"gqlQueryName"];
+    }
+    if (data[@"serverErrorMessage"] != [NSNull null]) {
+        serverErrorMessage = data[@"serverErrorMessage"];
+    }
+    
+    SEL networkLogSEL = NSSelectorFromString(@"addNetworkLogWithUrl:method:requestBody:requestBodySize:responseBody:responseBodySize:responseCode:requestHeaders:responseHeaders:contentType:errorDomain:errorCode:startTime:duration:gqlQueryName:serverErrorMessage:");
+
+    if([[IBGNetworkLogger class] respondsToSelector:networkLogSEL]) {
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[IBGNetworkLogger class] methodSignatureForSelector:networkLogSEL]];
+        [inv setSelector:networkLogSEL];
+        [inv setTarget:[IBGNetworkLogger class]];
+
+        [inv setArgument:&(url) atIndex:2];
+        [inv setArgument:&(method) atIndex:3];
+        [inv setArgument:&(requestBody) atIndex:4];
+        [inv setArgument:&(requestBodySize) atIndex:5];
+        [inv setArgument:&(responseBody) atIndex:6];
+        [inv setArgument:&(responseBodySize) atIndex:7];
+        [inv setArgument:&(responseCode) atIndex:8];
+        [inv setArgument:&(requestHeaders) atIndex:9];
+        [inv setArgument:&(responseHeaders) atIndex:10];
+        [inv setArgument:&(contentType) atIndex:11];
+        [inv setArgument:&(errorDomain) atIndex:12];
+        [inv setArgument:&(errorCode) atIndex:13];
+        [inv setArgument:&(startTime) atIndex:14];
+        [inv setArgument:&(duration) atIndex:15];
+        [inv setArgument:&(gqlQueryName) atIndex:16];
+        [inv setArgument:&(serverErrorMessage) atIndex:17];
+
+        [inv invoke];
+    }
+}
+
 @end
