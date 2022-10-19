@@ -4,9 +4,10 @@
 
 @implementation SurveysApi
 
-- (SurveysApi *)initWithFlutterApi:(SurveysFlutterApi *)api {
+- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
     self = [super init];
-    self.flutterApi = api;
+    self.flutterApi = [[SurveysFlutterApi alloc] initWithBinaryMessenger:messenger];
+    SurveysHostApiSetup(messenger, self);
     return self;
 }
 

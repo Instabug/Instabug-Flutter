@@ -12,23 +12,17 @@
 @implementation InstabugFlutterPlugin
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  BugReportingFlutterApi *bugReportingFlutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
-  BugReportingApi *bugReportingApi = [[BugReportingApi alloc] initWithFlutterApi:bugReportingFlutterApi];
-    
-  RepliesFlutterApi *repliesFlutterApi = [[RepliesFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
-  RepliesApi *repliesApi = [[RepliesApi alloc] initWithFlutterApi:repliesFlutterApi];
-
-  SurveysFlutterApi *surveysFlutterApi = [[SurveysFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
-  SurveysApi *surveysApi = [[SurveysApi alloc] initWithFlutterApi:surveysFlutterApi];
-
-  ApmHostApiSetup([registrar messenger], [[ApmApi alloc] init]);
-  InstabugHostApiSetup([registrar messenger], [[InstabugApi alloc] init]);
-  InstabugLogHostApiSetup([registrar messenger], [[InstabugLogApi alloc] init]);
-  CrashReportingHostApiSetup([registrar messenger], [[CrashReportingApi alloc] init]);
-  FeatureRequestsHostApiSetup([registrar messenger], [[FeatureRequestsApi alloc] init]);
-  BugReportingHostApiSetup([registrar messenger], bugReportingApi);
-  RepliesHostApiSetup([registrar messenger], repliesApi);
-  SurveysHostApiSetup([registrar messenger], surveysApi);
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wunused-value"
+    [[ApmApi alloc] initWithBinaryMessenger:[registrar messenger]];
+    [[BugReportingApi alloc] initWithBinaryMessenger:[registrar messenger]];
+    [[CrashReportingApi alloc] initWithBinaryMessenger:[registrar messenger]];
+    [[FeatureRequestsApi alloc] initWithBinaryMessenger:[registrar messenger]];
+    [[InstabugApi alloc] initWithBinaryMessenger:[registrar messenger]];
+    [[InstabugLogApi alloc] initWithBinaryMessenger:[registrar messenger]];
+    [[RepliesApi alloc] initWithBinaryMessenger:[registrar messenger]];
+    [[SurveysApi alloc] initWithBinaryMessenger:[registrar messenger]];
+    #pragma clang diagnostic pop
 }
 
 @end

@@ -3,6 +3,12 @@
 
 @implementation InstabugLogApi
 
+- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
+    self = [super init];
+    InstabugLogHostApiSetup(messenger, self);
+    return self;
+}
+
 - (void)logVerboseMessage:(NSString *)message error:(FlutterError *_Nullable *_Nonnull)error {
     [IBGLog logVerbose:message];
 }

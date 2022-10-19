@@ -3,6 +3,12 @@
 
 @implementation CrashReportingApi
 
+- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
+    self = [super init];
+    CrashReportingHostApiSetup(messenger, self);
+    return self;
+}
+
 - (void)setEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
     BOOL boolValue = [isEnabled boolValue];
     IBGCrashReporting.enabled = boolValue;

@@ -5,9 +5,10 @@
 
 @implementation BugReportingApi
 
-- (BugReportingApi *)initWithFlutterApi:(BugReportingFlutterApi *)api {
+- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
     self = [super init];
-    self.flutterApi = api;
+    self.flutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:messenger];
+    BugReportingHostApiSetup(messenger, self);
     return self;
 }
 

@@ -8,6 +8,12 @@
 
 @implementation InstabugApi
 
+- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
+    self = [super init];
+    InstabugHostApiSetup(messenger, self);
+    return self;
+}
+
 - (void)startToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents error:(FlutterError *_Nullable *_Nonnull)error {
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {

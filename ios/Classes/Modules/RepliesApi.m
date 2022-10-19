@@ -3,9 +3,10 @@
 
 @implementation RepliesApi
 
-- (RepliesApi *)initWithFlutterApi:(RepliesFlutterApi *)api {
+- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
     self = [super init];
-    self.flutterApi = api;
+    self.flutterApi = [[RepliesFlutterApi alloc] initWithBinaryMessenger:messenger];
+    RepliesHostApiSetup(messenger, self);
     return self;
 }
 

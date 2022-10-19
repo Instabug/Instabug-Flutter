@@ -6,9 +6,10 @@
 
 NSMutableDictionary *traces;
 
-- (instancetype)init {
+- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
     self = [super init];
     traces = [[NSMutableDictionary alloc] init];
+    ApmHostApiSetup(messenger, self);
     return self;
 }
 
