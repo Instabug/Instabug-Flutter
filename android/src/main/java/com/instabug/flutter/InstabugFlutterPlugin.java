@@ -4,14 +4,8 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.instabug.flutter.generated.ApmPigeon;
-import com.instabug.flutter.generated.BugReportingPigeon;
-import com.instabug.flutter.generated.CrashReportingPigeon;
-import com.instabug.flutter.generated.FeatureRequestsPigeon;
-import com.instabug.flutter.generated.InstabugLogPigeon;
-import com.instabug.flutter.generated.InstabugPigeon;
-import com.instabug.flutter.generated.RepliesPigeon;
-import com.instabug.flutter.generated.SurveysPigeon;
+import com.instabug.flutter.generated.*;
+import com.instabug.flutter.modules.*;
 
 import java.lang.reflect.Method;
 
@@ -38,14 +32,14 @@ public class InstabugFlutterPlugin implements FlutterPlugin {
     }
 
     private static void register(Context applicationContext, BinaryMessenger messenger){
-        InstabugPigeon.InstabugApi.setup(messenger, new InstabugApiImpl(applicationContext));
-        InstabugLogPigeon.InstabugLogApi.setup(messenger, new InstabugLogApiImpl());
-        ApmPigeon.ApmApi.setup(messenger, new ApmApiImpl());
-        BugReportingPigeon.BugReportingApi.setup(messenger, new BugReportingApiImpl(messenger));
-        CrashReportingPigeon.CrashReportingApi.setup(messenger, new CrashReportingApiImpl());
-        FeatureRequestsPigeon.FeatureRequestsApi.setup(messenger, new FeatureRequestsApiImpl());
-        RepliesPigeon.RepliesApi.setup(messenger, new RepliesApiImpl(messenger));
-        SurveysPigeon.SurveysApi.setup(messenger, new SurveysApiImpl(messenger));
+        InstabugPigeon.InstabugHostApi.setup(messenger, new InstabugApi(applicationContext));
+        InstabugLogPigeon.InstabugLogHostApi.setup(messenger, new InstabugLogApi());
+        ApmPigeon.ApmHostApi.setup(messenger, new ApmApi());
+        BugReportingPigeon.BugReportingHostApi.setup(messenger, new BugReportingApi(messenger));
+        CrashReportingPigeon.CrashReportingHostApi.setup(messenger, new CrashReportingApi());
+        FeatureRequestsPigeon.FeatureRequestsHostApi.setup(messenger, new FeatureRequestsApi());
+        RepliesPigeon.RepliesHostApi.setup(messenger, new RepliesApi(messenger));
+        SurveysPigeon.SurveysHostApi.setup(messenger, new SurveysApi(messenger));
     }
 
     /**

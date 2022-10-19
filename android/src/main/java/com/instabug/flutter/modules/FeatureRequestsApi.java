@@ -1,13 +1,14 @@
-package com.instabug.flutter;
+package com.instabug.flutter.modules;
 
 import androidx.annotation.NonNull;
 
 import com.instabug.featuresrequest.FeatureRequests;
+import com.instabug.flutter.ArgsRegistry;
 import com.instabug.flutter.generated.FeatureRequestsPigeon;
 
 import java.util.List;
 
-public class FeatureRequestsApiImpl implements FeatureRequestsPigeon.FeatureRequestsApi {
+public class FeatureRequestsApi implements FeatureRequestsPigeon.FeatureRequestsHostApi {
 
     @Override
     public void show() {

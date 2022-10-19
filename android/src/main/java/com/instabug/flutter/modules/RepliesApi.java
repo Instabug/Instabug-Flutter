@@ -1,4 +1,4 @@
-package com.instabug.flutter;
+package com.instabug.flutter.modules;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -12,10 +12,10 @@ import com.instabug.library.Feature;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
-public class RepliesApiImpl implements RepliesPigeon.RepliesApi {
+public class RepliesApi implements RepliesPigeon.RepliesHostApi {
     private final RepliesPigeon.RepliesFlutterApi flutterApi;
 
-    public RepliesApiImpl(BinaryMessenger messenger) {
+    public RepliesApi(BinaryMessenger messenger) {
         flutterApi = new RepliesPigeon.RepliesFlutterApi(messenger);
     }
 

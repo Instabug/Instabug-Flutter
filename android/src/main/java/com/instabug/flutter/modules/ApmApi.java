@@ -1,4 +1,4 @@
-package com.instabug.flutter;
+package com.instabug.flutter.modules;
 
 import static com.instabug.flutter.InstabugFlutterPlugin.getMethod;
 
@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
+import com.instabug.flutter.ArgsRegistry;
 import com.instabug.flutter.generated.ApmPigeon;
 
 import org.json.JSONObject;
@@ -21,8 +22,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ApmApiImpl implements ApmPigeon.ApmApi {
-    private final String TAG = ApmApiImpl.class.getName();
+public class ApmApi implements ApmPigeon.ApmHostApi {
+    private final String TAG = ApmApi.class.getName();
     private final HashMap<String, ExecutionTrace> traces = new HashMap<>();
 
     @Override

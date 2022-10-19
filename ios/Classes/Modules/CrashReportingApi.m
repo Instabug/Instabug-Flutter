@@ -1,7 +1,7 @@
 #import "Instabug.h"
-#import "CrashReportingApiImpl.h"
+#import "CrashReportingApi.h"
 
-@implementation CrashReportingApiImpl
+@implementation CrashReportingApi
 
 - (void)setEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
     BOOL boolValue = [isEnabled boolValue];

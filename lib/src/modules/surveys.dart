@@ -12,7 +12,7 @@ typedef AvailableSurveysCallback = void Function(List<String>);
 typedef HasRespondedToSurveyCallback = void Function(bool);
 
 class Surveys implements SurveysFlutterApi {
-  static final _native = SurveysApi();
+  static final _native = SurveysHostApi();
   static final _instance = Surveys();
 
   static OnShowSurveyCallback? _onShowCallback;

@@ -7,7 +7,7 @@ abstract class SurveysFlutterApi {
 }
 
 @HostApi()
-abstract class SurveysApi {
+abstract class SurveysHostApi {
   void setEnabled(bool isEnabled);
   void showSurveyIfAvailable();
   void showSurvey(String surveyToken);

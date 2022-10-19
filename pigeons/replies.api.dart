@@ -6,7 +6,7 @@ abstract class RepliesFlutterApi {
 }
 
 @HostApi()
-abstract class RepliesApi {
+abstract class RepliesHostApi {
   void setEnabled(bool isEnabled);
   void show();
   void setInAppNotificationsEnabled(bool isEnabled);

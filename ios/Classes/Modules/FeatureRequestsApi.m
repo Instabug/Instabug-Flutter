@@ -1,8 +1,8 @@
 #import "Instabug.h"
-#import "FeatureRequestsApiImpl.h"
+#import "FeatureRequestsApi.h"
 #import "InstabugFlutterPlugin.h"
 
-@implementation FeatureRequestsApiImpl
+@implementation FeatureRequestsApi
 
 - (void)showWithError:(FlutterError *_Nullable *_Nonnull)error {
     [IBGFeatureRequests show];

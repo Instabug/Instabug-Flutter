@@ -1,4 +1,4 @@
-package com.instabug.flutter;
+package com.instabug.flutter.modules;
 
 import static com.instabug.flutter.InstabugFlutterPlugin.getMethod;
 
@@ -16,8 +16,8 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 
-public class CrashReportingApiImpl implements CrashReportingPigeon.CrashReportingApi {
-    private final String TAG = CrashReportingApiImpl.class.getName();
+public class CrashReportingApi implements CrashReportingPigeon.CrashReportingHostApi {
+    private final String TAG = CrashReportingApi.class.getName();
 
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {

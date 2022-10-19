@@ -1,7 +1,7 @@
 import 'package:pigeon/pigeon.dart';
 
 @HostApi()
-abstract class ApmApi {
+abstract class ApmHostApi {
   void setEnabled(bool isEnabled);
   void setColdAppLaunchEnabled(bool isEnabled);
   void setAutoUITraceEnabled(bool isEnabled);

@@ -7,7 +7,7 @@ abstract class BugReportingFlutterApi {
 }
 
 @HostApi()
-abstract class BugReportingApi {
+abstract class BugReportingHostApi {
   void setEnabled(bool isEnabled);
   void show(String reportType, List<String> invocationOptions);
   void setInvocationEvents(List<String> events);

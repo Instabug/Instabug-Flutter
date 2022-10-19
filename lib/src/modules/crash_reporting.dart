@@ -11,7 +11,7 @@ import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 class CrashReporting {
-  static final _native = CrashReportingApi();
+  static final _native = CrashReportingHostApi();
   static bool enabled = true;
 
   /// Enables and disables Enables and disables automatic crash reporting.

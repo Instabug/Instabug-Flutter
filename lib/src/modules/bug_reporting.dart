@@ -37,7 +37,7 @@ typedef OnSDKInvokeCallback = void Function();
 typedef OnSDKDismissCallback = void Function(DismissType, ReportType);
 
 class BugReporting implements BugReportingFlutterApi {
-  static final BugReportingApi _native = BugReportingApi();
+  static final _native = BugReportingHostApi();
   static final _instance = BugReporting();
 
   static OnSDKInvokeCallback? _onInvokeCallback;

@@ -11,7 +11,7 @@ typedef OnNewReplyReceivedCallback = void Function();
 typedef UnreadRepliesCountCallback = void Function(int);
 
 class Replies implements RepliesFlutterApi {
-  static final _native = RepliesApi();
+  static final _native = RepliesHostApi();
   static final _instance = Replies();
 
   static OnNewReplyReceivedCallback? _onNewReplyReceivedCallback;

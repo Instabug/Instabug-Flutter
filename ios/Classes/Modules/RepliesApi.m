@@ -1,9 +1,9 @@
 #import "Instabug.h"
-#import "RepliesApiImpl.h"
+#import "RepliesApi.h"
 
-@implementation RepliesApiImpl
+@implementation RepliesApi
 
-- (RepliesApiImpl *)initWithFlutterApi:(RepliesFlutterApi *)api {
+- (RepliesApi *)initWithFlutterApi:(RepliesFlutterApi *)api {
     self = [super init];
     self.flutterApi = api;
     return self;

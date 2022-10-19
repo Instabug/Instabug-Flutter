@@ -7,7 +7,7 @@ import 'package:instabug_flutter/generated/feature_requests.api.g.dart';
 enum ActionType { requestNewFeature, addCommentToFeature }
 
 class FeatureRequests {
-  static final _native = FeatureRequestsApi();
+  static final _native = FeatureRequestsHostApi();
 
   /// Shows the UI for feature requests list
   static Future<void> show() async {

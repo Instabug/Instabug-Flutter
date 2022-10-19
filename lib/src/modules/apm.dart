@@ -18,7 +18,7 @@ enum LogLevel {
 }
 
 class APM {
-  static final _native = ApmApi();
+  static final _native = ApmHostApi();
 
   /// Enables or disables APM feature.
   /// [boolean] isEnabled

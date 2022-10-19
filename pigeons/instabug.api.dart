@@ -1,7 +1,7 @@
 import 'package:pigeon/pigeon.dart';
 
 @HostApi()
-abstract class InstabugApi {
+abstract class InstabugHostApi {
   void start(String token, List<String> invocationEvents);
 
   void show();

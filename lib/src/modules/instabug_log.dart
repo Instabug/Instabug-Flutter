@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:instabug_flutter/generated/instabug_log.api.g.dart';
 
 class InstabugLog {
-  static final _native = InstabugLogApi();
+  static final _native = InstabugLogHostApi();
 
   /// Appends a log [message] to Instabug internal log
   /// These logs are then sent along the next uploaded report.

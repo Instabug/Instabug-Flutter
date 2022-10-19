@@ -2,14 +2,14 @@
 #import "Instabug.h"
 #import "IBGAPM.h"
 
-#import "ApmApiImpl.h"
-#import "BugReportingApiImpl.h"
-#import "CrashReportingApiImpl.h"
-#import "FeatureRequestsApiImpl.h"
-#import "InstabugApiImpl.h"
-#import "InstabugLogApiImpl.h"
-#import "RepliesApiImpl.h"
-#import "SurveysApiImpl.h"
+#import "ApmApi.h"
+#import "BugReportingApi.h"
+#import "CrashReportingApi.h"
+#import "FeatureRequestsApi.h"
+#import "InstabugApi.h"
+#import "InstabugLogApi.h"
+#import "RepliesApi.h"
+#import "SurveysApi.h"
 
 
 @implementation InstabugFlutterPlugin
@@ -17,22 +17,22 @@
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   BugReportingFlutterApi *bugReportingFlutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
-  BugReportingApiImpl *bugReportingApi = [[BugReportingApiImpl alloc] initWithFlutterApi:bugReportingFlutterApi];
+  BugReportingApi *bugReportingApi = [[BugReportingApi alloc] initWithFlutterApi:bugReportingFlutterApi];
     
   RepliesFlutterApi *repliesFlutterApi = [[RepliesFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
-  RepliesApiImpl *repliesApi = [[RepliesApiImpl alloc] initWithFlutterApi:repliesFlutterApi];
+  RepliesApi *repliesApi = [[RepliesApi alloc] initWithFlutterApi:repliesFlutterApi];
 
   SurveysFlutterApi *surveysFlutterApi = [[SurveysFlutterApi alloc] initWithBinaryMessenger:[registrar messenger]];
-  SurveysApiImpl *surveysApi = [[SurveysApiImpl alloc] initWithFlutterApi:surveysFlutterApi];
+  SurveysApi *surveysApi = [[SurveysApi alloc] initWithFlutterApi:surveysFlutterApi];
 
-  ApmApiSetup([registrar messenger], [[ApmApiImpl alloc] init]);
-  InstabugApiSetup([registrar messenger], [[InstabugApiImpl alloc] init]);
-  InstabugLogApiSetup([registrar messenger], [[InstabugLogApiImpl alloc] init]);
-  CrashReportingApiSetup([registrar messenger], [[CrashReportingApiImpl alloc] init]);
-  FeatureRequestsApiSetup([registrar messenger], [[FeatureRequestsApiImpl alloc] init]);
-  BugReportingApiSetup([registrar messenger], bugReportingApi);
-  RepliesApiSetup([registrar messenger], repliesApi);
-  SurveysApiSetup([registrar messenger], surveysApi);
+  ApmHostApiSetup([registrar messenger], [[ApmApi alloc] init]);
+  InstabugHostApiSetup([registrar messenger], [[InstabugApi alloc] init]);
+  InstabugLogHostApiSetup([registrar messenger], [[InstabugLogApi alloc] init]);
+  CrashReportingHostApiSetup([registrar messenger], [[CrashReportingApi alloc] init]);
+  FeatureRequestsHostApiSetup([registrar messenger], [[FeatureRequestsApi alloc] init]);
+  BugReportingHostApiSetup([registrar messenger], bugReportingApi);
+  RepliesHostApiSetup([registrar messenger], repliesApi);
+  SurveysHostApiSetup([registrar messenger], surveysApi);
 }
 
 + (NSDictionary *)constants {

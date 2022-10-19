@@ -1,4 +1,4 @@
-package com.instabug.flutter;
+package com.instabug.flutter.modules;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.instabug.bug.BugReporting;
+import com.instabug.flutter.ArgsRegistry;
 import com.instabug.flutter.generated.BugReportingPigeon;
 import com.instabug.library.Feature;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
@@ -18,11 +19,11 @@ import java.util.List;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
-public class BugReportingApiImpl implements BugReportingPigeon.BugReportingApi {
-    private final String TAG = BugReportingApiImpl.class.getName();
+public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
+    private final String TAG = BugReportingApi.class.getName();
     private final BugReportingPigeon.BugReportingFlutterApi flutterApi;
 
-    public BugReportingApiImpl(BinaryMessenger messenger) {
+    public BugReportingApi(BinaryMessenger messenger) {
         flutterApi = new BugReportingPigeon.BugReportingFlutterApi(messenger);
     }
 

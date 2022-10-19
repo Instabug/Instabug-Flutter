@@ -1,4 +1,4 @@
-package com.instabug.flutter;
+package com.instabug.flutter.modules;
 
 import static com.instabug.flutter.InstabugFlutterPlugin.getMethod;
 
@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import com.instabug.bug.BugReporting;
+import com.instabug.flutter.ArgsRegistry;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
@@ -26,7 +27,6 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -36,13 +36,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class InstabugApiImpl implements InstabugPigeon.InstabugApi {
-    private final String TAG = InstabugApiImpl.class.getName();
+public class InstabugApi implements InstabugPigeon.InstabugHostApi {
+    private final String TAG = InstabugApi.class.getName();
 
     private final Context context;
     private final InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
 
-    InstabugApiImpl(Context context) {
+    public InstabugApi(Context context) {
         this.context = context;
     }
 

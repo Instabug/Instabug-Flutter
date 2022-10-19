@@ -1,8 +1,8 @@
 #import "Instabug.h"
-#import "ApmApiImpl.h"
+#import "ApmApi.h"
 #import "InstabugFlutterPlugin.h"
 
-@implementation ApmApiImpl
+@implementation ApmApi
 
 NSMutableDictionary *traces;
 

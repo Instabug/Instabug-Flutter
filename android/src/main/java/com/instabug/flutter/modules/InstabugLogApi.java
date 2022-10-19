@@ -1,12 +1,12 @@
-package com.instabug.flutter;
+package com.instabug.flutter.modules;
 
 import androidx.annotation.NonNull;
 
 import com.instabug.flutter.generated.InstabugLogPigeon;
 import com.instabug.library.logging.InstabugLog;
 
-public class InstabugLogApiImpl implements InstabugLogPigeon.InstabugLogApi {
-    private final String TAG = InstabugLogApiImpl.class.getName();
+public class InstabugLogApi implements InstabugLogPigeon.InstabugLogHostApi {
+    private final String TAG = InstabugLogApi.class.getName();
 
     @Override
     public void logVerbose(@NonNull String message) {

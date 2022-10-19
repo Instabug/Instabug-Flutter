@@ -1,11 +1,11 @@
 #import <Flutter/Flutter.h>
 #import "Instabug.h"
-#import "BugReportingApiImpl.h"
+#import "BugReportingApi.h"
 #import "InstabugFlutterPlugin.h"
 
-@implementation BugReportingApiImpl
+@implementation BugReportingApi
 
-- (BugReportingApiImpl *)initWithFlutterApi:(BugReportingFlutterApi *)api {
+- (BugReportingApi *)initWithFlutterApi:(BugReportingFlutterApi *)api {
     self = [super init];
     self.flutterApi = api;
     return self;

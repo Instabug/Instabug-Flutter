@@ -1,10 +1,10 @@
 #import <Flutter/Flutter.h>
 #import "Instabug.h"
-#import "SurveysApiImpl.h"
+#import "SurveysApi.h"
 
-@implementation SurveysApiImpl
+@implementation SurveysApi
 
-- (SurveysApiImpl *)initWithFlutterApi:(SurveysFlutterApi *)api {
+- (SurveysApi *)initWithFlutterApi:(SurveysFlutterApi *)api {
     self = [super init];
     self.flutterApi = api;
     return self;

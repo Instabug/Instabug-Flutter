@@ -1,7 +1,7 @@
 #import "Instabug.h"
-#import "InstabugLogApiImpl.h"
+#import "InstabugLogApi.h"
 
-@implementation InstabugLogApiImpl
+@implementation InstabugLogApi
 
 - (void)logVerboseMessage:(NSString *)message error:(FlutterError *_Nullable *_Nonnull)error {
     [IBGLog logVerbose:message];

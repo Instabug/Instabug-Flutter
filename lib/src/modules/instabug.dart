@@ -113,7 +113,7 @@ enum CustomTextPlaceHolderKey {
 enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 
 class Instabug {
-  static final _native = InstabugApi();
+  static final _native = InstabugHostApi();
 
   @internal
   static void init() {

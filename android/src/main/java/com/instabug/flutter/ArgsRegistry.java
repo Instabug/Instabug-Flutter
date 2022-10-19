@@ -48,7 +48,7 @@ import static com.instabug.library.ui.onboarding.WelcomeMessage.State.DISABLED;
 import static com.instabug.library.ui.onboarding.WelcomeMessage.State.LIVE;
 
 @SuppressWarnings({"SameParameterValue", "unchecked"})
-final class ArgsRegistry {
+final public class ArgsRegistry {
 
     static final Map<String, Object> ARGS = new HashMap<>();
 
@@ -78,7 +78,7 @@ final class ArgsRegistry {
      * @param key   the key whose associated value is to be returned
      * @return the value deserialized if all the assertions were successful, null otherwise
      */
-    static <T> T getDeserializedValue(String key) {
+    public static <T> T getDeserializedValue(String key) {
         if (key != null && ARGS.containsKey(key)) {
             Object constant = ARGS.get(key);
             if (constant != null) {
@@ -98,7 +98,7 @@ final class ArgsRegistry {
      * @param key the key whose associated value is to be returned
      * @return the value  if all the assertions were successful, null otherwise
      */
-    static Object getRawValue(String key) {
+    public static Object getRawValue(String key) {
         if (key != null) {
             return ARGS.get(key);
         }

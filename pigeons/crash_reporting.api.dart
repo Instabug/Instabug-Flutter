@@ -1,7 +1,7 @@
 import 'package:pigeon/pigeon.dart';
 
 @HostApi()
-abstract class CrashReportingApi {
+abstract class CrashReportingHostApi {
   void setEnabled(bool isEnabled);
   void send(String jsonCrash, bool isHandled);
 }

@@ -1,4 +1,4 @@
-package com.instabug.flutter;
+package com.instabug.flutter.modules;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -15,10 +15,10 @@ import java.util.List;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
-public class SurveysApiImpl implements SurveysPigeon.SurveysApi {
+public class SurveysApi implements SurveysPigeon.SurveysHostApi {
     private final SurveysPigeon.SurveysFlutterApi flutterApi;
 
-    public SurveysApiImpl(BinaryMessenger messenger) {
+    public SurveysApi(BinaryMessenger messenger) {
         flutterApi = new SurveysPigeon.SurveysFlutterApi(messenger);
     }
 
