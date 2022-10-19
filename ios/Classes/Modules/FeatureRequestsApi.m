@@ -1,6 +1,6 @@
 #import "Instabug.h"
 #import "FeatureRequestsApi.h"
-#import "InstabugFlutterPlugin.h"
+#import "ArgsRegistry.h"
 
 @implementation FeatureRequestsApi
 
@@ -9,14 +9,13 @@
 }
 
 - (void)setEmailFieldRequiredIsRequired:(NSNumber *)isRequired actionTypes:(NSArray<NSString *> *)actionTypes error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger types = 0;
-    for (NSString * actionType in actionTypes) {
-        types |= ((NSNumber *) constants[actionType]).integerValue;
+    IBGAction resolvedTypes = 0;
+    
+    for (NSString * type in actionTypes) {
+        resolvedTypes |= (ArgsRegistry.actionTypes[type]).integerValue;
     }
     
-    BOOL boolValue = [isRequired boolValue];
-    [IBGFeatureRequests setEmailFieldRequired:boolValue forAction:types];
+    [IBGFeatureRequests setEmailFieldRequired:[isRequired boolValue] forAction:resolvedTypes];
 }
 
 

@@ -1,7 +1,7 @@
 #import <Flutter/Flutter.h>
 #import "Instabug.h"
 #import "BugReportingApi.h"
-#import "InstabugFlutterPlugin.h"
+#import "ArgsRegistry.h"
 
 @implementation BugReportingApi
 
@@ -12,66 +12,64 @@
 }
 
 - (void)setEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
-    BOOL boolValue = [isEnabled boolValue];
-    IBGBugReporting.enabled = boolValue;
+    IBGBugReporting.enabled = [isEnabled boolValue];
 }
 
 - (void)showReportType:(NSString *)reportType invocationOptions:(NSArray<NSString *> *)invocationOptions error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger options = 0;
-    for (NSString * invocationOption in invocationOptions) {
-        options |= ((NSNumber *) constants[invocationOption]).integerValue;
+    IBGBugReportingReportType resolvedType = (ArgsRegistry.reportTypes[reportType]).integerValue;
+    IBGBugReportingOption resolvedOptions = 0;
+
+    for (NSString * option in invocationOptions) {
+        resolvedOptions |= (ArgsRegistry.invocationOptions[option]).integerValue;
     }
-    NSInteger reportTypeInt = ((NSNumber *) constants[reportType]).integerValue;
-    [IBGBugReporting showWithReportType:reportTypeInt options:options];
+    
+    [IBGBugReporting showWithReportType:resolvedType options:resolvedOptions];
 }
 
 - (void)setInvocationEventsEvents:(NSArray<NSString *> *)events error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger invocationEvents = 0;
-    for (NSString * invocationEvent in events) {
-        invocationEvents |= ((NSNumber *) constants[invocationEvent]).integerValue;
+    IBGInvocationEvent resolvedEvents = 0;
+    
+    for (NSString * event in events) {
+        resolvedEvents |= (ArgsRegistry.invocationEvents[event]).integerValue;
     }
-    IBGBugReporting.invocationEvents = invocationEvents;
+    
+    IBGBugReporting.invocationEvents = resolvedEvents;
 }
 
 - (void)setReportTypesTypes:(NSArray<NSString *> *)types error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger reportTypes = 0;
-    for (NSString * reportType in types) {
-        reportTypes |= ((NSNumber *) constants[reportType]).integerValue;
+    IBGBugReportingReportType resolvedTypes = 0;
+    
+    for (NSString * type in types) {
+        resolvedTypes |= (ArgsRegistry.reportTypes[type]).integerValue;
     }
-   [IBGBugReporting setPromptOptionsEnabledReportTypes: reportTypes];
 
+   [IBGBugReporting setPromptOptionsEnabledReportTypes:resolvedTypes];
 }
 
 - (void)setExtendedBugReportModeMode:(NSString *)mode error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger extendedBugReportModeInt = ((NSNumber *) constants[mode]).integerValue;
-    IBGBugReporting.extendedBugReportMode = extendedBugReportModeInt;
+    IBGExtendedBugReportMode resolvedMode = (ArgsRegistry.extendedBugReportStates[mode]).integerValue;
+    IBGBugReporting.extendedBugReportMode = resolvedMode;
 }
 
 - (void)setInvocationOptionsOptions:(NSArray<NSString *> *)options error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger invocationOptions = 0;
-    for (NSString * invocationOption in options) {
-        invocationOptions |= ((NSNumber *) constants[invocationOption]).integerValue;
+    IBGBugReportingOption resolvedOptions = 0;
+
+    for (NSString * option in options) {
+        resolvedOptions |= (ArgsRegistry.invocationOptions[option]).integerValue;
     }
-    IBGBugReporting.bugReportingOptions = invocationOptions;
+
+    IBGBugReporting.bugReportingOptions = resolvedOptions;
 }
 
 - (void)setFloatingButtonEdgeEdge:(NSString *)edge offset:(NSNumber *)offset error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    CGRectEdge intFloatingButtonEdge = ((NSNumber *) constants[edge]).doubleValue;
-    IBGBugReporting.floatingButtonEdge = intFloatingButtonEdge;
-    double offsetFromTop = [offset doubleValue];
-    IBGBugReporting.floatingButtonTopOffset = offsetFromTop;
+    CGRectEdge resolvedEdge = (ArgsRegistry.floatingButtonEdges[edge]).doubleValue;
+    IBGBugReporting.floatingButtonEdge = resolvedEdge;
+    IBGBugReporting.floatingButtonTopOffset = [offset doubleValue];
 }
 
 - (void)setVideoRecordingFloatingButtonPositionPosition:(NSString *)position error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    IBGPosition intPosition = ((NSNumber *) constants[position]).doubleValue;
-    IBGBugReporting.videoRecordingFloatingButtonPosition = intPosition;
+    IBGPosition resolvedPosition = (ArgsRegistry.recordButtonPositions[position]).integerValue;
+    IBGBugReporting.videoRecordingFloatingButtonPosition = resolvedPosition;
 }
 
 - (void)setShakingThresholdForiPhoneThreshold:(NSNumber *)threshold error:(FlutterError *_Nullable *_Nonnull)error {
@@ -87,21 +85,23 @@
 }
 
 - (void)setEnabledAttachmentTypesScreenshot:(NSNumber *)screenshot extraScreenshot:(NSNumber *)extraScreenshot galleryImage:(NSNumber *)galleryImage screenRecording:(NSNumber *)screenRecording error:(FlutterError *_Nullable *_Nonnull)error {
-    IBGAttachmentType attachmentTypes = 0;
-      if([screenshot boolValue]) {
-          attachmentTypes = IBGAttachmentTypeScreenShot;
-      }
-      if([extraScreenshot boolValue]) {
-          attachmentTypes |= IBGAttachmentTypeExtraScreenShot;
-      }
-      if([galleryImage boolValue]) {
-          attachmentTypes |= IBGAttachmentTypeGalleryImage;
-      }
-      if([screenRecording boolValue]) {
-          attachmentTypes |= IBGAttachmentTypeScreenRecording;
-      }
+    
+    IBGAttachmentType resolvedTypes = 0;
+    
+    if ([screenshot boolValue]) {
+        resolvedTypes |= IBGAttachmentTypeScreenShot;
+    }
+    if ([extraScreenshot boolValue]) {
+        resolvedTypes |= IBGAttachmentTypeExtraScreenShot;
+    }
+    if ([galleryImage boolValue]) {
+        resolvedTypes |= IBGAttachmentTypeGalleryImage;
+    }
+    if ([screenRecording boolValue]) {
+        resolvedTypes |= IBGAttachmentTypeScreenRecording;
+    }
 
-      IBGBugReporting.enabledAttachmentTypes = attachmentTypes;
+    IBGBugReporting.enabledAttachmentTypes = resolvedTypes;
 }
 
 - (void)bindOnInvokeCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
@@ -112,27 +112,11 @@
 
 - (void)bindOnDismissCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
     IBGBugReporting.didDismissHandler = ^(IBGDismissType dismissType, IBGReportType reportType) {
-        // Parse dismiss type enum
-        NSString* dismissTypeString;
-        if (dismissType == IBGDismissTypeCancel) {
-            dismissTypeString = @"CANCEL";
-        } else if (dismissType == IBGDismissTypeSubmit) {
-            dismissTypeString = @"SUBMIT";
-        } else if (dismissType == IBGDismissTypeAddAttachment) {
-            dismissTypeString = @"ADD_ATTACHMENT";
-        }
+        NSString* dismissEnumName = [[ArgsRegistry.dismissTypes allKeysForObject:@(dismissType)] objectAtIndex:0];
+
+        NSString* reportEnumName = [[ArgsRegistry.reportTypes allKeysForObject:@(reportType)] objectAtIndex:0];
         
-        // Parse report type enum
-        NSString* reportTypeString;
-        if (reportType == IBGReportTypeBug) {
-            reportTypeString = @"bug";
-        } else if (reportType == IBGReportTypeFeedback) {
-            reportTypeString = @"feedback";
-        } else {
-            reportTypeString = @"other";
-        }
-        
-        [self->_flutterApi onSdkDismissDismissType:dismissTypeString reportType:reportTypeString completion:^(NSError * _Nullable _) {}];
+        [self->_flutterApi onSdkDismissDismissType:dismissEnumName reportType:reportEnumName completion:^(NSError * _Nullable _) {}];
     };
 }
 

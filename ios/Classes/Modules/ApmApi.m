@@ -1,6 +1,6 @@
 #import "Instabug.h"
 #import "ApmApi.h"
-#import "InstabugFlutterPlugin.h"
+#import "ArgsRegistry.h"
 
 @implementation ApmApi
 
@@ -13,28 +13,25 @@ NSMutableDictionary *traces;
 }
 
 - (void)setEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
-    BOOL boolValue = [isEnabled boolValue];
-    IBGAPM.enabled = boolValue;
+    IBGAPM.enabled = [isEnabled boolValue];
 }
 
 - (void)setColdAppLaunchEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
-    BOOL boolValue = [isEnabled boolValue];
-    IBGAPM.appLaunchEnabled = boolValue;
+    IBGAPM.appLaunchEnabled = [isEnabled boolValue];
 }
 
 - (void)setAutoUITraceEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
-    BOOL boolValue = [isEnabled boolValue];
-    IBGAPM.autoUITraceEnabled = boolValue;
+    IBGAPM.autoUITraceEnabled = [isEnabled boolValue];
 }
 
 - (void)setLogLevelLevel:(NSString *)level error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger logLevelValue = ((NSNumber *) constants[level]).integerValue;
-    IBGAPM.logLevel = logLevelValue;
+    IBGLogLevel resolvedLevel = (ArgsRegistry.logLevels[level]).integerValue;
+    IBGAPM.logLevel = resolvedLevel;
 }
 
 - (nullable NSString *)startExecutionTraceId:(NSString *)id name:(NSString *)name error:(FlutterError *_Nullable *_Nonnull)error {
     IBGExecutionTrace *trace = [IBGAPM startExecutionTraceWithName:name];
+    
     if (trace != nil) {
         [traces setObject:trace forKey:id];
         return id;
@@ -45,6 +42,7 @@ NSMutableDictionary *traces;
 
 - (void)setExecutionTraceAttributeId:(NSString *)id key:(NSString *)key value:(NSString *)value error:(FlutterError *_Nullable *_Nonnull)error {
     IBGExecutionTrace *trace = [traces objectForKey:id];
+    
     if (trace != nil) {
         [trace setAttributeWithKey:key value:value];
     }
@@ -52,6 +50,7 @@ NSMutableDictionary *traces;
 
 - (void)endExecutionTraceId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error {
     IBGExecutionTrace *trace = [traces objectForKey:id];
+    
     if (trace != nil) {
         [trace end];
     }

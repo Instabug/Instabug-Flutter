@@ -2,7 +2,7 @@
 #import <Flutter/Flutter.h>
 #import "Instabug.h"
 #import "InstabugApi.h"
-#import "InstabugFlutterPlugin.h"
+#import "ArgsRegistry.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:((float)((rgbValue & 0xFF000000) >> 24))/255.0];
 
@@ -19,16 +19,13 @@
         [inv invoke];
     }
 
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger events = 0;
-    for (NSString * invocationEvent in invocationEvents) {
-        events |= ((NSNumber *) constants[invocationEvent]).integerValue;
-    }
-    if (events == 0) {
-        events = IBGInvocationEventNone;
+    IBGInvocationEvent resolvedEvents = 0;
+    
+    for (NSString * event in invocationEvents) {
+        resolvedEvents |= (ArgsRegistry.invocationEvents[event]).integerValue;
     }
 
-    [Instabug startWithToken:token invocationEvents:events];
+    [Instabug startWithToken:token invocationEvents:resolvedEvents];
 }
 
 - (void)showWithError:(FlutterError *_Nullable *_Nonnull)error {
@@ -36,9 +33,8 @@
 }
 
 - (void)showWelcomeMessageWithModeMode:(NSString *)mode error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger welcomeMode = ((NSNumber *) constants[mode]).integerValue;
-    [Instabug showWelcomeMessageWithMode:welcomeMode];
+    IBGWelcomeMessageMode resolvedMode = (ArgsRegistry.welcomeMessageStates[mode]).integerValue;
+    [Instabug showWelcomeMessageWithMode:resolvedMode];
 }
 
 - (void)identifyUserEmail:(NSString *)email name:(nullable NSString *)name error:(FlutterError *_Nullable *_Nonnull)error {
@@ -62,21 +58,18 @@
 }
 
 - (void)setLocaleLocale:(NSString *)locale error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger localeInt = ((NSNumber *) constants[locale]).integerValue;
-    [Instabug setLocale:localeInt];
+    IBGLocale resolvedLocale = (ArgsRegistry.locales[locale]).integerValue;
+    [Instabug setLocale:resolvedLocale];
 }
 
 - (void)setColorThemeTheme:(NSString *)theme error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger intColorTheme = ((NSNumber *) constants[theme]).integerValue;
-    [Instabug setColorTheme:intColorTheme];
+    IBGColorTheme resolvedTheme = (ArgsRegistry.colorThemes[theme]).integerValue;
+    [Instabug setColorTheme:resolvedTheme];
 }
 
 - (void)setWelcomeMessageModeMode:(NSString *)mode error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger welcomeMode = ((NSNumber *) constants[mode]).integerValue;
-    [Instabug setWelcomeMessageMode:welcomeMode];
+    IBGWelcomeMessageMode resolvedMode = (ArgsRegistry.welcomeMessageStates[mode]).integerValue;
+    [Instabug setWelcomeMessageMode:resolvedMode];
 }
 
 - (void)setPrimaryColorColor:(NSNumber *)color error:(FlutterError *_Nullable *_Nonnull)error {
@@ -84,13 +77,12 @@
 }
 
 - (void)setSessionProfilerEnabledEnabled:(NSNumber *)enabled error:(FlutterError *_Nullable *_Nonnull)error {
-    BOOL boolValue = [enabled boolValue];
-    [Instabug setSessionProfilerEnabled:boolValue];
+    [Instabug setSessionProfilerEnabled:[enabled boolValue]];
 }
 
 - (void)setValueForStringWithKeyValue:(NSString *)value key:(NSString *)key error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    [Instabug setValue:value forStringWithKey:constants[key]];
+    NSString *resolvedKey = ArgsRegistry.placeholders[key];
+    [Instabug setValue:value forStringWithKey:resolvedKey];
 }
 
 - (void)appendTagsTags:(NSArray<NSString *> *)tags error:(FlutterError *_Nullable *_Nonnull)error {
@@ -138,15 +130,13 @@
 }
 
 - (void)setSdkDebugLogsLevelLevel:(NSString *)level error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger sdkDebugLogsLevelInt = ((NSNumber *) constants[level]).integerValue;
-    [Instabug setSdkDebugLogsLevel:sdkDebugLogsLevelInt];
+    IBGSDKDebugLogsLevel resolvedLevel = (ArgsRegistry.sdkLogLevels[level]).integerValue;
+    [Instabug setSdkDebugLogsLevel:resolvedLevel];
 }
 
 - (void)setReproStepsModeMode:(NSString *)mode error:(FlutterError *_Nullable *_Nonnull)error {
-    NSDictionary *constants = [InstabugFlutterPlugin constants];
-    NSInteger reproMode = ((NSNumber *) constants[mode]).integerValue;
-    [Instabug setReproStepsMode:reproMode];
+    IBGUserStepsMode resolvedMode = (ArgsRegistry.reproStates[mode]).integerValue;
+    [Instabug setReproStepsMode:resolvedMode];
 }
 
 - (void)reportScreenChangeScreenName:(NSString *)screenName error:(FlutterError *_Nullable *_Nonnull)error {
