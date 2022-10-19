@@ -2,6 +2,7 @@ package com.instabug.flutter;
 
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
+import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.invocation.InstabugInvocationEvent;

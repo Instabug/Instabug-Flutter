@@ -1,7 +1,5 @@
 package com.instabug.flutter.modules;
 
-import static com.instabug.flutter.InstabugFlutterPlugin.getMethod;
-
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
@@ -16,8 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import com.instabug.bug.BugReporting;
-import com.instabug.flutter.ArgsRegistry;
+import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.generated.InstabugPigeon;
+import com.instabug.flutter.util.Reflection;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
@@ -57,7 +56,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     private void setCurrentPlatform() {
         try {
-            Method method = getMethod(Class.forName("com.instabug.library.Instabug"), "setCurrentPlatform", int.class);
+            Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "setCurrentPlatform", int.class);
             if (method != null) {
                 Log.i(TAG, "invoking setCurrentPlatform with platform: " + Platform.FLUTTER);
                 method.invoke(null, Platform.FLUTTER);
@@ -242,7 +241,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public void reportScreenChange(@NonNull String screenName) {
         try {
-            Method method = getMethod(Class.forName("com.instabug.library.Instabug"), "reportScreenChange",
+            Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "reportScreenChange",
                     Bitmap.class, String.class);
             if (method != null) {
                 method.invoke(null, null, screenName);

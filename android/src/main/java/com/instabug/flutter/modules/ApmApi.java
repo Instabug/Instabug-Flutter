@@ -1,7 +1,5 @@
 package com.instabug.flutter.modules;
 
-import static com.instabug.flutter.InstabugFlutterPlugin.getMethod;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -12,8 +10,9 @@ import androidx.annotation.Nullable;
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
-import com.instabug.flutter.ArgsRegistry;
 import com.instabug.flutter.generated.ApmPigeon;
+import com.instabug.flutter.util.ArgsRegistry;
+import com.instabug.flutter.util.Reflection;
 
 import org.json.JSONObject;
 
@@ -211,7 +210,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
             }
 
             try {
-                Method method = getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class);
+                Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class);
                 if (method != null) {
                     method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage);
                 } else {

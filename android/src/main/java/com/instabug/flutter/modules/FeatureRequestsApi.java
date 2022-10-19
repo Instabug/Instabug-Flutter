@@ -3,7 +3,7 @@ package com.instabug.flutter.modules;
 import androidx.annotation.NonNull;
 
 import com.instabug.featuresrequest.FeatureRequests;
-import com.instabug.flutter.ArgsRegistry;
+import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.generated.FeatureRequestsPigeon;
 
 import java.util.List;

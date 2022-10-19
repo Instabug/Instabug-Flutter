@@ -1,6 +1,5 @@
 package com.instabug.flutter.modules;
 
-import static com.instabug.flutter.InstabugFlutterPlugin.getMethod;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -10,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.instabug.crash.CrashReporting;
 import com.instabug.flutter.generated.CrashReportingPigeon;
+import com.instabug.flutter.util.Reflection;
 import com.instabug.library.Feature;
 
 import org.json.JSONObject;
@@ -40,7 +40,7 @@ public class CrashReportingApi implements CrashReportingPigeon.CrashReportingHos
             public void run() {
                 try {
                     final JSONObject exceptionObject = new JSONObject(jsonCrash);
-                    Method method = getMethod(Class.forName("com.instabug.crash.CrashReporting"), "reportException",
+                    Method method = Reflection.getMethod(Class.forName("com.instabug.crash.CrashReporting"), "reportException",
                             JSONObject.class, boolean.class);
                     if (method != null) {
                         method.invoke(null, exceptionObject, isHandled);

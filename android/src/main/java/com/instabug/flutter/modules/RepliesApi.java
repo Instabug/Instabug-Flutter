@@ -6,7 +6,6 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 
 import com.instabug.chat.Replies;
-import com.instabug.flutter.generated.BugReportingPigeon;
 import com.instabug.flutter.generated.RepliesPigeon;
 import com.instabug.library.Feature;
 
