@@ -21,9 +21,15 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.flutter.plugin.common.BinaryMessenger;
+
 public class ApmApi implements ApmPigeon.ApmHostApi {
     private final String TAG = ApmApi.class.getName();
     private final HashMap<String, ExecutionTrace> traces = new HashMap<>();
+
+    public ApmApi(BinaryMessenger messenger) {
+        ApmPigeon.ApmHostApi.setup(messenger, this);
+    }
 
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {

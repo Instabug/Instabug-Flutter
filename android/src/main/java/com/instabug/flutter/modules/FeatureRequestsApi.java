@@ -8,7 +8,13 @@ import com.instabug.flutter.generated.FeatureRequestsPigeon;
 
 import java.util.List;
 
+import io.flutter.plugin.common.BinaryMessenger;
+
 public class FeatureRequestsApi implements FeatureRequestsPigeon.FeatureRequestsHostApi {
+
+    public FeatureRequestsApi(BinaryMessenger messenger) {
+        FeatureRequestsPigeon.FeatureRequestsHostApi.setup(messenger, this);
+    }
 
     @Override
     public void show() {

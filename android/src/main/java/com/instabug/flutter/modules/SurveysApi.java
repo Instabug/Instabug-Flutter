@@ -20,6 +20,7 @@ public class SurveysApi implements SurveysPigeon.SurveysHostApi {
 
     public SurveysApi(BinaryMessenger messenger) {
         flutterApi = new SurveysPigeon.SurveysFlutterApi(messenger);
+        SurveysPigeon.SurveysHostApi.setup(messenger,this);
     }
 
     @Override

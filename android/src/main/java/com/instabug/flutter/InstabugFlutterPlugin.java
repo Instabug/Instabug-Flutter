@@ -4,7 +4,6 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.instabug.flutter.generated.*;
 import com.instabug.flutter.modules.*;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -29,14 +28,14 @@ public class InstabugFlutterPlugin implements FlutterPlugin {
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
     }
 
-    private static void register(Context applicationContext, BinaryMessenger messenger){
-        InstabugPigeon.InstabugHostApi.setup(messenger, new InstabugApi(applicationContext));
-        InstabugLogPigeon.InstabugLogHostApi.setup(messenger, new InstabugLogApi());
-        ApmPigeon.ApmHostApi.setup(messenger, new ApmApi());
-        BugReportingPigeon.BugReportingHostApi.setup(messenger, new BugReportingApi(messenger));
-        CrashReportingPigeon.CrashReportingHostApi.setup(messenger, new CrashReportingApi());
-        FeatureRequestsPigeon.FeatureRequestsHostApi.setup(messenger, new FeatureRequestsApi());
-        RepliesPigeon.RepliesHostApi.setup(messenger, new RepliesApi(messenger));
-        SurveysPigeon.SurveysHostApi.setup(messenger, new SurveysApi(messenger));
+    private static void register(Context context, BinaryMessenger messenger) {
+        new ApmApi(messenger);
+        new BugReportingApi(messenger);
+        new CrashReportingApi(messenger);
+        new FeatureRequestsApi(messenger);
+        new InstabugApi(messenger, context);
+        new InstabugLogApi(messenger);
+        new RepliesApi(messenger);
+        new SurveysApi(messenger);
     }
 }

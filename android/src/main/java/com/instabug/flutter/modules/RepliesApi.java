@@ -16,6 +16,7 @@ public class RepliesApi implements RepliesPigeon.RepliesHostApi {
 
     public RepliesApi(BinaryMessenger messenger) {
         flutterApi = new RepliesPigeon.RepliesFlutterApi(messenger);
+        RepliesPigeon.RepliesHostApi.setup(messenger, this);
     }
 
     @Override

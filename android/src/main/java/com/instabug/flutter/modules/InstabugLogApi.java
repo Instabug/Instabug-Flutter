@@ -5,8 +5,14 @@ import androidx.annotation.NonNull;
 import com.instabug.flutter.generated.InstabugLogPigeon;
 import com.instabug.library.logging.InstabugLog;
 
+import io.flutter.plugin.common.BinaryMessenger;
+
 public class InstabugLogApi implements InstabugLogPigeon.InstabugLogHostApi {
     private final String TAG = InstabugLogApi.class.getName();
+
+    public InstabugLogApi(BinaryMessenger messenger) {
+        InstabugLogPigeon.InstabugLogHostApi.setup(messenger, this);
+    }
 
     @Override
     public void logVerbose(@NonNull String message) {

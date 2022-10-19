@@ -25,6 +25,7 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
 
     public BugReportingApi(BinaryMessenger messenger) {
         flutterApi = new BugReportingPigeon.BugReportingFlutterApi(messenger);
+        BugReportingPigeon.BugReportingHostApi.setup(messenger, this);
     }
 
     @Override

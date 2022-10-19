@@ -35,14 +35,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import io.flutter.plugin.common.BinaryMessenger;
+
 public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     private final String TAG = InstabugApi.class.getName();
 
     private final Context context;
     private final InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
 
-    public InstabugApi(Context context) {
+    public InstabugApi(BinaryMessenger messenger, Context context) {
         this.context = context;
+        InstabugPigeon.InstabugHostApi.setup(messenger, this);
     }
 
     /**

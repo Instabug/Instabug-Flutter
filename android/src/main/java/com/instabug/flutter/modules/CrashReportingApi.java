@@ -16,8 +16,14 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 
+import io.flutter.plugin.common.BinaryMessenger;
+
 public class CrashReportingApi implements CrashReportingPigeon.CrashReportingHostApi {
     private final String TAG = CrashReportingApi.class.getName();
+
+    public CrashReportingApi(BinaryMessenger messenger) {
+        CrashReportingPigeon.CrashReportingHostApi.setup(messenger, this);
+    }
 
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {
