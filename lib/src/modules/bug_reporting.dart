@@ -37,11 +37,17 @@ typedef OnSDKInvokeCallback = void Function();
 typedef OnSDKDismissCallback = void Function(DismissType, ReportType);
 
 class BugReporting implements BugReportingFlutterApi {
-  static final _native = BugReportingHostApi();
+  static var _host = BugReportingHostApi();
   static final _instance = BugReporting();
 
   static OnSDKInvokeCallback? _onInvokeCallback;
   static OnSDKDismissCallback? _onDismissCallback;
+
+  @visibleForTesting
+  // ignore: use_setters_to_change_properties
+  static void $setHostApi(BugReportingHostApi host) {
+    _host = host;
+  }
 
   @internal
   static void init() {
@@ -82,7 +88,7 @@ class BugReporting implements BugReportingFlutterApi {
   /// Enables and disables manual invocation and prompt options for bug and feedback.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
-    return _native.setEnabled(isEnabled);
+    return _host.setEnabled(isEnabled);
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -93,7 +99,7 @@ class BugReporting implements BugReportingFlutterApi {
     OnSDKInvokeCallback callback,
   ) async {
     _onInvokeCallback = callback;
-    return _native.bindOnInvokeCallback();
+    return _host.bindOnInvokeCallback();
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -104,7 +110,7 @@ class BugReporting implements BugReportingFlutterApi {
     OnSDKDismissCallback callback,
   ) async {
     _onDismissCallback = callback;
-    return _native.bindOnDismissCallback();
+    return _host.bindOnDismissCallback();
   }
 
   /// Sets the events that invoke the feedback form.
@@ -114,7 +120,7 @@ class BugReporting implements BugReportingFlutterApi {
     List<InvocationEvent>? invocationEvents,
   ) async {
     final eventsStrings = invocationEvents?.map((e) => e.toString()).toList();
-    return _native.setInvocationEvents(eventsStrings ?? []);
+    return _host.setInvocationEvents(eventsStrings ?? []);
   }
 
   /// Sets whether attachments in bug reporting and in-app messaging are enabled or not.
@@ -130,7 +136,7 @@ class BugReporting implements BugReportingFlutterApi {
     bool galleryImage,
     bool screenRecording,
   ) async {
-    return _native.setEnabledAttachmentTypes(
+    return _host.setEnabledAttachmentTypes(
       screenshot,
       extraScreenshot,
       galleryImage,
@@ -142,7 +148,7 @@ class BugReporting implements BugReportingFlutterApi {
   /// [reportTypes] - List of reportTypes
   static Future<void> setReportTypes(List<ReportType>? reportTypes) async {
     final typesStrings = reportTypes?.map((e) => e.toString()).toList();
-    return _native.setReportTypes(typesStrings ?? []);
+    return _host.setReportTypes(typesStrings ?? []);
   }
 
   /// Sets whether the extended bug report mode should be disabled, enabled with
@@ -151,7 +157,7 @@ class BugReporting implements BugReportingFlutterApi {
   static Future<void> setExtendedBugReportMode(
     ExtendedBugReportMode extendedBugReportMode,
   ) async {
-    return _native.setExtendedBugReportMode(extendedBugReportMode.toString());
+    return _host.setExtendedBugReportMode(extendedBugReportMode.toString());
   }
 
   /// Sets the invocation options.
@@ -161,7 +167,7 @@ class BugReporting implements BugReportingFlutterApi {
     List<InvocationOption>? invocationOptions,
   ) async {
     final optionsStrings = invocationOptions?.map((e) => e.toString()).toList();
-    return _native.setInvocationOptions(optionsStrings ?? []);
+    return _host.setInvocationOptions(optionsStrings ?? []);
   }
 
   /// Sets the floating button position.
@@ -171,7 +177,7 @@ class BugReporting implements BugReportingFlutterApi {
     FloatingButtonEdge floatingButtonEdge,
     int offsetFromTop,
   ) async {
-    return _native.setFloatingButtonEdge(
+    return _host.setFloatingButtonEdge(
       floatingButtonEdge.toString(),
       offsetFromTop,
     );
@@ -182,7 +188,7 @@ class BugReporting implements BugReportingFlutterApi {
   static Future<void> setVideoRecordingFloatingButtonPosition(
     Position position,
   ) async {
-    return _native.setVideoRecordingFloatingButtonPosition(position.toString());
+    return _host.setVideoRecordingFloatingButtonPosition(position.toString());
   }
 
   /// Invoke bug reporting with report type and options.
@@ -193,7 +199,7 @@ class BugReporting implements BugReportingFlutterApi {
     List<InvocationOption>? invocationOptions,
   ) async {
     final optionsStrings = invocationOptions?.map((e) => e.toString()).toList();
-    return _native.show(reportType.toString(), optionsStrings ?? []);
+    return _host.show(reportType.toString(), optionsStrings ?? []);
   }
 
   /// Sets the threshold value of the shake gesture for iPhone/iPod Touch
@@ -201,7 +207,7 @@ class BugReporting implements BugReportingFlutterApi {
   /// [threshold] iPhoneShakingThreshold double
   static Future<void> setShakingThresholdForiPhone(double threshold) async {
     if (IBGBuildInfo.instance.isIOS) {
-      return _native.setShakingThresholdForiPhone(threshold);
+      return _host.setShakingThresholdForiPhone(threshold);
     }
   }
 
@@ -210,7 +216,7 @@ class BugReporting implements BugReportingFlutterApi {
   /// [threshold] iPhoneShakingThreshold double
   static Future<void> setShakingThresholdForiPad(double threshold) async {
     if (IBGBuildInfo.instance.isIOS) {
-      return _native.setShakingThresholdForiPad(threshold);
+      return _host.setShakingThresholdForiPad(threshold);
     }
   }
 
@@ -221,7 +227,7 @@ class BugReporting implements BugReportingFlutterApi {
   /// [threshold] iPhoneShakingThreshold int
   static Future<void> setShakingThresholdForAndroid(int threshold) async {
     if (IBGBuildInfo.instance.isAndroid) {
-      return _native.setShakingThresholdForAndroid(threshold);
+      return _host.setShakingThresholdForAndroid(threshold);
     }
   }
 }

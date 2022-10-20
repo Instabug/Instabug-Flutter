@@ -11,10 +11,16 @@ typedef OnNewReplyReceivedCallback = void Function();
 typedef UnreadRepliesCountCallback = void Function(int);
 
 class Replies implements RepliesFlutterApi {
-  static final _native = RepliesHostApi();
+  static var _host = RepliesHostApi();
   static final _instance = Replies();
 
   static OnNewReplyReceivedCallback? _onNewReplyReceivedCallback;
+
+  @visibleForTesting
+  // ignore: use_setters_to_change_properties
+  static void $setHostApi(RepliesHostApi host) {
+    _host = host;
+  }
 
   @internal
   static void init() {
@@ -29,19 +35,19 @@ class Replies implements RepliesFlutterApi {
   /// Enables and disables everything related to receiving replies.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
-    return _native.setEnabled(isEnabled);
+    return _host.setEnabled(isEnabled);
   }
 
   /// Manual invocation for replies.
   static Future<void> show() async {
-    return _native.show();
+    return _host.show();
   }
 
   /// Tells whether the user has chats already or not.
   /// [callback] - callback that is invoked if chats exist
   static Future<void> hasChats(HasChatsCallback callback) async {
     // TODO: return directly without callback
-    final hasChats = await _native.hasChats();
+    final hasChats = await _host.hasChats();
     callback(hasChats);
   }
 
@@ -51,7 +57,7 @@ class Replies implements RepliesFlutterApi {
     OnNewReplyReceivedCallback callback,
   ) async {
     _onNewReplyReceivedCallback = callback;
-    return _native.bindOnNewReplyCallback();
+    return _host.bindOnNewReplyCallback();
   }
 
   /// Returns the number of unread messages the user currently has.
@@ -63,14 +69,14 @@ class Replies implements RepliesFlutterApi {
     UnreadRepliesCountCallback callback,
   ) async {
     // TODO: return directly without callback
-    final count = await _native.getUnreadRepliesCount();
+    final count = await _host.getUnreadRepliesCount();
     callback(count);
   }
 
   /// Enables/disables showing in-app notifications when the user receives a new message.
   /// [isEnabled] A boolean to set whether notifications are enabled or disabled.
   static Future<void> setInAppNotificationsEnabled(bool isEnabled) async {
-    return _native.setInAppNotificationsEnabled(isEnabled);
+    return _host.setInAppNotificationsEnabled(isEnabled);
   }
 
   /// Set whether new in app notification received will play a small sound notification or not (Default is {@code false})
@@ -78,7 +84,7 @@ class Replies implements RepliesFlutterApi {
   /// @android ONLY
   static Future<void> setInAppNotificationSound(bool isEnabled) async {
     if (IBGBuildInfo.instance.isAndroid) {
-      return _native.setInAppNotificationsEnabled(isEnabled);
+      return _host.setInAppNotificationsEnabled(isEnabled);
     }
   }
 }

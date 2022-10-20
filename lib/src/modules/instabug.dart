@@ -113,7 +113,13 @@ enum CustomTextPlaceHolderKey {
 enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 
 class Instabug {
-  static final _native = InstabugHostApi();
+  static var _host = InstabugHostApi();
+
+  @visibleForTesting
+  // ignore: use_setters_to_change_properties
+  static void $setHostApi(InstabugHostApi host) {
+    _host = host;
+  }
 
   @internal
   static void init() {
@@ -137,7 +143,7 @@ class Instabug {
     
     final invocationEventsStrings =
         invocationEvents.map((e) => e.toString()).toList();
-    return _native.start(token, invocationEventsStrings);
+    return _host.start(token, invocationEventsStrings);
   }
 
   /// Shows the welcome message in a specific mode.
@@ -145,7 +151,7 @@ class Instabug {
   static Future<void> showWelcomeMessageWithMode(
     WelcomeMessageMode welcomeMessageMode,
   ) async {
-    return _native.showWelcomeMessageWithMode(welcomeMessageMode.toString());
+    return _host.showWelcomeMessageWithMode(welcomeMessageMode.toString());
   }
 
   /// Sets the default value of the user's [email] and hides the email field from the reporting UI
@@ -153,21 +159,21 @@ class Instabug {
   /// It also reset the chats on device to that email and removes user attributes,
   /// user data and completed surveys.
   static Future<void> identifyUser(String email, [String? name]) async {
-    return _native.identifyUser(email, name);
+    return _host.identifyUser(email, name);
   }
 
   /// Sets the default value of the user's email to nil and show email field and remove user name
   /// from all reports
   /// It also reset the chats on device and removes user attributes, user data and completed surveys.
   static Future<void> logOut() async {
-    return _native.logOut();
+    return _host.logOut();
   }
 
   /// Sets the SDK's [locale].
   /// Use to change the SDK's UI to different language.
   /// Defaults to the device's current locale.
   static Future<void> setLocale(IBGLocale locale) async {
-    return _native.setLocale(locale.toString());
+    return _host.setLocale(locale.toString());
   }
 
   /// Sets the verbosity level of logs used to debug The SDK. The defualt value in debug
@@ -175,68 +181,68 @@ class Instabug {
   static Future<void> setSdkDebugLogsLevel(
     IBGSDKDebugLogsLevel sdkDebugLogsLevel,
   ) async {
-    return _native.setSdkDebugLogsLevel(sdkDebugLogsLevel.toString());
+    return _host.setSdkDebugLogsLevel(sdkDebugLogsLevel.toString());
   }
 
   /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.
   /// It should be of type [ColorTheme].
   static Future<void> setColorTheme(ColorTheme colorTheme) async {
-    return _native.setColorTheme(colorTheme.toString());
+    return _host.setColorTheme(colorTheme.toString());
   }
 
   /// Appends a set of [tags] to previously added tags of reported feedback, bug or crash.
   static Future<void> appendTags(List<String> tags) async {
-    return _native.appendTags(tags);
+    return _host.appendTags(tags);
   }
 
   /// Manually removes all tags of reported feedback, bug or crash.
   static Future<void> resetTags() async {
-    return _native.resetTags();
+    return _host.resetTags();
   }
 
   /// Gets all tags of reported feedback, bug or crash. Returns the list of tags.
   static Future<List<String>?> getTags() async {
     // TODO: check
-    final tags = await _native.getTags();
+    final tags = await _host.getTags();
     return tags?.cast<String>();
   }
 
   /// Adds experiments to the next report.
   static Future<void> addExperiments(List<String> experiments) async {
-    return _native.addExperiments(experiments);
+    return _host.addExperiments(experiments);
   }
 
   /// Removes certain experiments from the next report.
   static Future<void> removeExperiments(List<String> experiments) async {
-    return _native.removeExperiments(experiments);
+    return _host.removeExperiments(experiments);
   }
 
   /// Clears all experiments from the next report.
   static Future<void> clearAllExperiments() async {
-    return _native.clearAllExperiments();
+    return _host.clearAllExperiments();
   }
 
   /// Add custom user attribute [value] with a [key] that is going to be sent with each feedback, bug or crash.
   static Future<void> setUserAttribute(String value, String key) async {
-    return _native.setUserAttribute(value, key);
+    return _host.setUserAttribute(value, key);
   }
 
   /// Removes a given [key] and its associated value from user attributes.
   /// Does nothing if a [key] does not exist.
   static Future<void> removeUserAttribute(String key) async {
-    return _native.removeUserAttribute(key);
+    return _host.removeUserAttribute(key);
   }
 
   /// Returns the user attribute associated with a given [key].
   static Future<String?> getUserAttributeForKey(String key) {
     // TODO: check
-    return _native.getUserAttributeForKey(key);
+    return _host.getUserAttributeForKey(key);
   }
 
   /// A new Map containing all the currently set user attributes, or an empty Map if no user attributes have been set.
   static Future<Map<String, String>> getUserAttributes() async {
     // TODO: check
-    final attributes = await _native.getUserAttributes();
+    final attributes = await _host.getUserAttributes();
     return attributes != null
         ? Map<String, String>.from(attributes)
         : <String, String>{};
@@ -244,13 +250,13 @@ class Instabug {
 
   /// invoke sdk manually
   static Future<void> show() async {
-    return _native.show();
+    return _host.show();
   }
 
   /// Logs a user event with [name] that happens through the lifecycle of the application.
   /// Logged user events are going to be sent with each report, as well as at the end of a session.
   static Future<void> logUserEvent(String name) async {
-    return _native.logUserEvent(name);
+    return _host.logUserEvent(name);
   }
 
   /// Overrides any of the strings shown in the SDK with custom ones.
@@ -259,7 +265,7 @@ class Instabug {
     String value,
     CustomTextPlaceHolderKey key,
   ) async {
-    return _native.setValueForStringWithKey(value, key.toString());
+    return _host.setValueForStringWithKey(value, key.toString());
   }
 
   /// Enable/disable session profiler
@@ -267,7 +273,7 @@ class Instabug {
   static Future<void> setSessionProfilerEnabled(
     bool sessionProfilerEnabled,
   ) async {
-    return _native.setSessionProfilerEnabled(sessionProfilerEnabled);
+    return _host.setSessionProfilerEnabled(sessionProfilerEnabled);
   }
 
   /// Android only
@@ -275,7 +281,7 @@ class Instabug {
   /// [debugEnabled] desired state of debug mode.
   static Future<void> setDebugEnabled(bool debugEnabled) async {
     if (IBGBuildInfo.instance.isAndroid) {
-      return _native.setDebugEnabled(debugEnabled);
+      return _host.setDebugEnabled(debugEnabled);
     }
   }
 
@@ -283,13 +289,13 @@ class Instabug {
   /// Sets the color of UI elements indicating interactivity or call to action.
   /// [color] primaryColor A color to set the UI elements of the SDK to.
   static Future<void> setPrimaryColor(Color color) async {
-    return _native.setPrimaryColor(color.value);
+    return _host.setPrimaryColor(color.value);
   }
 
   /// Adds specific user data that you need to be added to the reports
   /// [userData] data to be added
   static Future<void> setUserData(String userData) async {
-    return _native.setUserData(userData);
+    return _host.setUserData(userData);
   }
 
   /// Add file to be attached to the bug report.
@@ -300,7 +306,7 @@ class Instabug {
     String fileName,
   ) async {
     // TODO: check
-    return _native.addFileAttachmentWithURL(filePath, fileName);
+    return _host.addFileAttachmentWithURL(filePath, fileName);
   }
 
   /// Add file to be attached to the bug report.
@@ -311,13 +317,13 @@ class Instabug {
     String fileName,
   ) async {
     // TODO: check
-    return _native.addFileAttachmentWithData(data, fileName);
+    return _host.addFileAttachmentWithData(data, fileName);
   }
 
   /// Clears all Uris of the attached files.
   /// The URIs which added via {@link Instabug#addFileAttachment} API not the physical files.
   static Future<void> clearFileAttachments() async {
-    return _native.clearFileAttachments();
+    return _host.clearFileAttachments();
   }
 
   /// Sets the welcome message mode to live, beta or disabled.
@@ -325,26 +331,26 @@ class Instabug {
   static Future<void> setWelcomeMessageMode(
     WelcomeMessageMode welcomeMessageMode,
   ) async {
-    return _native.setWelcomeMessageMode(welcomeMessageMode.toString());
+    return _host.setWelcomeMessageMode(welcomeMessageMode.toString());
   }
 
   /// Reports that the screen has been changed (repro steps)
   /// [screenName] String containing the screen name
   static Future<void> reportScreenChange(String screenName) async {
-    return _native.reportScreenChange(screenName);
+    return _host.reportScreenChange(screenName);
   }
 
   /// Sets the repro steps mode
   /// [mode] repro steps mode
   static Future<void> setReproStepsMode(ReproStepsMode reproStepsMode) async {
-    return _native.setReproStepsMode(reproStepsMode.toString());
+    return _host.setReproStepsMode(reproStepsMode.toString());
   }
 
   /// Android Only
   /// Enables all Instabug functionality
   static Future<void> enableAndroid() async {
     if (IBGBuildInfo.I.isAndroid) {
-      return _native.enableAndroid();
+      return _host.enableAndroid();
     }
   }
 
@@ -352,7 +358,7 @@ class Instabug {
   /// Disables all Instabug functionality
   static Future<void> disableAndroid() async {
     if (IBGBuildInfo.I.isAndroid) {
-      return _native.disableAndroid();
+      return _host.disableAndroid();
     }
   }
 }

@@ -3,15 +3,22 @@
 import 'dart:async';
 
 import 'package:instabug_flutter/generated/feature_requests.api.g.dart';
+import 'package:meta/meta.dart';
 
 enum ActionType { requestNewFeature, addCommentToFeature }
 
 class FeatureRequests {
-  static final _native = FeatureRequestsHostApi();
+  static var _host = FeatureRequestsHostApi();
+
+  @visibleForTesting
+  // ignore: use_setters_to_change_properties
+  static void $setHostApi(FeatureRequestsHostApi host) {
+    _host = host;
+  }
 
   /// Shows the UI for feature requests list
   static Future<void> show() async {
-    return _native.show();
+    return _host.show();
   }
 
   /// Sets whether users are required to enter an email address or not when sending reports.
@@ -24,6 +31,6 @@ class FeatureRequests {
     List<ActionType>? actionTypes,
   ) async {
     final types = actionTypes?.map((e) => e.toString()).toList();
-    return _native.setEmailFieldRequired(isRequired, types ?? []);
+    return _host.setEmailFieldRequired(isRequired, types ?? []);
   }
 }

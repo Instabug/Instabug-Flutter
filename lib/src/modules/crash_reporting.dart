@@ -11,14 +11,20 @@ import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 class CrashReporting {
-  static final _native = CrashReportingHostApi();
+  static var _host = CrashReportingHostApi();
   static bool enabled = true;
+
+  @visibleForTesting
+  // ignore: use_setters_to_change_properties
+  static void $setHostApi(CrashReportingHostApi host) {
+    _host = host;
+  }
 
   /// Enables and disables Enables and disables automatic crash reporting.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
     enabled = isEnabled;
-    return _native.setEnabled(isEnabled);
+    return _host.setEnabled(isEnabled);
   }
 
   static Future<void> reportCrash(Object exception, StackTrace stack) async {
@@ -73,6 +79,6 @@ class CrashReporting {
       frames,
     );
 
-    return _native.send(jsonEncode(crashData), handled);
+    return _host.send(jsonEncode(crashData), handled);
   }
 }

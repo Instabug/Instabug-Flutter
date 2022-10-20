@@ -12,11 +12,18 @@ typedef AvailableSurveysCallback = void Function(List<String>);
 typedef HasRespondedToSurveyCallback = void Function(bool);
 
 class Surveys implements SurveysFlutterApi {
-  static final _native = SurveysHostApi();
+  static var _host = SurveysHostApi();
   static final _instance = Surveys();
 
   static OnShowSurveyCallback? _onShowCallback;
   static OnDismissSurveyCallback? _onDismissCallback;
+
+
+  @visibleForTesting
+  // ignore: use_setters_to_change_properties
+  static void $setHostApi(SurveysHostApi host) {
+    _host = host;
+  }
 
   @internal
   static void init() {
@@ -41,14 +48,14 @@ class Surveys implements SurveysFlutterApi {
   /// Defaults to `true`.
   /// [isEnabled] A boolean to set whether Instabug Surveys is enabled or disabled.
   static Future<void> setEnabled(bool isEnabled) async {
-    return _native.setEnabled(isEnabled);
+    return _host.setEnabled(isEnabled);
   }
 
   ///Sets whether auto surveys showing are enabled or not.
   /// [isEnabled] A boolean to indicate whether the
   /// surveys auto showing are enabled or not.
   static Future<void> setAutoShowingEnabled(bool isEnabled) async {
-    return _native.setAutoShowingEnabled(isEnabled);
+    return _host.setAutoShowingEnabled(isEnabled);
   }
 
   /// Returns an array containing the available surveys.
@@ -58,7 +65,7 @@ class Surveys implements SurveysFlutterApi {
     AvailableSurveysCallback callback,
   ) async {
     // TODO: return directly without callback
-    final titles = await _native.getAvailableSurveys();
+    final titles = await _host.getAvailableSurveys();
     callback(titles.cast<String>());
   }
 
@@ -70,7 +77,7 @@ class Surveys implements SurveysFlutterApi {
     OnShowSurveyCallback callback,
   ) async {
     _onShowCallback = callback;
-    return _native.bindOnShowSurveyCallback();
+    return _host.bindOnShowSurveyCallback();
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -81,7 +88,7 @@ class Surveys implements SurveysFlutterApi {
     OnDismissSurveyCallback callback,
   ) async {
     _onDismissCallback = callback;
-    return _native.bindOnDismissSurveyCallback();
+    return _host.bindOnDismissSurveyCallback();
   }
 
   /// Setting an option for all the surveys to show a welcome screen before
@@ -89,7 +96,7 @@ class Surveys implements SurveysFlutterApi {
   static Future<void> setShouldShowWelcomeScreen(
     bool shouldShowWelcomeScreen,
   ) async {
-    return _native.setShouldShowWelcomeScreen(shouldShowWelcomeScreen);
+    return _host.setShouldShowWelcomeScreen(shouldShowWelcomeScreen);
   }
 
   ///  Shows one of the surveys that were not shown before, that also have conditions
@@ -97,7 +104,7 @@ class Surveys implements SurveysFlutterApi {
   /// Does nothing if there are no available surveys or if a survey has already been shown
   /// in the current session.
   static Future<void> showSurveyIfAvailable() async {
-    return _native.showSurveyIfAvailable();
+    return _host.showSurveyIfAvailable();
   }
 
   /// Shows survey with a specific token.
@@ -105,7 +112,7 @@ class Surveys implements SurveysFlutterApi {
   /// Answered and cancelled surveys won't show up again.
   /// [surveyToken] - A String with a survey token.
   static Future<void> showSurvey(String surveyToken) async {
-    return _native.showSurvey(surveyToken);
+    return _host.showSurvey(surveyToken);
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -117,7 +124,7 @@ class Surveys implements SurveysFlutterApi {
     HasRespondedToSurveyCallback callback,
   ) async {
     // TODO: return directly without callback
-    final hasResponded = await _native.hasRespondedToSurvey(surveyToken);
+    final hasResponded = await _host.hasRespondedToSurvey(surveyToken);
     callback(hasResponded);
   }
 
@@ -127,7 +134,7 @@ class Surveys implements SurveysFlutterApi {
   /// [appStoreURL] A String url for the published iOS app on AppStore
   static Future<void> setAppStoreURL(String appStoreURL) async {
     if (IBGBuildInfo.instance.isIOS) {
-      return _native.setAppStoreURL(appStoreURL);
+      return _host.setAppStoreURL(appStoreURL);
     }
   }
 }
