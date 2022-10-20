@@ -14,5 +14,7 @@ else
         "expiration":${EXPIRATION}
     }
 EOF
+    flutter pub get
+    sh ./scripts/pigeon.sh
     flutter packages pub publish -f
 fi

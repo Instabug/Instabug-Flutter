@@ -15,6 +15,7 @@ jobs:
       - run: bundle exec danger
       - run: flutter doctor
       - run: flutter packages get
+      - run: sh ./scripts/pigeon.sh
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
       - run: bash <(curl -s https://codecov.io/bash)
@@ -29,6 +30,7 @@ jobs:
       - run: bundle exec danger
       - run: flutter doctor
       - run: flutter packages get
+      - run: sh ./scripts/pigeon.sh
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
 
@@ -44,6 +46,10 @@ jobs:
       - flutter/install_sdk_and_pub:
           flutter_version: 2.2.3
           app-dir: ..
+      - run:
+          name: Generate Pigeons
+          working_directory: ../..
+          command: sh ./scripts/pigeon.sh
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "Nexus 5"
@@ -76,6 +82,10 @@ jobs:
       - run: flutter doctor
       - run: flutter pub get
       - run:
+          name: Generate Pigeons
+          working_directory: ..
+          command: sh ./scripts/pigeon.sh
+      - run:
           name: Install Pods
           command: cd ios && pod install --repo-update
       - run:
@@ -88,6 +98,7 @@ jobs:
     steps:
       - checkout
       - run: flutter pub get
+      - run: sh ./scripts/pigeon.sh
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run:
           name: Check Format
@@ -99,6 +110,7 @@ jobs:
     steps:
       - checkout
       - run: flutter pub get
+      - run: sh ./scripts/pigeon.sh
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run:
           name: Perform Static Analysis
@@ -110,6 +122,7 @@ jobs:
     steps:
       - checkout
       - run: flutter pub get
+      - run: sh ./scripts/pigeon.sh
       - run:
           name: Check Package Score
           command: flutter pub run pana --no-warning --exit-code-threshold 0
@@ -133,6 +146,8 @@ jobs:
       - run: git clone https://InstabugCI:$RELEASE_GITHUB_TOKEN@github.com/Instabug/Escape.git
       - run: cd Escape && swift build -c release
       - run: cd Escape/.build/release && cp -f Escape /usr/local/bin/escape
+      - run: cd project && flutter pub get
+      - run: cd project && sh ./scripts/pigeon.sh
       - run: cd project && Escape flutter publish
 
 workflows:
