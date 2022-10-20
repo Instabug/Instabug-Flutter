@@ -1,3 +1,7 @@
+## Unreleased
+
+* Fixes an issue with request and response headers parameters type causing network requests not getting logged on iOS
+
 ## 11.3.0 (2022-09-30)
 
 * Bumps Instabug Android SDK to v11.5.1
