@@ -14,9 +14,14 @@ import io.flutter.plugin.common.BinaryMessenger;
 public class RepliesApi implements RepliesPigeon.RepliesHostApi {
     private final RepliesPigeon.RepliesFlutterApi flutterApi;
 
-    public RepliesApi(BinaryMessenger messenger) {
-        flutterApi = new RepliesPigeon.RepliesFlutterApi(messenger);
-        RepliesPigeon.RepliesHostApi.setup(messenger, this);
+    public static void init(BinaryMessenger messenger) {
+        final RepliesPigeon.RepliesFlutterApi flutterApi = new RepliesPigeon.RepliesFlutterApi(messenger);
+        final RepliesApi api = new RepliesApi(flutterApi);
+        RepliesPigeon.RepliesHostApi.setup(messenger, api);
+    }
+
+    public RepliesApi(RepliesPigeon.RepliesFlutterApi flutterApi) {
+        this.flutterApi = flutterApi;
     }
 
     @Override

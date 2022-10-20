@@ -27,8 +27,9 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     private final String TAG = ApmApi.class.getName();
     private final HashMap<String, ExecutionTrace> traces = new HashMap<>();
 
-    public ApmApi(BinaryMessenger messenger) {
-        ApmPigeon.ApmHostApi.setup(messenger, this);
+    public static void init(BinaryMessenger messenger) {
+        final ApmApi api = new ApmApi();
+        ApmPigeon.ApmHostApi.setup(messenger, api);
     }
 
     @Override

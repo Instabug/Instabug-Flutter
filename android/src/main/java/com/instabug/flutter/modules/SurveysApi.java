@@ -18,9 +18,14 @@ import io.flutter.plugin.common.BinaryMessenger;
 public class SurveysApi implements SurveysPigeon.SurveysHostApi {
     private final SurveysPigeon.SurveysFlutterApi flutterApi;
 
-    public SurveysApi(BinaryMessenger messenger) {
-        flutterApi = new SurveysPigeon.SurveysFlutterApi(messenger);
-        SurveysPigeon.SurveysHostApi.setup(messenger,this);
+    public static void init(BinaryMessenger messenger) {
+        final SurveysPigeon.SurveysFlutterApi flutterApi = new SurveysPigeon.SurveysFlutterApi(messenger);
+        final SurveysApi api = new SurveysApi(flutterApi);
+        SurveysPigeon.SurveysHostApi.setup(messenger, api);
+    }
+
+    public SurveysApi(SurveysPigeon.SurveysFlutterApi flutterApi) {
+        this.flutterApi = flutterApi;
     }
 
     @Override

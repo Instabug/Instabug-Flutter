@@ -39,13 +39,16 @@ import io.flutter.plugin.common.BinaryMessenger;
 
 public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     private final String TAG = InstabugApi.class.getName();
-
     private final Context context;
     private final InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
 
-    public InstabugApi(BinaryMessenger messenger, Context context) {
+    public static void init(BinaryMessenger messenger, Context context) {
+        final InstabugApi api = new InstabugApi(context);
+        InstabugPigeon.InstabugHostApi.setup(messenger, api);
+    }
+
+    public InstabugApi(Context context) {
         this.context = context;
-        InstabugPigeon.InstabugHostApi.setup(messenger, this);
     }
 
     /**

@@ -20,12 +20,16 @@ import java.util.List;
 import io.flutter.plugin.common.BinaryMessenger;
 
 public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
-    private final String TAG = BugReportingApi.class.getName();
     private final BugReportingPigeon.BugReportingFlutterApi flutterApi;
 
-    public BugReportingApi(BinaryMessenger messenger) {
-        flutterApi = new BugReportingPigeon.BugReportingFlutterApi(messenger);
-        BugReportingPigeon.BugReportingHostApi.setup(messenger, this);
+    public static void init(BinaryMessenger messenger) {
+        final BugReportingPigeon.BugReportingFlutterApi flutterApi = new BugReportingPigeon.BugReportingFlutterApi(messenger);
+        final BugReportingApi api = new BugReportingApi(flutterApi);
+        BugReportingPigeon.BugReportingHostApi.setup(messenger, api);
+    }
+
+    public BugReportingApi(BugReportingPigeon.BugReportingFlutterApi flutterApi) {
+        this.flutterApi = flutterApi;
     }
 
     @Override

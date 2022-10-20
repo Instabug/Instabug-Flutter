@@ -1,6 +1,5 @@
 package com.instabug.flutter.modules;
 
-
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -21,8 +20,9 @@ import io.flutter.plugin.common.BinaryMessenger;
 public class CrashReportingApi implements CrashReportingPigeon.CrashReportingHostApi {
     private final String TAG = CrashReportingApi.class.getName();
 
-    public CrashReportingApi(BinaryMessenger messenger) {
-        CrashReportingPigeon.CrashReportingHostApi.setup(messenger, this);
+    public static void init(BinaryMessenger messenger) {
+        final CrashReportingApi api = new CrashReportingApi();
+        CrashReportingPigeon.CrashReportingHostApi.setup(messenger, api);
     }
 
     @Override

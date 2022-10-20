@@ -29,13 +29,13 @@ public class InstabugFlutterPlugin implements FlutterPlugin {
     }
 
     private static void register(Context context, BinaryMessenger messenger) {
-        new ApmApi(messenger);
-        new BugReportingApi(messenger);
-        new CrashReportingApi(messenger);
-        new FeatureRequestsApi(messenger);
-        new InstabugApi(messenger, context);
-        new InstabugLogApi(messenger);
-        new RepliesApi(messenger);
-        new SurveysApi(messenger);
+        ApmApi.init(messenger);
+        BugReportingApi.init(messenger);
+        CrashReportingApi.init(messenger);
+        FeatureRequestsApi.init(messenger);
+        InstabugApi.init(messenger, context);
+        InstabugLogApi.init(messenger);
+        RepliesApi.init(messenger);
+        SurveysApi.init(messenger);
     }
 }

@@ -8,10 +8,9 @@ import com.instabug.library.logging.InstabugLog;
 import io.flutter.plugin.common.BinaryMessenger;
 
 public class InstabugLogApi implements InstabugLogPigeon.InstabugLogHostApi {
-    private final String TAG = InstabugLogApi.class.getName();
-
-    public InstabugLogApi(BinaryMessenger messenger) {
-        InstabugLogPigeon.InstabugLogHostApi.setup(messenger, this);
+    public static void init(BinaryMessenger messenger) {
+        final InstabugLogApi api = new InstabugLogApi();
+        InstabugLogPigeon.InstabugLogHostApi.setup(messenger, api);
     }
 
     @Override
