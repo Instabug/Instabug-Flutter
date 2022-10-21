@@ -79,8 +79,10 @@ class NetworkData {
     map['requestBody'] = requestBody;
     map['responseBody'] = responseBody;
     map['responseCode'] = status;
-    map['requestHeaders'] = requestHeaders;
-    map['responseHeaders'] = responseHeaders;
+    map['requestHeaders'] =
+        requestHeaders.map((key, value) => MapEntry(key, value.toString()));
+    map['responseHeaders'] =
+        responseHeaders.map((key, value) => MapEntry(key, value.toString()));
     map['requestContentType'] = requestContentType;
     map['responseContentType'] = responseContentType;
     map['duration'] = duration;
