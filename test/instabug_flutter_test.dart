@@ -188,32 +188,6 @@ void main() {
     ]);
   });
 
-  test('showFeatureRequests Test', () async {
-    await FeatureRequests.show();
-    expect(
-      log,
-      <Matcher>[isMethodCall('showFeatureRequests', arguments: null)],
-    );
-  });
-
-  test('setEmailFieldRequiredForFeatureRequests:forAction: Test', () async {
-    const isEmailFieldRequired = false;
-    final args = <dynamic>[
-      isEmailFieldRequired,
-      <String>[ActionType.addCommentToFeature.toString()]
-    ];
-    await FeatureRequests.setEmailFieldRequired(
-      isEmailFieldRequired,
-      [ActionType.addCommentToFeature],
-    );
-    expect(log, <Matcher>[
-      isMethodCall(
-        'setEmailFieldRequiredForFeatureRequests:forAction:',
-        arguments: args,
-      )
-    ]);
-  });
-
   test('setRepliesEnabled: Test', () async {
     const isEnabled = false;
     final args = <dynamic>[isEnabled];
