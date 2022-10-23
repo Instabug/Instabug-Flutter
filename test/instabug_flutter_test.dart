@@ -295,52 +295,7 @@ void main() {
     ]);
   });
 
-  test('setCrashReportingEnabled: Test', () async {
-    const isEnabled = false;
-    final args = <dynamic>[isEnabled];
-    await CrashReporting.setEnabled(isEnabled);
-    expect(log, <Matcher>[
-      isMethodCall(
-        'setCrashReportingEnabled:',
-        arguments: args,
-      )
-    ]);
-  });
 
-  test('sendJSCrashByReflection:handled: Test', () async {
-    try {
-      final params = <dynamic>[1, 2];
-      params[5] = 2;
-    } catch (exception, stack) {
-      const handled = true;
-      final trace = stack_trace.Trace.from(stack);
-      final frames = <ExceptionData>[];
-      for (var i = 0; i < trace.frames.length; i++) {
-        frames.add(
-          ExceptionData(
-            trace.frames[i].uri.toString(),
-            trace.frames[i].member,
-            trace.frames[i].line,
-            trace.frames[i].column == null ? 0 : trace.frames[i].column!,
-          ),
-        );
-      }
-      when(mockBuildInfo.operatingSystem).thenReturn('test');
-      final crashData = CrashData(
-        exception.toString(),
-        IBGBuildInfo.instance.operatingSystem,
-        frames,
-      );
-      final args = <dynamic>[jsonEncode(crashData), handled];
-      await CrashReporting.reportHandledCrash(exception, stack);
-      expect(log, <Matcher>[
-        isMethodCall(
-          'sendJSCrashByReflection:handled:',
-          arguments: args,
-        )
-      ]);
-    }
-  });
   test('Test NetworkData model ToMap', () async {
     final newNetworkData = networkData.toMap();
     expect(networkData.url, newNetworkData['url']);
@@ -423,18 +378,6 @@ void main() {
     expect(log, <Matcher>[
       isMethodCall(
         'setExecutionTraceAttribute:key:value:',
-        arguments: args,
-      )
-    ]);
-  });
-
-  test('setCrashReportingEnabled: Test', () async {
-    const isEnabled = false;
-    final args = <dynamic>[isEnabled];
-    await CrashReporting.setEnabled(isEnabled);
-    expect(log, <Matcher>[
-      isMethodCall(
-        'setCrashReportingEnabled:',
         arguments: args,
       )
     ]);
