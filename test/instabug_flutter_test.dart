@@ -58,25 +58,4 @@ void main() {
     log.clear();
   });
 
-  test('networkLog: Test', () async {
-    final data =
-        NetworkData(method: 'method', url: 'url', startTime: DateTime.now());
-    final args = <dynamic>[data.toMap()];
-    final networkLogger = NetworkLogger();
-
-    when(mockBuildInfo.isAndroid).thenReturn(false);
-    await networkLogger.networkLog(data);
-
-    expect(log, <Matcher>[
-      isMethodCall(
-        'networkLog:',
-        arguments: args,
-      )
-    ]);
-  });
-
-
-
-
-
 }
