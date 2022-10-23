@@ -172,20 +172,4 @@ void main() {
     expect(newNetworkData.status, statusCopy);
   });
 
-  test('setExecutionTraceAttribute: Test', () async {
-    const name = 'test_trace';
-    const id = '111';
-    const key = 'key';
-    const value = 'value';
-    final args = <dynamic>[id, key, value];
-    final trace = Trace(id, name);
-    trace.setAttribute(key, value);
-    expect(log, <Matcher>[
-      isMethodCall(
-        'setExecutionTraceAttribute:key:value:',
-        arguments: args,
-      )
-    ]);
-  });
-
 }
