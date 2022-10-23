@@ -84,7 +84,7 @@ class Replies implements RepliesFlutterApi {
   /// @android ONLY
   static Future<void> setInAppNotificationSound(bool isEnabled) async {
     if (IBGBuildInfo.instance.isAndroid) {
-      return _host.setInAppNotificationsEnabled(isEnabled);
+      return _host.setInAppNotificationSound(isEnabled);
     }
   }
 }
