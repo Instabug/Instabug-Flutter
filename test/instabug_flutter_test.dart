@@ -640,61 +640,6 @@ void main() {
     expect(newNetworkData.status, statusCopy);
   });
 
-  test('setAPMEnabled: Test', () async {
-    const isEnabled = false;
-    final args = <dynamic>[isEnabled];
-    await APM.setEnabled(isEnabled);
-    expect(log, <Matcher>[
-      isMethodCall(
-        'setAPMEnabled:',
-        arguments: args,
-      )
-    ]);
-  });
-
-  test('setAPMLogLevel: Test', () async {
-    const level = LogLevel.error;
-    final args = <dynamic>[level.toString()];
-    await APM.setLogLevel(level);
-    expect(log, <Matcher>[
-      isMethodCall(
-        'setAPMLogLevel:',
-        arguments: args,
-      )
-    ]);
-  });
-
-  test('setColdAppLaunchEnabled: Test', () async {
-    const isEnabled = false;
-    final args = <dynamic>[isEnabled];
-    await APM.setColdAppLaunchEnabled(isEnabled);
-    expect(log, <Matcher>[
-      isMethodCall(
-        'setColdAppLaunchEnabled:',
-        arguments: args,
-      )
-    ]);
-  });
-
-  test('startExecutionTrace: Test', () async {
-    const name = 'test-trace';
-    final timestamp = DateTime.now();
-    final args = <dynamic>[name, timestamp.toString()];
-
-    final mockDateTime = MockIBGDateTime();
-    IBGDateTime.setInstance(mockDateTime);
-    when(mockDateTime.now()).thenAnswer((_) => timestamp);
-
-    await APM.startExecutionTrace(name);
-
-    expect(log, <Matcher>[
-      isMethodCall(
-        'startExecutionTrace:id:',
-        arguments: args,
-      )
-    ]);
-  });
-
   test('setExecutionTraceAttribute: Test', () async {
     const name = 'test_trace';
     const id = '111';
@@ -723,37 +668,4 @@ void main() {
     ]);
   });
 
-  test('setAutoUITraceEnabled: Test', () async {
-    const isEnabled = false;
-    final args = <dynamic>[isEnabled];
-    await APM.setAutoUITraceEnabled(isEnabled);
-    expect(log, <Matcher>[
-      isMethodCall(
-        'setAutoUITraceEnabled:',
-        arguments: args,
-      )
-    ]);
-  });
-
-  test('startUITrace: Test', () async {
-    const name = 'UI_Trace';
-    final args = <dynamic>[name];
-    await APM.startUITrace(name);
-    expect(log, <Matcher>[
-      isMethodCall(
-        'startUITrace:',
-        arguments: args,
-      )
-    ]);
-  });
-
-  test('endUITrace: Test', () async {
-    await APM.endUITrace();
-    expect(log, <Matcher>[isMethodCall('endUITrace', arguments: null)]);
-  });
-
-  test('endAppLaunch: Test', () async {
-    await APM.endAppLaunch();
-    expect(log, <Matcher>[isMethodCall('endAppLaunch', arguments: null)]);
-  });
 }
