@@ -83,66 +83,6 @@ void main() {
     log.clear();
   });
 
-  test('logVerbose: Test', () async {
-    await InstabugLog.logVerbose(message);
-    final args = <dynamic>[message];
-    expect(log, <Matcher>[
-      isMethodCall(
-        'logVerbose:',
-        arguments: args,
-      )
-    ]);
-  });
-
-  test('logDebug: Test', () async {
-    await InstabugLog.logDebug(message);
-    final args = <dynamic>[message];
-    expect(log, <Matcher>[
-      isMethodCall(
-        'logDebug:',
-        arguments: args,
-      )
-    ]);
-  });
-
-  test('logInfo: Test', () async {
-    await InstabugLog.logInfo(message);
-    final args = <dynamic>[message];
-    expect(log, <Matcher>[
-      isMethodCall(
-        'logInfo:',
-        arguments: args,
-      )
-    ]);
-  });
-
-  test('clearAllLogs: Test', () async {
-    await InstabugLog.clearAllLogs();
-    expect(log, <Matcher>[isMethodCall('clearAllLogs', arguments: null)]);
-  });
-
-  test('logError: Test', () async {
-    await InstabugLog.logError(message);
-    final args = <dynamic>[message];
-    expect(log, <Matcher>[
-      isMethodCall(
-        'logError:',
-        arguments: args,
-      )
-    ]);
-  });
-
-  test('logWarn: Test', () async {
-    await InstabugLog.logWarn(message);
-    final args = <dynamic>[message];
-    expect(log, <Matcher>[
-      isMethodCall(
-        'logWarn:',
-        arguments: args,
-      )
-    ]);
-  });
-
   test(
       'test setFloatingButtonEdge should be called with arguments floatingButtonEdge and offsetFromTop',
       () async {
