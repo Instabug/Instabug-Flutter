@@ -105,7 +105,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void identifyUser(@NonNull String email, @Nullable String name) {
-        // TODO: check
         Instabug.identifyUser(name, email);
     }
 
@@ -209,7 +208,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void removeUserAttribute(@NonNull String key) {
-        // TODO: check
         Instabug.removeUserAttribute(key);
     }
 

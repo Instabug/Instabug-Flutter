@@ -202,7 +202,6 @@ class Instabug {
 
   /// Gets all tags of reported feedback, bug or crash. Returns the list of tags.
   static Future<List<String>?> getTags() async {
-    // TODO: check
     final tags = await _host.getTags();
     return tags?.cast<String>();
   }
@@ -235,13 +234,11 @@ class Instabug {
 
   /// Returns the user attribute associated with a given [key].
   static Future<String?> getUserAttributeForKey(String key) {
-    // TODO: check
     return _host.getUserAttributeForKey(key);
   }
 
   /// A new Map containing all the currently set user attributes, or an empty Map if no user attributes have been set.
   static Future<Map<String, String>> getUserAttributes() async {
-    // TODO: check
     final attributes = await _host.getUserAttributes();
     return attributes != null
         ? Map<String, String>.from(attributes)
@@ -305,7 +302,6 @@ class Instabug {
     String filePath,
     String fileName,
   ) async {
-    // TODO: check
     return _host.addFileAttachmentWithURL(filePath, fileName);
   }
 
@@ -316,7 +312,6 @@ class Instabug {
     Uint8List data,
     String fileName,
   ) async {
-    // TODO: check
     return _host.addFileAttachmentWithData(data, fileName);
   }
 
