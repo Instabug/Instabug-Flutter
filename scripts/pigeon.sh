@@ -22,6 +22,10 @@ generate_pigeon() {
   --java_package $PKG_ANDROID || exit 1;
 
   echo "Generated $name_snake pigeon"
+
+  # Generated files are not formatted by default,
+  # this affects pacakge score.
+  flutter format "$DIR_DART/$name_snake.api.g.dart"
 }
 
 generate_pigeon apm
