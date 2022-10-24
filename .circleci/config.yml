@@ -44,12 +44,12 @@ jobs:
       - checkout:
           path: ~/project
       - flutter/install_sdk_and_pub:
-          flutter_version: 2.2.3
+          flutter_version: 3.3.0
           app-dir: ..
       - run:
           name: Generate Pigeons
           working_directory: ../..
-          command: sh ./scripts/pigeon.sh
+          command: flutter pub get && sh ./scripts/pigeon.sh
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "Nexus 5"
@@ -72,7 +72,7 @@ jobs:
           command: sudo gem install cocoapods
       - run:
           name: download flutter SDK
-          command: if ! test -f "~/flutter_sdk.zip"; then curl -o ~/flutter_sdk.zip https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_2.2.3-stable.zip; fi
+          command: if ! test -f "~/flutter_sdk.zip"; then curl -o ~/flutter_sdk.zip https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_3.3.0-stable.zip; fi
       - run:
           name: unzip flutter SDK
           command: unzip ~/flutter_sdk.zip -d ~
@@ -84,7 +84,7 @@ jobs:
       - run:
           name: Generate Pigeons
           working_directory: ..
-          command: sh ./scripts/pigeon.sh
+          command: flutter pub get && sh ./scripts/pigeon.sh
       - run:
           name: Install Pods
           command: cd ios && pod install --repo-update
@@ -98,8 +98,6 @@ jobs:
     steps:
       - checkout
       - run: flutter pub get
-      - run: sh ./scripts/pigeon.sh
-      - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run:
           name: Check Format
           command: flutter format . --set-exit-if-changed
