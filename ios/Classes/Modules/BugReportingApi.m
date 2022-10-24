@@ -3,12 +3,17 @@
 #import "BugReportingApi.h"
 #import "ArgsRegistry.h"
 
+extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
+    BugReportingFlutterApi* flutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:messenger];
+    BugReportingApi* api = [[BugReportingApi alloc] initWithFlutterApi:flutterApi];
+    BugReportingHostApiSetup(messenger, api);
+}
+
 @implementation BugReportingApi
 
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
+- (instancetype)initWithFlutterApi:(BugReportingFlutterApi *)api {
     self = [super init];
-    self.flutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:messenger];
-    BugReportingHostApiSetup(messenger, self);
+    self.flutterApi = api;
     return self;
 }
 

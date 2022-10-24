@@ -1,7 +1,6 @@
 #import "InstabugLogPigeon.h"
 
+extern void InitInstabugLogApi(id<FlutterBinaryMessenger> messenger);
+
 @interface InstabugLogApi : NSObject<InstabugLogHostApi>
-
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger;
-
 @end

@@ -1,7 +1,6 @@
 #import "FeatureRequestsPigeon.h"
 
+extern void InitFeatureRequestsApi(id<FlutterBinaryMessenger> messenger);
+
 @interface FeatureRequestsApi : NSObject<FeatureRequestsHostApi>
-
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger;
-
 @end

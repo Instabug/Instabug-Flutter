@@ -1,12 +1,17 @@
 #import "Instabug.h"
 #import "RepliesApi.h"
 
+extern void InitRepliesApi(id<FlutterBinaryMessenger> messenger) {
+    RepliesFlutterApi* flutterApi = [[RepliesFlutterApi alloc] initWithBinaryMessenger:messenger];
+    RepliesApi* api = [[RepliesApi alloc] initWithFlutterApi:flutterApi];
+    RepliesHostApiSetup(messenger, api);
+}
+
 @implementation RepliesApi
 
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
+- (instancetype)initWithFlutterApi:(RepliesFlutterApi *)api {
     self = [super init];
-    self.flutterApi = [[RepliesFlutterApi alloc] initWithBinaryMessenger:messenger];
-    RepliesHostApiSetup(messenger, self);
+    self.flutterApi = api;
     return self;
 }
 

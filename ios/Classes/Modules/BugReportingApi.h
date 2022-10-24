@@ -1,9 +1,10 @@
 #import "BugReportingPigeon.h"
 
+extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger);
+
 @interface BugReportingApi : NSObject<BugReportingHostApi>
 
 @property (nonatomic, strong) BugReportingFlutterApi* flutterApi;
-
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger;
+- (instancetype)initWithFlutterApi:(BugReportingFlutterApi*)api;
 
 @end

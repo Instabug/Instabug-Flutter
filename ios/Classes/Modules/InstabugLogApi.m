@@ -1,13 +1,12 @@
 #import "Instabug.h"
 #import "InstabugLogApi.h"
 
-@implementation InstabugLogApi
-
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
-    self = [super init];
-    InstabugLogHostApiSetup(messenger, self);
-    return self;
+extern void InitInstabugLogApi(id<FlutterBinaryMessenger> messenger) {
+    InstabugLogApi* api = [[InstabugLogApi alloc] init];
+    InstabugLogHostApiSetup(messenger, api);
 }
+
+@implementation InstabugLogApi
 
 - (void)logVerboseMessage:(NSString *)message error:(FlutterError *_Nullable *_Nonnull)error {
     [IBGLog logVerbose:message];

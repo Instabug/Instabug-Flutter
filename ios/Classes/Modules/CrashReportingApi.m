@@ -1,13 +1,12 @@
 #import "Instabug.h"
 #import "CrashReportingApi.h"
 
-@implementation CrashReportingApi
-
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
-    self = [super init];
-    CrashReportingHostApiSetup(messenger, self);
-    return self;
+extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger) {
+    CrashReportingApi* api = [[CrashReportingApi alloc] init];
+    CrashReportingHostApiSetup(messenger, api);
 }
+
+@implementation CrashReportingApi
 
 - (void)setEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
     BOOL boolValue = [isEnabled boolValue];

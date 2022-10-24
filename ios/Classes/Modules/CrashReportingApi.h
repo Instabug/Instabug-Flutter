@@ -1,7 +1,6 @@
 #import "CrashReportingPigeon.h"
 
+extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger);
+
 @interface CrashReportingApi : NSObject<CrashReportingHostApi>
-
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger;
-
 @end

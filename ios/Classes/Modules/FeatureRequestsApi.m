@@ -2,13 +2,12 @@
 #import "FeatureRequestsApi.h"
 #import "ArgsRegistry.h"
 
-@implementation FeatureRequestsApi
-
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
-    self = [super init];
-    FeatureRequestsHostApiSetup(messenger, self);
-    return self;
+extern void InitFeatureRequestsApi(id<FlutterBinaryMessenger> messenger) {
+    FeatureRequestsApi* api = [[FeatureRequestsApi alloc] init];
+    FeatureRequestsHostApiSetup(messenger, api);
 }
+
+@implementation FeatureRequestsApi
 
 - (void)showWithError:(FlutterError *_Nullable *_Nonnull)error {
     [IBGFeatureRequests show];

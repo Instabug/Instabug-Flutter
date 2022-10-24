@@ -2,12 +2,17 @@
 #import "Instabug.h"
 #import "SurveysApi.h"
 
+extern void InitSurveysApi(id<FlutterBinaryMessenger> messenger) {
+    SurveysFlutterApi* flutterApi = [[SurveysFlutterApi alloc] initWithBinaryMessenger:messenger];
+    SurveysApi* api = [[SurveysApi alloc] initWithFlutterApi:flutterApi];
+    SurveysHostApiSetup(messenger, api);
+}
+
 @implementation SurveysApi
 
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
+- (instancetype)initWithFlutterApi:(SurveysFlutterApi *)api {
     self = [super init];
-    self.flutterApi = [[SurveysFlutterApi alloc] initWithBinaryMessenger:messenger];
-    SurveysHostApiSetup(messenger, self);
+    self.flutterApi = api;
     return self;
 }
 

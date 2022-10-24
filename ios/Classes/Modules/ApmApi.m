@@ -2,14 +2,18 @@
 #import "ApmApi.h"
 #import "ArgsRegistry.h"
 
+void InitApmApi(id<FlutterBinaryMessenger>messenger) {
+    ApmApi* api = [[ApmApi alloc] init];
+    ApmHostApiSetup(messenger, api);
+}
+
 @implementation ApmApi
 
 NSMutableDictionary *traces;
 
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)messenger {
+- (instancetype)init {
     self = [super init];
     traces = [[NSMutableDictionary alloc] init];
-    ApmHostApiSetup(messenger, self);
     return self;
 }
 
@@ -74,3 +78,4 @@ NSMutableDictionary *traces;
 }
 
 @end
+
