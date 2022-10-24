@@ -127,7 +127,7 @@ class Instabug {
     Replies.init();
     Surveys.init();
   }
-  
+
   /// Starts the SDK.
   /// This is the main SDK method that does all the magic. This is the only
   /// method that SHOULD be called.
@@ -140,7 +140,7 @@ class Instabug {
     List<InvocationEvent> invocationEvents,
   ) async {
     init();
-    
+
     final invocationEventsStrings =
         invocationEvents.map((e) => e.toString()).toList();
     return _host.start(token, invocationEventsStrings);

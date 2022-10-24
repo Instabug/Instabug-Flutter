@@ -14,8 +14,13 @@ abstract class SurveysHostApi {
   void setAutoShowingEnabled(bool isEnabled);
   void setShouldShowWelcomeScreen(bool shouldShowWelcomeScreen);
   void setAppStoreURL(String appStoreURL);
-  @async bool hasRespondedToSurvey(String surveyToken);
-  @async List<String> getAvailableSurveys();
+
+  @async
+  bool hasRespondedToSurvey(String surveyToken);
+
+  @async
+  List<String> getAvailableSurveys();
+
   void bindOnShowSurveyCallback();
   void bindOnDismissSurveyCallback();
 }

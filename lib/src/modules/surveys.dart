@@ -18,7 +18,6 @@ class Surveys implements SurveysFlutterApi {
   static OnShowSurveyCallback? _onShowCallback;
   static OnDismissSurveyCallback? _onDismissCallback;
 
-
   @visibleForTesting
   // ignore: use_setters_to_change_properties
   static void $setHostApi(SurveysHostApi host) {
