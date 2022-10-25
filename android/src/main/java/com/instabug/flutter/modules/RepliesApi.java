@@ -67,6 +67,15 @@ public class RepliesApi implements RepliesPigeon.RepliesHostApi {
 
     @Override
     public void bindOnNewReplyCallback() {
-        Replies.setOnNewReplyReceivedCallback(() -> { flutterApi.onNewReply(reply -> {}); });
+        Replies.setOnNewReplyReceivedCallback(new Runnable() {
+            @Override
+            public void run() {
+                flutterApi.onNewReply(new RepliesPigeon.RepliesFlutterApi.Reply<Void>() {
+                    @Override
+                    public void reply(Void reply) {
+                    }
+                });
+            }
+        });
     }
 }

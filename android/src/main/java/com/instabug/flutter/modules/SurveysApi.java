@@ -9,6 +9,8 @@ import com.instabug.flutter.generated.SurveysPigeon;
 import com.instabug.library.Feature;
 import com.instabug.survey.Survey;
 import com.instabug.survey.Surveys;
+import com.instabug.survey.callbacks.OnDismissCallback;
+import com.instabug.survey.callbacks.OnShowCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,11 +89,29 @@ public class SurveysApi implements SurveysPigeon.SurveysHostApi {
 
     @Override
     public void bindOnShowSurveyCallback() {
-        Surveys.setOnShowCallback(() -> flutterApi.onShowSurvey(reply -> {}));
+        Surveys.setOnShowCallback(new OnShowCallback() {
+            @Override
+            public void onShow() {
+                flutterApi.onShowSurvey(new SurveysPigeon.SurveysFlutterApi.Reply<Void>() {
+                    @Override
+                    public void reply(Void reply) {
+                    }
+                });
+            }
+        });
     }
 
     @Override
     public void bindOnDismissSurveyCallback() {
-        Surveys.setOnDismissCallback(() -> flutterApi.onDismissSurvey(reply -> {}));
+        Surveys.setOnDismissCallback(new OnDismissCallback() {
+            @Override
+            public void onDismiss() {
+                flutterApi.onDismissSurvey(new SurveysPigeon.SurveysFlutterApi.Reply<Void>() {
+                    @Override
+                    public void reply(Void reply) {
+                    }
+                });
+            }
+        });
     }
 }

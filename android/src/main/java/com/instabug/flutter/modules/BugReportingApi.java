@@ -10,8 +10,10 @@ import com.instabug.bug.BugReporting;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.generated.BugReportingPigeon;
 import com.instabug.library.Feature;
+import com.instabug.library.OnSdkDismissCallback;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.invocation.InstabugInvocationEvent;
+import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
 import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
 
@@ -136,15 +138,29 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
 
     @Override
     public void bindOnInvokeCallback() {
-        BugReporting.setOnInvokeCallback(() -> {
-            flutterApi.onSdkInvoke((reply) -> {});
+        BugReporting.setOnInvokeCallback(new OnInvokeCallback() {
+            @Override
+            public void onInvoke() {
+                flutterApi.onSdkInvoke(new BugReportingPigeon.BugReportingFlutterApi.Reply<Void>() {
+                    @Override
+                    public void reply(Void reply) {
+                    }
+                });
+            }
         });
     }
 
     @Override
     public void bindOnDismissCallback() {
-        BugReporting.setOnDismissCallback((dismissType, reportType) -> {
-            flutterApi.onSdkDismiss(dismissType.toString(), reportType.toString(), (reply) -> {});
+        BugReporting.setOnDismissCallback(new OnSdkDismissCallback() {
+            @Override
+            public void call(DismissType dismissType, ReportType reportType) {
+                flutterApi.onSdkDismiss(dismissType.toString(), reportType.toString(), new BugReportingPigeon.BugReportingFlutterApi.Reply<Void>() {
+                    @Override
+                    public void reply(Void reply) {
+                    }
+                });
+            }
         });
     }
 }
