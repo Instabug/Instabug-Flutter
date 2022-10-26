@@ -20,7 +20,7 @@ dev_dependencies:
   lint: ^1.0.0
   mockito: ^5.0.10
   pana: ^0.21.0
-  pigeon: ^4.2.2
+  pigeon: 3.0.4
 
 flutter:
   plugin:
