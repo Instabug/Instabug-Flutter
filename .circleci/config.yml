@@ -144,8 +144,6 @@ jobs:
       - run: git clone https://InstabugCI:$RELEASE_GITHUB_TOKEN@github.com/Instabug/Escape.git
       - run: cd Escape && swift build -c release
       - run: cd Escape/.build/release && cp -f Escape /usr/local/bin/escape
-      - run: cd project && flutter pub get
-      - run: cd project && sh ./scripts/pigeon.sh
       - run: cd project && Escape flutter publish
 
 workflows:
