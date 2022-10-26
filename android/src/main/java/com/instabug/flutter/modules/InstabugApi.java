@@ -1,6 +1,5 @@
 package com.instabug.flutter.modules;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,9 +8,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 
-import com.instabug.bug.BugReporting;
+import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
@@ -33,30 +31,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
 public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     private final String TAG = InstabugApi.class.getName();
     private final Context context;
+    private final Callable<Bitmap> screenshotProvider;
     private final InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
 
-    public static void init(BinaryMessenger messenger, Context context) {
-        final InstabugApi api = new InstabugApi(context);
+    public static void init(BinaryMessenger messenger, Context context, Callable<Bitmap> screenshotProvider) {
+        final InstabugApi api = new InstabugApi(context, screenshotProvider);
         InstabugPigeon.InstabugHostApi.setup(messenger, api);
     }
 
-    public InstabugApi(Context context) {
+    public InstabugApi(Context context, Callable<Bitmap> screenshotProvider) {
         this.context = context;
-    }
-
-    /**
-     * Enables taking screenshots by media projection.
-     */
-    @SuppressLint("NewApi")
-    @VisibleForTesting
-    public static void enableScreenShotByMediaProjection(boolean isEnabled) {
-        BugReporting.setScreenshotByMediaProjectionEnabled(isEnabled);
+        this.screenshotProvider = screenshotProvider;
     }
 
     private void setCurrentPlatform() {
@@ -98,8 +90,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         new Instabug.Builder(application, token)
                 .setInvocationEvents(invocationEventsArray)
                 .build();
-
-        enableScreenShotByMediaProjection(true);
+        Instabug.setScreenshotProvider(screenshotProvider);
     }
 
     @Override
