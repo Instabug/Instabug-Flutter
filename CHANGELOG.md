@@ -1,6 +1,8 @@
 ## Unreleased
 
 * Bumps Instabug Android SDK to v11.6.0
+* Enables Repro Steps screenshots on Android
+* Removes "Media Projection" dialog from Android
 * Adds BugReporting.setDisclaimerText API
 * Adds BugReporting.setCommentMinimumCharacterCount API
 * Deprecates Instabug.enableAndroid and Instabug.disableAndroid APIs in favour of a new API Instabug.setEnabled, which works on both platforms
