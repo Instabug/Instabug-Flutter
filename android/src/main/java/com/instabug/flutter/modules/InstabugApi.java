@@ -164,10 +164,9 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setValueForStringWithKey(@NonNull String value, @NonNull String key) {
-        InstabugCustomTextPlaceHolder.Key resolvedKey = ArgsRegistry.getDeserializedValue(value);
+        InstabugCustomTextPlaceHolder.Key resolvedKey = ArgsRegistry.getDeserializedValue(key);
         placeHolder.set(resolvedKey, value);
         Instabug.setCustomTextPlaceHolders(placeHolder);
-
     }
 
     @Override
