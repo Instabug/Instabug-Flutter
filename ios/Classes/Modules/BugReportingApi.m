@@ -118,11 +118,27 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
 
 - (void)bindOnDismissCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
     IBGBugReporting.didDismissHandler = ^(IBGDismissType dismissType, IBGReportType reportType) {
-        NSString* dismissEnumName = [[ArgsRegistry.dismissTypes allKeysForObject:@(dismissType)] objectAtIndex:0];
-
-        NSString* reportEnumName = [[ArgsRegistry.reportTypes allKeysForObject:@(reportType)] objectAtIndex:0];
+        // Parse dismiss type enum
+        NSString* dismissTypeString;
+        if (dismissType == IBGDismissTypeCancel) {
+            dismissTypeString = @"CANCEL";
+        } else if (dismissType == IBGDismissTypeSubmit) {
+            dismissTypeString = @"SUBMIT";
+        } else if (dismissType == IBGDismissTypeAddAttachment) {
+            dismissTypeString = @"ADD_ATTACHMENT";
+        }
         
-        [self->_flutterApi onSdkDismissDismissType:dismissEnumName reportType:reportEnumName completion:^(NSError * _Nullable _) {}];
+        // Parse report type enum
+        NSString* reportTypeString;
+        if (reportType == IBGReportTypeBug) {
+            reportTypeString = @"BUG";
+        } else if (reportType == IBGReportTypeFeedback) {
+            reportTypeString = @"FEEDBACK";
+        } else {
+            reportTypeString = @"OTHER";
+        }
+
+        [self->_flutterApi onSdkDismissDismissType:dismissTypeString reportType:reportTypeString completion:^(NSError * _Nullable _) {}];
     };
 }
 
