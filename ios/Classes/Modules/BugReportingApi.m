@@ -4,8 +4,8 @@
 #import "ArgsRegistry.h"
 
 extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
-    BugReportingFlutterApi* flutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:messenger];
-    BugReportingApi* api = [[BugReportingApi alloc] initWithFlutterApi:flutterApi];
+    BugReportingFlutterApi *flutterApi = [[BugReportingFlutterApi alloc] initWithBinaryMessenger:messenger];
+    BugReportingApi *api = [[BugReportingApi alloc] initWithFlutterApi:flutterApi];
     BugReportingHostApiSetup(messenger, api);
 }
 
@@ -25,31 +25,31 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
     IBGBugReportingReportType resolvedType = (ArgsRegistry.reportTypes[reportType]).integerValue;
     IBGBugReportingOption resolvedOptions = 0;
 
-    for (NSString * option in invocationOptions) {
+    for (NSString *option in invocationOptions) {
         resolvedOptions |= (ArgsRegistry.invocationOptions[option]).integerValue;
     }
-    
+
     [IBGBugReporting showWithReportType:resolvedType options:resolvedOptions];
 }
 
 - (void)setInvocationEventsEvents:(NSArray<NSString *> *)events error:(FlutterError *_Nullable *_Nonnull)error {
     IBGInvocationEvent resolvedEvents = 0;
-    
-    for (NSString * event in events) {
+
+    for (NSString *event in events) {
         resolvedEvents |= (ArgsRegistry.invocationEvents[event]).integerValue;
     }
-    
+
     IBGBugReporting.invocationEvents = resolvedEvents;
 }
 
 - (void)setReportTypesTypes:(NSArray<NSString *> *)types error:(FlutterError *_Nullable *_Nonnull)error {
     IBGBugReportingReportType resolvedTypes = 0;
-    
-    for (NSString * type in types) {
+
+    for (NSString *type in types) {
         resolvedTypes |= (ArgsRegistry.reportTypes[type]).integerValue;
     }
 
-   [IBGBugReporting setPromptOptionsEnabledReportTypes:resolvedTypes];
+    [IBGBugReporting setPromptOptionsEnabledReportTypes:resolvedTypes];
 }
 
 - (void)setExtendedBugReportModeMode:(NSString *)mode error:(FlutterError *_Nullable *_Nonnull)error {
@@ -60,7 +60,7 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
 - (void)setInvocationOptionsOptions:(NSArray<NSString *> *)options error:(FlutterError *_Nullable *_Nonnull)error {
     IBGBugReportingOption resolvedOptions = 0;
 
-    for (NSString * option in options) {
+    for (NSString *option in options) {
         resolvedOptions |= (ArgsRegistry.invocationOptions[option]).integerValue;
     }
 
@@ -91,9 +91,9 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
 }
 
 - (void)setEnabledAttachmentTypesScreenshot:(NSNumber *)screenshot extraScreenshot:(NSNumber *)extraScreenshot galleryImage:(NSNumber *)galleryImage screenRecording:(NSNumber *)screenRecording error:(FlutterError *_Nullable *_Nonnull)error {
-    
+
     IBGAttachmentType resolvedTypes = 0;
-    
+
     if ([screenshot boolValue]) {
         resolvedTypes |= IBGAttachmentTypeScreenShot;
     }
@@ -112,33 +112,37 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
 
 - (void)bindOnInvokeCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
     IBGBugReporting.willInvokeHandler = ^{
-        [self->_flutterApi onSdkInvokeWithCompletion:^(NSError * _Nullable _) {}];
+      [self->_flutterApi onSdkInvokeWithCompletion:^(NSError *_Nullable _){
+      }];
     };
 }
 
 - (void)bindOnDismissCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
     IBGBugReporting.didDismissHandler = ^(IBGDismissType dismissType, IBGReportType reportType) {
-        // Parse dismiss type enum
-        NSString* dismissTypeString;
-        if (dismissType == IBGDismissTypeCancel) {
-            dismissTypeString = @"CANCEL";
-        } else if (dismissType == IBGDismissTypeSubmit) {
-            dismissTypeString = @"SUBMIT";
-        } else if (dismissType == IBGDismissTypeAddAttachment) {
-            dismissTypeString = @"ADD_ATTACHMENT";
-        }
-        
-        // Parse report type enum
-        NSString* reportTypeString;
-        if (reportType == IBGReportTypeBug) {
-            reportTypeString = @"BUG";
-        } else if (reportType == IBGReportTypeFeedback) {
-            reportTypeString = @"FEEDBACK";
-        } else {
-            reportTypeString = @"OTHER";
-        }
+      // Parse dismiss type enum
+      NSString *dismissTypeString;
+      if (dismissType == IBGDismissTypeCancel) {
+          dismissTypeString = @"CANCEL";
+      } else if (dismissType == IBGDismissTypeSubmit) {
+          dismissTypeString = @"SUBMIT";
+      } else if (dismissType == IBGDismissTypeAddAttachment) {
+          dismissTypeString = @"ADD_ATTACHMENT";
+      }
 
-        [self->_flutterApi onSdkDismissDismissType:dismissTypeString reportType:reportTypeString completion:^(NSError * _Nullable _) {}];
+      // Parse report type enum
+      NSString *reportTypeString;
+      if (reportType == IBGReportTypeBug) {
+          reportTypeString = @"BUG";
+      } else if (reportType == IBGReportTypeFeedback) {
+          reportTypeString = @"FEEDBACK";
+      } else {
+          reportTypeString = @"OTHER";
+      }
+
+      [self->_flutterApi onSdkDismissDismissType:dismissTypeString
+                                      reportType:reportTypeString
+                                      completion:^(NSError *_Nullable _){
+                                      }];
     };
 }
 

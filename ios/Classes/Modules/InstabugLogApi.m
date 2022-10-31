@@ -2,7 +2,7 @@
 #import "InstabugLogApi.h"
 
 extern void InitInstabugLogApi(id<FlutterBinaryMessenger> messenger) {
-    InstabugLogApi* api = [[InstabugLogApi alloc] init];
+    InstabugLogApi *api = [[InstabugLogApi alloc] init];
     InstabugLogHostApiSetup(messenger, api);
 }
 
@@ -28,7 +28,7 @@ extern void InitInstabugLogApi(id<FlutterBinaryMessenger> messenger) {
     [IBGLog logError:message];
 }
 
-- (void)clearAllLogsWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+- (void)clearAllLogsWithError:(FlutterError *_Nullable __autoreleasing *_Nonnull)error {
     [IBGLog clearAllLogs];
 }
 

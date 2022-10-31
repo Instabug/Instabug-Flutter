@@ -2,8 +2,8 @@
 #import "RepliesApi.h"
 
 extern void InitRepliesApi(id<FlutterBinaryMessenger> messenger) {
-    RepliesFlutterApi* flutterApi = [[RepliesFlutterApi alloc] initWithBinaryMessenger:messenger];
-    RepliesApi* api = [[RepliesApi alloc] initWithFlutterApi:flutterApi];
+    RepliesFlutterApi *flutterApi = [[RepliesFlutterApi alloc] initWithBinaryMessenger:messenger];
+    RepliesApi *api = [[RepliesApi alloc] initWithFlutterApi:flutterApi];
     RepliesHostApiSetup(messenger, api);
 }
 
@@ -43,7 +43,8 @@ extern void InitRepliesApi(id<FlutterBinaryMessenger> messenger) {
 
 - (void)bindOnNewReplyCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
     IBGReplies.didReceiveReplyHandler = ^{
-        [self->_flutterApi onNewReplyWithCompletion:^(NSError * _Nullable _) {}];
+      [self->_flutterApi onNewReplyWithCompletion:^(NSError *_Nullable _){
+      }];
     };
 }
 

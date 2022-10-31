@@ -3,8 +3,8 @@
 #import "SurveysApi.h"
 
 extern void InitSurveysApi(id<FlutterBinaryMessenger> messenger) {
-    SurveysFlutterApi* flutterApi = [[SurveysFlutterApi alloc] initWithBinaryMessenger:messenger];
-    SurveysApi* api = [[SurveysApi alloc] initWithFlutterApi:flutterApi];
+    SurveysFlutterApi *flutterApi = [[SurveysFlutterApi alloc] initWithBinaryMessenger:messenger];
+    SurveysApi *api = [[SurveysApi alloc] initWithFlutterApi:flutterApi];
     SurveysHostApiSetup(messenger, api);
 }
 
@@ -43,36 +43,38 @@ extern void InitSurveysApi(id<FlutterBinaryMessenger> messenger) {
     IBGSurveys.appStoreURL = appStoreURL;
 }
 
-- (void)hasRespondedToSurveySurveyToken:(NSString *)surveyToken completion:(void(^)(NSNumber *_Nullable, FlutterError *_Nullable))completion {
-    [IBGSurveys hasRespondedToSurveyWithToken:surveyToken completionHandler:^(BOOL hasResponded){
-        NSNumber *boolNumber = [NSNumber numberWithBool:hasResponded];
-        completion(boolNumber, nil);
-    }];
+- (void)hasRespondedToSurveySurveyToken:(NSString *)surveyToken completion:(void (^)(NSNumber *_Nullable, FlutterError *_Nullable))completion {
+    [IBGSurveys hasRespondedToSurveyWithToken:surveyToken
+                            completionHandler:^(BOOL hasResponded) {
+                              NSNumber *boolNumber = [NSNumber numberWithBool:hasResponded];
+                              completion(boolNumber, nil);
+                            }];
 }
 
-- (void)getAvailableSurveysWithCompletion:(void(^)(NSArray<NSString *> *_Nullable, FlutterError *_Nullable))completion {
+- (void)getAvailableSurveysWithCompletion:(void (^)(NSArray<NSString *> *_Nullable, FlutterError *_Nullable))completion {
     [IBGSurveys availableSurveysWithCompletionHandler:^(NSArray<IBGSurvey *> *availableSurveys) {
-        NSMutableArray<NSString*>* titles = [[NSMutableArray alloc] init];
+      NSMutableArray<NSString *> *titles = [[NSMutableArray alloc] init];
 
-        for (IBGSurvey* survey in availableSurveys) {
-            [titles addObject:[survey title]];
-        }
+      for (IBGSurvey *survey in availableSurveys) {
+          [titles addObject:[survey title]];
+      }
 
-        completion(titles, nil);
+      completion(titles, nil);
     }];
 }
 
 - (void)bindOnShowSurveyCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
     IBGSurveys.willShowSurveyHandler = ^{
-        [self->_flutterApi onShowSurveyWithCompletion:^(NSError * _Nullable _) {}];
+      [self->_flutterApi onShowSurveyWithCompletion:^(NSError *_Nullable _){
+      }];
     };
 }
 
 - (void)bindOnDismissSurveyCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
     IBGSurveys.didDismissSurveyHandler = ^{
-        [self->_flutterApi onDismissSurveyWithCompletion:^(NSError * _Nullable _) {}];
+      [self->_flutterApi onDismissSurveyWithCompletion:^(NSError *_Nullable _){
+      }];
     };
 }
-
 
 @end

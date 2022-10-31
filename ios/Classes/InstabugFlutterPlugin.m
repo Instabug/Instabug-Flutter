@@ -11,7 +11,7 @@
 
 @implementation InstabugFlutterPlugin
 
-+ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
++ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
     InitApmApi([registrar messenger]);
     InitBugReportingApi([registrar messenger]);
     InitCrashReportingApi([registrar messenger]);

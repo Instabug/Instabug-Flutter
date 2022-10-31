@@ -2,5 +2,5 @@
 
 extern void InitFeatureRequestsApi(id<FlutterBinaryMessenger> messenger);
 
-@interface FeatureRequestsApi : NSObject<FeatureRequestsHostApi>
+@interface FeatureRequestsApi : NSObject <FeatureRequestsHostApi>
 @end

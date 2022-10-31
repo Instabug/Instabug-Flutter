@@ -2,9 +2,9 @@
 
 extern void InitRepliesApi(id<FlutterBinaryMessenger> messenger);
 
-@interface RepliesApi : NSObject<RepliesHostApi>
+@interface RepliesApi : NSObject <RepliesHostApi>
 
-@property (nonatomic, strong) RepliesFlutterApi* flutterApi;
-- (instancetype)initWithFlutterApi:(RepliesFlutterApi*)api;
+@property(nonatomic, strong) RepliesFlutterApi *flutterApi;
+- (instancetype)initWithFlutterApi:(RepliesFlutterApi *)api;
 
 @end

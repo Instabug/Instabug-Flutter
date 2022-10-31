@@ -2,5 +2,5 @@
 
 extern void InitInstabugLogApi(id<FlutterBinaryMessenger> messenger);
 
-@interface InstabugLogApi : NSObject<InstabugLogHostApi>
+@interface InstabugLogApi : NSObject <InstabugLogHostApi>
 @end

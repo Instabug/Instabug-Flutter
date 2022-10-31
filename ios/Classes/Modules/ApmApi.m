@@ -2,8 +2,8 @@
 #import "ApmApi.h"
 #import "ArgsRegistry.h"
 
-void InitApmApi(id<FlutterBinaryMessenger>messenger) {
-    ApmApi* api = [[ApmApi alloc] init];
+void InitApmApi(id<FlutterBinaryMessenger> messenger) {
+    ApmApi *api = [[ApmApi alloc] init];
     ApmHostApiSetup(messenger, api);
 }
 
@@ -36,7 +36,7 @@ NSMutableDictionary *traces;
 
 - (nullable NSString *)startExecutionTraceId:(NSString *)id name:(NSString *)name error:(FlutterError *_Nullable *_Nonnull)error {
     IBGExecutionTrace *trace = [IBGAPM startExecutionTraceWithName:name];
-    
+
     if (trace != nil) {
         [traces setObject:trace forKey:id];
         return id;
@@ -47,7 +47,7 @@ NSMutableDictionary *traces;
 
 - (void)setExecutionTraceAttributeId:(NSString *)id key:(NSString *)key value:(NSString *)value error:(FlutterError *_Nullable *_Nonnull)error {
     IBGExecutionTrace *trace = [traces objectForKey:id];
-    
+
     if (trace != nil) {
         [trace setAttributeWithKey:key value:value];
     }
@@ -55,7 +55,7 @@ NSMutableDictionary *traces;
 
 - (void)endExecutionTraceId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error {
     IBGExecutionTrace *trace = [traces objectForKey:id];
-    
+
     if (trace != nil) {
         [trace end];
     }
@@ -78,4 +78,3 @@ NSMutableDictionary *traces;
 }
 
 @end
-

@@ -4,10 +4,10 @@
 #import "InstabugApi.h"
 #import "ArgsRegistry.h"
 
-#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:((float)((rgbValue & 0xFF000000) >> 24))/255.0];
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue:((float)(rgbValue & 0xFF)) / 255.0 alpha:((float)((rgbValue & 0xFF000000) >> 24)) / 255.0];
 
 extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
-    InstabugApi* api = [[InstabugApi alloc] init];
+    InstabugApi *api = [[InstabugApi alloc] init];
     InstabugHostApiSetup(messenger, api);
 }
 
@@ -25,8 +25,8 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     }
 
     IBGInvocationEvent resolvedEvents = 0;
-    
-    for (NSString * event in invocationEvents) {
+
+    for (NSString *event in invocationEvents) {
         resolvedEvents |= (ArgsRegistry.invocationEvents[event]).integerValue;
     }
 
@@ -44,9 +44,9 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
 - (void)identifyUserEmail:(NSString *)email name:(nullable NSString *)name error:(FlutterError *_Nullable *_Nonnull)error {
     if ([name isKindOfClass:[NSNull class]]) {
-      [Instabug identifyUserWithEmail:email name:nil];
+        [Instabug identifyUserWithEmail:email name:nil];
     } else {
-      [Instabug identifyUserWithEmail:email name:name];
+        [Instabug identifyUserWithEmail:email name:name];
     }
 }
 
@@ -146,13 +146,13 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
 - (void)reportScreenChangeScreenName:(NSString *)screenName error:(FlutterError *_Nullable *_Nonnull)error {
     SEL setPrivateApiSEL = NSSelectorFromString(@"logViewDidAppearEvent:");
-     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
-         NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
-         [inv setSelector:setPrivateApiSEL];
-         [inv setTarget:[Instabug class]];
-         [inv setArgument:&(screenName) atIndex:2];
-         [inv invoke];
-     }
+    if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
+        [inv setSelector:setPrivateApiSEL];
+        [inv setTarget:[Instabug class]];
+        [inv setArgument:&(screenName) atIndex:2];
+        [inv invoke];
+    }
 }
 
 - (void)addFileAttachmentWithURLFilePath:(NSString *)filePath fileName:(NSString *)fileName error:(FlutterError *_Nullable *_Nonnull)error {
@@ -175,43 +175,42 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     // Android Only
 }
 
-
 - (void)networkLogData:(NSDictionary<NSString *, id> *)data error:(FlutterError *_Nullable *_Nonnull)error {
-    NSString* url = data[@"url"];
-    NSString* method = data[@"method"];
-    NSString* requestBody = data[@"requestBody"];
-    NSString* responseBody = data[@"responseBody"];
+    NSString *url = data[@"url"];
+    NSString *method = data[@"method"];
+    NSString *requestBody = data[@"requestBody"];
+    NSString *responseBody = data[@"responseBody"];
     int32_t responseCode = [data[@"responseCode"] integerValue];
     int64_t requestBodySize = [data[@"requestBodySize"] integerValue];
     int64_t responseBodySize = [data[@"responseBodySize"] integerValue];
     int32_t errorCode = [data[@"errorCode"] integerValue];
-    NSString* errorDomain = data[@"errorDomain"];
-    NSDictionary* requestHeaders = data[@"requestHeaders"];
+    NSString *errorDomain = data[@"errorDomain"];
+    NSDictionary *requestHeaders = data[@"requestHeaders"];
     if ([requestHeaders count] == 0) {
         requestHeaders = @{};
     }
-    NSDictionary* responseHeaders = data[@"responseHeaders"];
-    NSString* contentType = data[@"responseContentType"];
+    NSDictionary *responseHeaders = data[@"responseHeaders"];
+    NSString *contentType = data[@"responseContentType"];
     int64_t duration = [data[@"duration"] integerValue];
     int64_t startTime = [data[@"startTime"] integerValue] * 1000;
 
-    for(NSString *key in [requestHeaders allKeys]) {
+    for (NSString *key in [requestHeaders allKeys]) {
         NSLog(@"key: %@", key);
-        NSLog(@"value: %@",[requestHeaders objectForKey:key]);
+        NSLog(@"value: %@", [requestHeaders objectForKey:key]);
     }
-    
-    NSString* gqlQueryName = nil;
-    NSString* serverErrorMessage = nil;
+
+    NSString *gqlQueryName = nil;
+    NSString *serverErrorMessage = nil;
     if (data[@"gqlQueryName"] != [NSNull null]) {
         gqlQueryName = data[@"gqlQueryName"];
     }
     if (data[@"serverErrorMessage"] != [NSNull null]) {
         serverErrorMessage = data[@"serverErrorMessage"];
     }
-    
+
     SEL networkLogSEL = NSSelectorFromString(@"addNetworkLogWithUrl:method:requestBody:requestBodySize:responseBody:responseBodySize:responseCode:requestHeaders:responseHeaders:contentType:errorDomain:errorCode:startTime:duration:gqlQueryName:serverErrorMessage:");
 
-    if([[IBGNetworkLogger class] respondsToSelector:networkLogSEL]) {
+    if ([[IBGNetworkLogger class] respondsToSelector:networkLogSEL]) {
         NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[IBGNetworkLogger class] methodSignatureForSelector:networkLogSEL]];
         [inv setSelector:networkLogSEL];
         [inv setTarget:[IBGNetworkLogger class]];
