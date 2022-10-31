@@ -200,18 +200,18 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
             final String responseHeaders = (new JSONObject((HashMap<String, String>) data.get("responseHeaders"))).toString(4);
             final String errorMessage;
 
-            if(errorDomain.equals("")) {
+            if (errorDomain.equals("")) {
                 errorMessage = null;
             } else {
                 errorMessage = errorDomain;
             }
             //--------------------------------------------------
             String gqlQueryName = null;
-            if(data.containsKey("gqlQueryName")){
+            if (data.containsKey("gqlQueryName")) {
                 gqlQueryName = (String) data.get("gqlQueryName");
             }
             String serverErrorMessage = "";
-            if(data.containsKey("serverErrorMessage")){
+            if (data.containsKey("serverErrorMessage")) {
                 serverErrorMessage = (String) data.get("serverErrorMessage");
             }
 

@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.instabug.bug.BugReporting;
-import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.generated.BugReportingPigeon;
+import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.library.Feature;
 import com.instabug.library.OnSdkDismissCallback;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;

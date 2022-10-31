@@ -1,20 +1,5 @@
 package com.instabug.flutter.util;
 
-import com.instabug.bug.BugReporting;
-import com.instabug.bug.invocation.Option;
-import com.instabug.featuresrequest.ActionType;
-import com.instabug.library.InstabugColorTheme;
-import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
-import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
-import com.instabug.library.InstabugCustomTextPlaceHolder;
-import com.instabug.library.extendedbugreport.ExtendedBugReport;
-import com.instabug.library.visualusersteps.State;
-import com.instabug.apm.model.LogLevel;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
 import static com.instabug.library.internal.module.InstabugLocale.ARABIC;
 import static com.instabug.library.internal.module.InstabugLocale.AZERBAIJANI;
 import static com.instabug.library.internal.module.InstabugLocale.CZECH;
@@ -47,6 +32,21 @@ import static com.instabug.library.ui.onboarding.WelcomeMessage.State.BETA;
 import static com.instabug.library.ui.onboarding.WelcomeMessage.State.DISABLED;
 import static com.instabug.library.ui.onboarding.WelcomeMessage.State.LIVE;
 
+import com.instabug.apm.model.LogLevel;
+import com.instabug.bug.BugReporting;
+import com.instabug.bug.invocation.Option;
+import com.instabug.featuresrequest.ActionType;
+import com.instabug.library.InstabugColorTheme;
+import com.instabug.library.InstabugCustomTextPlaceHolder;
+import com.instabug.library.extendedbugreport.ExtendedBugReport;
+import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
+import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
+import com.instabug.library.visualusersteps.State;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 @SuppressWarnings({"SameParameterValue", "unchecked"})
 final public class ArgsRegistry {
 
@@ -75,7 +75,7 @@ final public class ArgsRegistry {
      * - {@code key} does exist in the registry
      * - The value assigned to the {@code key} is not null
      *
-     * @param key   the key whose associated value is to be returned
+     * @param key the key whose associated value is to be returned
      * @return the value deserialized if all the assertions were successful, null otherwise
      */
     public static <T> T getDeserializedValue(String key) {
@@ -234,18 +234,18 @@ final public class ArgsRegistry {
     public static void registerInstabugExtendedBugReportModeArgs(Map<String, Object> args) {
         args.put("ExtendedBugReportMode.enabledWithRequiredFields", ExtendedBugReport.State.ENABLED_WITH_REQUIRED_FIELDS);
         args.put("ExtendedBugReportMode.enabledWithOptionalFields", ExtendedBugReport.State.ENABLED_WITH_OPTIONAL_FIELDS);
-        args.put("ExtendedBugReportMode.disabled",ExtendedBugReport.State.DISABLED);
+        args.put("ExtendedBugReportMode.disabled", ExtendedBugReport.State.DISABLED);
     }
 
     public static void registerInstabugActionTypesArgs(Map<String, Object> args) {
-        args.put("ActionType.requestNewFeature",ActionType.REQUEST_NEW_FEATURE);
-        args.put("ActionType.addCommentToFeature",ActionType.ADD_COMMENT_TO_FEATURE);
+        args.put("ActionType.requestNewFeature", ActionType.REQUEST_NEW_FEATURE);
+        args.put("ActionType.addCommentToFeature", ActionType.ADD_COMMENT_TO_FEATURE);
     }
 
     public static void registerReproStepsModeArgs(Map<String, Object> args) {
         args.put("ReproStepsMode.enabled", State.ENABLED);
         args.put("ReproStepsMode.disabled", State.DISABLED);
-        args.put("ReproStepsMode.enabledWithNoScreenshots",State.ENABLED_WITH_NO_SCREENSHOTS);
+        args.put("ReproStepsMode.enabledWithNoScreenshots", State.ENABLED_WITH_NO_SCREENSHOTS);
     }
 
     public static void registerLogLevelArgs(Map<String, Object> args) {

@@ -193,7 +193,7 @@ public class ArgsRegistryTest {
     }
 
     private void assertAllSupportedCustomTextPlaceHolderKeysArePresent(Map<String, Object> map,
-            List<InstabugCustomTextPlaceHolder.Key> expectedKeys) {
+                                                                       List<InstabugCustomTextPlaceHolder.Key> expectedKeys) {
         // actual
         List<InstabugCustomTextPlaceHolder.Key> actualKeys = new ArrayList<>();
         for (Map.Entry m : map.entrySet()) {
