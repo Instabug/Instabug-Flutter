@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/generated/bug_reporting.api.g.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -41,10 +42,7 @@ void main() {
     await BugReporting.show(report, options);
 
     verify(
-      mHost.show(
-        report.toString(),
-        options.map((e) => e.toString()).toList(),
-      ),
+      mHost.show(report.toString(), options.mapToString()),
     ).called(1);
   });
 
@@ -54,9 +52,7 @@ void main() {
     await BugReporting.setInvocationEvents(events);
 
     verify(
-      mHost.setInvocationEvents(
-        events.map((e) => e.toString()).toList(),
-      ),
+      mHost.setInvocationEvents(events.mapToString()),
     ).called(1);
   });
 
@@ -66,9 +62,7 @@ void main() {
     await BugReporting.setReportTypes(reports);
 
     verify(
-      mHost.setReportTypes(
-        reports.map((e) => e.toString()).toList(),
-      ),
+      mHost.setReportTypes(reports.mapToString()),
     ).called(1);
   });
 
@@ -88,9 +82,7 @@ void main() {
     await BugReporting.setInvocationOptions(options);
 
     verify(
-      mHost.setInvocationOptions(
-        options.map((e) => e.toString()).toList(),
-      ),
+      mHost.setInvocationOptions(options.mapToString()),
     ).called(1);
   });
 

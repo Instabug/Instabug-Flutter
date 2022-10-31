@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:instabug_flutter/generated/feature_requests.api.g.dart';
+import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:meta/meta.dart';
 
 enum ActionType { requestNewFeature, addCommentToFeature }
@@ -30,7 +31,6 @@ class FeatureRequests {
     bool isRequired,
     List<ActionType>? actionTypes,
   ) async {
-    final types = actionTypes?.map((e) => e.toString()).toList();
-    return _host.setEmailFieldRequired(isRequired, types ?? []);
+    return _host.setEmailFieldRequired(isRequired, actionTypes.mapToString());
   }
 }

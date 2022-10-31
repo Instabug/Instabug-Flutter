@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -33,10 +34,7 @@ void main() {
     await Instabug.start(token, events);
 
     verify(
-      mHost.start(
-        token,
-        events.map((e) => e.toString()).toList(),
-      ),
+      mHost.start(token, events.mapToString()),
     ).called(1);
   });
 

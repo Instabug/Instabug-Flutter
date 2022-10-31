@@ -11,6 +11,7 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:meta/meta.dart';
 
@@ -140,10 +141,7 @@ class Instabug {
     List<InvocationEvent> invocationEvents,
   ) async {
     init();
-
-    final invocationEventsStrings =
-        invocationEvents.map((e) => e.toString()).toList();
-    return _host.start(token, invocationEventsStrings);
+    return _host.start(token, invocationEvents.mapToString());
   }
 
   /// Shows the welcome message in a specific mode.

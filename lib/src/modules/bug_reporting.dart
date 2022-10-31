@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:instabug_flutter/generated/bug_reporting.api.g.dart';
 import 'package:instabug_flutter/src/modules/instabug.dart';
+import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:meta/meta.dart';
 
@@ -119,8 +120,7 @@ class BugReporting implements BugReportingFlutterApi {
   static Future<void> setInvocationEvents(
     List<InvocationEvent>? invocationEvents,
   ) async {
-    final eventsStrings = invocationEvents?.map((e) => e.toString()).toList();
-    return _host.setInvocationEvents(eventsStrings ?? []);
+    return _host.setInvocationEvents(invocationEvents.mapToString());
   }
 
   /// Sets whether attachments in bug reporting and in-app messaging are enabled or not.
@@ -147,8 +147,7 @@ class BugReporting implements BugReportingFlutterApi {
   /// Sets what type of reports, bug or feedback, should be invoked.
   /// [reportTypes] - List of reportTypes
   static Future<void> setReportTypes(List<ReportType>? reportTypes) async {
-    final typesStrings = reportTypes?.map((e) => e.toString()).toList();
-    return _host.setReportTypes(typesStrings ?? []);
+    return _host.setReportTypes(reportTypes.mapToString());
   }
 
   /// Sets whether the extended bug report mode should be disabled, enabled with
@@ -166,8 +165,7 @@ class BugReporting implements BugReportingFlutterApi {
   static Future<void> setInvocationOptions(
     List<InvocationOption>? invocationOptions,
   ) async {
-    final optionsStrings = invocationOptions?.map((e) => e.toString()).toList();
-    return _host.setInvocationOptions(optionsStrings ?? []);
+    return _host.setInvocationOptions(invocationOptions.mapToString());
   }
 
   /// Sets the floating button position.
@@ -198,8 +196,7 @@ class BugReporting implements BugReportingFlutterApi {
     ReportType reportType,
     List<InvocationOption>? invocationOptions,
   ) async {
-    final optionsStrings = invocationOptions?.map((e) => e.toString()).toList();
-    return _host.show(reportType.toString(), optionsStrings ?? []);
+    return _host.show(reportType.toString(), invocationOptions.mapToString());
   }
 
   /// Sets the threshold value of the shake gesture for iPhone/iPod Touch
