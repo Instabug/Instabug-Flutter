@@ -35,62 +35,54 @@ jobs:
       - run: flutter test --coverage
 
   test_android:
-    working_directory: ~/project/example/android
     executor:
       name: android/android-machine
       resource-class: xlarge
       tag: 2022.04.1
     steps:
-      - checkout:
-          path: ~/project
+      - checkout
       - flutter/install_sdk_and_pub:
           flutter_version: 3.3.0
-          app-dir: ..
       - run:
           name: Generate Pigeons
-          working_directory: ../..
-          command: flutter pub get && sh ./scripts/pigeon.sh
+          command: sh ./scripts/pigeon.sh
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "Nexus 5"
-          post-emulator-launch-assemble-command: flutter build apk
+          post-emulator-launch-assemble-command: cd example && flutter build apk
+          run-tests-working-directory: example/android
           test-command: ./gradlew app:connectedAndroidTest
       - android/run-tests:
+          working-directory: example/android
           test-command: ./gradlew test
 
   ios_tests:
     macos:
-      xcode: "13.4.1"
-    working_directory: ~/project/example
-    environment:
-      FL_OUTPUT_DIR: output
+      xcode: 13.4.1
     steps:
-      - checkout:
-          path: ~/project
+      - checkout
+      - flutter/install_sdk_and_pub:
+          flutter_version: 3.3.0
+      - run:
+          name: Generate Pigeons
+          command: sh ./scripts/pigeon.sh
       - run:
           name: Install CocoaPods
           command: sudo gem install cocoapods
       - run:
-          name: download flutter SDK
-          command: if ! test -f "~/flutter_sdk.zip"; then curl -o ~/flutter_sdk.zip https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_3.3.0-stable.zip; fi
-      - run:
-          name: unzip flutter SDK
-          command: unzip ~/flutter_sdk.zip -d ~
-      - run:
-          name: export flutter path
-          command: echo 'export PATH="$PATH:~/flutter/bin"'  >> $BASH_ENV
-      - run: flutter doctor
-      - run: flutter pub get
-      - run:
-          name: Generate Pigeons
-          working_directory: ..
-          command: flutter pub get && sh ./scripts/pigeon.sh
-      - run:
           name: Install Pods
-          command: cd ios && pod install --repo-update
+          working_directory: example/ios
+          command: pod install --repo-update
       - run:
           name: Build and run tests
-          command: cd ios && xcodebuild  -allowProvisioningUpdates   -workspace Runner.xcworkspace   -scheme Runner   -sdk iphonesimulator   -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.5'   test | xcpretty
+          working_directory: example/ios
+          command: |
+            xcodebuild -allowProvisioningUpdates \
+                       -workspace Runner.xcworkspace \
+                       -scheme Runner \
+                       -sdk iphonesimulator \
+                       -destination 'name=iPhone 12 Pro Max' \
+                       test | xcpretty
 
   format_flutter:
     docker:
