@@ -18,8 +18,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   lint: ^1.0.0
-  mockito: ^5.0.10
+  mockito: 5.2.0
   pana: ^0.21.0
+  pigeon: 3.0.4
 
 flutter:
   plugin:
