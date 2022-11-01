@@ -64,7 +64,7 @@ jobs:
             sudo apt-get install -y dotnet-sdk-6.0
       - run:
           name: Clone Captain
-          command: git clone https://InstabugCI:$RELEASE_GITHUB_TOKEN@github.com/Instabug/Captain.git ../Instabug.Captain
+          command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "Nexus 5"
@@ -107,7 +107,7 @@ jobs:
           command: brew install --cask dotnet-sdk
       - run:
           name: Clone Captain
-          command: git clone https://InstabugCI:$RELEASE_GITHUB_TOKEN@github.com/Instabug/Captain.git ../Instabug.Captain
+          command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
       - run:
           name: Run E2E Tests
           working_directory: example/e2e
