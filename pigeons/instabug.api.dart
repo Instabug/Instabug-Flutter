@@ -45,6 +45,8 @@ abstract class InstabugHostApi {
   void setReproStepsMode(String mode);
   void reportScreenChange(String screenName);
 
+  void setCustomBrandingImage(String light, String dark);
+
   void addFileAttachmentWithURL(String filePath, String fileName);
   void addFileAttachmentWithData(Uint8List data, String fileName);
   void clearFileAttachments();

@@ -8,6 +8,7 @@ import 'dart:typed_data';
 // ignore: unnecessary_import
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
@@ -343,6 +344,25 @@ class Instabug {
   /// [mode] repro steps mode
   static Future<void> setReproStepsMode(ReproStepsMode reproStepsMode) async {
     return _host.setReproStepsMode(reproStepsMode.toString());
+  }
+
+  /// Sets a custom branding image logo with [light] and [dark] images for different color modes.
+  ///
+  /// If no [context] is passed, [asset variants](https://docs.flutter.dev/development/ui/assets-and-images#asset-variants) won't work as expected;
+  /// if you have different variants of the [light] or [dark] image assets make sure to pass the [context] in order for the right variant to be picked up.
+  static Future<void> setCustomBrandingImage({
+    required AssetImage light,
+    required AssetImage dark,
+    BuildContext? context,
+  }) async {
+    var configuration = ImageConfiguration.empty;
+    if (context != null) {
+      configuration = createLocalImageConfiguration(context);
+    }
+
+    final lightKey = await light.obtainKey(configuration);
+    final darkKey = await dark.obtainKey(configuration);
+    return _host.setCustomBrandingImage(lightKey.name, darkKey.name);
   }
 
   /// Android Only
