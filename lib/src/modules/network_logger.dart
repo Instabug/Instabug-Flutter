@@ -2,19 +2,22 @@
 
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:instabug_flutter/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/modules/apm.dart';
+import 'package:meta/meta.dart';
 
 class NetworkLogger {
-  static const MethodChannel _channel = MethodChannel('instabug_flutter');
+  static var _host = InstabugHostApi();
 
-  static Future<String?> get platformVersion =>
-      _channel.invokeMethod<String>('getPlatformVersion');
+  @visibleForTesting
+  // ignore: use_setters_to_change_properties
+  static void $setHostApi(InstabugHostApi host) {
+    _host = host;
+  }
 
   Future<void> networkLog(NetworkData data) async {
-    final params = <dynamic>[data.toMap()];
-    await _channel.invokeMethod('networkLog:', params);
+    await _host.networkLog(data.toMap());
     await APM.networkLogAndroid(data);
   }
 }

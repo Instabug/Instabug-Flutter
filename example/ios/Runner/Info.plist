@@ -45,5 +45,7 @@
 	<string>Instabug needs access to your microphone so you can attach voice notes.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Instabug needs access to your photo library so you can attach images.</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 </dict>
 </plist>

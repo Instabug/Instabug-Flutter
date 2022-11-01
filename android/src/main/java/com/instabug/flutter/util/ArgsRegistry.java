@@ -1,19 +1,4 @@
-package com.instabug.flutter;
-
-import com.instabug.bug.BugReporting;
-import com.instabug.bug.invocation.Option;
-import com.instabug.featuresrequest.ActionType;
-import com.instabug.library.InstabugColorTheme;
-import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
-import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
-import com.instabug.library.InstabugCustomTextPlaceHolder;
-import com.instabug.library.extendedbugreport.ExtendedBugReport;
-import com.instabug.library.visualusersteps.State;
-import com.instabug.apm.model.LogLevel;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+package com.instabug.flutter.util;
 
 import static com.instabug.library.internal.module.InstabugLocale.ARABIC;
 import static com.instabug.library.internal.module.InstabugLocale.AZERBAIJANI;
@@ -47,10 +32,25 @@ import static com.instabug.library.ui.onboarding.WelcomeMessage.State.BETA;
 import static com.instabug.library.ui.onboarding.WelcomeMessage.State.DISABLED;
 import static com.instabug.library.ui.onboarding.WelcomeMessage.State.LIVE;
 
-@SuppressWarnings({"SameParameterValue", "unchecked"})
-final class ArgsRegistry {
+import com.instabug.apm.model.LogLevel;
+import com.instabug.bug.BugReporting;
+import com.instabug.bug.invocation.Option;
+import com.instabug.featuresrequest.ActionType;
+import com.instabug.library.InstabugColorTheme;
+import com.instabug.library.InstabugCustomTextPlaceHolder;
+import com.instabug.library.extendedbugreport.ExtendedBugReport;
+import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
+import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
+import com.instabug.library.visualusersteps.State;
 
-    static final Map<String, Object> ARGS = new HashMap<>();
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+@SuppressWarnings({"SameParameterValue", "unchecked"})
+final public class ArgsRegistry {
+
+    public static final Map<String, Object> ARGS = new HashMap<>();
 
     static {
         registerInstabugInvocationEventsArgs(ARGS);
@@ -75,10 +75,10 @@ final class ArgsRegistry {
      * - {@code key} does exist in the registry
      * - The value assigned to the {@code key} is not null
      *
-     * @param key   the key whose associated value is to be returned
+     * @param key the key whose associated value is to be returned
      * @return the value deserialized if all the assertions were successful, null otherwise
      */
-    static <T> T getDeserializedValue(String key) {
+    public static <T> T getDeserializedValue(String key) {
         if (key != null && ARGS.containsKey(key)) {
             Object constant = ARGS.get(key);
             if (constant != null) {
@@ -98,14 +98,14 @@ final class ArgsRegistry {
      * @param key the key whose associated value is to be returned
      * @return the value  if all the assertions were successful, null otherwise
      */
-    static Object getRawValue(String key) {
+    public static Object getRawValue(String key) {
         if (key != null) {
             return ARGS.get(key);
         }
         return null;
     }
 
-    static void registerInstabugInvocationEventsArgs(Map<String, Object> args) {
+    public static void registerInstabugInvocationEventsArgs(Map<String, Object> args) {
         args.put("InvocationEvent.twoFingersSwipeLeft", TWO_FINGER_SWIPE_LEFT);
         args.put("InvocationEvent.floatingButton", FLOATING_BUTTON);
         args.put("InvocationEvent.screenshot", SCREENSHOT);
@@ -113,37 +113,37 @@ final class ArgsRegistry {
         args.put("InvocationEvent.none", NONE);
     }
 
-    static void registerWelcomeMessageArgs(Map<String, Object> args) {
+    public static void registerWelcomeMessageArgs(Map<String, Object> args) {
         args.put("WelcomeMessageMode.disabled", DISABLED);
         args.put("WelcomeMessageMode.live", LIVE);
         args.put("WelcomeMessageMode.beta", BETA);
     }
 
-    static void registerColorThemeArgs(Map<String, Object> args) {
+    public static void registerColorThemeArgs(Map<String, Object> args) {
         args.put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
         args.put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
     }
 
-    static void registerInstabugFloatingButtonEdgeArgs(Map<String, Object> args) {
+    public static void registerInstabugFloatingButtonEdgeArgs(Map<String, Object> args) {
         args.put("FloatingButtonEdge.left", InstabugFloatingButtonEdge.LEFT);
         args.put("FloatingButtonEdge.right", InstabugFloatingButtonEdge.RIGHT);
     }
 
-    static void registerInstabugVideoRecordingButtonPositionArgs(Map<String, Object> args) {
+    public static void registerInstabugVideoRecordingButtonPositionArgs(Map<String, Object> args) {
         args.put("Position.topRight", InstabugVideoRecordingButtonPosition.TOP_RIGHT);
         args.put("Position.topLeft", InstabugVideoRecordingButtonPosition.TOP_LEFT);
         args.put("Position.bottomRight", InstabugVideoRecordingButtonPosition.BOTTOM_RIGHT);
         args.put("Position.bottomLeft", InstabugVideoRecordingButtonPosition.BOTTOM_LEFT);
     }
 
-    static void registerInvocationOptionsArgs(Map<String, Object> args) {
+    public static void registerInvocationOptionsArgs(Map<String, Object> args) {
         args.put("InvocationOption.commentFieldRequired", Option.COMMENT_FIELD_REQUIRED);
         args.put("InvocationOption.disablePostSendingDialog", Option.DISABLE_POST_SENDING_DIALOG);
         args.put("InvocationOption.emailFieldHidden", Option.EMAIL_FIELD_HIDDEN);
         args.put("InvocationOption.emailFieldOptional", Option.EMAIL_FIELD_OPTIONAL);
     }
 
-    static void registerLocaleArgs(Map<String, Object> args) {
+    public static void registerLocaleArgs(Map<String, Object> args) {
         args.put("IBGLocale.chineseTraditional", new Locale(TRADITIONAL_CHINESE.getCode(), TRADITIONAL_CHINESE.getCountry()));
         args.put("IBGLocale.portuguesePortugal", new Locale(PORTUGUESE_PORTUGAL.getCode(), PORTUGUESE_PORTUGAL.getCountry()));
         args.put("IBGLocale.chineseSimplified", new Locale(SIMPLIFIED_CHINESE.getCode(), SIMPLIFIED_CHINESE.getCountry()));
@@ -169,7 +169,7 @@ final class ArgsRegistry {
         args.put("IBGLocale.czech", new Locale(CZECH.getCode(), CZECH.getCountry()));
     }
 
-    static void registerCustomTextPlaceHolderKeysArgs(Map<String, Object> args) {
+    public static void registerCustomTextPlaceHolderKeysArgs(Map<String, Object> args) {
         args.put("CustomTextPlaceHolderKey.shakeHint", InstabugCustomTextPlaceHolder.Key.SHAKE_HINT);
         args.put("CustomTextPlaceHolderKey.swipeHint", InstabugCustomTextPlaceHolder.Key.SWIPE_HINT);
         args.put("CustomTextPlaceHolderKey.invalidEmailMessage", InstabugCustomTextPlaceHolder.Key.INVALID_EMAIL_MESSAGE);
@@ -225,30 +225,30 @@ final class ArgsRegistry {
         args.put("CustomTextPlaceHolderKey.reproStepsListItemTitle", InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_ITEM_NUMBERING_TITLE);
     }
 
-    static void registerInstabugReportTypesArgs(Map<String, Object> args) {
+    public static void registerInstabugReportTypesArgs(Map<String, Object> args) {
         args.put("ReportType.bug", BugReporting.ReportType.BUG);
         args.put("ReportType.feedback", BugReporting.ReportType.FEEDBACK);
         args.put("ReportType.question", BugReporting.ReportType.QUESTION);
     }
 
-    static void registerInstabugExtendedBugReportModeArgs(Map<String, Object> args) {
+    public static void registerInstabugExtendedBugReportModeArgs(Map<String, Object> args) {
         args.put("ExtendedBugReportMode.enabledWithRequiredFields", ExtendedBugReport.State.ENABLED_WITH_REQUIRED_FIELDS);
         args.put("ExtendedBugReportMode.enabledWithOptionalFields", ExtendedBugReport.State.ENABLED_WITH_OPTIONAL_FIELDS);
-        args.put("ExtendedBugReportMode.disabled",ExtendedBugReport.State.DISABLED);
+        args.put("ExtendedBugReportMode.disabled", ExtendedBugReport.State.DISABLED);
     }
 
-    static void registerInstabugActionTypesArgs(Map<String, Object> args) {
-        args.put("ActionType.requestNewFeature",ActionType.REQUEST_NEW_FEATURE);
-        args.put("ActionType.addCommentToFeature",ActionType.ADD_COMMENT_TO_FEATURE);
+    public static void registerInstabugActionTypesArgs(Map<String, Object> args) {
+        args.put("ActionType.requestNewFeature", ActionType.REQUEST_NEW_FEATURE);
+        args.put("ActionType.addCommentToFeature", ActionType.ADD_COMMENT_TO_FEATURE);
     }
 
-    static void registerReproStepsModeArgs(Map<String, Object> args) {
+    public static void registerReproStepsModeArgs(Map<String, Object> args) {
         args.put("ReproStepsMode.enabled", State.ENABLED);
         args.put("ReproStepsMode.disabled", State.DISABLED);
-        args.put("ReproStepsMode.enabledWithNoScreenshots",State.ENABLED_WITH_NO_SCREENSHOTS);
+        args.put("ReproStepsMode.enabledWithNoScreenshots", State.ENABLED_WITH_NO_SCREENSHOTS);
     }
 
-    static void registerLogLevelArgs(Map<String, Object> args) {
+    public static void registerLogLevelArgs(Map<String, Object> args) {
         args.put("logLevelNone", LogLevel.NONE);
         args.put("logLevelError", LogLevel.ERROR);
         args.put("logLevelWarning", LogLevel.WARNING);

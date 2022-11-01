@@ -2,44 +2,41 @@
 
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:instabug_flutter/generated/surveys.api.g.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
+import 'package:meta/meta.dart';
 
 typedef OnShowSurveyCallback = void Function();
 typedef OnDismissSurveyCallback = void Function();
 typedef AvailableSurveysCallback = void Function(List<String>);
 typedef HasRespondedToSurveyCallback = void Function(bool);
 
-class Surveys {
+class Surveys implements SurveysFlutterApi {
+  static var _host = SurveysHostApi();
+  static final _instance = Surveys();
+
   static OnShowSurveyCallback? _onShowCallback;
   static OnDismissSurveyCallback? _onDismissCallback;
-  static AvailableSurveysCallback? _availableSurveysCallback;
-  static HasRespondedToSurveyCallback? _hasRespondedToSurveyCallback;
-  static const MethodChannel _channel = MethodChannel('instabug_flutter');
 
-  static Future<String?> get platformVersion =>
-      _channel.invokeMethod<String>('getPlatformVersion');
+  @visibleForTesting
+  // ignore: use_setters_to_change_properties
+  static void $setHostApi(SurveysHostApi host) {
+    _host = host;
+  }
 
-  static Future<dynamic> _handleMethod(MethodCall call) async {
-    switch (call.method) {
-      case 'onShowSurveyCallback':
-        _onShowCallback?.call();
-        return;
-      case 'onDismissSurveyCallback':
-        _onDismissCallback?.call();
-        return;
-      case 'availableSurveysCallback':
-        final result = call.arguments as List<dynamic>;
-        final params = <String>[];
-        for (var i = 0; i < result.length; i++) {
-          params.add(result[i].toString());
-        }
-        _availableSurveysCallback?.call(params);
-        return;
-      case 'hasRespondedToSurveyCallback':
-        _hasRespondedToSurveyCallback?.call(call.arguments as bool);
-        return;
-    }
+  @internal
+  static void init() {
+    SurveysFlutterApi.setup(_instance);
+  }
+
+  @override
+  void onShowSurvey() {
+    _onShowCallback?.call();
+  }
+
+  @override
+  void onDismissSurvey() {
+    _onDismissCallback?.call();
   }
 
   /// @summary Sets whether surveys are enabled or not.
@@ -50,52 +47,47 @@ class Surveys {
   /// Defaults to `true`.
   /// [isEnabled] A boolean to set whether Instabug Surveys is enabled or disabled.
   static Future<void> setEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    return _channel.invokeMethod('setSurveysEnabled:', params);
+    return _host.setEnabled(isEnabled);
   }
 
   ///Sets whether auto surveys showing are enabled or not.
   /// [isEnabled] A boolean to indicate whether the
   /// surveys auto showing are enabled or not.
   static Future<void> setAutoShowingEnabled(bool isEnabled) async {
-    final params = <dynamic>[isEnabled];
-    return _channel.invokeMethod(
-      'setAutoShowingSurveysEnabled:',
-      params,
-    );
+    return _host.setAutoShowingEnabled(isEnabled);
   }
 
   /// Returns an array containing the available surveys.
-  /// [function] availableSurveysCallback callback with
+  /// [callback] availableSurveysCallback callback with
   /// argument available surveys
   static Future<void> getAvailableSurveys(
-    AvailableSurveysCallback function,
+    AvailableSurveysCallback callback,
   ) async {
-    _channel.setMethodCallHandler(_handleMethod);
-    _availableSurveysCallback = function;
-    return _channel.invokeMethod('getAvailableSurveys');
+    // TODO: return directly without callback
+    final titles = await _host.getAvailableSurveys();
+    callback(titles.cast<String>());
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes before the survey's UI is shown.
-  /// [function]  A callback that gets executed before presenting the survey's UI.
-  static Future<void> setOnShowCallback(OnShowSurveyCallback function) async {
-    _channel.setMethodCallHandler(_handleMethod);
-    _onShowCallback = function;
-    return _channel.invokeMethod('setOnShowSurveyCallback');
+  /// [callback]  A callback that gets executed before presenting the survey's UI.
+  static Future<void> setOnShowCallback(
+    OnShowSurveyCallback callback,
+  ) async {
+    _onShowCallback = callback;
+    return _host.bindOnShowSurveyCallback();
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes  after the survey's UI is dismissed.
-  /// [function]  A callback that gets executed after the survey's UI is dismissed.
+  /// [callback]  A callback that gets executed after the survey's UI is dismissed.
   static Future<void> setOnDismissCallback(
-    OnDismissSurveyCallback function,
+    OnDismissSurveyCallback callback,
   ) async {
-    _channel.setMethodCallHandler(_handleMethod);
-    _onDismissCallback = function;
-    return _channel.invokeMethod('setOnDismissSurveyCallback');
+    _onDismissCallback = callback;
+    return _host.bindOnDismissSurveyCallback();
   }
 
   /// Setting an option for all the surveys to show a welcome screen before
@@ -103,11 +95,7 @@ class Surveys {
   static Future<void> setShouldShowWelcomeScreen(
     bool shouldShowWelcomeScreen,
   ) async {
-    final params = <dynamic>[shouldShowWelcomeScreen];
-    return _channel.invokeMethod(
-      'setShouldShowSurveysWelcomeScreen:',
-      params,
-    );
+    return _host.setShouldShowWelcomeScreen(shouldShowWelcomeScreen);
   }
 
   ///  Shows one of the surveys that were not shown before, that also have conditions
@@ -115,7 +103,7 @@ class Surveys {
   /// Does nothing if there are no available surveys or if a survey has already been shown
   /// in the current session.
   static Future<void> showSurveyIfAvailable() async {
-    return _channel.invokeMethod('showSurveysIfAvailable');
+    return _host.showSurveyIfAvailable();
   }
 
   /// Shows survey with a specific token.
@@ -123,35 +111,29 @@ class Surveys {
   /// Answered and cancelled surveys won't show up again.
   /// [surveyToken] - A String with a survey token.
   static Future<void> showSurvey(String surveyToken) async {
-    final params = <dynamic>[surveyToken];
-    return _channel.invokeMethod('showSurveyWithToken:', params);
+    return _host.showSurvey(surveyToken);
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes  after the survey's UI is dismissed.
-  /// [function]  A callback that gets executed after the survey's UI is dismissed.
+  /// [callback]  A callback that gets executed after the survey's UI is dismissed.
   static Future<void> hasRespondedToSurvey(
     String surveyToken,
-    HasRespondedToSurveyCallback function,
+    HasRespondedToSurveyCallback callback,
   ) async {
-    _channel.setMethodCallHandler(_handleMethod);
-    _hasRespondedToSurveyCallback = function;
-    final params = <dynamic>[surveyToken];
-    return _channel.invokeMethod(
-      'hasRespondedToSurveyWithToken:',
-      params,
-    );
+    // TODO: return directly without callback
+    final hasResponded = await _host.hasRespondedToSurvey(surveyToken);
+    callback(hasResponded);
   }
 
   /// iOS Only
-  /// @summary Sets url for the published iOS app on AppStore, You can redirect
+  /// Sets url for the published iOS app on AppStore, You can redirect
   /// NPS Surveys or AppRating Surveys to AppStore to let users rate your app on AppStore itself.
   /// [appStoreURL] A String url for the published iOS app on AppStore
   static Future<void> setAppStoreURL(String appStoreURL) async {
     if (IBGBuildInfo.instance.isIOS) {
-      final params = <dynamic>[appStoreURL];
-      return _channel.invokeMethod('setAppStoreURL:', params);
+      return _host.setAppStoreURL(appStoreURL);
     }
   }
 }

@@ -1,3 +1,7 @@
+## Unreleased
+
+* Uses pigeon for internal communication between Flutter and the host platform.
+
 ## 11.3.0 (2022-09-30)
 
 * Bumps Instabug Android SDK to v11.5.1

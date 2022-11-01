@@ -2,6 +2,7 @@ package com.instabug.flutter;
 
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
+import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.invocation.InstabugInvocationEvent;
@@ -192,7 +193,7 @@ public class ArgsRegistryTest {
     }
 
     private void assertAllSupportedCustomTextPlaceHolderKeysArePresent(Map<String, Object> map,
-            List<InstabugCustomTextPlaceHolder.Key> expectedKeys) {
+                                                                       List<InstabugCustomTextPlaceHolder.Key> expectedKeys) {
         // actual
         List<InstabugCustomTextPlaceHolder.Key> actualKeys = new ArrayList<>();
         for (Map.Entry m : map.entrySet()) {
