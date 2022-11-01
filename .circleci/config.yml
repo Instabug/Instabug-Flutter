@@ -39,17 +39,31 @@ jobs:
       tag: 2022.04.1
     steps:
       - checkout
+      - run:
+          name: Install Appium
+          command: npm install -g appium
+      - run:
+          name: Launch Appium
+          command: appium
+          background: true
       - flutter/install_sdk_and_pub:
           flutter_version: 3.3.0
       - run:
           name: Generate Pigeons
           command: sh ./scripts/pigeon.sh
+      - run:
+          name: Install .NET
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y dotnet-sdk-6.0
+      - run:
+          name: Clone Captain
+          command: git clone https://InstabugCI:$RELEASE_GITHUB_TOKEN@github.com/Instabug/Captain.git ../Instabug.Captain
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "Nexus 5"
-          post-emulator-launch-assemble-command: cd example && flutter build apk
-          run-tests-working-directory: example/android
-          test-command: ./gradlew app:connectedAndroidTest
+          post-emulator-launch-assemble-command: flutter build apk
+          test-command: cd ../e2e && CAPTAIN_PLATFORM=android dotnet test
       - android/run-tests:
           working-directory: example/android
           test-command: ./gradlew test
@@ -59,6 +73,13 @@ jobs:
       xcode: 13.4.1
     steps:
       - checkout
+      - run:
+          name: Install Appium
+          command: npm install -g appium
+      - run:
+          name: Launch Appium
+          command: appium
+          background: true
       - flutter/install_sdk_and_pub:
           flutter_version: 3.3.0
       - run:
@@ -72,15 +93,21 @@ jobs:
           working_directory: example/ios
           command: pod install --repo-update
       - run:
-          name: Build and run tests
-          working_directory: example/ios
-          command: |
-            xcodebuild -allowProvisioningUpdates \
-                       -workspace Runner.xcworkspace \
-                       -scheme Runner \
-                       -sdk iphonesimulator \
-                       -destination 'name=iPhone 12 Pro Max' \
-                       test | xcpretty
+          name: Build Example App
+          working_directory: example
+          command: flutter build ios --simulator
+      - run:
+          name: Install .NET
+          command: brew install --cask dotnet-sdk
+      - run:
+          name: Clone Captain
+          command: git clone https://InstabugCI:$RELEASE_GITHUB_TOKEN@github.com/Instabug/Captain.git ../Instabug.Captain
+      - run:
+          name: Run E2E Tests
+          working_directory: example/e2e
+          command: dotnet test
+          environment:
+            CAPTAIN_PLATFORM: ios
 
   format_flutter:
     docker:
