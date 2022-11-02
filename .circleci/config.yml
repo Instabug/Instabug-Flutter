@@ -68,8 +68,8 @@ jobs:
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "Nexus 5"
-          post-emulator-launch-assemble-command: flutter build apk
-          test-command: cd ../e2e && CAPTAIN_PLATFORM=android dotnet test
+          post-emulator-launch-assemble-command: cd example && flutter build apk
+          test-command: cd example/e2e && CAPTAIN_PLATFORM=android dotnet test
       - android/run-tests:
           working-directory: example/android
           test-command: ./gradlew test
