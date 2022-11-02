@@ -148,6 +148,24 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [Instabug setReproStepsMode:resolvedMode];
 }
 
+- (UIImage *)getImageForAsset:(NSString *)assetName {
+    NSString *key = [FlutterDartProject lookupKeyForAsset:assetName];
+    NSString *path = [[NSBundle mainBundle] pathForResource:key ofType:nil];
+
+    return [UIImage imageWithContentsOfFile:path];
+}
+
+- (void)setCustomBrandingImageLight:(NSString *)light dark:(NSString *)dark error:(FlutterError * _Nullable __autoreleasing *)error {
+    UIImage *lightImage = [self getImageForAsset:light];
+    UIImage *darkImage = [self getImageForAsset:dark];
+
+    UIImageAsset *imageAsset = lightImage.imageAsset;
+    [imageAsset registerImage:lightImage withTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight]];
+    [imageAsset registerImage:darkImage withTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark]];
+
+    Instabug.customBrandingImage = imageAsset;
+}
+
 - (void)reportScreenChangeScreenName:(NSString *)screenName error:(FlutterError *_Nullable *_Nonnull)error {
     SEL setPrivateApiSEL = NSSelectorFromString(@"logViewDidAppearEvent:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
