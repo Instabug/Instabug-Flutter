@@ -5,14 +5,19 @@ orbs:
   flutter: circleci/flutter@1.0
 
 jobs:
+  danger:
+    docker:
+      - image: circleci/ruby:2.6.4
+    steps:
+      - checkout
+      - run: bundle install
+      - run: bundle exec danger
+
   flutter_tests:
     docker:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - run: sudo gem install bundler:2.1.4
-      - run: bundle check || sudo bundle install
-      - run: bundle exec danger
       - run: flutter doctor
       - run: flutter packages get
       - run: sh ./scripts/pigeon.sh
@@ -25,9 +30,6 @@ jobs:
       - image: cirrusci/flutter:2.10.5
     steps:
       - checkout
-      - run: sudo gem install bundler:2.1.4
-      - run: bundle check || sudo bundle install
-      - run: bundle exec danger
       - run: flutter doctor
       - run: flutter packages get
       - run: sh ./scripts/pigeon.sh
@@ -150,6 +152,7 @@ workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
+      - danger
       - flutter_tests
       - flutter_tests_2-10-5
       - test_android
@@ -164,6 +167,7 @@ workflows:
       - hold_release:
           type: approval
           requires:
+            - danger
             - flutter_tests
             - flutter_tests_2-10-5
             - test_android
