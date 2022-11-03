@@ -160,8 +160,11 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     UIImage *darkImage = [self getImageForAsset:dark];
 
     UIImageAsset *imageAsset = lightImage.imageAsset;
-    [imageAsset registerImage:lightImage withTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight]];
-    [imageAsset registerImage:darkImage withTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark]];
+
+    if (@available(iOS 12.0, *)) {
+        [imageAsset registerImage:lightImage withTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight]];
+        [imageAsset registerImage:darkImage withTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark]];
+    }
 
     Instabug.customBrandingImage = imageAsset;
 }
