@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import <CoreText/CoreText.h>
 #import <Flutter/Flutter.h>
 #import "Instabug.h"
 #import "InstabugApi.h"
@@ -194,6 +195,27 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
         [inv setArgument:&(screenName) atIndex:2];
         [inv invoke];
     }
+}
+
+- (void)setFontFont:(NSString *)fontAssetPath error:(FlutterError *_Nullable *_Nonnull)error {
+    NSString *key = [FlutterDartProject lookupKeyForAsset:fontAssetPath];
+    NSString *path = [[NSBundle mainBundle] pathForResource:key ofType:nil];
+    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+    CFErrorRef fontError;
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef) data);
+    CGFontRef font = CGFontCreateWithDataProvider(provider);
+
+    if(!CTFontManagerRegisterGraphicsFont(font, &fontError)){
+        CFStringRef errorDescription = CFErrorCopyDescription(fontError);
+        *error = [FlutterError errorWithCode:@"IBGFailedToLoadFont" message:(__bridge NSString *)errorDescription details:nil];
+        CFRelease(errorDescription);
+    } else {
+        NSString *fontName = (__bridge NSString *)CGFontCopyFullName(font);
+        Instabug.font = [UIFont fontWithName:fontName size:10.0];
+    }
+    
+    if (font) CFRelease(font);
+    if (provider) CFRelease(provider);
 }
 
 - (void)addFileAttachmentWithURLFilePath:(NSString *)filePath fileName:(NSString *)fileName error:(FlutterError *_Nullable *_Nonnull)error {
