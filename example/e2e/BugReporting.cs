@@ -6,7 +6,7 @@ namespace E2E;
 public class BugReporting
 {
   readonly Captain captain = new(
-      androidApp: Path.GetFullPath("../../../../build/app/outputs/apk/release/app-release.apk"),
+      androidApp: Path.GetFullPath("../../../../build/app/outputs/flutter-apk/app-debug.apk"),
       androidVersion: "11",
       iosApp: Path.GetFullPath("../../../../build/ios/iphonesimulator/Runner.app"),
       iosVersion: "15.5"
