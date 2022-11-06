@@ -13,28 +13,24 @@ jobs:
       - run: bundle install
       - run: bundle exec danger
 
-  flutter_tests:
+  test_flutter:
+    parameters:
+      version:
+        type: string
+      coverage:
+        type: boolean
     docker:
-      - image: cirrusci/flutter
+      - image: cirrusci/flutter:<<parameters.version>>
     steps:
       - checkout
-      - run: flutter doctor
-      - run: flutter packages get
+      - run: flutter pub get
       - run: sh ./scripts/pigeon.sh
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
-      - run: bash <(curl -s https://codecov.io/bash)
-
-  flutter_tests_2-10-5:
-    docker:
-      - image: cirrusci/flutter:2.10.5
-    steps:
-      - checkout
-      - run: flutter doctor
-      - run: flutter packages get
-      - run: sh ./scripts/pigeon.sh
-      - run: flutter pub run build_runner build --delete-conflicting-outputs
-      - run: flutter test --coverage
+      - when:
+          condition: <<parameters.coverage>>
+          steps:
+            - run: bash <(curl -s https://codecov.io/bash)
 
   test_android:
     executor:
@@ -153,8 +149,14 @@ workflows:
   build-test-and-approval-deploy:
     jobs:
       - danger
-      - flutter_tests
-      - flutter_tests_2-10-5
+      - test_flutter:
+          name: test_flutter-stable
+          version: stable
+          coverage: true
+      - test_flutter:
+          name: test_flutter-2.10.5
+          version: 2.10.5
+          coverage: false
       - test_android
       - ios_tests
       - format_flutter
@@ -168,8 +170,8 @@ workflows:
           type: approval
           requires:
             - danger
-            - flutter_tests
-            - flutter_tests_2-10-5
+            - test_flutter-stable
+            - test_flutter-2.10.5
             - test_android
             - ios_tests
             - verify_pub
