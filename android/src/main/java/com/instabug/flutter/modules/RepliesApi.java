@@ -1,8 +1,5 @@
 package com.instabug.flutter.modules;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import androidx.annotation.NonNull;
 
 import com.instabug.chat.Replies;
@@ -26,16 +23,11 @@ public class RepliesApi implements RepliesPigeon.RepliesHostApi {
 
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (isEnabled) {
-                    Replies.setState(Feature.State.ENABLED);
-                } else {
-                    Replies.setState(Feature.State.DISABLED);
-                }
-            }
-        });
+        if (isEnabled) {
+            Replies.setState(Feature.State.ENABLED);
+        } else {
+            Replies.setState(Feature.State.DISABLED);
+        }
     }
 
     @Override

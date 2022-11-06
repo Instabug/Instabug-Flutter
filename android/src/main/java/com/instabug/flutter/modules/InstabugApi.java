@@ -5,8 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -93,8 +91,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void show() {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(Instabug::show);
+        Instabug.show();
     }
 
     @Override
@@ -145,12 +142,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setPrimaryColor(@NonNull Long color) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                Instabug.setPrimaryColor(color.intValue());
-            }
-        });
+        Instabug.setPrimaryColor(color.intValue());
     }
 
     @Override

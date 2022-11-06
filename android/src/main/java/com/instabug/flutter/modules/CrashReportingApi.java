@@ -1,7 +1,5 @@
 package com.instabug.flutter.modules;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -27,35 +25,26 @@ public class CrashReportingApi implements CrashReportingPigeon.CrashReportingHos
 
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (isEnabled) {
-                    CrashReporting.setState(Feature.State.ENABLED);
-                } else {
-                    CrashReporting.setState(Feature.State.DISABLED);
-                }
-            }
-        });
+        if (isEnabled) {
+            CrashReporting.setState(Feature.State.ENABLED);
+        } else {
+            CrashReporting.setState(Feature.State.DISABLED);
+        }
     }
 
     @Override
     public void send(@NonNull String jsonCrash, @NonNull Boolean isHandled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    final JSONObject exceptionObject = new JSONObject(jsonCrash);
-                    Method method = Reflection.getMethod(Class.forName("com.instabug.crash.CrashReporting"), "reportException",
-                            JSONObject.class, boolean.class);
-                    if (method != null) {
-                        method.invoke(null, exceptionObject, isHandled);
-                        Log.e(TAG, exceptionObject.toString());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        try {
+            final JSONObject exceptionObject = new JSONObject(jsonCrash);
+            Method method = Reflection.getMethod(Class.forName("com.instabug.crash.CrashReporting"), "reportException",
+                    JSONObject.class, boolean.class);
+            if (method != null) {
+                method.invoke(null, exceptionObject, isHandled);
+                Log.e(TAG, exceptionObject.toString());
             }
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }

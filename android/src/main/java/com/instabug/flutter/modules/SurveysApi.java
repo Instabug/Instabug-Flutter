@@ -1,8 +1,5 @@
 package com.instabug.flutter.modules;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import androidx.annotation.NonNull;
 
 import com.instabug.flutter.generated.SurveysPigeon;
@@ -32,16 +29,11 @@ public class SurveysApi implements SurveysPigeon.SurveysHostApi {
 
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (isEnabled) {
-                    Surveys.setState(Feature.State.ENABLED);
-                } else {
-                    Surveys.setState(Feature.State.DISABLED);
-                }
-            }
-        });
+        if (isEnabled) {
+            Surveys.setState(Feature.State.ENABLED);
+        } else {
+            Surveys.setState(Feature.State.DISABLED);
+        }
     }
 
     @Override
