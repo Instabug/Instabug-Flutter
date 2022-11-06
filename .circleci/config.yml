@@ -4,6 +4,25 @@ orbs:
   android: circleci/android@2.0
   flutter: circleci/flutter@1.0
 
+commands:
+  setup_flutter:
+    steps:
+      - flutter/install_sdk_and_pub:
+          flutter_version: 3.3.0
+      - run:
+          name: Generate Pigeons
+          command: sh ./scripts/pigeon.sh
+  setup_ios:
+    steps:
+      - setup_flutter
+      - run:
+          name: Install CocoaPods
+          command: sudo gem install cocoapods
+      - run:
+          name: Install Pods
+          working_directory: example/ios
+          command: pod install --repo-update
+
 jobs:
   danger:
     docker:
@@ -35,6 +54,18 @@ jobs:
   test_android:
     executor:
       name: android/android-machine
+      resource-class: large
+      tag: 2022.04.1
+    steps:
+      - checkout
+      - setup_flutter
+      - android/run-tests:
+          working-directory: example/android
+          test-command: ./gradlew test
+
+  e2e_android:
+    executor:
+      name: android/android-machine
       resource-class: xlarge
       tag: 2022.04.1
     steps:
@@ -46,11 +77,7 @@ jobs:
           name: Launch Appium
           command: appium
           background: true
-      - flutter/install_sdk_and_pub:
-          flutter_version: 3.3.0
-      - run:
-          name: Generate Pigeons
-          command: sh ./scripts/pigeon.sh
+      - setup_flutter
       - run:
           name: Add Microsoft Packages to APT
           command: |
@@ -70,11 +97,25 @@ jobs:
           additional-avd-args: -d "Nexus 5"
           post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
           test-command: cd example/e2e && CAPTAIN_PLATFORM=android dotnet test
-      - android/run-tests:
-          working-directory: example/android
-          test-command: ./gradlew test
 
-  ios_tests:
+  test_ios:
+    macos:
+      xcode: 13.4.1
+    steps:
+      - checkout
+      - setup_ios
+      - run:
+          name: Build and run tests
+          working_directory: example/ios
+          command: |
+            xcodebuild -allowProvisioningUpdates \
+                       -workspace Runner.xcworkspace \
+                       -scheme Runner \
+                       -sdk iphonesimulator \
+                       -destination 'name=iPhone 12 Pro Max' \
+                       test | xcpretty
+
+  e2e_ios:
     macos:
       xcode: 13.4.1
     steps:
@@ -86,18 +127,7 @@ jobs:
           name: Launch Appium
           command: appium
           background: true
-      - flutter/install_sdk_and_pub:
-          flutter_version: 3.3.0
-      - run:
-          name: Generate Pigeons
-          command: sh ./scripts/pigeon.sh
-      - run:
-          name: Install CocoaPods
-          command: sudo gem install cocoapods
-      - run:
-          name: Install Pods
-          working_directory: example/ios
-          command: pod install --repo-update
+      - setup_ios
       - run:
           name: Build Example App
           working_directory: example
@@ -191,7 +221,9 @@ workflows:
           version: 2.10.5
           coverage: false
       - test_android
-      - ios_tests
+      - e2e_android
+      - test_ios
+      - e2e_ios
       - format_flutter
       - lint_flutter:
           requires:
@@ -206,7 +238,9 @@ workflows:
             - test_flutter-stable
             - test_flutter-2.10.5
             - test_android
-            - ios_tests
+            - e2e_android
+            - test_ios
+            - e2e_ios
             - verify_pub
           filters:
             branches:
