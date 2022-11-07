@@ -8,7 +8,15 @@ import 'package:meta/meta.dart';
 
 typedef OnShowSurveyCallback = void Function();
 typedef OnDismissSurveyCallback = void Function();
+
+@Deprecated(
+  "Use [Surveys.getAvailableSurveys] return value instead of callback.",
+)
 typedef AvailableSurveysCallback = void Function(List<String>);
+
+@Deprecated(
+  "Use [Surveys.hasRespondedToSurvey] return value instead of callback.",
+)
 typedef HasRespondedToSurveyCallback = void Function(bool);
 
 class Surveys implements SurveysFlutterApi {
@@ -60,12 +68,16 @@ class Surveys implements SurveysFlutterApi {
   /// Returns an array containing the available surveys.
   /// [callback] availableSurveysCallback callback with
   /// argument available surveys
-  static Future<void> getAvailableSurveys(
-    AvailableSurveysCallback callback,
-  ) async {
-    // TODO: return directly without callback
+  static Future<List<String>> getAvailableSurveys([
+    @Deprecated(
+      'Use return value instead of callback: `final surveys = await Surveys.getAvailableSurveys();`',
+    )
+        // ignore: deprecated_member_use_from_same_package
+        AvailableSurveysCallback? callback,
+  ]) async {
     final titles = await _host.getAvailableSurveys();
-    callback(titles.cast<String>());
+    callback?.call(titles.cast<String>());
+    return titles.cast<String>();
   }
 
   /// Sets a block of code to be executed just before the SDK's UI is presented.
@@ -118,13 +130,17 @@ class Surveys implements SurveysFlutterApi {
   /// This block is executed on the UI thread. Could be used for performing any
   /// UI changes  after the survey's UI is dismissed.
   /// [callback]  A callback that gets executed after the survey's UI is dismissed.
-  static Future<void> hasRespondedToSurvey(
-    String surveyToken,
-    HasRespondedToSurveyCallback callback,
-  ) async {
-    // TODO: return directly without callback
+  static Future<bool> hasRespondedToSurvey(
+    String surveyToken, [
+    @Deprecated(
+      'Use return value instead of callback: `final responded = await Surveys.hasRespondedToSurvey("<TOKEN>");`',
+    )
+        // ignore: deprecated_member_use_from_same_package
+        HasRespondedToSurveyCallback? callback,
+  ]) async {
     final hasResponded = await _host.hasRespondedToSurvey(surveyToken);
-    callback(hasResponded);
+    callback?.call(hasResponded);
+    return hasResponded;
   }
 
   /// iOS Only
