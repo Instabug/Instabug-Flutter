@@ -124,6 +124,7 @@ jobs:
   e2e_ios_captain:
     macos:
       xcode: 13.4.1
+    resource_class: large
     steps:
       - checkout
       - run:
