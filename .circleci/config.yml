@@ -54,16 +54,22 @@ jobs:
   test_android:
     executor:
       name: android/android-machine
-      resource-class: large
+      resource-class: xlarge
       tag: 2022.04.1
     steps:
       - checkout
       - setup_flutter
+      - android/start-emulator-and-run-tests:
+          system-image: system-images;android-30;google_apis;x86
+          additional-avd-args: -d "Nexus 5"
+          post-emulator-launch-assemble-command: cd example && flutter build apk
+          run-tests-working-directory: example/android
+          test-command: ./gradlew app:connectedAndroidTest
       - android/run-tests:
           working-directory: example/android
           test-command: ./gradlew test
 
-  e2e_android:
+  e2e_android_captain:
     executor:
       name: android/android-machine
       resource-class: xlarge
@@ -115,7 +121,7 @@ jobs:
                        -destination 'name=iPhone 12 Pro Max' \
                        test | xcpretty
 
-  e2e_ios:
+  e2e_ios_captain:
     macos:
       xcode: 13.4.1
     steps:
@@ -221,9 +227,9 @@ workflows:
           version: 2.10.5
           coverage: false
       - test_android
-      - e2e_android
+      - e2e_android_captain
       - test_ios
-      - e2e_ios
+      - e2e_ios_captain
       - format_flutter
       - lint_flutter:
           requires:
@@ -238,9 +244,9 @@ workflows:
             - test_flutter-stable
             - test_flutter-2.10.5
             - test_android
-            - e2e_android
+            - e2e_android_captain
             - test_ios
-            - e2e_ios
+            - e2e_ios_captain
             - verify_pub
           filters:
             branches:
