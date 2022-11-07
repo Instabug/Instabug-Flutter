@@ -283,11 +283,15 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         }
     }
 
-    private Bitmap getBitmapForAsset(String assetName) throws IOException {
-        FlutterLoader loader = FlutterInjector.instance().flutterLoader();
-        String key = loader.getLookupKeyForAsset(assetName);
-        InputStream stream = context.getAssets().open(key);
-        return BitmapFactory.decodeStream(stream);
+    private Bitmap getBitmapForAsset(String assetName) {
+        try {
+            FlutterLoader loader = FlutterInjector.instance().flutterLoader();
+            String key = loader.getLookupKeyForAsset(assetName);
+            InputStream stream = context.getAssets().open(key);
+            return BitmapFactory.decodeStream(stream);
+        } catch (IOException exception) {
+            return null;
+        }
     }
 
     @Override
@@ -295,6 +299,16 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         try {
             Bitmap lightLogoVariant = getBitmapForAsset(light);
             Bitmap darkLogoVariant = getBitmapForAsset(dark);
+
+            if (lightLogoVariant == null) {
+                lightLogoVariant = darkLogoVariant;
+            }
+            if (darkLogoVariant == null) {
+                darkLogoVariant = lightLogoVariant;
+            }
+            if (lightLogoVariant == null) {
+                throw new Exception("Couldn't find the light or dark logo images");
+            }
 
             Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "setCustomBrandingImage", Bitmap.class, Bitmap.class);
 

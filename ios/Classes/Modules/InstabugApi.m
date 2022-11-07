@@ -159,14 +159,28 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     UIImage *lightImage = [self getImageForAsset:light];
     UIImage *darkImage = [self getImageForAsset:dark];
 
-    UIImageAsset *imageAsset = lightImage.imageAsset;
-
-    if (@available(iOS 12.0, *)) {
-        [imageAsset registerImage:lightImage withTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight]];
-        [imageAsset registerImage:darkImage withTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark]];
+    if (!lightImage) {
+        lightImage = darkImage;
+    }
+    if (!darkImage) {
+        darkImage = lightImage;
     }
 
-    Instabug.customBrandingImage = imageAsset;
+    if (@available(iOS 12.0, *)) {
+        UIImageAsset *imageAsset = [[UIImageAsset alloc] init];
+
+        [imageAsset registerImage:lightImage withTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight]];
+        [imageAsset registerImage:darkImage withTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark]];
+
+        Instabug.customBrandingImage = imageAsset;
+    } else {
+        UIImage *defaultImage = lightImage;
+        if (!lightImage) {
+            defaultImage = darkImage;
+        }
+
+        Instabug.customBrandingImage = defaultImage.imageAsset;
+    }
 }
 
 - (void)reportScreenChangeScreenName:(NSString *)screenName error:(FlutterError *_Nullable *_Nonnull)error {
