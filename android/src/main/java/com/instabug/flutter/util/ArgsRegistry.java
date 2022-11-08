@@ -23,6 +23,7 @@ import static com.instabug.library.internal.module.InstabugLocale.SPANISH;
 import static com.instabug.library.internal.module.InstabugLocale.SWEDISH;
 import static com.instabug.library.internal.module.InstabugLocale.TRADITIONAL_CHINESE;
 import static com.instabug.library.internal.module.InstabugLocale.TURKISH;
+import static com.instabug.library.internal.module.InstabugLocale.ROMANIAN;
 import static com.instabug.library.invocation.InstabugInvocationEvent.FLOATING_BUTTON;
 import static com.instabug.library.invocation.InstabugInvocationEvent.NONE;
 import static com.instabug.library.invocation.InstabugInvocationEvent.SCREENSHOT;
@@ -167,6 +168,7 @@ final public class ArgsRegistry {
         args.put("IBGLocale.polish", new Locale(POLISH.getCode(), POLISH.getCountry()));
         args.put("IBGLocale.slovak", new Locale(SLOVAK.getCode(), SLOVAK.getCountry()));
         args.put("IBGLocale.czech", new Locale(CZECH.getCode(), CZECH.getCountry()));
+        args.put("IBGLocale.romanian", new Locale(ROMANIAN.getCode(), ROMANIAN.getCountry()));
     }
 
     public static void registerCustomTextPlaceHolderKeysArgs(Map<String, Object> args) {
