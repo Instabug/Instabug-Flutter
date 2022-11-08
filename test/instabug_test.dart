@@ -328,6 +328,16 @@ void main() {
     ).called(1);
   });
 
+  test('[setFont] should call host method', () async {
+    const font = "fonts/OpenSans-Regular.ttf";
+
+    await Instabug.setFont(font);
+
+    verify(
+      mHost.setFont(font),
+    ).called(1);
+  });
+
   test('[addFileAttachmentWithURL] should call host method', () async {
     const path = "/opt/android/logs/";
     const name = "log.txt";

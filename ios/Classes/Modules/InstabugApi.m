@@ -197,25 +197,33 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     }
 }
 
-- (void)setFontFont:(NSString *)fontAssetPath error:(FlutterError *_Nullable *_Nonnull)error {
-    NSString *key = [FlutterDartProject lookupKeyForAsset:fontAssetPath];
+- (UIFont *)getFontForAsset:(NSString *)assetName  error:(FlutterError *_Nullable *_Nonnull)error {
+    NSString *key = [FlutterDartProject lookupKeyForAsset:assetName];
     NSString *path = [[NSBundle mainBundle] pathForResource:key ofType:nil];
     NSData *data = [[NSData alloc] initWithContentsOfFile:path];
     CFErrorRef fontError;
     CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef) data);
-    CGFontRef font = CGFontCreateWithDataProvider(provider);
-
-    if(!CTFontManagerRegisterGraphicsFont(font, &fontError)){
+    CGFontRef cgFont = CGFontCreateWithDataProvider(provider);
+    UIFont *font;
+    
+    if(!CTFontManagerRegisterGraphicsFont(cgFont, &fontError)){
         CFStringRef errorDescription = CFErrorCopyDescription(fontError);
         *error = [FlutterError errorWithCode:@"IBGFailedToLoadFont" message:(__bridge NSString *)errorDescription details:nil];
         CFRelease(errorDescription);
     } else {
-        NSString *fontName = (__bridge NSString *)CGFontCopyFullName(font);
-        Instabug.font = [UIFont fontWithName:fontName size:10.0];
+        NSString *fontName = (__bridge NSString *)CGFontCopyFullName(cgFont);
+        font = [UIFont fontWithName:fontName size:10.0];
     }
     
-    if (font) CFRelease(font);
+    if (cgFont) CFRelease(cgFont);
     if (provider) CFRelease(provider);
+    
+    return font;
+}
+
+- (void)setFontFont:(NSString *)fontAsset error:(FlutterError *_Nullable *_Nonnull)error {
+    UIFont *font = [self getFontForAsset:fontAsset error:error];
+    Instabug.font = font;
 }
 
 - (void)addFileAttachmentWithURLFilePath:(NSString *)filePath fileName:(NSString *)fileName error:(FlutterError *_Nullable *_Nonnull)error {
