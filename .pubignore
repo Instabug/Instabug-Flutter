@@ -1,6 +1,9 @@
 # Generated files
 *.mocks.dart
 
+# E2E tests
+e2e/
+
 # Miscellaneous
 *.class
 *.log

@@ -102,7 +102,7 @@ jobs:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "Nexus 5"
           post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
-          test-command: cd example/e2e && CAPTAIN_PLATFORM=android dotnet test
+          test-command: cd e2e && CAPTAIN_PLATFORM=android dotnet test
 
   test_ios:
     macos:
@@ -147,7 +147,7 @@ jobs:
           command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
       - run:
           name: Run E2E Tests
-          working_directory: example/e2e
+          working_directory: e2e
           command: dotnet test
           environment:
             CAPTAIN_PLATFORM: ios
