@@ -91,7 +91,7 @@ jobs:
             sudo dpkg -i packages-microsoft-prod.deb
             rm packages-microsoft-prod.deb
       - run:
-          name: Install .NET
+          name: Install .NET 6
           command: |
             sudo apt-get update
             sudo apt-get install -y dotnet-sdk-6.0
@@ -140,8 +140,10 @@ jobs:
           working_directory: example
           command: flutter build ios --simulator
       - run:
-          name: Install .NET
-          command: brew install --cask dotnet-sdk
+          name: Install .NET 6
+          command: |
+            brew tap isen-ng/dotnet-sdk-versions
+            brew install --cask dotnet-sdk6-0-400
       - run:
           name: Clone Captain
           command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
