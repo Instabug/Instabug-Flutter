@@ -4,6 +4,25 @@ orbs:
   android: circleci/android@2.0
   flutter: circleci/flutter@1.0
 
+commands:
+  setup_flutter:
+    steps:
+      - flutter/install_sdk_and_pub:
+          flutter_version: 3.3.0
+      - run:
+          name: Generate Pigeons
+          command: sh ./scripts/pigeon.sh
+  setup_ios:
+    steps:
+      - setup_flutter
+      - run:
+          name: Install CocoaPods
+          command: sudo gem install cocoapods
+      - run:
+          name: Install Pods
+          working_directory: example/ios
+          command: pod install --repo-update
+
 jobs:
   danger:
     docker:
@@ -39,11 +58,7 @@ jobs:
       tag: 2022.04.1
     steps:
       - checkout
-      - flutter/install_sdk_and_pub:
-          flutter_version: 3.3.0
-      - run:
-          name: Generate Pigeons
-          command: sh ./scripts/pigeon.sh
+      - setup_flutter
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "Nexus 5"
@@ -54,23 +69,47 @@ jobs:
           working-directory: example/android
           test-command: ./gradlew test
 
-  ios_tests:
+  e2e_android_captain:
+    executor:
+      name: android/android-machine
+      resource-class: xlarge
+      tag: 2022.04.1
+    steps:
+      - checkout
+      - run:
+          name: Install Appium
+          command: npm install -g appium
+      - run:
+          name: Launch Appium
+          command: appium
+          background: true
+      - setup_flutter
+      - run:
+          name: Add Microsoft Packages to APT
+          command: |
+            wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+            sudo dpkg -i packages-microsoft-prod.deb
+            rm packages-microsoft-prod.deb
+      - run:
+          name: Install .NET
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y dotnet-sdk-6.0
+      - run:
+          name: Clone Captain
+          command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
+      - android/start-emulator-and-run-tests:
+          system-image: system-images;android-30;google_apis;x86
+          additional-avd-args: -d "Nexus 5"
+          post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
+          test-command: cd e2e && CAPTAIN_PLATFORM=android dotnet test
+
+  test_ios:
     macos:
       xcode: 13.4.1
     steps:
       - checkout
-      - flutter/install_sdk_and_pub:
-          flutter_version: 3.3.0
-      - run:
-          name: Generate Pigeons
-          command: sh ./scripts/pigeon.sh
-      - run:
-          name: Install CocoaPods
-          command: sudo gem install cocoapods
-      - run:
-          name: Install Pods
-          working_directory: example/ios
-          command: pod install --repo-update
+      - setup_ios
       - run:
           name: Build and run tests
           working_directory: example/ios
@@ -81,6 +120,37 @@ jobs:
                        -sdk iphonesimulator \
                        -destination 'name=iPhone 12 Pro Max' \
                        test | xcpretty
+
+  e2e_ios_captain:
+    macos:
+      xcode: 13.4.1
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: Install Appium
+          command: npm install -g appium
+      - run:
+          name: Launch Appium
+          command: appium
+          background: true
+      - setup_ios
+      - run:
+          name: Build Example App
+          working_directory: example
+          command: flutter build ios --simulator
+      - run:
+          name: Install .NET
+          command: brew install --cask dotnet-sdk
+      - run:
+          name: Clone Captain
+          command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
+      - run:
+          name: Run E2E Tests
+          working_directory: e2e
+          command: dotnet test
+          environment:
+            CAPTAIN_PLATFORM: ios
 
   format_flutter:
     docker:
@@ -158,7 +228,9 @@ workflows:
           version: 2.10.5
           coverage: false
       - test_android
-      - ios_tests
+      - e2e_android_captain
+      - test_ios
+      - e2e_ios_captain
       - format_flutter
       - lint_flutter:
           requires:
@@ -173,7 +245,9 @@ workflows:
             - test_flutter-stable
             - test_flutter-2.10.5
             - test_android
-            - ios_tests
+            - e2e_android_captain
+            - test_ios
+            - e2e_ios_captain
             - verify_pub
           filters:
             branches:
