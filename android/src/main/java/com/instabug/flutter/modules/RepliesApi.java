@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.instabug.chat.Replies;
 import com.instabug.flutter.generated.RepliesPigeon;
+import com.instabug.flutter.util.ThreadManager;
 import com.instabug.library.Feature;
 
 import io.flutter.plugin.common.BinaryMessenger;
@@ -45,16 +46,28 @@ public class RepliesApi implements RepliesPigeon.RepliesHostApi {
         Replies.setInAppNotificationSound(isEnabled);
     }
 
-    @NonNull
     @Override
-    public Long getUnreadRepliesCount() {
-        return (long) Replies.getUnreadRepliesCount();
+    public void getUnreadRepliesCount(RepliesPigeon.Result<Long> result) {
+        ThreadManager.runOnBackground(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        result.success((long) Replies.getUnreadRepliesCount());
+                    }
+                }
+        );
     }
 
-    @NonNull
     @Override
-    public Boolean hasChats() {
-        return Replies.hasChats();
+    public void hasChats(RepliesPigeon.Result<Boolean> result) {
+        ThreadManager.runOnBackground(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        result.success(Replies.hasChats());
+                    }
+                }
+        );
     }
 
     @Override

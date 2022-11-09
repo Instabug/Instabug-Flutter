@@ -3,7 +3,6 @@ package com.instabug.flutter.modules;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
@@ -11,6 +10,7 @@ import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
+import com.instabug.flutter.util.ThreadManager;
 
 import org.json.JSONObject;
 
@@ -68,21 +68,27 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         }
     }
 
-    @Nullable
     @Override
-    public String startExecutionTrace(@NonNull String id, @NonNull String name) {
-        try {
-            String result = null;
-            ExecutionTrace trace = APM.startExecutionTrace(name);
-            if (trace != null) {
-                result = id;
-                traces.put(id, trace);
-            }
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public void startExecutionTrace(@NonNull String id, @NonNull String name, ApmPigeon.Result<String> result) {
+        ThreadManager.runOnBackground(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            ExecutionTrace trace = APM.startExecutionTrace(name);
+                            if (trace != null) {
+                                traces.put(id, trace);
+                                result.success(id);
+                            } else {
+                                result.success(null);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            result.success(null);
+                        }
+                    }
+                }
+        );
     }
 
     @Override

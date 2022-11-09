@@ -21,6 +21,8 @@ abstract class InstabugHostApi {
 
   void appendTags(List<String> tags);
   void resetTags();
+
+  @async
   List<String>? getTags();
 
   void addExperiments(List<String> experiments);
@@ -29,7 +31,11 @@ abstract class InstabugHostApi {
 
   void setUserAttribute(String value, String key);
   void removeUserAttribute(String key);
+
+  @async
   String? getUserAttributeForKey(String key);
+
+  @async
   Map<String, String>? getUserAttributes();
 
   void setDebugEnabled(bool enabled);
