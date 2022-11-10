@@ -5,8 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,6 +15,7 @@ import com.instabug.bug.BugReporting;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
+import com.instabug.flutter.util.ThreadManager;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
@@ -93,8 +92,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void show() {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(Instabug::show);
+        Instabug.show();
     }
 
     @Override
@@ -145,12 +143,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setPrimaryColor(@NonNull Long color) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                Instabug.setPrimaryColor(color.intValue());
-            }
-        });
+        Instabug.setPrimaryColor(color.intValue());
     }
 
     @Override
@@ -179,10 +172,16 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         Instabug.resetTags();
     }
 
-    @Nullable
     @Override
-    public List<String> getTags() {
-        return Instabug.getTags();
+    public void getTags(InstabugPigeon.Result<List<String>> result) {
+        ThreadManager.runOnBackground(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        result.success(Instabug.getTags());
+                    }
+                }
+        );
     }
 
     @Override
@@ -210,16 +209,29 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         Instabug.removeUserAttribute(key);
     }
 
-    @Nullable
+
     @Override
-    public String getUserAttributeForKey(@NonNull String key) {
-        return Instabug.getUserAttribute(key);
+    public void getUserAttributeForKey(@NonNull String key, InstabugPigeon.Result<String> result) {
+        ThreadManager.runOnBackground(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        result.success(Instabug.getUserAttribute(key));
+                    }
+                }
+        );
     }
 
-    @Nullable
     @Override
-    public Map<String, String> getUserAttributes() {
-        return Instabug.getAllUserAttributes();
+    public void getUserAttributes(InstabugPigeon.Result<Map<String, String>> result) {
+        ThreadManager.runOnBackground(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        result.success(Instabug.getAllUserAttributes());
+                    }
+                }
+        );
     }
 
     @Override

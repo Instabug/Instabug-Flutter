@@ -33,12 +33,12 @@ extern void InitRepliesApi(id<FlutterBinaryMessenger> messenger) {
     // Android Only
 }
 
-- (nullable NSNumber *)getUnreadRepliesCountWithError:(FlutterError *_Nullable *_Nonnull)error {
-    return [NSNumber numberWithLong:IBGReplies.unreadRepliesCount];
+- (void)getUnreadRepliesCountWithCompletion:(nonnull void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion {
+    completion([NSNumber numberWithLong:IBGReplies.unreadRepliesCount], nil);
 }
 
-- (nullable NSNumber *)hasChatsWithError:(FlutterError *_Nullable *_Nonnull)error {
-    return [NSNumber numberWithBool:IBGReplies.hasChats];
+- (void)hasChatsWithCompletion:(nonnull void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion {
+    completion([NSNumber numberWithBool:IBGReplies.hasChats], nil);
 }
 
 - (void)bindOnNewReplyCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {

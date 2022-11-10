@@ -98,8 +98,8 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [Instabug resetTags];
 }
 
-- (nullable NSArray<NSString *> *)getTagsWithError:(FlutterError *_Nullable *_Nonnull)error {
-    return [Instabug getTags];
+- (void)getTagsWithCompletion:(nonnull void (^)(NSArray<NSString *> * _Nullable, FlutterError * _Nullable))completion {
+    completion([Instabug getTags], nil);
 }
 
 - (void)addExperimentsExperiments:(NSArray<NSString *> *)experiments error:(FlutterError *_Nullable *_Nonnull)error {
@@ -122,12 +122,12 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [Instabug removeUserAttributeForKey:key];
 }
 
-- (nullable NSString *)getUserAttributeForKeyKey:(NSString *)key error:(FlutterError *_Nullable *_Nonnull)error {
-    return [Instabug userAttributeForKey:key];
+- (void)getUserAttributeForKeyKey:(nonnull NSString *)key completion:(nonnull void (^)(NSString * _Nullable, FlutterError * _Nullable))completion {
+    completion([Instabug userAttributeForKey:key], nil);
 }
 
-- (nullable NSDictionary<NSString *, NSString *> *)getUserAttributesWithError:(FlutterError *_Nullable *_Nonnull)error {
-    return Instabug.userAttributes;
+- (void)getUserAttributesWithCompletion:(nonnull void (^)(NSDictionary<NSString *,NSString *> * _Nullable, FlutterError * _Nullable))completion {
+    completion(Instabug.userAttributes, nil);
 }
 
 - (void)setDebugEnabledEnabled:(NSNumber *)enabled error:(FlutterError *_Nullable *_Nonnull)error {

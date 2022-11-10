@@ -34,14 +34,14 @@ NSMutableDictionary *traces;
     IBGAPM.logLevel = resolvedLevel;
 }
 
-- (nullable NSString *)startExecutionTraceId:(NSString *)id name:(NSString *)name error:(FlutterError *_Nullable *_Nonnull)error {
+- (void)startExecutionTraceId:(NSString *)id name:(NSString *)name completion:(void(^)(NSString *_Nullable, FlutterError *_Nullable))completion {
     IBGExecutionTrace *trace = [IBGAPM startExecutionTraceWithName:name];
 
     if (trace != nil) {
         [traces setObject:trace forKey:id];
-        return id;
+        return completion(id, nil);
     } else {
-        return nil;
+        return completion(nil, nil);
     }
 }
 

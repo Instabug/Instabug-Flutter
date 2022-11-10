@@ -1,11 +1,9 @@
 package com.instabug.flutter.modules;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import androidx.annotation.NonNull;
 
 import com.instabug.flutter.generated.SurveysPigeon;
+import com.instabug.flutter.util.ThreadManager;
 import com.instabug.library.Feature;
 import com.instabug.survey.Survey;
 import com.instabug.survey.Surveys;
@@ -32,16 +30,11 @@ public class SurveysApi implements SurveysPigeon.SurveysHostApi {
 
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (isEnabled) {
-                    Surveys.setState(Feature.State.ENABLED);
-                } else {
-                    Surveys.setState(Feature.State.DISABLED);
-                }
-            }
-        });
+        if (isEnabled) {
+            Surveys.setState(Feature.State.ENABLED);
+        } else {
+            Surveys.setState(Feature.State.DISABLED);
+        }
     }
 
     @Override
@@ -71,20 +64,34 @@ public class SurveysApi implements SurveysPigeon.SurveysHostApi {
 
     @Override
     public void hasRespondedToSurvey(@NonNull String surveyToken, SurveysPigeon.Result<Boolean> result) {
-        final boolean hasResponded = Surveys.hasRespondToSurvey(surveyToken);
-        result.success(hasResponded);
+        ThreadManager.runOnBackground(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        final boolean hasResponded = Surveys.hasRespondToSurvey(surveyToken);
+                        result.success(hasResponded);
+                    }
+                }
+        );
     }
 
     @Override
     public void getAvailableSurveys(SurveysPigeon.Result<List<String>> result) {
-        List<Survey> surveys = Surveys.getAvailableSurveys();
+        ThreadManager.runOnBackground(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        List<Survey> surveys = Surveys.getAvailableSurveys();
 
-        ArrayList<String> titles = new ArrayList<>();
-        for (Survey survey : surveys != null ? surveys : new ArrayList<Survey>()) {
-            titles.add(survey.getTitle());
-        }
+                        ArrayList<String> titles = new ArrayList<>();
+                        for (Survey survey : surveys != null ? surveys : new ArrayList<Survey>()) {
+                            titles.add(survey.getTitle());
+                        }
 
-        result.success(titles);
+                        result.success(titles);
+                    }
+                }
+        );
     }
 
     @Override

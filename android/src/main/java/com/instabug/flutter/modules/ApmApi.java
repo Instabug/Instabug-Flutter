@@ -1,11 +1,8 @@
 package com.instabug.flutter.modules;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
@@ -13,6 +10,7 @@ import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
+import com.instabug.flutter.util.ThreadManager;
 
 import org.json.JSONObject;
 
@@ -33,148 +31,109 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    APM.setEnabled(isEnabled);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    @Override
-    public void setColdAppLaunchEnabled(@NonNull Boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    APM.setAppLaunchEnabled(isEnabled);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    @Override
-    public void setAutoUITraceEnabled(@NonNull Boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    APM.setAutoUITraceEnabled(isEnabled);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    @Override
-    public void setLogLevel(@NonNull String level) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (ArgsRegistry.getDeserializedValue(level) == null) {
-                        return;
-                    }
-                    APM.setLogLevel((int) ArgsRegistry.getRawValue(level));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    @Nullable
-    @Override
-    public String startExecutionTrace(@NonNull String id, @NonNull String name) {
         try {
-            String result = null;
-            ExecutionTrace trace = APM.startExecutionTrace(name);
-            if (trace != null) {
-                result = id;
-                traces.put(id, trace);
-            }
-            return result;
+            APM.setEnabled(isEnabled);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
     @Override
-    public void setExecutionTraceAttribute(@NonNull String id, @NonNull String key, @NonNull String value) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    traces.get(id).setAttribute(key, value);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+    public void setColdAppLaunchEnabled(@NonNull Boolean isEnabled) {
+        try {
+            APM.setAppLaunchEnabled(isEnabled);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setAutoUITraceEnabled(@NonNull Boolean isEnabled) {
+        try {
+            APM.setAutoUITraceEnabled(isEnabled);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setLogLevel(@NonNull String level) {
+        try {
+            if (ArgsRegistry.getDeserializedValue(level) == null) {
+                return;
             }
-        });
+            APM.setLogLevel((int) ArgsRegistry.getRawValue(level));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void startExecutionTrace(@NonNull String id, @NonNull String name, ApmPigeon.Result<String> result) {
+        ThreadManager.runOnBackground(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            ExecutionTrace trace = APM.startExecutionTrace(name);
+                            if (trace != null) {
+                                traces.put(id, trace);
+                                result.success(id);
+                            } else {
+                                result.success(null);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            result.success(null);
+                        }
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void setExecutionTraceAttribute(@NonNull String id, @NonNull String key, @NonNull String value) {
+        try {
+            traces.get(id).setAttribute(key, value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void endExecutionTrace(@NonNull String id) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    traces.get(id).end();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        try {
+            traces.get(id).end();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void startUITrace(@NonNull String name) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    APM.startUITrace(name);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        try {
+            APM.startUITrace(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void endUITrace() {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    APM.endUITrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        try {
+            APM.endUITrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void endAppLaunch() {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    APM.endAppLaunch();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        try {
+            APM.endAppLaunch();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

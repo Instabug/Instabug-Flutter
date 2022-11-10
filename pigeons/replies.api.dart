@@ -11,7 +11,12 @@ abstract class RepliesHostApi {
   void show();
   void setInAppNotificationsEnabled(bool isEnabled);
   void setInAppNotificationSound(bool isEnabled);
+
+  @async
   int getUnreadRepliesCount();
+
+  @async
   bool hasChats();
+
   void bindOnNewReplyCallback();
 }

@@ -6,7 +6,10 @@ abstract class ApmHostApi {
   void setColdAppLaunchEnabled(bool isEnabled);
   void setAutoUITraceEnabled(bool isEnabled);
   void setLogLevel(String level);
+
+  @async
   String? startExecutionTrace(String id, String name);
+
   void setExecutionTraceAttribute(
     String id,
     String key,

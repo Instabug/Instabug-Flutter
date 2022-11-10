@@ -1,8 +1,5 @@
 package com.instabug.flutter.modules;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -36,16 +33,11 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
 
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (isEnabled) {
-                    BugReporting.setState(Feature.State.ENABLED);
-                } else {
-                    BugReporting.setState(Feature.State.DISABLED);
-                }
-            }
-        });
+        if (isEnabled) {
+            BugReporting.setState(Feature.State.ENABLED);
+        } else {
+            BugReporting.setState(Feature.State.DISABLED);
+        }
     }
 
     @Override
@@ -60,32 +52,26 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
 
     @Override
     public void setInvocationEvents(@NonNull List<String> events) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[events.size()];
-                for (int i = 0; i < events.size(); i++) {
-                    String key = events.get(i);
-                    invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key);
-                }
-                BugReporting.setInvocationEvents(invocationEventsArray);
-            }
-        });
+        InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[events.size()];
+
+        for (int i = 0; i < events.size(); i++) {
+            String key = events.get(i);
+            invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key);
+        }
+
+        BugReporting.setInvocationEvents(invocationEventsArray);
     }
 
     @Override
     public void setReportTypes(@NonNull List<String> types) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                int[] reportTypesArray = new int[types.size()];
-                for (int i = 0; i < types.size(); i++) {
-                    String key = types.get(i);
-                    reportTypesArray[i] = ArgsRegistry.getDeserializedValue(key);
-                }
-                BugReporting.setReportTypes(reportTypesArray);
-            }
-        });
+        int[] reportTypesArray = new int[types.size()];
+
+        for (int i = 0; i < types.size(); i++) {
+            String key = types.get(i);
+            reportTypesArray[i] = ArgsRegistry.getDeserializedValue(key);
+        }
+
+        BugReporting.setReportTypes(reportTypesArray);
     }
 
     @Override
