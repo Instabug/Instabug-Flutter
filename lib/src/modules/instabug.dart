@@ -361,7 +361,9 @@ class Instabug {
   /// Changes the font of Instabug's UI.
   /// [font] The asset path to the font file (e.g. "fonts/Poppins.ttf").
   static Future<void> setFont(String font) async {
-    return _host.setFont(font);
+    if (IBGBuildInfo.I.isIOS) {
+      return _host.setFont(font);
+    }
   }
 
   /// Sets the repro steps mode

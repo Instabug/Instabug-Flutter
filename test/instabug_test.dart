@@ -330,6 +330,7 @@ void main() {
 
   test('[setFont] should call host method', () async {
     const font = "fonts/OpenSans-Regular.ttf";
+    when(mBuildInfo.isIOS).thenReturn(true);
 
     await Instabug.setFont(font);
 
