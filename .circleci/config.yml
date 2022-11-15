@@ -22,6 +22,19 @@ commands:
           name: Install Pods
           working_directory: example/ios
           command: pod install --repo-update
+  setup_captain:
+    steps:
+      - run:
+          name: Install .NET 6
+          command: curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 6.0.1xx
+      - run:
+          name: Add .NET to PATH
+          command: |
+            echo 'export DOTNET_ROOT=$HOME/.dotnet' >> $BASH_ENV
+            echo 'export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools' >> $BASH_ENV
+      - run:
+          name: Clone Captain
+          command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
 
 jobs:
   danger:
@@ -84,20 +97,7 @@ jobs:
           command: appium
           background: true
       - setup_flutter
-      - run:
-          name: Add Microsoft Packages to APT
-          command: |
-            wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-            sudo dpkg -i packages-microsoft-prod.deb
-            rm packages-microsoft-prod.deb
-      - run:
-          name: Install .NET 6
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y dotnet-sdk-6.0
-      - run:
-          name: Clone Captain
-          command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
+      - setup_captain
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "Nexus 5"
@@ -139,14 +139,7 @@ jobs:
           name: Build Example App
           working_directory: example
           command: flutter build ios --simulator
-      - run:
-          name: Install .NET 6
-          command: |
-            brew tap isen-ng/dotnet-sdk-versions
-            brew install --cask dotnet-sdk6-0-400
-      - run:
-          name: Clone Captain
-          command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
+      - setup_captain
       - run:
           name: Run E2E Tests
           working_directory: e2e
