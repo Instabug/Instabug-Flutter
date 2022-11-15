@@ -25,6 +25,13 @@ commands:
   setup_captain:
     steps:
       - run:
+          name: Install Appium
+          command: npm install -g appium
+      - run:
+          name: Launch Appium
+          command: appium
+          background: true
+      - run:
           name: Install .NET 6
           command: curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 6.0.1xx
       - run:
@@ -89,15 +96,8 @@ jobs:
       tag: 2022.04.1
     steps:
       - checkout
-      - run:
-          name: Install Appium
-          command: npm install -g appium
-      - run:
-          name: Launch Appium
-          command: appium
-          background: true
-      - setup_flutter
       - setup_captain
+      - setup_flutter
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "Nexus 5"
@@ -127,19 +127,12 @@ jobs:
     resource_class: large
     steps:
       - checkout
-      - run:
-          name: Install Appium
-          command: npm install -g appium
-      - run:
-          name: Launch Appium
-          command: appium
-          background: true
+      - setup_captain
       - setup_ios
       - run:
           name: Build Example App
           working_directory: example
           command: flutter build ios --simulator
-      - setup_captain
       - run:
           name: Run E2E Tests
           working_directory: e2e
