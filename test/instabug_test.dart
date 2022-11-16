@@ -344,6 +344,7 @@ void main() {
   test('[enableAndroid] should call host method', () async {
     when(mBuildInfo.isAndroid).thenReturn(true);
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.enableAndroid();
 
     verify(
@@ -354,6 +355,7 @@ void main() {
   test('[disableAndroid] should call host method', () async {
     when(mBuildInfo.isAndroid).thenReturn(true);
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.disableAndroid();
 
     verify(

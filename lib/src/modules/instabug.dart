@@ -345,6 +345,10 @@ class Instabug {
     return _host.setReproStepsMode(reproStepsMode.toString());
   }
 
+  @Deprecated(
+    "Use [Instabug.setEnabled(true)] instead. This will work on both Android and iOS. ",
+  )
+
   /// Android Only
   /// Enables all Instabug functionality
   static Future<void> enableAndroid() async {
@@ -352,6 +356,10 @@ class Instabug {
       return _host.enableAndroid();
     }
   }
+
+  @Deprecated(
+    "Use [Instabug.setEnabled(false)] instead. This will work on both Android and iOS. ",
+  )
 
   /// Android Only
   /// Disables all Instabug functionality
