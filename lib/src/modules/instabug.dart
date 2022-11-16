@@ -129,6 +129,12 @@ class Instabug {
     Surveys.init();
   }
 
+  /// Enables or disables Instabug functionality.
+  /// [boolean] isEnabled
+  static Future<void> setEnabled(bool isEnabled) async {
+    return _host.setEnabled(isEnabled);
+  }
+
   /// Starts the SDK.
   /// This is the main SDK method that does all the magic. This is the only
   /// method that SHOULD be called.

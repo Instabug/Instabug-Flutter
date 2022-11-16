@@ -73,6 +73,18 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         }
     }
 
+    @Override
+    public void setEnabled(@NonNull Boolean isEnabled) {
+        try {
+            if(isEnabled)
+                Instabug.enable();
+            else
+                Instabug.disable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void start(@NonNull String token, @NonNull List<String> invocationEvents) {
         setCurrentPlatform();
 
