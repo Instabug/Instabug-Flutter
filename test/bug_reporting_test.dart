@@ -178,4 +178,14 @@ void main() {
       mHost.bindOnDismissCallback(),
     ).called(1);
   });
+
+  test('[setDisclaimerText] should call host method', () async {
+    const text = 'This is a disclaimer text!';
+
+    await BugReporting.setDisclaimerText(text);
+
+    verify(
+      mHost.setDisclaimerText(text),
+    ).called(1);
+  });
 }
