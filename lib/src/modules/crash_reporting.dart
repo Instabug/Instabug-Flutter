@@ -60,23 +60,21 @@ class CrashReporting {
     bool handled,
   ) async {
     final trace = Trace.from(stack);
-    final frames = <ExceptionData>[];
-
-    for (var i = 0; i < trace.frames.length; i++) {
-      frames.add(
-        ExceptionData(
-          trace.frames[i].uri.toString(),
-          trace.frames[i].member,
-          trace.frames[i].line,
-          trace.frames[i].column ?? 0,
-        ),
-      );
-    }
+    final frames = trace.frames
+        .map(
+          (frame) => ExceptionData(
+            file: frame.uri.toString(),
+            methodName: frame.member,
+            lineNumber: frame.line,
+            column: frame.column ?? 0,
+          ),
+        )
+        .toList();
 
     final crashData = CrashData(
-      exception.toString(),
-      IBGBuildInfo.instance.operatingSystem,
-      frames,
+      os: IBGBuildInfo.instance.operatingSystem,
+      message: exception.toString(),
+      exception: frames,
     );
 
     return _host.send(jsonEncode(crashData), handled);

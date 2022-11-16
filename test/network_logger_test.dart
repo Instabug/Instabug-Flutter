@@ -41,11 +41,11 @@ void main() {
     await logger.networkLog(data);
 
     verify(
-      mInstabugHost.networkLog(data.toMap()),
+      mInstabugHost.networkLog(data.toJson()),
     ).called(1);
 
     verifyNever(
-      mApmHost.networkLogAndroid(data.toMap()),
+      mApmHost.networkLogAndroid(data.toJson()),
     );
   });
 
@@ -55,11 +55,11 @@ void main() {
     await logger.networkLog(data);
 
     verify(
-      mInstabugHost.networkLog(data.toMap()),
+      mInstabugHost.networkLog(data.toJson()),
     ).called(1);
 
     verify(
-      mApmHost.networkLogAndroid(data.toMap()),
+      mApmHost.networkLogAndroid(data.toJson()),
     ).called(1);
   });
 }
