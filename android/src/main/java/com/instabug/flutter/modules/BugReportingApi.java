@@ -149,4 +149,9 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
             }
         });
     }
+
+    @Override
+    public void setDisclaimerText(@NonNull String text) {
+        BugReporting.setDisclaimerText(text);
+    }
 }

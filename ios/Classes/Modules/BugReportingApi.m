@@ -146,4 +146,8 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
     };
 }
 
+- (void)setDisclaimerTextText:(NSString *)text error:(FlutterError *_Nullable *_Nonnull)error {
+    [IBGBugReporting setDisclaimerText:text];
+}
+
 @end

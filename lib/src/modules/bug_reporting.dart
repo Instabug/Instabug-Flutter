@@ -227,4 +227,11 @@ class BugReporting implements BugReportingFlutterApi {
       return _host.setShakingThresholdForAndroid(threshold);
     }
   }
+
+  /// Adds a disclaimer text within the bug reporting form,
+  /// which can include hyperlinked text.
+  /// [text] String text
+  static Future<void> setDisclaimerText(String text) async {
+    return _host.setDisclaimerText(text);
+  }
 }

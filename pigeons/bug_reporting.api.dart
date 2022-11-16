@@ -27,4 +27,5 @@ abstract class BugReportingHostApi {
   );
   void bindOnInvokeCallback();
   void bindOnDismissCallback();
+  void setDisclaimerText(String text);
 }
