@@ -88,13 +88,9 @@ void main() {
     const responded = true;
     when(mHost.hasRespondedToSurvey(token)).thenAnswer((_) async => responded);
 
-    await Surveys.hasRespondedToSurvey(
-      token,
-      (result) {
-        expect(result, responded);
-      },
-    );
+    final result = await Surveys.hasRespondedToSurvey(token);
 
+    expect(result, responded);
     verify(
       mHost.hasRespondedToSurvey(token),
     ).called(1);
@@ -104,10 +100,9 @@ void main() {
     const surveys = ["survey-1", "survey-2"];
     when(mHost.getAvailableSurveys()).thenAnswer((_) async => surveys);
 
-    await Surveys.getAvailableSurveys((result) {
-      expect(result, surveys);
-    });
+    final result = await Surveys.getAvailableSurveys();
 
+    expect(result, surveys);
     verify(
       mHost.getAvailableSurveys(),
     ).called(1);

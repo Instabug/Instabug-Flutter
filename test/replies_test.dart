@@ -67,10 +67,9 @@ void main() {
     const count = 10;
     when(mHost.getUnreadRepliesCount()).thenAnswer((_) async => count);
 
-    await Replies.getUnreadRepliesCount((result) {
-      expect(result, count);
-    });
+    final result = await Replies.getUnreadRepliesCount();
 
+    expect(result, count);
     verify(
       mHost.getUnreadRepliesCount(),
     ).called(1);
@@ -80,10 +79,9 @@ void main() {
     const hasChats = true;
     when(mHost.hasChats()).thenAnswer((_) async => hasChats);
 
-    await Replies.hasChats((result) {
-      expect(result, hasChats);
-    });
+    final result = await Replies.hasChats();
 
+    expect(result, hasChats);
     verify(
       mHost.hasChats(),
     ).called(1);
