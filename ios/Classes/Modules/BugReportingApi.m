@@ -150,4 +150,19 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
     [IBGBugReporting setDisclaimerText:text];
 }
 
+- (void)setCommentMinimumCharacterCountLimit:(NSNumber *)limit reportTypes:(nullable NSArray<NSString *> *)reportTypes error:(FlutterError *_Nullable *_Nonnull)error {
+    IBGBugReportingReportType resolvedTypes = 0;
+
+    if (![reportTypes count]) {
+        resolvedTypes = (ArgsRegistry.reportTypes[@"ReportType.bug"]).integerValue | (ArgsRegistry.reportTypes[@"ReportType.feedback"]).integerValue | (ArgsRegistry.reportTypes[@"ReportType.question"]).integerValue;
+    }
+    else {
+        for (NSString *reportType in reportTypes) {
+            resolvedTypes |= (ArgsRegistry.reportTypes[reportType]).integerValue;
+        }
+    }
+    
+    [IBGBugReporting setCommentMinimumCharacterCountForReportTypes:resolvedTypes withLimit:limit.intValue];
+}
+
 @end

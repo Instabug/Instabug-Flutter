@@ -234,4 +234,14 @@ class BugReporting implements BugReportingFlutterApi {
   static Future<void> setDisclaimerText(String text) async {
     return _host.setDisclaimerText(text);
   }
+
+  static Future<void> setCommentMinimumCharacterCount(
+    int limit, [
+    List<ReportType>? reportTypes,
+  ]) async {
+    return _host.setCommentMinimumCharacterCount(
+      limit,
+      reportTypes?.mapToString(),
+    );
+  }
 }
