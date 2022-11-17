@@ -235,6 +235,11 @@ class BugReporting implements BugReportingFlutterApi {
     return _host.setDisclaimerText(text);
   }
 
+  /// Sets a minimum number of characters as a requirement for
+  /// the comments field in the different report types.
+  /// [limit] int number of characters
+  /// [reportTypes] Optional list of ReportType. If it's not passed,
+  /// the limit will apply to all report types.
   static Future<void> setCommentMinimumCharacterCount(
     int limit, [
     List<ReportType>? reportTypes,
