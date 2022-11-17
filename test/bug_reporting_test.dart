@@ -188,4 +188,15 @@ void main() {
       mHost.setDisclaimerText(text),
     ).called(1);
   });
+
+  test('[setCommentMinimumCharacterCount] should call host method', () async {
+    const count = 20;
+    const reportTypes = [ReportType.bug];
+
+    await BugReporting.setCommentMinimumCharacterCount(count, reportTypes);
+
+    verify(
+      mHost.setCommentMinimumCharacterCount(count, reportTypes.mapToString()),
+    ).called(1);
+  });
 }
