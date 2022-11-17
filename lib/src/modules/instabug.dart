@@ -345,24 +345,22 @@ class Instabug {
     return _host.setReproStepsMode(reproStepsMode.toString());
   }
 
+  /// Android Only
+  /// Enables all Instabug functionality
   @Deprecated(
     "Use [Instabug.setEnabled(true)] instead. This will work on both Android and iOS. ",
   )
-
-  /// Android Only
-  /// Enables all Instabug functionality
   static Future<void> enableAndroid() async {
     if (IBGBuildInfo.I.isAndroid) {
       return _host.enableAndroid();
     }
   }
 
+  /// Android Only
+  /// Disables all Instabug functionality
   @Deprecated(
     "Use [Instabug.setEnabled(false)] instead. This will work on both Android and iOS. ",
   )
-
-  /// Android Only
-  /// Disables all Instabug functionality
   static Future<void> disableAndroid() async {
     if (IBGBuildInfo.I.isAndroid) {
       return _host.disableAndroid();
