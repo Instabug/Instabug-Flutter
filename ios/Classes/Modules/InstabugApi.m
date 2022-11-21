@@ -13,6 +13,10 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
 @implementation InstabugApi
 
+- (void)setEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
+    Instabug.enabled = [isEnabled boolValue];
+}
+
 - (void)startToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents error:(FlutterError *_Nullable *_Nonnull)error {
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {

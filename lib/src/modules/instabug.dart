@@ -129,6 +129,12 @@ class Instabug {
     Surveys.init();
   }
 
+  /// Enables or disables Instabug functionality.
+  /// [boolean] isEnabled
+  static Future<void> setEnabled(bool isEnabled) async {
+    return _host.setEnabled(isEnabled);
+  }
+
   /// Starts the SDK.
   /// This is the main SDK method that does all the magic. This is the only
   /// method that SHOULD be called.
@@ -341,6 +347,9 @@ class Instabug {
 
   /// Android Only
   /// Enables all Instabug functionality
+  @Deprecated(
+    "Use [Instabug.setEnabled(true)] instead. This will work on both Android and iOS. ",
+  )
   static Future<void> enableAndroid() async {
     if (IBGBuildInfo.I.isAndroid) {
       return _host.enableAndroid();
@@ -349,6 +358,9 @@ class Instabug {
 
   /// Android Only
   /// Disables all Instabug functionality
+  @Deprecated(
+    "Use [Instabug.setEnabled(false)] instead. This will work on both Android and iOS. ",
+  )
   static Future<void> disableAndroid() async {
     if (IBGBuildInfo.I.isAndroid) {
       return _host.disableAndroid();

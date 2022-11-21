@@ -227,4 +227,26 @@ class BugReporting implements BugReportingFlutterApi {
       return _host.setShakingThresholdForAndroid(threshold);
     }
   }
+
+  /// Adds a disclaimer text within the bug reporting form,
+  /// which can include hyperlinked text.
+  /// [text] String text
+  static Future<void> setDisclaimerText(String text) async {
+    return _host.setDisclaimerText(text);
+  }
+
+  /// Sets a minimum number of characters as a requirement for
+  /// the comments field in the different report types.
+  /// [limit] int number of characters
+  /// [reportTypes] Optional list of ReportType. If it's not passed,
+  /// the limit will apply to all report types.
+  static Future<void> setCommentMinimumCharacterCount(
+    int limit, [
+    List<ReportType>? reportTypes,
+  ]) async {
+    return _host.setCommentMinimumCharacterCount(
+      limit,
+      reportTypes?.mapToString(),
+    );
+  }
 }

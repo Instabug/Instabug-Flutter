@@ -149,4 +149,21 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
             }
         });
     }
+
+    @Override
+    public void setDisclaimerText(@NonNull String text) {
+        BugReporting.setDisclaimerText(text);
+    }
+
+    @Override
+    public void setCommentMinimumCharacterCount(@NonNull Long limit, @Nullable List<String> reportTypes) {
+        int[] reportTypesArray = reportTypes == null ? new int[0] : new int[reportTypes.size()];
+        if(reportTypes != null){
+        for (int i = 0; i < reportTypes.size(); i++) {
+            String key = reportTypes.get(i);
+            reportTypesArray[i] = ArgsRegistry.getDeserializedValue(key);
+        }
+    }
+        BugReporting.setCommentMinimumCharacterCount(limit.intValue(), reportTypesArray);
+    }
 }

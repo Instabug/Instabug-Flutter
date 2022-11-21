@@ -27,6 +27,16 @@ void main() {
     IBGBuildInfo.setInstance(mBuildInfo);
   });
 
+  test('[setEnabled] should call host method', () async {
+    const enabled = true;
+
+    await Instabug.setEnabled(enabled);
+
+    verify(
+      mHost.setEnabled(enabled),
+    ).called(1);
+  });
+
   test('[start] should call host method', () async {
     const token = "068ba9a8c3615035e163dc5f829c73be";
     const events = [InvocationEvent.shake, InvocationEvent.screenshot];
@@ -334,6 +344,7 @@ void main() {
   test('[enableAndroid] should call host method', () async {
     when(mBuildInfo.isAndroid).thenReturn(true);
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.enableAndroid();
 
     verify(
@@ -344,6 +355,7 @@ void main() {
   test('[disableAndroid] should call host method', () async {
     when(mBuildInfo.isAndroid).thenReturn(true);
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.disableAndroid();
 
     verify(

@@ -1,5 +1,8 @@
 ## Unreleased
 
+* Adds BugReporting.setDisclaimerText API
+* Adds BugReporting.setCommentMinimumCharacterCount API
+* Deprecates Instabug.enableAndroid and Instabug.disableAndroid APIs in favour of a new API Instabug.setEnabled, which works on both platforms
 * Fixes main thread violation on Android
 * Fixes an issue with request and response headers parameters type causing network requests not getting logged on iOS
 * Uses pigeon for internal communication between Flutter and the host platform
