@@ -28,7 +28,7 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
-  pod 'Instabug', :podspec => 'https://ios-releases.instabug.com/custom/feature-Gettr-CustomFonts-APIs/11.4.1/Instabug.podspec'
+  pod 'Instabug', :podspec => 'https://ios-releases.instabug.com/custom/feature-Gettr-CustomFonts-APIs/Instabug.podspec'
 
   use_frameworks!
   use_modular_headers!
