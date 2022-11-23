@@ -1,6 +1,7 @@
 ## Unreleased
 
 * Bumps Instabug Android SDK to v11.6.0
+* Bumps Instabug iOS SDK to v11.5.0
 * Adds BugReporting.setDisclaimerText API
 * Adds BugReporting.setCommentMinimumCharacterCount API
 * Deprecates Instabug.enableAndroid and Instabug.disableAndroid APIs in favour of a new API Instabug.setEnabled, which works on both platforms
