@@ -1,18 +1,18 @@
-## Unreleased
+## 11.5.0 (2022-11-24)
 
 * Bumps Instabug Android SDK to v11.6.0
 * Bumps Instabug iOS SDK to v11.5.0
-* Enables Repro Steps screenshots on Android
-* Removes "Media Projection" dialog while taking screenshots on Android
 * Adds BugReporting.setDisclaimerText API
 * Adds BugReporting.setCommentMinimumCharacterCount API
 * Adds Romanian locale support
-* Deprecates Instabug.enableAndroid and Instabug.disableAndroid APIs in favour of a new API Instabug.setEnabled, which works on both platforms
+* Adds Repro Steps screenshots on Android
+* Removes "Media Projection" dialog while taking screenshots on Android
 * Fixes APM network logging on Android
 * Fixes main thread violation on Android
 * Fixes an issue with request and response headers parameters type causing network requests not getting logged on iOS
-* Uses pigeon for internal communication between Flutter and the host platform
-* Uses return values instead of callbacks in the following APIs:
+* Improves performance by using pigeon for internal communication between Flutter and the host platform
+* Deprecates Instabug.enableAndroid and Instabug.disableAndroid APIs in favour of the new API Instabug.setEnabled, which works on both platforms
+* Deprecates callbacks in favor of return values in the following APIs:
   1. Replies.getUnreadRepliesCount
   2. Replies.hasChats
   3. Surveys.hasRespondedToSurvey
