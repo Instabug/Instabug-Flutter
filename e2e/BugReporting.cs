@@ -20,8 +20,6 @@ public class BugReporting
         ios: "IBGFloatingButtonAccessibilityIdentifier"
     ).Tap();
 
-    if (captain.IsAndroid) captain.GoBack();
-
     captain.FindByText("Report a bug").Tap();
 
     captain.FindInput(
