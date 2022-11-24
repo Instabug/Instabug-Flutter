@@ -3,6 +3,7 @@ package com.instabug.flutter.modules;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 
@@ -26,6 +27,8 @@ import com.instabug.library.ui.onboarding.WelcomeMessage;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +36,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import io.flutter.FlutterInjector;
 import io.flutter.plugin.common.BinaryMessenger;
+import io.flutter.embedding.engine.loader.FlutterLoader;
 
 public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     private final String TAG = InstabugApi.class.getName();
@@ -263,6 +268,43 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                     Bitmap.class, String.class);
             if (method != null) {
                 method.invoke(null, null, screenName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Bitmap getBitmapForAsset(String assetName) {
+        try {
+            FlutterLoader loader = FlutterInjector.instance().flutterLoader();
+            String key = loader.getLookupKeyForAsset(assetName);
+            InputStream stream = context.getAssets().open(key);
+            return BitmapFactory.decodeStream(stream);
+        } catch (IOException exception) {
+            return null;
+        }
+    }
+
+    @Override
+    public void setCustomBrandingImage(@NonNull String light, @NonNull String dark) {
+        try {
+            Bitmap lightLogoVariant = getBitmapForAsset(light);
+            Bitmap darkLogoVariant = getBitmapForAsset(dark);
+
+            if (lightLogoVariant == null) {
+                lightLogoVariant = darkLogoVariant;
+            }
+            if (darkLogoVariant == null) {
+                darkLogoVariant = lightLogoVariant;
+            }
+            if (lightLogoVariant == null) {
+                throw new Exception("Couldn't find the light or dark logo images");
+            }
+
+            Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "setCustomBrandingImage", Bitmap.class, Bitmap.class);
+
+            if (method != null) {
+                method.invoke(null, lightLogoVariant, darkLogoVariant);
             }
         } catch (Exception e) {
             e.printStackTrace();
