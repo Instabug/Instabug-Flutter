@@ -11,7 +11,7 @@ import org.mockito.MockedStatic;
 
 
 public class InstabugApiTest extends TestCase {
-    private final InstabugApi mApi = new InstabugApi(null);
+    private final InstabugApi mApi = new InstabugApi(null, null);
     private final MockedStatic<Instabug> mInstabug = mockStatic(Instabug.class);
 
     public void testLogOut() {

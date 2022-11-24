@@ -84,7 +84,6 @@ Repro Steps list all of the actions an app user took before reporting a bug or c
   ));
   ```
 
-⚠️  Screenshots in repro steps on android is not currently supported.
 
 ## Network Logging
 You can choose to attach all your network requests to the reports being sent to the dashboard. To enable the feature when using the `dart:io` package `HttpClient`, please refer to the [Instabug Dart IO Http Client](https://github.com/Instabug/instabug-dart-io-http-client) repository.
