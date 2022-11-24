@@ -301,6 +301,20 @@ void main() {
     ).called(1);
   });
 
+  test('[setCustomBrandingImage] should call host method', () async {
+    const lightImage = 'images/light_logo.jpeg';
+    const darkImage = 'images/dark_logo.jpeg';
+
+    await Instabug.setCustomBrandingImage(
+      light: const AssetImage(lightImage),
+      dark: const AssetImage(darkImage),
+    );
+
+    verify(
+      mHost.setCustomBrandingImage(lightImage, darkImage),
+    ).called(1);
+  });
+
   test('[reportScreenChange] should call host method', () async {
     const screen = "home";
 
