@@ -4,6 +4,7 @@
 * Bumps Instabug iOS SDK to v11.5.0
 * Adds BugReporting.setDisclaimerText API
 * Adds BugReporting.setCommentMinimumCharacterCount API
+* Adds Romanian locale support
 * Deprecates Instabug.enableAndroid and Instabug.disableAndroid APIs in favour of a new API Instabug.setEnabled, which works on both platforms
 * Fixes APM network logging on Android
 * Fixes main thread violation on Android
