@@ -33,11 +33,6 @@ public class InvokeInstabugUITest {
         onView(withResourceName("instabug_floating_button")).perform(click());
         Thread.sleep(1000);
 
-        // Dismiss media projection prompt.
-        // This is a temporary solution as we are dropping media projection in a future release.
-        device.pressBack();
-        Thread.sleep(1000);
-
         onView(withText("Report a bug")).perform(click());
         Thread.sleep(1000);
 
