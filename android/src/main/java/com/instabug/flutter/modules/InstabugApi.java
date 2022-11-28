@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.generated.InstabugPigeon;
@@ -57,7 +58,8 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         this.screenshotProvider = screenshotProvider;
     }
 
-    private void setCurrentPlatform() {
+    @VisibleForTesting
+    public void setCurrentPlatform() {
         try {
             Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "setCurrentPlatform", int.class);
             if (method != null) {
@@ -278,7 +280,8 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         }
     }
 
-    private Bitmap getBitmapForAsset(String assetName) {
+    @VisibleForTesting
+    public Bitmap getBitmapForAsset(String assetName) {
         try {
             FlutterLoader loader = FlutterInjector.instance().flutterLoader();
             String key = loader.getLookupKeyForAsset(assetName);
