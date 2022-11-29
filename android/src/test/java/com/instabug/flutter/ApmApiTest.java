@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.MockedConstruction;
 import org.mockito.MockedStatic;
 
 import java.util.HashMap;
@@ -219,7 +220,7 @@ public class ApmApiTest {
         data.put("duration", requestDuration);
         data.put("serverErrorMessage", serverErrorMessage);
 
-        mockConstruction(JSONObject.class, (mock, context) -> when(mock.toString(anyInt())).thenReturn("{}"));
+        MockedConstruction<JSONObject> mJSONObject = mockConstruction(JSONObject.class, (mock, context) -> when(mock.toString(anyInt())).thenReturn("{}"));
 
         mApi.networkLogAndroid(data);
 
@@ -241,5 +242,7 @@ public class ApmApiTest {
                 null,
                 serverErrorMessage
         ));
+
+        mJSONObject.close();
     }
 }

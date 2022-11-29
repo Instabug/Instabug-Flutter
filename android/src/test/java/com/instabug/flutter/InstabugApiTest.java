@@ -508,7 +508,7 @@ public class InstabugApiTest {
 
         MockedConstruction<NetworkLog> mNetworkLog = mockConstruction(NetworkLog.class);
 
-        mockConstruction(JSONObject.class, (mock, context) -> when(mock.toString(anyInt())).thenReturn("{}"));
+        MockedConstruction<JSONObject> mJSONObject = mockConstruction(JSONObject.class, (mock, context) -> when(mock.toString(anyInt())).thenReturn("{}"));
 
         mApi.networkLog(data);
 
@@ -524,5 +524,7 @@ public class InstabugApiTest {
         verify(networkLog).setResponseHeaders("{}");
         verify(networkLog).setTotalDuration(duration / 1000);
         verify(networkLog).insert();
+
+        mJSONObject.close();
     }
 }
