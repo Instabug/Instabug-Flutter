@@ -107,8 +107,8 @@ public class ApmApiTest {
     public void testStartExecutionTraceWhenTraceNotNull() {
         String expectedId = "trace-id";
         String name = "trace-name";
-        ApmPigeon.Result<String> result = makeResult((String receivedId) -> {
-            assertEquals(receivedId, expectedId);
+        ApmPigeon.Result<String> result = makeResult((String actualId) -> {
+            assertEquals(expectedId, actualId);
         });
 
         mAPM.when(() -> APM.startExecutionTrace(name)).thenReturn(new ExecutionTrace(name));
@@ -122,7 +122,7 @@ public class ApmApiTest {
     public void testStartExecutionTraceWhenTraceIsNull() {
         String id = "trace-id";
         String name = "trace-name";
-        ApmPigeon.Result<String> result = makeResult((String receivedId) -> assertNull(receivedId));
+        ApmPigeon.Result<String> result = makeResult((String actualId) -> assertNull(actualId));
 
         mAPM.when(() -> APM.startExecutionTrace(name)).thenReturn(null);
 

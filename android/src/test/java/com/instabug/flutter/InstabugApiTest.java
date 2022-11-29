@@ -114,7 +114,7 @@ public class InstabugApiTest {
         MockedConstruction<Instabug.Builder> mInstabugBuilder = mockConstruction(Instabug.Builder.class, (mock, context) -> {
             String actualToken = (String) context.arguments().get(1);
             // Initializes Instabug with the correct token
-            assertEquals(actualToken, token);
+            assertEquals(token, actualToken);
             when(mock.setInvocationEvents(any())).thenReturn(mock);
         });
 
@@ -125,7 +125,8 @@ public class InstabugApiTest {
         // Initializes Instabug with correct the invocation events
         assertEquals(
                 "expected Instabug to be initialized using Instabug.Builder",
-                mInstabugBuilder.constructed().size(), 1
+                1,
+                mInstabugBuilder.constructed().size()
         );
         verify(builder).setInvocationEvents(InstabugInvocationEvent.FLOATING_BUTTON);
         verify(builder).build();
@@ -288,7 +289,7 @@ public class InstabugApiTest {
 
     @Test
     public void testGetTags() {
-        InstabugPigeon.Result<List<String>> result = makeResult((tags) -> assertEquals(tags, new ArrayList<>()));
+        InstabugPigeon.Result<List<String>> result = makeResult((tags) -> assertEquals(new ArrayList<>(), tags));
 
         mApi.getTags(result);
 
