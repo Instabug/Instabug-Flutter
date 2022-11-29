@@ -1,5 +1,6 @@
 package com.instabug.flutter;
 
+import static com.instabug.flutter.util.GlobalMocks.reflected;
 import static com.instabug.flutter.util.MockResult.makeResult;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -7,21 +8,28 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.modules.ApmApi;
 import com.instabug.flutter.util.GlobalMocks;
+import com.instabug.flutter.util.MockReflected;
 import com.instabug.library.LogLevel;
 
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
@@ -176,5 +184,62 @@ public class ApmApiTest {
         mAPM.verify(APM::endAppLaunch);
     }
 
-    // TODO: Test networkLogAndroid
+    @Test
+    public void testNetworkLogAndroid() {
+        Map<String, Object> data = new HashMap<>();
+        String requestUrl = "https://example.com";
+        String requestBody = "hi";
+        String responseBody = "{\"hello\":\"world\"}";
+        String requestMethod = "POST";
+        String requestContentType = "text/plain";
+        String responseContentType = "application/json";
+        long requestBodySize = 20;
+        long responseBodySize = 50;
+        int responseCode = 401;
+        long requestDuration = 23000;
+        long requestStartTime = System.currentTimeMillis() / 1000;
+        HashMap<String, String> requestHeaders = new HashMap<>();
+        HashMap<String, String> responseHeaders = new HashMap<>();
+        String errorDomain = "ERROR_DOMAIN";
+        String serverErrorMessage = "SERVER_ERROR_MESSAGE";
+        data.put("url", requestUrl);
+        data.put("requestBody", requestBody);
+        data.put("responseBody", responseBody);
+        data.put("method", requestMethod);
+        data.put("requestContentType", requestContentType);
+        data.put("responseContentType", responseContentType);
+        data.put("requestBodySize", requestBodySize);
+        data.put("responseBodySize", responseBodySize);
+        data.put("errorDomain", errorDomain);
+        data.put("responseCode", responseCode);
+        data.put("requestDuration", requestDuration);
+        data.put("startTime", requestStartTime);
+        data.put("requestHeaders", requestHeaders);
+        data.put("responseHeaders", responseHeaders);
+        data.put("duration", requestDuration);
+        data.put("serverErrorMessage", serverErrorMessage);
+
+        mockConstruction(JSONObject.class, (mock, context) -> when(mock.toString(anyInt())).thenReturn("{}"));
+
+        mApi.networkLogAndroid(data);
+
+        reflected.verify(() -> MockReflected.apmNetworkLog(
+                requestStartTime * 1000,
+                requestDuration / 1000,
+                "{}",
+                requestBody,
+                requestBodySize,
+                requestMethod,
+                requestUrl,
+                requestContentType,
+                "{}",
+                responseBody,
+                responseBodySize,
+                responseCode,
+                responseContentType,
+                errorDomain,
+                null,
+                serverErrorMessage
+        ));
+    }
 }

@@ -56,6 +56,12 @@ public class GlobalMocks {
                 .when(() -> Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "setCurrentPlatform", int.class))
                 .thenReturn(mSetCurrentPlatform);
 
+        Method mAPMNetworkLog = MockReflected.class.getDeclaredMethod("apmNetworkLog", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class);
+        mAPMNetworkLog.setAccessible(true);
+        reflection
+                .when(() -> Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class))
+                .thenReturn(mAPMNetworkLog);
+
         uri = mockStatic(Uri.class);
         uri.when(() -> Uri.fromFile(any())).thenReturn(mock(Uri.class));
     }
