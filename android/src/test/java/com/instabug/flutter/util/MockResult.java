@@ -3,8 +3,9 @@ package com.instabug.flutter.util;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.generated.RepliesPigeon;
+import com.instabug.flutter.generated.SurveysPigeon;
 
-interface Result<T> extends ApmPigeon.Result<T>, InstabugPigeon.Result<T>, RepliesPigeon.Result<T> {
+interface Result<T> extends ApmPigeon.Result<T>, InstabugPigeon.Result<T>, RepliesPigeon.Result<T>, SurveysPigeon.Result<T> {
     void success(T result);
 
     void error(Throwable error);
