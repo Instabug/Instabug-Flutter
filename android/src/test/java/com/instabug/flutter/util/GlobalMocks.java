@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 
+import org.json.JSONObject;
 import org.mockito.MockedStatic;
 import org.mockito.invocation.InvocationOnMock;
 
@@ -61,6 +62,13 @@ public class GlobalMocks {
         reflection
                 .when(() -> Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class))
                 .thenReturn(mAPMNetworkLog);
+
+        Method mCrashReportException = MockReflected.class.getDeclaredMethod("crashReportException", JSONObject.class, boolean.class);
+        mCrashReportException.setAccessible(true);
+        reflection
+                .when(() -> Reflection.getMethod(Class.forName("com.instabug.crash.CrashReporting"), "reportException",
+                        JSONObject.class, boolean.class))
+                .thenReturn(mCrashReportException);
 
         uri = mockStatic(Uri.class);
         uri.when(() -> Uri.fromFile(any())).thenReturn(mock(Uri.class));
