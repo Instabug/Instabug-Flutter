@@ -17,7 +17,6 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.OnInvokeCallback;
 import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
 import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
-import com.instabug.survey.callbacks.OnDismissCallback;
 
 import org.junit.After;
 import org.junit.Before;
