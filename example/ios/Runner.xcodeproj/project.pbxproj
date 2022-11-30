@@ -16,8 +16,9 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		9D381ECFBB01BD0E978EBDF2 /* Pods_InstabugSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71679BEC094CFF3474195C2E /* Pods_InstabugSampleTests.framework */; };
-		C090017C25D9A031006F3DAE /* InstabugSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C090017B25D9A031006F3DAE /* InstabugSampleTests.m */; };
 		C09001B425D9A3C5006F3DAE /* InstabugSampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C09001B325D9A3C5006F3DAE /* InstabugSampleUITests.m */; };
+		CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC080E102937B7DB0041170A /* InstabugApiTests.m */; };
+		CC359DB92937720C0067A924 /* ApmApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC359DB82937720C0067A924 /* ApmApiTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,11 +76,12 @@
 		BA5633844585BB93FE7BCCE7 /* Pods-InstabugSampleTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugSampleTests.profile.xcconfig"; path = "Target Support Files/Pods-InstabugSampleTests/Pods-InstabugSampleTests.profile.xcconfig"; sourceTree = "<group>"; };
 		BF9025BBD0A6FD7B193E903A /* Pods-InstabugSampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugSampleTests.debug.xcconfig"; path = "Target Support Files/Pods-InstabugSampleTests/Pods-InstabugSampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C090017925D9A030006F3DAE /* InstabugSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstabugSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C090017B25D9A031006F3DAE /* InstabugSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugSampleTests.m; sourceTree = "<group>"; };
 		C090017D25D9A031006F3DAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C09001B125D9A3C5006F3DAE /* InstabugSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstabugSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C09001B325D9A3C5006F3DAE /* InstabugSampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugSampleUITests.m; sourceTree = "<group>"; };
 		C09001B525D9A3C5006F3DAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC080E102937B7DB0041170A /* InstabugApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstabugApiTests.m; sourceTree = "<group>"; };
+		CC359DB82937720C0067A924 /* ApmApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApmApiTests.m; sourceTree = "<group>"; };
 		D465CA8CFED509B46412330E /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		F5446C0D3B2623D9BCC7CCE3 /* Pods_InstabugSampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstabugSampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -190,8 +192,9 @@
 		C090017A25D9A031006F3DAE /* InstabugSampleTests */ = {
 			isa = PBXGroup;
 			children = (
-				C090017B25D9A031006F3DAE /* InstabugSampleTests.m */,
+				CC080E102937B7DB0041170A /* InstabugApiTests.m */,
 				C090017D25D9A031006F3DAE /* Info.plist */,
+				CC359DB82937720C0067A924 /* ApmApiTests.m */,
 			);
 			path = InstabugSampleTests;
 			sourceTree = "<group>";
@@ -503,7 +506,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C090017C25D9A031006F3DAE /* InstabugSampleTests.m in Sources */,
+				CC359DB92937720C0067A924 /* ApmApiTests.m in Sources */,
+				CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
