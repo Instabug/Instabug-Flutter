@@ -193,5 +193,12 @@ public final class ArgsRegistry {
         put("CustomTextPlaceHolderKey.repliesNotificationTeamName", Key.CHATS_TEAM_STRING_NAME);
         put("CustomTextPlaceHolderKey.repliesNotificationReplyButton", Key.REPLIES_NOTIFICATION_REPLY_BUTTON);
         put("CustomTextPlaceHolderKey.repliesNotificationDismissButton", Key.REPLIES_NOTIFICATION_DISMISS_BUTTON);
+
+        put("CustomTextPlaceHolderKey.okButtonText", Key.BUG_ATTACHMENT_DIALOG_OK_BUTTON);
+        put("CustomTextPlaceHolderKey.audio", Key.CHATS_TYPE_AUDIO);
+        put("CustomTextPlaceHolderKey.image", Key.CHATS_TYPE_IMAGE);
+        put("CustomTextPlaceHolderKey.screenRecording", Key.CHATS_TYPE_VIDEO);
+        put("CustomTextPlaceHolderKey.messagesNotificationAndOthers", Key.CHATS_MULTIPLE_MESSAGE_NOTIFICATION);
+        put("CustomTextPlaceHolderKey.insufficientContentMessage", Key.COMMENT_FIELD_INSUFFICIENT_CONTENT);
     }};
 }
