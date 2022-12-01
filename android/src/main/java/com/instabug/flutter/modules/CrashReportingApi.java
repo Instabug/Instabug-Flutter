@@ -40,7 +40,6 @@ public class CrashReportingApi implements CrashReportingPigeon.CrashReportingHos
                     JSONObject.class, boolean.class);
             if (method != null) {
                 method.invoke(null, exceptionObject, isHandled);
-                Log.e(TAG, exceptionObject.toString());
             }
         } catch (Exception e) {
             e.printStackTrace();
