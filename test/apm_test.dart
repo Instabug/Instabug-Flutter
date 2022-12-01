@@ -145,7 +145,7 @@ void main() {
     await APM.networkLogAndroid(data);
 
     verify(
-      mHost.networkLogAndroid(data.toMap()),
+      mHost.networkLogAndroid(data.toJson()),
     ).called(1);
   });
 }

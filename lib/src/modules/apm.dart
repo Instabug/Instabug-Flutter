@@ -58,7 +58,10 @@ class APM {
       );
     }
 
-    return Trace(traceId, name);
+    return Trace(
+      id: traceId,
+      name: name,
+    );
   }
 
   /// Sets attribute of an execution trace.
@@ -103,7 +106,7 @@ class APM {
 
   static FutureOr<void> networkLogAndroid(NetworkData data) {
     if (IBGBuildInfo.instance.isAndroid) {
-      return _host.networkLogAndroid(data.toMap());
+      return _host.networkLogAndroid(data.toJson());
     }
   }
 }

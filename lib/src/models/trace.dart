@@ -1,19 +1,14 @@
 import 'package:instabug_flutter/src/modules/apm.dart';
 
 class Trace {
-  String id;
-  String name = '';
-  Map<String, dynamic> attributes;
-  Trace(this.id, this.name, {Map<String, dynamic>? listOfAttributes})
-      : attributes = listOfAttributes ?? <String, dynamic>{};
+  Trace({
+    required this.id,
+    required this.name,
+  });
 
-  Map<String, dynamic> toMap() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['name'] = name;
-    map['attributes'] = attributes;
-    return map;
-  }
+  final String id;
+  final String name;
+  final Map<String, dynamic> attributes = {};
 
   void setAttribute(String key, String value) {
     APM.setExecutionTraceAttribute(id, key, value);
@@ -22,5 +17,13 @@ class Trace {
 
   void end() {
     APM.endExecutionTrace(id);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'attributes': attributes,
+    };
   }
 }
