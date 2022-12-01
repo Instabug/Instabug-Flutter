@@ -98,7 +98,6 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
 
             view.setDrawingCacheEnabled(true);
             final Bitmap bitmap = renderer.getBitmap();
-            Log.v(TAG, bitmap.toString());
             view.setDrawingCacheEnabled(false);
 
             return bitmap;

@@ -233,11 +233,6 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     int64_t duration = [data[@"duration"] integerValue];
     int64_t startTime = [data[@"startTime"] integerValue] * 1000;
 
-    for (NSString *key in [requestHeaders allKeys]) {
-        NSLog(@"key: %@", key);
-        NSLog(@"value: %@", [requestHeaders objectForKey:key]);
-    }
-
     NSString *gqlQueryName = nil;
     NSString *serverErrorMessage = nil;
     if (data[@"gqlQueryName"] != [NSNull null]) {
