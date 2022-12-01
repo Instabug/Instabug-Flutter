@@ -248,11 +248,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     @Override
-    public void setDebugEnabled(@NonNull Boolean enabled) {
-        Instabug.setDebugEnabled(enabled);
-    }
-
-    @Override
     public void setSdkDebugLogsLevel(@NonNull String level) {
         final int sdkLogLevel = ArgsRegistry.sdkLogLevels.get(level);
         Instabug.setSdkDebugLogsLevel(sdkLogLevel);
