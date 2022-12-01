@@ -17,7 +17,7 @@ class NetworkLogger {
   }
 
   Future<void> networkLog(NetworkData data) async {
-    await _host.networkLog(data.toMap());
+    await _host.networkLog(data.toJson());
     await APM.networkLogAndroid(data);
   }
 }

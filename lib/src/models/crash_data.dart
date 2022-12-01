@@ -1,26 +1,23 @@
 import 'package:instabug_flutter/src/models/exception_data.dart';
 
 class CrashData {
-  CrashData(this.message, this.os, this.exception);
+  const CrashData({
+    required this.os,
+    required this.message,
+    required this.exception,
+  });
 
-  String message;
-  String os;
-  String platform = 'flutter';
-  List<ExceptionData> exception;
+  static const platform = 'flutter';
+  final String message;
+  final String os;
+  final List<ExceptionData> exception;
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'message': message,
-        'os': os,
-        'platform': platform,
-        'exception': exception,
-      };
-
-  Map<String, dynamic> toMap() {
-    final map = <String, dynamic>{};
-    map['message'] = message;
-    map['os'] = os;
-    map['platform'] = platform;
-    map['exception'] = exception;
-    return map;
+  Map<String, dynamic> toJson() {
+    return {
+      'os': os,
+      'message': message,
+      'platform': platform,
+      'exception': exception,
+    };
   }
 }

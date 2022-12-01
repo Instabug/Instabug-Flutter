@@ -46,10 +46,10 @@ void main() {
       final frames = trace.frames
           .map(
             (frame) => ExceptionData(
-              frame.uri.toString(),
-              frame.member,
-              frame.line,
-              frame.column ?? 0,
+              file: frame.uri.toString(),
+              methodName: frame.member,
+              lineNumber: frame.line,
+              column: frame.column ?? 0,
             ),
           )
           .toList();
@@ -57,9 +57,9 @@ void main() {
       when(mBuildInfo.operatingSystem).thenReturn('unit-test');
 
       final data = CrashData(
-        exception.toString(),
-        IBGBuildInfo.instance.operatingSystem,
-        frames,
+        os: IBGBuildInfo.instance.operatingSystem,
+        message: exception.toString(),
+        exception: frames,
       );
 
       await CrashReporting.reportHandledCrash(exception, stack);

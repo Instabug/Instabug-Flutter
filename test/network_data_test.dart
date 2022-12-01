@@ -23,7 +23,7 @@ void main() {
 
   test('[copyWith] should return an exact copy', () async {
     final newData = data.copyWith();
-    expect(newData.toMap(), data.toMap());
+    expect(newData.toJson(), data.toJson());
   });
 
   test('[copyWith] should return an updated copy', () async {
@@ -69,7 +69,7 @@ void main() {
   });
 
   test('[toMap] should return exact data in a map', () async {
-    final map = data.toMap();
+    final map = data.toJson();
 
     expect(map['url'], data.url);
     expect(map['method'], data.method);

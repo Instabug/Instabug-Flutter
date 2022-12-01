@@ -15,7 +15,10 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   final mHost = MockApmHostApi();
-  final trace = Trace("trace", "Execution Trace");
+  final trace = Trace(
+    id: "trace",
+    name: "Execution Trace",
+  );
 
   setUpAll(() {
     APM.$setHostApi(mHost);

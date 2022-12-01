@@ -52,45 +52,46 @@ class NetworkData {
     DateTime? startTime,
     int? errorCode,
     String? errorDomain,
-  }) =>
-      NetworkData(
-        url: url ?? this.url,
-        method: method ?? this.method,
-        requestBody: requestBody ?? this.requestBody,
-        responseBody: responseBody ?? this.responseBody,
-        requestBodySize: requestBodySize ?? this.requestBodySize,
-        responseBodySize: responseBodySize ?? this.responseBodySize,
-        status: status ?? this.status,
-        requestHeaders: requestHeaders ?? this.requestHeaders,
-        responseHeaders: responseHeaders ?? this.responseHeaders,
-        duration: duration ?? this.duration,
-        requestContentType: requestContentType ?? this.requestContentType,
-        responseContentType: responseContentType ?? this.responseContentType,
-        endTime: endTime ?? this.endTime,
-        startTime: startTime ?? this.startTime,
-        errorCode: errorCode ?? this.errorCode,
-        errorDomain: errorDomain ?? this.errorDomain,
-      );
+  }) {
+    return NetworkData(
+      url: url ?? this.url,
+      method: method ?? this.method,
+      requestBody: requestBody ?? this.requestBody,
+      responseBody: responseBody ?? this.responseBody,
+      requestBodySize: requestBodySize ?? this.requestBodySize,
+      responseBodySize: responseBodySize ?? this.responseBodySize,
+      status: status ?? this.status,
+      requestHeaders: requestHeaders ?? this.requestHeaders,
+      responseHeaders: responseHeaders ?? this.responseHeaders,
+      duration: duration ?? this.duration,
+      requestContentType: requestContentType ?? this.requestContentType,
+      responseContentType: responseContentType ?? this.responseContentType,
+      endTime: endTime ?? this.endTime,
+      startTime: startTime ?? this.startTime,
+      errorCode: errorCode ?? this.errorCode,
+      errorDomain: errorDomain ?? this.errorDomain,
+    );
+  }
 
-  Map<String, dynamic> toMap() {
-    final map = <String, dynamic>{};
-    map['url'] = url;
-    map['method'] = method;
-    map['requestBody'] = requestBody;
-    map['responseBody'] = responseBody;
-    map['responseCode'] = status;
-    map['requestHeaders'] =
-        requestHeaders.map((key, value) => MapEntry(key, value.toString()));
-    map['responseHeaders'] =
-        responseHeaders.map((key, value) => MapEntry(key, value.toString()));
-    map['requestContentType'] = requestContentType;
-    map['responseContentType'] = responseContentType;
-    map['duration'] = duration;
-    map['startTime'] = startTime.millisecondsSinceEpoch;
-    map['requestBodySize'] = requestBodySize;
-    map['responseBodySize'] = responseBodySize;
-    map['errorDomain'] = errorDomain;
-    map['errorCode'] = errorCode;
-    return map;
+  Map<String, dynamic> toJson() {
+    return {
+      'url': url,
+      'method': method,
+      'requestBody': requestBody,
+      'responseBody': responseBody,
+      'responseCode': status,
+      'requestHeaders':
+          requestHeaders.map((key, value) => MapEntry(key, value.toString())),
+      'responseHeaders':
+          responseHeaders.map((key, value) => MapEntry(key, value.toString())),
+      'requestContentType': requestContentType,
+      'responseContentType': responseContentType,
+      'duration': duration,
+      'startTime': startTime.millisecondsSinceEpoch,
+      'requestBodySize': requestBodySize,
+      'responseBodySize': responseBodySize,
+      'errorDomain': errorDomain,
+      'errorCode': errorCode,
+    };
   }
 }
