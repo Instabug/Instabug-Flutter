@@ -60,7 +60,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         try {
             Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "setCurrentPlatform", int.class);
             if (method != null) {
-                Log.i(TAG, "invoking setCurrentPlatform with platform: " + Platform.FLUTTER);
                 method.invoke(null, Platform.FLUTTER);
             } else {
                 Log.e(TAG, "setCurrentPlatform was not found by reflection");
