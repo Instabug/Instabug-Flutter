@@ -270,14 +270,17 @@ void main() {
     ).called(1);
   });
 
-  test('[setDebugEnabled] should call host method', () async {
+  test('[setDebugEnabled] should call setSdkDebugLogsLevel host method',
+      () async {
     const enabled = true;
+    const level = IBGSDKDebugLogsLevel.verbose;
     when(mBuildInfo.isAndroid).thenReturn(true);
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.setDebugEnabled(enabled);
 
     verify(
-      mHost.setDebugEnabled(enabled),
+      mHost.setSdkDebugLogsLevel(level.toString()),
     ).called(1);
   });
 
