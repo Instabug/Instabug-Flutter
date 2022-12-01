@@ -254,7 +254,8 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setSdkDebugLogsLevel(@NonNull String level) {
-        // iOS Only
+        final int sdkLogLevel = ArgsRegistry.sdkLogLevels.get(level);
+        Instabug.setSdkDebugLogsLevel(sdkLogLevel);
     }
 
     @Override
