@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR_DART="lib/generated"
+DIR_DART="lib/src/generated"
 DIR_IOS="ios/Classes/Generated"
 DIR_ANDROID="android/src/main/java/com/instabug/flutter/generated"
 PKG_ANDROID="com.instabug.flutter.generated"
