@@ -82,6 +82,8 @@
 		C09001B525D9A3C5006F3DAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC080E102937B7DB0041170A /* InstabugApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstabugApiTests.m; sourceTree = "<group>"; };
 		CC359DB82937720C0067A924 /* ApmApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApmApiTests.m; sourceTree = "<group>"; };
+		CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Instabug+Test.h"; sourceTree = "<group>"; };
+		CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IBGNetworkLogger+Test.h"; sourceTree = "<group>"; };
 		D465CA8CFED509B46412330E /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		F5446C0D3B2623D9BCC7CCE3 /* Pods_InstabugSampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstabugSampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -192,6 +194,7 @@
 		C090017A25D9A031006F3DAE /* InstabugSampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				CC78720A2938D1C5008CB2A5 /* Util */,
 				CC080E102937B7DB0041170A /* InstabugApiTests.m */,
 				C090017D25D9A031006F3DAE /* Info.plist */,
 				CC359DB82937720C0067A924 /* ApmApiTests.m */,
@@ -206,6 +209,15 @@
 				C09001B525D9A3C5006F3DAE /* Info.plist */,
 			);
 			path = InstabugSampleUITests;
+			sourceTree = "<group>";
+		};
+		CC78720A2938D1C5008CB2A5 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */,
+				CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
