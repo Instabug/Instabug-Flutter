@@ -59,10 +59,8 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     @Override
     public void setLogLevel(@NonNull String level) {
         try {
-            if (ArgsRegistry.getDeserializedValue(level) == null) {
-                return;
-            }
-            APM.setLogLevel((int) ArgsRegistry.getRawValue(level));
+            final int resolvedLevel = ArgsRegistry.logLevels.get(level);
+            APM.setLogLevel(resolvedLevel);
         } catch (Exception e) {
             e.printStackTrace();
         }

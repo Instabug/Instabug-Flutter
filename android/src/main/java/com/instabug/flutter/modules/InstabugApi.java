@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.generated.InstabugPigeon;
-import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
 import com.instabug.library.Feature;
@@ -20,9 +19,11 @@ import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.Platform;
+import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+import com.instabug.library.visualusersteps.State;
 
 import org.json.JSONObject;
 
@@ -87,7 +88,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
         for (int i = 0; i < invocationEvents.size(); i++) {
             String key = invocationEvents.get(i);
-            invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key);
+            invocationEventsArray[i] = ArgsRegistry.invocationEvents.get(key);
         }
 
         final Application application = (Application) context;
@@ -104,8 +105,8 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void showWelcomeMessageWithMode(@NonNull String mode) {
-        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(mode);
-        Instabug.showWelcomeMessage(resolvedWelcomeMessageMode);
+        WelcomeMessage.State resolvedMode = ArgsRegistry.welcomeMessageStates.get(mode);
+        Instabug.showWelcomeMessage(resolvedMode);
     }
 
     @Override
@@ -130,22 +131,20 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setLocale(@NonNull String locale) {
-        Locale resolvedLocale = ArgsRegistry.getDeserializedValue(locale);
-        Instabug.setLocale(resolvedLocale);
+        final InstabugLocale resolvedLocale = ArgsRegistry.locales.get(locale);
+        Instabug.setLocale(new Locale(resolvedLocale.getCode(), resolvedLocale.getCountry()));
     }
 
     @Override
     public void setColorTheme(@NonNull String theme) {
-        InstabugColorTheme resolvedTheme = ArgsRegistry.getDeserializedValue(theme);
-        if (resolvedTheme != null) {
-            Instabug.setColorTheme(resolvedTheme);
-        }
+        InstabugColorTheme resolvedTheme = ArgsRegistry.colorThemes.get(theme);
+        Instabug.setColorTheme(resolvedTheme);
     }
 
     @Override
     public void setWelcomeMessageMode(@NonNull String mode) {
-        WelcomeMessage.State resolvedWelcomeMessageMode = ArgsRegistry.getDeserializedValue(mode);
-        Instabug.setWelcomeMessageState(resolvedWelcomeMessageMode);
+        WelcomeMessage.State resolvedMode = ArgsRegistry.welcomeMessageStates.get(mode);
+        Instabug.setWelcomeMessageState(resolvedMode);
     }
 
     @Override
@@ -164,7 +163,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setValueForStringWithKey(@NonNull String value, @NonNull String key) {
-        InstabugCustomTextPlaceHolder.Key resolvedKey = ArgsRegistry.getDeserializedValue(key);
+        InstabugCustomTextPlaceHolder.Key resolvedKey = ArgsRegistry.placeholders.get(key);
         placeHolder.set(resolvedKey, value);
         Instabug.setCustomTextPlaceHolders(placeHolder);
     }
@@ -254,7 +253,8 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public void setReproStepsMode(@NonNull String mode) {
         try {
-            Instabug.setReproStepsState(ArgsRegistry.getDeserializedValue(mode));
+            final State resolvedMode = ArgsRegistry.reproStates.get(mode);
+            Instabug.setReproStepsState(resolvedMode);
         } catch (Exception e) {
             e.printStackTrace();
         }

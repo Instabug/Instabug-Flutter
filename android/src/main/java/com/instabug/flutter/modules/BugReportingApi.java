@@ -1,5 +1,7 @@
 package com.instabug.flutter.modules;
 
+import android.annotation.SuppressLint;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -40,13 +42,14 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
         }
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void show(@NonNull String reportType, @Nullable List<String> invocationOptions) {
         int[] options = new int[invocationOptions.size()];
         for (int i = 0; i < invocationOptions.size(); i++) {
-            options[i] = ArgsRegistry.getDeserializedValue(invocationOptions.get(i));
+            options[i] = ArgsRegistry.invocationOptions.get(invocationOptions.get(i));
         }
-        int reportTypeInt = ArgsRegistry.getDeserializedValue(reportType);
+        int reportTypeInt = ArgsRegistry.reportTypes.get(reportType);
         BugReporting.show(reportTypeInt, options);
     }
 
@@ -56,19 +59,20 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
 
         for (int i = 0; i < events.size(); i++) {
             String key = events.get(i);
-            invocationEventsArray[i] = ArgsRegistry.getDeserializedValue(key);
+            invocationEventsArray[i] = ArgsRegistry.invocationEvents.get(key);
         }
 
         BugReporting.setInvocationEvents(invocationEventsArray);
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void setReportTypes(@NonNull List<String> types) {
         int[] reportTypesArray = new int[types.size()];
 
         for (int i = 0; i < types.size(); i++) {
             String key = types.get(i);
-            reportTypesArray[i] = ArgsRegistry.getDeserializedValue(key);
+            reportTypesArray[i] = ArgsRegistry.reportTypes.get(key);
         }
 
         BugReporting.setReportTypes(reportTypesArray);
@@ -76,29 +80,30 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
 
     @Override
     public void setExtendedBugReportMode(@NonNull String mode) {
-        final ExtendedBugReport.State resolvedMode = ArgsRegistry.getDeserializedValue(mode);
+        final ExtendedBugReport.State resolvedMode = ArgsRegistry.extendedBugReportStates.get(mode);
         BugReporting.setExtendedBugReportState(resolvedMode);
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void setInvocationOptions(@NonNull List<String> options) {
         int[] resolvedOptions = new int[options.size()];
         for (int i = 0; i < options.size(); i++) {
-            resolvedOptions[i] = ArgsRegistry.getDeserializedValue(options.get(i));
+            resolvedOptions[i] = ArgsRegistry.invocationOptions.get(options.get(i));
         }
         BugReporting.setOptions(resolvedOptions);
     }
 
     @Override
     public void setFloatingButtonEdge(@NonNull String edge, @NonNull Long offset) {
-        final InstabugFloatingButtonEdge resolvedEdge = ArgsRegistry.getDeserializedValue(edge);
+        final InstabugFloatingButtonEdge resolvedEdge = ArgsRegistry.floatingButtonEdges.get(edge);
         BugReporting.setFloatingButtonEdge(resolvedEdge);
         BugReporting.setFloatingButtonOffset(offset.intValue());
     }
 
     @Override
     public void setVideoRecordingFloatingButtonPosition(@NonNull String position) {
-        final InstabugVideoRecordingButtonPosition resolvedPosition = ArgsRegistry.getDeserializedValue(position);
+        final InstabugVideoRecordingButtonPosition resolvedPosition = ArgsRegistry.recordButtonPositions.get(position);
         BugReporting.setVideoRecordingFloatingButtonPosition(resolvedPosition);
     }
 
@@ -155,13 +160,14 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
         BugReporting.setDisclaimerText(text);
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void setCommentMinimumCharacterCount(@NonNull Long limit, @Nullable List<String> reportTypes) {
         int[] reportTypesArray = reportTypes == null ? new int[0] : new int[reportTypes.size()];
         if(reportTypes != null){
         for (int i = 0; i < reportTypes.size(); i++) {
             String key = reportTypes.get(i);
-            reportTypesArray[i] = ArgsRegistry.getDeserializedValue(key);
+            reportTypesArray[i] = ArgsRegistry.reportTypes.get(key);
         }
     }
         BugReporting.setCommentMinimumCharacterCount(limit.intValue(), reportTypesArray);
