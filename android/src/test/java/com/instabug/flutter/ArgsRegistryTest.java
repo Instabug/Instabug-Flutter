@@ -1,372 +1,291 @@
 package com.instabug.flutter;
 
+import static org.junit.Assert.assertTrue;
+
+import com.instabug.apm.model.LogLevel;
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
+import com.instabug.featuresrequest.ActionType;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.library.InstabugColorTheme;
-import com.instabug.library.InstabugCustomTextPlaceHolder;
+import com.instabug.library.InstabugCustomTextPlaceHolder.Key;
+import com.instabug.library.OnSdkDismissCallback.DismissType;
+import com.instabug.library.extendedbugreport.ExtendedBugReport;
+import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
+import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
+import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+import com.instabug.library.visualusersteps.State;
 
-import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 public class ArgsRegistryTest {
 
     @Test
-    public void given$registerInstabugInvocationEventsArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria() {
-        // given
-        Map<String, Object> map = new HashMap<>();
-        // when
-        ArgsRegistry.registerInstabugInvocationEventsArgs(map);
-        // then
-        Assert.assertEquals(5, map.size());
-        assertAllInvocationEventsArePresent(map);
-    }
+    public void testLogLevels() {
+        Integer[] values = {
+                LogLevel.NONE,
+                LogLevel.ERROR,
+                LogLevel.WARNING,
+                LogLevel.INFO,
+                LogLevel.DEBUG,
+                LogLevel.VERBOSE,
+        };
 
-    @Test
-    public void given$registerWelcomeMessageArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria() {
-        // given
-        Map<String, Object> map = new HashMap<>();
-        // when
-        ArgsRegistry.registerWelcomeMessageArgs(map);
-        // then
-        Assert.assertEquals(3, map.size());
-        assertAllWelcomeMessageStatesArePresent(map);
-    }
-
-    @Test
-    public void given$registerLocaleArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria() {
-        // given
-        Map<String, Object> map = new HashMap<>();
-        // when
-        ArgsRegistry.registerLocaleArgs(map);
-        // then
-        assertAllSupportedLocalesArePresent(map);
-    }
-
-    @Test
-    public void given$ArgsRegistryIsInitialized_whenQuery_thenShouldMatchCriteria() {
-        Map<String, Object> args = ArgsRegistry.ARGS;
-        assertAllInvocationEventsArePresent(args);
-        assertAllWelcomeMessageStatesArePresent(args);
-        assertAllSupportedLocalesArePresent(args);
-        assertAllColorThemesArePresent(args);
-        assertAllInvocationModesArePresent(args);
-        assertAllInvocationOptionsArePresent(args);
-        assertAllSupportedCustomTextPlaceHolderKeysArePresent(args);
-    }
-
-    @Test
-    public void givenFabInvocationIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale() {
-        // when
-        InstabugInvocationEvent deserializedValue = ArgsRegistry.getDeserializedValue(
-                "InvocationEvent.floatingButton");
-        // then
-        Assert.assertNotNull(deserializedValue);
-        Assert.assertEquals(InstabugInvocationEvent.FLOATING_BUTTON, deserializedValue);
-    }
-
-    @Test
-    public void givenWelcomeMessageBetaIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale() {
-        // when
-        WelcomeMessage.State deserializedValue = ArgsRegistry.getDeserializedValue(
-                "WelcomeMessageMode.beta");
-        // then
-        Assert.assertNotNull(deserializedValue);
-        Assert.assertEquals(WelcomeMessage.State.BETA, deserializedValue);
-    }
-
-    @Test
-    public void givenEnglishLocaleIsPresent_when$getDeserializedValue_thenShouldReturnNonNullLocale() {
-        // when
-        Locale actualLocale = ArgsRegistry.getDeserializedValue("IBGLocale.english");
-        // then
-        Assert.assertNotNull(actualLocale);
-        Assert.assertEquals("en", actualLocale.getLanguage());
-    }
-
-    @Test
-    public void given$registerColorThemeArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria() {
-        // given
-        Map<String, Object> map = new HashMap<>();
-        // when
-        ArgsRegistry.registerColorThemeArgs(map);
-        // then
-        assertAllColorThemesArePresent(map);
-    }
-
-    @Test
-    public void givenShakeHintIsPresent_when$getDeserializedValue_thenShouldReturnNonNullKey() {
-        // when
-        InstabugCustomTextPlaceHolder.Key actualKey = ArgsRegistry
-                .getDeserializedValue("CustomTextPlaceHolderKey.shakeHint");
-        // then
-        Assert.assertNotNull(actualKey);
-        Assert.assertEquals(InstabugCustomTextPlaceHolder.Key.SHAKE_HINT, actualKey);
-
-    }
-
-    @Test
-    public void given$registerPlaceHolderKeysArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria() {
-        // given
-        Map<String, Object> map = new HashMap<>();
-        // when
-        ArgsRegistry.registerCustomTextPlaceHolderKeysArgs(map);
-        // then
-        assertAllSupportedCustomTextPlaceHolderKeysArePresent(map);
-    }
-
-    @Ignore
-    @Test
-    public void duplicate_given$registerPlaceHolderKeysArgsIsCalledOnAMap_whenQuery_thenShouldMatchCriteria() {
-        // given
-        Map<String, Object> map = new HashMap<>();
-        // when
-        ArgsRegistry.registerCustomTextPlaceHolderKeysArgs(map);
-        // then
-        assertAllSupportedCustomTextPlaceHolderKeysArePresent(map, getAllCustomTextPlaceHolderKeys());
-    }
-
-    private void assertAllInvocationEventsArePresent(Map<String, Object> map) {
-        Assert.assertTrue(map.containsValue(InstabugInvocationEvent.NONE));
-        Assert.assertTrue(map.containsValue(InstabugInvocationEvent.SHAKE));
-        Assert.assertTrue(map.containsValue(InstabugInvocationEvent.FLOATING_BUTTON));
-        Assert.assertTrue(map.containsValue(InstabugInvocationEvent.SCREENSHOT));
-        Assert.assertTrue(map.containsValue(InstabugInvocationEvent.TWO_FINGER_SWIPE_LEFT));
-    }
-
-    private void assertAllWelcomeMessageStatesArePresent(Map<String, Object> map) {
-        Assert.assertTrue(map.containsValue(WelcomeMessage.State.LIVE));
-        Assert.assertTrue(map.containsValue(WelcomeMessage.State.BETA));
-        Assert.assertTrue(map.containsValue(WelcomeMessage.State.DISABLED));
-    }
-
-    private void assertAllSupportedLocalesArePresent(Map<String, Object> map) {
-        // source of truth
-        List<Locale> expectedLocales = getCurrentlySupportLanguagesByTheSDK();
-        // actual
-        List<Locale> actualLocales = new ArrayList<>();
-        for (Map.Entry m : map.entrySet()) {
-            if (m.getValue() instanceof Locale) {
-                actualLocales.add((Locale) m.getValue());
-            }
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Locale expectedLocale : expectedLocales) {
-            if (!actualLocales.contains(expectedLocale)) {
-                stringBuilder.append(expectedLocale.getLanguage())
-                        .append(" - ")
-                        .append(expectedLocale.getCountry())
-                        .append(" is missing")
-                        .append("\n");
-            }
-        }
-        String missingLangs = stringBuilder.toString();
-        if (!missingLangs.isEmpty()) {
-            Assert.fail(missingLangs);
+        for (Integer value : values) {
+            assertTrue(ArgsRegistry.logLevels.containsValue(value));
         }
     }
 
-    private void assertAllColorThemesArePresent(Map<String, Object> map) {
-        Assert.assertTrue(map.containsValue(InstabugColorTheme.InstabugColorThemeDark));
-        Assert.assertTrue(map.containsValue(InstabugColorTheme.InstabugColorThemeLight));
-    }
+    @Test
+    public void testInvocationEvents() {
+        InstabugInvocationEvent[] values = {
+                InstabugInvocationEvent.NONE,
+                InstabugInvocationEvent.SHAKE,
+                InstabugInvocationEvent.FLOATING_BUTTON,
+                InstabugInvocationEvent.SCREENSHOT,
+                InstabugInvocationEvent.TWO_FINGER_SWIPE_LEFT,
+        };
 
-    private void assertAllInvocationModesArePresent(Map<String, Object> map) {
-        Assert.assertTrue(map.containsValue(BugReporting.ReportType.BUG));
-        Assert.assertTrue(map.containsValue(BugReporting.ReportType.FEEDBACK));
-    }
-
-    private void assertAllInvocationOptionsArePresent(Map<String, Object> map) {
-        Assert.assertTrue(map.containsValue(Option.COMMENT_FIELD_REQUIRED));
-        Assert.assertTrue(map.containsValue(Option.DISABLE_POST_SENDING_DIALOG));
-        Assert.assertTrue(map.containsValue(Option.EMAIL_FIELD_HIDDEN));
-        Assert.assertTrue(map.containsValue(Option.EMAIL_FIELD_OPTIONAL));
-    }
-
-    private void assertAllSupportedCustomTextPlaceHolderKeysArePresent(Map<String, Object> map,
-                                                                       List<InstabugCustomTextPlaceHolder.Key> expectedKeys) {
-        // actual
-        List<InstabugCustomTextPlaceHolder.Key> actualKeys = new ArrayList<>();
-        for (Map.Entry m : map.entrySet()) {
-            if (m.getValue() instanceof InstabugCustomTextPlaceHolder.Key) {
-                actualKeys.add((InstabugCustomTextPlaceHolder.Key) m.getValue());
-            }
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (InstabugCustomTextPlaceHolder.Key expectedKey : expectedKeys) {
-            if (!actualKeys.contains(expectedKey)) {
-                stringBuilder.append(expectedKey)
-                        .append(" is missing")
-                        .append("\n");
-            }
-        }
-        String missingKeys = stringBuilder.toString();
-        if (!missingKeys.isEmpty()) {
-            Assert.fail(missingKeys);
+        for (InstabugInvocationEvent value : values) {
+            assertTrue(ArgsRegistry.invocationEvents.containsValue(value));
         }
     }
 
-    private void assertAllSupportedCustomTextPlaceHolderKeysArePresent(Map<String, Object> map) {
-        // source of truth
-        List<InstabugCustomTextPlaceHolder.Key> expectedKeys = getCurrentlySupportedKeysBySDK();
-        assertAllSupportedCustomTextPlaceHolderKeysArePresent(map, expectedKeys);
+    @Test
+    public void testInvocationOptions() {
+        Integer[] values = {
+                Option.EMAIL_FIELD_HIDDEN,
+                Option.EMAIL_FIELD_OPTIONAL,
+                Option.COMMENT_FIELD_REQUIRED,
+                Option.DISABLE_POST_SENDING_DIALOG,
+        };
+
+        for (Integer value : values) {
+            assertTrue(ArgsRegistry.invocationOptions.containsValue(value));
+        }
     }
 
-    private List<Locale> getCurrentlySupportLanguagesByTheSDK() {
-        List<Locale> langs = new ArrayList<>();
-        langs.add(new Locale("en", ""));
-        langs.add(new Locale("ar", ""));
-        langs.add(new Locale("de", ""));
-        langs.add(new Locale("es", ""));
-        langs.add(new Locale("fr", ""));
-        langs.add(new Locale("it", ""));
-        langs.add(new Locale("ja", ""));
-        langs.add(new Locale("ko", ""));
-        langs.add(new Locale("pl", ""));
-        langs.add(new Locale("pt", "BR"));
-        langs.add(new Locale("pt", "PT"));
-        langs.add(new Locale("ru", ""));
-        langs.add(new Locale("sv", ""));
-        langs.add(new Locale("tr", ""));
-        langs.add(new Locale("zh", "CN"));
-        langs.add(new Locale("zh", "TW"));
-        langs.add(new Locale("cs", ""));
-        langs.add(new Locale("in", ""));
-        langs.add(new Locale("da", ""));
-        langs.add(new Locale("sk", ""));
-        langs.add(new Locale("nl", ""));
-        langs.add(new Locale("no", ""));
-        return langs;
+    @Test
+    public void testColorThemes() {
+        InstabugColorTheme[] values = {
+                InstabugColorTheme.InstabugColorThemeLight,
+                InstabugColorTheme.InstabugColorThemeDark,
+        };
+
+        for (InstabugColorTheme value : values) {
+            assertTrue(ArgsRegistry.colorThemes.containsValue(value));
+        }
     }
 
-    private List<InstabugCustomTextPlaceHolder.Key> getCurrentlySupportedKeysBySDK() {
-        List<InstabugCustomTextPlaceHolder.Key> keys = new ArrayList<>();
-        keys.add(InstabugCustomTextPlaceHolder.Key.SHAKE_HINT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.SWIPE_HINT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.INVALID_EMAIL_MESSAGE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.INVALID_COMMENT_MESSAGE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.INVOCATION_HEADER);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_BUG);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK);
-        keys.add(InstabugCustomTextPlaceHolder.Key.EMAIL_FIELD_HINT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_BUG_REPORT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_FEEDBACK);
-        keys.add(InstabugCustomTextPlaceHolder.Key.ADD_VOICE_MESSAGE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.ADD_IMAGE_FROM_GALLERY);
-        keys.add(InstabugCustomTextPlaceHolder.Key.ADD_EXTRA_SCREENSHOT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.CONVERSATIONS_LIST_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.AUDIO_RECORDING_PERMISSION_DENIED);
-        keys.add(InstabugCustomTextPlaceHolder.Key.CONVERSATION_TEXT_FIELD_HINT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD);
-        keys.add(InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_RELEASE_TO_ATTACH);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.SUCCESS_DIALOG_HEADER);
-        keys.add(InstabugCustomTextPlaceHolder.Key.ADD_VIDEO);
-        keys.add(InstabugCustomTextPlaceHolder.Key.VIDEO_RECORDING_FAB_BUBBLE_HINT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_CONTENT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.CHATS_TEAM_STRING_NAME);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_REPLY_BUTTON);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_DISMISS_BUTTON);
-        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_SUBTITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_BUG_DESCRIPTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK_DESCRIPTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION_DESCRIPTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REQUEST_FEATURE_DESCRIPTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_BODY);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_NEGATIVE_ACTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_POSITIVE_ACTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_ADD_ATTACHMENT_HEADER);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_BODY);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_LINK);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_PROGRESS_DIALOG_BODY);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_HEADER);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_DESCRIPTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_EMPTY_STATE_DESCRIPTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_ITEM_NUMBERING_TITLE);
-        return keys;
+    @Test
+    public void testFloatingButtonEdges() {
+        InstabugFloatingButtonEdge[] values = {
+                InstabugFloatingButtonEdge.LEFT,
+                InstabugFloatingButtonEdge.RIGHT,
+        };
+
+        for (InstabugFloatingButtonEdge value : values) {
+            assertTrue(ArgsRegistry.floatingButtonEdges.containsValue(value));
+        }
     }
 
-    private List<InstabugCustomTextPlaceHolder.Key> getAllCustomTextPlaceHolderKeys() {
-        List<InstabugCustomTextPlaceHolder.Key> keys = new ArrayList<>();
-        keys.add(InstabugCustomTextPlaceHolder.Key.SHAKE_HINT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.SWIPE_HINT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.INVALID_EMAIL_MESSAGE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.INVALID_COMMENT_MESSAGE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.INVOCATION_HEADER);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_BUG);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK);
-        keys.add(InstabugCustomTextPlaceHolder.Key.EMAIL_FIELD_HINT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_BUG_REPORT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.COMMENT_FIELD_HINT_FOR_FEEDBACK);
-        keys.add(InstabugCustomTextPlaceHolder.Key.ADD_VOICE_MESSAGE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.ADD_IMAGE_FROM_GALLERY);
-        keys.add(InstabugCustomTextPlaceHolder.Key.ADD_EXTRA_SCREENSHOT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.CONVERSATIONS_LIST_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.AUDIO_RECORDING_PERMISSION_DENIED);
-        keys.add(InstabugCustomTextPlaceHolder.Key.CONVERSATION_TEXT_FIELD_HINT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD);
-        keys.add(InstabugCustomTextPlaceHolder.Key.VOICE_MESSAGE_RELEASE_TO_ATTACH);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_SUCCESSFULLY_SENT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.SUCCESS_DIALOG_HEADER);
-        keys.add(InstabugCustomTextPlaceHolder.Key.ADD_VIDEO);
-        keys.add(InstabugCustomTextPlaceHolder.Key.VIDEO_RECORDING_FAB_BUBBLE_HINT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.LIVE_WELCOME_MESSAGE_CONTENT);
-        keys.add(InstabugCustomTextPlaceHolder.Key.VIDEO_PLAYER_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.FEATURES_REQUEST);
-        keys.add(InstabugCustomTextPlaceHolder.Key.FEATURES_REQUEST_ADD_FEATURE_TOAST);
-        keys.add(InstabugCustomTextPlaceHolder.Key.FEATURES_REQUEST_ADD_FEATURE_THANKS_MESSAGE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_WELCOME_SCREEN_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_WELCOME_SCREEN_SUBTITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_WELCOME_SCREEN_BUTTON);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REQUEST_FEATURE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.CHATS_TEAM_STRING_NAME);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_REPLY_BUTTON);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPLIES_NOTIFICATION_DISMISS_BUTTON);
-        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.SURVEYS_STORE_RATING_THANKS_SUBTITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_BUG_DESCRIPTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_FEEDBACK_DESCRIPTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_QUESTION_DESCRIPTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REQUEST_FEATURE_DESCRIPTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_TITLE);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_BODY);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_NEGATIVE_ACTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_DISCARD_DIALOG_POSITIVE_ACTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_ADD_ATTACHMENT_HEADER);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_BODY);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPORT_REPRO_STEPS_DISCLAIMER_LINK);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_PROGRESS_DIALOG_BODY);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_HEADER);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_DESCRIPTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_EMPTY_STATE_DESCRIPTION);
-        keys.add(InstabugCustomTextPlaceHolder.Key.REPRO_STEPS_LIST_ITEM_NUMBERING_TITLE);
-        return keys;
+    @Test
+    public void testRecordButtonPositions() {
+        InstabugVideoRecordingButtonPosition[] values = {
+                InstabugVideoRecordingButtonPosition.TOP_LEFT,
+                InstabugVideoRecordingButtonPosition.TOP_RIGHT,
+                InstabugVideoRecordingButtonPosition.BOTTOM_LEFT,
+                InstabugVideoRecordingButtonPosition.BOTTOM_RIGHT,
+        };
+
+        for (InstabugVideoRecordingButtonPosition value : values) {
+            assertTrue(ArgsRegistry.recordButtonPositions.containsValue(value));
+        }
     }
+
+    @Test
+    public void testwelcomeMessageStates() {
+        WelcomeMessage.State[] values = {
+                WelcomeMessage.State.LIVE,
+                WelcomeMessage.State.BETA,
+                WelcomeMessage.State.DISABLED,
+        };
+
+        for (WelcomeMessage.State value : values) {
+            assertTrue(ArgsRegistry.welcomeMessageStates.containsValue(value));
+        }
+    }
+
+    @Test
+    public void testReportTypes() {
+        Integer[] values = {
+                BugReporting.ReportType.BUG,
+                BugReporting.ReportType.FEEDBACK,
+                BugReporting.ReportType.QUESTION,
+        };
+
+        for (Integer value : values) {
+            assertTrue(ArgsRegistry.reportTypes.containsValue(value));
+        }
+    }
+
+    @Test
+    public void testDismissTypes() {
+        DismissType[] values = {
+                DismissType.SUBMIT,
+                DismissType.CANCEL,
+                DismissType.ADD_ATTACHMENT,
+        };
+
+        for (DismissType value : values) {
+            assertTrue(ArgsRegistry.dismissTypes.containsValue(value));
+        }
+    }
+
+    @Test
+    public void testActionTypes() {
+        Integer[] values = {
+                ActionType.REQUEST_NEW_FEATURE,
+                ActionType.ADD_COMMENT_TO_FEATURE,
+        };
+
+        for (Integer value : values) {
+            assertTrue(ArgsRegistry.actionTypes.containsValue(value));
+        }
+    }
+
+    @Test
+    public void testExtendedBugReportStates() {
+        ExtendedBugReport.State[] values = {
+                ExtendedBugReport.State.ENABLED_WITH_REQUIRED_FIELDS,
+                ExtendedBugReport.State.ENABLED_WITH_OPTIONAL_FIELDS,
+                ExtendedBugReport.State.DISABLED,
+        };
+
+        for (ExtendedBugReport.State value : values) {
+            assertTrue(ArgsRegistry.extendedBugReportStates.containsValue(value));
+        }
+    }
+
+
+    @Test
+    public void testReproStates() {
+        State[] values = {
+                State.ENABLED_WITH_NO_SCREENSHOTS,
+                State.ENABLED,
+                State.DISABLED,
+        };
+
+        for (State value : values) {
+            assertTrue(ArgsRegistry.reproStates.containsValue(value));
+        }
+    }
+
+
+    @Test
+    public void testLocales() {
+        InstabugLocale[] values = {
+                InstabugLocale.ARABIC,
+                InstabugLocale.AZERBAIJANI,
+                InstabugLocale.SIMPLIFIED_CHINESE,
+                InstabugLocale.TRADITIONAL_CHINESE,
+                InstabugLocale.CZECH,
+                InstabugLocale.DANISH,
+                InstabugLocale.NETHERLANDS,
+                InstabugLocale.ENGLISH,
+                InstabugLocale.FRENCH,
+                InstabugLocale.GERMAN,
+                InstabugLocale.INDONESIAN,
+                InstabugLocale.ITALIAN,
+                InstabugLocale.JAPANESE,
+                InstabugLocale.KOREAN,
+                InstabugLocale.NORWEGIAN,
+                InstabugLocale.POLISH,
+                InstabugLocale.PORTUGUESE_BRAZIL,
+                InstabugLocale.PORTUGUESE_PORTUGAL,
+                InstabugLocale.ROMANIAN,
+                InstabugLocale.RUSSIAN,
+                InstabugLocale.SPANISH,
+                InstabugLocale.SLOVAK,
+                InstabugLocale.SWEDISH,
+                InstabugLocale.TURKISH,
+        };
+
+        for (InstabugLocale value : values) {
+            assertTrue(ArgsRegistry.locales.containsValue(value));
+        }
+    }
+
+
+    @Test
+    public void testPlaceholder() {
+        Key[] values = {
+                Key.SHAKE_HINT,
+                Key.SWIPE_HINT,
+                Key.INVALID_EMAIL_MESSAGE,
+                Key.INVALID_COMMENT_MESSAGE,
+                Key.EMAIL_FIELD_HINT,
+                Key.COMMENT_FIELD_HINT_FOR_BUG_REPORT,
+                Key.COMMENT_FIELD_HINT_FOR_FEEDBACK,
+                Key.COMMENT_FIELD_HINT_FOR_QUESTION,
+                Key.INVOCATION_HEADER,
+                Key.REPORT_QUESTION,
+                Key.REPORT_BUG,
+                Key.REPORT_FEEDBACK,
+                Key.CONVERSATIONS_LIST_TITLE,
+                Key.ADD_VOICE_MESSAGE,
+                Key.ADD_IMAGE_FROM_GALLERY,
+                Key.ADD_EXTRA_SCREENSHOT,
+                Key.ADD_VIDEO,
+                Key.AUDIO_RECORDING_PERMISSION_DENIED,
+                Key.VOICE_MESSAGE_PRESS_AND_HOLD_TO_RECORD,
+                Key.VOICE_MESSAGE_RELEASE_TO_ATTACH,
+                Key.SUCCESS_DIALOG_HEADER,
+                Key.VIDEO_RECORDING_FAB_BUBBLE_HINT,
+                Key.CONVERSATION_TEXT_FIELD_HINT,
+                Key.REPORT_SUCCESSFULLY_SENT,
+
+                Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_TITLE,
+                Key.BETA_WELCOME_MESSAGE_WELCOME_STEP_CONTENT,
+                Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_TITLE,
+                Key.BETA_WELCOME_MESSAGE_HOW_TO_REPORT_STEP_CONTENT,
+                Key.BETA_WELCOME_MESSAGE_FINISH_STEP_TITLE,
+                Key.BETA_WELCOME_MESSAGE_FINISH_STEP_CONTENT,
+                Key.LIVE_WELCOME_MESSAGE_TITLE,
+                Key.LIVE_WELCOME_MESSAGE_CONTENT,
+
+                Key.SURVEYS_STORE_RATING_THANKS_TITLE,
+                Key.SURVEYS_STORE_RATING_THANKS_SUBTITLE,
+
+                Key.REPORT_BUG_DESCRIPTION,
+                Key.REPORT_FEEDBACK_DESCRIPTION,
+                Key.REPORT_QUESTION_DESCRIPTION,
+                Key.REQUEST_FEATURE_DESCRIPTION,
+
+                Key.REPORT_DISCARD_DIALOG_TITLE,
+                Key.REPORT_DISCARD_DIALOG_BODY,
+                Key.REPORT_DISCARD_DIALOG_NEGATIVE_ACTION,
+                Key.REPORT_DISCARD_DIALOG_POSITIVE_ACTION,
+                Key.REPORT_ADD_ATTACHMENT_HEADER,
+
+                Key.REPORT_REPRO_STEPS_DISCLAIMER_BODY,
+                Key.REPORT_REPRO_STEPS_DISCLAIMER_LINK,
+                Key.REPRO_STEPS_PROGRESS_DIALOG_BODY,
+                Key.REPRO_STEPS_LIST_HEADER,
+                Key.REPRO_STEPS_LIST_DESCRIPTION,
+                Key.REPRO_STEPS_LIST_EMPTY_STATE_DESCRIPTION,
+                Key.REPRO_STEPS_LIST_ITEM_NUMBERING_TITLE,
+
+                Key.CHATS_TEAM_STRING_NAME,
+                Key.REPLIES_NOTIFICATION_REPLY_BUTTON,
+                Key.REPLIES_NOTIFICATION_DISMISS_BUTTON,
+        };
+
+        for (Key value : values) {
+            assertTrue(ArgsRegistry.placeholders.containsValue(value));
+        }
+    }
+
 }
