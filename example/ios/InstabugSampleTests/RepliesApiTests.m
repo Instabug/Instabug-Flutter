@@ -1,0 +1,82 @@
+#import <XCTest/XCTest.h>
+#import "OCMock/OCMock.h"
+#import "RepliesApi.h"
+#import "Instabug/IBGReplies.h"
+
+@interface RepliesApiTests : XCTestCase
+
+@property (nonatomic, strong) id mReplies;
+@property (nonatomic, strong) RepliesFlutterApi *mFlutterApi;
+@property (nonatomic, strong) RepliesApi *api;
+
+@end
+
+@implementation RepliesApiTests
+
+- (void)setUp {
+    self.mReplies = OCMClassMock([IBGReplies class]);
+    self.mFlutterApi = OCMPartialMock([[RepliesFlutterApi alloc] init]);
+    self.api = [[RepliesApi alloc] initWithFlutterApi:self.mFlutterApi];
+}
+
+- (void)testSetEnabled {
+    NSNumber *isEnabled = @1;
+    FlutterError *error;
+
+    [self.api setEnabledIsEnabled:isEnabled error:&error];
+
+    OCMVerify([self.mReplies setEnabled:YES]);
+}
+
+- (void)testShow {
+    FlutterError *error;
+
+    [self.api showWithError:&error];
+
+    OCMVerify([self.mReplies show]);
+}
+
+- (void)testSetInAppNotificationsEnabled {
+    NSNumber *isEnabled = @1;
+    FlutterError *error;
+
+    [self.api setInAppNotificationsEnabledIsEnabled:isEnabled error:&error];
+
+    OCMVerify([self.mReplies setInAppNotificationsEnabled:YES]);
+}
+
+- (void)testGetUnreadRepliesCount {
+    NSInteger expected = 5;
+    
+    OCMStub([self.mReplies unreadRepliesCount]).andReturn(expected);
+
+    [self.api getUnreadRepliesCountWithCompletion:^(NSNumber *actual, FlutterError *error) {
+        XCTAssertEqual(expected, actual.integerValue);
+    }];
+
+    OCMVerify([self.mReplies unreadRepliesCount]);
+}
+
+- (void)testHasChats {
+    BOOL expected = YES;
+
+    OCMStub([self.mReplies hasChats]).andReturn(expected);
+
+    [self.api hasChatsWithCompletion:^(NSNumber *actual, FlutterError *error) {
+        XCTAssertEqual(expected, actual.boolValue);
+    }];
+
+    OCMVerify([self.mReplies hasChats]);
+}
+
+- (void)testBindOnNewReplyCallback {
+    FlutterError *error;
+
+    [self.api bindOnNewReplyCallbackWithError:&error];
+    IBGReplies.didReceiveReplyHandler();
+
+    OCMVerify([self.mReplies setDidReceiveReplyHandler:[OCMArg any]]);
+    OCMVerify([self.mFlutterApi onNewReplyWithCompletion:[OCMArg invokeBlock]]);
+}
+
+@end
