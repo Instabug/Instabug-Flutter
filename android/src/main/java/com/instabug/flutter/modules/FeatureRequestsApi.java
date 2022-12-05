@@ -1,5 +1,7 @@
 package com.instabug.flutter.modules;
 
+import android.annotation.SuppressLint;
+
 import androidx.annotation.NonNull;
 
 import com.instabug.featuresrequest.FeatureRequests;
@@ -22,11 +24,12 @@ public class FeatureRequestsApi implements FeatureRequestsPigeon.FeatureRequests
         FeatureRequests.show();
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void setEmailFieldRequired(@NonNull Boolean isRequired, @NonNull List<String> actionTypes) {
         int[] actions = new int[actionTypes.size()];
         for (int i = 0; i < actionTypes.size(); i++) {
-            actions[i] = ArgsRegistry.getDeserializedValue(actionTypes.get(i));
+            actions[i] = ArgsRegistry.actionTypes.get(actionTypes.get(i));
         }
 
         FeatureRequests.setEmailFieldRequired(isRequired, actions);
