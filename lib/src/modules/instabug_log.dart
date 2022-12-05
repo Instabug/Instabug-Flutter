@@ -2,12 +2,13 @@
 
 import 'dart:async';
 
-import 'package:instabug_flutter/generated/instabug_log.api.g.dart';
+import 'package:instabug_flutter/src/generated/instabug_log.api.g.dart';
 import 'package:meta/meta.dart';
 
 class InstabugLog {
   static var _host = InstabugLogHostApi();
 
+  /// @nodoc
   @visibleForTesting
   // ignore: use_setters_to_change_properties
   static void $setHostApi(InstabugLogHostApi host) {

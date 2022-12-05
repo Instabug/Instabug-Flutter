@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:instabug_flutter/generated/bug_reporting.api.g.dart';
+import 'package:instabug_flutter/src/generated/bug_reporting.api.g.dart';
 import 'package:instabug_flutter/src/modules/instabug.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
@@ -44,22 +44,28 @@ class BugReporting implements BugReportingFlutterApi {
   static OnSDKInvokeCallback? _onInvokeCallback;
   static OnSDKDismissCallback? _onDismissCallback;
 
+  /// @nodoc
   @visibleForTesting
   // ignore: use_setters_to_change_properties
   static void $setHostApi(BugReportingHostApi host) {
     _host = host;
   }
 
+  /// @nodoc
   @internal
   static void init() {
     BugReportingFlutterApi.setup(_instance);
   }
 
+  /// @nodoc
+  @internal
   @override
   void onSdkInvoke() {
     _onInvokeCallback?.call();
   }
 
+  /// @nodoc
+  @internal
   @override
   void onSdkDismiss(String dismissType, String reportType) {
     final dismissTypeKey = dismissType.toUpperCase();

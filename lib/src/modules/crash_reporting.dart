@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:instabug_flutter/generated/crash_reporting.api.g.dart';
+import 'package:instabug_flutter/src/generated/crash_reporting.api.g.dart';
 import 'package:instabug_flutter/src/models/crash_data.dart';
 import 'package:instabug_flutter/src/models/exception_data.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
@@ -14,6 +14,7 @@ class CrashReporting {
   static var _host = CrashReportingHostApi();
   static bool enabled = true;
 
+  /// @nodoc
   @visibleForTesting
   // ignore: use_setters_to_change_properties
   static void $setHostApi(CrashReportingHostApi host) {
