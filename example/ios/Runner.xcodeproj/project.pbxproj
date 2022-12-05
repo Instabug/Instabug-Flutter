@@ -18,6 +18,7 @@
 		9D381ECFBB01BD0E978EBDF2 /* Pods_InstabugSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71679BEC094CFF3474195C2E /* Pods_InstabugSampleTests.framework */; };
 		C09001B425D9A3C5006F3DAE /* InstabugSampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C09001B325D9A3C5006F3DAE /* InstabugSampleUITests.m */; };
 		CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC080E102937B7DB0041170A /* InstabugApiTests.m */; };
+		CC198C61293E1A21007077C8 /* SurveysApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC198C60293E1A21007077C8 /* SurveysApiTests.m */; };
 		CC359DB92937720C0067A924 /* ApmApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC359DB82937720C0067A924 /* ApmApiTests.m */; };
 		CC9925D2293DEB0B001FD3EE /* CrashReportingApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */; };
 		CC9925D5293DF534001FD3EE /* FeatureRequestsApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D4293DF534001FD3EE /* FeatureRequestsApiTests.m */; };
@@ -86,6 +87,8 @@
 		C09001B325D9A3C5006F3DAE /* InstabugSampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugSampleUITests.m; sourceTree = "<group>"; };
 		C09001B525D9A3C5006F3DAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC080E102937B7DB0041170A /* InstabugApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstabugApiTests.m; sourceTree = "<group>"; };
+		CC198C60293E1A21007077C8 /* SurveysApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveysApiTests.m; sourceTree = "<group>"; };
+		CC198C62293E2392007077C8 /* IBGSurvey+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IBGSurvey+Test.h"; sourceTree = "<group>"; };
 		CC359DB82937720C0067A924 /* ApmApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApmApiTests.m; sourceTree = "<group>"; };
 		CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Instabug+Test.h"; sourceTree = "<group>"; };
 		CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IBGNetworkLogger+Test.h"; sourceTree = "<group>"; };
@@ -204,6 +207,7 @@
 		C090017A25D9A031006F3DAE /* InstabugSampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				CC198C60293E1A21007077C8 /* SurveysApiTests.m */,
 				CC78720A2938D1C5008CB2A5 /* Util */,
 				CC080E102937B7DB0041170A /* InstabugApiTests.m */,
 				CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */,
@@ -231,6 +235,7 @@
 			children = (
 				CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */,
 				CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */,
+				CC198C62293E2392007077C8 /* IBGSurvey+Test.h */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -536,6 +541,7 @@
 			files = (
 				CC359DB92937720C0067A924 /* ApmApiTests.m in Sources */,
 				CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */,
+				CC198C61293E1A21007077C8 /* SurveysApiTests.m in Sources */,
 				CCADBDD8293CFED300AE5EB8 /* BugReportingApiTests.m in Sources */,
 				CC9925D9293DFD7F001FD3EE /* RepliesApiTests.m in Sources */,
 				CC9925D2293DEB0B001FD3EE /* CrashReportingApiTests.m in Sources */,
