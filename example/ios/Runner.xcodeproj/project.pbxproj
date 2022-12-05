@@ -19,6 +19,7 @@
 		C09001B425D9A3C5006F3DAE /* InstabugSampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C09001B325D9A3C5006F3DAE /* InstabugSampleUITests.m */; };
 		CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC080E102937B7DB0041170A /* InstabugApiTests.m */; };
 		CC359DB92937720C0067A924 /* ApmApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC359DB82937720C0067A924 /* ApmApiTests.m */; };
+		CC9925D2293DEB0B001FD3EE /* CrashReportingApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */; };
 		CCADBDD8293CFED300AE5EB8 /* BugReportingApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +86,7 @@
 		CC359DB82937720C0067A924 /* ApmApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApmApiTests.m; sourceTree = "<group>"; };
 		CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Instabug+Test.h"; sourceTree = "<group>"; };
 		CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IBGNetworkLogger+Test.h"; sourceTree = "<group>"; };
+		CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrashReportingApiTests.m; sourceTree = "<group>"; };
 		CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BugReportingApiTests.m; sourceTree = "<group>"; };
 		D465CA8CFED509B46412330E /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		F5446C0D3B2623D9BCC7CCE3 /* Pods_InstabugSampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstabugSampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,6 +203,7 @@
 				CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */,
 				C090017D25D9A031006F3DAE /* Info.plist */,
 				CC359DB82937720C0067A924 /* ApmApiTests.m */,
+				CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */,
 			);
 			path = InstabugSampleTests;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 					};
 					C090017825D9A030006F3DAE = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1340;
 						TestTargetID = 97C146ED1CF9000F007C117D;
 					};
 					C09001B025D9A3C5006F3DAE = {
@@ -524,6 +528,7 @@
 				CC359DB92937720C0067A924 /* ApmApiTests.m in Sources */,
 				CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */,
 				CCADBDD8293CFED300AE5EB8 /* BugReportingApiTests.m in Sources */,
+				CC9925D2293DEB0B001FD3EE /* CrashReportingApiTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -826,6 +831,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -844,6 +850,9 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "InstabugSampleTests/InstabugSampleTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/Runner";
 			};
@@ -857,6 +866,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -874,6 +884,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "InstabugSampleTests/InstabugSampleTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/Runner";
 			};
@@ -887,6 +899,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -904,6 +917,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "InstabugSampleTests/InstabugSampleTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/Runner";
 			};

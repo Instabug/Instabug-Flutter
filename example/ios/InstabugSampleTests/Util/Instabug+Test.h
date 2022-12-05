@@ -4,4 +4,5 @@
 
 @interface Instabug (Test)
 + (void)setCurrentPlatform:(IBGPlatform)platform;
++ (void)reportCrashWithStackTrace:(NSDictionary*)stackTrace handled:(NSNumber*)handled;
 @end
