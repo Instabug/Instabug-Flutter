@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:instabug_flutter/generated/feature_requests.api.g.dart';
+import 'package:instabug_flutter/src/generated/feature_requests.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:meta/meta.dart';
 
@@ -11,6 +11,7 @@ enum ActionType { requestNewFeature, addCommentToFeature }
 class FeatureRequests {
   static var _host = FeatureRequestsHostApi();
 
+  /// @nodoc
   @visibleForTesting
   // ignore: use_setters_to_change_properties
   static void $setHostApi(FeatureRequestsHostApi host) {

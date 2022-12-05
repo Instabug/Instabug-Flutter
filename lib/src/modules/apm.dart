@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:instabug_flutter/generated/apm.api.g.dart';
+import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/models/trace.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
@@ -21,6 +21,7 @@ enum LogLevel {
 class APM {
   static var _host = ApmHostApi();
 
+  /// @nodoc
   @visibleForTesting
   // ignore: use_setters_to_change_properties
   static void $setHostApi(ApmHostApi host) {

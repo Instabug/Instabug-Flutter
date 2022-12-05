@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:instabug_flutter/generated/surveys.api.g.dart';
+import 'package:instabug_flutter/src/generated/surveys.api.g.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:meta/meta.dart';
 
@@ -26,22 +26,28 @@ class Surveys implements SurveysFlutterApi {
   static OnShowSurveyCallback? _onShowCallback;
   static OnDismissSurveyCallback? _onDismissCallback;
 
+  /// @nodoc
   @visibleForTesting
   // ignore: use_setters_to_change_properties
   static void $setHostApi(SurveysHostApi host) {
     _host = host;
   }
 
+  /// @nodoc
   @internal
   static void init() {
     SurveysFlutterApi.setup(_instance);
   }
 
+  /// @nodoc
+  @internal
   @override
   void onShowSurvey() {
     _onShowCallback?.call();
   }
 
+  /// @nodoc
+  @internal
   @override
   void onDismissSurvey() {
     _onDismissCallback?.call();

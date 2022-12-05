@@ -10,8 +10,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:instabug_flutter/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:meta/meta.dart';
@@ -118,12 +118,14 @@ enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 class Instabug {
   static var _host = InstabugHostApi();
 
+  /// @nodoc
   @visibleForTesting
   // ignore: use_setters_to_change_properties
   static void $setHostApi(InstabugHostApi host) {
     _host = host;
   }
 
+  /// @nodoc
   @internal
   static void init() {
     BugReporting.init();

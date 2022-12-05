@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:instabug_flutter/generated/replies.api.g.dart';
+import 'package:instabug_flutter/src/generated/replies.api.g.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:meta/meta.dart';
 
@@ -24,17 +24,21 @@ class Replies implements RepliesFlutterApi {
 
   static OnNewReplyReceivedCallback? _onNewReplyReceivedCallback;
 
+  /// @nodoc
   @visibleForTesting
   // ignore: use_setters_to_change_properties
   static void $setHostApi(RepliesHostApi host) {
     _host = host;
   }
 
+  /// @nodoc
   @internal
   static void init() {
     RepliesFlutterApi.setup(_instance);
   }
 
+  /// @nodoc
+  @internal
   @override
   void onNewReply() {
     _onNewReplyReceivedCallback?.call();
