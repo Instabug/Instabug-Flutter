@@ -47,26 +47,32 @@
 
 - (void)testGetUnreadRepliesCount {
     NSInteger expected = 5;
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
     
     OCMStub([self.mReplies unreadRepliesCount]).andReturn(expected);
 
     [self.api getUnreadRepliesCountWithCompletion:^(NSNumber *actual, FlutterError *error) {
+        [expectation fulfill];
         XCTAssertEqual(expected, actual.integerValue);
     }];
 
     OCMVerify([self.mReplies unreadRepliesCount]);
+    [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
 - (void)testHasChats {
     BOOL expected = YES;
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
 
     OCMStub([self.mReplies hasChats]).andReturn(expected);
 
     [self.api hasChatsWithCompletion:^(NSNumber *actual, FlutterError *error) {
+        [expectation fulfill];
         XCTAssertEqual(expected, actual.boolValue);
     }];
 
     OCMVerify([self.mReplies hasChats]);
+    [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
 - (void)testBindOnNewReplyCallback {

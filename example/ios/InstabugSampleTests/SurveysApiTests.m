@@ -67,14 +67,17 @@
 - (void)testHasRespondedToSurvey {
     NSString *token = @"survey-token";
     NSNumber *expected = @1;
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
 
     OCMStub([self.mSurveys hasRespondedToSurveyWithToken:token completionHandler:([OCMArg invokeBlockWithArgs:expected, nil])]);
 
     [self.api hasRespondedToSurveySurveyToken:token completion:^(NSNumber *actual, FlutterError *error) {
+        [expectation fulfill];
         XCTAssertEqual(expected.boolValue, actual.boolValue);
     }];
 
     OCMVerify([self.mSurveys hasRespondedToSurveyWithToken:token completionHandler:[OCMArg any]]);
+    [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
 - (void)testGetAvailableSurveys {
@@ -82,14 +85,17 @@
     IBGSurvey *survey = [[IBGSurvey alloc] init];
     survey.title = expected[0];
     NSArray<IBGSurvey *> *surveys = @[survey];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
 
     OCMStub([self.mSurveys availableSurveysWithCompletionHandler:([OCMArg invokeBlockWithArgs:surveys, nil])]);;
 
     [self.api getAvailableSurveysWithCompletion:^(NSArray<NSString *> *actual, FlutterError *error) {
+        [expectation fulfill];
         XCTAssertTrue([expected isEqualToArray:actual]);
     }];
 
     OCMVerify([self.mSurveys availableSurveysWithCompletionHandler:[OCMArg any]]);
+    [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
 - (void)testBindOnShowSurveyCallback {

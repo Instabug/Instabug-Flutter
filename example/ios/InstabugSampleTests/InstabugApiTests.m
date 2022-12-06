@@ -182,14 +182,17 @@
 
 - (void)testGetTags {
     NSArray<NSString *> *expected = @[@"active"];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
     
     OCMStub([self.mInstabug getTags]).andReturn(expected);
 
     [self.api getTagsWithCompletion:^(NSArray<NSString *> *actual, FlutterError *error) {
+        [expectation fulfill];
         XCTAssertEqual(expected, actual);
     }];
 
     OCMVerify([self.mInstabug getTags]);
+    [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
 - (void)testAddExperiments {
@@ -240,26 +243,32 @@
 - (void)testGetUserAttributeForKey {
     NSString *key = @"is_premium";
     NSString *expected = @"yup";
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
 
     OCMStub([self.mInstabug userAttributeForKey:key]).andReturn(expected);
 
     [self.api getUserAttributeForKeyKey:key completion:^(NSString *actual, FlutterError *error) {
+        [expectation fulfill];
         XCTAssertEqual(expected, actual);
     }];
 
     OCMVerify([self.mInstabug userAttributeForKey:key]);
+    [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
 - (void)testGetUserAttributes {
     NSDictionary<NSString *, NSString *> *expected = @{ @"plan": @"hobby" };
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
 
     OCMStub([self.mInstabug userAttributes]).andReturn(expected);
 
     [self.api getUserAttributesWithCompletion:^(NSDictionary<NSString *, NSString *> *actual, FlutterError *error) {
+        [expectation fulfill];
         XCTAssertEqual(expected, actual);
     }];
 
     OCMVerify([self.mInstabug userAttributes]);
+    [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
 - (void)testSetSdkDebugLogsLevel {
