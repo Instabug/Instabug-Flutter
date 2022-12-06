@@ -254,7 +254,8 @@ public class InstabugApiTest {
         String value = "Send a bug report";
         String key = "CustomTextPlaceHolderKey.reportBug";
 
-        mApi.setValueForStringWithKey(key, value);
+        mApi.setValueForStringWithKey(value, key);
+
         mInstabug.verify(() -> Instabug.setCustomTextPlaceHolders(any(InstabugCustomTextPlaceHolder.class)));
     }
 

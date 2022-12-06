@@ -103,13 +103,11 @@ public class ApmApiTest {
 
     @Test
     public void testSetLogLevel() {
-        String logLevel = "logLevelNone";
+        String logLevel = "LogLevel.none";
 
         mApi.setLogLevel(logLevel);
-        mApi.setLogLevel("NonExistingLogLevel");
 
         mAPM.verify(() -> APM.setLogLevel(LogLevel.NONE));
-        mAPM.verify(() -> APM.setLogLevel(anyInt()), times(1));
     }
 
     @Test
