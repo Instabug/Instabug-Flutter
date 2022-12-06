@@ -20,6 +20,7 @@
 		CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC080E102937B7DB0041170A /* InstabugApiTests.m */; };
 		CC198C61293E1A21007077C8 /* SurveysApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC198C60293E1A21007077C8 /* SurveysApiTests.m */; };
 		CC359DB92937720C0067A924 /* ApmApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC359DB82937720C0067A924 /* ApmApiTests.m */; };
+		CC3D69E7293F47FC000DCE54 /* ArgsRegistryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC3D69E6293F47FC000DCE54 /* ArgsRegistryTests.m */; };
 		CC9925D2293DEB0B001FD3EE /* CrashReportingApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */; };
 		CC9925D5293DF534001FD3EE /* FeatureRequestsApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D4293DF534001FD3EE /* FeatureRequestsApiTests.m */; };
 		CC9925D7293DFB03001FD3EE /* InstabugLogApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D6293DFB03001FD3EE /* InstabugLogApiTests.m */; };
@@ -90,6 +91,7 @@
 		CC198C60293E1A21007077C8 /* SurveysApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveysApiTests.m; sourceTree = "<group>"; };
 		CC198C62293E2392007077C8 /* IBGSurvey+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IBGSurvey+Test.h"; sourceTree = "<group>"; };
 		CC359DB82937720C0067A924 /* ApmApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApmApiTests.m; sourceTree = "<group>"; };
+		CC3D69E6293F47FC000DCE54 /* ArgsRegistryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArgsRegistryTests.m; sourceTree = "<group>"; };
 		CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Instabug+Test.h"; sourceTree = "<group>"; };
 		CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IBGNetworkLogger+Test.h"; sourceTree = "<group>"; };
 		CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrashReportingApiTests.m; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				CC9925D4293DF534001FD3EE /* FeatureRequestsApiTests.m */,
 				CC9925D6293DFB03001FD3EE /* InstabugLogApiTests.m */,
 				CC9925D8293DFD7F001FD3EE /* RepliesApiTests.m */,
+				CC3D69E6293F47FC000DCE54 /* ArgsRegistryTests.m */,
 			);
 			path = InstabugSampleTests;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC359DB92937720C0067A924 /* ApmApiTests.m in Sources */,
+				CC3D69E7293F47FC000DCE54 /* ArgsRegistryTests.m in Sources */,
 				CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */,
 				CC198C61293E1A21007077C8 /* SurveysApiTests.m in Sources */,
 				CCADBDD8293CFED300AE5EB8 /* BugReportingApiTests.m in Sources */,
