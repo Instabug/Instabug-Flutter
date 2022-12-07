@@ -10,6 +10,7 @@ import org.json.JSONObject;
  * Includes fake implementations of methods called by reflection.
  * Used to verify whether or not a private methods was called.
  */
+@SuppressWarnings("unused")
 public class MockReflected {
     /**
      * Instabug.reportScreenChange

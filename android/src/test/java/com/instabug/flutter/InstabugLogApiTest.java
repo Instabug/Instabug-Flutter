@@ -19,7 +19,7 @@ import io.flutter.plugin.common.BinaryMessenger;
 
 
 public class InstabugLogApiTest {
-    private final InstabugLogApi mApi = new InstabugLogApi();
+    private final InstabugLogApi api = new InstabugLogApi();
     private MockedStatic<InstabugLog> mInstabugLog;
     private MockedStatic<InstabugLogPigeon.InstabugLogHostApi> mHostApi;
 
@@ -50,7 +50,7 @@ public class InstabugLogApiTest {
     public void testLogVerbose() {
         String message = "created an account";
 
-        mApi.logVerbose(message);
+        api.logVerbose(message);
 
         mInstabugLog.verify(() -> InstabugLog.v(message));
     }
@@ -58,7 +58,7 @@ public class InstabugLogApiTest {
     public void testLogDebug() {
         String message = "created an account";
 
-        mApi.logDebug(message);
+        api.logDebug(message);
 
         mInstabugLog.verify(() -> InstabugLog.d(message));
     }
@@ -66,7 +66,7 @@ public class InstabugLogApiTest {
     public void testLogInfo() {
         String message = "created an account";
 
-        mApi.logInfo(message);
+        api.logInfo(message);
 
         mInstabugLog.verify(() -> InstabugLog.i(message));
     }
@@ -74,7 +74,7 @@ public class InstabugLogApiTest {
     public void testLogWarn() {
         String message = "created an account";
 
-        mApi.logWarn(message);
+        api.logWarn(message);
 
         mInstabugLog.verify(() -> InstabugLog.w(message));
     }
@@ -82,13 +82,13 @@ public class InstabugLogApiTest {
     public void testLogError() {
         String message = "something went wrong";
 
-        mApi.logError(message);
+        api.logError(message);
 
         mInstabugLog.verify(() -> InstabugLog.e(message));
     }
     @Test
     public void testClearAllLogs() {
-        mApi.clearAllLogs();
+        api.clearAllLogs();
 
         mInstabugLog.verify(InstabugLog::clearLogs);
     }

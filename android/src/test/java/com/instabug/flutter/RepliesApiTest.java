@@ -24,7 +24,9 @@ import io.flutter.plugin.common.BinaryMessenger;
 
 
 public class RepliesApiTest {
-    private final RepliesApi mApi = new RepliesApi(null);
+    private final BinaryMessenger mMessenger = mock(BinaryMessenger.class);
+    private final RepliesPigeon.RepliesFlutterApi flutterApi = new RepliesPigeon.RepliesFlutterApi(mMessenger);
+    private final RepliesApi api = new RepliesApi(flutterApi);
     private MockedStatic<Replies> mReplies;
     private MockedStatic<RepliesPigeon.RepliesHostApi> mHostApi;
 
@@ -44,18 +46,16 @@ public class RepliesApiTest {
 
     @Test
     public void testInit() {
-        BinaryMessenger messenger = mock(BinaryMessenger.class);
+        RepliesApi.init(mMessenger);
 
-        RepliesApi.init(messenger);
-
-        mHostApi.verify(() -> RepliesPigeon.RepliesHostApi.setup(eq(messenger), any(RepliesApi.class)));
+        mHostApi.verify(() -> RepliesPigeon.RepliesHostApi.setup(eq(mMessenger), any(RepliesApi.class)));
     }
 
     @Test
     public void testSetEnabledGivenTrue() {
         boolean isEnabled = true;
 
-        mApi.setEnabled(isEnabled);
+        api.setEnabled(isEnabled);
 
         mReplies.verify(() -> Replies.setState(Feature.State.ENABLED));
     }
@@ -64,14 +64,14 @@ public class RepliesApiTest {
     public void testSetEnabledGivenFalse() {
         boolean isEnabled = false;
 
-        mApi.setEnabled(isEnabled);
+        api.setEnabled(isEnabled);
 
         mReplies.verify(() -> Replies.setState(Feature.State.DISABLED));
     }
 
     @Test
     public void testShow() {
-        mApi.show();
+        api.show();
 
         mReplies.verify(Replies::show);
     }
@@ -80,7 +80,7 @@ public class RepliesApiTest {
     public void testSetInAppNotificationsEnabled() {
         boolean isEnabled = true;
 
-        mApi.setInAppNotificationsEnabled(isEnabled);
+        api.setInAppNotificationsEnabled(isEnabled);
 
         mReplies.verify(() -> Replies.setInAppNotificationEnabled(isEnabled));
     }
@@ -89,7 +89,7 @@ public class RepliesApiTest {
     public void testSetInAppNotificationSound() {
         boolean isEnabled = true;
 
-        mApi.setInAppNotificationSound(isEnabled);
+        api.setInAppNotificationSound(isEnabled);
 
         mReplies.verify(() -> Replies.setInAppNotificationSound(isEnabled));
     }
@@ -101,7 +101,7 @@ public class RepliesApiTest {
 
         mReplies.when(Replies::getUnreadRepliesCount).thenReturn((int) expected);
 
-        mApi.getUnreadRepliesCount(result);
+        api.getUnreadRepliesCount(result);
 
         verify(result).success(expected);
         mReplies.verify(Replies::getUnreadRepliesCount);
@@ -114,7 +114,7 @@ public class RepliesApiTest {
 
         mReplies.when(Replies::hasChats).thenReturn(expected);
 
-        mApi.hasChats(result);
+        api.hasChats(result);
 
         verify(result).success(expected);
         mReplies.verify(Replies::hasChats);
@@ -122,7 +122,7 @@ public class RepliesApiTest {
 
     @Test
     public void testBindOnNewReplyCallback() {
-        mApi.bindOnNewReplyCallback();
+        api.bindOnNewReplyCallback();
 
         mReplies.verify(() -> Replies.setOnNewReplyReceivedCallback(any(Runnable.class)));
     }

@@ -23,7 +23,7 @@ import io.flutter.plugin.common.BinaryMessenger;
 
 
 public class CrashReportingApiTest {
-    private final CrashReportingApi mApi = new CrashReportingApi();
+    private final CrashReportingApi api = new CrashReportingApi();
     private MockedStatic<CrashReporting> mCrashReporting;
     private MockedStatic<CrashReportingPigeon.CrashReportingHostApi> mHostApi;
 
@@ -54,7 +54,7 @@ public class CrashReportingApiTest {
     public void testSetEnabledGivenTrue() {
         boolean isEnabled = true;
 
-        mApi.setEnabled(isEnabled);
+        api.setEnabled(isEnabled);
 
         mCrashReporting.verify(() -> CrashReporting.setState(Feature.State.ENABLED));
     }
@@ -63,7 +63,7 @@ public class CrashReportingApiTest {
     public void testSetEnabledGivenFalse() {
         boolean isEnabled = false;
 
-        mApi.setEnabled(isEnabled);
+        api.setEnabled(isEnabled);
 
         mCrashReporting.verify(() -> CrashReporting.setState(Feature.State.DISABLED));
     }
@@ -73,7 +73,7 @@ public class CrashReportingApiTest {
         String jsonCrash = "{}";
         boolean isHandled = false;
 
-        mApi.send(jsonCrash, isHandled);
+        api.send(jsonCrash, isHandled);
 
         reflected.verify(() -> MockReflected.crashReportException(any(JSONObject.class), eq(isHandled)));
     }

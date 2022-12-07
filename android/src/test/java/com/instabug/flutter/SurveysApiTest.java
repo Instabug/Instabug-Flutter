@@ -23,15 +23,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 
-import java.sql.Array;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
 
 public class SurveysApiTest {
-    private final SurveysApi mApi = new SurveysApi(null);
+    private final BinaryMessenger mMessenger = mock(BinaryMessenger.class);
+    private final SurveysPigeon.SurveysFlutterApi flutterApi = new SurveysPigeon.SurveysFlutterApi(mMessenger);
+    private final SurveysApi api = new SurveysApi(flutterApi);
     private MockedStatic<Surveys> mSurveys;
     private MockedStatic<SurveysPigeon.SurveysHostApi> mHostApi;
 
@@ -51,18 +52,16 @@ public class SurveysApiTest {
 
     @Test
     public void testInit() {
-        BinaryMessenger messenger = mock(BinaryMessenger.class);
+        SurveysApi.init(mMessenger);
 
-        SurveysApi.init(messenger);
-
-        mHostApi.verify(() -> SurveysPigeon.SurveysHostApi.setup(eq(messenger), any(SurveysApi.class)));
+        mHostApi.verify(() -> SurveysPigeon.SurveysHostApi.setup(eq(mMessenger), any(SurveysApi.class)));
     }
 
     @Test
     public void testSetEnabledGivenTrue() {
         boolean isEnabled = true;
 
-        mApi.setEnabled(isEnabled);
+        api.setEnabled(isEnabled);
 
         mSurveys.verify(() -> Surveys.setState(Feature.State.ENABLED));
     }
@@ -71,14 +70,14 @@ public class SurveysApiTest {
     public void testSetEnabledGivenFalse() {
         boolean isEnabled = false;
 
-        mApi.setEnabled(isEnabled);
+        api.setEnabled(isEnabled);
 
         mSurveys.verify(() -> Surveys.setState(Feature.State.DISABLED));
     }
 
     @Test
     public void testShowSurveyIfAvailable() {
-        mApi.showSurveyIfAvailable();
+        api.showSurveyIfAvailable();
 
         mSurveys.verify(Surveys::showSurveyIfAvailable);
     }
@@ -87,7 +86,7 @@ public class SurveysApiTest {
     public void testShowSurvey() {
         String token = "survey-token";
 
-        mApi.showSurvey(token);
+        api.showSurvey(token);
 
         mSurveys.verify(() -> Surveys.showSurvey(token));
     }
@@ -96,7 +95,7 @@ public class SurveysApiTest {
     public void testSetAutoShowingEnabled() {
         boolean isEnabled = true;
 
-        mApi.setAutoShowingEnabled(isEnabled);
+        api.setAutoShowingEnabled(isEnabled);
 
         mSurveys.verify(() -> Surveys.setAutoShowingEnabled(isEnabled));
     }
@@ -105,7 +104,7 @@ public class SurveysApiTest {
     public void testSetShouldShowWelcomeScreen() {
         boolean shouldShowWelcomeScreen = true;
 
-        mApi.setShouldShowWelcomeScreen(shouldShowWelcomeScreen);
+        api.setShouldShowWelcomeScreen(shouldShowWelcomeScreen);
 
         mSurveys.verify(() -> Surveys.setShouldShowWelcomeScreen(shouldShowWelcomeScreen));
     }
@@ -118,7 +117,7 @@ public class SurveysApiTest {
 
         mSurveys.when(() -> Surveys.hasRespondToSurvey(token)).thenReturn(expected);
 
-        mApi.hasRespondedToSurvey(token, result);
+        api.hasRespondedToSurvey(token, result);
 
         verify(result).success(expected);
         mSurveys.verify(() -> Surveys.hasRespondToSurvey(token));
@@ -126,16 +125,13 @@ public class SurveysApiTest {
 
     @Test
     public void testGetAvailableSurveys() {
-        String token = "survey-token";
-        List<String> expected = new ArrayList<>();
-        expected.add("survey1");
-        List<Survey> surveys = new ArrayList<>();
-        surveys.add(new Survey(1, "survey1"));
+        List<String> expected = Collections.singletonList("survey1");
+        List<Survey> surveys = Collections.singletonList(new Survey(1, "survey1"));
         SurveysPigeon.Result<List<String>> result = spy(makeResult((actual) -> assertEquals(expected, actual)));
 
         mSurveys.when(Surveys::getAvailableSurveys).thenReturn(surveys);
 
-        mApi.getAvailableSurveys(result);
+        api.getAvailableSurveys(result);
 
         verify(result).success(expected);
         mSurveys.verify(Surveys::getAvailableSurveys);
@@ -143,14 +139,14 @@ public class SurveysApiTest {
 
     @Test
     public void testBindOnShowSurveyCallback() {
-        mApi.bindOnShowSurveyCallback();
+        api.bindOnShowSurveyCallback();
 
         mSurveys.verify(() -> Surveys.setOnShowCallback(any(OnShowCallback.class)));
     }
 
     @Test
     public void testBindOnDismissSurveyCallback() {
-        mApi.bindOnDismissSurveyCallback();
+        api.bindOnDismissSurveyCallback();
 
         mSurveys.verify(() -> Surveys.setOnDismissCallback(any(OnDismissCallback.class)));
     }

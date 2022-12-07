@@ -23,14 +23,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
 
 public class BugReportingApiTest {
-    private final BugReportingApi mApi = new BugReportingApi(null);
+    private final BinaryMessenger mMessenger = mock(BinaryMessenger.class);
+    private final BugReportingPigeon.BugReportingFlutterApi flutterApi = new BugReportingPigeon.BugReportingFlutterApi(mMessenger);
+    private final BugReportingApi api = new BugReportingApi(flutterApi);
     private MockedStatic<BugReporting> mBugReporting;
     private MockedStatic<BugReportingPigeon.BugReportingHostApi> mHostApi;
 
@@ -50,18 +52,16 @@ public class BugReportingApiTest {
 
     @Test
     public void testInit() {
-        BinaryMessenger messenger = mock(BinaryMessenger.class);
+        BugReportingApi.init(mMessenger);
 
-        BugReportingApi.init(messenger);
-
-        mHostApi.verify(() -> BugReportingPigeon.BugReportingHostApi.setup(eq(messenger), any(BugReportingApi.class)));
+        mHostApi.verify(() -> BugReportingPigeon.BugReportingHostApi.setup(eq(mMessenger), any(BugReportingApi.class)));
     }
 
     @Test
     public void testSetEnabledGivenTrue() {
         boolean isEnabled = true;
 
-        mApi.setEnabled(isEnabled);
+        api.setEnabled(isEnabled);
 
         mBugReporting.verify(() -> BugReporting.setState(Feature.State.ENABLED));
     }
@@ -70,7 +70,7 @@ public class BugReportingApiTest {
     public void testSetEnabledGivenFalse() {
         boolean isEnabled = false;
 
-        mApi.setEnabled(isEnabled);
+        api.setEnabled(isEnabled);
 
         mBugReporting.verify(() -> BugReporting.setState(Feature.State.DISABLED));
     }
@@ -78,33 +78,27 @@ public class BugReportingApiTest {
     @Test
     public void testShow() {
         String reportType = "ReportType.bug";
-        List<String> invocationOptions = new ArrayList<>();
-        invocationOptions.add("InvocationOption.emailFieldOptional");
-        invocationOptions.add("InvocationOption.disablePostSendingDialog");
+        List<String> invocationOptions = Arrays.asList("InvocationOption.emailFieldOptional", "InvocationOption.disablePostSendingDialog");
 
-        mApi.show(reportType, invocationOptions);
+        api.show(reportType, invocationOptions);
 
         mBugReporting.verify(() -> BugReporting.show(BugReporting.ReportType.BUG, Option.EMAIL_FIELD_OPTIONAL, Option.DISABLE_POST_SENDING_DIALOG));
     }
 
     @Test
     public void testSetInvocationEvents() {
-        List<String> events = new ArrayList<>();
-        events.add("InvocationEvent.floatingButton");
-        events.add("InvocationEvent.screenshot");
+        List<String> events = Arrays.asList("InvocationEvent.floatingButton", "InvocationEvent.screenshot");
 
-        mApi.setInvocationEvents(events);
+        api.setInvocationEvents(events);
 
         mBugReporting.verify(() -> BugReporting.setInvocationEvents(InstabugInvocationEvent.FLOATING_BUTTON, InstabugInvocationEvent.SCREENSHOT));
     }
 
     @Test
     public void testSetReportTypes() {
-        List<String> types = new ArrayList<>();
-        types.add("ReportType.bug");
-        types.add("ReportType.feedback");
+        List<String> types = Arrays.asList("ReportType.bug", "ReportType.feedback");
 
-        mApi.setReportTypes(types);
+        api.setReportTypes(types);
 
         mBugReporting.verify(() -> BugReporting.setReportTypes(BugReporting.ReportType.BUG, BugReporting.ReportType.FEEDBACK));
     }
@@ -113,18 +107,16 @@ public class BugReportingApiTest {
     public void testSetExtendedBugReportingMode() {
         String mode = "ExtendedBugReportMode.enabledWithOptionalFields";
 
-        mApi.setExtendedBugReportMode(mode);
+        api.setExtendedBugReportMode(mode);
 
         mBugReporting.verify(() -> BugReporting.setExtendedBugReportState(ExtendedBugReport.State.ENABLED_WITH_OPTIONAL_FIELDS));
     }
 
     @Test
     public void testSetInvocationOptions() {
-        List<String> options = new ArrayList<>();
-        options.add("InvocationOption.emailFieldHidden");
-        options.add("InvocationOption.commentFieldRequired");
+        List<String> options = Arrays.asList("InvocationOption.emailFieldHidden", "InvocationOption.commentFieldRequired");
 
-        mApi.setInvocationOptions(options);
+        api.setInvocationOptions(options);
 
         mBugReporting.verify(() -> BugReporting.setOptions(Option.EMAIL_FIELD_HIDDEN, Option.COMMENT_FIELD_REQUIRED));
     }
@@ -134,7 +126,7 @@ public class BugReportingApiTest {
         String edge = "FloatingButtonEdge.left";
         Long offset = 100L;
 
-        mApi.setFloatingButtonEdge(edge, offset);
+        api.setFloatingButtonEdge(edge, offset);
 
         mBugReporting.verify(() -> BugReporting.setFloatingButtonEdge(InstabugFloatingButtonEdge.LEFT));
         mBugReporting.verify(() -> BugReporting.setFloatingButtonOffset(offset.intValue()));
@@ -144,7 +136,7 @@ public class BugReportingApiTest {
     public void testSetVideoRecordingFloatingButtonPosition() {
         String position = "Position.topRight";
 
-        mApi.setVideoRecordingFloatingButtonPosition(position);
+        api.setVideoRecordingFloatingButtonPosition(position);
 
         mBugReporting.verify(() -> BugReporting.setVideoRecordingFloatingButtonPosition(InstabugVideoRecordingButtonPosition.TOP_RIGHT));
     }
@@ -153,7 +145,7 @@ public class BugReportingApiTest {
     public void testSetShakingThresholdForAndroid() {
         Long threshold = 300L;
         
-        mApi.setShakingThresholdForAndroid(threshold);
+        api.setShakingThresholdForAndroid(threshold);
 
         mBugReporting.verify(() -> BugReporting.setShakingThreshold(threshold.intValue()));
     }
@@ -165,21 +157,21 @@ public class BugReportingApiTest {
         boolean galleryImage = false;
         boolean screenRecording = true;
 
-        mApi.setEnabledAttachmentTypes(screenshot, extraScreenshot, galleryImage, screenRecording);
+        api.setEnabledAttachmentTypes(screenshot, extraScreenshot, galleryImage, screenRecording);
 
         mBugReporting.verify(() -> BugReporting.setAttachmentTypesEnabled(screenshot, extraScreenshot, galleryImage, screenRecording));
     }
 
     @Test
     public void testBindOnInvokeCallback() {
-        mApi.bindOnInvokeCallback();
+        api.bindOnInvokeCallback();
 
         mBugReporting.verify(() -> BugReporting.setOnInvokeCallback(any(OnInvokeCallback.class)));
     }
 
     @Test
     public void testBindOnDismissCallback() {
-        mApi.bindOnDismissCallback();
+        api.bindOnDismissCallback();
 
         mBugReporting.verify(() -> BugReporting.setOnDismissCallback(any(OnSdkDismissCallback.class)));
     }
@@ -188,7 +180,7 @@ public class BugReportingApiTest {
     public void testSetDisclaimerText() {
         String text = "My very own disclaimer text";
 
-        mApi.setDisclaimerText(text);
+        api.setDisclaimerText(text);
 
         mBugReporting.verify(() -> BugReporting.setDisclaimerText(text));
     }
@@ -196,11 +188,9 @@ public class BugReportingApiTest {
     @Test
     public void testSetCommentMinimumCharacterCount() {
         Long limit = 100L;
-        List<String> reportTypes = new ArrayList<>();
-        reportTypes.add("ReportType.bug");
-        reportTypes.add("ReportType.question");
+        List<String> reportTypes = Arrays.asList("ReportType.bug", "ReportType.question");
 
-        mApi.setCommentMinimumCharacterCount(limit, reportTypes);
+        api.setCommentMinimumCharacterCount(limit, reportTypes);
 
         mBugReporting.verify(() -> BugReporting.setCommentMinimumCharacterCount(limit.intValue(), BugReporting.ReportType.BUG, BugReporting.ReportType.QUESTION));
     }

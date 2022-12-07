@@ -3,14 +3,12 @@ package com.instabug.flutter;
 import static com.instabug.flutter.util.GlobalMocks.reflected;
 import static com.instabug.flutter.util.MockResult.makeResult;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -24,6 +22,7 @@ import com.instabug.library.LogLevel;
 
 import org.json.JSONObject;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedConstruction;
@@ -36,7 +35,7 @@ import io.flutter.plugin.common.BinaryMessenger;
 
 
 public class ApmApiTest {
-    private final ApmApi mApi = new ApmApi();
+    private final ApmApi api = new ApmApi();
     private MockedStatic<APM> mAPM;
     private MockedStatic<ApmPigeon.ApmHostApi> mHostApi;
 
@@ -60,7 +59,7 @@ public class ApmApiTest {
 
         mAPM.when(() -> APM.startExecutionTrace(name)).thenReturn(mTrace);
 
-        mApi.startExecutionTrace(id, name, makeResult());
+        api.startExecutionTrace(id, name, makeResult());
 
         return mTrace;
     }
@@ -78,16 +77,17 @@ public class ApmApiTest {
     public void testSetEnabled() {
         boolean isEnabled = false;
 
-        mApi.setEnabled(isEnabled);
+        api.setEnabled(isEnabled);
 
         mAPM.verify(() -> APM.setEnabled(isEnabled));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testSetColdAppLaunchEnabled() {
         boolean isEnabled = false;
 
-        mApi.setColdAppLaunchEnabled(isEnabled);
+        api.setColdAppLaunchEnabled(isEnabled);
 
         mAPM.verify(() -> APM.setAppLaunchEnabled(isEnabled));
     }
@@ -96,16 +96,17 @@ public class ApmApiTest {
     public void testSetAutoUITraceEnabled() {
         boolean isEnabled = false;
 
-        mApi.setAutoUITraceEnabled(isEnabled);
+        api.setAutoUITraceEnabled(isEnabled);
 
         mAPM.verify(() -> APM.setAutoUITraceEnabled(isEnabled));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testSetLogLevel() {
         String logLevel = "LogLevel.none";
 
-        mApi.setLogLevel(logLevel);
+        api.setLogLevel(logLevel);
 
         mAPM.verify(() -> APM.setLogLevel(LogLevel.NONE));
     }
@@ -114,13 +115,11 @@ public class ApmApiTest {
     public void testStartExecutionTraceWhenTraceNotNull() {
         String expectedId = "trace-id";
         String name = "trace-name";
-        ApmPigeon.Result<String> result = makeResult((String actualId) -> {
-            assertEquals(expectedId, actualId);
-        });
+        ApmPigeon.Result<String> result = makeResult((String actualId) -> assertEquals(expectedId, actualId));
 
         mAPM.when(() -> APM.startExecutionTrace(name)).thenReturn(new ExecutionTrace(name));
 
-        mApi.startExecutionTrace(expectedId, name, result);
+        api.startExecutionTrace(expectedId, name, result);
 
         mAPM.verify(() -> APM.startExecutionTrace(name));
     }
@@ -129,11 +128,11 @@ public class ApmApiTest {
     public void testStartExecutionTraceWhenTraceIsNull() {
         String id = "trace-id";
         String name = "trace-name";
-        ApmPigeon.Result<String> result = makeResult((String actualId) -> assertNull(actualId));
+        ApmPigeon.Result<String> result = makeResult(Assert::assertNull);
 
         mAPM.when(() -> APM.startExecutionTrace(name)).thenReturn(null);
 
-        mApi.startExecutionTrace(id, name, result);
+        api.startExecutionTrace(id, name, result);
 
         mAPM.verify(() -> APM.startExecutionTrace(name));
     }
@@ -145,7 +144,7 @@ public class ApmApiTest {
         String value = "true";
         ExecutionTrace mTrace = mockTrace(id);
 
-        mApi.setExecutionTraceAttribute(id, key, value);
+        api.setExecutionTraceAttribute(id, key, value);
 
         verify(mTrace).setAttribute(key, value);
     }
@@ -155,7 +154,7 @@ public class ApmApiTest {
         String id = "trace-id";
         ExecutionTrace mTrace = mockTrace(id);
 
-        mApi.endExecutionTrace(id);
+        api.endExecutionTrace(id);
 
         verify(mTrace).end();
     }
@@ -164,21 +163,21 @@ public class ApmApiTest {
     public void testStartUITrace() {
         String name = "login";
 
-        mApi.startUITrace(name);
+        api.startUITrace(name);
 
         mAPM.verify(() -> APM.startUITrace(name));
     }
 
     @Test
     public void testEndUITrace() {
-        mApi.endUITrace();
+        api.endUITrace();
 
         mAPM.verify(APM::endUITrace);
     }
 
     @Test
     public void testEndAppLaunch() {
-        mApi.endAppLaunch();
+        api.endAppLaunch();
 
         mAPM.verify(APM::endAppLaunch);
     }
@@ -220,7 +219,7 @@ public class ApmApiTest {
 
         MockedConstruction<JSONObject> mJSONObject = mockConstruction(JSONObject.class, (mock, context) -> when(mock.toString(anyInt())).thenReturn("{}"));
 
-        mApi.networkLogAndroid(data);
+        api.networkLogAndroid(data);
 
         reflected.verify(() -> MockReflected.apmNetworkLog(
                 requestStartTime * 1000,

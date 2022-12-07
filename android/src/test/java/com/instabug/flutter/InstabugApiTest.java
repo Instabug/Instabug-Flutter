@@ -17,6 +17,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.app.Application;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
@@ -44,16 +45,20 @@ import org.mockito.MockedStatic;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
 public class InstabugApiTest {
-    private InstabugApi mApi;
+    private final Callable<Bitmap> screenshotProvider = () -> mock(Bitmap.class);
+    private final Application mContext = mock(Application.class);
+    private InstabugApi api;
     private MockedStatic<Instabug> mInstabug;
     private MockedStatic<BugReporting> mBugReporting;
     private MockedConstruction<InstabugCustomTextPlaceHolder> mCustomTextPlaceHolder;
@@ -62,7 +67,7 @@ public class InstabugApiTest {
     @Before
     public void setUp() throws NoSuchMethodException {
         mCustomTextPlaceHolder = mockConstruction(InstabugCustomTextPlaceHolder.class);
-        mApi = spy(new InstabugApi(null, null));
+        api = spy(new InstabugApi(mContext, screenshotProvider));
         mInstabug = mockStatic(Instabug.class);
         mBugReporting = mockStatic(BugReporting.class);
         mHostApi = mockStatic(InstabugPigeon.InstabugHostApi.class);
@@ -82,14 +87,14 @@ public class InstabugApiTest {
     public void testInit() {
         BinaryMessenger messenger = mock(BinaryMessenger.class);
 
-        InstabugApi.init(messenger, null, null);
+        InstabugApi.init(messenger, mContext, screenshotProvider);
 
         mHostApi.verify(() -> InstabugPigeon.InstabugHostApi.setup(eq(messenger), any(InstabugApi.class)));
     }
 
     @Test
     public void testSetCurrentPlatform() {
-        mApi.setCurrentPlatform();
+        api.setCurrentPlatform();
 
         reflected.verify(() -> MockReflected.setCurrentPlatform(Platform.FLUTTER));
     }
@@ -97,8 +102,7 @@ public class InstabugApiTest {
     @Test
     public void testStart() {
         String token = "app-token";
-        List<String> invocationEvents = new ArrayList<>();
-        invocationEvents.add("InvocationEvent.floatingButton");
+        List<String> invocationEvents = Collections.singletonList("InvocationEvent.floatingButton");
 
         MockedConstruction<Instabug.Builder> mInstabugBuilder = mockConstruction(Instabug.Builder.class, (mock, context) -> {
             String actualToken = (String) context.arguments().get(1);
@@ -107,7 +111,7 @@ public class InstabugApiTest {
             when(mock.setInvocationEvents(any())).thenReturn(mock);
         });
 
-        mApi.start(token, invocationEvents);
+        api.start(token, invocationEvents);
 
         Instabug.Builder builder = mInstabugBuilder.constructed().get(0);
 
@@ -121,7 +125,7 @@ public class InstabugApiTest {
         verify(builder).build();
 
         // Sets screenshot provider
-        mInstabug.verify(() -> Instabug.setScreenshotProvider(any()));
+        mInstabug.verify(() -> Instabug.setScreenshotProvider(screenshotProvider));
 
         // Sets current platform
         reflected.verify(() -> MockReflected.setCurrentPlatform(Platform.FLUTTER));
@@ -131,7 +135,7 @@ public class InstabugApiTest {
     public void testSetEnabledGivenTrue() {
         boolean isEnabled = true;
 
-        mApi.setEnabled(isEnabled);
+        api.setEnabled(isEnabled);
 
         mInstabug.verify(Instabug::enable);
     }
@@ -140,14 +144,14 @@ public class InstabugApiTest {
     public void testSetEnabledGivenFalse() {
         boolean isEnabled = false;
 
-        mApi.setEnabled(isEnabled);
+        api.setEnabled(isEnabled);
 
         mInstabug.verify(Instabug::disable);
     }
 
     @Test
     public void testShow() {
-        mApi.show();
+        api.show();
         mInstabug.verify(Instabug::show);
     }
 
@@ -155,7 +159,7 @@ public class InstabugApiTest {
     public void testShowWelcomeMessageWithMode() {
         String mode = "WelcomeMessageMode.live";
 
-        mApi.showWelcomeMessageWithMode(mode);
+        api.showWelcomeMessageWithMode(mode);
 
         mInstabug.verify(() -> Instabug.showWelcomeMessage(WelcomeMessage.State.LIVE));
     }
@@ -165,7 +169,7 @@ public class InstabugApiTest {
         String email = "inst@bug.com";
         String name = "John Doe";
 
-        mApi.identifyUser(email, name);
+        api.identifyUser(email, name);
 
         mInstabug.verify(() -> Instabug.identifyUser(name, email));
     }
@@ -174,7 +178,7 @@ public class InstabugApiTest {
     public void testSetUserData() {
         String data = "premium";
 
-        mApi.setUserData(data);
+        api.setUserData(data);
 
         mInstabug.verify(() -> Instabug.setUserData(data));
     }
@@ -183,14 +187,14 @@ public class InstabugApiTest {
     public void testLogUserEvent() {
         String event = "sign_up";
 
-        mApi.logUserEvent(event);
+        api.logUserEvent(event);
 
         mInstabug.verify(() -> Instabug.logUserEvent(event));
     }
 
     @Test
     public void testLogOut() {
-        mApi.logOut();
+        api.logOut();
 
         mInstabug.verify(Instabug::logoutUser);
     }
@@ -199,7 +203,7 @@ public class InstabugApiTest {
     public void testSetLocale() {
         String locale = "IBGLocale.japanese";
 
-        mApi.setLocale(locale);
+        api.setLocale(locale);
 
         mInstabug.verify(() -> Instabug.setLocale(any(Locale.class)));
     }
@@ -208,7 +212,7 @@ public class InstabugApiTest {
     public void testSetColorTheme() {
         String theme = "ColorTheme.dark";
 
-        mApi.setColorTheme(theme);
+        api.setColorTheme(theme);
 
         mInstabug.verify(() -> Instabug.setColorTheme(InstabugColorTheme.InstabugColorThemeDark));
     }
@@ -217,7 +221,7 @@ public class InstabugApiTest {
     public void testSetWelcomeMessageMode() {
         String mode = "WelcomeMessageMode.beta";
 
-        mApi.setWelcomeMessageMode(mode);
+        api.setWelcomeMessageMode(mode);
 
         mInstabug.verify(() -> Instabug.setWelcomeMessageState(WelcomeMessage.State.BETA));
     }
@@ -226,7 +230,7 @@ public class InstabugApiTest {
     public void testSetPrimaryColor() {
         Long color = 0xFF0000L;
 
-        mApi.setPrimaryColor(color);
+        api.setPrimaryColor(color);
 
         mInstabug.verify(() -> Instabug.setPrimaryColor(0xFF0000));
     }
@@ -235,7 +239,7 @@ public class InstabugApiTest {
     public void testSetSessionProfilerEnabledGivenTrue() {
         Boolean isEnabled = true;
 
-        mApi.setSessionProfilerEnabled(isEnabled);
+        api.setSessionProfilerEnabled(isEnabled);
 
         mInstabug.verify(() -> Instabug.setSessionProfilerState(Feature.State.ENABLED));
     }
@@ -244,7 +248,7 @@ public class InstabugApiTest {
     public void testSetSessionProfilerEnabledGivenFalse() {
         Boolean isEnabled = false;
 
-        mApi.setSessionProfilerEnabled(isEnabled);
+        api.setSessionProfilerEnabled(isEnabled);
 
         mInstabug.verify(() -> Instabug.setSessionProfilerState(Feature.State.DISABLED));
     }
@@ -254,63 +258,57 @@ public class InstabugApiTest {
         String value = "Send a bug report";
         String key = "CustomTextPlaceHolderKey.reportBug";
 
-        mApi.setValueForStringWithKey(value, key);
+        api.setValueForStringWithKey(value, key);
 
         mInstabug.verify(() -> Instabug.setCustomTextPlaceHolders(any(InstabugCustomTextPlaceHolder.class)));
     }
 
     @Test
     public void testAppendTags() {
-        List<String> tags = new ArrayList<>();
-        tags.add("premium");
-        tags.add("star");
+        List<String> tags = Arrays.asList("premium", "star");
 
-        mApi.appendTags(tags);
+        api.appendTags(tags);
 
         mInstabug.verify(() -> Instabug.addTags("premium", "star"));
     }
 
     @Test
     public void testResetTags() {
-        mApi.resetTags();
+        api.resetTags();
 
         mInstabug.verify(Instabug::resetTags);
     }
 
     @Test
     public void testGetTags() {
-        InstabugPigeon.Result<List<String>> result = makeResult((tags) -> assertEquals(new ArrayList<>(), tags));
+        InstabugPigeon.Result<List<String>> result = makeResult((tags) -> assertEquals(Collections.emptyList(), tags));
 
-        mApi.getTags(result);
+        api.getTags(result);
 
         mInstabug.verify(Instabug::getTags);
     }
 
     @Test
     public void testAddExperiments() {
-        List<String> experiments = new ArrayList<>();
-        experiments.add("premium");
-        experiments.add("star");
+        List<String> experiments = Arrays.asList("premium", "star");
 
-        mApi.addExperiments(experiments);
+        api.addExperiments(experiments);
 
         mInstabug.verify(() -> Instabug.addExperiments(experiments));
     }
 
     @Test
     public void testRemoveExperiments() {
-        List<String> experiments = new ArrayList<>();
-        experiments.add("premium");
-        experiments.add("star");
+        List<String> experiments = Arrays.asList("premium", "star");
 
-        mApi.removeExperiments(experiments);
+        api.removeExperiments(experiments);
 
         mInstabug.verify(() -> Instabug.removeExperiments(experiments));
     }
 
     @Test
     public void testClearAllExperiments() {
-        mApi.clearAllExperiments();
+        api.clearAllExperiments();
 
         mInstabug.verify(Instabug::clearAllExperiments);
     }
@@ -319,7 +317,7 @@ public class InstabugApiTest {
     public void testSetUserAttribute() {
         String key = "is_premium";
         String value = "true";
-        mApi.setUserAttribute(value, key);
+        api.setUserAttribute(value, key);
 
         mInstabug.verify(() -> Instabug.setUserAttribute(key, value));
     }
@@ -328,7 +326,7 @@ public class InstabugApiTest {
     public void testRemoveUserAttribute() {
         String key = "is_premium";
 
-        mApi.removeUserAttribute(key);
+        api.removeUserAttribute(key);
 
         mInstabug.verify(() -> Instabug.removeUserAttribute(key));
     }
@@ -342,7 +340,7 @@ public class InstabugApiTest {
 
         mInstabug.when(() -> Instabug.getUserAttribute(key)).thenReturn(expected);
 
-        mApi.getUserAttributeForKey(key, result);
+        api.getUserAttributeForKey(key, result);
 
         mInstabug.verify(() -> Instabug.getUserAttribute(key));
     }
@@ -356,16 +354,17 @@ public class InstabugApiTest {
 
         mInstabug.when(Instabug::getAllUserAttributes).thenReturn(expected);
 
-        mApi.getUserAttributes(result);
+        api.getUserAttributes(result);
 
         mInstabug.verify(Instabug::getAllUserAttributes);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testSetDebugEnabled() {
         boolean isEnabled = true;
 
-        mApi.setDebugEnabled(isEnabled);
+        api.setDebugEnabled(isEnabled);
 
         mInstabug.verify(() -> Instabug.setDebugEnabled(isEnabled));
     }
@@ -374,7 +373,7 @@ public class InstabugApiTest {
     public void testSetReproStepsMode() {
         String mode = "ReproStepsMode.enabled";
 
-        mApi.setReproStepsMode(mode);
+        api.setReproStepsMode(mode);
 
         mInstabug.verify(() -> Instabug.setReproStepsState(State.ENABLED));
     }
@@ -383,7 +382,7 @@ public class InstabugApiTest {
     public void testReportScreenChange() {
         String screenName = "HomeScreen";
 
-        mApi.reportScreenChange(screenName);
+        api.reportScreenChange(screenName);
 
         reflected.verify(() -> MockReflected.reportScreenChange(null, screenName));
     }
@@ -395,10 +394,10 @@ public class InstabugApiTest {
         Bitmap lightLogoVariant = mock(Bitmap.class);
         Bitmap darkLogoVariant = mock(Bitmap.class);
 
-        doReturn(lightLogoVariant).when(mApi).getBitmapForAsset(light);
-        doReturn(darkLogoVariant).when(mApi).getBitmapForAsset(dark);
+        doReturn(lightLogoVariant).when(api).getBitmapForAsset(light);
+        doReturn(darkLogoVariant).when(api).getBitmapForAsset(dark);
 
-        mApi.setCustomBrandingImage(light, dark);
+        api.setCustomBrandingImage(light, dark);
 
         reflected.verify(() -> MockReflected.setCustomBrandingImage(lightLogoVariant, darkLogoVariant));
     }
@@ -409,10 +408,10 @@ public class InstabugApiTest {
         String dark = "images/dark_logo.png";
         Bitmap lightLogoVariant = mock(Bitmap.class);
 
-        doReturn(lightLogoVariant).when(mApi).getBitmapForAsset(light);
-        doReturn(null).when(mApi).getBitmapForAsset(dark);
+        doReturn(lightLogoVariant).when(api).getBitmapForAsset(light);
+        doReturn(null).when(api).getBitmapForAsset(dark);
 
-        mApi.setCustomBrandingImage(light, dark);
+        api.setCustomBrandingImage(light, dark);
 
         reflected.verify(() -> MockReflected.setCustomBrandingImage(lightLogoVariant, lightLogoVariant));
     }
@@ -423,10 +422,10 @@ public class InstabugApiTest {
         String dark = "images/dark_logo.png";
         Bitmap darkLogoVariant = mock(Bitmap.class);
 
-        doReturn(null).when(mApi).getBitmapForAsset(light);
-        doReturn(darkLogoVariant).when(mApi).getBitmapForAsset(dark);
+        doReturn(null).when(api).getBitmapForAsset(light);
+        doReturn(darkLogoVariant).when(api).getBitmapForAsset(dark);
 
-        mApi.setCustomBrandingImage(light, dark);
+        api.setCustomBrandingImage(light, dark);
 
         reflected.verify(() -> MockReflected.setCustomBrandingImage(darkLogoVariant, darkLogoVariant));
     }
@@ -436,9 +435,9 @@ public class InstabugApiTest {
         String light = "images/light_logo.png";
         String dark = "images/dark_logo.png";
 
-        doReturn(null).when(mApi).getBitmapForAsset(any());
+        doReturn(null).when(api).getBitmapForAsset(any());
 
-        mApi.setCustomBrandingImage(light, dark);
+        api.setCustomBrandingImage(light, dark);
 
         reflected.verify(() -> MockReflected.setCustomBrandingImage(any(), any()), never());
     }
@@ -453,7 +452,7 @@ public class InstabugApiTest {
         boolean fileCreated = file.exists() || file.createNewFile();
         assertTrue("Failed to create a file", fileCreated);
 
-        mApi.addFileAttachmentWithURL(path, name);
+        api.addFileAttachmentWithURL(path, name);
 
         mInstabug.verify(() -> Instabug.addFileAttachment(any(Uri.class), eq(name)));
 
@@ -461,11 +460,11 @@ public class InstabugApiTest {
     }
 
     @Test
-    public void testAddFileAttachmentWithURLWhenFileDoesntExists() {
-        String path = "somewhere/that_doesnt_exist.png";
+    public void testAddFileAttachmentWithURLWhenFileDoesNotExists() {
+        String path = "somewhere/that_does_not_exist.png";
         String name = "Buggy";
 
-        mApi.addFileAttachmentWithURL(path, name);
+        api.addFileAttachmentWithURL(path, name);
 
         mInstabug.verify(() -> Instabug.addFileAttachment(any(Uri.class), eq(name)), never());
     }
@@ -475,14 +474,14 @@ public class InstabugApiTest {
         byte[] data = new byte[] {65, 100};
         String name = "Issue";
 
-        mApi.addFileAttachmentWithData(data, name);
+        api.addFileAttachmentWithData(data, name);
 
         mInstabug.verify(() -> Instabug.addFileAttachment(data, name));
     }
 
     @Test
     public void testClearFileAttachments() {
-        mApi.clearFileAttachments();
+        api.clearFileAttachments();
 
         mInstabug.verify(Instabug::clearFileAttachment);
     }
@@ -511,7 +510,7 @@ public class InstabugApiTest {
 
         MockedConstruction<JSONObject> mJSONObject = mockConstruction(JSONObject.class, (mock, context) -> when(mock.toString(anyInt())).thenReturn("{}"));
 
-        mApi.networkLog(data);
+        api.networkLog(data);
 
         NetworkLog networkLog = mNetworkLog.constructed().get(0);
 
