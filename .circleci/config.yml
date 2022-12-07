@@ -56,8 +56,6 @@ jobs:
     parameters:
       version:
         type: string
-      coverage:
-        type: boolean
     docker:
       - image: cirrusci/flutter:<<parameters.version>>
     steps:
@@ -66,10 +64,6 @@ jobs:
       - run: sh ./scripts/pigeon.sh
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
-      - when:
-          condition: <<parameters.coverage>>
-          steps:
-            - run: bash <(curl -s https://codecov.io/bash)
 
   test_android:
     executor:
@@ -210,11 +204,9 @@ workflows:
       - test_flutter:
           name: test_flutter-stable
           version: stable
-          coverage: true
       - test_flutter:
           name: test_flutter-2.10.5
           version: 2.10.5
-          coverage: false
       - test_android
       - e2e_android_captain
       - test_ios
