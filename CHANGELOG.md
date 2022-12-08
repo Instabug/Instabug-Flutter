@@ -1,6 +1,7 @@
 ## Unreleased
 
 * Removes redundant native logs
+* Fixes a NullPointerException when overriding a string key that doesn't exist on Android 
 
 ## 11.5.0 (2022-11-24)
 
