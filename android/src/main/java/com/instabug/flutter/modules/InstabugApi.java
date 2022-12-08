@@ -163,9 +163,14 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setValueForStringWithKey(@NonNull String value, @NonNull String key) {
-        InstabugCustomTextPlaceHolder.Key resolvedKey = ArgsRegistry.placeholders.get(key);
-        placeHolder.set(resolvedKey, value);
-        Instabug.setCustomTextPlaceHolders(placeHolder);
+        if(ArgsRegistry.placeholders.containsKey(key)) {
+            InstabugCustomTextPlaceHolder.Key resolvedKey = ArgsRegistry.placeholders.get(key);
+            placeHolder.set(resolvedKey, value);
+            Instabug.setCustomTextPlaceHolders(placeHolder);
+        }
+        else {
+            Log.i(TAG, "Instabug: " + key +  " is only relevant to iOS.");
+        }
     }
 
     @Override
