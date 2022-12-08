@@ -168,6 +168,9 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             placeHolder.set(resolvedKey, value);
             Instabug.setCustomTextPlaceHolders(placeHolder);
         }
+        else {
+            Log.i(TAG, "Instabug: " + key +  " is only relevant to iOS.");
+        }
     }
 
     @Override
