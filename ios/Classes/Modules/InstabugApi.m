@@ -94,6 +94,10 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
         NSString *resolvedKey = ArgsRegistry.placeholders[key];
         [Instabug setValue:value forStringWithKey:resolvedKey];
     }
+    else {
+        NSString *logMessage = [NSString stringWithFormat: @"%@%@%@", @"Instabug: ", key,  @" is only relevant to Android."];
+        NSLog(@"%@", logMessage);
+    }
 }
 
 - (void)appendTagsTags:(NSArray<NSString *> *)tags error:(FlutterError *_Nullable *_Nonnull)error {
