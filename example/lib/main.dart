@@ -12,6 +12,7 @@ void main() {
 
   Instabug.start(
       'ed6f659591566da19b67857e1b9d40ab', [InvocationEvent.floatingButton]);
+  Instabug.setWelcomeMessageMode(WelcomeMessageMode.disabled);
 }
 
 class MyApp extends StatelessWidget {
@@ -54,6 +55,27 @@ class InstabugButton extends StatelessWidget {
   }
 }
 
+class InstabugTextField extends StatelessWidget {
+  String label;
+  TextEditingController controller;
+
+  InstabugTextField({required this.label, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+        ),
+      ),
+    );
+  }
+}
+
 class SectionTitle extends StatelessWidget {
   String text;
 
@@ -87,6 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
     backgroundColor: MaterialStateProperty.all(Colors.lightBlue),
     foregroundColor: MaterialStateProperty.all(Colors.white),
   );
+
+  final primaryColorController = TextEditingController();
 
   void show() {
     Instabug.show();
@@ -122,8 +146,10 @@ class _MyHomePageState extends State<MyHomePage> {
     BugReporting.setInvocationEvents([invocationEvent]);
   }
 
-  void setPrimaryColor(Color c) {
-    Instabug.setPrimaryColor(c);
+  void changePrimaryColor() {
+    String text = "FF" + primaryColorController.text.replaceAll("#", "");
+    Color color = Color(int.parse(text, radix: 16));
+    Instabug.setPrimaryColor(color);
   }
 
   void setColorTheme(ColorTheme colorTheme) {
@@ -146,6 +172,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   'Hello Instabug\'s awesome user! The purpose of this application is to show you the different options for customizing the SDK and how easy it is to integrate it to your existing app',
                   textAlign: TextAlign.center,
                 ),
+              ),
+              SectionTitle('Primary Color'),
+              InstabugTextField(
+                controller: primaryColorController,
+                label: "Enter primary color",
+              ),
+              InstabugButton(
+                text: "Change Primary Color",
+                onPressed: changePrimaryColor,
+              ),
+              InstabugButton(
+                onPressed: show,
+                text: 'Invoke',
               ),
               InstabugButton(
                 onPressed: sendBugReport,
@@ -209,67 +248,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         setInvocationEvent(InvocationEvent.twoFingersSwipeLeft),
                     style: buttonStyle,
                     child: const Text('Two Fingers Swipe Left'),
-                  ),
-                ],
-              ),
-              SectionTitle('Set Primary Color'),
-              ButtonBar(
-                mainAxisSize: MainAxisSize.min,
-                alignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ButtonTheme(
-                    minWidth: 50.0,
-                    height: 30.0,
-                    child: ElevatedButton(
-                      onPressed: () => setPrimaryColor(Colors.red),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.red),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                      ),
-                      child: null,
-                    ),
-                  ),
-                  ButtonTheme(
-                    minWidth: 50.0,
-                    height: 30.0,
-                    child: ElevatedButton(
-                      onPressed: () => setPrimaryColor(Colors.green),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.green),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                      ),
-                      child: null,
-                    ),
-                  ),
-                  ButtonTheme(
-                    minWidth: 50.0,
-                    height: 30.0,
-                    child: ElevatedButton(
-                      onPressed: () => setPrimaryColor(Colors.blue),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                      ),
-                      child: null,
-                    ),
-                  ),
-                  ButtonTheme(
-                    minWidth: 50.0,
-                    height: 30.0,
-                    child: ElevatedButton(
-                      onPressed: () => setPrimaryColor(Colors.yellow),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.yellow),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                      ),
-                      child: null,
-                    ),
                   ),
                 ],
               ),
