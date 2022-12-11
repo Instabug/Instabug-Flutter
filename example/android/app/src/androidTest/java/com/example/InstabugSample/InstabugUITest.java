@@ -33,6 +33,7 @@ public class InstabugUITest {
 
         onFlutterWidget(withText("Enter primary color")).perform(typeText(color));
         onFlutterWidget(withText("Change Primary Color")).perform(click());
+        onFlutterWidget(withText("Floating Button")).perform(click());
 
         onView(withResourceName("instabug_floating_button"))
                 .check(matches(hasBackgroundColor(expected)));

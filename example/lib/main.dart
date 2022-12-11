@@ -182,34 +182,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 text: "Change Primary Color",
                 onPressed: changePrimaryColor,
               ),
-              InstabugButton(
-                onPressed: show,
-                text: 'Invoke',
-              ),
-              InstabugButton(
-                onPressed: sendBugReport,
-                text: 'Send Bug Report',
-              ),
-              InstabugButton(
-                onPressed: sendFeedback,
-                text: 'Send Feedback',
-              ),
-              InstabugButton(
-                onPressed: askQuestion,
-                text: 'Ask a Question',
-              ),
-              InstabugButton(
-                onPressed: showNpsSurvey,
-                text: 'Show NPS Survey',
-              ),
-              InstabugButton(
-                onPressed: showMultipleQuestionSurvey,
-                text: 'Show Multiple Questions Survey',
-              ),
-              InstabugButton(
-                onPressed: showFeatureRequests,
-                text: 'Show Feature Requests',
-              ),
               SectionTitle('Change Invocation Event'),
               ButtonBar(
                 mainAxisSize: MainAxisSize.min,
@@ -218,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ElevatedButton(
                     onPressed: () => setInvocationEvent(InvocationEvent.none),
                     style: buttonStyle,
-                    child: const Text('none'),
+                    child: const Text('None'),
                   ),
                   ElevatedButton(
                     onPressed: () => setInvocationEvent(InvocationEvent.shake),
@@ -250,6 +222,34 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: const Text('Two Fingers Swipe Left'),
                   ),
                 ],
+              ),
+              InstabugButton(
+                onPressed: show,
+                text: 'Invoke',
+              ),
+              InstabugButton(
+                onPressed: sendBugReport,
+                text: 'Send Bug Report',
+              ),
+              InstabugButton(
+                onPressed: sendFeedback,
+                text: 'Send Feedback',
+              ),
+              InstabugButton(
+                onPressed: askQuestion,
+                text: 'Ask a Question',
+              ),
+              InstabugButton(
+                onPressed: showNpsSurvey,
+                text: 'Show NPS Survey',
+              ),
+              InstabugButton(
+                onPressed: showMultipleQuestionSurvey,
+                text: 'Show Multiple Questions Survey',
+              ),
+              InstabugButton(
+                onPressed: showFeatureRequests,
+                text: 'Show Feature Requests',
               ),
               SectionTitle('Color Theme'),
               ButtonBar(
