@@ -153,7 +153,7 @@
     OCMVerify([self.mInstabug setSessionProfilerEnabled:YES]);
 }
 
-- (void)testSetValueForStringWithKey {
+- (void)testSetValueForStringWithKeyWhenKeyExists {
     NSString *value = @"Send a bug report";
     NSString *key = @"CustomTextPlaceHolderKey.reportBug";
     FlutterError *error;
@@ -161,6 +161,16 @@
     [self.api setValueForStringWithKeyValue:value key:key error:&error];
 
     OCMVerify([self.mInstabug setValue:value forStringWithKey:kIBGReportBugStringName]);
+}
+
+- (void)testSetValueForStringWithKeyWhenKeyDoesNotExist {
+    NSString *value = @"Wingardium Leviosa";
+    NSString *key = @"CustomTextPlaceHolderKey.wingardiumLeviosa";
+    FlutterError *error;
+
+    [self.api setValueForStringWithKeyValue:value key:key error:&error];
+
+    OCMVerify(never(), [self.mInstabug setValue:value forStringWithKey:kIBGReportBugStringName]);
 }
 
 - (void)testAppendTags {
