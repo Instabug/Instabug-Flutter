@@ -22,6 +22,8 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.flutter.EspressoFlutter.onFlutterWidget;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
+import static com.example.InstabugSample.util.InstabugViewMatchers.isToTheLeft;
+
 import android.app.Instrumentation;
 import android.graphics.Point;
 
@@ -149,6 +151,16 @@ public class BugReportingUITest {
                 .check(matches(ViewMatchers.isDisplayed()));
         onView(ViewMatchers.withText("Ask a question"))
                 .check(doesNotExist());
+    }
+
+    @Test
+    public void changeFloatingButtonEdge() {
+        onFlutterWidget(FlutterMatchers.withText("Floating Button"))
+                .perform(FlutterActions.scrollTo(), FlutterActions.click());
+        onFlutterWidget(FlutterMatchers.withText("Move Floating Button to Left"))
+                .perform(FlutterActions.scrollTo(), FlutterActions.click());
+        onView(ViewMatchers.withResourceName("instabug_floating_button"))
+                .check(matches(isToTheLeft()));
     }
 
     private void assertOptionsPromptIsVisible() {

@@ -180,6 +180,10 @@ class _MyHomePageState extends State<MyHomePage> {
     BugReporting.setReportTypes(reportTypes);
   }
 
+  void changeFloatingButtonEdge() {
+    BugReporting.setFloatingButtonEdge(FloatingButtonEdge.left, 200);
+  }
+
   void setInvocationEvent(InvocationEvent invocationEvent) {
     BugReporting.setInvocationEvents([invocationEvent]);
   }
@@ -311,6 +315,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: const Text('Question'),
                   ),
                 ],
+              ),
+              InstabugButton(
+                onPressed: changeFloatingButtonEdge,
+                text: 'Move Floating Button to Left',
               ),
               InstabugButton(
                 onPressed: sendFeedback,

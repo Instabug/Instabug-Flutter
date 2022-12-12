@@ -9,4 +9,8 @@ public class InstabugViewMatchers {
     public static Matcher<View> hasBackgroundColor(Color color) {
         return new HasBackgroundColorMatcher(color);
     }
+
+    public static Matcher<View> isToTheLeft() {
+        return new IsToTheLeftMatcher();
+    }
 }
