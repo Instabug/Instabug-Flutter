@@ -139,8 +139,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Surveys.showSurvey('pcV_mE2ttqHxT1iqvBxL0w');
   }
 
-  void showMultipleQuestionSurvey() {
-    Surveys.showSurvey('ZAKSlVz98QdPyOx1wIt8BA');
+  void showManualSurvey() {
+    Surveys.showSurvey('PMqUZXqarkOR2yGKiENB4w');
   }
 
   void showFeatureRequests() {
@@ -152,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void changePrimaryColor() {
-    String text = "FF" + primaryColorController.text.replaceAll("#", "");
+    String text = 'FF' + primaryColorController.text.replaceAll('#', '');
     Color color = Color(int.parse(text, radix: 16));
     Instabug.setPrimaryColor(color);
   }
@@ -181,10 +181,10 @@ class _MyHomePageState extends State<MyHomePage> {
               SectionTitle('Primary Color'),
               InstabugTextField(
                 controller: primaryColorController,
-                label: "Enter primary color",
+                label: 'Enter primary color',
               ),
               InstabugButton(
-                text: "Change Primary Color",
+                text: 'Change Primary Color',
                 onPressed: changePrimaryColor,
               ),
               SectionTitle('Change Invocation Event'),
@@ -235,15 +235,19 @@ class _MyHomePageState extends State<MyHomePage> {
               SectionTitle('Repro Steps'),
               InstabugTextField(
                 controller: screenNameController,
-                label: "Enter screen name",
+                label: 'Enter screen name',
               ),
               InstabugButton(
-                text: "Report Screen Change",
+                text: 'Report Screen Change',
                 onPressed: reportScreenChange,
               ),
               InstabugButton(
                 onPressed: sendBugReport,
                 text: 'Send Bug Report',
+              ),
+              InstabugButton(
+                onPressed: showManualSurvey,
+                text: 'Show Manual Survey',
               ),
               InstabugButton(
                 onPressed: sendFeedback,
@@ -258,7 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 text: 'Show NPS Survey',
               ),
               InstabugButton(
-                onPressed: showMultipleQuestionSurvey,
+                onPressed: showManualSurvey,
                 text: 'Show Multiple Questions Survey',
               ),
               InstabugButton(
