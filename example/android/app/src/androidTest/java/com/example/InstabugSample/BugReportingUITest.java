@@ -9,6 +9,7 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
 
 import org.junit.Before;
@@ -122,7 +123,7 @@ public class BugReportingUITest {
     }
 
     @Test
-    public void changeReportTypes() {
+    public void changeReportTypes() throws UiObjectNotFoundException {
         onFlutterWidget(FlutterMatchers.withText("Bug"))
                 .perform(FlutterActions.scrollTo(), FlutterActions.click());
         onFlutterWidget(FlutterMatchers.withText("Invoke"))
@@ -134,7 +135,7 @@ public class BugReportingUITest {
 
         // Close bug reporting screen
         device.pressBack();
-        onView(ViewMatchers.withText("DISCARD")).perform(ViewActions.click());
+        device.findObject(new UiSelector().text("DISCARD")).click();
 
         // Enable feedback reports
         onFlutterWidget(FlutterMatchers.withText("Feedback"))
