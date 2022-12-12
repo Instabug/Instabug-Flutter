@@ -24,6 +24,8 @@ import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentat
 import android.app.Instrumentation;
 import android.graphics.Point;
 
+import com.example.InstabugSample.util.Keyboard;
+
 @RunWith(AndroidJUnit4.class)
 public class BugReportingUITest {
     Instrumentation instrumentation = getInstrumentation();
@@ -82,7 +84,8 @@ public class BugReportingUITest {
         String screen = "Orders";
 
         onFlutterWidget(FlutterMatchers.withText("Enter screen name"))
-                .perform(FlutterActions.typeText(screen));
+                .perform(FlutterActions.scrollTo(), FlutterActions.typeText(screen));
+        Keyboard.closeKeyboard();
         onFlutterWidget(FlutterMatchers.withText("Report Screen Change"))
                 .perform(FlutterActions.scrollTo(), FlutterActions.click());
         onFlutterWidget(FlutterMatchers.withText("Send Bug Report"))
@@ -90,7 +93,7 @@ public class BugReportingUITest {
         onView(ViewMatchers.withResourceName("instabug_text_view_repro_steps_disclaimer"))
                 .perform(ViewActions.click());
 
-        Thread.sleep(2000);
+        Thread.sleep(3000);
 
         onView(ViewMatchers.withResourceName("instabug_vus_list"))
                 .check(matches(ViewMatchers.hasMinimumChildCount(2)));

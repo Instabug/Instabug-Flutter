@@ -16,6 +16,8 @@ import android.graphics.Color;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.InstabugSample.util.Keyboard;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +35,7 @@ public class InstabugUITest {
         Color expected = Color.valueOf(0xFFFF0000);
 
         onFlutterWidget(withText("Enter primary color")).perform(typeText(color));
+        Keyboard.closeKeyboard();
         onFlutterWidget(withText("Change Primary Color")).perform(scrollTo(), click());
         onFlutterWidget(withText("Floating Button")).perform(scrollTo(), click());
 
