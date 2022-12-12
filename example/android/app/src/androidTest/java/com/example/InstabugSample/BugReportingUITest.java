@@ -11,6 +11,7 @@ import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiSelector;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +35,12 @@ public class BugReportingUITest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
+
+    @Before
+    public void setUp() {
+        onFlutterWidget(FlutterMatchers.withText("Restart Instabug"))
+                .perform(FlutterActions.click());
+    }
 
     @Test
     public void floatingButtonInvocationEvent() {
@@ -85,6 +92,7 @@ public class BugReportingUITest {
 
         onFlutterWidget(FlutterMatchers.withText("Enter screen name"))
                 .perform(FlutterActions.scrollTo(), FlutterActions.typeText(screen));
+        Thread.sleep(1000);
         Keyboard.closeKeyboard();
         onFlutterWidget(FlutterMatchers.withText("Report Screen Change"))
                 .perform(FlutterActions.scrollTo(), FlutterActions.click());
@@ -102,11 +110,45 @@ public class BugReportingUITest {
 
     @Test
     public void onDismissCallbackIsCalled() {
-        onFlutterWidget(FlutterMatchers.withText("Invoke")).perform(FlutterActions.click());
+        onFlutterWidget(FlutterMatchers.withText("Set On Dismiss Callback"))
+                .perform(FlutterActions.scrollTo(), FlutterActions.click());
+
+        onFlutterWidget(FlutterMatchers.withText("Invoke")).perform(FlutterActions.scrollTo(), FlutterActions.click());
         device.pressBack();
 
         onFlutterWidget(FlutterMatchers.withText("onDismiss callback called with DismissType.cancel and ReportType.other"))
                 .check(FlutterAssertions.matches(FlutterMatchers.isExisting()));
+    }
+
+    @Test
+    public void changeReportTypes() {
+        onFlutterWidget(FlutterMatchers.withText("Bug"))
+                .perform(FlutterActions.scrollTo(), FlutterActions.click());
+        onFlutterWidget(FlutterMatchers.withText("Invoke"))
+                .perform(FlutterActions.scrollTo(), FlutterActions.click());
+
+        // Shows bug reporting screen immediately
+        onView(ViewMatchers.withResourceName("instabug_edit_text_message"))
+                .check(matches(ViewMatchers.isDisplayed()));
+
+        // Close bug reporting screen
+        device.pressBack();
+        onView(ViewMatchers.withText("DISCARD")).perform(ViewActions.click());
+
+        // Enable feedback reports
+        onFlutterWidget(FlutterMatchers.withText("Feedback"))
+                .perform(FlutterActions.scrollTo(), FlutterActions.click());
+        onFlutterWidget(FlutterMatchers.withText("Invoke"))
+                .perform(FlutterActions.scrollTo(), FlutterActions.click());
+
+        // Shows both bug reporting and feature requests in prompt options
+        assertOptionsPromptIsVisible();
+        onView(ViewMatchers.withText("Report a bug"))
+                .check(matches(ViewMatchers.isDisplayed()));
+        onView(ViewMatchers.withText("Suggest an improvement"))
+                .check(matches(ViewMatchers.isDisplayed()));
+        onView(ViewMatchers.withText("Ask a question"))
+                .check(doesNotExist());
     }
 
     private void assertOptionsPromptIsVisible() {

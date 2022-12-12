@@ -110,11 +110,18 @@ class _MyHomePageState extends State<MyHomePage> {
     foregroundColor: MaterialStateProperty.all(Colors.white),
   );
 
+  List<ReportType> reportTypes = [];
+
   final primaryColorController = TextEditingController();
   final screenNameController = TextEditingController();
 
-  @override
-  void initState() {
+  void restartInstabug() {
+    Instabug.setEnabled(false);
+    Instabug.setEnabled(true);
+    BugReporting.setInvocationEvents([InvocationEvent.floatingButton]);
+  }
+
+  void setOnDismissCallback() {
     BugReporting.setOnDismissCallback((dismissType, reportType) {
       showDialog(
         context: context,
@@ -164,6 +171,15 @@ class _MyHomePageState extends State<MyHomePage> {
     FeatureRequests.show();
   }
 
+  void toggleReportType(ReportType reportType) {
+    if (reportTypes.contains(reportType)) {
+      reportTypes.remove(reportType);
+    } else {
+      reportTypes.add(reportType);
+    }
+    BugReporting.setReportTypes(reportTypes);
+  }
+
   void setInvocationEvent(InvocationEvent invocationEvent) {
     BugReporting.setInvocationEvents([invocationEvent]);
   }
@@ -194,6 +210,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   'Hello Instabug\'s awesome user! The purpose of this application is to show you the different options for customizing the SDK and how easy it is to integrate it to your existing app',
                   textAlign: TextAlign.center,
                 ),
+              ),
+              InstabugButton(
+                onPressed: restartInstabug,
+                text: 'Restart Instabug',
               ),
               SectionTitle('Primary Color'),
               InstabugTextField(
@@ -249,6 +269,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: show,
                 text: 'Invoke',
               ),
+              InstabugButton(
+                onPressed: setOnDismissCallback,
+                text: 'Set On Dismiss Callback',
+              ),
               SectionTitle('Repro Steps'),
               InstabugTextField(
                 controller: screenNameController,
@@ -265,6 +289,28 @@ class _MyHomePageState extends State<MyHomePage> {
               InstabugButton(
                 onPressed: showManualSurvey,
                 text: 'Show Manual Survey',
+              ),
+              SectionTitle('Change Report Types'),
+              ButtonBar(
+                mainAxisSize: MainAxisSize.min,
+                alignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: () => toggleReportType(ReportType.bug),
+                    style: buttonStyle,
+                    child: const Text('Bug'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => toggleReportType(ReportType.feedback),
+                    style: buttonStyle,
+                    child: const Text('Feedback'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => toggleReportType(ReportType.question),
+                    style: buttonStyle,
+                    child: const Text('Question'),
+                  ),
+                ],
               ),
               InstabugButton(
                 onPressed: sendFeedback,
