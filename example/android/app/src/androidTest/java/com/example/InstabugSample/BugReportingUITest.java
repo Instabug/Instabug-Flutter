@@ -2,6 +2,7 @@ package com.example.InstabugSample;
 
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.flutter.action.FlutterActions;
+import androidx.test.espresso.flutter.assertion.FlutterAssertions;
 import androidx.test.espresso.flutter.matcher.FlutterMatchers;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
@@ -94,6 +95,15 @@ public class BugReportingUITest {
         onView(ViewMatchers.withResourceName("instabug_vus_list"))
                 .check(matches(ViewMatchers.hasMinimumChildCount(2)));
         onView(ViewMatchers.withText(screen)).check(matches(ViewMatchers.isDisplayed()));
+    }
+
+    @Test
+    public void onDismissCallbackIsCalled() {
+        onFlutterWidget(FlutterMatchers.withText("Invoke")).perform(FlutterActions.click());
+        device.pressBack();
+
+        onFlutterWidget(FlutterMatchers.withText("onDismiss callback called with DismissType.cancel and ReportType.other"))
+                .check(FlutterAssertions.matches(FlutterMatchers.isExisting()));
     }
 
     private void assertOptionsPromptIsVisible() {

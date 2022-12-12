@@ -113,6 +113,23 @@ class _MyHomePageState extends State<MyHomePage> {
   final primaryColorController = TextEditingController();
   final screenNameController = TextEditingController();
 
+  @override
+  void initState() {
+    BugReporting.setOnDismissCallback((dismissType, reportType) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('On Dismiss'),
+            content: Text(
+              'onDismiss callback called with $dismissType and $reportType',
+            ),
+          );
+        },
+      );
+    });
+  }
+
   void show() {
     Instabug.show();
   }
