@@ -4,6 +4,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.flutter.EspressoFlutter.onFlutterWidget;
 import static androidx.test.espresso.flutter.action.FlutterActions.click;
+import static androidx.test.espresso.flutter.action.FlutterActions.scrollTo;
 import static androidx.test.espresso.flutter.matcher.FlutterMatchers.withText;
 import static androidx.test.espresso.flutter.action.FlutterActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.withResourceName;
@@ -32,8 +33,8 @@ public class InstabugUITest {
         Color expected = Color.valueOf(0xFFFF0000);
 
         onFlutterWidget(withText("Enter primary color")).perform(typeText(color));
-        onFlutterWidget(withText("Change Primary Color")).perform(click());
-        onFlutterWidget(withText("Floating Button")).perform(click());
+        onFlutterWidget(withText("Change Primary Color")).perform(scrollTo(), click());
+        onFlutterWidget(withText("Floating Button")).perform(scrollTo(), click());
 
         onView(withResourceName("instabug_floating_button"))
                 .check(matches(hasBackgroundColor(expected)));

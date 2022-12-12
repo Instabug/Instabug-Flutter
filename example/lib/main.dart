@@ -111,9 +111,14 @@ class _MyHomePageState extends State<MyHomePage> {
   );
 
   final primaryColorController = TextEditingController();
+  final screenNameController = TextEditingController();
 
   void show() {
     Instabug.show();
+  }
+
+  void reportScreenChange() {
+    Instabug.reportScreenChange(screenNameController.text);
   }
 
   void sendBugReport() {
@@ -226,6 +231,15 @@ class _MyHomePageState extends State<MyHomePage> {
               InstabugButton(
                 onPressed: show,
                 text: 'Invoke',
+              ),
+              SectionTitle('Repro Steps'),
+              InstabugTextField(
+                controller: screenNameController,
+                label: "Enter screen name",
+              ),
+              InstabugButton(
+                text: "Report Screen Change",
+                onPressed: reportScreenChange,
               ),
               InstabugButton(
                 onPressed: sendBugReport,
