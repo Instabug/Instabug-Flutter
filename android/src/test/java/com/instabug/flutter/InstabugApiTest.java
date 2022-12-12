@@ -254,13 +254,23 @@ public class InstabugApiTest {
     }
 
     @Test
-    public void testSetValueForStringWithKey() {
+    public void testSetValueForStringWithKeyWhenKeyExists() {
         String value = "Send a bug report";
         String key = "CustomTextPlaceHolderKey.reportBug";
 
         api.setValueForStringWithKey(value, key);
 
         mInstabug.verify(() -> Instabug.setCustomTextPlaceHolders(any(InstabugCustomTextPlaceHolder.class)));
+    }
+
+    @Test
+    public void testSetValueForStringWithKeyWhenKeyDoesNotExists() {
+        String value = "Wingardium Leviosa";
+        String key = "CustomTextPlaceHolderKey.wingardiumLeviosa";
+
+        api.setValueForStringWithKey(value, key);
+
+        mInstabug.verify(() -> Instabug.setCustomTextPlaceHolders(any(InstabugCustomTextPlaceHolder.class)), never());
     }
 
     @Test
