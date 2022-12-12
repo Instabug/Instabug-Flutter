@@ -1,9 +1,3 @@
-# Generated files
-*.mocks.dart
-*.g.dart
-android/**/generated/
-ios/**/Generated/
-
 # Miscellaneous
 *.class
 *.log
