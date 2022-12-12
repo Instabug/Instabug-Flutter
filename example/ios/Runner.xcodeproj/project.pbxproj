@@ -16,8 +16,16 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		9D381ECFBB01BD0E978EBDF2 /* Pods_InstabugSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71679BEC094CFF3474195C2E /* Pods_InstabugSampleTests.framework */; };
-		C090017C25D9A031006F3DAE /* InstabugSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C090017B25D9A031006F3DAE /* InstabugSampleTests.m */; };
 		C09001B425D9A3C5006F3DAE /* InstabugSampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C09001B325D9A3C5006F3DAE /* InstabugSampleUITests.m */; };
+		CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC080E102937B7DB0041170A /* InstabugApiTests.m */; };
+		CC198C61293E1A21007077C8 /* SurveysApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC198C60293E1A21007077C8 /* SurveysApiTests.m */; };
+		CC359DB92937720C0067A924 /* ApmApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC359DB82937720C0067A924 /* ApmApiTests.m */; };
+		CC3D69E7293F47FC000DCE54 /* ArgsRegistryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC3D69E6293F47FC000DCE54 /* ArgsRegistryTests.m */; };
+		CC9925D2293DEB0B001FD3EE /* CrashReportingApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */; };
+		CC9925D5293DF534001FD3EE /* FeatureRequestsApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D4293DF534001FD3EE /* FeatureRequestsApiTests.m */; };
+		CC9925D7293DFB03001FD3EE /* InstabugLogApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D6293DFB03001FD3EE /* InstabugLogApiTests.m */; };
+		CC9925D9293DFD7F001FD3EE /* RepliesApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D8293DFD7F001FD3EE /* RepliesApiTests.m */; };
+		CCADBDD8293CFED300AE5EB8 /* BugReportingApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,11 +83,22 @@
 		BA5633844585BB93FE7BCCE7 /* Pods-InstabugSampleTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugSampleTests.profile.xcconfig"; path = "Target Support Files/Pods-InstabugSampleTests/Pods-InstabugSampleTests.profile.xcconfig"; sourceTree = "<group>"; };
 		BF9025BBD0A6FD7B193E903A /* Pods-InstabugSampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugSampleTests.debug.xcconfig"; path = "Target Support Files/Pods-InstabugSampleTests/Pods-InstabugSampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C090017925D9A030006F3DAE /* InstabugSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstabugSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C090017B25D9A031006F3DAE /* InstabugSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugSampleTests.m; sourceTree = "<group>"; };
 		C090017D25D9A031006F3DAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C09001B125D9A3C5006F3DAE /* InstabugSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstabugSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C09001B325D9A3C5006F3DAE /* InstabugSampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugSampleUITests.m; sourceTree = "<group>"; };
 		C09001B525D9A3C5006F3DAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC080E102937B7DB0041170A /* InstabugApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstabugApiTests.m; sourceTree = "<group>"; };
+		CC198C60293E1A21007077C8 /* SurveysApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveysApiTests.m; sourceTree = "<group>"; };
+		CC198C62293E2392007077C8 /* IBGSurvey+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IBGSurvey+Test.h"; sourceTree = "<group>"; };
+		CC359DB82937720C0067A924 /* ApmApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApmApiTests.m; sourceTree = "<group>"; };
+		CC3D69E6293F47FC000DCE54 /* ArgsRegistryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArgsRegistryTests.m; sourceTree = "<group>"; };
+		CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Instabug+Test.h"; sourceTree = "<group>"; };
+		CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IBGNetworkLogger+Test.h"; sourceTree = "<group>"; };
+		CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrashReportingApiTests.m; sourceTree = "<group>"; };
+		CC9925D4293DF534001FD3EE /* FeatureRequestsApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeatureRequestsApiTests.m; sourceTree = "<group>"; };
+		CC9925D6293DFB03001FD3EE /* InstabugLogApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugLogApiTests.m; sourceTree = "<group>"; };
+		CC9925D8293DFD7F001FD3EE /* RepliesApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RepliesApiTests.m; sourceTree = "<group>"; };
+		CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BugReportingApiTests.m; sourceTree = "<group>"; };
 		D465CA8CFED509B46412330E /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		F5446C0D3B2623D9BCC7CCE3 /* Pods_InstabugSampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstabugSampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -190,8 +209,17 @@
 		C090017A25D9A031006F3DAE /* InstabugSampleTests */ = {
 			isa = PBXGroup;
 			children = (
-				C090017B25D9A031006F3DAE /* InstabugSampleTests.m */,
+				CC198C60293E1A21007077C8 /* SurveysApiTests.m */,
+				CC78720A2938D1C5008CB2A5 /* Util */,
+				CC080E102937B7DB0041170A /* InstabugApiTests.m */,
+				CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */,
 				C090017D25D9A031006F3DAE /* Info.plist */,
+				CC359DB82937720C0067A924 /* ApmApiTests.m */,
+				CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */,
+				CC9925D4293DF534001FD3EE /* FeatureRequestsApiTests.m */,
+				CC9925D6293DFB03001FD3EE /* InstabugLogApiTests.m */,
+				CC9925D8293DFD7F001FD3EE /* RepliesApiTests.m */,
+				CC3D69E6293F47FC000DCE54 /* ArgsRegistryTests.m */,
 			);
 			path = InstabugSampleTests;
 			sourceTree = "<group>";
@@ -203,6 +231,16 @@
 				C09001B525D9A3C5006F3DAE /* Info.plist */,
 			);
 			path = InstabugSampleUITests;
+			sourceTree = "<group>";
+		};
+		CC78720A2938D1C5008CB2A5 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */,
+				CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */,
+				CC198C62293E2392007077C8 /* IBGSurvey+Test.h */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,6 +323,7 @@
 					};
 					C090017825D9A030006F3DAE = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1340;
 						TestTargetID = 97C146ED1CF9000F007C117D;
 					};
 					C09001B025D9A3C5006F3DAE = {
@@ -503,7 +542,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C090017C25D9A031006F3DAE /* InstabugSampleTests.m in Sources */,
+				CC359DB92937720C0067A924 /* ApmApiTests.m in Sources */,
+				CC3D69E7293F47FC000DCE54 /* ArgsRegistryTests.m in Sources */,
+				CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */,
+				CC198C61293E1A21007077C8 /* SurveysApiTests.m in Sources */,
+				CCADBDD8293CFED300AE5EB8 /* BugReportingApiTests.m in Sources */,
+				CC9925D9293DFD7F001FD3EE /* RepliesApiTests.m in Sources */,
+				CC9925D2293DEB0B001FD3EE /* CrashReportingApiTests.m in Sources */,
+				CC9925D7293DFB03001FD3EE /* InstabugLogApiTests.m in Sources */,
+				CC9925D5293DF534001FD3EE /* FeatureRequestsApiTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,6 +853,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -824,6 +872,9 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "InstabugSampleTests/InstabugSampleTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/Runner";
 			};
@@ -837,6 +888,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -854,6 +906,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "InstabugSampleTests/InstabugSampleTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/Runner";
 			};
@@ -867,6 +921,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -884,6 +939,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "InstabugSampleTests/InstabugSampleTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/Runner";
 			};
