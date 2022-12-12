@@ -90,14 +90,14 @@ public class BugReportingUITest {
 
     @Test
     public void multipleScreenshotsInReproSteps() throws InterruptedException {
-        String screen = "Orders";
+        String screen = "My Screen";
 
         onFlutterWidget(FlutterMatchers.withText("Enter screen name"))
                 .perform(FlutterActions.scrollTo(), FlutterActions.typeText(screen));
         Thread.sleep(1000);
         Keyboard.closeKeyboard();
         onFlutterWidget(FlutterMatchers.withText("Report Screen Change"))
-                .perform(FlutterActions.scrollTo(), FlutterActions.click());
+                .perform(FlutterActions.scrollTo(), FlutterActions.click(), FlutterActions.click());
         onFlutterWidget(FlutterMatchers.withText("Send Bug Report"))
                 .perform(FlutterActions.scrollTo(), FlutterActions.click());
         onView(ViewMatchers.withResourceName("instabug_text_view_repro_steps_disclaimer"))
@@ -106,8 +106,7 @@ public class BugReportingUITest {
         Thread.sleep(3000);
 
         onView(ViewMatchers.withResourceName("instabug_vus_list"))
-                .check(matches(ViewMatchers.hasMinimumChildCount(2)));
-        onView(ViewMatchers.withText(screen)).check(matches(ViewMatchers.isDisplayed()));
+                .check(matches(ViewMatchers.hasChildCount(2)));
     }
 
     @Test
