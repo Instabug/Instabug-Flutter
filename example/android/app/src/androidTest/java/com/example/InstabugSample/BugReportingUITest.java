@@ -164,8 +164,8 @@ public class BugReportingUITest {
     }
 
     private void assertOptionsPromptIsVisible() {
-        onView(ViewMatchers.withResourceName("instabug_main_prompt_container"))
-                .check(matches(ViewMatchers.isDisplayed()));
+        UiObject optionsPrompt = device.findObject(new UiSelector().resourceIdMatches(".*/id:instabug_main_prompt_container"));
+        optionsPrompt.waitForExists(2000);
     }
 }
 
