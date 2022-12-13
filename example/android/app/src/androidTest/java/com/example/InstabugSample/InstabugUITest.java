@@ -3,16 +3,14 @@ package com.example.InstabugSample;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.flutter.EspressoFlutter.onFlutterWidget;
-import static androidx.test.espresso.flutter.action.FlutterActions.click;
-import static androidx.test.espresso.flutter.action.FlutterActions.scrollTo;
-import static androidx.test.espresso.flutter.matcher.FlutterMatchers.withText;
-import static androidx.test.espresso.flutter.action.FlutterActions.typeText;
-import static androidx.test.espresso.matcher.ViewMatchers.withResourceName;
 
 import static com.example.InstabugSample.util.InstabugViewMatchers.hasBackgroundColor;
 
 import android.graphics.Color;
 
+import androidx.test.espresso.flutter.action.FlutterActions;
+import androidx.test.espresso.flutter.matcher.FlutterMatchers;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -34,12 +32,15 @@ public class InstabugUITest {
         String color = "#FF0000";
         Color expected = Color.valueOf(0xFFFF0000);
 
-        onFlutterWidget(withText("Enter primary color")).perform(typeText(color));
+        onFlutterWidget(FlutterMatchers.withText("Enter primary color"))
+                .perform(FlutterActions.typeText(color));
         Keyboard.closeKeyboard();
-        onFlutterWidget(withText("Change Primary Color")).perform(scrollTo(), click());
-        onFlutterWidget(withText("Floating Button")).perform(scrollTo(), click());
+        onFlutterWidget(FlutterMatchers.withText("Change Primary Color"))
+                .perform(FlutterActions.scrollTo(), FlutterActions.click());
+        onFlutterWidget(FlutterMatchers.withText("Floating Button"))
+                .perform(FlutterActions.scrollTo(), FlutterActions.click());
 
-        onView(withResourceName("instabug_floating_button"))
+        onView(ViewMatchers.withResourceName("instabug_floating_button"))
                 .check(matches(hasBackgroundColor(expected)));
     }
 }

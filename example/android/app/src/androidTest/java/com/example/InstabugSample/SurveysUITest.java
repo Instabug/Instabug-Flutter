@@ -1,14 +1,11 @@
 package com.example.InstabugSample;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.flutter.EspressoFlutter.onFlutterWidget;
-import static androidx.test.espresso.flutter.action.FlutterActions.click;
-import static androidx.test.espresso.flutter.action.FlutterActions.scrollTo;
-import static androidx.test.espresso.flutter.matcher.FlutterMatchers.withText;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withResourceName;
 
+import static com.example.InstabugSample.util.InstabugAssertions.assertViewWillBeVisible;
+
+import androidx.test.espresso.flutter.action.FlutterActions;
+import androidx.test.espresso.flutter.matcher.FlutterMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -24,12 +21,10 @@ public class SurveysUITest {
             new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void showManualSurvey() throws InterruptedException {
-        onFlutterWidget(withText("Show Manual Survey")).perform(scrollTo(), click());
+    public void showManualSurvey() {
+        onFlutterWidget(FlutterMatchers.withText("Show Manual Survey"))
+                .perform(FlutterActions.scrollTo(), FlutterActions.click());
 
-        Thread.sleep(1000);
-
-        onView(withResourceName("instabug_survey_dialog_container"))
-                .check(matches(isDisplayed()));
+        assertViewWillBeVisible("instabug_survey_dialog_container", 2000);
     }
 }
