@@ -23,7 +23,10 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.flutter.EspressoFlutter.onFlutterWidget;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
+import static com.example.InstabugSample.util.InstabugAssertions.assertViewWillBeVisible;
 import static com.example.InstabugSample.util.InstabugViewMatchers.isToTheLeft;
+
+import static org.junit.Assert.assertTrue;
 
 import android.app.Instrumentation;
 import android.graphics.Point;
@@ -90,7 +93,7 @@ public class BugReportingUITest {
     }
 
     @Test
-    public void multipleScreenshotsInReproSteps() throws InterruptedException {
+    public void multipleScreenshotsInReproSteps() throws InterruptedException, UiObjectNotFoundException {
         String screen = "My Screen";
 
         onFlutterWidget(FlutterMatchers.withText("Enter screen name"))
@@ -101,22 +104,26 @@ public class BugReportingUITest {
                 .perform(FlutterActions.scrollTo(), FlutterActions.click(), FlutterActions.click());
         onFlutterWidget(FlutterMatchers.withText("Send Bug Report"))
                 .perform(FlutterActions.scrollTo(), FlutterActions.click());
-        onView(ViewMatchers.withResourceName("instabug_text_view_repro_steps_disclaimer"))
-                .perform(ViewActions.click());
+        UiObject reproStepsDisclaimer = assertViewWillBeVisible("instabug_text_view_repro_steps_disclaimer", 2000);
+        reproStepsDisclaimer.click();
 
-        Thread.sleep(3000);
-
-        onView(ViewMatchers.withResourceName("instabug_vus_list"))
+        String screenshotsListId = "instabug_vus_list";
+        assertViewWillBeVisible(screenshotsListId, 5000);
+        onView(ViewMatchers.withResourceName(screenshotsListId))
                 .check(matches(ViewMatchers.hasChildCount(2)));
     }
 
     @Test
-    public void onDismissCallbackIsCalled() {
+    public void onDismissCallbackIsCalled() throws InterruptedException {
         onFlutterWidget(FlutterMatchers.withText("Set On Dismiss Callback"))
                 .perform(FlutterActions.scrollTo(), FlutterActions.click());
 
-        onFlutterWidget(FlutterMatchers.withText("Invoke")).perform(FlutterActions.scrollTo(), FlutterActions.click());
+        onFlutterWidget(FlutterMatchers.withText("Invoke"))
+                .perform(FlutterActions.scrollTo(), FlutterActions.click());
+        Thread.sleep(1000);
         device.pressBack();
+
+        Thread.sleep(1000);
 
         onFlutterWidget(FlutterMatchers.withText("onDismiss callback called with DismissType.cancel and ReportType.other"))
                 .check(FlutterAssertions.matches(FlutterMatchers.isExisting()));
@@ -129,9 +136,8 @@ public class BugReportingUITest {
         onFlutterWidget(FlutterMatchers.withText("Invoke"))
                 .perform(FlutterActions.scrollTo(), FlutterActions.click());
 
-        // Shows bug reporting screen immediately
-        onView(ViewMatchers.withResourceName("instabug_edit_text_message"))
-                .check(matches(ViewMatchers.isDisplayed()));
+        // Shows bug reporting screen
+        assertViewWillBeVisible("instabug_edit_text_message", 2000);
 
         // Close bug reporting screen
         device.pressBack();
@@ -164,8 +170,7 @@ public class BugReportingUITest {
     }
 
     private void assertOptionsPromptIsVisible() {
-        UiObject optionsPrompt = device.findObject(new UiSelector().resourceIdMatches(".*/id:instabug_main_prompt_container"));
-        optionsPrompt.waitForExists(2000);
+        assertViewWillBeVisible("instabug_main_prompt_container", 2000);
     }
 }
 
