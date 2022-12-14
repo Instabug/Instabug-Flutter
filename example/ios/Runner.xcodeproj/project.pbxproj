@@ -26,6 +26,9 @@
 		CC9925D7293DFB03001FD3EE /* InstabugLogApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D6293DFB03001FD3EE /* InstabugLogApiTests.m */; };
 		CC9925D9293DFD7F001FD3EE /* RepliesApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D8293DFD7F001FD3EE /* RepliesApiTests.m */; };
 		CCADBDD8293CFED300AE5EB8 /* BugReportingApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */; };
+		CC6018BE2948C371003A845D /* InstabugUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC6018BD2948C371003A845D /* InstabugUITests.m */; };
+		CC7B6B4D2949D43D00C6274F /* XCUIElement+Instabug.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7B6B4C2949D43D00C6274F /* XCUIElement+Instabug.m */; };
+		CC7B6B512949F9B700C6274F /* InstabugUITestsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7B6B502949F9B700C6274F /* InstabugUITestsUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +102,11 @@
 		CC9925D6293DFB03001FD3EE /* InstabugLogApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugLogApiTests.m; sourceTree = "<group>"; };
 		CC9925D8293DFD7F001FD3EE /* RepliesApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RepliesApiTests.m; sourceTree = "<group>"; };
 		CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BugReportingApiTests.m; sourceTree = "<group>"; };
+		CC6018BD2948C371003A845D /* InstabugUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugUITests.m; sourceTree = "<group>"; };
+		CC7B6B4C2949D43D00C6274F /* XCUIElement+Instabug.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCUIElement+Instabug.m"; sourceTree = "<group>"; };
+		CC7B6B4E2949D52800C6274F /* XCUIElement+Instabug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCUIElement+Instabug.h"; sourceTree = "<group>"; };
+		CC7B6B4F2949F95600C6274F /* InstabugUITestsUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstabugUITestsUtils.h; sourceTree = "<group>"; };
+		CC7B6B502949F9B700C6274F /* InstabugUITestsUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugUITestsUtils.m; sourceTree = "<group>"; };
 		D465CA8CFED509B46412330E /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		F5446C0D3B2623D9BCC7CCE3 /* Pods_InstabugSampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstabugSampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -227,8 +235,10 @@
 		C09001B225D9A3C5006F3DAE /* InstabugSampleUITests */ = {
 			isa = PBXGroup;
 			children = (
+				CC7B6B442949D0E700C6274F /* Util */,
 				C09001B325D9A3C5006F3DAE /* InstabugSampleUITests.m */,
 				C09001B525D9A3C5006F3DAE /* Info.plist */,
+				CC6018BD2948C371003A845D /* InstabugUITests.m */,
 			);
 			path = InstabugSampleUITests;
 			sourceTree = "<group>";
@@ -239,6 +249,17 @@
 				CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */,
 				CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */,
 				CC198C62293E2392007077C8 /* IBGSurvey+Test.h */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		CC7B6B442949D0E700C6274F /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				CC7B6B4E2949D52800C6274F /* XCUIElement+Instabug.h */,
+				CC7B6B4C2949D43D00C6274F /* XCUIElement+Instabug.m */,
+				CC7B6B4F2949F95600C6274F /* InstabugUITestsUtils.h */,
+				CC7B6B502949F9B700C6274F /* InstabugUITestsUtils.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -558,7 +579,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC7B6B512949F9B700C6274F /* InstabugUITestsUtils.m in Sources */,
+				CC6018BE2948C371003A845D /* InstabugUITests.m in Sources */,
 				C09001B425D9A3C5006F3DAE /* InstabugSampleUITests.m in Sources */,
+				CC7B6B4D2949D43D00C6274F /* XCUIElement+Instabug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
