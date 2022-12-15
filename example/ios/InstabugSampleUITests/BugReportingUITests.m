@@ -34,6 +34,30 @@
     XCTAssertEqual(2, screensQuery.count);
 }
 
+- (void)testFloatingButtonInvocationEvent {
+    // Grabbing the "Floating Button" invocation event button
+    // inside the "Change Invocation Events" section as it
+    // conflicts with Instabug's floating button.
+    XCUIElement *invocationEvents = [[self.app.otherElements containingPredicate:[NSPredicate predicateWithFormat:@"label == 'Change Invocation Event'"]] element];
+    [invocationEvents.buttons[@"Floating Button"] forceTap];
+    [self.app.buttons[@"IBGFloatingButtonAccessibilityIdentifier"] tap];
+
+    [self assertOptionsPromptIsVisible];
+}
+
+- (void)testNoneInvocationEvent {
+    [self.app.buttons[@"None"] tap];
+
+    XCUIElement *floatingButton = self.app.buttons[@"IBGFloatingButtonAccessibilityIdentifier"];
+    XCTAssertFalse(floatingButton.exists, "Floating button is still visible");
+}
+
+- (void)testManualInvocation {
+    [self.app.buttons[@"Invoke"] tap];
+
+    [self assertOptionsPromptIsVisible];
+}
+
 - (void)testChangeFloatingButtonEdge {
     // Grabbing the "Floating Button" invocation event button
     // inside the "Change Invocation Events" section as it
@@ -46,6 +70,11 @@
     CGFloat floatingButtonLeft = floatingButton.frame.origin.x;
     CGFloat screenMiddle = self.app.frame.size.width / 2.0f;
     XCTAssertLessThan(floatingButtonLeft, screenMiddle, @"Floating button isn't to the left of the screen");
+}
+
+- (void)assertOptionsPromptIsVisible {
+    XCUIElement *optionsPrompt = self.app.cells[@"IBGReportBugPromptOptionAccessibilityIdentifier"];
+    XCTAssertTrue(optionsPrompt.exists, @"Options prompt didn't show up");
 }
 
 @end
