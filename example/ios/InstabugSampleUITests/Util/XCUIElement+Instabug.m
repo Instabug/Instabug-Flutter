@@ -39,12 +39,12 @@
     [coordinate tap];
 }
 
-- (void)assertExists {
-    XCTAssertTrue(self.exists, "Element described by: %@ doesn't exist, expected to exist", self.description);
+- (void)assertExistsWithTimeout:(NSTimeInterval)timeout {
+    XCTAssertTrue([self waitForExistenceWithTimeout:timeout], "Element described by: %@ doesn't exist, expected to exist", self.description);
 }
 
 - (void)assertDoesNotExist {
-    XCTAssertFalse(self.exists, "Element described by: %@ exists, expected to not exist", self.description);
+    XCTAssertFalse([self waitForExistenceWithTimeout:2], "Element described by: %@ exists, expected to not exist", self.description);
 }
 
 @end

@@ -6,7 +6,7 @@
 - (void)scrollUpAndTap;
 - (void)closeKeyboard;
 - (void)forceTap;
-- (void)assertExists;
+- (void)assertExistsWithTimeout:(NSTimeInterval)timeout;
 - (void)assertDoesNotExist;
 
 @end

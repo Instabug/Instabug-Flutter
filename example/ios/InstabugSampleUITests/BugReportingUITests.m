@@ -57,14 +57,22 @@
     [self assertOptionsPromptIsVisible];
 }
 
+- (void)testOnDismissCallbackIsCalled {
+    [self.app.buttons[@"Set On Dismiss Callback"] scrollDownAndTap];
+    [self.app.buttons[@"Invoke"] scrollUpAndTap];
+    [self.app.buttons[@"Cancel"] tap];
+
+    [self.app.staticTexts[@"onDismiss callback called with DismissType.cancel and ReportType.bug"] assertExistsWithTimeout:2];
+}
+
 - (void)testChangeReportTypes {
     [self.app.buttons[@"Bug"] scrollDownAndTap];
     [self.app.buttons[@"Feedback"] scrollDownAndTap];
     [self.app.buttons[@"Invoke"] scrollUpAndTap];
 
     [self assertOptionsPromptIsVisible];
-    [self.app.staticTexts[@"Report a bug"] assertExists];
-    [self.app.staticTexts[@"Suggest an improvement"] assertExists];
+    [self.app.staticTexts[@"Report a bug"] assertExistsWithTimeout:2000];
+    [self.app.staticTexts[@"Suggest an improvement"] assertExistsWithTimeout:2000];
     [self.app.staticTexts[@"Ask a question"] assertDoesNotExist];
 }
 
@@ -83,7 +91,7 @@
 }
 
 - (void)assertOptionsPromptIsVisible {
-    [self.app.cells[@"IBGReportBugPromptOptionAccessibilityIdentifier"] assertExists];
+    [self.app.cells[@"IBGReportBugPromptOptionAccessibilityIdentifier"] assertExistsWithTimeout:2];
 }
 
 @end
