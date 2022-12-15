@@ -17,4 +17,12 @@
     [self typeText:@"\n"];
 }
 
+/// Taps on the button's coordinates without checking if it's visible.
+/// This is useful as XCUITest fails to scroll to Flutter widgets even though they might be visible
+/// on the screen.
+- (void)forceTap {
+    XCUICoordinate *coordinate = [self coordinateWithNormalizedOffset:CGVectorMake(0.0f, 0.0f)];
+    [coordinate tap];
+}
+
 @end

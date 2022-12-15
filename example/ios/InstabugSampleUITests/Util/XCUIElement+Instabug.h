@@ -4,5 +4,6 @@
 
 - (void)scrollAndTap;
 - (void)closeKeyboard;
+- (void)forceTap;
 
 @end

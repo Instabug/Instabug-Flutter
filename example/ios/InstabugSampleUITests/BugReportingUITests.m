@@ -34,4 +34,18 @@
     XCTAssertEqual(2, screensQuery.count);
 }
 
+- (void)testChangeFloatingButtonEdge {
+    // Grabbing the "Floating Button" invocation event button
+    // inside the "Change Invocation Events" section as it
+    // conflicts with Instabug's floating button.
+    XCUIElement *invocationEvents = [[self.app.otherElements containingPredicate:[NSPredicate predicateWithFormat:@"label == 'Change Invocation Event'"]] element];
+    [invocationEvents.buttons[@"Floating Button"] forceTap];
+    [self.app.buttons[@"Move Floating Button to Left"] scrollAndTap];
+
+    XCUIElement *floatingButton = self.app.buttons[@"IBGFloatingButtonAccessibilityIdentifier"];
+    CGFloat floatingButtonLeft = floatingButton.frame.origin.x;
+    CGFloat screenMiddle = self.app.frame.size.width / 2.0f;
+    XCTAssertLessThan(floatingButtonLeft, screenMiddle, @"Floating button isn't to the left of the screen");
+}
+
 @end
