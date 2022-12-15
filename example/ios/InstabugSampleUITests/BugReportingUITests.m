@@ -13,7 +13,6 @@
     self.continueAfterFailure = NO;
     self.app = [[XCUIApplication alloc] init];
     [self.app launch];
-    [self.app.buttons[@"Restart Instabug"] tap];
 }
 
 - (void)testMultipleScreenshotsInReproSteps {
