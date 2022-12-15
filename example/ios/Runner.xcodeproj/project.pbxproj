@@ -29,6 +29,7 @@
 		C090017C25D9A031006F3DAE /* InstabugSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C090017B25D9A031006F3DAE /* InstabugSampleTests.m */; };
 		C09001B425D9A3C5006F3DAE /* BugReportingUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C09001B325D9A3C5006F3DAE /* BugReportingUITests.m */; };
 		CC6018BE2948C371003A845D /* InstabugUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC6018BD2948C371003A845D /* InstabugUITests.m */; };
+		CC77911C294B6E9B00296485 /* FeatureRequestsUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC77911B294B6E9B00296485 /* FeatureRequestsUITests.m */; };
 		CC7B6B4D2949D43D00C6274F /* XCUIElement+Instabug.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7B6B4C2949D43D00C6274F /* XCUIElement+Instabug.m */; };
 		CC7B6B512949F9B700C6274F /* InstabugUITestsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7B6B502949F9B700C6274F /* InstabugUITestsUtils.m */; };
 /* End PBXBuildFile section */
@@ -105,6 +106,7 @@
 		CC9925D8293DFD7F001FD3EE /* RepliesApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RepliesApiTests.m; sourceTree = "<group>"; };
 		CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BugReportingApiTests.m; sourceTree = "<group>"; };
 		CC6018BD2948C371003A845D /* InstabugUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugUITests.m; sourceTree = "<group>"; };
+		CC77911B294B6E9B00296485 /* FeatureRequestsUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeatureRequestsUITests.m; sourceTree = "<group>"; };
 		CC7B6B4C2949D43D00C6274F /* XCUIElement+Instabug.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCUIElement+Instabug.m"; sourceTree = "<group>"; };
 		CC7B6B4E2949D52800C6274F /* XCUIElement+Instabug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCUIElement+Instabug.h"; sourceTree = "<group>"; };
 		CC7B6B4F2949F95600C6274F /* InstabugUITestsUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstabugUITestsUtils.h; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				C09001B325D9A3C5006F3DAE /* BugReportingUITests.m */,
 				C09001B525D9A3C5006F3DAE /* Info.plist */,
 				CC6018BD2948C371003A845D /* InstabugUITests.m */,
+				CC77911B294B6E9B00296485 /* FeatureRequestsUITests.m */,
 			);
 			path = InstabugSampleUITests;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 			files = (
 				CC7B6B512949F9B700C6274F /* InstabugUITestsUtils.m in Sources */,
 				CC6018BE2948C371003A845D /* InstabugUITests.m in Sources */,
+				CC77911C294B6E9B00296485 /* FeatureRequestsUITests.m in Sources */,
 				C09001B425D9A3C5006F3DAE /* BugReportingUITests.m in Sources */,
 				CC7B6B4D2949D43D00C6274F /* XCUIElement+Instabug.m in Sources */,
 			);
