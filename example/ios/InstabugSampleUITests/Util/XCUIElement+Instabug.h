@@ -2,8 +2,11 @@
 
 @interface XCUIElement (Instabug)
 
-- (void)scrollAndTap;
+- (void)scrollDownAndTap;
+- (void)scrollUpAndTap;
 - (void)closeKeyboard;
 - (void)forceTap;
+- (void)assertExists;
+- (void)assertDoesNotExist;
 
 @end

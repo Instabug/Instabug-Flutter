@@ -48,8 +48,7 @@
 - (void)testNoneInvocationEvent {
     [self.app.buttons[@"None"] tap];
 
-    XCUIElement *floatingButton = self.app.buttons[@"IBGFloatingButtonAccessibilityIdentifier"];
-    XCTAssertFalse(floatingButton.exists, "Floating button is still visible");
+    [self.app.buttons[@"IBGFloatingButtonAccessibilityIdentifier"] assertDoesNotExist];
 }
 
 - (void)testManualInvocation {
@@ -58,13 +57,24 @@
     [self assertOptionsPromptIsVisible];
 }
 
+- (void)testChangeReportTypes {
+    [self.app.buttons[@"Bug"] scrollDownAndTap];
+    [self.app.buttons[@"Feedback"] scrollDownAndTap];
+    [self.app.buttons[@"Invoke"] scrollUpAndTap];
+
+    [self assertOptionsPromptIsVisible];
+    [self.app.staticTexts[@"Report a bug"] assertExists];
+    [self.app.staticTexts[@"Suggest an improvement"] assertExists];
+    [self.app.staticTexts[@"Ask a question"] assertDoesNotExist];
+}
+
 - (void)testChangeFloatingButtonEdge {
     // Grabbing the "Floating Button" invocation event button
     // inside the "Change Invocation Events" section as it
     // conflicts with Instabug's floating button.
     XCUIElement *invocationEvents = [[self.app.otherElements containingPredicate:[NSPredicate predicateWithFormat:@"label == 'Change Invocation Event'"]] element];
     [invocationEvents.buttons[@"Floating Button"] forceTap];
-    [self.app.buttons[@"Move Floating Button to Left"] scrollAndTap];
+    [self.app.buttons[@"Move Floating Button to Left"] scrollDownAndTap];
 
     XCUIElement *floatingButton = self.app.buttons[@"IBGFloatingButtonAccessibilityIdentifier"];
     CGFloat floatingButtonLeft = floatingButton.frame.origin.x;
@@ -73,8 +83,7 @@
 }
 
 - (void)assertOptionsPromptIsVisible {
-    XCUIElement *optionsPrompt = self.app.cells[@"IBGReportBugPromptOptionAccessibilityIdentifier"];
-    XCTAssertTrue(optionsPrompt.exists, @"Options prompt didn't show up");
+    [self.app.cells[@"IBGReportBugPromptOptionAccessibilityIdentifier"] assertExists];
 }
 
 @end
