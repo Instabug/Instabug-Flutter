@@ -26,6 +26,8 @@
 		CC9925D7293DFB03001FD3EE /* InstabugLogApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D6293DFB03001FD3EE /* InstabugLogApiTests.m */; };
 		CC9925D9293DFD7F001FD3EE /* RepliesApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D8293DFD7F001FD3EE /* RepliesApiTests.m */; };
 		CCADBDD8293CFED300AE5EB8 /* BugReportingApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */; };
+		C090017C25D9A031006F3DAE /* InstabugSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C090017B25D9A031006F3DAE /* InstabugSampleTests.m */; };
+		C09001B425D9A3C5006F3DAE /* BugReportingUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C09001B325D9A3C5006F3DAE /* BugReportingUITests.m */; };
 		CC6018BE2948C371003A845D /* InstabugUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC6018BD2948C371003A845D /* InstabugUITests.m */; };
 		CC7B6B4D2949D43D00C6274F /* XCUIElement+Instabug.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7B6B4C2949D43D00C6274F /* XCUIElement+Instabug.m */; };
 		CC7B6B512949F9B700C6274F /* InstabugUITestsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7B6B502949F9B700C6274F /* InstabugUITestsUtils.m */; };
@@ -88,7 +90,7 @@
 		C090017925D9A030006F3DAE /* InstabugSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstabugSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C090017D25D9A031006F3DAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C09001B125D9A3C5006F3DAE /* InstabugSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstabugSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C09001B325D9A3C5006F3DAE /* InstabugSampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugSampleUITests.m; sourceTree = "<group>"; };
+		C09001B325D9A3C5006F3DAE /* BugReportingUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BugReportingUITests.m; sourceTree = "<group>"; };
 		C09001B525D9A3C5006F3DAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC080E102937B7DB0041170A /* InstabugApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstabugApiTests.m; sourceTree = "<group>"; };
 		CC198C60293E1A21007077C8 /* SurveysApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveysApiTests.m; sourceTree = "<group>"; };
@@ -236,7 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				CC7B6B442949D0E700C6274F /* Util */,
-				C09001B325D9A3C5006F3DAE /* InstabugSampleUITests.m */,
+				C09001B325D9A3C5006F3DAE /* BugReportingUITests.m */,
 				C09001B525D9A3C5006F3DAE /* Info.plist */,
 				CC6018BD2948C371003A845D /* InstabugUITests.m */,
 			);
@@ -581,7 +583,7 @@
 			files = (
 				CC7B6B512949F9B700C6274F /* InstabugUITestsUtils.m in Sources */,
 				CC6018BE2948C371003A845D /* InstabugUITests.m in Sources */,
-				C09001B425D9A3C5006F3DAE /* InstabugSampleUITests.m in Sources */,
+				C09001B425D9A3C5006F3DAE /* BugReportingUITests.m in Sources */,
 				CC7B6B4D2949D43D00C6274F /* XCUIElement+Instabug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
