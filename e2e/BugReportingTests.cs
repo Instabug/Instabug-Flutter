@@ -1,17 +1,12 @@
+using E2E.Utils;
 using Xunit;
 using Instabug.Captain;
 
 namespace E2E;
 
-public class BugReporting
+[Collection("E2E")]
+public class BugReportingTests : CaptainTest
 {
-  readonly Captain captain = new(
-      androidApp: Path.GetFullPath("../../../../example/build/app/outputs/flutter-apk/app-debug.apk"),
-      androidVersion: "11",
-      iosApp: Path.GetFullPath("../../../../example/build/ios/iphonesimulator/Runner.app"),
-      iosVersion: "15.5"
-  );
-
   [Fact]
   public void ReportABug()
   {
