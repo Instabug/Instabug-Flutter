@@ -48,6 +48,10 @@ public class BugReportingUITest {
                 .perform(FlutterActions.click());
     }
 
+    private void assertOptionsPromptIsVisible() {
+        assertViewWillBeVisible("instabug_main_prompt_container", 2000);
+    }
+
     @Test
     public void floatingButtonInvocationEvent() {
         onFlutterWidget(FlutterMatchers.withText("Floating Button")).perform(FlutterActions.click());
@@ -167,10 +171,6 @@ public class BugReportingUITest {
                 .perform(FlutterActions.scrollTo(), FlutterActions.click());
         onView(ViewMatchers.withResourceName("instabug_floating_button"))
                 .check(matches(isToTheLeft()));
-    }
-
-    private void assertOptionsPromptIsVisible() {
-        assertViewWillBeVisible("instabug_main_prompt_container", 2000);
     }
 }
 

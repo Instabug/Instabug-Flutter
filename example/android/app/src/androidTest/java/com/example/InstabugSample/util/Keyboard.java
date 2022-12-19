@@ -18,7 +18,7 @@ public class Keyboard {
     }
 
     private static boolean isKeyboardOpened() {
-        for(AccessibilityWindowInfo window : instrumentation.getUiAutomation().getWindows()){
+        for (AccessibilityWindowInfo window : instrumentation.getUiAutomation().getWindows()) {
             if (window.getType() == AccessibilityWindowInfo.TYPE_INPUT_METHOD) {
                 return true;
             }
