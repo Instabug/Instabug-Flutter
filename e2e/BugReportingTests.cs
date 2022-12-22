@@ -94,4 +94,20 @@ public class BugReportingTests : CaptainTest
     Assert.True(captain.FindByText("Suggest an improvement").Displayed);
     Assert.ThrowsAny<Exception>(() => captain.FindByText("Ask a question"));
   }
+
+  [Fact]
+  public void ChangeFloatingButtonEdge()
+  {
+    captain.FindByText("Floating Button").Tap();
+    ScrollDown();
+    captain.FindByText("Move Floating Button to Left").Tap();
+
+    var floatingButton = captain.FindById(
+        android: "instabug_floating_button",
+        ios: "IBGFloatingButtonAccessibilityIdentifier"
+    );
+    var screenWidth = captain.Window.Size.Width;
+
+    Assert.True(floatingButton.Location.X < screenWidth / 2);
+  }
 }
