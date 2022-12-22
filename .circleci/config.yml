@@ -41,7 +41,7 @@ commands:
             echo 'export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools' >> $BASH_ENV
       - run:
           name: Clone Captain
-          command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
+          command: git clone -b feat/find-many git@github.com:Instabug/Captain.git ../Instabug.Captain
 
 jobs:
   danger:

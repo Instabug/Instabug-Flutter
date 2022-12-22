@@ -29,4 +29,25 @@ public class BugReportingTests : CaptainTest
 
     Assert.True(captain.FindByText("Thank you").Displayed);
   }
+
+  [Fact]
+  public void MultipleScreenshotsInReproSteps()
+  {
+    captain.FindByText("Enter screen name").Tap();
+    captain.Type("My Screen");
+    captain.HideKeyboard();
+
+    captain.FindByText("Report Screen Change").Tap();
+    captain.FindByText("Send Bug Report").Tap();
+    captain.FindById(
+        android: "instabug_text_view_repro_steps_disclaimer",
+        ios: "IBGBugVCReproStepsDisclaimerAccessibilityIdentifier"
+    ).Tap();
+
+    var reproSteps = captain.FindManyById(
+        android: "ib_bug_repro_step_screenshot",
+        ios: "IBGReproStepsTableCellViewAccessibilityIdentifier"
+    );
+    Assert.Equal(2, reproSteps.Count);
+  }
 }
