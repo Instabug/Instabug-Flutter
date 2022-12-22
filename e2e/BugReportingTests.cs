@@ -110,4 +110,19 @@ public class BugReportingTests : CaptainTest
 
     Assert.True(floatingButton.Location.X < screenWidth / 2);
   }
+
+  [Fact]
+  public void OnDismissCallbackIsCalled()
+  {
+    captain.FindByText("Set On Dismiss Callback").Tap();
+    captain.FindByText("Invoke").Tap();
+
+    AssertOptionsPromptIsDisplayed();
+
+    captain.FindByText("Cancel").Tap();
+
+    var reportType = Platform.Choose("other", "bug");
+    var popUpText = captain.FindByText($"onDismiss callback called with DismissType.cancel and ReportType.{reportType}");
+    Assert.True(popUpText.Displayed);
+  }
 }
