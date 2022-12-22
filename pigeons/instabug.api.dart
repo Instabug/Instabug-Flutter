@@ -39,7 +39,6 @@ abstract class InstabugHostApi {
   @async
   Map<String, String>? getUserAttributes();
 
-  void setDebugEnabled(bool enabled);
   void setSdkDebugLogsLevel(String level);
 
   void setReproStepsMode(String mode);

@@ -1,10 +1,11 @@
 ## Unreleased
 
 * Bumps Instabug Android SDK to v11.7.0
+* Adds new string keys: okButtonText, audio, image, screenRecording, messagesNotificationAndOthers, insufficientContentTitle, insufficientContentMessage
 * Fixes APM network logging on Android
 * Fixes a NullPointerException when overriding a string key that doesn't exist on Android
 * Removes redundant native logs
-* Adds new string keys: okButtonText, audio, image, screenRecording, messagesNotificationAndOthers, insufficientContentTitle, insufficientContentMessage
+* Deprecates Instabug.setDebugEnabled and APM.setLogLevel APIs in favour of Instabug.setSdkDebugLogsLevel, which controls the verbosity of SDK logs on both platforms
 
 ## 11.5.0 (2022-11-24)
 

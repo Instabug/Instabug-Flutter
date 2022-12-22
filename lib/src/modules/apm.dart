@@ -36,6 +36,9 @@ class APM {
 
   /// Sets log Level to determine level of details in a log
   /// [logLevel] Enum value to determine the level
+  @Deprecated(
+    "Use [Instabug.setSdkDebugLogsLevel] instead. ",
+  )
   static Future<void> setLogLevel(LogLevel logLevel) async {
     return _host.setLogLevel(logLevel.toString());
   }
