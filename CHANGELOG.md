@@ -1,7 +1,9 @@
 ## Unreleased
 
+* Bumps Instabug Android SDK to v11.7.0
+* Fixes APM network logging on Android
+* Fixes a NullPointerException when overriding a string key that doesn't exist on Android
 * Removes redundant native logs
-* Fixes a NullPointerException when overriding a string key that doesn't exist on Android 
 
 ## 11.5.0 (2022-11-24)
 
