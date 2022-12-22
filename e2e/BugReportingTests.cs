@@ -7,6 +7,16 @@ namespace E2E;
 [Collection("E2E")]
 public class BugReportingTests : CaptainTest
 {
+  private void AssertOptionsPromptIsDisplayed()
+  {
+    var optionsPrompt = captain.FindById(
+        android: "instabug_main_prompt_container",
+        ios: "IBGReportBugPromptOptionAccessibilityIdentifier"
+    );
+
+    Assert.True(optionsPrompt.Displayed);
+  }
+
   [Fact]
   public void ReportABug()
   {
@@ -49,5 +59,39 @@ public class BugReportingTests : CaptainTest
         ios: "IBGReproStepsTableCellViewAccessibilityIdentifier"
     );
     Assert.Equal(2, reproSteps.Count);
+  }
+
+  [Fact]
+  public void ChangeReportTypes()
+  {
+    ScrollDown();
+    captain.FindByText("Bug", exact: true).Tap();
+
+    ScrollUp();
+    captain.FindByText("Invoke").Tap();
+
+    if (Platform.IsAndroid)
+    {
+      // Shows bug reporting screen
+      Assert.True(captain.FindById("ib_bug_scroll_view").Displayed);
+
+      // Close bug reporting screen
+      captain.GoBack();
+      captain.FindByText("DISCARD").Tap();
+    }
+
+    // Enable feedback reports
+    ScrollDown();
+    captain.FindByText("Feedback").Tap();
+
+    ScrollUp();
+    captain.FindByText("Invoke").Tap();
+
+    // Shows both bug reporting and feature requests in prompt options
+    AssertOptionsPromptIsDisplayed();
+
+    Assert.True(captain.FindByText("Report a bug").Displayed);
+    Assert.True(captain.FindByText("Suggest an improvement").Displayed);
+    Assert.ThrowsAny<Exception>(() => captain.FindByText("Ask a question"));
   }
 }

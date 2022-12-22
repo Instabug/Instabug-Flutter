@@ -24,4 +24,20 @@ public class CaptainTest : IDisposable
   {
     captain.ResetApp();
   }
+
+  protected void ScrollDown()
+  {
+    captain.Swipe(
+        start: new Point(captain.Window.Size.Width / 2, captain.Window.Size.Height - 200),
+        end: new Point(captain.Window.Size.Width / 2, 250)
+    );
+  }
+
+  protected void ScrollUp()
+  {
+    captain.Swipe(
+        start: new Point(captain.Window.Size.Width / 2, 250),
+        end: new Point(captain.Window.Size.Width / 2, captain.Window.Size.Height - 200)
+    );
+  }
 }
