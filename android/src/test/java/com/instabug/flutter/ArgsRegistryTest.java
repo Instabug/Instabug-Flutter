@@ -281,6 +281,13 @@ public class ArgsRegistryTest {
                 Key.CHATS_TEAM_STRING_NAME,
                 Key.REPLIES_NOTIFICATION_REPLY_BUTTON,
                 Key.REPLIES_NOTIFICATION_DISMISS_BUTTON,
+
+                Key.BUG_ATTACHMENT_DIALOG_OK_BUTTON,
+                Key.CHATS_TYPE_AUDIO,
+                Key.CHATS_TYPE_IMAGE,
+                Key.CHATS_TYPE_VIDEO,
+                Key.CHATS_MULTIPLE_MESSAGE_NOTIFICATION,
+                Key.COMMENT_FIELD_INSUFFICIENT_CONTENT,
         };
 
         for (Key value : values) {

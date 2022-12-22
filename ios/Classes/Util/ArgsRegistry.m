@@ -199,6 +199,14 @@
         @"CustomTextPlaceHolderKey.reproStepsListDescription" : kIBGReproStepsListHeader,
         @"CustomTextPlaceHolderKey.reproStepsListEmptyStateDescription" : kIBGReproStepsListEmptyStateLabel,
         @"CustomTextPlaceHolderKey.reproStepsListItemTitle" : kIBGReproStepsListItemName,
+        
+        @"CustomTextPlaceHolderKey.okButtonText" : kIBGOkButtonTitleStringName,
+        @"CustomTextPlaceHolderKey.audio" : kIBGAudioStringName,
+        @"CustomTextPlaceHolderKey.image" : kIBGImageStringName,
+        @"CustomTextPlaceHolderKey.screenRecording" : kIBGScreenRecordingStringName,
+        @"CustomTextPlaceHolderKey.messagesNotificationAndOthers" : kIBGMessagesNotificationTitleMultipleMessagesStringName,
+        @"CustomTextPlaceHolderKey.insufficientContentTitle" : kIBGInsufficientContentTitleStringName,
+        @"CustomTextPlaceHolderKey.insufficientContentMessage" : kIBGInsufficientContentMessageStringName,
     };
 }
 

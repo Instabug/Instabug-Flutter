@@ -111,6 +111,13 @@ enum CustomTextPlaceHolderKey {
   reproStepsListDescription,
   reproStepsListEmptyStateDescription,
   reproStepsListItemTitle,
+  okButtonText,
+  audio,
+  image,
+  screenRecording,
+  messagesNotificationAndOthers,
+  insufficientContentTitle,
+  insufficientContentMessage,
 }
 
 enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
