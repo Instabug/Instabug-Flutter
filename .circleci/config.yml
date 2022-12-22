@@ -78,7 +78,7 @@ jobs:
           additional-avd-args: -d "Nexus 5"
           post-emulator-launch-assemble-command: cd example && flutter build apk
           run-tests-working-directory: example/android
-          test-command: ./gradlew app:connectedAndroidTest
+          test-command: ./gradlew app:connectedAndroidTest -Ptarget=`pwd`/../test_driver/example.dart
       - android/run-tests:
           working-directory: example/android
           test-command: ./gradlew test
