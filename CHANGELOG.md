@@ -1,6 +1,7 @@
 ## Unreleased
 
 * Bumps Instabug Android SDK to v11.7.0
+* Bumps Instabug iOS SDK to v11.6.0
 * Adds new string keys: okButtonText, audio, image, screenRecording, messagesNotificationAndOthers, insufficientContentTitle, insufficientContentMessage
 * Fixes APM network logging on Android
 * Fixes a NullPointerException when overriding a string key that doesn't exist on Android
