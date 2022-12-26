@@ -61,7 +61,7 @@
     [self.app.buttons[@"Invoke"] scrollUpAndTap];
     [self.app.buttons[@"Cancel"] tap];
 
-    [self.app.staticTexts[@"onDismiss callback called with DismissType.cancel and ReportType.bug"] assertExistsWithTimeout:2];
+    [self.app.staticTexts[@"onDismiss callback called with DismissType.cancel and ReportType.other"] assertExistsWithTimeout:2];
 }
 
 - (void)testChangeReportTypes {
