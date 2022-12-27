@@ -3,7 +3,7 @@ using Instabug.Captain;
 
 namespace E2E.Utils;
 
-public class CaptainTest : IDisposable
+public class CaptainTest
 {
   private static readonly CaptainConfig _config = new()
   {
@@ -18,11 +18,6 @@ public class CaptainTest : IDisposable
   {
     // Wait till the app is ready
     captain.FindByText("Hello Instabug");
-  }
-
-  public void Dispose()
-  {
-    captain.ResetApp();
   }
 
   protected void ScrollDown()
