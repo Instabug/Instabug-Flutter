@@ -369,13 +369,14 @@ public class InstabugApiTest {
         mInstabug.verify(Instabug::getAllUserAttributes);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
-    public void testSetSdkDebugLogsLevel() {
-        String level = "IBGSDKDebugLogsLevel.debug";
+    public void testSetDebugEnabled() {
+        boolean isEnabled = true;
 
-        api.setSdkDebugLogsLevel(level);
+        api.setDebugEnabled(isEnabled);
 
-        mInstabug.verify(() -> Instabug.setSdkDebugLogsLevel(com.instabug.library.LogLevel.DEBUG));
+        mInstabug.verify(() -> Instabug.setDebugEnabled(isEnabled));
     }
 
     @Test

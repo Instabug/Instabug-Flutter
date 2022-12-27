@@ -6,7 +6,6 @@
 * Fixes APM network logging on Android
 * Fixes a NullPointerException when overriding a string key that doesn't exist on Android
 * Removes redundant native logs
-* Deprecates Instabug.setDebugEnabled and APM.setLogLevel APIs in favour of Instabug.setSdkDebugLogsLevel, which controls the verbosity of SDK logs on both platforms
 
 ## 11.5.0 (2022-11-24)
 

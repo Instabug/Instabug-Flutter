@@ -61,7 +61,6 @@ void main() {
   test('[setLogLevel] should call host method', () async {
     const level = LogLevel.debug;
 
-    // ignore: deprecated_member_use_from_same_package
     await APM.setLogLevel(level);
 
     verify(

@@ -140,6 +140,10 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     completion(Instabug.userAttributes, nil);
 }
 
+- (void)setDebugEnabledEnabled:(NSNumber *)enabled error:(FlutterError *_Nullable *_Nonnull)error {
+    // Android Only
+}
+
 - (void)setSdkDebugLogsLevelLevel:(NSString *)level error:(FlutterError *_Nullable *_Nonnull)error {
     IBGSDKDebugLogsLevel resolvedLevel = (ArgsRegistry.sdkLogLevels[level]).integerValue;
     [Instabug setSdkDebugLogsLevel:resolvedLevel];
