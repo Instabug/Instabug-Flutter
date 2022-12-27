@@ -1,6 +1,9 @@
 using E2E.Utils;
 using Xunit;
 using Instabug.Captain;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Appium.Interactions;
 
 namespace E2E;
 
@@ -38,6 +41,80 @@ public class BugReportingTests : CaptainTest
     ).Tap();
 
     Assert.True(captain.FindByText("Thank you").Displayed);
+  }
+
+  [Fact]
+  public void FloatingButtonInvocationEvent()
+  {
+    captain.FindById(
+        android: "instabug_floating_button",
+        ios: "IBGFloatingButtonAccessibilityIdentifier"
+    ).Tap();
+
+    AssertOptionsPromptIsDisplayed();
+  }
+
+  [Fact]
+  public void ShakeInvocationEvent()
+  {
+    if (!Platform.IsIOS) return;
+
+    captain.FindByText("Shake");
+
+    Thread.Sleep(500);
+
+    captain.Shake();
+
+    AssertOptionsPromptIsDisplayed();
+  }
+
+  [Fact]
+  public void TwoFingersSwipeLeftInvocationEvent()
+  {
+    captain.FindByText("Two Fingers Swipe Left").Tap();
+
+    Thread.Sleep(500);
+
+    // Do a two-finger swipe left
+    var width = captain.Window.Size.Width;
+    var finger1 = new OpenQA.Selenium.Appium.Interactions.PointerInputDevice(PointerKind.Touch);
+    var swipe1 = new ActionSequence(finger1, 0);
+    swipe1.AddAction(finger1.CreatePointerMove(CoordinateOrigin.Viewport, width - 50, 300, TimeSpan.Zero));
+    swipe1.AddAction(finger1.CreatePointerDown(PointerButton.TouchContact));
+    swipe1.AddAction(finger1.CreatePointerMove(CoordinateOrigin.Viewport, 50, 300, TimeSpan.FromMilliseconds(250)));
+    swipe1.AddAction(finger1.CreatePointerUp(PointerButton.TouchContact));
+
+    var finger2 = new OpenQA.Selenium.Appium.Interactions.PointerInputDevice(PointerKind.Touch);
+    var swipe2 = new ActionSequence(finger2, 0);
+    swipe2.AddAction(finger1.CreatePointerMove(CoordinateOrigin.Viewport, width - 50, 350, TimeSpan.Zero));
+    swipe2.AddAction(finger1.CreatePointerDown(PointerButton.TouchContact));
+    swipe2.AddAction(finger1.CreatePointerMove(CoordinateOrigin.Viewport, 50, 350, TimeSpan.FromMilliseconds(250)));
+    swipe2.AddAction(finger1.CreatePointerUp(PointerButton.TouchContact));
+
+    captain.Driver.PerformActions(new List<ActionSequence> { swipe1, swipe2 });
+
+    AssertOptionsPromptIsDisplayed();
+  }
+
+  [Fact]
+  public void NoneInvocationEvent()
+  {
+    captain.FindByText("None").Tap();
+
+    Assert.ThrowsAny<Exception>(() =>
+      captain.FindById(
+          android: "instabug_floating_button",
+          ios: "IBGFloatingButtonAccessibilityIdentifier"
+      )
+    );
+  }
+
+  [Fact]
+  public void ManualInvocation()
+  {
+    captain.FindByText("Invoke").Tap();
+
+    AssertOptionsPromptIsDisplayed();
   }
 
   [Fact]
@@ -98,7 +175,6 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void ChangeFloatingButtonEdge()
   {
-    captain.FindByText("Floating Button").Tap();
     ScrollDown();
     captain.FindByText("Move Floating Button to Left").Tap();
 
