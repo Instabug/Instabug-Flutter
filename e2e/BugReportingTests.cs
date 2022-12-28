@@ -1,9 +1,7 @@
+using System.Drawing;
 using E2E.Utils;
 using Xunit;
 using Instabug.Captain;
-using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Appium.Interactions;
 
 namespace E2E;
 
@@ -59,9 +57,7 @@ public class BugReportingTests : CaptainTest
   {
     if (!Platform.IsIOS) return;
 
-    captain.FindByText("Shake");
-
-    Thread.Sleep(500);
+    captain.FindByText("Shake").Tap();
 
     captain.Shake();
 
@@ -77,21 +73,12 @@ public class BugReportingTests : CaptainTest
 
     // Do a two-finger swipe left
     var width = captain.Window.Size.Width;
-    var finger1 = new OpenQA.Selenium.Appium.Interactions.PointerInputDevice(PointerKind.Touch);
-    var swipe1 = new ActionSequence(finger1, 0);
-    swipe1.AddAction(finger1.CreatePointerMove(CoordinateOrigin.Viewport, width - 50, 300, TimeSpan.Zero));
-    swipe1.AddAction(finger1.CreatePointerDown(PointerButton.TouchContact));
-    swipe1.AddAction(finger1.CreatePointerMove(CoordinateOrigin.Viewport, 50, 300, TimeSpan.FromMilliseconds(250)));
-    swipe1.AddAction(finger1.CreatePointerUp(PointerButton.TouchContact));
-
-    var finger2 = new OpenQA.Selenium.Appium.Interactions.PointerInputDevice(PointerKind.Touch);
-    var swipe2 = new ActionSequence(finger2, 0);
-    swipe2.AddAction(finger1.CreatePointerMove(CoordinateOrigin.Viewport, width - 50, 350, TimeSpan.Zero));
-    swipe2.AddAction(finger1.CreatePointerDown(PointerButton.TouchContact));
-    swipe2.AddAction(finger1.CreatePointerMove(CoordinateOrigin.Viewport, 50, 350, TimeSpan.FromMilliseconds(250)));
-    swipe2.AddAction(finger1.CreatePointerUp(PointerButton.TouchContact));
-
-    captain.Driver.PerformActions(new List<ActionSequence> { swipe1, swipe2 });
+    captain.TwoFingerSwipe(
+        new Point(width - 50, 300),
+        new Point(50, 300),
+        new Point(width - 50, 350),
+        new Point(50, 350)
+    );
 
     AssertOptionsPromptIsDisplayed();
   }
@@ -101,10 +88,12 @@ public class BugReportingTests : CaptainTest
   {
     captain.FindByText("None").Tap();
 
-    Assert.ThrowsAny<Exception>(() =>
-      captain.FindById(
-          android: "instabug_floating_button",
-          ios: "IBGFloatingButtonAccessibilityIdentifier"
+    captain.WaitForAssertion(() =>
+      Assert.ThrowsAny<Exception>(() =>
+        captain.FindById(
+            android: "instabug_floating_button",
+            ios: "IBGFloatingButtonAccessibilityIdentifier"
+        )
       )
     );
   }
@@ -144,21 +133,21 @@ public class BugReportingTests : CaptainTest
     ScrollDown();
     captain.FindByText("Bug", exact: true).Tap();
 
-    ScrollUp();
-    captain.FindByText("Invoke").Tap();
-
     if (Platform.IsAndroid)
     {
+      ScrollUp();
+      captain.FindByText("Invoke").Tap();
+
       // Shows bug reporting screen
       Assert.True(captain.FindById("ib_bug_scroll_view").Displayed);
 
       // Close bug reporting screen
       captain.GoBack();
       captain.FindByText("DISCARD").Tap();
+
+      ScrollDown();
     }
 
-    // Enable feedback reports
-    ScrollDown();
     captain.FindByText("Feedback").Tap();
 
     ScrollUp();
