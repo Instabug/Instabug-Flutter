@@ -13,11 +13,14 @@ public class SurveysTests : CaptainTest
     ScrollDown();
     captain.FindByText("Show Manual Survey").Tap();
 
-    var surveyDialog = captain.FindById(
-        android: "instabug_survey_dialog_container",
-        ios: "SurveyNavigationVC"
-    );
-    Assert.True(surveyDialog.Displayed);
+    captain.WaitForAssertion(() =>
+    {
+      var surveyDialog = captain.FindById(
+          android: "instabug_survey_dialog_container",
+          ios: "SurveyNavigationVC"
+      );
+      Assert.True(surveyDialog.Displayed);
+    });
   }
 }
 
