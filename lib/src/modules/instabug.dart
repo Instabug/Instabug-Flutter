@@ -291,17 +291,9 @@ class Instabug {
   /// Android only
   /// Enable/disable SDK logs
   /// [debugEnabled] desired state of debug mode.
-  @Deprecated(
-    "Use [Instabug.setSdkDebugLogsLevel] instead. This will work on both Android and iOS. ",
-  )
   static Future<void> setDebugEnabled(bool debugEnabled) async {
     if (IBGBuildInfo.instance.isAndroid) {
-      if (debugEnabled) {
-        return _host
-            .setSdkDebugLogsLevel(IBGSDKDebugLogsLevel.verbose.toString());
-      } else {
-        return _host.setSdkDebugLogsLevel(IBGSDKDebugLogsLevel.none.toString());
-      }
+      return _host.setDebugEnabled(debugEnabled);
     }
   }
 
