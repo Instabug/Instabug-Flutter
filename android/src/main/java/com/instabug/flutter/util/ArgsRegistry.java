@@ -201,11 +201,4 @@ public final class ArgsRegistry {
         put("CustomTextPlaceHolderKey.messagesNotificationAndOthers", Key.CHATS_MULTIPLE_MESSAGE_NOTIFICATION);
         put("CustomTextPlaceHolderKey.insufficientContentMessage", Key.COMMENT_FIELD_INSUFFICIENT_CONTENT);
     }};
-
-    public static final ArgsMap<Integer> sdkLogLevels = new ArgsMap<Integer>() {{
-        put("IBGSDKDebugLogsLevel.none", com.instabug.library.LogLevel.NONE);
-        put("IBGSDKDebugLogsLevel.error", com.instabug.library.LogLevel.ERROR);
-        put("IBGSDKDebugLogsLevel.debug", com.instabug.library.LogLevel.DEBUG);
-        put("IBGSDKDebugLogsLevel.verbose", com.instabug.library.LogLevel.VERBOSE);
-    }};
 }
