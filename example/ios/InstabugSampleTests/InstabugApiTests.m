@@ -320,6 +320,18 @@
     OCMVerify([self.mInstabug setCustomBrandingImage:[OCMArg isKindOfClass:[UIImageAsset class]]]);
 }
 
+- (void)testSetFont {
+    NSString* fontName = @"fonts/OpenSans-Regular.ttf";
+    UIFont* font = [UIFont fontWithName:@"Open Sans" size:10.0];
+    FlutterError *error;
+    
+    OCMStub([self.mApi getFontForAsset:fontName error:&error]).andReturn(font);
+
+    [self.api setFontFont:fontName error:&error];
+
+    OCMVerify([self.mInstabug setFont:font]);
+}
+
 - (void)testAddFileAttachmentWithURL {
     NSString *path = @"buggy.txt";
     NSString *name = @"Buggy";

@@ -315,6 +315,11 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     @Override
+    public void setFont(@NonNull String font) {
+        // iOS Only
+    }
+
+    @Override
     public void addFileAttachmentWithURL(@NonNull String filePath, @NonNull String fileName) {
         final File file = new File(filePath);
         if (file.exists()) {
