@@ -3,6 +3,8 @@ using E2E.Utils;
 using Xunit;
 using Instabug.Captain;
 
+using NoSuchElementException = OpenQA.Selenium.NoSuchElementException;
+
 namespace E2E;
 
 [Collection("E2E")]
@@ -89,10 +91,11 @@ public class BugReportingTests : CaptainTest
     captain.FindByText("None").Tap();
 
     captain.WaitForAssertion(() =>
-      Assert.ThrowsAny<Exception>(() =>
+      Assert.Throws<NoSuchElementException>(() =>
         captain.FindById(
             android: "instabug_floating_button",
-            ios: "IBGFloatingButtonAccessibilityIdentifier"
+            ios: "IBGFloatingButtonAccessibilityIdentifier",
+            wait: false
         )
       )
     );
@@ -158,7 +161,7 @@ public class BugReportingTests : CaptainTest
 
     Assert.True(captain.FindByText("Report a bug").Displayed);
     Assert.True(captain.FindByText("Suggest an improvement").Displayed);
-    Assert.ThrowsAny<Exception>(() => captain.FindByText("Ask a question"));
+    Assert.Throws<NoSuchElementException>(() => captain.FindByText("Ask a question", wait: false));
   }
 
   [Fact]
@@ -167,13 +170,18 @@ public class BugReportingTests : CaptainTest
     ScrollDown();
     captain.FindByText("Move Floating Button to Left").Tap();
 
-    var floatingButton = captain.FindById(
-        android: "instabug_floating_button",
-        ios: "IBGFloatingButtonAccessibilityIdentifier"
-    );
-    var screenWidth = captain.Window.Size.Width;
+    Thread.Sleep(500);
 
-    Assert.True(floatingButton.Location.X < screenWidth / 2);
+    captain.WaitForAssertion(() =>
+    {
+      var floatingButton = captain.FindById(
+          android: "instabug_floating_button",
+          ios: "IBGFloatingButtonAccessibilityIdentifier"
+      );
+      var screenWidth = captain.Window.Size.Width;
+
+      Assert.True(floatingButton.Location.X < screenWidth / 2);
+    });
   }
 
   [Fact]
