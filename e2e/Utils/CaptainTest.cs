@@ -22,7 +22,7 @@ public class CaptainTest : IDisposable
 
   public void Dispose()
   {
-    captain.ResetApp();
+    captain.RestartApp();
   }
 
   protected void ScrollDown()

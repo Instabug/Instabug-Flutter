@@ -148,6 +148,8 @@ public class BugReportingTests : CaptainTest
       captain.GoBack();
       captain.FindByText("DISCARD").Tap();
 
+      Thread.Sleep(500);
+
       ScrollDown();
     }
 
