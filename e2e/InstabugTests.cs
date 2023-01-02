@@ -20,18 +20,21 @@ public class InstabugTests : CaptainTest
 
     captain.FindByText("Change Primary Color").Tap();
 
-    var floatingButton = captain.FindById(
-        android: "instabug_floating_button",
-        ios: "IBGFloatingButtonAccessibilityIdentifier"
-    );
+    captain.WaitForAssertion(() =>
+    {
+      var floatingButton = captain.FindById(
+          android: "instabug_floating_button",
+          ios: "IBGFloatingButtonAccessibilityIdentifier"
+      );
 
-    var x = floatingButton.Location.X + floatingButton.Size.Width / 2;
-    var y = floatingButton.Location.Y + 5;
-    var actual = captain.GetPixel(x, y);
+      var x = floatingButton.Location.X + floatingButton.Size.Width / 2;
+      var y = floatingButton.Location.Y + 5;
+      var actual = captain.GetPixel(x, y);
 
-    // Assert actual color is close to expected color
-    Assert.InRange(actual.R, expected.R - 10, expected.R + 10);
-    Assert.InRange(actual.G, expected.G - 10, expected.G + 10);
-    Assert.InRange(actual.B, expected.B - 10, expected.B + 10);
+      // Assert actual color is close to expected color
+      Assert.InRange(actual.R, expected.R - 10, expected.R + 10);
+      Assert.InRange(actual.G, expected.G - 10, expected.G + 10);
+      Assert.InRange(actual.B, expected.B - 10, expected.B + 10);
+    });
   }
 }
