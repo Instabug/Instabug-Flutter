@@ -196,8 +196,7 @@ public class BugReportingTests : CaptainTest
 
     captain.FindByText("Cancel").Tap();
 
-    var reportType = Platform.Choose("other", "bug");
-    var popUpText = captain.FindByText($"onDismiss callback called with DismissType.cancel and ReportType.{reportType}");
+    var popUpText = captain.FindByText($"onDismiss callback called with DismissType.cancel and ReportType.other");
     Assert.True(popUpText.Displayed);
   }
 }
