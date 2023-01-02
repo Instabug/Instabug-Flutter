@@ -96,7 +96,7 @@ jobs:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "pixel_4"
           post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
-          test-command: cd e2e && CAPTAIN_PLATFORM=android dotnet test
+          test-command: cd e2e || true && CAPTAIN_PLATFORM=android dotnet test
 
   test_ios:
     macos:
