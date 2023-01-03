@@ -28,7 +28,7 @@ public class InstabugTests : CaptainTest
       );
 
       var x = floatingButton.Location.X + floatingButton.Size.Width / 2;
-      var y = floatingButton.Location.Y + 5;
+      var y = floatingButton.Location.Y + Platform.Choose(android: 15, ios: 5);
       var actual = captain.GetPixel(x, y);
 
       // Assert actual color is close to expected color
