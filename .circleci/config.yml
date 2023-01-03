@@ -29,7 +29,8 @@ commands:
           command: npm install -g appium
       - run:
           name: Launch Appium
-          command: appium
+          # Enable --relaxed-security for `mobile: shell` command that Captain uses internally.
+          command: appium --relaxed-security
           background: true
       - run:
           name: Install .NET 6
