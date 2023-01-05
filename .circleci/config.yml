@@ -29,7 +29,8 @@ commands:
           command: npm install -g appium
       - run:
           name: Launch Appium
-          command: appium
+          # Enable --relaxed-security for `mobile: shell` command that Captain uses internally.
+          command: appium --relaxed-security
           background: true
       - run:
           name: Install .NET 6
@@ -94,9 +95,9 @@ jobs:
       - setup_flutter
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
-          additional-avd-args: -d "Nexus 5"
+          additional-avd-args: -d "pixel_4"
           post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
-          test-command: cd e2e && CAPTAIN_PLATFORM=android dotnet test
+          test-command: cd e2e || true && CAPTAIN_PLATFORM=android dotnet test
 
   test_ios:
     macos:
@@ -129,6 +130,7 @@ jobs:
           command: flutter build ios --simulator
       - run:
           name: Run E2E Tests
+          no_output_timeout: 30m
           working_directory: e2e
           command: dotnet test
           environment:
