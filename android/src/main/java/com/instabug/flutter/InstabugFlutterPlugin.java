@@ -29,7 +29,7 @@ import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
-    private static final String TAG = InstabugFlutterPlugin.class.getName();
+    private static final String TAG = "InstabugFlutterPlugin";
 
     @SuppressLint("StaticFieldLeak")
     private static Activity activity;
@@ -40,11 +40,13 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @SuppressWarnings("deprecation")
     public static void registerWith(Registrar registrar) {
         activity = registrar.activity();
+        Log.d(TAG, "Embedding v1: " + registrar.textures());
         register(registrar.context().getApplicationContext(), registrar.messenger(), (FlutterRenderer) registrar.textures());
     }
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+        Log.d(TAG, "Embedding v2: " + binding.getTextureRegistry());
         register(binding.getApplicationContext(), binding.getBinaryMessenger(), (FlutterRenderer) binding.getTextureRegistry());
     }
 
@@ -77,6 +79,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
         final Callable<Bitmap> screenshotProvider = new Callable<Bitmap>() {
             @Override
             public Bitmap call() {
+                Log.d(TAG, "Screenshot Provider called with renderer: " + renderer.toString());
                 return takeScreenshot(renderer);
             }
         };
@@ -95,9 +98,11 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     private static Bitmap takeScreenshot(FlutterRenderer renderer) {
         try {
             final View view = activity.getWindow().getDecorView().getRootView();
+            Log.d(TAG, "view: " + view.toString());
 
             view.setDrawingCacheEnabled(true);
             final Bitmap bitmap = renderer.getBitmap();
+            Log.d(TAG, "bitmap: " + bitmap.toString());
             view.setDrawingCacheEnabled(false);
 
             return bitmap;
