@@ -51,6 +51,8 @@ enum IBGLocale {
   slovak,
   norwegian,
   romanian,
+  hungarian,
+  finnish,
 }
 
 enum IBGSDKDebugLogsLevel { verbose, debug, error, none }

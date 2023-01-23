@@ -131,6 +131,8 @@ public final class ArgsRegistry {
         put("IBGLocale.slovak", InstabugLocale.SLOVAK);
         put("IBGLocale.swedish", InstabugLocale.SWEDISH);
         put("IBGLocale.turkish", InstabugLocale.TURKISH);
+        put("IBGLocale.hungarian", InstabugLocale.HUNGARIAN);
+        put("IBGLocale.finnish", InstabugLocale.FINNISH);
     }};
 
     public static final ArgsMap<Key> placeholders = new ArgsMap<Key>() {{

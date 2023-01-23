@@ -193,7 +193,9 @@
         @(IBGLocaleTurkish),
         @(IBGLocaleSlovak),
         @(IBGLocaleNorwegian),
-        @(IBGLocaleRomanian)
+        @(IBGLocaleRomanian),
+        @(IBGLocaleHungarian),
+        @(IBGLocaleFinnish),
     ];
 
     for (NSNumber *value in values) {

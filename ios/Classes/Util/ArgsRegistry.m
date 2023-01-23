@@ -138,6 +138,8 @@
         @"IBGLocale.slovak" : @(IBGLocaleSlovak),
         @"IBGLocale.norwegian" : @(IBGLocaleNorwegian),
         @"IBGLocale.romanian" : @(IBGLocaleRomanian),
+        @"IBGLocale.hungarian" : @(IBGLocaleHungarian),
+        @"IBGLocale.finnish" : @(IBGLocaleFinnish),
     };
 }
 

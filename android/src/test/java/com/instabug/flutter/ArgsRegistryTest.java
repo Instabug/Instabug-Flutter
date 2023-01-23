@@ -211,6 +211,8 @@ public class ArgsRegistryTest {
                 InstabugLocale.SLOVAK,
                 InstabugLocale.SWEDISH,
                 InstabugLocale.TURKISH,
+                InstabugLocale.HUNGARIAN,
+                InstabugLocale.FINNISH,
         };
 
         for (InstabugLocale value : values) {
