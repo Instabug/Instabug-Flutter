@@ -191,6 +191,8 @@
         @(IBGLocaleSpanish),
         @(IBGLocaleSwedish),
         @(IBGLocaleTurkish),
+        @(IBGLocaleSlovak),
+        @(IBGLocaleNorwegian),
         @(IBGLocaleRomanian)
     ];
 
