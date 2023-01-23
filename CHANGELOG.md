@@ -1,3 +1,8 @@
+## Unreleased
+
+* Adds `hungarian` and `finnish` locales support
+* Adds missing mapping for `norwegian` and `slovak` locales on iOS
+
 ## 11.6.0 (2022-12-29)
 
 * Bumps Instabug Android SDK to v11.7.0
