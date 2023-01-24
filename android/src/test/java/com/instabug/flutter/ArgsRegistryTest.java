@@ -195,8 +195,10 @@ public class ArgsRegistryTest {
                 InstabugLocale.DANISH,
                 InstabugLocale.NETHERLANDS,
                 InstabugLocale.ENGLISH,
+                InstabugLocale.FINNISH,
                 InstabugLocale.FRENCH,
                 InstabugLocale.GERMAN,
+                InstabugLocale.HUNGARIAN,
                 InstabugLocale.INDONESIAN,
                 InstabugLocale.ITALIAN,
                 InstabugLocale.JAPANESE,
@@ -207,12 +209,10 @@ public class ArgsRegistryTest {
                 InstabugLocale.PORTUGUESE_PORTUGAL,
                 InstabugLocale.ROMANIAN,
                 InstabugLocale.RUSSIAN,
-                InstabugLocale.SPANISH,
                 InstabugLocale.SLOVAK,
+                InstabugLocale.SPANISH,
                 InstabugLocale.SWEDISH,
                 InstabugLocale.TURKISH,
-                InstabugLocale.HUNGARIAN,
-                InstabugLocale.FINNISH,
         };
 
         for (InstabugLocale value : values) {
