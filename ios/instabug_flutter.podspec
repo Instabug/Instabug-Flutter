@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.readme            = 'https://github.com/Instabug/Instabug-Flutter#readme'
   s.changelog         = 'https://pub.dev/packages/instabug_flutter/changelog'
   s.documentation_url = 'https://docs.instabug.com/docs/flutter-overview'
-  s.license           = { :file => '../LICENSE.md' }
+  s.license           = { :file => '../LICENSE' }
 
   s.source              = { :path => '.' }
   s.source_files        = 'Classes/**/*'
