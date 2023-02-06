@@ -165,6 +165,7 @@ jobs:
       - checkout
       - run: flutter pub get
       - run: sh ./scripts/pigeon.sh
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run:
           name: Check Package Score
           command: flutter pub run pana --no-warning --exit-code-threshold 0
