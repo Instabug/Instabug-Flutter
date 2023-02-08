@@ -115,8 +115,10 @@ public final class ArgsRegistry {
         put("IBGLocale.danish", InstabugLocale.DANISH);
         put("IBGLocale.dutch", InstabugLocale.NETHERLANDS);
         put("IBGLocale.english", InstabugLocale.ENGLISH);
+        put("IBGLocale.finnish", InstabugLocale.FINNISH);
         put("IBGLocale.french", InstabugLocale.FRENCH);
         put("IBGLocale.german", InstabugLocale.GERMAN);
+        put("IBGLocale.hungarian", InstabugLocale.HUNGARIAN);
         put("IBGLocale.indonesian", InstabugLocale.INDONESIAN);
         put("IBGLocale.italian", InstabugLocale.ITALIAN);
         put("IBGLocale.japanese", InstabugLocale.JAPANESE);
@@ -127,8 +129,8 @@ public final class ArgsRegistry {
         put("IBGLocale.portuguesePortugal", InstabugLocale.PORTUGUESE_PORTUGAL);
         put("IBGLocale.romanian", InstabugLocale.ROMANIAN);
         put("IBGLocale.russian", InstabugLocale.RUSSIAN);
-        put("IBGLocale.spanish", InstabugLocale.SPANISH);
         put("IBGLocale.slovak", InstabugLocale.SLOVAK);
+        put("IBGLocale.spanish", InstabugLocale.SPANISH);
         put("IBGLocale.swedish", InstabugLocale.SWEDISH);
         put("IBGLocale.turkish", InstabugLocale.TURKISH);
     }};

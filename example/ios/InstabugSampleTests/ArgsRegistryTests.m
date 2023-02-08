@@ -179,19 +179,23 @@
         @(IBGLocaleDanish),
         @(IBGLocaleDutch),
         @(IBGLocaleEnglish),
+        @(IBGLocaleFinnish),
         @(IBGLocaleFrench),
         @(IBGLocaleGerman),
+        @(IBGLocaleHungarian),
         @(IBGLocaleItalian),
         @(IBGLocaleJapanese),
         @(IBGLocaleKorean),
+        @(IBGLocaleNorwegian),
         @(IBGLocalePolish),
         @(IBGLocalePortugueseBrazil),
         @(IBGLocalePortuguese),
+        @(IBGLocaleRomanian),
         @(IBGLocaleRussian),
+        @(IBGLocaleSlovak),
         @(IBGLocaleSpanish),
         @(IBGLocaleSwedish),
         @(IBGLocaleTurkish),
-        @(IBGLocaleRomanian)
     ];
 
     for (NSNumber *value in values) {
