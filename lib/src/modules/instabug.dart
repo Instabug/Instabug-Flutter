@@ -134,10 +134,10 @@ class Instabug {
 
   /// @nodoc
   @internal
-  static void init() {
-    BugReporting.init();
-    Replies.init();
-    Surveys.init();
+  static void $setup() {
+    BugReporting.$setup();
+    Replies.$setup();
+    Surveys.$setup();
   }
 
   /// Enables or disables Instabug functionality.
@@ -153,12 +153,25 @@ class Instabug {
   /// it on your dashboard.
   /// The [invocationEvents] are the events that invoke
   /// the SDK's UI.
+  static Future<void> init({
+    required String token,
+    required List<InvocationEvent> invocationEvents,
+  }) async {
+    $setup();
+    return _host.init(token, invocationEvents.mapToString());
+  }
+
+  @Deprecated(
+    "Use [Instabug.init] instead.",
+  )
   static Future<void> start(
     String token,
     List<InvocationEvent> invocationEvents,
   ) async {
-    init();
-    return _host.start(token, invocationEvents.mapToString());
+    return init(
+      token: token,
+      invocationEvents: invocationEvents,
+    );
   }
 
   /// Shows the welcome message in a specific mode.

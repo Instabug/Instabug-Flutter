@@ -33,7 +33,7 @@ class Replies implements RepliesFlutterApi {
 
   /// @nodoc
   @internal
-  static void init() {
+  static void $setup() {
     RepliesFlutterApi.setup(_instance);
   }
 

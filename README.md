@@ -38,16 +38,21 @@ flutter packages get
 
 ### Initializing Instabug
 
-To start using Instabug, import it into your Flutter app. 
+Initialize the SDK in your `main` function. This starts the SDK with the default behavior and sets it to be shown when the device is shaken.
 
 ```dart
 import 'package:instabug_flutter/instabug_flutter.dart';
-```
 
-Initialize the SDK in `initState()`. This line enables the SDK with the default behavior and sets it to be shown when the device is shaken.
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
 
-```dart
-Instabug.start('APP_TOKEN', [InvocationEvent.shake]);
+  Instabug.init(
+    token: 'APP_TOKEN',
+    invocationEvents: [InvocationEvent.shake],
+  );
+
+  runApp(MyApp());
+}
 ```
 
 > :warning:  If you're updating the SDK from versions prior to v11, please check our [migration guide](https://docs.instabug.com/docs/flutter-migration-guide).
@@ -58,19 +63,20 @@ Instabug automatically captures every crash of your app and sends relevant detai
 
 ⚠️ **Crashes will only be reported in release mode and not in debug mode.**
 
-
-Replace `void main() => runApp(MyApp());` with the following snippet:
-
 ```dart
-void main() async {
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  Instabug.init(
+    token: 'APP_TOKEN',
+    invocationEvents: [InvocationEvent.floatingButton],
+  );
+
   FlutterError.onError = (FlutterErrorDetails details) {
-    Zone.current.handleUncaughtError(details.exception, details.stack);
+    Zone.current.handleUncaughtError(details.exception, details.stack!);
   };
-  runZonedGuarded<Future<void>>(() async {
-    runApp(MyApp());
-  }, (Object error, StackTrace stackTrace) {
-    CrashReporting.reportCrash(error, stackTrace);
-  });
+
+  runZonedGuarded(() => runApp(MyApp()), CrashReporting.reportCrash);
 }
 ```
 

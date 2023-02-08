@@ -18,7 +18,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     Instabug.enabled = [isEnabled boolValue];
 }
 
-- (void)startToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents error:(FlutterError *_Nullable *_Nonnull)error {
+- (void)initToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents error:(FlutterError *_Nullable *_Nonnull)error {
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
         NSInteger *platformID = IBGPlatformFlutter;

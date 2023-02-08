@@ -35,7 +35,7 @@ class Surveys implements SurveysFlutterApi {
 
   /// @nodoc
   @internal
-  static void init() {
+  static void $setup() {
     SurveysFlutterApi.setup(_instance);
   }
 

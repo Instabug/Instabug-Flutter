@@ -1,3 +1,7 @@
+## Unreleased
+
+* Deprecates `Instabug.start` in favour of the new `Instabug.init` API.
+
 ## 11.6.0 (2022-12-29)
 
 * Bumps Instabug Android SDK to v11.7.0
