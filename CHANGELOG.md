@@ -1,5 +1,6 @@
 ## Unreleased
 
+* Bumps Instabug Android SDK to v11.8.0
 * Bumps Instabug iOS SDK to v11.7.0
 * Deprecates `Instabug.start` in favour of the new `Instabug.init` API.
 * Adds `hungarian` and `finnish` locales support
