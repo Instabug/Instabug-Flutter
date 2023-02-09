@@ -3,7 +3,7 @@ import 'package:pigeon/pigeon.dart';
 @HostApi()
 abstract class InstabugHostApi {
   void setEnabled(bool isEnabled);
-  void start(String token, List<String> invocationEvents);
+  void init(String token, List<String> invocationEvents);
 
   void show();
   void showWelcomeMessageWithMode(String mode);

@@ -111,7 +111,7 @@ public class InstabugApiTest {
             when(mock.setInvocationEvents(any())).thenReturn(mock);
         });
 
-        api.start(token, invocationEvents);
+        api.init(token, invocationEvents);
 
         Instabug.Builder builder = mInstabugBuilder.constructed().get(0);
 

@@ -1,5 +1,6 @@
 ## Unreleased
 
+* Deprecates `Instabug.start` in favour of the new `Instabug.init` API.
 * Adds `hungarian` and `finnish` locales support
 * Adds missing mapping for `norwegian` and `slovak` locales on iOS
 

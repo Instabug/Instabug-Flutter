@@ -84,7 +84,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         }
     }
 
-    public void start(@NonNull String token, @NonNull List<String> invocationEvents) {
+    public void init(@NonNull String token, @NonNull List<String> invocationEvents) {
         setCurrentPlatform();
 
         InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];

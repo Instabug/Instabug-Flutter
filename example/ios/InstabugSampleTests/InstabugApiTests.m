@@ -39,7 +39,7 @@
     NSArray<NSString *> *invocationEvents = @[@"InvocationEvent.floatingButton", @"InvocationEvent.screenshot"];
     FlutterError *error;
     
-    [self.api startToken:token invocationEvents:invocationEvents error:&error];
+    [self.api initToken:token invocationEvents:invocationEvents error:&error];
 
     OCMVerify([self.mInstabug setCurrentPlatform:IBGPlatformFlutter]);
     
