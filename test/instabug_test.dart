@@ -41,10 +41,13 @@ void main() {
     const token = "068ba9a8c3615035e163dc5f829c73be";
     const events = [InvocationEvent.shake, InvocationEvent.screenshot];
 
-    await Instabug.start(token, events);
+    await Instabug.init(
+      token: token,
+      invocationEvents: events,
+    );
 
     verify(
-      mHost.start(token, events.mapToString()),
+      mHost.init(token, events.mapToString()),
     ).called(1);
   });
 

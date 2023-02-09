@@ -53,7 +53,7 @@ class BugReporting implements BugReportingFlutterApi {
 
   /// @nodoc
   @internal
-  static void init() {
+  static void $setup() {
     BugReportingFlutterApi.setup(_instance);
   }
 
@@ -121,7 +121,7 @@ class BugReporting implements BugReportingFlutterApi {
   }
 
   /// Sets the events that invoke the feedback form.
-  /// Default is set by `Instabug.startWithToken`.
+  /// Default is set by [Instabug.init].
   /// [invocationEvents] invocationEvent List of events that invokes the
   static Future<void> setInvocationEvents(
     List<InvocationEvent>? invocationEvents,
@@ -166,7 +166,7 @@ class BugReporting implements BugReportingFlutterApi {
   }
 
   /// Sets the invocation options.
-  /// Default is set by `Instabug.startWithToken`.
+  /// Default is set by [Instabug.init].
   /// [invocationOptions] List of invocation options
   static Future<void> setInvocationOptions(
     List<InvocationOption>? invocationOptions,
