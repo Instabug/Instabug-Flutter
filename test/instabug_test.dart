@@ -47,7 +47,7 @@ void main() {
     );
 
     verify(
-      mHost.init(token, events.mapToString()),
+      mHost.init(token, events.mapToString(), LogLevel.error.toString()),
     ).called(1);
   });
 

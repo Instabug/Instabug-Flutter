@@ -2,7 +2,7 @@ package com.instabug.flutter;
 
 import static org.junit.Assert.assertTrue;
 
-import com.instabug.apm.model.LogLevel;
+import com.instabug.library.LogLevel;
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
 import com.instabug.featuresrequest.ActionType;
@@ -21,16 +21,29 @@ import com.instabug.library.visualusersteps.State;
 import org.junit.Test;
 
 public class ArgsRegistryTest {
+    @Test
+    public void testSdkLogLevels() {
+        Integer[] values = {
+                LogLevel.NONE,
+                LogLevel.ERROR,
+                LogLevel.DEBUG,
+                LogLevel.VERBOSE,
+        };
+
+        for (Integer value : values) {
+            assertTrue(ArgsRegistry.sdkLogLevels.containsValue(value));
+        }
+    }
 
     @Test
     public void testLogLevels() {
         Integer[] values = {
-                LogLevel.NONE,
-                LogLevel.ERROR,
-                LogLevel.WARNING,
-                LogLevel.INFO,
-                LogLevel.DEBUG,
-                LogLevel.VERBOSE,
+                com.instabug.apm.model.LogLevel.NONE,
+                com.instabug.apm.model.LogLevel.ERROR,
+                com.instabug.apm.model.LogLevel.WARNING,
+                com.instabug.apm.model.LogLevel.INFO,
+                com.instabug.apm.model.LogLevel.DEBUG,
+                com.instabug.apm.model.LogLevel.VERBOSE,
         };
 
         for (Integer value : values) {
