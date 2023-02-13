@@ -3,6 +3,9 @@
 * Bumps Instabug Android SDK to v11.8.0
 * Bumps Instabug iOS SDK to v11.7.0
 * Deprecates `Instabug.start` in favour of the new `Instabug.init` API.
+* Deprecates `Instabug.setDebugEnabled`, `Instabug.setSdkDebugLogsLevel`, and `APM.setLogLevel` in favour of `debugLogsLevel` property, which can be passed while initializing the SDK using `Instabug.init`.
+* Deprecates the `IBGSDKDebugLogsLevel` enum in favour of the `LogLevel` enum.
+* Deprecates both `warning` and `info` values from the `LogLevel` enum.
 * Adds `hungarian` and `finnish` locales support
 * Adds missing mapping for `norwegian` and `slovak` locales on iOS
 * Exports native Android SDK
