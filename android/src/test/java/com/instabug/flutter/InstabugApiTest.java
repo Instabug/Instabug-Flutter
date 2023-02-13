@@ -101,7 +101,7 @@ public class InstabugApiTest {
     }
 
     @Test
-    public void testInit() {
+    public void testSdkInit() {
         String token = "app-token";
         List<String> invocationEvents = Collections.singletonList("InvocationEvent.floatingButton");
         String logLevel = "LogLevel.error";

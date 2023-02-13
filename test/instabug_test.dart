@@ -277,6 +277,7 @@ void main() {
     const enabled = true;
     when(mBuildInfo.isAndroid).thenReturn(true);
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.setDebugEnabled(enabled);
 
     verify(
@@ -285,8 +286,10 @@ void main() {
   });
 
   test('[setSdkDebugLogsLevel] should call host method', () async {
+    // ignore: deprecated_member_use_from_same_package
     const level = IBGSDKDebugLogsLevel.error;
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.setSdkDebugLogsLevel(level);
 
     verify(
