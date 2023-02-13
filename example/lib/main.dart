@@ -9,6 +9,7 @@ void main() {
   Instabug.init(
     token: 'ed6f659591566da19b67857e1b9d40ab',
     invocationEvents: [InvocationEvent.floatingButton],
+    debugLogsLevel: LogLevel.verbose,
   );
 
   Instabug.setWelcomeMessageMode(WelcomeMessageMode.disabled);

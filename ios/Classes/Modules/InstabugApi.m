@@ -18,7 +18,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     Instabug.enabled = [isEnabled boolValue];
 }
 
-- (void)initToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents error:(FlutterError *_Nullable *_Nonnull)error {
+- (void)initToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents debugLogsLevel:(NSString *)debugLogsLevel error:(FlutterError *_Nullable *_Nonnull)error {
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
         NSInteger *platformID = IBGPlatformFlutter;
@@ -35,6 +35,9 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
         resolvedEvents |= (ArgsRegistry.invocationEvents[event]).integerValue;
     }
 
+    IBGSDKDebugLogsLevel resolvedLogLevel = (ArgsRegistry.sdkLogLevels[debugLogsLevel]).integerValue;
+
+    [Instabug setSdkDebugLogsLevel:resolvedLogLevel];
     [Instabug startWithToken:token invocationEvents:resolvedEvents];
 }
 
