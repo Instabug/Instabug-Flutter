@@ -111,6 +111,7 @@ public class InstabugApiTest {
             // Initializes Instabug with the correct token
             assertEquals(token, actualToken);
             when(mock.setInvocationEvents(any())).thenReturn(mock);
+            when(mock.setSdkDebugLogsLevel(anyInt())).thenReturn(mock);
         });
 
         api.init(token, invocationEvents, logLevel);
