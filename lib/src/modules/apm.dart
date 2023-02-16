@@ -5,18 +5,10 @@ import 'dart:async';
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/models/trace.dart';
+import 'package:instabug_flutter/src/modules/instabug.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 import 'package:meta/meta.dart';
-
-enum LogLevel {
-  none,
-  error,
-  warning,
-  info,
-  debug,
-  verbose,
-}
 
 class APM {
   static var _host = ApmHostApi();
@@ -36,6 +28,7 @@ class APM {
 
   /// Sets log Level to determine level of details in a log
   /// [logLevel] Enum value to determine the level
+  @Deprecated("Use [Instabug.init]'s [debugLogsLevel] parameter instead.")
   static Future<void> setLogLevel(LogLevel logLevel) async {
     return _host.setLogLevel(logLevel.toString());
   }

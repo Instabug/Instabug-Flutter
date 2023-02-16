@@ -4,10 +4,17 @@
 
 + (ArgsDictionary *)sdkLogLevels {
     return @{
-        @"IBGSDKDebugLogsLevel.verbose" : @(IBGSDKDebugLogsLevelVerbose),
-        @"IBGSDKDebugLogsLevel.debug" : @(IBGSDKDebugLogsLevelDebug),
-        @"IBGSDKDebugLogsLevel.error" : @(IBGSDKDebugLogsLevelError),
-        @"IBGSDKDebugLogsLevel.none" : @(IBGSDKDebugLogsLevelNone),
+        @"LogLevel.none" : @(IBGLogLevelNone),
+        @"LogLevel.error" : @(IBGSDKDebugLogsLevelError),
+        @"LogLevel.warning" : @(IBGSDKDebugLogsLevelError), // Deprecated
+        @"LogLevel.info" : @(IBGSDKDebugLogsLevelDebug), // Deprecated
+        @"LogLevel.debug" : @(IBGSDKDebugLogsLevelDebug),
+        @"LogLevel.verbose" : @(IBGSDKDebugLogsLevelVerbose),
+
+        @"IBGSDKDebugLogsLevel.verbose" : @(IBGSDKDebugLogsLevelVerbose), // Deprecated
+        @"IBGSDKDebugLogsLevel.debug" : @(IBGSDKDebugLogsLevelDebug), // Deprecated
+        @"IBGSDKDebugLogsLevel.error" : @(IBGSDKDebugLogsLevelError), // Deprecated
+        @"IBGSDKDebugLogsLevel.none" : @(IBGSDKDebugLogsLevelNone), // Deprecated
     };
 }
 
