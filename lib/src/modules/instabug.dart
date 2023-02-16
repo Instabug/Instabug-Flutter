@@ -55,6 +55,18 @@ enum IBGLocale {
   turkish,
 }
 
+enum LogLevel {
+  none,
+  error,
+  @Deprecated('Use [LogLevel.error] instead.')
+  warning,
+  @Deprecated('Use [LogLevel.debug] instead.')
+  info,
+  debug,
+  verbose,
+}
+
+@Deprecated("Use [LogLevel] instead.")
 enum IBGSDKDebugLogsLevel { verbose, debug, error, none }
 
 enum ColorTheme { dark, light }
@@ -151,16 +163,20 @@ class Instabug {
   /// Starts the SDK.
   /// This is the main SDK method that does all the magic. This is the only
   /// method that SHOULD be called.
-  /// The [token] that identifies the app, you can find
-  /// it on your dashboard.
-  /// The [invocationEvents] are the events that invoke
-  /// the SDK's UI.
+  /// The [token] that identifies the app, you can find it on your dashboard.
+  /// The [invocationEvents] are the events that invoke the SDK's UI.
+  /// The [debugLogsLevel] used to debug Instabug's SDK.
   static Future<void> init({
     required String token,
     required List<InvocationEvent> invocationEvents,
+    LogLevel debugLogsLevel = LogLevel.error,
   }) async {
     $setup();
-    return _host.init(token, invocationEvents.mapToString());
+    return _host.init(
+      token,
+      invocationEvents.mapToString(),
+      debugLogsLevel.toString(),
+    );
   }
 
   @Deprecated(
@@ -206,8 +222,9 @@ class Instabug {
     return _host.setLocale(locale.toString());
   }
 
-  /// Sets the verbosity level of logs used to debug The SDK. The defualt value in debug
+  /// Sets the verbosity level of logs used to debug The SDK. The default value in debug
   /// mode is sdkDebugLogsLevelVerbose and in production is sdkDebugLogsLevelError.
+  @Deprecated("Use [Instabug.init]'s [debugLogsLevel] parameter instead.")
   static Future<void> setSdkDebugLogsLevel(
     IBGSDKDebugLogsLevel sdkDebugLogsLevel,
   ) async {
@@ -306,6 +323,7 @@ class Instabug {
   /// Android only
   /// Enable/disable SDK logs
   /// [debugEnabled] desired state of debug mode.
+  @Deprecated("Use [Instabug.init]'s [debugLogsLevel] parameter instead.")
   static Future<void> setDebugEnabled(bool debugEnabled) async {
     if (IBGBuildInfo.instance.isAndroid) {
       return _host.setDebugEnabled(debugEnabled);

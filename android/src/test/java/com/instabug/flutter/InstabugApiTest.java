@@ -30,6 +30,7 @@ import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
+import com.instabug.library.LogLevel;
 import com.instabug.library.Platform;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
@@ -100,18 +101,20 @@ public class InstabugApiTest {
     }
 
     @Test
-    public void testStart() {
+    public void testSdkInit() {
         String token = "app-token";
         List<String> invocationEvents = Collections.singletonList("InvocationEvent.floatingButton");
+        String logLevel = "LogLevel.error";
 
         MockedConstruction<Instabug.Builder> mInstabugBuilder = mockConstruction(Instabug.Builder.class, (mock, context) -> {
             String actualToken = (String) context.arguments().get(1);
             // Initializes Instabug with the correct token
             assertEquals(token, actualToken);
             when(mock.setInvocationEvents(any())).thenReturn(mock);
+            when(mock.setSdkDebugLogsLevel(anyInt())).thenReturn(mock);
         });
 
-        api.init(token, invocationEvents);
+        api.init(token, invocationEvents, logLevel);
 
         Instabug.Builder builder = mInstabugBuilder.constructed().get(0);
 
@@ -122,6 +125,7 @@ public class InstabugApiTest {
                 mInstabugBuilder.constructed().size()
         );
         verify(builder).setInvocationEvents(InstabugInvocationEvent.FLOATING_BUTTON);
+        verify(builder).setSdkDebugLogsLevel(LogLevel.ERROR);
         verify(builder).build();
 
         // Sets screenshot provider

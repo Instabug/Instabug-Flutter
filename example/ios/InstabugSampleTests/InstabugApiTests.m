@@ -34,15 +34,16 @@
     OCMVerify([self.mInstabug setEnabled:YES]);
 }
 
-- (void)testStart {
+- (void)testInit {
     NSString *token = @"app-token";
     NSArray<NSString *> *invocationEvents = @[@"InvocationEvent.floatingButton", @"InvocationEvent.screenshot"];
+    NSString *logLevel = @"LogLevel.error";
     FlutterError *error;
     
-    [self.api initToken:token invocationEvents:invocationEvents error:&error];
+    [self.api initToken:token invocationEvents:invocationEvents debugLogsLevel:logLevel error:&error];
 
     OCMVerify([self.mInstabug setCurrentPlatform:IBGPlatformFlutter]);
-    
+    OCMVerify([self.mInstabug setSdkDebugLogsLevel:IBGSDKDebugLogsLevelError]);
     OCMVerify([self.mInstabug startWithToken:token invocationEvents:(IBGInvocationEventFloatingButton | IBGInvocationEventScreenshot)]);
 }
 

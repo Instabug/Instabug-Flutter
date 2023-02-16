@@ -84,7 +84,8 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         }
     }
 
-    public void init(@NonNull String token, @NonNull List<String> invocationEvents) {
+    @Override
+    public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {
         setCurrentPlatform();
 
         InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
@@ -94,9 +95,13 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         }
 
         final Application application = (Application) context;
+        final int parsedLogLevel = ArgsRegistry.sdkLogLevels.get(debugLogsLevel);
+
         new Instabug.Builder(application, token)
                 .setInvocationEvents(invocationEventsArray)
+                .setSdkDebugLogsLevel(parsedLogLevel)
                 .build();
+
         Instabug.setScreenshotProvider(screenshotProvider);
     }
 

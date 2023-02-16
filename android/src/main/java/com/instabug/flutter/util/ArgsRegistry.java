@@ -2,7 +2,7 @@ package com.instabug.flutter.util;
 
 import androidx.annotation.NonNull;
 
-import com.instabug.apm.model.LogLevel;
+import com.instabug.library.LogLevel;
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
 import com.instabug.featuresrequest.ActionType;
@@ -30,13 +30,24 @@ public final class ArgsRegistry {
         }
     }
 
-    public static final ArgsMap<Integer> logLevels = new ArgsMap<Integer>() {{
+    public static final ArgsMap<Integer> sdkLogLevels = new ArgsMap<Integer>() {{
         put("LogLevel.none", LogLevel.NONE);
         put("LogLevel.error", LogLevel.ERROR);
-        put("LogLevel.warning", LogLevel.WARNING);
-        put("LogLevel.info", LogLevel.INFO);
+        put("LogLevel.warning", LogLevel.ERROR); // Deprecated
+        put("LogLevel.info", LogLevel.DEBUG); // Deprecated
         put("LogLevel.debug", LogLevel.DEBUG);
         put("LogLevel.verbose", LogLevel.VERBOSE);
+    }};
+
+    @SuppressWarnings("DeprecatedIsStillUsed")
+    @Deprecated()
+    public static final ArgsMap<Integer> logLevels = new ArgsMap<Integer>() {{
+        put("LogLevel.none", com.instabug.apm.model.LogLevel.NONE);
+        put("LogLevel.error", com.instabug.apm.model.LogLevel.ERROR);
+        put("LogLevel.warning", com.instabug.apm.model.LogLevel.WARNING);
+        put("LogLevel.info", com.instabug.apm.model.LogLevel.INFO);
+        put("LogLevel.debug", com.instabug.apm.model.LogLevel.DEBUG);
+        put("LogLevel.verbose", com.instabug.apm.model.LogLevel.VERBOSE);
     }};
 
     public static ArgsMap<InstabugInvocationEvent> invocationEvents = new ArgsMap<InstabugInvocationEvent>() {{
