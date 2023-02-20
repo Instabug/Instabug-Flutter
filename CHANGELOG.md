@@ -1,6 +1,6 @@
 ## Unreleased
 
-* Bumps Instabug Android SDK to v11.8.0
+* Bumps Instabug Android SDK to v11.9.0
 * Bumps Instabug iOS SDK to v11.9.0
 * Deprecates `Instabug.start` in favour of the new `Instabug.init` API.
 * Deprecates `Instabug.setDebugEnabled`, `Instabug.setSdkDebugLogsLevel`, and `APM.setLogLevel` in favour of `debugLogsLevel` property, which can be passed while initializing the SDK using `Instabug.init`.
