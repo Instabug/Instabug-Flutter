@@ -34,7 +34,7 @@ target 'Runner' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
-target 'InstabugSampleTests' do
+target 'InstabugTests' do
   pod 'OCMock', '3.6'
   
   use_frameworks!
