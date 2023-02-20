@@ -43,7 +43,7 @@ target 'InstabugTests' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
-target 'InstabugSampleUITests' do
+target 'InstabugUITests' do
   use_frameworks!
   use_modular_headers!
 

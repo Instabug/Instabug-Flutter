@@ -52,8 +52,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C09001B025D9A3C5006F3DAE"
-               BuildableName = "InstabugSampleUITests.xctest"
-               BlueprintName = "InstabugSampleUITests"
+               BuildableName = "InstabugUITests.xctest"
+               BlueprintName = "InstabugUITests"
                ReferencedContainer = "container:Runner.xcodeproj">
             </BuildableReference>
          </TestableReference>
