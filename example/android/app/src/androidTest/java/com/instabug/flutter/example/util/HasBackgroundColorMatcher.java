@@ -1,4 +1,4 @@
-package com.example.InstabugSample.util;
+package com.instabug.flutter.example.util;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
