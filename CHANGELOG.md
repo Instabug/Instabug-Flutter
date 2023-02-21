@@ -1,14 +1,23 @@
-## Unreleased
+## 11.9.0 (2023-02-21)
 
-* Bumps Instabug Android SDK to v11.9.0
-* Bumps Instabug iOS SDK to v11.9.0
-* Deprecates `Instabug.start` in favour of the new `Instabug.init` API.
-* Deprecates `Instabug.setDebugEnabled`, `Instabug.setSdkDebugLogsLevel`, and `APM.setLogLevel` in favour of `debugLogsLevel` property, which can be passed while initializing the SDK using `Instabug.init`.
+* Bumps Instabug Android SDK to v11.9.0.
+* Bumps Instabug iOS SDK to v11.9.0.
+* Adds the new `Instabug.init` API to start the SDK as follows:
+    ```dart
+    Instabug.init(
+      token: '<APP_TOKEN>',
+      invocationEvents: [InvocationEvent.shake],
+      debugLogsLevel: LogLevel.verbose,
+    );
+    ```
+* Adds `hungarian` and `finnish` locales support.
+* Deprecates `Instabug.start` in favour of `Instabug.init`.
+* Deprecates `Instabug.setDebugEnabled`, `Instabug.setSdkDebugLogsLevel`, and `APM.setLogLevel` in favour of `debugLogsLevel` parameter of `Instabug.init`.
 * Deprecates the `IBGSDKDebugLogsLevel` enum in favour of the `LogLevel` enum.
 * Deprecates both `warning` and `info` values from the `LogLevel` enum.
-* Adds `hungarian` and `finnish` locales support
-* Adds missing mapping for `norwegian` and `slovak` locales on iOS
-* Exports native Android SDK
+* Fixes `norwegian` and `slovak` locales on iOS.
+* Fixes license warning on iOS.
+* Exports Instabug Android SDK using `api` instead of `implementation`.
 
 ## 11.6.0 (2022-12-29)
 
