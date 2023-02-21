@@ -7,7 +7,7 @@
 #import "Util/IBGNetworkLogger+Test.h"
 #import "Flutter/Flutter.h"
 
-@interface InstabugSampleTests : XCTestCase
+@interface InstabugTests : XCTestCase
 
 @property (nonatomic, strong) id mInstabug;
 @property (nonatomic, strong) InstabugApi *api;
@@ -16,7 +16,7 @@
 
 @end
 
-@implementation InstabugSampleTests
+@implementation InstabugTests
 
 - (void)setUp {
     self.mInstabug = OCMClassMock([Instabug class]);

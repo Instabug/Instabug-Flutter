@@ -1,4 +1,4 @@
-package com.example.InstabugSample.util;
+package com.instabug.flutter.example.util;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
