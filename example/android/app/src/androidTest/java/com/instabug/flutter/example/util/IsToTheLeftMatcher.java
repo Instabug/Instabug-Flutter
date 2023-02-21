@@ -1,4 +1,4 @@
-package com.example.InstabugSample.util;
+package com.instabug.flutter.example.util;
 
 import android.view.View;
 

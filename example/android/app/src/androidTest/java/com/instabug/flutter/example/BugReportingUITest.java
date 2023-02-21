@@ -1,4 +1,4 @@
-package com.example.InstabugSample;
+package com.instabug.flutter.example;
 
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.flutter.action.FlutterActions;
@@ -23,15 +23,15 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.flutter.EspressoFlutter.onFlutterWidget;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
-import static com.example.InstabugSample.util.InstabugAssertions.assertViewWillBeVisible;
-import static com.example.InstabugSample.util.InstabugViewMatchers.isToTheLeft;
+import static com.instabug.flutter.example.util.InstabugAssertions.assertViewWillBeVisible;
+import static com.instabug.flutter.example.util.InstabugViewMatchers.isToTheLeft;
 
 import static org.junit.Assert.assertTrue;
 
 import android.app.Instrumentation;
 import android.graphics.Point;
 
-import com.example.InstabugSample.util.Keyboard;
+import com.instabug.flutter.example.util.Keyboard;
 
 @RunWith(AndroidJUnit4.class)
 public class BugReportingUITest {

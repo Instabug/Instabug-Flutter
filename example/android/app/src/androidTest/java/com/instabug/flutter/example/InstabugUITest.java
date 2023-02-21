@@ -1,10 +1,10 @@
-package com.example.InstabugSample;
+package com.instabug.flutter.example;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.flutter.EspressoFlutter.onFlutterWidget;
 
-import static com.example.InstabugSample.util.InstabugViewMatchers.hasBackgroundColor;
+import static com.instabug.flutter.example.util.InstabugViewMatchers.hasBackgroundColor;
 
 import android.graphics.Color;
 
@@ -14,7 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.InstabugSample.util.Keyboard;
+import com.instabug.flutter.example.util.Keyboard;
 
 import org.junit.Rule;
 import org.junit.Test;

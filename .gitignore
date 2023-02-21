@@ -34,7 +34,7 @@ ios/**/Generated/
 .packages
 .pub-cache/
 .pub/
-pubspec.lock
+/pubspec.lock
 build/
 coverage/
 

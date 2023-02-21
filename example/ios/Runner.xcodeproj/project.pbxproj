@@ -9,30 +9,28 @@
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
-		3EA1F5233E85A5C4F9EF3957 /* Pods_InstabugSampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5446C0D3B2623D9BCC7CCE3 /* Pods_InstabugSampleUITests.framework */; };
+		3EA1F5233E85A5C4F9EF3957 /* Pods_InstabugUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5446C0D3B2623D9BCC7CCE3 /* Pods_InstabugUITests.framework */; };
 		65C88E6E8EAE049E32FF2F52 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 853739F5879F6E4272829F47 /* Pods_Runner.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
-		9D381ECFBB01BD0E978EBDF2 /* Pods_InstabugSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71679BEC094CFF3474195C2E /* Pods_InstabugSampleTests.framework */; };
-		C09001B425D9A3C5006F3DAE /* InstabugSampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C09001B325D9A3C5006F3DAE /* InstabugSampleUITests.m */; };
+		9D381ECFBB01BD0E978EBDF2 /* Pods_InstabugTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71679BEC094CFF3474195C2E /* Pods_InstabugTests.framework */; };
+		C09001B425D9A3C5006F3DAE /* BugReportingUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C09001B325D9A3C5006F3DAE /* BugReportingUITests.m */; };
 		CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC080E102937B7DB0041170A /* InstabugApiTests.m */; };
 		CC198C61293E1A21007077C8 /* SurveysApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC198C60293E1A21007077C8 /* SurveysApiTests.m */; };
 		CC359DB92937720C0067A924 /* ApmApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC359DB82937720C0067A924 /* ApmApiTests.m */; };
 		CC3D69E7293F47FC000DCE54 /* ArgsRegistryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC3D69E6293F47FC000DCE54 /* ArgsRegistryTests.m */; };
-		CC9925D2293DEB0B001FD3EE /* CrashReportingApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */; };
-		CC9925D5293DF534001FD3EE /* FeatureRequestsApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D4293DF534001FD3EE /* FeatureRequestsApiTests.m */; };
-		CC9925D7293DFB03001FD3EE /* InstabugLogApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D6293DFB03001FD3EE /* InstabugLogApiTests.m */; };
-		CC9925D9293DFD7F001FD3EE /* RepliesApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D8293DFD7F001FD3EE /* RepliesApiTests.m */; };
-		CCADBDD8293CFED300AE5EB8 /* BugReportingApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */; };
-		C090017C25D9A031006F3DAE /* InstabugSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C090017B25D9A031006F3DAE /* InstabugSampleTests.m */; };
-		C09001B425D9A3C5006F3DAE /* BugReportingUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C09001B325D9A3C5006F3DAE /* BugReportingUITests.m */; };
 		CC6018BE2948C371003A845D /* InstabugUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC6018BD2948C371003A845D /* InstabugUITests.m */; };
 		CC77911C294B6E9B00296485 /* FeatureRequestsUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC77911B294B6E9B00296485 /* FeatureRequestsUITests.m */; };
 		CC77911E294B707900296485 /* SurveysUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC77911D294B707900296485 /* SurveysUITests.m */; };
 		CC7B6B4D2949D43D00C6274F /* XCUIElement+Instabug.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7B6B4C2949D43D00C6274F /* XCUIElement+Instabug.m */; };
 		CC7B6B512949F9B700C6274F /* InstabugUITestsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7B6B502949F9B700C6274F /* InstabugUITestsUtils.m */; };
+		CC9925D2293DEB0B001FD3EE /* CrashReportingApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */; };
+		CC9925D5293DF534001FD3EE /* FeatureRequestsApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D4293DF534001FD3EE /* FeatureRequestsApiTests.m */; };
+		CC9925D7293DFB03001FD3EE /* InstabugLogApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D6293DFB03001FD3EE /* InstabugLogApiTests.m */; };
+		CC9925D9293DFD7F001FD3EE /* RepliesApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9925D8293DFD7F001FD3EE /* RepliesApiTests.m */; };
+		CCADBDD8293CFED300AE5EB8 /* BugReportingApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,11 +66,11 @@
 /* Begin PBXFileReference section */
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
-		243EF14638ECA64074771B11 /* Pods-InstabugSampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugSampleTests.release.xcconfig"; path = "Target Support Files/Pods-InstabugSampleTests/Pods-InstabugSampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		243EF14638ECA64074771B11 /* Pods-InstabugTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugTests.release.xcconfig"; path = "Target Support Files/Pods-InstabugTests/Pods-InstabugTests.release.xcconfig"; sourceTree = "<group>"; };
 		354EA318B622513FE3FD25E4 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
-		671EF4FEC6834993651EBC4D /* Pods-InstabugSampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugSampleUITests.release.xcconfig"; path = "Target Support Files/Pods-InstabugSampleUITests/Pods-InstabugSampleUITests.release.xcconfig"; sourceTree = "<group>"; };
-		71679BEC094CFF3474195C2E /* Pods_InstabugSampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstabugSampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		671EF4FEC6834993651EBC4D /* Pods-InstabugUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugUITests.release.xcconfig"; path = "Target Support Files/Pods-InstabugUITests/Pods-InstabugUITests.release.xcconfig"; sourceTree = "<group>"; };
+		71679BEC094CFF3474195C2E /* Pods_InstabugTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstabugTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
@@ -85,13 +83,13 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A964F0D42132F93F7E4DEB73 /* Pods-InstabugSampleUITests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugSampleUITests.profile.xcconfig"; path = "Target Support Files/Pods-InstabugSampleUITests/Pods-InstabugSampleUITests.profile.xcconfig"; sourceTree = "<group>"; };
-		B03C8370EEFE061BDDDA1DA1 /* Pods-InstabugSampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugSampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-InstabugSampleUITests/Pods-InstabugSampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		BA5633844585BB93FE7BCCE7 /* Pods-InstabugSampleTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugSampleTests.profile.xcconfig"; path = "Target Support Files/Pods-InstabugSampleTests/Pods-InstabugSampleTests.profile.xcconfig"; sourceTree = "<group>"; };
-		BF9025BBD0A6FD7B193E903A /* Pods-InstabugSampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugSampleTests.debug.xcconfig"; path = "Target Support Files/Pods-InstabugSampleTests/Pods-InstabugSampleTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C090017925D9A030006F3DAE /* InstabugSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstabugSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A964F0D42132F93F7E4DEB73 /* Pods-InstabugUITests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugUITests.profile.xcconfig"; path = "Target Support Files/Pods-InstabugUITests/Pods-InstabugUITests.profile.xcconfig"; sourceTree = "<group>"; };
+		B03C8370EEFE061BDDDA1DA1 /* Pods-InstabugUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugUITests.debug.xcconfig"; path = "Target Support Files/Pods-InstabugUITests/Pods-InstabugUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BA5633844585BB93FE7BCCE7 /* Pods-InstabugTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugTests.profile.xcconfig"; path = "Target Support Files/Pods-InstabugTests/Pods-InstabugTests.profile.xcconfig"; sourceTree = "<group>"; };
+		BF9025BBD0A6FD7B193E903A /* Pods-InstabugTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugTests.debug.xcconfig"; path = "Target Support Files/Pods-InstabugTests/Pods-InstabugTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C090017925D9A030006F3DAE /* InstabugTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstabugTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C090017D25D9A031006F3DAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C09001B125D9A3C5006F3DAE /* InstabugSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstabugSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C09001B125D9A3C5006F3DAE /* InstabugUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstabugUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C09001B325D9A3C5006F3DAE /* BugReportingUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BugReportingUITests.m; sourceTree = "<group>"; };
 		C09001B525D9A3C5006F3DAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC080E102937B7DB0041170A /* InstabugApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstabugApiTests.m; sourceTree = "<group>"; };
@@ -99,22 +97,22 @@
 		CC198C62293E2392007077C8 /* IBGSurvey+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IBGSurvey+Test.h"; sourceTree = "<group>"; };
 		CC359DB82937720C0067A924 /* ApmApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApmApiTests.m; sourceTree = "<group>"; };
 		CC3D69E6293F47FC000DCE54 /* ArgsRegistryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArgsRegistryTests.m; sourceTree = "<group>"; };
+		CC6018BD2948C371003A845D /* InstabugUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugUITests.m; sourceTree = "<group>"; };
+		CC77911B294B6E9B00296485 /* FeatureRequestsUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeatureRequestsUITests.m; sourceTree = "<group>"; };
+		CC77911D294B707900296485 /* SurveysUITests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveysUITests.m; sourceTree = "<group>"; };
 		CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Instabug+Test.h"; sourceTree = "<group>"; };
 		CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IBGNetworkLogger+Test.h"; sourceTree = "<group>"; };
+		CC7B6B4C2949D43D00C6274F /* XCUIElement+Instabug.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCUIElement+Instabug.m"; sourceTree = "<group>"; };
+		CC7B6B4E2949D52800C6274F /* XCUIElement+Instabug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCUIElement+Instabug.h"; sourceTree = "<group>"; };
+		CC7B6B4F2949F95600C6274F /* InstabugUITestsUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstabugUITestsUtils.h; sourceTree = "<group>"; };
+		CC7B6B502949F9B700C6274F /* InstabugUITestsUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugUITestsUtils.m; sourceTree = "<group>"; };
 		CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrashReportingApiTests.m; sourceTree = "<group>"; };
 		CC9925D4293DF534001FD3EE /* FeatureRequestsApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeatureRequestsApiTests.m; sourceTree = "<group>"; };
 		CC9925D6293DFB03001FD3EE /* InstabugLogApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugLogApiTests.m; sourceTree = "<group>"; };
 		CC9925D8293DFD7F001FD3EE /* RepliesApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RepliesApiTests.m; sourceTree = "<group>"; };
 		CCADBDD7293CFED300AE5EB8 /* BugReportingApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BugReportingApiTests.m; sourceTree = "<group>"; };
-		CC6018BD2948C371003A845D /* InstabugUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugUITests.m; sourceTree = "<group>"; };
-		CC77911B294B6E9B00296485 /* FeatureRequestsUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeatureRequestsUITests.m; sourceTree = "<group>"; };
-		CC77911D294B707900296485 /* SurveysUITests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveysUITests.m; sourceTree = "<group>"; };
-		CC7B6B4C2949D43D00C6274F /* XCUIElement+Instabug.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCUIElement+Instabug.m"; sourceTree = "<group>"; };
-		CC7B6B4E2949D52800C6274F /* XCUIElement+Instabug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCUIElement+Instabug.h"; sourceTree = "<group>"; };
-		CC7B6B4F2949F95600C6274F /* InstabugUITestsUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstabugUITestsUtils.h; sourceTree = "<group>"; };
-		CC7B6B502949F9B700C6274F /* InstabugUITestsUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugUITestsUtils.m; sourceTree = "<group>"; };
 		D465CA8CFED509B46412330E /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
-		F5446C0D3B2623D9BCC7CCE3 /* Pods_InstabugSampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstabugSampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5446C0D3B2623D9BCC7CCE3 /* Pods_InstabugUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstabugUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,7 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D381ECFBB01BD0E978EBDF2 /* Pods_InstabugSampleTests.framework in Frameworks */,
+				9D381ECFBB01BD0E978EBDF2 /* Pods_InstabugTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EA1F5233E85A5C4F9EF3957 /* Pods_InstabugSampleUITests.framework in Frameworks */,
+				3EA1F5233E85A5C4F9EF3957 /* Pods_InstabugUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,12 +149,12 @@
 				816B0520F0A0D656CA616D31 /* Pods-Runner.debug.xcconfig */,
 				D465CA8CFED509B46412330E /* Pods-Runner.release.xcconfig */,
 				354EA318B622513FE3FD25E4 /* Pods-Runner.profile.xcconfig */,
-				BF9025BBD0A6FD7B193E903A /* Pods-InstabugSampleTests.debug.xcconfig */,
-				243EF14638ECA64074771B11 /* Pods-InstabugSampleTests.release.xcconfig */,
-				BA5633844585BB93FE7BCCE7 /* Pods-InstabugSampleTests.profile.xcconfig */,
-				B03C8370EEFE061BDDDA1DA1 /* Pods-InstabugSampleUITests.debug.xcconfig */,
-				671EF4FEC6834993651EBC4D /* Pods-InstabugSampleUITests.release.xcconfig */,
-				A964F0D42132F93F7E4DEB73 /* Pods-InstabugSampleUITests.profile.xcconfig */,
+				BF9025BBD0A6FD7B193E903A /* Pods-InstabugTests.debug.xcconfig */,
+				243EF14638ECA64074771B11 /* Pods-InstabugTests.release.xcconfig */,
+				BA5633844585BB93FE7BCCE7 /* Pods-InstabugTests.profile.xcconfig */,
+				B03C8370EEFE061BDDDA1DA1 /* Pods-InstabugUITests.debug.xcconfig */,
+				671EF4FEC6834993651EBC4D /* Pods-InstabugUITests.release.xcconfig */,
+				A964F0D42132F93F7E4DEB73 /* Pods-InstabugUITests.profile.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -165,8 +163,8 @@
 			isa = PBXGroup;
 			children = (
 				853739F5879F6E4272829F47 /* Pods_Runner.framework */,
-				71679BEC094CFF3474195C2E /* Pods_InstabugSampleTests.framework */,
-				F5446C0D3B2623D9BCC7CCE3 /* Pods_InstabugSampleUITests.framework */,
+				71679BEC094CFF3474195C2E /* Pods_InstabugTests.framework */,
+				F5446C0D3B2623D9BCC7CCE3 /* Pods_InstabugUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -187,8 +185,8 @@
 			children = (
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
-				C090017A25D9A031006F3DAE /* InstabugSampleTests */,
-				C09001B225D9A3C5006F3DAE /* InstabugSampleUITests */,
+				C090017A25D9A031006F3DAE /* InstabugTests */,
+				C09001B225D9A3C5006F3DAE /* InstabugUITests */,
 				97C146EF1CF9000F007C117D /* Products */,
 				263CD21F80996ACC7964A383 /* Pods */,
 				54C1C903B090526284242B67 /* Frameworks */,
@@ -199,8 +197,8 @@
 			isa = PBXGroup;
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
-				C090017925D9A030006F3DAE /* InstabugSampleTests.xctest */,
-				C09001B125D9A3C5006F3DAE /* InstabugSampleUITests.xctest */,
+				C090017925D9A030006F3DAE /* InstabugTests.xctest */,
+				C09001B125D9A3C5006F3DAE /* InstabugUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -220,7 +218,7 @@
 			path = Runner;
 			sourceTree = "<group>";
 		};
-		C090017A25D9A031006F3DAE /* InstabugSampleTests */ = {
+		C090017A25D9A031006F3DAE /* InstabugTests */ = {
 			isa = PBXGroup;
 			children = (
 				CC198C60293E1A21007077C8 /* SurveysApiTests.m */,
@@ -235,10 +233,10 @@
 				CC9925D8293DFD7F001FD3EE /* RepliesApiTests.m */,
 				CC3D69E6293F47FC000DCE54 /* ArgsRegistryTests.m */,
 			);
-			path = InstabugSampleTests;
+			path = InstabugTests;
 			sourceTree = "<group>";
 		};
-		C09001B225D9A3C5006F3DAE /* InstabugSampleUITests */ = {
+		C09001B225D9A3C5006F3DAE /* InstabugUITests */ = {
 			isa = PBXGroup;
 			children = (
 				CC77911D294B707900296485 /* SurveysUITests.m */,
@@ -248,7 +246,7 @@
 				CC6018BD2948C371003A845D /* InstabugUITests.m */,
 				CC77911B294B6E9B00296485 /* FeatureRequestsUITests.m */,
 			);
-			path = InstabugSampleUITests;
+			path = InstabugUITests;
 			sourceTree = "<group>";
 		};
 		CC78720A2938D1C5008CB2A5 /* Util */ = {
@@ -297,9 +295,9 @@
 			productReference = 97C146EE1CF9000F007C117D /* Runner.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C090017825D9A030006F3DAE /* InstabugSampleTests */ = {
+		C090017825D9A030006F3DAE /* InstabugTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C090018325D9A031006F3DAE /* Build configuration list for PBXNativeTarget "InstabugSampleTests" */;
+			buildConfigurationList = C090018325D9A031006F3DAE /* Build configuration list for PBXNativeTarget "InstabugTests" */;
 			buildPhases = (
 				A19F33D3063ED99B3A6581AC /* [CP] Check Pods Manifest.lock */,
 				C090017525D9A030006F3DAE /* Sources */,
@@ -312,14 +310,14 @@
 			dependencies = (
 				C090017F25D9A031006F3DAE /* PBXTargetDependency */,
 			);
-			name = InstabugSampleTests;
-			productName = InstabugSampleTests;
-			productReference = C090017925D9A030006F3DAE /* InstabugSampleTests.xctest */;
+			name = InstabugTests;
+			productName = InstabugTests;
+			productReference = C090017925D9A030006F3DAE /* InstabugTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C09001B025D9A3C5006F3DAE /* InstabugSampleUITests */ = {
+		C09001B025D9A3C5006F3DAE /* InstabugUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C09001BB25D9A3C5006F3DAE /* Build configuration list for PBXNativeTarget "InstabugSampleUITests" */;
+			buildConfigurationList = C09001BB25D9A3C5006F3DAE /* Build configuration list for PBXNativeTarget "InstabugUITests" */;
 			buildPhases = (
 				CADA44F7640ED1F5D8ED0572 /* [CP] Check Pods Manifest.lock */,
 				C09001AD25D9A3C5006F3DAE /* Sources */,
@@ -332,9 +330,9 @@
 			dependencies = (
 				C09001B725D9A3C5006F3DAE /* PBXTargetDependency */,
 			);
-			name = InstabugSampleUITests;
-			productName = InstabugSampleUITests;
-			productReference = C09001B125D9A3C5006F3DAE /* InstabugSampleUITests.xctest */;
+			name = InstabugUITests;
+			productName = InstabugUITests;
+			productReference = C09001B125D9A3C5006F3DAE /* InstabugUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -375,8 +373,8 @@
 			projectRoot = "";
 			targets = (
 				97C146ED1CF9000F007C117D /* Runner */,
-				C090017825D9A030006F3DAE /* InstabugSampleTests */,
-				C09001B025D9A3C5006F3DAE /* InstabugSampleUITests */,
+				C090017825D9A030006F3DAE /* InstabugTests */,
+				C09001B025D9A3C5006F3DAE /* InstabugUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -416,15 +414,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-InstabugSampleUITests/Pods-InstabugSampleUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-InstabugUITests/Pods-InstabugUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-InstabugSampleUITests/Pods-InstabugSampleUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-InstabugUITests/Pods-InstabugUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-InstabugSampleUITests/Pods-InstabugSampleUITests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-InstabugUITests/Pods-InstabugUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		27D8E26CCAF4064D58654530 /* [CP] Embed Pods Frameworks */ = {
@@ -464,15 +462,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-InstabugSampleTests/Pods-InstabugSampleTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-InstabugTests/Pods-InstabugTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-InstabugSampleTests/Pods-InstabugSampleTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-InstabugTests/Pods-InstabugTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-InstabugSampleTests/Pods-InstabugSampleTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-InstabugTests/Pods-InstabugTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9740EEB61CF901F6004384FC /* Run Script */ = {
@@ -504,7 +502,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-InstabugSampleTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-InstabugTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -526,7 +524,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-InstabugSampleUITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-InstabugUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -881,7 +879,7 @@
 		};
 		C090018025D9A031006F3DAE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF9025BBD0A6FD7B193E903A /* Pods-InstabugSampleTests.debug.xcconfig */;
+			baseConfigurationReference = BF9025BBD0A6FD7B193E903A /* Pods-InstabugTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -895,7 +893,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 56S6Q9SA8U;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = InstabugSampleTests/Info.plist;
+				INFOPLIST_FILE = InstabugTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -904,9 +902,9 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSampleTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "InstabugSampleTests/InstabugSampleTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "InstabugTests/InstabugTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -916,7 +914,7 @@
 		};
 		C090018125D9A031006F3DAE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 243EF14638ECA64074771B11 /* Pods-InstabugSampleTests.release.xcconfig */;
+			baseConfigurationReference = 243EF14638ECA64074771B11 /* Pods-InstabugTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -930,7 +928,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 56S6Q9SA8U;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = InstabugSampleTests/Info.plist;
+				INFOPLIST_FILE = InstabugTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -938,9 +936,9 @@
 					"@loader_path/Frameworks",
 				);
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSampleTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "InstabugSampleTests/InstabugSampleTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "InstabugTests/InstabugTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/Runner";
@@ -949,7 +947,7 @@
 		};
 		C090018225D9A031006F3DAE /* Profile */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BA5633844585BB93FE7BCCE7 /* Pods-InstabugSampleTests.profile.xcconfig */;
+			baseConfigurationReference = BA5633844585BB93FE7BCCE7 /* Pods-InstabugTests.profile.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -963,7 +961,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 56S6Q9SA8U;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = InstabugSampleTests/Info.plist;
+				INFOPLIST_FILE = InstabugTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -971,9 +969,9 @@
 					"@loader_path/Frameworks",
 				);
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSampleTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "InstabugSampleTests/InstabugSampleTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "InstabugTests/InstabugTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/Runner";
@@ -982,7 +980,7 @@
 		};
 		C09001B825D9A3C5006F3DAE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B03C8370EEFE061BDDDA1DA1 /* Pods-InstabugSampleUITests.debug.xcconfig */;
+			baseConfigurationReference = B03C8370EEFE061BDDDA1DA1 /* Pods-InstabugUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -994,7 +992,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 56S6Q9SA8U;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = InstabugSampleUITests/Info.plist;
+				INFOPLIST_FILE = InstabugUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1003,7 +1001,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Runner;
@@ -1012,7 +1010,7 @@
 		};
 		C09001B925D9A3C5006F3DAE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 671EF4FEC6834993651EBC4D /* Pods-InstabugSampleUITests.release.xcconfig */;
+			baseConfigurationReference = 671EF4FEC6834993651EBC4D /* Pods-InstabugUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1024,7 +1022,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 56S6Q9SA8U;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = InstabugSampleUITests/Info.plist;
+				INFOPLIST_FILE = InstabugUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1032,7 +1030,7 @@
 					"@loader_path/Frameworks",
 				);
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Runner;
@@ -1041,7 +1039,7 @@
 		};
 		C09001BA25D9A3C5006F3DAE /* Profile */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A964F0D42132F93F7E4DEB73 /* Pods-InstabugSampleUITests.profile.xcconfig */;
+			baseConfigurationReference = A964F0D42132F93F7E4DEB73 /* Pods-InstabugUITests.profile.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1053,7 +1051,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 56S6Q9SA8U;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = InstabugSampleUITests/Info.plist;
+				INFOPLIST_FILE = InstabugUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1061,7 +1059,7 @@
 					"@loader_path/Frameworks",
 				);
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Runner;
@@ -1091,7 +1089,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C090018325D9A031006F3DAE /* Build configuration list for PBXNativeTarget "InstabugSampleTests" */ = {
+		C090018325D9A031006F3DAE /* Build configuration list for PBXNativeTarget "InstabugTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C090018025D9A031006F3DAE /* Debug */,
@@ -1101,7 +1099,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C09001BB25D9A3C5006F3DAE /* Build configuration list for PBXNativeTarget "InstabugSampleUITests" */ = {
+		C09001BB25D9A3C5006F3DAE /* Build configuration list for PBXNativeTarget "InstabugUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C09001B825D9A3C5006F3DAE /* Debug */,
