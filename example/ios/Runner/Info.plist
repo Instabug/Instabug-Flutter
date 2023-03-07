@@ -47,5 +47,7 @@
 	<string>Instabug needs access to your photo library so you can attach images.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>
