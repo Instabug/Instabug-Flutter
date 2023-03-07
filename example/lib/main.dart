@@ -11,7 +11,6 @@ import '../providers/theme_state.dart';
 import '../screens/main_screen.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
 
   Instabug.init(
