@@ -18,11 +18,12 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.18.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  provider: ^6.0.5
   instabug_flutter:
     path: ../
 
@@ -32,6 +33,7 @@ dev_dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
+  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -42,6 +44,12 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/images/
+  fonts:
+    - family: Axiforma
+      fonts:
+        - asset: assets/fonts/Axiforma Regular.otf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
