@@ -9,7 +9,7 @@ commands:
   setup_flutter:
     steps:
       - flutter/install_sdk_and_pub:
-          flutter_version: 3.3.0
+          flutter_version: 3.7.3
       - run:
           name: Generate Pigeons
           command: sh ./scripts/pigeon.sh
