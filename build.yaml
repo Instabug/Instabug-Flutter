@@ -1,0 +1,6 @@
+targets:
+  $default:
+    sources:
+      # Exclude the 'example' folder from the build
+      exclude:
+        - example/**
