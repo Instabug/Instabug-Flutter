@@ -23,10 +23,34 @@ commands:
           working_directory: example/ios
           command: pod install --repo-update
   setup_captain:
+    parameters:
+      platform:
+        type: enum
+        enum:
+          - ios
+          - android
     steps:
       - run:
           name: Install Appium
-          command: npm install -g appium
+          command: npm install -g appium@next
+      - when:
+          condition:
+            equal:
+              - <<parameters.platform>>
+              - ios
+          steps:
+            - run:
+                name: Install XCUITest Driver
+                command: appium driver install xcuitest
+      - when:
+          condition:
+            equal:
+              - <<parameters.platform>>
+              - android
+          steps:
+            - run:
+                name: Install UIAutomator2 Driver
+                command: appium driver install uiautomator2
       - run:
           name: Launch Appium
           # Enable --relaxed-security for `mobile: shell` command that Captain uses internally.
@@ -43,6 +67,9 @@ commands:
       - run:
           name: Clone Captain
           command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
+      - run:
+          name: Configure Captain Platform
+          command: echo 'export CAPTAIN_PLATFORM=<<parameters.platform>>' >> $BASH_ENV
 
 jobs:
   danger:
@@ -91,13 +118,14 @@ jobs:
       tag: 2022.04.1
     steps:
       - checkout
-      - setup_captain
+      - setup_captain:
+          platform: android
       - setup_flutter
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "pixel_4"
           post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
-          test-command: cd e2e || true && CAPTAIN_PLATFORM=android dotnet test
+          test-command: cd e2e || true && dotnet test
 
   test_ios:
     macos:
@@ -122,7 +150,8 @@ jobs:
     resource_class: large
     steps:
       - checkout
-      - setup_captain
+      - setup_captain:
+          platform: ios
       - setup_ios
       - run:
           name: Build Example App
@@ -133,8 +162,6 @@ jobs:
           no_output_timeout: 30m
           working_directory: e2e
           command: dotnet test
-          environment:
-            CAPTAIN_PLATFORM: ios
 
   format_flutter:
     docker:
