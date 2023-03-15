@@ -7,14 +7,9 @@ import '../widgets/feature_tile.dart';
 import '../widgets/section_card.dart';
 import '../widgets/separated_list_view.dart';
 
-class CrashReportingScreen extends StatefulWidget {
+class CrashReportingScreen extends StatelessWidget {
   const CrashReportingScreen({super.key});
 
-  @override
-  State<CrashReportingScreen> createState() => _CrashReportingScreenState();
-}
-
-class _CrashReportingScreenState extends State<CrashReportingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

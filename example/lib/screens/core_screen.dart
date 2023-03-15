@@ -8,14 +8,9 @@ import '../widgets/feature_tile.dart';
 import '../widgets/section_card.dart';
 import '../widgets/separated_list_view.dart';
 
-class CoreScreen extends StatefulWidget {
+class CoreScreen extends StatelessWidget {
   const CoreScreen({super.key});
 
-  @override
-  State<CoreScreen> createState() => _CoreScreenState();
-}
-
-class _CoreScreenState extends State<CoreScreen> {
   @override
   Widget build(BuildContext context) {
     final state = Provider.of<CoreState>(context);

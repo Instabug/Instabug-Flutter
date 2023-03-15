@@ -4,36 +4,18 @@ import 'package:provider/provider.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 
 import '../providers/bug_reporting_state.dart';
+import '../utils/enum_extensions.dart';
 import '../widgets/chip_picker.dart';
 import '../widgets/feature_tile.dart';
 import '../widgets/section_card.dart';
 import '../widgets/separated_list_view.dart';
 
-class BugReportingScreen extends StatefulWidget {
+class BugReportingScreen extends StatelessWidget {
   const BugReportingScreen({super.key});
-
-  @override
-  _BugReportingScreenState createState() => _BugReportingScreenState();
-}
-
-class _BugReportingScreenState extends State<BugReportingScreen> {
-  final characterCountController = TextEditingController();
-  final disclaimerTextController = TextEditingController();
-  final floatingButtonOffsetController = TextEditingController();
-
-  @override
-  void dispose() {
-    characterCountController.dispose();
-    disclaimerTextController.dispose();
-    floatingButtonOffsetController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     final state = Provider.of<BugReportingState>(context);
-    floatingButtonOffsetController.text =
-        state.selectedFloatingButtonOffset.toString();
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -88,9 +70,9 @@ class _BugReportingScreenState extends State<BugReportingScreen> {
                     leading: const Icon(Icons.touch_app),
                     title: const Text('Invocation Events'),
                     bottom: ChipPicker(
-                      items: state.invocationEvents.keys.toSet(),
+                      items: InvocationEvent.values.toSet(),
                       values: state.selectedInvocationEvents,
-                      labelBuilder: (value) => state.invocationEvents[value]!,
+                      labelBuilder: (value) => value.capitalizedName(),
                       onChanged: (values) {
                         state.selectedInvocationEvents = values;
                         BugReporting.setInvocationEvents(
@@ -111,15 +93,16 @@ class _BugReportingScreenState extends State<BugReportingScreen> {
                           label: Text(attachment),
                           selected: state.extraAttachments[attachment]!,
                           onSelected: (bool value) {
-                            setState(() {
-                              state.extraAttachments[attachment] = value;
-                              BugReporting.setEnabledAttachmentTypes(
-                                state.extraAttachments['Screenshot']!,
-                                state.extraAttachments['Extra Screenshot']!,
-                                state.extraAttachments['Gallery Image']!,
-                                state.extraAttachments['Screen Recording']!,
-                              );
-                            });
+                            state.extraAttachments = {
+                              ...state.extraAttachments,
+                              attachment: value
+                            };
+                            BugReporting.setEnabledAttachmentTypes(
+                              state.extraAttachments['Screenshot']!,
+                              state.extraAttachments['Extra Screenshot']!,
+                              state.extraAttachments['Gallery Image']!,
+                              state.extraAttachments['Screen Recording']!,
+                            );
                           },
                         );
                       }).toList(),
@@ -129,9 +112,9 @@ class _BugReportingScreenState extends State<BugReportingScreen> {
                     leading: const Icon(Icons.dynamic_form),
                     title: const Text('Invocation Options'),
                     bottom: ChipPicker(
-                      items: state.invocationOptions.keys.toSet(),
+                      items: InvocationOption.values.toSet(),
                       values: state.selectedInvocationOptions,
-                      labelBuilder: (value) => state.invocationOptions[value]!,
+                      labelBuilder: (value) => value.capitalizedName('Field'),
                       onChanged: (values) {
                         state.selectedInvocationOptions = values;
                         BugReporting.setInvocationOptions(
@@ -149,15 +132,14 @@ class _BugReportingScreenState extends State<BugReportingScreen> {
                       title: const Text('Comment Minimum'),
                       right: Focus(
                         onFocusChange: (hasFocus) {
-                          if (!hasFocus &&
-                              characterCountController.text.isNotEmpty) {
+                          if (!hasFocus && state.characterCount.isNotEmpty) {
                             BugReporting.setCommentMinimumCharacterCount(
-                              int.parse(characterCountController.text),
+                              int.parse(state.characterCount),
                             );
                           }
                         },
-                        child: TextField(
-                          controller: characterCountController,
+                        child: TextFormField(
+                          initialValue: state.characterCount,
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           textAlignVertical: TextAlignVertical.center,
@@ -167,6 +149,7 @@ class _BugReportingScreenState extends State<BugReportingScreen> {
                             hintText: 'Characters',
                           ),
                           enableInteractiveSelection: true,
+                          onChanged: (value) => state.characterCount = value,
                         ),
                       ),
                     ),
@@ -178,31 +161,27 @@ class _BugReportingScreenState extends State<BugReportingScreen> {
                     rightFlex: 4,
                     right: DropdownMenu<ExtendedBugReportMode>(
                       width: 150,
-                      initialSelection: state.extendedMode.keys.firstWhere(
-                        (element) =>
-                            state.extendedMode[element] ==
-                            state.selectedExtendedMode,
-                      ),
+                      initialSelection: state.selectedExtendedMode,
                       label: const Text('Mode'),
-                      dropdownMenuEntries: state.extendedMode.keys
+                      dropdownMenuEntries: ExtendedBugReportMode.values
                           .map<DropdownMenuEntry<ExtendedBugReportMode>>(
                               (ExtendedBugReportMode mode) {
                         return DropdownMenuEntry<ExtendedBugReportMode>(
                           value: mode,
-                          label: state.extendedMode[mode]!,
+                          label: mode.capitalizedName('enabledWith'),
                         );
                       }).toList(),
                       onSelected: (ExtendedBugReportMode? mode) {
-                        state.selectedExtendedMode = state.extendedMode[mode]!;
-                        BugReporting.setExtendedBugReportMode(mode!);
+                        state.selectedExtendedMode = mode!;
+                        BugReporting.setExtendedBugReportMode(mode);
                       },
                     ),
                   ),
                   FeatureTile(
                     leading: const Icon(Icons.info_outline),
                     title: const Text('Disclaimer Text'),
-                    bottom: TextField(
-                      controller: disclaimerTextController,
+                    bottom: TextFormField(
+                      initialValue: state.disclaimerText,
                       keyboardType: TextInputType.multiline,
                       textAlign: TextAlign.left,
                       textAlignVertical: TextAlignVertical.top,
@@ -213,11 +192,13 @@ class _BugReportingScreenState extends State<BugReportingScreen> {
                         ),
                         border: OutlineInputBorder(),
                       ),
-                      onSubmitted: (String value) =>
-                          BugReporting.setDisclaimerText(
-                        disclaimerTextController.text,
-                      ),
                       enableInteractiveSelection: true,
+                      onFieldSubmitted: (String value) {
+                        state.disclaimerText = value;
+                        BugReporting.setDisclaimerText(
+                          value,
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -231,26 +212,20 @@ class _BugReportingScreenState extends State<BugReportingScreen> {
                     rightFlex: 4,
                     right: DropdownMenu<Position>(
                       width: 150,
-                      initialSelection:
-                          state.videoRecordingPosition.keys.firstWhere(
-                        (element) =>
-                            state.videoRecordingPosition[element] ==
-                            state.selectedVideoRecordingPosition,
-                      ),
+                      initialSelection: state.selectedVideoRecordingPosition,
                       label: const Text('Position'),
-                      dropdownMenuEntries: state.videoRecordingPosition.keys
+                      dropdownMenuEntries: Position.values
                           .map<DropdownMenuEntry<Position>>(
                               (Position position) {
                         return DropdownMenuEntry<Position>(
                           value: position,
-                          label: state.videoRecordingPosition[position]!,
+                          label: position.capitalizedName(),
                         );
                       }).toList(),
                       onSelected: (Position? position) {
-                        state.selectedVideoRecordingPosition =
-                            state.videoRecordingPosition[position]!;
+                        state.selectedVideoRecordingPosition = position!;
                         BugReporting.setVideoRecordingFloatingButtonPosition(
-                          position!,
+                          position,
                         );
                       },
                     ),
@@ -262,27 +237,21 @@ class _BugReportingScreenState extends State<BugReportingScreen> {
                     rightFlex: 4,
                     right: DropdownMenu<FloatingButtonEdge>(
                       width: 150,
-                      initialSelection:
-                          state.floatingButtonEdge.keys.firstWhere(
-                        (element) =>
-                            state.floatingButtonEdge[element] ==
-                            state.selectedFloatingButtonEdge,
-                      ),
+                      initialSelection: state.selectedFloatingButtonEdge,
                       label: const Text('Edge'),
-                      dropdownMenuEntries: state.floatingButtonEdge.keys
+                      dropdownMenuEntries: FloatingButtonEdge.values
                           .map<DropdownMenuEntry<FloatingButtonEdge>>(
                               (FloatingButtonEdge edge) {
                         return DropdownMenuEntry<FloatingButtonEdge>(
                           value: edge,
-                          label: state.floatingButtonEdge[edge]!,
+                          label: edge.capitalizedName(),
                         );
                       }).toList(),
                       onSelected: (FloatingButtonEdge? edge) {
-                        state.selectedFloatingButtonEdge =
-                            state.floatingButtonEdge[edge]!;
+                        state.selectedFloatingButtonEdge = edge!;
                         BugReporting.setFloatingButtonEdge(
-                          edge!,
-                          state.selectedFloatingButtonOffset,
+                          edge,
+                          state.floatingButtonOffset,
                         );
                       },
                     ),
@@ -295,26 +264,15 @@ class _BugReportingScreenState extends State<BugReportingScreen> {
                       title: const Text('Floating Button Offset'),
                       right: Focus(
                         onFocusChange: (hasFocus) {
-                          if (!hasFocus &&
-                              floatingButtonOffsetController.text.isNotEmpty) {
-                            state.selectedFloatingButtonOffset = int.parse(
-                              floatingButtonOffsetController.text,
+                          if (!hasFocus) {
+                            BugReporting.setFloatingButtonEdge(
+                              state.selectedFloatingButtonEdge,
+                              state.floatingButtonOffset,
                             );
-                          } else if (!hasFocus &&
-                              floatingButtonOffsetController.text.isEmpty) {
-                            state.selectedFloatingButtonOffset = 100;
                           }
-                          BugReporting.setFloatingButtonEdge(
-                            state.floatingButtonEdge.keys.firstWhere(
-                              (element) =>
-                                  state.floatingButtonEdge[element] ==
-                                  state.selectedFloatingButtonEdge,
-                            ),
-                            state.selectedFloatingButtonOffset,
-                          );
                         },
-                        child: TextField(
-                          controller: floatingButtonOffsetController,
+                        child: TextFormField(
+                          initialValue: state.floatingButtonOffset.toString(),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           textAlignVertical: TextAlignVertical.center,
@@ -323,6 +281,13 @@ class _BugReportingScreenState extends State<BugReportingScreen> {
                             border: OutlineInputBorder(),
                           ),
                           enableInteractiveSelection: true,
+                          onChanged: (value) {
+                            if (value.isEmpty) {
+                              state.floatingButtonOffset = 100;
+                            } else {
+                              state.floatingButtonOffset = int.parse(value);
+                            }
+                          },
                         ),
                       ),
                     ),

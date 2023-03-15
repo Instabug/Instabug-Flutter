@@ -9,14 +9,9 @@ import '../widgets/feature_tile.dart';
 import '../widgets/section_card.dart';
 import '../widgets/separated_list_view.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
-  @override
-  _SettingsScreenState createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<ThemeState>(context);

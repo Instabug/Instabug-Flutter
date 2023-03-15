@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 typedef LabelBuilder<T> = String Function(T value);
 
-class ChipPicker<T> extends StatefulWidget {
+class ChipPicker<T> extends StatelessWidget {
   final LabelBuilder<T> labelBuilder;
   final Set<T> items;
   final Set<T> values;
@@ -17,28 +17,23 @@ class ChipPicker<T> extends StatefulWidget {
   });
 
   @override
-  _ChipPickerState<T> createState() => _ChipPickerState<T>();
-}
-
-class _ChipPickerState<T> extends State<ChipPicker<T>> {
-  @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 4.0,
-      children: widget.items
+      children: items
           .map(
             (item) => FilterChip(
               label: Text(
-                widget.labelBuilder(item),
+                labelBuilder(item),
               ),
-              selected: widget.values.contains(item),
+              selected: values.contains(item),
               onSelected: (selected) {
                 if (selected) {
-                  widget.values.add(item);
+                  values.add(item);
                 } else {
-                  widget.values.remove(item);
+                  values.remove(item);
                 }
-                widget.onChanged(widget.values);
+                onChanged(values);
               },
             ),
           )
