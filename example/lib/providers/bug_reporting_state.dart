@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:instabug_flutter/instabug_flutter.dart';
@@ -70,7 +72,7 @@ class BugReportingState with ChangeNotifier {
     notifyListeners();
   }
 
-  var _floatingButtonOffset = 100;
+  var _floatingButtonOffset = Platform.isIOS ? 100 : 250;
   int get floatingButtonOffset => _floatingButtonOffset;
   set floatingButtonOffset(int offset) {
     _floatingButtonOffset = offset;

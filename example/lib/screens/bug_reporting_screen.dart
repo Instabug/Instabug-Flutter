@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -283,7 +285,8 @@ class BugReportingScreen extends StatelessWidget {
                           enableInteractiveSelection: true,
                           onChanged: (value) {
                             if (value.isEmpty) {
-                              state.floatingButtonOffset = 100;
+                              state.floatingButtonOffset =
+                                  Platform.isIOS ? 100 : 250;
                             } else {
                               state.floatingButtonOffset = int.parse(value);
                             }
