@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/product_item.dart';
-import '../providers/theme_state.dart';
+import '../providers/settings_state.dart';
 import '../screens/products_screen.dart';
 
 class ProductCard extends StatelessWidget {
@@ -29,7 +29,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = Provider.of<ThemeState>(context);
+    final state = Provider.of<SettingsState>(context);
     return InkWell(
       onTap: () => navToSelectedProduct(context),
       splashColor: state.getThemeData().splashColor,

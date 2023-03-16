@@ -7,7 +7,6 @@ import 'package:instabug_flutter/instabug_flutter.dart';
 import '../providers/bug_reporting_state.dart';
 import '../providers/core_state.dart';
 import '../providers/settings_state.dart';
-import '../providers/theme_state.dart';
 import '../screens/main_screen.dart';
 
 void main() async {
@@ -44,11 +43,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => SettingsState(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => ThemeState(),
-        ),
       ],
-      child: Consumer<ThemeState>(
+      child: Consumer<SettingsState>(
         builder: (context, themeState, child) {
           return MaterialApp(
             title: 'Instabug Flutter Example',

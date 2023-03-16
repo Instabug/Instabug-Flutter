@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/theme_state.dart';
+import '../providers/settings_state.dart';
 import '../widgets/separated_list_view.dart';
 
 class SectionCard extends StatelessWidget {
@@ -14,7 +14,7 @@ class SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = Provider.of<ThemeState>(context);
+    final state = Provider.of<SettingsState>(context);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
