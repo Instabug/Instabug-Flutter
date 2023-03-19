@@ -147,7 +147,7 @@ jobs:
   e2e_ios_captain:
     macos:
       xcode: 13.4.1
-    resource_class: large
+    resource_class: macos.m1.large.gen1
     steps:
       - checkout
       - setup_captain:
