@@ -1,55 +1,55 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
-  static const primaryColor = Color(0xFF00287a);
-  static const secondaryColor = Color(0xFF5DAAF0);
-  static const primaryColorDark = Color(0xFF212121);
+  static const primary = Color(0xFF00287a);
+  static const secondary = Color(0xFF5DAAF0);
+  static const primaryDark = Color(0xFF212121);
 }
 
 class AppTheme {
-  static final lightTheme = ThemeData(
+  static final light = ThemeData(
     colorScheme: ColorScheme.fromSwatch().copyWith(
       brightness: Brightness.light,
-      primary: AppColors.primaryColor,
-      secondary: AppColors.secondaryColor,
+      primary: AppColors.primary,
+      secondary: AppColors.secondary,
     ),
     scaffoldBackgroundColor: Colors.grey[100],
     appBarTheme: const AppBarTheme(
-      color: AppColors.primaryColor,
+      color: AppColors.primary,
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.primary,
       unselectedItemColor: Colors.white,
-      selectedItemColor: AppColors.secondaryColor,
+      selectedItemColor: AppColors.secondary,
     ),
     chipTheme: const ChipThemeData(
-      selectedColor: AppColors.secondaryColor,
+      selectedColor: AppColors.secondary,
     ),
     iconTheme: IconThemeData(color: Colors.grey[600]),
     textTheme: const TextTheme(
       headlineMedium: TextStyle(
         fontFamily: 'Axiforma',
         fontSize: 16.0,
-        color: AppColors.primaryColor,
+        color: AppColors.primary,
         fontWeight: FontWeight.w600,
       ),
     ),
   );
 
-  static final darkTheme = ThemeData.dark().copyWith(
+  static final dark = ThemeData.dark().copyWith(
     colorScheme: ColorScheme.fromSwatch().copyWith(
-      secondary: AppColors.secondaryColor,
+      secondary: AppColors.secondary,
     ),
     appBarTheme: const AppBarTheme(
-      color: AppColors.primaryColorDark,
+      color: AppColors.primaryDark,
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: AppColors.primaryColorDark,
+      backgroundColor: AppColors.primaryDark,
     ),
     chipTheme: const ChipThemeData(
-      selectedColor: AppColors.secondaryColor,
+      selectedColor: AppColors.secondary,
       backgroundColor: Color(0xFFB3B3B3),
     ),
     iconTheme: const IconThemeData(color: Colors.white),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../models/product_item.dart';
-import '../providers/settings_state.dart';
 import '../screens/products_screen.dart';
 
 class ProductCard extends StatelessWidget {
@@ -17,26 +15,25 @@ class ProductCard extends StatelessWidget {
     required this.color,
   });
 
-  void navToSelectedProduct(BuildContext ctx) {
+  void navToSelectedProduct(BuildContext context) {
     ProductItem selectedProduct =
         ProductsScreen.products.firstWhere((product) => product.title == title);
 
     Navigator.push(
-      ctx,
+      context,
       MaterialPageRoute(builder: (_) => selectedProduct.screen),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = Provider.of<SettingsState>(context);
     return InkWell(
       onTap: () => navToSelectedProduct(context),
-      splashColor: state.getThemeData().splashColor,
+      splashColor: Theme.of(context).splashColor,
       child: Ink(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),
-          color: state.getThemeData().cardColor,
+          color: Theme.of(context).cardColor,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +55,7 @@ class ProductCard extends StatelessWidget {
                 child: Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: state.getThemeData().textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
               ),
             ),

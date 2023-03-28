@@ -1,7 +1,6 @@
 extension EnumLabel on Enum {
-  String capitalizedName([String? substringToRemove]) {
+  String get capitalizedName {
     return name
-        .replaceAll(substringToRemove ?? '', '')
         .replaceAllMapped(
           RegExp('([A-Z]+)'),
           (match) => ' ${match.group(0)}',

@@ -27,12 +27,6 @@ class _MainScreenState extends State<MainScreen> {
     ),
   ];
 
-  void _selectPage(int index) {
-    setState(() {
-      selectedPageIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +38,11 @@ class _MainScreenState extends State<MainScreen> {
         children: flows.map((flow) => flow.page).toList(),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectPage,
+        onTap: (index) {
+          setState(() {
+            selectedPageIndex = index;
+          });
+        },
         currentIndex: selectedPageIndex,
         items: flows
             .map(

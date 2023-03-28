@@ -26,15 +26,13 @@ class FeatureRequestsScreen extends StatelessWidget {
           separator: const SizedBox(
             height: 8.0,
           ),
-          children: <Widget>[
+          children: const <Widget>[
             SectionCard(
               children: [
                 FeatureTile(
-                  leading: const Icon(Icons.lightbulb),
-                  title: const Text('Show Feature Requests'),
-                  onTap: () {
-                    FeatureRequests.show();
-                  },
+                  leading: Icon(Icons.lightbulb),
+                  title: Text('Show Feature Requests'),
+                  onTap: FeatureRequests.show,
                 ),
               ],
             ),

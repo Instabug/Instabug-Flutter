@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-
-import '../models/app_theme.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 
 class SettingsState extends ChangeNotifier {
-  bool _isDarkTheme = false;
-  ThemeData _themeData = AppTheme.lightTheme;
+  ColorTheme _theme = ColorTheme.light;
+  // bool _isDarkTheme = false;
+  // ThemeData _themeData = AppTheme.lightTheme;
 
-  bool get isDarkTheme => _isDarkTheme;
+  // bool get isDarkTheme => _isDarkTheme;
 
-  ThemeData getThemeData() => _themeData;
-  void setThemeData(bool isDarkMode) {
-    _isDarkTheme = !_isDarkTheme;
-    _themeData = isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme;
+  ColorTheme get colorTheme => _theme;
+  void setColorTheme(ColorTheme theme) {
+    // _isDarkTheme = !_isDarkTheme;
+    // _themeData = isDarkMode ? AppTheme.dark : AppTheme.light;
+    _theme = theme;
     notifyListeners();
   }
 

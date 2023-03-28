@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:instabug_flutter/instabug_flutter.dart';
 
+import '../models/app_theme.dart';
 import '../providers/bug_reporting_state.dart';
 import '../providers/core_state.dart';
 import '../providers/settings_state.dart';
@@ -24,18 +25,21 @@ void main() async {
     Zone.current.handleUncaughtError(details.exception, details.stack!);
   };
 
-  runZonedGuarded(() => runApp(const MyApp()), CrashReporting.reportCrash);
+  runZonedGuarded(
+    () => runApp(const InstabugApp()),
+    CrashReporting.reportCrash,
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class InstabugApp extends StatelessWidget {
+  const InstabugApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<BugReportingState>(
-          create: (ctx) => BugReportingState(),
+          create: (_) => BugReportingState(),
         ),
         ChangeNotifierProvider(
           create: (_) => CoreState(),
@@ -45,10 +49,14 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: Consumer<SettingsState>(
-        builder: (context, themeState, child) {
+        builder: (context, state, child) {
           return MaterialApp(
             title: 'Instabug Flutter Example',
-            theme: themeState.getThemeData(),
+            themeMode: state.colorTheme == ColorTheme.light
+                ? ThemeMode.light
+                : ThemeMode.dark,
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
             home: const MainScreen(),
           );
         },

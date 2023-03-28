@@ -3,58 +3,53 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:instabug_flutter/instabug_flutter.dart';
+import '../models/attachment_type.dart';
 
 class BugReportingState with ChangeNotifier {
-  var _extraAttachments = {
-    'Screenshot': true,
-    'Extra Screenshot': true,
-    'Gallery Image': true,
-    'Screen Recording': true
+  var _extraAttachments = <AttachmentType>{
+    AttachmentType.screenshot,
+    AttachmentType.extraScreenshot,
+    AttachmentType.galleryImage,
+    AttachmentType.screenRecording,
   };
-  Map<String, bool> get extraAttachments => _extraAttachments;
-  set extraAttachments(Map<String, bool> attachments) {
+  Set<AttachmentType> get extraAttachments => _extraAttachments;
+  set extraAttachments(Set<AttachmentType> attachments) {
     _extraAttachments = attachments;
     notifyListeners();
   }
 
-  var _selectedInvocationOptions = <InvocationOption>{};
-  Set<InvocationOption> get selectedInvocationOptions =>
-      _selectedInvocationOptions;
-  set selectedInvocationOptions(Set<InvocationOption> options) {
-    _selectedInvocationOptions = options;
+  var _invocationOptions = <InvocationOption>{};
+  Set<InvocationOption> get invocationOptions => _invocationOptions;
+  set invocationOptions(Set<InvocationOption> options) {
+    _invocationOptions = options;
     notifyListeners();
   }
 
-  var _selectedInvocationEvents = <InvocationEvent>{
-    InvocationEvent.floatingButton
-  };
-  Set<InvocationEvent> get selectedInvocationEvents =>
-      _selectedInvocationEvents;
-  set selectedInvocationEvents(Set<InvocationEvent> events) {
-    _selectedInvocationEvents = events;
+  var _invocationEvents = <InvocationEvent>{InvocationEvent.floatingButton};
+  Set<InvocationEvent> get invocationEvents => _invocationEvents;
+  set invocationEvents(Set<InvocationEvent> events) {
+    _invocationEvents = events;
     notifyListeners();
   }
 
-  var _selectedExtendedMode = ExtendedBugReportMode.disabled;
-  ExtendedBugReportMode get selectedExtendedMode => _selectedExtendedMode;
-  set selectedExtendedMode(ExtendedBugReportMode mode) {
-    _selectedExtendedMode = mode;
+  var _extendedMode = ExtendedBugReportMode.disabled;
+  ExtendedBugReportMode get extendedMode => _extendedMode;
+  set extendedMode(ExtendedBugReportMode mode) {
+    _extendedMode = mode;
     notifyListeners();
   }
 
-  var _selectedVideoRecordingPosition = Position.bottomRight;
-  Position get selectedVideoRecordingPosition =>
-      _selectedVideoRecordingPosition;
-  set selectedVideoRecordingPosition(Position position) {
-    _selectedVideoRecordingPosition = position;
+  var _videoRecordingPosition = Position.bottomRight;
+  Position get videoRecordingPosition => _videoRecordingPosition;
+  set videoRecordingPosition(Position position) {
+    _videoRecordingPosition = position;
     notifyListeners();
   }
 
-  var _selectedFloatingButtonEdge = FloatingButtonEdge.right;
-  FloatingButtonEdge get selectedFloatingButtonEdge =>
-      _selectedFloatingButtonEdge;
-  set selectedFloatingButtonEdge(FloatingButtonEdge edge) {
-    _selectedFloatingButtonEdge = edge;
+  var _floatingButtonEdge = FloatingButtonEdge.right;
+  FloatingButtonEdge get floatingButtonEdge => _floatingButtonEdge;
+  set floatingButtonEdge(FloatingButtonEdge edge) {
+    _floatingButtonEdge = edge;
     notifyListeners();
   }
 

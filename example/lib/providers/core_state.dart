@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CoreState extends ChangeNotifier {
-  bool _isDisabled = false;
+  bool _isEnabled = true;
 
-  bool get isDisabled => _isDisabled;
-  set isDisabled(bool value) {
-    _isDisabled = value;
+  bool get isEnabled => _isEnabled;
+  set isEnabled(bool value) {
+    _isEnabled = value;
     notifyListeners();
   }
 }

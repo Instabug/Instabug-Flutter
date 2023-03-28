@@ -38,10 +38,10 @@ class CoreScreen extends StatelessWidget {
                   ),
                   title: const Text('Disable SDK'),
                   trailing: Switch(
-                    value: state.isDisabled,
+                    value: !state.isEnabled,
                     onChanged: (value) {
                       Instabug.setEnabled(!value);
-                      state.isDisabled = value;
+                      state.isEnabled = !value;
                     },
                   ),
                 ),

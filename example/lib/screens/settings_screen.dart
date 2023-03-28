@@ -29,18 +29,18 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 FeatureTile(
                   leading: Icon(
-                    state.isDarkTheme
+                    state.colorTheme == ColorTheme.dark
                         ? Icons.dark_mode
                         : Icons.dark_mode_outlined,
                   ),
                   title: const Text('Dark Theme'),
                   trailing: Switch(
-                    value: state.isDarkTheme,
+                    value: state.colorTheme == ColorTheme.dark,
                     onChanged: (value) {
-                      state.setThemeData(value);
-                      Instabug.setColorTheme(
-                        state.isDarkTheme ? ColorTheme.dark : ColorTheme.light,
+                      state.setColorTheme(
+                        value ? ColorTheme.dark : ColorTheme.light,
                       );
+                      Instabug.setColorTheme(state.colorTheme);
                     },
                   ),
                 ),

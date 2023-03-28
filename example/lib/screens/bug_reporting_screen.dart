@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:instabug_flutter/instabug_flutter.dart';
 
+import '../models/attachment_type.dart';
 import '../providers/bug_reporting_state.dart';
 import '../utils/enum_extensions.dart';
 import '../widgets/chip_picker.dart';
@@ -45,7 +46,7 @@ class BugReportingScreen extends StatelessWidget {
                     title: const Text('Report a bug'),
                     onTap: () => BugReporting.show(
                       ReportType.bug,
-                      state.selectedInvocationOptions.toList(),
+                      state.invocationOptions.toList(),
                     ),
                   ),
                   FeatureTile(
@@ -53,7 +54,7 @@ class BugReportingScreen extends StatelessWidget {
                     title: const Text('Suggest an improvement'),
                     onTap: () => BugReporting.show(
                       ReportType.feedback,
-                      state.selectedInvocationOptions.toList(),
+                      state.invocationOptions.toList(),
                     ),
                   ),
                   FeatureTile(
@@ -61,7 +62,7 @@ class BugReportingScreen extends StatelessWidget {
                     title: const Text('Ask a question'),
                     onTap: () => BugReporting.show(
                       ReportType.question,
-                      state.selectedInvocationOptions.toList(),
+                      state.invocationOptions.toList(),
                     ),
                   ),
                 ],
@@ -73,12 +74,12 @@ class BugReportingScreen extends StatelessWidget {
                     title: const Text('Invocation Events'),
                     bottom: ChipPicker(
                       items: InvocationEvent.values.toSet(),
-                      values: state.selectedInvocationEvents,
-                      labelBuilder: (value) => value.capitalizedName(),
+                      values: state.invocationEvents,
+                      labelBuilder: (value) => value.capitalizedName,
                       onChanged: (values) {
-                        state.selectedInvocationEvents = values;
+                        state.invocationEvents = values;
                         BugReporting.setInvocationEvents(
-                          state.selectedInvocationEvents.toList(),
+                          state.invocationEvents.toList(),
                         );
                       },
                     ),
@@ -86,28 +87,23 @@ class BugReportingScreen extends StatelessWidget {
                   FeatureTile(
                     leading: const Icon(Icons.attachment),
                     title: const Text('Attachments'),
-                    bottom: Wrap(
-                      spacing: 4.0,
-                      children: state.extraAttachments.keys
-                          .toList()
-                          .map((String attachment) {
-                        return FilterChip(
-                          label: Text(attachment),
-                          selected: state.extraAttachments[attachment]!,
-                          onSelected: (bool value) {
-                            state.extraAttachments = {
-                              ...state.extraAttachments,
-                              attachment: value
-                            };
-                            BugReporting.setEnabledAttachmentTypes(
-                              state.extraAttachments['Screenshot']!,
-                              state.extraAttachments['Extra Screenshot']!,
-                              state.extraAttachments['Gallery Image']!,
-                              state.extraAttachments['Screen Recording']!,
-                            );
-                          },
+                    bottom: ChipPicker(
+                      items: AttachmentType.values.toSet(),
+                      values: state.extraAttachments,
+                      labelBuilder: (value) => value.capitalizedName,
+                      onChanged: (values) {
+                        state.extraAttachments = values;
+                        BugReporting.setEnabledAttachmentTypes(
+                          state.extraAttachments
+                              .contains(AttachmentType.screenshot),
+                          state.extraAttachments
+                              .contains(AttachmentType.extraScreenshot),
+                          state.extraAttachments
+                              .contains(AttachmentType.galleryImage),
+                          state.extraAttachments
+                              .contains(AttachmentType.screenRecording),
                         );
-                      }).toList(),
+                      },
                     ),
                   ),
                   FeatureTile(
@@ -115,12 +111,13 @@ class BugReportingScreen extends StatelessWidget {
                     title: const Text('Invocation Options'),
                     bottom: ChipPicker(
                       items: InvocationOption.values.toSet(),
-                      values: state.selectedInvocationOptions,
-                      labelBuilder: (value) => value.capitalizedName('Field'),
+                      values: state.invocationOptions,
+                      labelBuilder: (value) =>
+                          value.capitalizedName.replaceAll('Field ', ''),
                       onChanged: (values) {
-                        state.selectedInvocationOptions = values;
+                        state.invocationOptions = values;
                         BugReporting.setInvocationOptions(
-                          state.selectedInvocationOptions.toList(),
+                          state.invocationOptions.toList(),
                         );
                       },
                     ),
@@ -163,18 +160,19 @@ class BugReportingScreen extends StatelessWidget {
                     rightFlex: 4,
                     right: DropdownMenu<ExtendedBugReportMode>(
                       width: 150,
-                      initialSelection: state.selectedExtendedMode,
+                      initialSelection: state.extendedMode,
                       label: const Text('Mode'),
                       dropdownMenuEntries: ExtendedBugReportMode.values
                           .map<DropdownMenuEntry<ExtendedBugReportMode>>(
                               (ExtendedBugReportMode mode) {
                         return DropdownMenuEntry<ExtendedBugReportMode>(
                           value: mode,
-                          label: mode.capitalizedName('enabledWith'),
+                          label: mode.capitalizedName
+                              .replaceAll('enabledWith', ''),
                         );
                       }).toList(),
                       onSelected: (ExtendedBugReportMode? mode) {
-                        state.selectedExtendedMode = mode!;
+                        state.extendedMode = mode!;
                         BugReporting.setExtendedBugReportMode(mode);
                       },
                     ),
@@ -214,18 +212,18 @@ class BugReportingScreen extends StatelessWidget {
                     rightFlex: 4,
                     right: DropdownMenu<Position>(
                       width: 150,
-                      initialSelection: state.selectedVideoRecordingPosition,
+                      initialSelection: state.videoRecordingPosition,
                       label: const Text('Position'),
                       dropdownMenuEntries: Position.values
                           .map<DropdownMenuEntry<Position>>(
                               (Position position) {
                         return DropdownMenuEntry<Position>(
                           value: position,
-                          label: position.capitalizedName(),
+                          label: position.capitalizedName,
                         );
                       }).toList(),
                       onSelected: (Position? position) {
-                        state.selectedVideoRecordingPosition = position!;
+                        state.videoRecordingPosition = position!;
                         BugReporting.setVideoRecordingFloatingButtonPosition(
                           position,
                         );
@@ -239,18 +237,18 @@ class BugReportingScreen extends StatelessWidget {
                     rightFlex: 4,
                     right: DropdownMenu<FloatingButtonEdge>(
                       width: 150,
-                      initialSelection: state.selectedFloatingButtonEdge,
+                      initialSelection: state.floatingButtonEdge,
                       label: const Text('Edge'),
                       dropdownMenuEntries: FloatingButtonEdge.values
                           .map<DropdownMenuEntry<FloatingButtonEdge>>(
                               (FloatingButtonEdge edge) {
                         return DropdownMenuEntry<FloatingButtonEdge>(
                           value: edge,
-                          label: edge.capitalizedName(),
+                          label: edge.capitalizedName,
                         );
                       }).toList(),
                       onSelected: (FloatingButtonEdge? edge) {
-                        state.selectedFloatingButtonEdge = edge!;
+                        state.floatingButtonEdge = edge!;
                         BugReporting.setFloatingButtonEdge(
                           edge,
                           state.floatingButtonOffset,
@@ -268,7 +266,7 @@ class BugReportingScreen extends StatelessWidget {
                         onFocusChange: (hasFocus) {
                           if (!hasFocus) {
                             BugReporting.setFloatingButtonEdge(
-                              state.selectedFloatingButtonEdge,
+                              state.floatingButtonEdge,
                               state.floatingButtonOffset,
                             );
                           }

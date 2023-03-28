@@ -38,8 +38,8 @@ class CrashReportingScreen extends StatelessWidget {
                       throw Exception(
                         'This is a handled crash from Instabug Example App',
                       );
-                    } catch (e, st) {
-                      CrashReporting.reportHandledCrash(e, st);
+                    } catch (error, stacktrace) {
+                      CrashReporting.reportHandledCrash(error, stacktrace);
                       const snackBar = SnackBar(
                         content: Text(
                           'A handled crash has been successfully reported!',
