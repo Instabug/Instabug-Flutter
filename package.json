@@ -1,0 +1,7 @@
+{
+  "name": "Instabug-Flutter",
+  "version": "0.0.0",
+  "devDependencies": {
+    "danger": "^11.2.5"
+  }
+}
