@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   android: circleci/android@2.0
   flutter: circleci/flutter@1.0
+  node: circleci/node@5.1.0
 
 commands:
   setup_flutter:
@@ -73,12 +74,15 @@ commands:
 
 jobs:
   danger:
-    docker:
-      - image: circleci/ruby:2.6.4
+    executor:
+      name: node/default
     steps:
       - checkout
-      - run: bundle install
-      - run: bundle exec danger
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Run Danger
+          command: yarn danger ci
 
   test_flutter:
     parameters:
