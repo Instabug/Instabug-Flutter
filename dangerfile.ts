@@ -1,4 +1,5 @@
 import { danger, fail, schedule, warn } from 'danger';
+import collectCoverage, { ReportType } from '@instabug/danger-plugin-coverage';
 
 const hasSourceChanges = danger.git.modified_files.some((file) =>
   file.startsWith('lib/')
@@ -27,3 +28,9 @@ async function hasDescription() {
 }
 
 schedule(hasDescription());
+
+collectCoverage({
+  label: 'Dart',
+  type: ReportType.LCOV,
+  filePath: 'coverage/lcov.info',
+});
