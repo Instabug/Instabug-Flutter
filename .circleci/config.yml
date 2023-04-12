@@ -99,7 +99,6 @@ jobs:
       - run: sh ./scripts/pigeon.sh
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
-      - run: brew install lcov
       - run:
           working_directory: coverage
           command: lcov --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
