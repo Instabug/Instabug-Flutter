@@ -80,6 +80,7 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
+          override-ci-command: yarn install --frozen-lockfile --network-concurrency 1
       - attach_workspace:
           at: coverage
       - run:
