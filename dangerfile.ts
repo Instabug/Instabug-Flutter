@@ -33,4 +33,5 @@ collectCoverage({
   label: 'Dart',
   type: ReportType.LCOV,
   filePath: 'coverage/lcov.info',
+  threshold: 80,
 });
