@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v11.10.0...dev)
+## [11.10.1](https://github.com/Instabug/Instabug-Flutter/compare/v11.10.0...v11.10.1) (April 17, 2023)
 
 ### Changed
 
