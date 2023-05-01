@@ -51,6 +51,7 @@ class InstabugApp extends StatelessWidget {
       child: Consumer<SettingsState>(
         builder: (context, state, child) {
           return MaterialApp(
+            navigatorObservers: [InstabugNavigatorObserver()],
             title: 'Instabug Flutter Example',
             themeMode: state.colorTheme == ColorTheme.light
                 ? ThemeMode.light
