@@ -80,6 +80,9 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
+          override-ci-command: yarn install --frozen-lockfile --network-concurrency 1
+      - attach_workspace:
+          at: coverage
       - run:
           name: Run Danger
           command: yarn danger ci
@@ -96,6 +99,13 @@ jobs:
       - run: sh ./scripts/pigeon.sh
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
+      - run:
+          working_directory: coverage
+          command: lcov --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
+      - persist_to_workspace:
+          root: coverage
+          paths:
+            - lcov.info
 
   test_android:
     executor:
@@ -234,7 +244,9 @@ workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
-      - danger
+      - danger:
+          requires:
+            - test_flutter-stable
       - test_flutter:
           name: test_flutter-stable
           version: stable
