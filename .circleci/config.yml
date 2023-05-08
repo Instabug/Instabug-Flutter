@@ -185,7 +185,7 @@ jobs:
       - run: flutter pub get
       - run:
           name: Check Format
-          command: flutter format . --set-exit-if-changed
+          command: dart format . --set-exit-if-changed
 
   lint_flutter:
     docker:
