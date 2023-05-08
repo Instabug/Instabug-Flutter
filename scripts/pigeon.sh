@@ -26,7 +26,7 @@ generate_pigeon() {
 
   # Generated files are not formatted by default,
   # this affects pacakge score.
-  flutter format "$DIR_DART/$name_snake.api.g.dart"
+  dart format "$DIR_DART/$name_snake.api.g.dart"
 }
 
 for file in pigeons/**
