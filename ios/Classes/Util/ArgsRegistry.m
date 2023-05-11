@@ -124,34 +124,34 @@
     return @{
         @"IBGLocale.arabic" : @(IBGLocaleArabic),
         @"IBGLocale.azerbaijani" : @(IBGLocaleAzerbaijani),
-        @"IBGLocale.bulgarian" : @(IBGLocaleBulgarian)
+        @"IBGLocale.bulgarian" : @(IBGLocaleBulgarian),
         @"IBGLocale.chineseSimplified" : @(IBGLocaleChineseSimplified),
         @"IBGLocale.chineseTraditional" : @(IBGLocaleChineseTraditional),
-        @"IBGLocale.croatian" : @(IBGLocaleCroatian)
+        @"IBGLocale.croatian" : @(IBGLocaleCroatian),
         @"IBGLocale.czech" : @(IBGLocaleCzech),
         @"IBGLocale.danish" : @(IBGLocaleDanish),
         @"IBGLocale.dutch" : @(IBGLocaleDutch),
         @"IBGLocale.english" : @(IBGLocaleEnglish),
-        @"IBGLocale.estonian" : @(IBGLocaleEstonian)
+        @"IBGLocale.estonian" : @(IBGLocaleEstonian),
         @"IBGLocale.finnish" : @(IBGLocaleFinnish),
         @"IBGLocale.french" : @(IBGLocaleFrench),
         @"IBGLocale.german" : @(IBGLocaleGerman),
-        @"IBGLocale.greek" : @(IBGLocaleGreek)
+        @"IBGLocale.greek" : @(IBGLocaleGreek),
         @"IBGLocale.hungarian" : @(IBGLocaleHungarian),
         @"IBGLocale.italian" : @(IBGLocaleItalian),
         @"IBGLocale.japanese" : @(IBGLocaleJapanese),
         @"IBGLocale.korean" : @(IBGLocaleKorean),
-        @"IBGLocale.latvian" : @(IBGLocaleLatvian)
-        @"IBGLocale.lithuanian" : @(IBGLocaleLithuanian)
+        @"IBGLocale.latvian" : @(IBGLocaleLatvian),
+        @"IBGLocale.lithuanian" : @(IBGLocaleLithuanian),
         @"IBGLocale.norwegian" : @(IBGLocaleNorwegian),
         @"IBGLocale.polish" : @(IBGLocalePolish),
         @"IBGLocale.portugueseBrazil" : @(IBGLocalePortugueseBrazil),
         @"IBGLocale.portuguesePortugal" : @(IBGLocalePortuguese),
         @"IBGLocale.romanian" : @(IBGLocaleRomanian),
         @"IBGLocale.russian" : @(IBGLocaleRussian),
-        @"IBGLocale.serbian" : @(IBGLocaleSerbian)
+        @"IBGLocale.serbian" : @(IBGLocaleSerbian),
         @"IBGLocale.slovak" : @(IBGLocaleSlovak),
-        @"IBGLocale.slovenian" : @(IBGLocaleSlovenian)
+        @"IBGLocale.slovenian" : @(IBGLocaleSlovenian),
         @"IBGLocale.spanish" : @(IBGLocaleSpanish),
         @"IBGLocale.swedish" : @(IBGLocaleSwedish),
         @"IBGLocale.turkish" : @(IBGLocaleTurkish),
