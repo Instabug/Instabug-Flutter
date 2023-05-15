@@ -123,12 +123,19 @@
 
 ### Added
 
-- Add network logs obfuscation support using the new `NetworkLogger.obfuscateLog`
-  API ([#380](https://github.com/Instabug/Instabug-Flutter/pull/380)).
-- Add network logs omission support using the new `NetworkLogger.omitLog`
-  API ([#382](https://github.com/Instabug/Instabug-Flutter/pull/382)).
-- Add the new repro steps configuration
-  API `Instabug.setReproStepsConfig` ([#388](https://github.com/Instabug/Instabug-Flutter/pull/388)).
+- Add network logs obfuscation support using the new `NetworkLogger.obfuscateLog` API ([#380](https://github.com/Instabug/Instabug-Flutter/pull/380)).
+- Add network logs omission support using the new `NetworkLogger.omitLog` API ([#382](https://github.com/Instabug/Instabug-Flutter/pull/382)).
+- Add the new repro steps configuration API `Instabug.setReproStepsConfig` ([#388](https://github.com/Instabug/Instabug-Flutter/pull/388)).
+- Add support for more locales ([#363](https://github.com/Instabug/Instabug-Flutter/pull/363)):
+    1. Bulgarian
+    2. Croatian
+    3. Estonian
+    4. Greek
+    5. Latvian
+    6. Lithuanian
+    7. Serbian
+    8. Slovenian
+    9. Ukrainian
 
 ### Changed
 
