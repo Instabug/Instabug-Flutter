@@ -1,5 +1,20 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v11.10.1...dev)
+
+### Added
+
+- Add support for more locales ([#363](https://github.com/Instabug/Instabug-Flutter/pull/363)):
+  1. Bulgarian
+  2. Croatian
+  3. Estonian
+  4. Greek
+  5. Latvian
+  6. Lithuanian
+  7. Serbian
+  8. Slovenian
+  9. Ukrainian
+
 ## [11.10.1](https://github.com/Instabug/Instabug-Flutter/compare/v11.10.0...v11.10.1) (April 17, 2023)
 
 ### Changed
