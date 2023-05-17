@@ -107,39 +107,39 @@ public final class ArgsRegistry {
     public static final ArgsMap<InstabugLocale> locales = new ArgsMap<InstabugLocale>() {{
         put("IBGLocale.arabic", InstabugLocale.ARABIC);
         put("IBGLocale.azerbaijani", InstabugLocale.AZERBAIJANI);
-        put("IBGLocale.bulgarian", InstabugLocale.BULGARIAN),
+        put("IBGLocale.bulgarian", InstabugLocale.BULGARIAN);
         put("IBGLocale.chineseSimplified", InstabugLocale.SIMPLIFIED_CHINESE);
         put("IBGLocale.chineseTraditional", InstabugLocale.TRADITIONAL_CHINESE);
-        put("IBGLocale.croatian", InstabugLocale.CROATIAN),
+        put("IBGLocale.croatian", InstabugLocale.CROATIAN);
         put("IBGLocale.czech", InstabugLocale.CZECH);
         put("IBGLocale.danish", InstabugLocale.DANISH);
         put("IBGLocale.dutch", InstabugLocale.NETHERLANDS);
         put("IBGLocale.english", InstabugLocale.ENGLISH);
-        put("IBGLocale.estonian", InstabugLocale.ESTONIAN),
+        put("IBGLocale.estonian", InstabugLocale.ESTONIAN);
         put("IBGLocale.finnish", InstabugLocale.FINNISH);
         put("IBGLocale.french", InstabugLocale.FRENCH);
         put("IBGLocale.german", InstabugLocale.GERMAN);
-        put("IBGLocale.greek", InstabugLocale.GREEK),
+        put("IBGLocale.greek", InstabugLocale.GREEK);
         put("IBGLocale.hungarian", InstabugLocale.HUNGARIAN);
         put("IBGLocale.indonesian", InstabugLocale.INDONESIAN);
         put("IBGLocale.italian", InstabugLocale.ITALIAN);
         put("IBGLocale.japanese", InstabugLocale.JAPANESE);
         put("IBGLocale.korean", InstabugLocale.KOREAN);
-        put("IBGLocale.latvian", InstabugLocale.LATVIAN),
-        put("IBGLocale.lithuanian", InstabugLocale.LITHUANIAN),
+        put("IBGLocale.latvian", InstabugLocale.LATVIAN);
+        put("IBGLocale.lithuanian", InstabugLocale.LITHUANIAN);
         put("IBGLocale.norwegian", InstabugLocale.NORWEGIAN);
         put("IBGLocale.polish", InstabugLocale.POLISH);
         put("IBGLocale.portugueseBrazil", InstabugLocale.PORTUGUESE_BRAZIL);
         put("IBGLocale.portuguesePortugal", InstabugLocale.PORTUGUESE_PORTUGAL);
         put("IBGLocale.romanian", InstabugLocale.ROMANIAN);
         put("IBGLocale.russian", InstabugLocale.RUSSIAN);
-        put("IBGLocale.serbian", InstabugLocale.SERBIAN),
+        put("IBGLocale.serbian", InstabugLocale.SERBIAN);
         put("IBGLocale.slovak", InstabugLocale.SLOVAK);
-        put("IBGLocale.slovenian", InstabugLocale.SLOVENIAN),
+        put("IBGLocale.slovenian", InstabugLocale.SLOVENIAN);
         put("IBGLocale.spanish", InstabugLocale.SPANISH);
         put("IBGLocale.swedish", InstabugLocale.SWEDISH);
         put("IBGLocale.turkish", InstabugLocale.TURKISH);
-        put("IBGLocale.ukrainian", InstabugLocale.UKRAINIAN),
+        put("IBGLocale.ukrainian", InstabugLocale.UKRAINIAN);
     }};
 
     public static final ArgsMap<Key> placeholders = new ArgsMap<Key>() {{
