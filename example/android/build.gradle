@@ -15,10 +15,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-
-        maven {
-            url 'https://oss.sonatype.org/content/repositories/snapshots'
-        }
     }
 }
 
@@ -30,6 +26,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
