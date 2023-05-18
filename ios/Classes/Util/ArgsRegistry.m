@@ -147,7 +147,7 @@
         @"IBGLocale.spanish" : @(IBGLocaleSpanish),
         @"IBGLocale.swedish" : @(IBGLocaleSwedish),
         @"IBGLocale.turkish" : @(IBGLocaleTurkish),
-        @"IBGLocale.ukrainian" : @(IBGLocaleUkranian),
+        @"IBGLocale.ukrainian" : @(IBGLocaleUkrainian),
     };
 }
 
