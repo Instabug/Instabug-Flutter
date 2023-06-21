@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v11.12.0...dev)
+
+### Fixed
+
+- Fix an issue with the `onInvoke` callback not being called and causing `Instabug.show` to break on Android ([#369](https://github.com/Instabug/Instabug-Flutter/pull/369)).
+
 ## [11.12.0](https://github.com/Instabug/Instabug-Flutter/compare/v11.10.1...v11.12.0) (May 30, 2023)
 
 ### Changed
