@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import com.instabug.bug.BugReporting;
 import com.instabug.flutter.generated.BugReportingPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
+import com.instabug.flutter.util.ThreadManager;
 import com.instabug.library.Feature;
 import com.instabug.library.OnSdkDismissCallback;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
@@ -132,9 +133,17 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
         BugReporting.setOnInvokeCallback(new OnInvokeCallback() {
             @Override
             public void onInvoke() {
-                flutterApi.onSdkInvoke(new BugReportingPigeon.BugReportingFlutterApi.Reply<Void>() {
+                // The on invoke callback for Flutter needs to be run on the
+                // main thread, otherwise, it won't work and will break the
+                // Instabug.show API
+                ThreadManager.runOnMainThread(new Runnable() {
                     @Override
-                    public void reply(Void reply) {
+                    public void run() {
+                        flutterApi.onSdkInvoke(new BugReportingPigeon.BugReportingFlutterApi.Reply<Void>() {
+                            @Override
+                            public void reply(Void reply) {
+                            }
+                        });
                     }
                 });
             }
