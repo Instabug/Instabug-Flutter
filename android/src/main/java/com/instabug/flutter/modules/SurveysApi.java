@@ -69,7 +69,13 @@ public class SurveysApi implements SurveysPigeon.SurveysHostApi {
                     @Override
                     public void run() {
                         final boolean hasResponded = Surveys.hasRespondToSurvey(surveyToken);
-                        result.success(hasResponded);
+
+                        ThreadManager.runOnMainThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                result.success(hasResponded);
+                            }
+                        });
                     }
                 }
         );
@@ -88,7 +94,12 @@ public class SurveysApi implements SurveysPigeon.SurveysHostApi {
                             titles.add(survey.getTitle());
                         }
 
-                        result.success(titles);
+                        ThreadManager.runOnMainThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                result.success(titles);
+                            }
+                        });
                     }
                 }
         );
@@ -99,9 +110,14 @@ public class SurveysApi implements SurveysPigeon.SurveysHostApi {
         Surveys.setOnShowCallback(new OnShowCallback() {
             @Override
             public void onShow() {
-                flutterApi.onShowSurvey(new SurveysPigeon.SurveysFlutterApi.Reply<Void>() {
+                ThreadManager.runOnMainThread(new Runnable() {
                     @Override
-                    public void reply(Void reply) {
+                    public void run() {
+                        flutterApi.onShowSurvey(new SurveysPigeon.SurveysFlutterApi.Reply<Void>() {
+                            @Override
+                            public void reply(Void reply) {
+                            }
+                        });
                     }
                 });
             }
@@ -113,9 +129,14 @@ public class SurveysApi implements SurveysPigeon.SurveysHostApi {
         Surveys.setOnDismissCallback(new OnDismissCallback() {
             @Override
             public void onDismiss() {
-                flutterApi.onDismissSurvey(new SurveysPigeon.SurveysFlutterApi.Reply<Void>() {
+                ThreadManager.runOnMainThread(new Runnable() {
                     @Override
-                    public void reply(Void reply) {
+                    public void run() {
+                        flutterApi.onDismissSurvey(new SurveysPigeon.SurveysFlutterApi.Reply<Void>() {
+                            @Override
+                            public void reply(Void reply) {
+                            }
+                        });
                     }
                 });
             }

@@ -196,7 +196,14 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 new Runnable() {
                     @Override
                     public void run() {
-                        result.success(Instabug.getTags());
+                        final List<String> tags = Instabug.getTags();
+
+                        ThreadManager.runOnMainThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                result.success(tags);
+                            }
+                        });
                     }
                 }
         );
@@ -234,7 +241,14 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 new Runnable() {
                     @Override
                     public void run() {
-                        result.success(Instabug.getUserAttribute(key));
+                        final String attribute = Instabug.getUserAttribute(key);
+
+                        ThreadManager.runOnMainThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                result.success(attribute);
+                            }
+                        });
                     }
                 }
         );
@@ -246,7 +260,14 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 new Runnable() {
                     @Override
                     public void run() {
-                        result.success(Instabug.getAllUserAttributes());
+                        final Map<String, String> attributes = Instabug.getAllUserAttributes();
+
+                        ThreadManager.runOnMainThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                result.success(attributes);
+                            }
+                        });
                     }
                 }
         );

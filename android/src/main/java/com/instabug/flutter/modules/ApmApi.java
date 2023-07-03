@@ -76,13 +76,30 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
                             ExecutionTrace trace = APM.startExecutionTrace(name);
                             if (trace != null) {
                                 traces.put(id, trace);
-                                result.success(id);
+
+                                ThreadManager.runOnMainThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        result.success(id);
+                                    }
+                                });
                             } else {
-                                result.success(null);
+                                ThreadManager.runOnMainThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        result.success(null);
+                                    }
+                                });
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            result.success(null);
+
+                            ThreadManager.runOnMainThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    result.success(null);
+                                }
+                            });
                         }
                     }
                 }
