@@ -11,6 +11,7 @@ import android.util.Log;
 import org.json.JSONObject;
 import org.mockito.MockedStatic;
 import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import java.lang.reflect.Method;
 
@@ -26,13 +27,17 @@ public class GlobalMocks {
 
         // ThreadManager mock
         threadManager = mockStatic(ThreadManager.class);
+        Answer threadAnswer = (InvocationOnMock invocation) -> {
+            Runnable runnable = invocation.getArgument(0);
+            runnable.run();
+            return null;
+        };
         threadManager
                 .when(() -> ThreadManager.runOnBackground(any(Runnable.class)))
-                .thenAnswer((InvocationOnMock invocation) -> {
-                    Runnable runnable = invocation.getArgument(0);
-                    runnable.run();
-                    return null;
-                });
+                .thenAnswer(threadAnswer);
+        threadManager
+                .when(() -> ThreadManager.runOnMainThread(any(Runnable.class)))
+                .thenAnswer(threadAnswer);
 
         // Reflection mock
         reflection = mockStatic(Reflection.class);
