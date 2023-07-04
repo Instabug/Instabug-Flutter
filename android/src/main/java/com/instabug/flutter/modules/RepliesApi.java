@@ -52,7 +52,14 @@ public class RepliesApi implements RepliesPigeon.RepliesHostApi {
                 new Runnable() {
                     @Override
                     public void run() {
-                        result.success((long) Replies.getUnreadRepliesCount());
+                        final long count = Replies.getUnreadRepliesCount();
+
+                        ThreadManager.runOnMainThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                result.success(count);
+                            }
+                        });
                     }
                 }
         );
@@ -64,7 +71,14 @@ public class RepliesApi implements RepliesPigeon.RepliesHostApi {
                 new Runnable() {
                     @Override
                     public void run() {
-                        result.success(Replies.hasChats());
+                        final boolean hasChats = Replies.hasChats();
+
+                        ThreadManager.runOnMainThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                result.success(hasChats);
+                            }
+                        });
                     }
                 }
         );
@@ -75,9 +89,14 @@ public class RepliesApi implements RepliesPigeon.RepliesHostApi {
         Replies.setOnNewReplyReceivedCallback(new Runnable() {
             @Override
             public void run() {
-                flutterApi.onNewReply(new RepliesPigeon.RepliesFlutterApi.Reply<Void>() {
+                ThreadManager.runOnMainThread(new Runnable() {
                     @Override
-                    public void reply(Void reply) {
+                    public void run() {
+                        flutterApi.onNewReply(new RepliesPigeon.RepliesFlutterApi.Reply<Void>() {
+                            @Override
+                            public void reply(Void reply) {
+                            }
+                        });
                     }
                 });
             }

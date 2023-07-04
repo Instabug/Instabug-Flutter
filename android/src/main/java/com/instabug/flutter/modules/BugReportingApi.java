@@ -155,9 +155,14 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
         BugReporting.setOnDismissCallback(new OnSdkDismissCallback() {
             @Override
             public void call(DismissType dismissType, ReportType reportType) {
-                flutterApi.onSdkDismiss(dismissType.toString(), reportType.toString(), new BugReportingPigeon.BugReportingFlutterApi.Reply<Void>() {
+                ThreadManager.runOnMainThread(new Runnable() {
                     @Override
-                    public void reply(Void reply) {
+                    public void run() {
+                        flutterApi.onSdkDismiss(dismissType.toString(), reportType.toString(), new BugReportingPigeon.BugReportingFlutterApi.Reply<Void>() {
+                            @Override
+                            public void reply(Void reply) {
+                            }
+                        });
                     }
                 });
             }

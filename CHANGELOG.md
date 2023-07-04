@@ -4,7 +4,22 @@
 
 ### Fixed
 
-- Fix an issue with the `onInvoke` callback not being called and causing `Instabug.show` to break on Android ([#369](https://github.com/Instabug/Instabug-Flutter/pull/369)).
+- Fix an issue that caused APIs that return a value or invoke a callback break on Android in some versions of Flutter ([#370](https://github.com/Instabug/Instabug-Flutter/pull/370), [#369](https://github.com/Instabug/Instabug-Flutter/pull/369)).
+  
+  Below is a list of all the affected APIs:
+  
+  - `APM.startExecutionTrace`
+  - `BugReporting.setOnInvokeCallback`
+  - `BugReporting.setOnDismissCallback`
+  - `Instabug.getTags`
+  - `Instabug.getUserAttributeForKey`
+  - `Instabug.getUserAttributes`
+  - `Replies.getUnreadRepliesCount`
+  - `Replies.hasChats`
+  - `Replies.setOnNewReplyReceivedCallback`
+  - `Surveys.hasRespondToSurvey`
+  - `Surveys.setOnShowCallback`
+  - `Surveys.setOnDismissCallback`
 
 ## [11.12.0](https://github.com/Instabug/Instabug-Flutter/compare/v11.10.1...v11.12.0) (May 30, 2023)
 
