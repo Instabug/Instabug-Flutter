@@ -94,15 +94,21 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @Nullable
     private static Bitmap takeScreenshot(FlutterRenderer renderer) {
         try {
+            Log.d(TAG, "Taking screenshot...");
+            Log.d(TAG, "Renderer is " + renderer.toString());
             final View view = activity.getWindow().getDecorView().getRootView();
+            Log.d(TAG, "Root view: " + view.getClass().getName());
 
             view.setDrawingCacheEnabled(true);
             final Bitmap bitmap = renderer.getBitmap();
             view.setDrawingCacheEnabled(false);
+            Log.d(TAG, "Bitmap: " + bitmap);
+            Log.d(TAG, bitmap == null ? "Bitmap is null" : "Bitmap isn't null");
 
             return bitmap;
         } catch (Exception e) {
             Log.e(TAG, "Failed to take screenshot using " + renderer.toString() + ". Cause: " + e);
+            e.printStackTrace();
             return null;
         }
     }
