@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v11.12.0...dev)
 
+### Changed
+
+- Bump Instabug iOS SDK to v11.13.3 ([#373](https://github.com/Instabug/Instabug-Flutter/pull/373)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/v11.13.0).
+
 ### Fixed
 
 - Fix an issue that caused APIs that return a value or invoke a callback break on Android in some versions of Flutter ([#370](https://github.com/Instabug/Instabug-Flutter/pull/370), [#369](https://github.com/Instabug/Instabug-Flutter/pull/369)).
