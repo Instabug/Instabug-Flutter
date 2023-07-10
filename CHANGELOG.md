@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Bump Instabug iOS SDK to v11.13.3 ([#373](https://github.com/Instabug/Instabug-Flutter/pull/373)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/v11.13.0).
 - Bump Instabug Android SDK to v11.13.0 ([#372](https://github.com/Instabug/Instabug-Flutter/pull/372)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v11.13.0).
 
 ### Fixed
