@@ -43,6 +43,27 @@ Initialize the SDK in your `main` function. This starts the SDK with the default
 import 'package:instabug_flutter/instabug_flutter.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  Instabug.init(
+    token: 'APP_TOKEN',
+    invocationEvents: [InvocationEvent.shake],
+  );
+
+  runApp(MyApp());
+}
+```
+
+> :warning:  If you're updating the SDK from versions prior to v11, please check our [migration guide](https://docs.instabug.com/docs/flutter-migration-guide).
+
+## Crash reporting
+
+Instabug automatically captures every crash of your app and sends relevant details to the crashes page of your dashboard. 
+
+⚠️ **Crashes will only be reported in release mode and not in debug mode.**
+
+```dart
+void main() {
   runZonedGuarded(
     () {
       WidgetsFlutterBinding.ensureInitialized();
@@ -60,31 +81,6 @@ void main() {
     },
     CrashReporting.reportCrash,
   );
-}
-```
-
-> :warning:  If you're updating the SDK from versions prior to v11, please check our [migration guide](https://docs.instabug.com/docs/flutter-migration-guide).
-
-## Crash reporting
-
-Instabug automatically captures every crash of your app and sends relevant details to the crashes page of your dashboard. 
-
-⚠️ **Crashes will only be reported in release mode and not in debug mode.**
-
-```dart
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  Instabug.init(
-    token: 'APP_TOKEN',
-    invocationEvents: [InvocationEvent.floatingButton],
-  );
-
-  FlutterError.onError = (FlutterErrorDetails details) {
-    Zone.current.handleUncaughtError(details.exception, details.stack!);
-  };
-
-  runZonedGuarded(() => runApp(MyApp()), CrashReporting.reportCrash);
 }
 ```
 
