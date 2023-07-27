@@ -22,6 +22,9 @@ dev_dependencies:
   pana: ^0.21.0
   pigeon: ^10.1.4
 
+dependency_overrides:
+  matcher: ^0.12.16
+
 flutter:
   plugin:
     platforms:
