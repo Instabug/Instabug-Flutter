@@ -6,22 +6,13 @@ orbs:
   node: circleci/node@5.1.0
 
 commands:
-  setup_pigeon:
-    steps:
-      - run:
-          name: Install Pigeon Globally
-          command: dart pub global activate pigeon 10.0.0
-      - run:
-          name: Generate Pigeons
-          working_directory: ~/project
-          command: sh ./scripts/pigeon.sh
-
   setup_flutter:
     steps:
       - flutter/install_sdk_and_pub:
           flutter_version: 3.3.0
-      - setup_pigeon
-
+      - run:
+          name: Generate Pigeons
+          command: sh ./scripts/pigeon.sh
   setup_ios:
     steps:
       - setup_flutter
@@ -91,24 +82,10 @@ jobs:
           pkg-manager: yarn
           override-ci-command: yarn install --frozen-lockfile --network-concurrency 1
       - attach_workspace:
-          at: '.'
+          at: coverage
       - run:
           name: Run Danger
           command: yarn danger ci
-
-  generate_pigeons:
-    docker:
-      - image: cirrusci/flutter:stable
-    steps:
-      - checkout
-      - run: flutter pub get
-      - setup_pigeon
-      - persist_to_workspace:
-          root: '.'
-          paths:
-            - '*.g.dart'
-            - android/**/generated/
-            - ios/**/Generated/
 
   test_flutter:
     parameters:
@@ -118,18 +95,17 @@ jobs:
       - image: cirrusci/flutter:<<parameters.version>>
     steps:
       - checkout
-      - attach_workspace:
-          at: '.'
       - run: flutter pub get
+      - run: sh ./scripts/pigeon.sh
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test --coverage
       - run:
           working_directory: coverage
           command: lcov --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
       - persist_to_workspace:
-          root: '.'
+          root: coverage
           paths:
-            - coverage/lcov.info
+            - lcov.info
 
   test_android:
     executor:
@@ -217,7 +193,7 @@ jobs:
     steps:
       - checkout
       - run: flutter pub get
-      - setup_pigeon
+      - run: sh ./scripts/pigeon.sh
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run:
           name: Perform Static Analysis
@@ -229,7 +205,7 @@ jobs:
     steps:
       - checkout
       - run: flutter pub get
-      - setup_pigeon
+      - run: sh ./scripts/pigeon.sh
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run:
           name: Check Package Score
@@ -246,7 +222,10 @@ jobs:
       - flutter/install_sdk_and_pub:
           flutter_version: 3.3.6
           app-dir: project
-      - setup_pigeon
+      - run:
+          name: Generate Pigeons
+          working_directory: project
+          command: sh ./scripts/pigeon.sh
       - run:
           name: Clone Escape
           command: git clone git@github.com:Instabug/Escape.git
@@ -271,14 +250,9 @@ workflows:
       - test_flutter:
           name: test_flutter-stable
           version: stable
-          requires:
-            - generate_pigeons
       - test_flutter:
           name: test_flutter-2.10.5
           version: 2.10.5
-          requires:
-            - generate_pigeons
-      - generate_pigeons
       - test_android
       - e2e_android_captain
       - test_ios
