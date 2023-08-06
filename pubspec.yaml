@@ -18,7 +18,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   lint: ^1.0.0
-  mockito: ^5.3.1
+  mockito: '>=5.2.0 <=5.3.1'
   pana: ^0.21.0
   pigeon: '>=3.0.0 <=9.2.5'
 
