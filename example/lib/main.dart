@@ -162,11 +162,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ReportType.feedback, [InvocationOption.emailFieldOptional]);
   }
 
-  void askQuestion() {
-    BugReporting.show(
-        ReportType.question, [InvocationOption.emailFieldOptional]);
-  }
-
   void showNpsSurvey() {
     Surveys.showSurvey('pcV_mE2ttqHxT1iqvBxL0w');
   }
@@ -332,10 +327,6 @@ class _MyHomePageState extends State<MyHomePage> {
               InstabugButton(
                 onPressed: sendFeedback,
                 text: 'Send Feedback',
-              ),
-              InstabugButton(
-                onPressed: askQuestion,
-                text: 'Ask a Question',
               ),
               InstabugButton(
                 onPressed: showNpsSurvey,
