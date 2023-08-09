@@ -43,7 +43,7 @@ extern void InitRepliesApi(id<FlutterBinaryMessenger> messenger) {
 
 - (void)bindOnNewReplyCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
     IBGReplies.didReceiveReplyHandler = ^{
-      [self->_flutterApi onNewReplyWithCompletion:^(NSError *_Nullable _){
+      [self->_flutterApi onNewReplyWithCompletion:^(FlutterError *_Nullable _){
       }];
     };
 }
