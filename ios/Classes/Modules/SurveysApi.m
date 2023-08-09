@@ -65,14 +65,14 @@ extern void InitSurveysApi(id<FlutterBinaryMessenger> messenger) {
 
 - (void)bindOnShowSurveyCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
     IBGSurveys.willShowSurveyHandler = ^{
-      [self->_flutterApi onShowSurveyWithCompletion:^(NSError *_Nullable _){
+      [self->_flutterApi onShowSurveyWithCompletion:^(FlutterError *_Nullable _){
       }];
     };
 }
 
 - (void)bindOnDismissSurveyCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
     IBGSurveys.didDismissSurveyHandler = ^{
-      [self->_flutterApi onDismissSurveyWithCompletion:^(NSError *_Nullable _){
+      [self->_flutterApi onDismissSurveyWithCompletion:^(FlutterError *_Nullable _){
       }];
     };
 }
