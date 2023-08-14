@@ -8,17 +8,19 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - Instabug (from `https://ios-releases.instabug.com/custom/disable_automatic_capturing_of_network_logs/11.13.3/Instabug.podspec`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
 
 SPEC REPOS:
   trunk:
-    - Instabug
     - OCMock
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  Instabug:
+    :podspec: https://ios-releases.instabug.com/custom/disable_automatic_capturing_of_network_logs/11.13.3/Instabug.podspec
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
 
@@ -28,6 +30,6 @@ SPEC CHECKSUMS:
   instabug_flutter: 4ac2812a7091470121b05722eadd76e450acca6d
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
 
-PODFILE CHECKSUM: 637e800c0a0982493b68adb612d2dd60c15c8e5c
+PODFILE CHECKSUM: 5fc85464b0c6b65f07a762e27aca369882901744
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

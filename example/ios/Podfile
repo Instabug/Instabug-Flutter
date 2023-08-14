@@ -31,6 +31,8 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
+  pod 'Instabug', :podspec => 'https://ios-releases.instabug.com/custom/disable_automatic_capturing_of_network_logs/11.13.3/Instabug.podspec'
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
