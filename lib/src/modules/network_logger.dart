@@ -43,7 +43,15 @@ class NetworkLogger {
     _manager.setObfuscateLogCallback(callback);
   }
 
+  static void omitLog(OmitLogCallback callback) {
+    _manager.setOmitLogCallback(callback);
+  }
+
   Future<void> networkLog(NetworkData data) async {
+    final omit = await _manager.omitLog(data);
+
+    if (omit) return;
+
     final obfuscated = await _manager.obfuscateLog(data);
 
     await _host.networkLog(obfuscated.toJson());
