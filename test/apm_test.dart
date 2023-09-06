@@ -58,17 +58,6 @@ void main() {
     ).called(1);
   });
 
-  test('[setLogLevel] should call host method', () async {
-    const level = LogLevel.debug;
-
-    // ignore: deprecated_member_use_from_same_package
-    await APM.setLogLevel(level);
-
-    verify(
-      mHost.setLogLevel(level.toString()),
-    ).called(1);
-  });
-
   test('[startExecutionTrace] should call host method', () async {
     final id = DateTime.now();
     const name = "trace";

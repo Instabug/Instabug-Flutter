@@ -40,17 +40,6 @@ public final class ArgsRegistry {
         put("LogLevel.verbose", LogLevel.VERBOSE);
     }};
 
-    @SuppressWarnings("DeprecatedIsStillUsed")
-    @Deprecated()
-    public static final ArgsMap<Integer> logLevels = new ArgsMap<Integer>() {{
-        put("LogLevel.none", com.instabug.apm.model.LogLevel.NONE);
-        put("LogLevel.error", com.instabug.apm.model.LogLevel.ERROR);
-        put("LogLevel.warning", com.instabug.apm.model.LogLevel.WARNING);
-        put("LogLevel.info", com.instabug.apm.model.LogLevel.INFO);
-        put("LogLevel.debug", com.instabug.apm.model.LogLevel.DEBUG);
-        put("LogLevel.verbose", com.instabug.apm.model.LogLevel.VERBOSE);
-    }};
-
     public static ArgsMap<InstabugInvocationEvent> invocationEvents = new ArgsMap<InstabugInvocationEvent>() {{
         put("InvocationEvent.none", InstabugInvocationEvent.NONE);
         put("InvocationEvent.shake", InstabugInvocationEvent.SHAKE);

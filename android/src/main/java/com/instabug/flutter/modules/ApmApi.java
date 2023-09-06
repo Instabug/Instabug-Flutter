@@ -57,16 +57,6 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     }
 
     @Override
-    public void setLogLevel(@NonNull String level) {
-        try {
-            final int resolvedLevel = ArgsRegistry.logLevels.get(level);
-            APM.setLogLevel(resolvedLevel);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public void startExecutionTrace(@NonNull String id, @NonNull String name, ApmPigeon.Result<String> result) {
         ThreadManager.runOnBackground(
                 new Runnable() {

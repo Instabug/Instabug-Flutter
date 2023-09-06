@@ -101,16 +101,6 @@ public class ApmApiTest {
         mAPM.verify(() -> APM.setAutoUITraceEnabled(isEnabled));
     }
 
-    @SuppressWarnings("deprecation")
-    @Test
-    public void testSetLogLevel() {
-        String logLevel = "LogLevel.none";
-
-        api.setLogLevel(logLevel);
-
-        mAPM.verify(() -> APM.setLogLevel(LogLevel.NONE));
-    }
-
     @Test
     public void testStartExecutionTraceWhenTraceNotNull() {
         String expectedId = "trace-id";
