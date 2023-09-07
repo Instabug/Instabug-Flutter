@@ -19,21 +19,6 @@
     }
 }
 
-- (void)testLogLevels {
-    NSArray *values = @[
-        @(IBGLogLevelNone),
-        @(IBGLogLevelError),
-        @(IBGLogLevelWarning),
-        @(IBGLogLevelInfo),
-        @(IBGLogLevelDebug),
-        @(IBGLogLevelVerbose)
-    ];
-
-    for (NSNumber *value in values) {
-        XCTAssertTrue([[ArgsRegistry.logLevels allValues] containsObject:value]);
-    }
-}
-
 - (void)testInvocationEvents {
     NSArray *values = @[
         @(IBGInvocationEventNone),

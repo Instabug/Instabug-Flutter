@@ -273,18 +273,6 @@ void main() {
     ).called(1);
   });
 
-  test('[setDebugEnabled] should call host method', () async {
-    const enabled = true;
-    when(mBuildInfo.isAndroid).thenReturn(true);
-
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.setDebugEnabled(enabled);
-
-    verify(
-      mHost.setDebugEnabled(enabled),
-    ).called(1);
-  });
-
   test('[setReproStepsMode] should call host method', () async {
     const mode = ReproStepsMode.enabled;
 
@@ -386,28 +374,6 @@ void main() {
 
     verify(
       mHost.clearFileAttachments(),
-    ).called(1);
-  });
-
-  test('[enableAndroid] should call host method', () async {
-    when(mBuildInfo.isAndroid).thenReturn(true);
-
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.enableAndroid();
-
-    verify(
-      mHost.enableAndroid(),
-    ).called(1);
-  });
-
-  test('[disableAndroid] should call host method', () async {
-    when(mBuildInfo.isAndroid).thenReturn(true);
-
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.disableAndroid();
-
-    verify(
-      mHost.disableAndroid(),
     ).called(1);
   });
 }

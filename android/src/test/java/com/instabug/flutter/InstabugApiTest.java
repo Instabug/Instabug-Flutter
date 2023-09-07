@@ -379,16 +379,6 @@ public class InstabugApiTest {
 
     @SuppressWarnings("deprecation")
     @Test
-    public void testSetDebugEnabled() {
-        boolean isEnabled = true;
-
-        api.setDebugEnabled(isEnabled);
-
-        mInstabug.verify(() -> Instabug.setDebugEnabled(isEnabled));
-    }
-
-    @SuppressWarnings("deprecation")
-    @Test
     public void testSetReproStepsMode() {
         String mode = "ReproStepsMode.enabled";
 

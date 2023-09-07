@@ -37,22 +37,6 @@ public class ArgsRegistryTest {
     }
 
     @Test
-    public void testLogLevels() {
-        Integer[] values = {
-                com.instabug.apm.model.LogLevel.NONE,
-                com.instabug.apm.model.LogLevel.ERROR,
-                com.instabug.apm.model.LogLevel.WARNING,
-                com.instabug.apm.model.LogLevel.INFO,
-                com.instabug.apm.model.LogLevel.DEBUG,
-                com.instabug.apm.model.LogLevel.VERBOSE,
-        };
-
-        for (Integer value : values) {
-            assertTrue(ArgsRegistry.logLevels.containsValue(value));
-        }
-    }
-
-    @Test
     public void testInvocationEvents() {
         InstabugInvocationEvent[] values = {
                 InstabugInvocationEvent.NONE,

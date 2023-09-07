@@ -275,11 +275,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         );
     }
 
-    @Override
-    public void setDebugEnabled(@NonNull Boolean enabled) {
-        Instabug.setDebugEnabled(enabled);
-    }
-
     @SuppressWarnings("deprecation")
     @Override
     @Deprecated()
@@ -387,16 +382,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public void clearFileAttachments() {
         Instabug.clearFileAttachment();
-    }
-
-    @Override
-    public void enableAndroid() {
-        Instabug.enable();
-    }
-
-    @Override
-    public void disableAndroid() {
-        Instabug.disable();
     }
 
     @Override

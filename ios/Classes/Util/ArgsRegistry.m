@@ -11,17 +11,6 @@
     };
 }
 
-+ (ArgsDictionary *)logLevels {
-    return @{
-        @"LogLevel.none" : @(IBGLogLevelNone),
-        @"LogLevel.error" : @(IBGLogLevelError),
-        @"LogLevel.warning" : @(IBGLogLevelWarning),
-        @"LogLevel.info" : @(IBGLogLevelInfo),
-        @"LogLevel.debug" : @(IBGLogLevelDebug),
-        @"LogLevel.verbose" : @(IBGLogLevelVerbose)
-    };
-}
-
 + (ArgsDictionary *)invocationEvents {
     return @{
         @"InvocationEvent.none" : @(IBGInvocationEventNone),

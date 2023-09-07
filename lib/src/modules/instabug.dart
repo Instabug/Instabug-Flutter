@@ -291,16 +291,6 @@ class Instabug {
     return _host.setSessionProfilerEnabled(sessionProfilerEnabled);
   }
 
-  /// Android only
-  /// Enable/disable SDK logs
-  /// [debugEnabled] desired state of debug mode.
-  @Deprecated("Use [Instabug.init]'s [debugLogsLevel] parameter instead.")
-  static Future<void> setDebugEnabled(bool debugEnabled) async {
-    if (IBGBuildInfo.instance.isAndroid) {
-      return _host.setDebugEnabled(debugEnabled);
-    }
-  }
-
   /// Sets the primary color of the SDK's UI.
   /// Sets the color of UI elements indicating interactivity or call to action.
   /// [color] primaryColor A color to set the UI elements of the SDK to.
@@ -427,27 +417,5 @@ class Instabug {
     final lightKey = await light.obtainKey(configuration);
     final darkKey = await dark.obtainKey(configuration);
     return _host.setCustomBrandingImage(lightKey.name, darkKey.name);
-  }
-
-  /// Android Only
-  /// Enables all Instabug functionality
-  @Deprecated(
-    "Use [Instabug.setEnabled(true)] instead. This will work on both Android and iOS. ",
-  )
-  static Future<void> enableAndroid() async {
-    if (IBGBuildInfo.I.isAndroid) {
-      return _host.enableAndroid();
-    }
-  }
-
-  /// Android Only
-  /// Disables all Instabug functionality
-  @Deprecated(
-    "Use [Instabug.setEnabled(false)] instead. This will work on both Android and iOS. ",
-  )
-  static Future<void> disableAndroid() async {
-    if (IBGBuildInfo.I.isAndroid) {
-      return _host.disableAndroid();
-    }
   }
 }
