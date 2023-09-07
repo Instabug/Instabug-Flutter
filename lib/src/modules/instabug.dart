@@ -172,19 +172,6 @@ class Instabug {
     );
   }
 
-  @Deprecated(
-    "Use [Instabug.init] instead.",
-  )
-  static Future<void> start(
-    String token,
-    List<InvocationEvent> invocationEvents,
-  ) async {
-    return init(
-      token: token,
-      invocationEvents: invocationEvents,
-    );
-  }
-
   /// Shows the welcome message in a specific mode.
   /// [welcomeMessageMode] is an enum to set the welcome message mode to live, or beta.
   static Future<void> showWelcomeMessageWithMode(
