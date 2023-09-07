@@ -58,16 +58,9 @@ enum IBGLocale {
 enum LogLevel {
   none,
   error,
-  @Deprecated('Use [LogLevel.error] instead.')
-  warning,
-  @Deprecated('Use [LogLevel.debug] instead.')
-  info,
   debug,
   verbose,
 }
-
-@Deprecated("Use [LogLevel] instead.")
-enum IBGSDKDebugLogsLevel { verbose, debug, error, none }
 
 enum ColorTheme { dark, light }
 
@@ -220,15 +213,6 @@ class Instabug {
   /// Defaults to the device's current locale.
   static Future<void> setLocale(IBGLocale locale) async {
     return _host.setLocale(locale.toString());
-  }
-
-  /// Sets the verbosity level of logs used to debug The SDK. The default value in debug
-  /// mode is sdkDebugLogsLevelVerbose and in production is sdkDebugLogsLevelError.
-  @Deprecated("Use [Instabug.init]'s [debugLogsLevel] parameter instead.")
-  static Future<void> setSdkDebugLogsLevel(
-    IBGSDKDebugLogsLevel sdkDebugLogsLevel,
-  ) async {
-    return _host.setSdkDebugLogsLevel(sdkDebugLogsLevel.toString());
   }
 
   /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.

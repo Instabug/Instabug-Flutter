@@ -280,11 +280,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         Instabug.setDebugEnabled(enabled);
     }
 
-    @Override
-    public void setSdkDebugLogsLevel(@NonNull String level) {
-        // iOS Only
-    }
-
     @SuppressWarnings("deprecation")
     @Override
     @Deprecated()

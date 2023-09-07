@@ -285,18 +285,6 @@ void main() {
     ).called(1);
   });
 
-  test('[setSdkDebugLogsLevel] should call host method', () async {
-    // ignore: deprecated_member_use_from_same_package
-    const level = IBGSDKDebugLogsLevel.error;
-
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.setSdkDebugLogsLevel(level);
-
-    verify(
-      mHost.setSdkDebugLogsLevel(level.toString()),
-    ).called(1);
-  });
-
   test('[setReproStepsMode] should call host method', () async {
     const mode = ReproStepsMode.enabled;
 

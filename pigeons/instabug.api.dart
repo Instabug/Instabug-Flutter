@@ -40,7 +40,6 @@ abstract class InstabugHostApi {
   Map<String, String>? getUserAttributes();
 
   void setDebugEnabled(bool enabled);
-  void setSdkDebugLogsLevel(String level);
 
   @Deprecated('Use [setReproStepsConfig] instead')
   void setReproStepsMode(String mode);

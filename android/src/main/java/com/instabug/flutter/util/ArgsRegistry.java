@@ -34,8 +34,6 @@ public final class ArgsRegistry {
     public static final ArgsMap<Integer> sdkLogLevels = new ArgsMap<Integer>() {{
         put("LogLevel.none", LogLevel.NONE);
         put("LogLevel.error", LogLevel.ERROR);
-        put("LogLevel.warning", LogLevel.ERROR); // Deprecated
-        put("LogLevel.info", LogLevel.DEBUG); // Deprecated
         put("LogLevel.debug", LogLevel.DEBUG);
         put("LogLevel.verbose", LogLevel.VERBOSE);
     }};

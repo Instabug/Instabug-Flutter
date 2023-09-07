@@ -153,11 +153,6 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     // Android Only
 }
 
-- (void)setSdkDebugLogsLevelLevel:(NSString *)level error:(FlutterError *_Nullable *_Nonnull)error {
-    IBGSDKDebugLogsLevel resolvedLevel = (ArgsRegistry.sdkLogLevels[level]).integerValue;
-    [Instabug setSdkDebugLogsLevel:resolvedLevel];
-}
-
 - (void)setReproStepsModeMode:(NSString *)mode error:(FlutterError *_Nullable *_Nonnull)error {
     IBGUserStepsMode resolvedMode = (ArgsRegistry.reproModes[mode]).integerValue;
     [Instabug setReproStepsMode:resolvedMode];

@@ -6,15 +6,8 @@
     return @{
         @"LogLevel.none" : @(IBGLogLevelNone),
         @"LogLevel.error" : @(IBGSDKDebugLogsLevelError),
-        @"LogLevel.warning" : @(IBGSDKDebugLogsLevelError), // Deprecated
-        @"LogLevel.info" : @(IBGSDKDebugLogsLevelDebug), // Deprecated
         @"LogLevel.debug" : @(IBGSDKDebugLogsLevelDebug),
         @"LogLevel.verbose" : @(IBGSDKDebugLogsLevelVerbose),
-
-        @"IBGSDKDebugLogsLevel.verbose" : @(IBGSDKDebugLogsLevelVerbose), // Deprecated
-        @"IBGSDKDebugLogsLevel.debug" : @(IBGSDKDebugLogsLevelDebug), // Deprecated
-        @"IBGSDKDebugLogsLevel.error" : @(IBGSDKDebugLogsLevelError), // Deprecated
-        @"IBGSDKDebugLogsLevel.none" : @(IBGSDKDebugLogsLevelNone), // Deprecated
     };
 }
 
@@ -210,7 +203,7 @@
         @"CustomTextPlaceHolderKey.reproStepsListDescription" : kIBGReproStepsListHeader,
         @"CustomTextPlaceHolderKey.reproStepsListEmptyStateDescription" : kIBGReproStepsListEmptyStateLabel,
         @"CustomTextPlaceHolderKey.reproStepsListItemTitle" : kIBGReproStepsListItemName,
-        
+
         @"CustomTextPlaceHolderKey.okButtonText" : kIBGOkButtonTitleStringName,
         @"CustomTextPlaceHolderKey.audio" : kIBGAudioStringName,
         @"CustomTextPlaceHolderKey.image" : kIBGImageStringName,
