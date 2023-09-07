@@ -12,7 +12,7 @@ public class CaptainTest : IDisposable
     AndroidVersion = "11",
     IosApp = Path.GetFullPath("../../../../example/build/ios/iphonesimulator/Runner.app"),
     IosAppId = "com.instabug.InstabugSample",
-    IosVersion = "16.4"
+    IosVersion = "15.5"
   };
   protected static readonly Captain captain = new(_config);
 
