@@ -33,7 +33,7 @@ commands:
     steps:
       - run:
           name: Install Appium
-          command: npm install -g appium@next
+          command: npm install -g appium
       - when:
           condition:
             equal:
