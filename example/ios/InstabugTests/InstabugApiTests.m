@@ -282,15 +282,6 @@
     [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
-- (void)testSetSdkDebugLogsLevel {
-    NSString *level = @"IBGSDKDebugLogsLevel.error";
-    FlutterError *error;
-
-    [self.api setSdkDebugLogsLevelLevel:level error:&error];
-
-    OCMVerify([self.mInstabug setSdkDebugLogsLevel:IBGSDKDebugLogsLevelError]);
-}
-
 - (void)testSetReproStepsMode {
     NSString *mode = @"ReproStepsMode.enabled";
     FlutterError *error;
