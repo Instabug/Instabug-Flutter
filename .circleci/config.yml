@@ -33,7 +33,7 @@ commands:
     steps:
       - run:
           name: Install Appium
-          command: npm install -g appium@next
+          command: npm install -g appium
       - when:
           condition:
             equal:
@@ -42,7 +42,7 @@ commands:
           steps:
             - run:
                 name: Install XCUITest Driver
-                command: appium driver install xcuitest
+                command: appium driver install xcuitest@4.35.0
       - when:
           condition:
             equal:
@@ -51,7 +51,7 @@ commands:
           steps:
             - run:
                 name: Install UIAutomator2 Driver
-                command: appium driver install uiautomator2
+                command: appium driver install uiautomator2@2.29.5
       - run:
           name: Launch Appium
           # Enable --relaxed-security for `mobile: shell` command that Captain uses internally.
