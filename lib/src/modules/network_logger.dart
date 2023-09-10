@@ -26,6 +26,19 @@ class NetworkLogger {
     _manager = manager;
   }
 
+  /// Registers a callback to selectively obfuscate network log data.
+  ///
+  /// The [callback] function takes a [NetworkData] object as its argument and
+  /// should return a modified [NetworkData] object with sensitive information
+  /// obfuscated.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// NetworkLogger.obfuscateLog((data) {
+  ///   // Modify 'data' as needed and return it.
+  /// });
+  /// ```
   static void obfuscateLog(ObfuscateLogCallback callback) {
     _manager.setObfuscateLogCallback(callback);
   }
