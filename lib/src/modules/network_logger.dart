@@ -43,6 +43,24 @@ class NetworkLogger {
     _manager.setObfuscateLogCallback(callback);
   }
 
+  /// Registers a callback to selectively omit network log data.
+  ///
+  /// Use this method to set a callback function that determines whether
+  /// specific network log data should be excluded before recording it.
+  ///
+  /// The [callback] function takes a [NetworkData] object as its argument and
+  /// should return a boolean value indicating whether the data should be omitted
+  /// (`true`) or included (`false`).
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// NetworkLogger.omitLog((data) {
+  ///   // Implement logic to decide whether to omit the data.
+  ///   // For example, ignore requests to a specific URL:
+  ///   return data.url.startsWith('https://example.com');
+  /// });
+  /// ```
   static void omitLog(OmitLogCallback callback) {
     _manager.setOmitLogCallback(callback);
   }
