@@ -97,7 +97,7 @@ public class InstabugApiTest {
     public void testSetCurrentPlatform() {
         api.setCurrentPlatform();
 
-        reflected.verify(() -> MockReflected.setCurrentPlatform(Platform.FLUTTER));
+        reflected.verify(() -> MockReflected.setCurrentPlatform(Platform.FLUTTER, "11.13.0"));
     }
 
     @Test
@@ -132,7 +132,7 @@ public class InstabugApiTest {
         mInstabug.verify(() -> Instabug.setScreenshotProvider(screenshotProvider));
 
         // Sets current platform
-        reflected.verify(() -> MockReflected.setCurrentPlatform(Platform.FLUTTER));
+        reflected.verify(() -> MockReflected.setCurrentPlatform(Platform.FLUTTER, "11.13.0"));
     }
 
     @Test

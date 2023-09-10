@@ -42,7 +42,7 @@
     
     [self.api initToken:token invocationEvents:invocationEvents debugLogsLevel:logLevel error:&error];
 
-    OCMVerify([self.mInstabug setCurrentPlatform:IBGPlatformFlutter]);
+    OCMVerify([self.mInstabug setCurrentPlatform:IBGPlatformFlutter cpSDKVersion:@"11.13.0"]);
     OCMVerify([self.mInstabug setSdkDebugLogsLevel:IBGSDKDebugLogsLevelError]);
     OCMVerify([self.mInstabug startWithToken:token invocationEvents:(IBGInvocationEventFloatingButton | IBGInvocationEventScreenshot)]);
 }

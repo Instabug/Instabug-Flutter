@@ -3,6 +3,6 @@
 #import <Instabug/Instabug.h>
 
 @interface Instabug (Test)
-+ (void)setCurrentPlatform:(IBGPlatform)platform;
++ (void)setCurrentPlatform:(IBGPlatform)platform cpSDKVersion:(NSString *)cpSDKVersion;
 + (void)reportCrashWithStackTrace:(NSDictionary*)stackTrace handled:(NSNumber*)handled;
 @end

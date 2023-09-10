@@ -56,10 +56,10 @@ public class GlobalMocks {
                         Bitmap.class, Bitmap.class))
                 .thenReturn(mSetCustomBrandingImage);
 
-        Method mSetCurrentPlatform = MockReflected.class.getDeclaredMethod("setCurrentPlatform", int.class);
+        Method mSetCurrentPlatform = MockReflected.class.getDeclaredMethod("setCurrentPlatform", int.class, String.class);
         mSetCurrentPlatform.setAccessible(true);
         reflection
-                .when(() -> Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "setCurrentPlatform", int.class))
+                .when(() -> Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "setCurrentPlatform", int.class, String.class))
                 .thenReturn(mSetCurrentPlatform);
 
         Method mAPMNetworkLog = MockReflected.class.getDeclaredMethod("apmNetworkLog", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class);
