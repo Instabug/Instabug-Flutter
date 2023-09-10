@@ -4,7 +4,7 @@
 
 + (ArgsDictionary *)sdkLogLevels {
     return @{
-        @"LogLevel.none" : @(IBGLogLevelNone),
+        @"LogLevel.none" : @(IBGSDKDebugLogsLevelNone),
         @"LogLevel.error" : @(IBGSDKDebugLogsLevelError),
         @"LogLevel.debug" : @(IBGSDKDebugLogsLevelDebug),
         @"LogLevel.verbose" : @(IBGSDKDebugLogsLevelVerbose),
