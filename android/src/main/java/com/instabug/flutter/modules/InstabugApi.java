@@ -285,6 +285,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         // iOS Only
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Deprecated()
     public void setReproStepsMode(@NonNull String mode) {
