@@ -42,7 +42,9 @@ abstract class InstabugHostApi {
   void setDebugEnabled(bool enabled);
   void setSdkDebugLogsLevel(String level);
 
+  @Deprecated('Use [setReproStepsConfig] instead')
   void setReproStepsMode(String mode);
+  void setReproStepsConfig(String? bugMode, String? crashMode);
   void reportScreenChange(String screenName);
 
   void setCustomBrandingImage(String light, String dark);

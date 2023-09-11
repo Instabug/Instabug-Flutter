@@ -9,6 +9,7 @@ import com.instabug.featuresrequest.ActionType;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder.Key;
 import com.instabug.library.OnSdkDismissCallback.DismissType;
+import com.instabug.library.ReproMode;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
@@ -115,6 +116,12 @@ public final class ArgsRegistry {
         put("ReproStepsMode.enabledWithNoScreenshots", State.ENABLED_WITH_NO_SCREENSHOTS);
         put("ReproStepsMode.enabled", State.ENABLED);
         put("ReproStepsMode.disabled", State.DISABLED);
+    }};
+
+    public static final ArgsMap<Integer> reproModes = new ArgsMap<Integer>() {{
+        put("ReproStepsMode.enabledWithNoScreenshots", ReproMode.EnableWithNoScreenshots);
+        put("ReproStepsMode.enabled", ReproMode.EnableWithScreenshots);
+        put("ReproStepsMode.disabled", ReproMode.Disable);
     }};
 
     public static final ArgsMap<InstabugLocale> locales = new ArgsMap<InstabugLocale>() {{
