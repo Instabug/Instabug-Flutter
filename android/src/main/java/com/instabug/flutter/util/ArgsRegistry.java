@@ -112,6 +112,7 @@ public final class ArgsRegistry {
         put("ExtendedBugReportMode.disabled", ExtendedBugReport.State.DISABLED);
     }};
 
+    @Deprecated()
     public static final ArgsMap<State> reproStates = new ArgsMap<State>() {{
         put("ReproStepsMode.enabledWithNoScreenshots", State.ENABLED_WITH_NO_SCREENSHOTS);
         put("ReproStepsMode.enabled", State.ENABLED);
