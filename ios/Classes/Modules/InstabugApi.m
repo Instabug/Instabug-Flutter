@@ -2,6 +2,7 @@
 #import <CoreText/CoreText.h>
 #import <Flutter/Flutter.h>
 #import "Instabug.h"
+#import "IBGNetworkLogger+CP.h"
 #import "InstabugApi.h"
 #import "ArgsRegistry.h"
 
@@ -28,6 +29,10 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
         [inv setArgument:&(platformID) atIndex:2];
         [inv invoke];
     }
+    
+    // Disable automatic capturing of native iOS network logs to avoid duplicate
+    // logs of the same request when using a native network client like cupertino_http
+    [IBGNetworkLogger disableAutomaticCapturingOfNetworkLogs];
 
     IBGInvocationEvent resolvedEvents = 0;
 
