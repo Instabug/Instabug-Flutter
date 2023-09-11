@@ -308,7 +308,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
             if (crashMode != null) {
                 final Integer resolvedCrashMode = ArgsRegistry.reproModes.get(crashMode);
-                builder.setIssueMode(IssueType.Bug, resolvedCrashMode);
+                builder.setIssueMode(IssueType.Crash, resolvedCrashMode);
             }
 
             final ReproConfigurations config = builder.build();
