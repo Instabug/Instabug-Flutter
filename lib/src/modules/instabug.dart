@@ -393,8 +393,30 @@ class Instabug {
 
   /// Sets the repro steps mode
   /// [mode] repro steps mode
+  @Deprecated('Use [setReproStepsConfig] instead.')
   static Future<void> setReproStepsMode(ReproStepsMode reproStepsMode) async {
     return _host.setReproStepsMode(reproStepsMode.toString());
+  }
+
+  /// Sets the repro steps mode for bugs and crashes.
+  /// [bug] repro steps mode for bug reports.
+  /// [crash] repro steps mode for crash reports.
+  /// [all] repro steps mode for both bug and crash reports, when present it
+  /// overrides [bug] and [crash].
+  static Future<void> setReproStepsConfig({
+    ReproStepsMode? bug,
+    ReproStepsMode? crash,
+    ReproStepsMode? all,
+  }) async {
+    if (all != null) {
+      bug = all;
+      crash = all;
+    }
+
+    return _host.setReproStepsConfig(
+      bug.toString(),
+      crash.toString(),
+    );
   }
 
   /// Sets a custom branding image logo with [light] and [dark] images for different color modes.
