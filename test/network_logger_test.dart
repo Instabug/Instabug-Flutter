@@ -51,6 +51,7 @@ void main() {
   test('[networkLog] should call 1 host method on iOS', () async {
     when(mBuildInfo.isAndroid).thenReturn(false);
     when(mManager.obfuscateLog(data)).thenReturn(data);
+    when(mManager.omitLog(data)).thenReturn(false);
 
     await logger.networkLog(data);
 
@@ -66,6 +67,7 @@ void main() {
   test('[networkLog] should call 2 host methods on Android', () async {
     when(mBuildInfo.isAndroid).thenReturn(true);
     when(mManager.obfuscateLog(data)).thenReturn(data);
+    when(mManager.omitLog(data)).thenReturn(false);
 
     await logger.networkLog(data);
 
@@ -83,6 +85,7 @@ void main() {
 
     when(mBuildInfo.isAndroid).thenReturn(true);
     when(mManager.obfuscateLog(data)).thenReturn(obfuscated);
+    when(mManager.omitLog(data)).thenReturn(false);
 
     await logger.networkLog(data);
 
@@ -99,6 +102,28 @@ void main() {
     ).called(1);
   });
 
+  test('[networkLog] should not log data if it should be omitted', () async {
+    const omit = true;
+
+    when(mBuildInfo.isAndroid).thenReturn(true);
+    when(mManager.obfuscateLog(data)).thenReturn(data);
+    when(mManager.omitLog(data)).thenReturn(omit);
+
+    await logger.networkLog(data);
+
+    verify(
+      mManager.omitLog(data),
+    ).called(1);
+
+    verifyNever(
+      mInstabugHost.networkLog(data.toJson()),
+    );
+
+    verifyNever(
+      mApmHost.networkLogAndroid(data.toJson()),
+    );
+  });
+
   test('[obfuscateLog] should set obfuscation callback on manager', () async {
     FutureOr<NetworkData> callback(NetworkData data) => data;
 
@@ -106,6 +131,16 @@ void main() {
 
     verify(
       mManager.setObfuscateLogCallback(callback),
+    ).called(1);
+  });
+
+  test('[omitLog] should set omission callback on manager', () async {
+    FutureOr<bool> callback(NetworkData data) => true;
+
+    NetworkLogger.omitLog(callback);
+
+    verify(
+      mManager.setOmitLogCallback(callback),
     ).called(1);
   });
 }
