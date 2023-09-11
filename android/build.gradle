@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:11.13.0'
+    api 'com.instabug.library:instabug:11.14.0'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
