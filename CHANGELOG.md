@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v11.14.0...dev)
 
+### Added
+
+- Add network logs obfuscation support using the new `NetworkLogger.obfuscateLog` API ([#380](https://github.com/Instabug/Instabug-Flutter/pull/380)).
+
 ### Changed
 
 - Bump Instabug iOS SDK to v11.14.0 ([#383](https://github.com/Instabug/Instabug-Flutter/pull/383)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/11.14.0).
