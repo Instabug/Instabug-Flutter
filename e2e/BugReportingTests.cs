@@ -127,7 +127,7 @@ public class BugReportingTests : CaptainTest
         android: "ib_bug_repro_step_screenshot",
         ios: "IBGReproStepsTableCellViewAccessibilityIdentifier"
     );
-    Assert.Equal(2, reproSteps.Count);
+    Assert.Equal(3, reproSteps.Count);
   }
 
   [Fact]
