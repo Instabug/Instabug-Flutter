@@ -300,6 +300,17 @@
     OCMVerify([self.mInstabug setReproStepsMode:IBGUserStepsModeEnable]);
 }
 
+- (void)testSetReproStepsConfig {
+    NSString *bugMode = @"ReproStepsMode.enabled";
+    NSString *crashMode = @"ReproStepsMode.disabled";
+    FlutterError *error;
+
+    [self.api setReproStepsConfigBugMode:bugMode crashMode:crashMode error:&error];
+
+    OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeBug withMode:IBGUserStepsModeEnable]);
+    OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeCrash withMode:IBGUserStepsModeDisable]);
+}
+
 - (void)testReportScreenChange {
     NSString *screenName = @"HomeScreen";
     FlutterError *error;
