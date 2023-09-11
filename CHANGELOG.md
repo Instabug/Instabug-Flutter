@@ -5,6 +5,7 @@
 ### Added
 
 - Add network logs obfuscation support using the new `NetworkLogger.obfuscateLog` API ([#380](https://github.com/Instabug/Instabug-Flutter/pull/380)).
+- Add network logs omission support using the new `NetworkLogger.omitLog` API ([#382](https://github.com/Instabug/Instabug-Flutter/pull/382)).
 
 ### Changed
 

@@ -47,4 +47,33 @@ void main() {
 
     expect(result, equals(obfuscated));
   });
+
+  test('[omitLog] should return false when no omit log callback', () async {
+    const expected = false;
+
+    final result = await manager.omitLog(data);
+
+    expect(result, equals(expected));
+  });
+
+  test(
+      '[omitLog] should use omit callback when [setOmitLogCallback] has set a callback',
+      () async {
+    const omit = true;
+    final completer = Completer<NetworkData>();
+    FutureOr<bool> callback(NetworkData data) {
+      completer.complete(data);
+      return omit;
+    }
+
+    manager.setOmitLogCallback(callback);
+
+    final result = await manager.omitLog(data);
+
+    expect(completer.isCompleted, isTrue);
+
+    expect(await completer.future, data);
+
+    expect(result, equals(omit));
+  });
 }
