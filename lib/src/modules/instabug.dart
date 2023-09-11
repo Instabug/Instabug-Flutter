@@ -399,10 +399,19 @@ class Instabug {
   }
 
   /// Sets the repro steps mode for bugs and crashes.
+  ///
   /// [bug] repro steps mode for bug reports.
   /// [crash] repro steps mode for crash reports.
   /// [all] repro steps mode for both bug and crash reports, when present it
   /// overrides [bug] and [crash].
+  ///
+  /// Example:
+  /// ```dart
+  /// Instabug.setReproStepsConfig(
+  ///  bug: ReproStepsMode.enabledWithNoScreenshots,
+  ///  crash: ReproStepsMode.enabled,
+  ///  );
+  ///  ```
   static Future<void> setReproStepsConfig({
     ReproStepsMode? bug,
     ReproStepsMode? crash,
