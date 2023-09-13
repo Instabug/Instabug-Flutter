@@ -20,13 +20,16 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 }
 
 - (void)initToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents debugLogsLevel:(NSString *)debugLogsLevel error:(FlutterError *_Nullable *_Nonnull)error {
-    SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
+    SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:cpSDKVersion:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
         NSInteger *platformID = IBGPlatformFlutter;
+        NSString *cpSDKVersion = @"11.13.0";
         NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
         [inv setSelector:setPrivateApiSEL];
         [inv setTarget:[Instabug class]];
         [inv setArgument:&(platformID) atIndex:2];
+        [inv setArgument:&(cpSDKVersion) atIndex:3];
+
         [inv invoke];
     }
     
