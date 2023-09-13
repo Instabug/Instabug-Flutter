@@ -39,10 +39,12 @@
     NSArray<NSString *> *invocationEvents = @[@"InvocationEvent.floatingButton", @"InvocationEvent.screenshot"];
     NSString *logLevel = @"LogLevel.error";
     FlutterError *error;
+
+    NSString *cpSDKVersion = @"11.13.0";
     
     [self.api initToken:token invocationEvents:invocationEvents debugLogsLevel:logLevel error:&error];
 
-    OCMVerify([self.mInstabug setCurrentPlatform:IBGPlatformFlutter cpSDKVersion:@"11.13.0"]);
+    OCMVerify([self.mInstabug setCurrentPlatform:IBGPlatformFlutter cpSDKVersion:cpSDKVersion]);
     OCMVerify([self.mInstabug setSdkDebugLogsLevel:IBGSDKDebugLogsLevelError]);
     OCMVerify([self.mInstabug startWithToken:token invocationEvents:(IBGInvocationEventFloatingButton | IBGInvocationEventScreenshot)]);
 }
