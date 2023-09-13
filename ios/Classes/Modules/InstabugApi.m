@@ -159,8 +159,20 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 }
 
 - (void)setReproStepsModeMode:(NSString *)mode error:(FlutterError *_Nullable *_Nonnull)error {
-    IBGUserStepsMode resolvedMode = (ArgsRegistry.reproStates[mode]).integerValue;
+    IBGUserStepsMode resolvedMode = (ArgsRegistry.reproModes[mode]).integerValue;
     [Instabug setReproStepsMode:resolvedMode];
+}
+
+- (void)setReproStepsConfigBugMode:(nullable NSString *)bugMode crashMode:(nullable NSString *)crashMode error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    if (bugMode != nil) {
+        IBGUserStepsMode resolvedBugMode = ArgsRegistry.reproModes[bugMode].integerValue;
+        [Instabug setReproStepsFor:IBGIssueTypeBug withMode:resolvedBugMode];
+    }
+    
+    if (crashMode != nil) {
+        IBGUserStepsMode resolvedCrashMode = ArgsRegistry.reproModes[crashMode].integerValue;
+        [Instabug setReproStepsFor:IBGIssueTypeCrash withMode:resolvedCrashMode];
+    }
 }
 
 - (UIImage *)getImageForAsset:(NSString *)assetName {

@@ -6,11 +6,16 @@
 
 - Add network logs obfuscation support using the new `NetworkLogger.obfuscateLog` API ([#380](https://github.com/Instabug/Instabug-Flutter/pull/380)).
 - Add network logs omission support using the new `NetworkLogger.omitLog` API ([#382](https://github.com/Instabug/Instabug-Flutter/pull/382)).
+- Add the new repro steps configuration API `Instabug.setReproStepsConfig` ([#388](https://github.com/Instabug/Instabug-Flutter/pull/388)).
 
 ### Changed
 
 - Bump Instabug Android SDK to v11.14.0 ([#384](https://github.com/Instabug/Instabug-Flutter/pull/384)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v11.14.0).
 - Bump Instabug iOS SDK to v11.14.0 ([#383](https://github.com/Instabug/Instabug-Flutter/pull/383)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/11.14.0).
+
+### Deprecated
+
+- Deprecate `Instabug.setReproStepsMode` in favor of the new `Instabug.setReproStepsConfig` ([#388](https://github.com/Instabug/Instabug-Flutter/pull/388)).
 
 ## [11.13.0](https://github.com/Instabug/Instabug-Flutter/compare/v11.12.0...v11.13.0) (July 10, 2023)
 
