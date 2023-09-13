@@ -417,14 +417,25 @@ class Instabug {
     ReproStepsMode? crash,
     ReproStepsMode? all,
   }) async {
+    var bugMode = bug;
+    var crashMode = crash;
+
     if (all != null) {
-      bug = all;
-      crash = all;
+      bugMode = all;
+      crashMode = all;
+    }
+
+    // There's an issue with crashes repro steps with screenshots in the iOS SDK
+    // at the moment, so we'll map enabled with screenshots to enabled with no
+    // screenshots to avoid storing the images on disk if it's not needed until
+    // this issue is fixed in a future version.
+    if (IBGBuildInfo.I.isIOS && crashMode == ReproStepsMode.enabled) {
+      crashMode = ReproStepsMode.enabledWithNoScreenshots;
     }
 
     return _host.setReproStepsConfig(
-      bug.toString(),
-      crash.toString(),
+      bugMode.toString(),
+      crashMode.toString(),
     );
   }
 

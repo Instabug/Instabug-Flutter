@@ -312,6 +312,8 @@ void main() {
     const bug = ReproStepsMode.enabled;
     const crash = ReproStepsMode.enabledWithNoScreenshots;
 
+    when(mBuildInfo.isIOS).thenReturn(false);
+
     await Instabug.setReproStepsConfig(
       bug: bug,
       crash: crash,
