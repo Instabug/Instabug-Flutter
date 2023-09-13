@@ -408,9 +408,9 @@ class Instabug {
   /// Example:
   /// ```dart
   /// Instabug.setReproStepsConfig(
-  ///  bug: ReproStepsMode.enabledWithNoScreenshots,
-  ///  crash: ReproStepsMode.enabled,
-  ///  );
+  ///   bug: ReproStepsMode.enabled,
+  ///   crash: ReproStepsMode.disabled,
+  /// );
   ///  ```
   static Future<void> setReproStepsConfig({
     ReproStepsMode? bug,
