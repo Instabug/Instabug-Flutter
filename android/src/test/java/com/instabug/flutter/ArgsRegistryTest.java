@@ -10,6 +10,7 @@ import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder.Key;
 import com.instabug.library.OnSdkDismissCallback.DismissType;
+import com.instabug.library.ReproMode;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
 import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
@@ -183,6 +184,7 @@ public class ArgsRegistryTest {
     }
 
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testReproStates() {
         State[] values = {
@@ -193,6 +195,19 @@ public class ArgsRegistryTest {
 
         for (State value : values) {
             assertTrue(ArgsRegistry.reproStates.containsValue(value));
+        }
+    }
+
+    @Test
+    public void testReproModes() {
+        Integer[] values = {
+                ReproMode.Disable,
+                ReproMode.EnableWithScreenshots,
+                ReproMode.EnableWithNoScreenshots,
+        };
+
+        for (Integer value : values) {
+            assertTrue(ArgsRegistry.reproModes.containsValue(value));
         }
     }
 

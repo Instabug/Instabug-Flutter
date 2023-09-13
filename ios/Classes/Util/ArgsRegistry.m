@@ -112,7 +112,7 @@
     };
 }
 
-+ (ArgsDictionary *)reproStates {
++ (ArgsDictionary *)reproModes {
     return @{
         @"ReproStepsMode.enabled" : @(IBGUserStepsModeEnable),
         @"ReproStepsMode.disabled" : @(IBGUserStepsModeDisable),
