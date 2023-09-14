@@ -1,8 +1,8 @@
 name: instabug_flutter
-version: 11.14.0
+version: 11.13.0
 description: >-
-  Instabug empowers mobile teams to monitor, prioritize, and debug
-  performance and stability issues throughout the app development lifecycle.
+  Instabug empowers mobile teams to monitor, prioritize, and debug 
+  performance and stability issues throughout the app development lifecycle. 
 homepage: https://www.instabug.com/platforms/flutter
 repository: https://github.com/Instabug/Instabug-Flutter
 documentation: https://docs.instabug.com/docs/flutter-overview
@@ -18,11 +18,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   lint: ^1.0.0
-  # mockito v5.2.0 is needed for running Flutter 2 tests on CI
-  mockito: '>=5.2.0 <=5.4.2'
+  mockito: 5.2.0
   pana: ^0.21.0
-  # pigeon v3.0.0 is needed for running Flutter 2 tests on CI
-  pigeon: '>=3.0.0 <=10.1.5'
+  pigeon: ^3.0.0
 
 flutter:
   plugin:

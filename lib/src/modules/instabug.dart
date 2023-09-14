@@ -393,50 +393,8 @@ class Instabug {
 
   /// Sets the repro steps mode
   /// [mode] repro steps mode
-  @Deprecated('Use [setReproStepsConfig] instead.')
   static Future<void> setReproStepsMode(ReproStepsMode reproStepsMode) async {
     return _host.setReproStepsMode(reproStepsMode.toString());
-  }
-
-  /// Sets the repro steps mode for bugs and crashes.
-  ///
-  /// [bug] repro steps mode for bug reports.
-  /// [crash] repro steps mode for crash reports.
-  /// [all] repro steps mode for both bug and crash reports, when present it
-  /// overrides [bug] and [crash].
-  ///
-  /// Example:
-  /// ```dart
-  /// Instabug.setReproStepsConfig(
-  ///   bug: ReproStepsMode.enabled,
-  ///   crash: ReproStepsMode.disabled,
-  /// );
-  ///  ```
-  static Future<void> setReproStepsConfig({
-    ReproStepsMode? bug,
-    ReproStepsMode? crash,
-    ReproStepsMode? all,
-  }) async {
-    var bugMode = bug;
-    var crashMode = crash;
-
-    if (all != null) {
-      bugMode = all;
-      crashMode = all;
-    }
-
-    // There's an issue with crashes repro steps with screenshots in the iOS SDK
-    // at the moment, so we'll map enabled with screenshots to enabled with no
-    // screenshots to avoid storing the images on disk if it's not needed until
-    // this issue is fixed in a future version.
-    if (IBGBuildInfo.I.isIOS && crashMode == ReproStepsMode.enabled) {
-      crashMode = ReproStepsMode.enabledWithNoScreenshots;
-    }
-
-    return _host.setReproStepsConfig(
-      bugMode.toString(),
-      crashMode.toString(),
-    );
   }
 
   /// Sets a custom branding image logo with [light] and [dark] images for different color modes.

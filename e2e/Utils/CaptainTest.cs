@@ -8,12 +8,9 @@ public class CaptainTest : IDisposable
   private static readonly CaptainConfig _config = new()
   {
     AndroidApp = Path.GetFullPath("../../../../example/build/app/outputs/flutter-apk/app-debug.apk"),
-    AndroidAppId = "com.instabug.flutter.example",
     AndroidVersion = "11",
     IosApp = Path.GetFullPath("../../../../example/build/ios/iphonesimulator/Runner.app"),
-    IosAppId = "com.instabug.InstabugSample",
-    IosVersion = "15.5",
-    IosDevice = "iPhone 13 Pro Max"
+    IosVersion = "15.5"
   };
   protected static readonly Captain captain = new(_config);
 
