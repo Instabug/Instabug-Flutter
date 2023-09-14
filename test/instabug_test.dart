@@ -300,39 +300,10 @@ void main() {
   test('[setReproStepsMode] should call host method', () async {
     const mode = ReproStepsMode.enabled;
 
-    // ignore: deprecated_member_use_from_same_package
     await Instabug.setReproStepsMode(mode);
 
     verify(
       mHost.setReproStepsMode(mode.toString()),
-    ).called(1);
-  });
-
-  test('[setReproStepsConfig] should call host method', () async {
-    const bug = ReproStepsMode.enabled;
-    const crash = ReproStepsMode.enabledWithNoScreenshots;
-
-    when(mBuildInfo.isIOS).thenReturn(false);
-
-    await Instabug.setReproStepsConfig(
-      bug: bug,
-      crash: crash,
-    );
-
-    verify(
-      mHost.setReproStepsConfig(bug.toString(), crash.toString()),
-    ).called(1);
-  });
-
-  test(
-      '[setReproStepsConfig] should use [all] for [bug] and [crash] if present',
-      () async {
-    const all = ReproStepsMode.enabled;
-
-    await Instabug.setReproStepsConfig(all: all);
-
-    verify(
-      mHost.setReproStepsConfig(all.toString(), all.toString()),
     ).called(1);
   });
 

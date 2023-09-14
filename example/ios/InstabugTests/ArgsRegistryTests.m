@@ -157,7 +157,7 @@
     }
 }
 
-- (void)testReproModes {
+- (void)testReproStates {
     NSArray *values = @[
         @(IBGUserStepsModeEnable),
         @(IBGUserStepsModeDisable),
@@ -165,7 +165,7 @@
     ];
 
     for (NSNumber *value in values) {
-        XCTAssertTrue([[ArgsRegistry.reproModes allValues] containsObject:value]);
+        XCTAssertTrue([[ArgsRegistry.reproStates allValues] containsObject:value]);
     }
 }
 

@@ -112,7 +112,7 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
 
 - (void)bindOnInvokeCallbackWithError:(FlutterError *_Nullable *_Nonnull)error {
     IBGBugReporting.willInvokeHandler = ^{
-      [self->_flutterApi onSdkInvokeWithCompletion:^(FlutterError *_Nullable _){
+      [self->_flutterApi onSdkInvokeWithCompletion:^(NSError *_Nullable _){
       }];
     };
 }
@@ -141,7 +141,7 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
 
       [self->_flutterApi onSdkDismissDismissType:dismissTypeString
                                       reportType:reportTypeString
-                                      completion:^(FlutterError *_Nullable _){
+                                      completion:^(NSError *_Nullable _){
                                       }];
     };
 }

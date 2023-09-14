@@ -9,7 +9,7 @@ commands:
   setup_flutter:
     steps:
       - flutter/install_sdk_and_pub:
-          flutter_version: 3.10.5
+          flutter_version: 3.3.0
       - run:
           name: Generate Pigeons
           command: sh ./scripts/pigeon.sh
@@ -33,7 +33,7 @@ commands:
     steps:
       - run:
           name: Install Appium
-          command: npm install -g appium
+          command: npm install -g appium@next
       - when:
           condition:
             equal:
@@ -42,7 +42,7 @@ commands:
           steps:
             - run:
                 name: Install XCUITest Driver
-                command: appium driver install xcuitest@4.35.0
+                command: appium driver install xcuitest
       - when:
           condition:
             equal:
@@ -51,7 +51,7 @@ commands:
           steps:
             - run:
                 name: Install UIAutomator2 Driver
-                command: appium driver install uiautomator2@2.29.5
+                command: appium driver install uiautomator2
       - run:
           name: Launch Appium
           # Enable --relaxed-security for `mobile: shell` command that Captain uses internally.
