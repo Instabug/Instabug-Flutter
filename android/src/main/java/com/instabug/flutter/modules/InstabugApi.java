@@ -19,7 +19,9 @@ import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
+import com.instabug.library.IssueType;
 import com.instabug.library.Platform;
+import com.instabug.library.ReproConfigurations;
 import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
@@ -283,11 +285,36 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         // iOS Only
     }
 
+    @SuppressWarnings("deprecation")
     @Override
+    @Deprecated()
     public void setReproStepsMode(@NonNull String mode) {
         try {
             final State resolvedMode = ArgsRegistry.reproStates.get(mode);
             Instabug.setReproStepsState(resolvedMode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setReproStepsConfig(@Nullable String bugMode, @Nullable String crashMode) {
+        try {
+            final ReproConfigurations.Builder builder = new ReproConfigurations.Builder();
+
+            if (bugMode != null) {
+                final Integer resolvedBugMode = ArgsRegistry.reproModes.get(bugMode);
+                builder.setIssueMode(IssueType.Bug, resolvedBugMode);
+            }
+
+            if (crashMode != null) {
+                final Integer resolvedCrashMode = ArgsRegistry.reproModes.get(crashMode);
+                builder.setIssueMode(IssueType.Crash, resolvedCrashMode);
+            }
+
+            final ReproConfigurations config = builder.build();
+
+            Instabug.setReproConfigurations(config);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -30,8 +31,11 @@ import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
+import com.instabug.library.IssueType;
 import com.instabug.library.LogLevel;
 import com.instabug.library.Platform;
+import com.instabug.library.ReproConfigurations;
+import com.instabug.library.ReproMode;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
@@ -383,6 +387,7 @@ public class InstabugApiTest {
         mInstabug.verify(() -> Instabug.setDebugEnabled(isEnabled));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testSetReproStepsMode() {
         String mode = "ReproStepsMode.enabled";
@@ -390,6 +395,28 @@ public class InstabugApiTest {
         api.setReproStepsMode(mode);
 
         mInstabug.verify(() -> Instabug.setReproStepsState(State.ENABLED));
+    }
+
+    @Test
+    public void testSetReproStepsConfig() {
+        String bug = "ReproStepsMode.enabled";
+        String crash = "ReproStepsMode.disabled";
+
+        ReproConfigurations config = mock(ReproConfigurations.class);
+        MockedConstruction<ReproConfigurations.Builder> mReproConfigurationsBuilder = mockConstruction(ReproConfigurations.Builder.class, (mock, context) -> {
+            when(mock.setIssueMode(anyInt(), anyInt())).thenReturn(mock);
+            when(mock.build()).thenReturn(config);
+        });
+
+        api.setReproStepsConfig(bug, crash);
+
+        ReproConfigurations.Builder builder = mReproConfigurationsBuilder.constructed().get(0);
+
+        verify(builder).setIssueMode(IssueType.Bug, ReproMode.EnableWithScreenshots);
+        verify(builder).setIssueMode(IssueType.Crash, ReproMode.Disable);
+        verify(builder).build();
+
+        mInstabug.verify(() -> Instabug.setReproConfigurations(config));
     }
 
     @Test

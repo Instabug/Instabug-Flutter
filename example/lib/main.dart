@@ -4,21 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  runZonedGuarded(
+    () {
+      WidgetsFlutterBinding.ensureInitialized();
 
-  Instabug.init(
-    token: 'ed6f659591566da19b67857e1b9d40ab',
-    invocationEvents: [InvocationEvent.floatingButton],
-    debugLogsLevel: LogLevel.verbose,
+      Instabug.init(
+        token: 'ed6f659591566da19b67857e1b9d40ab',
+        invocationEvents: [InvocationEvent.floatingButton],
+      );
+
+      FlutterError.onError = (FlutterErrorDetails details) {
+        Zone.current.handleUncaughtError(details.exception, details.stack!);
+      };
+
+      runApp(MyApp());
+    },
+    CrashReporting.reportCrash,
   );
-
-  Instabug.setWelcomeMessageMode(WelcomeMessageMode.disabled);
-
-  FlutterError.onError = (FlutterErrorDetails details) {
-    Zone.current.handleUncaughtError(details.exception, details.stack!);
-  };
-
-  runZonedGuarded(() => runApp(MyApp()), CrashReporting.reportCrash);
 }
 
 class MyApp extends StatelessWidget {
@@ -158,11 +160,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void sendFeedback() {
     BugReporting.show(
         ReportType.feedback, [InvocationOption.emailFieldOptional]);
-  }
-
-  void askQuestion() {
-    BugReporting.show(
-        ReportType.question, [InvocationOption.emailFieldOptional]);
   }
 
   void showNpsSurvey() {
@@ -330,10 +327,6 @@ class _MyHomePageState extends State<MyHomePage> {
               InstabugButton(
                 onPressed: sendFeedback,
                 text: 'Send Feedback',
-              ),
-              InstabugButton(
-                onPressed: askQuestion,
-                text: 'Ask a Question',
               ),
               InstabugButton(
                 onPressed: showNpsSurvey,

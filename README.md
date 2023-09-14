@@ -22,7 +22,6 @@ A Flutter plugin for [Instabug](https://instabug.com/).
 
 ### Installation
 
-
 1. Add Instabug to your `pubspec.yaml` file.
 
 ```yaml
@@ -65,18 +64,23 @@ Instabug automatically captures every crash of your app and sends relevant detai
 
 ```dart
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  runZonedGuarded(
+    () {
+      WidgetsFlutterBinding.ensureInitialized();
 
-  Instabug.init(
-    token: 'APP_TOKEN',
-    invocationEvents: [InvocationEvent.floatingButton],
+      Instabug.init(
+        token: 'APP_TOKEN',
+        invocationEvents: [InvocationEvent.shake],
+      );
+
+      FlutterError.onError = (FlutterErrorDetails details) {
+        Zone.current.handleUncaughtError(details.exception, details.stack!);
+      };
+
+      runApp(MyApp());
+    },
+    CrashReporting.reportCrash,
   );
-
-  FlutterError.onError = (FlutterErrorDetails details) {
-    Zone.current.handleUncaughtError(details.exception, details.stack!);
-  };
-
-  runZonedGuarded(() => runApp(MyApp()), CrashReporting.reportCrash);
 }
 ```
 
@@ -89,7 +93,6 @@ Repro Steps list all of the actions an app user took before reporting a bug or c
     navigatorObservers: [InstabugNavigatorObserver()],
   ));
   ```
-
 
 ## Network Logging
 You can choose to attach all your network requests to the reports being sent to the dashboard. To enable the feature when using the `dart:io` package `HttpClient`, please refer to the [Instabug Dart IO Http Client](https://github.com/Instabug/instabug-dart-io-http-client) repository.
