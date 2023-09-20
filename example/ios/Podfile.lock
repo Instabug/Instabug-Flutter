@@ -8,17 +8,19 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - Instabug (from `https://ios-releases.instabug.com/custom/bdr-therma-14.4/11.14.0/Instabug.podspec`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
 
 SPEC REPOS:
   trunk:
-    - Instabug
     - OCMock
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  Instabug:
+    :podspec: https://ios-releases.instabug.com/custom/bdr-therma-14.4/11.14.0/Instabug.podspec
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
 
@@ -30,4 +32,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: f809f4241ff3da61349081a141c44763598f2fbb
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.12.1
