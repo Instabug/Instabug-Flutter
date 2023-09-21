@@ -137,7 +137,6 @@
         @"CustomTextPlaceHolderKey.shakeHint" : kIBGShakeStartAlertTextStringName,
         @"CustomTextPlaceHolderKey.swipeHint" : kIBGEdgeSwipeStartAlertTextStringName,
         @"CustomTextPlaceHolderKey.invalidEmailMessage" : kIBGInvalidEmailMessageStringName,
-        @"CustomTextPlaceHolderKey.invalidCommentMessage" : kIBGInvalidCommentMessageStringName,
         @"CustomTextPlaceHolderKey.invocationHeader" : kIBGInvocationTitleStringName,
         @"CustomTextPlaceHolderKey.reportQuestion" : kIBGAskAQuestionStringName,
         @"CustomTextPlaceHolderKey.reportBug" : kIBGReportBugStringName,

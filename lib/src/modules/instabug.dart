@@ -68,7 +68,6 @@ enum CustomTextPlaceHolderKey {
   shakeHint,
   swipeHint,
   invalidEmailMessage,
-  invalidCommentMessage,
   invocationHeader,
   reportQuestion,
   reportBug,

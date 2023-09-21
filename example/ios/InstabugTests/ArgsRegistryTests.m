@@ -193,7 +193,6 @@
         kIBGShakeStartAlertTextStringName,
         kIBGEdgeSwipeStartAlertTextStringName,
         kIBGInvalidEmailMessageStringName,
-        kIBGInvalidCommentMessageStringName,
         kIBGInvocationTitleStringName,
         kIBGAskAQuestionStringName,
         kIBGReportBugStringName,
