@@ -3,7 +3,6 @@ export 'src/models/crash_data.dart';
 export 'src/models/exception_data.dart';
 export 'src/models/network_data.dart';
 export 'src/models/trace.dart';
-
 // Modules
 export 'src/modules/apm.dart';
 export 'src/modules/bug_reporting.dart';
@@ -15,6 +14,5 @@ export 'src/modules/network_logger.dart';
 export 'src/modules/replies.dart';
 export 'src/modules/session_replay.dart';
 export 'src/modules/surveys.dart';
-
 // Utils
 export 'src/utils/instabug_navigator_observer.dart';
