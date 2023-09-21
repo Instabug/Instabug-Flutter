@@ -13,6 +13,7 @@ export 'src/modules/instabug.dart';
 export 'src/modules/instabug_log.dart';
 export 'src/modules/network_logger.dart';
 export 'src/modules/replies.dart';
+export 'src/modules/session_replay.dart';
 export 'src/modules/surveys.dart';
 
 // Utils
