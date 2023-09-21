@@ -16,7 +16,6 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
 import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
-import com.instabug.library.visualusersteps.State;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -99,13 +98,6 @@ public final class ArgsRegistry {
         put("ExtendedBugReportMode.disabled", ExtendedBugReport.State.DISABLED);
     }};
 
-    @Deprecated()
-    public static final ArgsMap<State> reproStates = new ArgsMap<State>() {{
-        put("ReproStepsMode.enabledWithNoScreenshots", State.ENABLED_WITH_NO_SCREENSHOTS);
-        put("ReproStepsMode.enabled", State.ENABLED);
-        put("ReproStepsMode.disabled", State.DISABLED);
-    }};
-
     public static final ArgsMap<Integer> reproModes = new ArgsMap<Integer>() {{
         put("ReproStepsMode.enabledWithNoScreenshots", ReproMode.EnableWithNoScreenshots);
         put("ReproStepsMode.enabled", ReproMode.EnableWithScreenshots);
@@ -145,7 +137,6 @@ public final class ArgsRegistry {
         put("CustomTextPlaceHolderKey.shakeHint", Key.SHAKE_HINT);
         put("CustomTextPlaceHolderKey.swipeHint", Key.SWIPE_HINT);
         put("CustomTextPlaceHolderKey.invalidEmailMessage", Key.INVALID_EMAIL_MESSAGE);
-        put("CustomTextPlaceHolderKey.invalidCommentMessage", Key.INVALID_COMMENT_MESSAGE);
         put("CustomTextPlaceHolderKey.emailFieldHint", Key.EMAIL_FIELD_HINT);
         put("CustomTextPlaceHolderKey.commentFieldHintForBugReport", Key.COMMENT_FIELD_HINT_FOR_BUG_REPORT);
         put("CustomTextPlaceHolderKey.commentFieldHintForFeedback", Key.COMMENT_FIELD_HINT_FOR_FEEDBACK);

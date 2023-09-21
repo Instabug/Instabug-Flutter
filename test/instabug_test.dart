@@ -273,17 +273,6 @@ void main() {
     ).called(1);
   });
 
-  test('[setReproStepsMode] should call host method', () async {
-    const mode = ReproStepsMode.enabled;
-
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.setReproStepsMode(mode);
-
-    verify(
-      mHost.setReproStepsMode(mode.toString()),
-    ).called(1);
-  });
-
   test('[setReproStepsConfig] should call host method', () async {
     const bug = ReproStepsMode.enabled;
     const crash = ReproStepsMode.enabledWithNoScreenshots;

@@ -282,15 +282,6 @@
     [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
-- (void)testSetReproStepsMode {
-    NSString *mode = @"ReproStepsMode.enabled";
-    FlutterError *error;
-
-    [self.api setReproStepsModeMode:mode error:&error];
-
-    OCMVerify([self.mInstabug setReproStepsMode:IBGUserStepsModeEnable]);
-}
-
 - (void)testSetReproStepsConfig {
     NSString *bugMode = @"ReproStepsMode.enabled";
     NSString *crashMode = @"ReproStepsMode.disabled";

@@ -39,8 +39,6 @@ abstract class InstabugHostApi {
   @async
   Map<String, String>? getUserAttributes();
 
-  @Deprecated('Use [setReproStepsConfig] instead')
-  void setReproStepsMode(String mode);
   void setReproStepsConfig(String? bugMode, String? crashMode);
   void reportScreenChange(String screenName);
 

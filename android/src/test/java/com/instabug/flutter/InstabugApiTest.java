@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -39,7 +38,6 @@ import com.instabug.library.ReproMode;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
-import com.instabug.library.visualusersteps.State;
 
 import org.json.JSONObject;
 import org.junit.After;
@@ -375,16 +373,6 @@ public class InstabugApiTest {
         api.getUserAttributes(result);
 
         mInstabug.verify(Instabug::getAllUserAttributes);
-    }
-
-    @SuppressWarnings("deprecation")
-    @Test
-    public void testSetReproStepsMode() {
-        String mode = "ReproStepsMode.enabled";
-
-        api.setReproStepsMode(mode);
-
-        mInstabug.verify(() -> Instabug.setReproStepsState(State.ENABLED));
     }
 
     @Test

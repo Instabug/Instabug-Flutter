@@ -275,18 +275,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         );
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    @Deprecated()
-    public void setReproStepsMode(@NonNull String mode) {
-        try {
-            final State resolvedMode = ArgsRegistry.reproStates.get(mode);
-            Instabug.setReproStepsState(resolvedMode);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void setReproStepsConfig(@Nullable String bugMode, @Nullable String crashMode) {
         try {

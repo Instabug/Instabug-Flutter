@@ -17,7 +17,6 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
 import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
-import com.instabug.library.visualusersteps.State;
 
 import org.junit.Test;
 
@@ -167,21 +166,6 @@ public class ArgsRegistryTest {
         }
     }
 
-
-    @SuppressWarnings("deprecation")
-    @Test
-    public void testReproStates() {
-        State[] values = {
-                State.ENABLED_WITH_NO_SCREENSHOTS,
-                State.ENABLED,
-                State.DISABLED,
-        };
-
-        for (State value : values) {
-            assertTrue(ArgsRegistry.reproStates.containsValue(value));
-        }
-    }
-
     @Test
     public void testReproModes() {
         Integer[] values = {
@@ -239,7 +223,6 @@ public class ArgsRegistryTest {
                 Key.SHAKE_HINT,
                 Key.SWIPE_HINT,
                 Key.INVALID_EMAIL_MESSAGE,
-                Key.INVALID_COMMENT_MESSAGE,
                 Key.EMAIL_FIELD_HINT,
                 Key.COMMENT_FIELD_HINT_FOR_BUG_REPORT,
                 Key.COMMENT_FIELD_HINT_FOR_FEEDBACK,

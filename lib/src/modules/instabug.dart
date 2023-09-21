@@ -352,13 +352,6 @@ class Instabug {
     }
   }
 
-  /// Sets the repro steps mode
-  /// [mode] repro steps mode
-  @Deprecated('Use [setReproStepsConfig] instead.')
-  static Future<void> setReproStepsMode(ReproStepsMode reproStepsMode) async {
-    return _host.setReproStepsMode(reproStepsMode.toString());
-  }
-
   /// Sets the repro steps mode for bugs and crashes.
   ///
   /// [bug] repro steps mode for bug reports.
