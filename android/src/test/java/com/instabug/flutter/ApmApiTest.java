@@ -18,7 +18,6 @@ import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.modules.ApmApi;
 import com.instabug.flutter.util.GlobalMocks;
 import com.instabug.flutter.util.MockReflected;
-import com.instabug.library.LogLevel;
 
 import org.json.JSONObject;
 import org.junit.After;
@@ -82,14 +81,13 @@ public class ApmApiTest {
         mAPM.verify(() -> APM.setEnabled(isEnabled));
     }
 
-    @SuppressWarnings("deprecation")
     @Test
     public void testSetColdAppLaunchEnabled() {
         boolean isEnabled = false;
 
         api.setColdAppLaunchEnabled(isEnabled);
 
-        mAPM.verify(() -> APM.setAppLaunchEnabled(isEnabled));
+        mAPM.verify(() -> APM.setColdAppLaunchEnabled(isEnabled));
     }
 
     @Test

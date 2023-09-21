@@ -8,7 +8,6 @@ import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
-import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
 
@@ -41,7 +40,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     @Override
     public void setColdAppLaunchEnabled(@NonNull Boolean isEnabled) {
         try {
-            APM.setAppLaunchEnabled(isEnabled);
+            APM.setColdAppLaunchEnabled(isEnabled);
         } catch (Exception e) {
             e.printStackTrace();
         }
