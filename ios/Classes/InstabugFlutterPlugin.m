@@ -7,6 +7,7 @@
 #import "InstabugApi.h"
 #import "InstabugLogApi.h"
 #import "RepliesApi.h"
+#import "SessionReplayApi.h"
 #import "SurveysApi.h"
 
 @implementation InstabugFlutterPlugin
@@ -19,6 +20,7 @@
     InitInstabugApi([registrar messenger]);
     InitInstabugLogApi([registrar messenger]);
     InitRepliesApi([registrar messenger]);
+    InitSessionReplayApi([registrar messenger]);
     InitSurveysApi([registrar messenger]);
 }
 
