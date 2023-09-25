@@ -61,11 +61,11 @@
     NSString *name = @"trace-name";
     XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
 
-    OCMStub([self.mAPM startExecutionTraceWithName:name]).andReturn([IBGExecutionTrace new]);
+    OCMStub([self.mAPM startExecutionTraceWithName:name]).andReturn([IBGAPM startExecutionTraceWithName:name]);
 
     [self.api startExecutionTraceId:expectedId name:name completion:^(NSString *actualId, FlutterError *error) {
         [expectation fulfill];
-        XCTAssertEqual(actualId, expectedId);
+        XCTAssertEqualObjects(actualId, expectedId);
         XCTAssertNil(error);
     }];
 
@@ -124,7 +124,7 @@
 
 - (void)testEndUITrace {
     FlutterError *error;
-    
+
     [self.api endUITraceWithError:&error];
 
     OCMVerify([self.mAPM endUITrace]);

@@ -379,6 +379,7 @@ public class InstabugApiTest {
     public void testSetReproStepsConfig() {
         String bug = "ReproStepsMode.enabled";
         String crash = "ReproStepsMode.disabled";
+        String sessionReplay = "ReproStepsMode.disabled";
 
         ReproConfigurations config = mock(ReproConfigurations.class);
         MockedConstruction<ReproConfigurations.Builder> mReproConfigurationsBuilder = mockConstruction(ReproConfigurations.Builder.class, (mock, context) -> {
@@ -386,12 +387,13 @@ public class InstabugApiTest {
             when(mock.build()).thenReturn(config);
         });
 
-        api.setReproStepsConfig(bug, crash);
+        api.setReproStepsConfig(bug, crash, sessionReplay);
 
         ReproConfigurations.Builder builder = mReproConfigurationsBuilder.constructed().get(0);
 
         verify(builder).setIssueMode(IssueType.Bug, ReproMode.EnableWithScreenshots);
         verify(builder).setIssueMode(IssueType.Crash, ReproMode.Disable);
+        verify(builder).setIssueMode(IssueType.SessionReplay, ReproMode.Disable);
         verify(builder).build();
 
         mInstabug.verify(() -> Instabug.setReproConfigurations(config));
