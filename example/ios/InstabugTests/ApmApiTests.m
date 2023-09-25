@@ -66,7 +66,7 @@
 
     [self.api startExecutionTraceId:expectedId name:name completion:^(NSString *actualId, FlutterError *error) {
         [expectation fulfill];
-        XCTAssertEqual(actualId, expectedId);
+        XCTAssertEqualObjects(actualId, expectedId);
         XCTAssertNil(error);
     }];
 
