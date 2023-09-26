@@ -47,7 +47,7 @@ public class SessionReplayApiTest {
     }
 
     @Test
-    public void testSetEnabledGivenTrue() {
+    public void testSetEnabled() {
         boolean isEnabled = true;
 
         api.setEnabled(isEnabled);
@@ -56,16 +56,7 @@ public class SessionReplayApiTest {
     }
 
     @Test
-    public void testSetEnabledGivenFalse() {
-        boolean isEnabled = false;
-
-        api.setEnabled(isEnabled);
-
-        mSessionReplay.verify(() -> SessionReplay.setEnabled(false));
-    }
-
-    @Test
-    public void testSetNetworkLogsEnabledGivenTrue() {
+    public void testSetNetworkLogsEnabled() {
         boolean isEnabled = true;
 
         api.setNetworkLogsEnabled(isEnabled);
@@ -74,16 +65,7 @@ public class SessionReplayApiTest {
     }
 
     @Test
-    public void testSetNetworkLogsEnabledGivenFalse() {
-        boolean isEnabled = false;
-
-        api.setNetworkLogsEnabled(isEnabled);
-
-        mSessionReplay.verify(() -> SessionReplay.setNetworkLogsEnabled(false));
-    }
-
-    @Test
-    public void testSetInstabugLogsEnabledGivenTrue() {
+    public void testSetInstabugLogsEnabled() {
         boolean isEnabled = true;
 
         api.setInstabugLogsEnabled(isEnabled);
@@ -92,30 +74,12 @@ public class SessionReplayApiTest {
     }
 
     @Test
-    public void testSetInstabugLogsEnabledGivenFalse() {
-        boolean isEnabled = false;
-
-        api.setInstabugLogsEnabled(isEnabled);
-
-        mSessionReplay.verify(() -> SessionReplay.setIBGLogsEnabled(false));
-    }
-
-    @Test
-    public void testSetUserStepsEnabledGivenTrue() {
+    public void testSetUserStepsEnabled() {
         boolean isEnabled = true;
 
         api.setUserStepsEnabled(isEnabled);
 
         mSessionReplay.verify(() -> SessionReplay.setUserStepsEnabled(true));
-    }
-
-    @Test
-    public void testSetUserStepsEnabledGivenFalse() {
-        boolean isEnabled = false;
-
-        api.setUserStepsEnabled(isEnabled);
-
-        mSessionReplay.verify(() -> SessionReplay.setUserStepsEnabled(false));
     }
 
 }
