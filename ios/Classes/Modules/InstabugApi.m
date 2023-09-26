@@ -149,20 +149,6 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     completion(Instabug.userAttributes, nil);
 }
 
-- (void)setDebugEnabledEnabled:(NSNumber *)enabled error:(FlutterError *_Nullable *_Nonnull)error {
-    // Android Only
-}
-
-- (void)setSdkDebugLogsLevelLevel:(NSString *)level error:(FlutterError *_Nullable *_Nonnull)error {
-    IBGSDKDebugLogsLevel resolvedLevel = (ArgsRegistry.sdkLogLevels[level]).integerValue;
-    [Instabug setSdkDebugLogsLevel:resolvedLevel];
-}
-
-- (void)setReproStepsModeMode:(NSString *)mode error:(FlutterError *_Nullable *_Nonnull)error {
-    IBGUserStepsMode resolvedMode = (ArgsRegistry.reproModes[mode]).integerValue;
-    [Instabug setReproStepsMode:resolvedMode];
-}
-
 - (void)setReproStepsConfigBugMode:(nullable NSString *)bugMode crashMode:(nullable NSString *)crashMode error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     if (bugMode != nil) {
         IBGUserStepsMode resolvedBugMode = ArgsRegistry.reproModes[bugMode].integerValue;
@@ -229,7 +215,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef) data);
     CGFontRef cgFont = CGFontCreateWithDataProvider(provider);
     UIFont *font;
-    
+
     if(!CTFontManagerRegisterGraphicsFont(cgFont, &fontError)){
         CFStringRef errorDescription = CFErrorCopyDescription(fontError);
         *error = [FlutterError errorWithCode:@"IBGFailedToLoadFont" message:(__bridge NSString *)errorDescription details:nil];
@@ -238,10 +224,10 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
         NSString *fontName = (__bridge NSString *)CGFontCopyFullName(cgFont);
         font = [UIFont fontWithName:fontName size:10.0];
     }
-    
+
     if (cgFont) CFRelease(cgFont);
     if (provider) CFRelease(provider);
-    
+
     return font;
 }
 
@@ -260,14 +246,6 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
 - (void)clearFileAttachmentsWithError:(FlutterError *_Nullable *_Nonnull)error {
     [Instabug clearFileAttachments];
-}
-
-- (void)enableAndroidWithError:(FlutterError *_Nullable *_Nonnull)error {
-    // Android Only
-}
-
-- (void)disableAndroidWithError:(FlutterError *_Nullable *_Nonnull)error {
-    // Android Only
 }
 
 - (void)networkLogData:(NSDictionary<NSString *, id> *)data error:(FlutterError *_Nullable *_Nonnull)error {

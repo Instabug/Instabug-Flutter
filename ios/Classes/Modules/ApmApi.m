@@ -22,16 +22,11 @@ NSMutableDictionary *traces;
 }
 
 - (void)setColdAppLaunchEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
-    IBGAPM.appLaunchEnabled = [isEnabled boolValue];
+    IBGAPM.coldAppLaunchEnabled = [isEnabled boolValue];
 }
 
 - (void)setAutoUITraceEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
     IBGAPM.autoUITraceEnabled = [isEnabled boolValue];
-}
-
-- (void)setLogLevelLevel:(NSString *)level error:(FlutterError *_Nullable *_Nonnull)error {
-    IBGLogLevel resolvedLevel = (ArgsRegistry.logLevels[level]).integerValue;
-    IBGAPM.logLevel = resolvedLevel;
 }
 
 - (void)startExecutionTraceId:(NSString *)id name:(NSString *)name completion:(void(^)(NSString *_Nullable, FlutterError *_Nullable))completion {

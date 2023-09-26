@@ -6,7 +6,6 @@ typedef NSDictionary<NSString *, NSNumber *> ArgsDictionary;
 @interface ArgsRegistry : NSObject
 
 + (ArgsDictionary *)sdkLogLevels;
-+ (ArgsDictionary *)logLevels __deprecated_msg("Use sdkLogLevels instead.");
 + (ArgsDictionary *)invocationEvents;
 + (ArgsDictionary *)invocationOptions;
 + (ArgsDictionary *)colorThemes;

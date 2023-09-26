@@ -44,7 +44,7 @@
 
     [self.api setColdAppLaunchEnabledIsEnabled:isEnabled error:&error];
 
-    OCMVerify([self.mAPM setAppLaunchEnabled:YES]);
+    OCMVerify([self.mAPM setColdAppLaunchEnabled:YES]);
 }
 
 - (void)testSetAutoUITraceEnabled {
@@ -54,15 +54,6 @@
     [self.api setAutoUITraceEnabledIsEnabled:isEnabled error:&error];
 
     OCMVerify([self.mAPM setAutoUITraceEnabled:YES]);
-}
-
-- (void)testSetLogLevel {
-    NSString *level = @"LogLevel.warning";
-    FlutterError *error;
-
-    [self.api setLogLevelLevel:level error:&error];
-
-    OCMVerify([self.mAPM setLogLevel:IBGLogLevelWarning]);
 }
 
 - (void)testStartExecutionTraceWhenTraceNotNil {

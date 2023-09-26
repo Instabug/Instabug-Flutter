@@ -58,16 +58,9 @@ enum IBGLocale {
 enum LogLevel {
   none,
   error,
-  @Deprecated('Use [LogLevel.error] instead.')
-  warning,
-  @Deprecated('Use [LogLevel.debug] instead.')
-  info,
   debug,
   verbose,
 }
-
-@Deprecated("Use [LogLevel] instead.")
-enum IBGSDKDebugLogsLevel { verbose, debug, error, none }
 
 enum ColorTheme { dark, light }
 
@@ -75,7 +68,6 @@ enum CustomTextPlaceHolderKey {
   shakeHint,
   swipeHint,
   invalidEmailMessage,
-  invalidCommentMessage,
   invocationHeader,
   reportQuestion,
   reportBug,
@@ -179,19 +171,6 @@ class Instabug {
     );
   }
 
-  @Deprecated(
-    "Use [Instabug.init] instead.",
-  )
-  static Future<void> start(
-    String token,
-    List<InvocationEvent> invocationEvents,
-  ) async {
-    return init(
-      token: token,
-      invocationEvents: invocationEvents,
-    );
-  }
-
   /// Shows the welcome message in a specific mode.
   /// [welcomeMessageMode] is an enum to set the welcome message mode to live, or beta.
   static Future<void> showWelcomeMessageWithMode(
@@ -220,15 +199,6 @@ class Instabug {
   /// Defaults to the device's current locale.
   static Future<void> setLocale(IBGLocale locale) async {
     return _host.setLocale(locale.toString());
-  }
-
-  /// Sets the verbosity level of logs used to debug The SDK. The default value in debug
-  /// mode is sdkDebugLogsLevelVerbose and in production is sdkDebugLogsLevelError.
-  @Deprecated("Use [Instabug.init]'s [debugLogsLevel] parameter instead.")
-  static Future<void> setSdkDebugLogsLevel(
-    IBGSDKDebugLogsLevel sdkDebugLogsLevel,
-  ) async {
-    return _host.setSdkDebugLogsLevel(sdkDebugLogsLevel.toString());
   }
 
   /// Sets the color theme of the SDK's whole UI to the [colorTheme] given.
@@ -320,16 +290,6 @@ class Instabug {
     return _host.setSessionProfilerEnabled(sessionProfilerEnabled);
   }
 
-  /// Android only
-  /// Enable/disable SDK logs
-  /// [debugEnabled] desired state of debug mode.
-  @Deprecated("Use [Instabug.init]'s [debugLogsLevel] parameter instead.")
-  static Future<void> setDebugEnabled(bool debugEnabled) async {
-    if (IBGBuildInfo.instance.isAndroid) {
-      return _host.setDebugEnabled(debugEnabled);
-    }
-  }
-
   /// Sets the primary color of the SDK's UI.
   /// Sets the color of UI elements indicating interactivity or call to action.
   /// [color] primaryColor A color to set the UI elements of the SDK to.
@@ -391,13 +351,6 @@ class Instabug {
     }
   }
 
-  /// Sets the repro steps mode
-  /// [mode] repro steps mode
-  @Deprecated('Use [setReproStepsConfig] instead.')
-  static Future<void> setReproStepsMode(ReproStepsMode reproStepsMode) async {
-    return _host.setReproStepsMode(reproStepsMode.toString());
-  }
-
   /// Sets the repro steps mode for bugs and crashes.
   ///
   /// [bug] repro steps mode for bug reports.
@@ -456,27 +409,5 @@ class Instabug {
     final lightKey = await light.obtainKey(configuration);
     final darkKey = await dark.obtainKey(configuration);
     return _host.setCustomBrandingImage(lightKey.name, darkKey.name);
-  }
-
-  /// Android Only
-  /// Enables all Instabug functionality
-  @Deprecated(
-    "Use [Instabug.setEnabled(true)] instead. This will work on both Android and iOS. ",
-  )
-  static Future<void> enableAndroid() async {
-    if (IBGBuildInfo.I.isAndroid) {
-      return _host.enableAndroid();
-    }
-  }
-
-  /// Android Only
-  /// Disables all Instabug functionality
-  @Deprecated(
-    "Use [Instabug.setEnabled(false)] instead. This will work on both Android and iOS. ",
-  )
-  static Future<void> disableAndroid() async {
-    if (IBGBuildInfo.I.isAndroid) {
-      return _host.disableAndroid();
-    }
   }
 }

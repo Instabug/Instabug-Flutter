@@ -276,28 +276,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     @Override
-    public void setDebugEnabled(@NonNull Boolean enabled) {
-        Instabug.setDebugEnabled(enabled);
-    }
-
-    @Override
-    public void setSdkDebugLogsLevel(@NonNull String level) {
-        // iOS Only
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    @Deprecated()
-    public void setReproStepsMode(@NonNull String mode) {
-        try {
-            final State resolvedMode = ArgsRegistry.reproStates.get(mode);
-            Instabug.setReproStepsState(resolvedMode);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public void setReproStepsConfig(@Nullable String bugMode, @Nullable String crashMode) {
         try {
             final ReproConfigurations.Builder builder = new ReproConfigurations.Builder();
@@ -392,16 +370,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public void clearFileAttachments() {
         Instabug.clearFileAttachment();
-    }
-
-    @Override
-    public void enableAndroid() {
-        Instabug.enable();
-    }
-
-    @Override
-    public void disableAndroid() {
-        Instabug.disable();
     }
 
     @Override

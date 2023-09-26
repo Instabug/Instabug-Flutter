@@ -6,17 +6,7 @@ import 'package:instabug_flutter/src/generated/replies.api.g.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:meta/meta.dart';
 
-@Deprecated(
-  "Use [Replies.hasChats] return value instead of callback.",
-)
-typedef HasChatsCallback = void Function(bool);
-
 typedef OnNewReplyReceivedCallback = void Function();
-
-@Deprecated(
-  "Use [Replies.getUnreadRepliesCount] return value instead of callback.",
-)
-typedef UnreadRepliesCountCallback = void Function(int);
 
 class Replies implements RepliesFlutterApi {
   static var _host = RepliesHostApi();
@@ -57,15 +47,9 @@ class Replies implements RepliesFlutterApi {
 
   /// Tells whether the user has chats already or not.
   /// [callback] - callback that is invoked if chats exist
-  static Future<bool> hasChats([
-    @Deprecated(
-      'Use return value instead of callback: `final count = await Replies.hasChats();`',
-    )
-        // ignore: deprecated_member_use_from_same_package
-        HasChatsCallback? callback,
-  ]) async {
+  static Future<bool> hasChats() async {
     final hasChats = await _host.hasChats();
-    callback?.call(hasChats);
+
     return hasChats;
   }
 
@@ -83,15 +67,9 @@ class Replies implements RepliesFlutterApi {
   /// has, then possibly notify them about it with your own UI.
   /// [function] callback with argument
   /// Notifications count, or -1 in case the SDK has not been initialized.
-  static Future<int> getUnreadRepliesCount([
-    @Deprecated(
-      'Use return value instead of callback: `final count = await Replies.getUnreadRepliesCount();`',
-    )
-        // ignore: deprecated_member_use_from_same_package
-        UnreadRepliesCountCallback? callback,
-  ]) async {
+  static Future<int> getUnreadRepliesCount() async {
     final count = await _host.getUnreadRepliesCount();
-    callback?.call(count);
+
     return count;
   }
 
