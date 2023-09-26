@@ -39,11 +39,6 @@ abstract class InstabugHostApi {
   @async
   Map<String, String>? getUserAttributes();
 
-  void setDebugEnabled(bool enabled);
-  void setSdkDebugLogsLevel(String level);
-
-  @Deprecated('Use [setReproStepsConfig] instead')
-  void setReproStepsMode(String mode);
   void setReproStepsConfig(String? bugMode, String? crashMode);
   void reportScreenChange(String screenName);
 
@@ -53,9 +48,6 @@ abstract class InstabugHostApi {
   void addFileAttachmentWithURL(String filePath, String fileName);
   void addFileAttachmentWithData(Uint8List data, String fileName);
   void clearFileAttachments();
-
-  void enableAndroid();
-  void disableAndroid();
 
   void networkLog(Map<String, Object> data);
 }

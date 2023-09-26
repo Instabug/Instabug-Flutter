@@ -4,28 +4,10 @@
 
 + (ArgsDictionary *)sdkLogLevels {
     return @{
-        @"LogLevel.none" : @(IBGLogLevelNone),
+        @"LogLevel.none" : @(IBGSDKDebugLogsLevelNone),
         @"LogLevel.error" : @(IBGSDKDebugLogsLevelError),
-        @"LogLevel.warning" : @(IBGSDKDebugLogsLevelError), // Deprecated
-        @"LogLevel.info" : @(IBGSDKDebugLogsLevelDebug), // Deprecated
         @"LogLevel.debug" : @(IBGSDKDebugLogsLevelDebug),
         @"LogLevel.verbose" : @(IBGSDKDebugLogsLevelVerbose),
-
-        @"IBGSDKDebugLogsLevel.verbose" : @(IBGSDKDebugLogsLevelVerbose), // Deprecated
-        @"IBGSDKDebugLogsLevel.debug" : @(IBGSDKDebugLogsLevelDebug), // Deprecated
-        @"IBGSDKDebugLogsLevel.error" : @(IBGSDKDebugLogsLevelError), // Deprecated
-        @"IBGSDKDebugLogsLevel.none" : @(IBGSDKDebugLogsLevelNone), // Deprecated
-    };
-}
-
-+ (ArgsDictionary *)logLevels {
-    return @{
-        @"LogLevel.none" : @(IBGLogLevelNone),
-        @"LogLevel.error" : @(IBGLogLevelError),
-        @"LogLevel.warning" : @(IBGLogLevelWarning),
-        @"LogLevel.info" : @(IBGLogLevelInfo),
-        @"LogLevel.debug" : @(IBGLogLevelDebug),
-        @"LogLevel.verbose" : @(IBGLogLevelVerbose)
     };
 }
 
@@ -155,7 +137,6 @@
         @"CustomTextPlaceHolderKey.shakeHint" : kIBGShakeStartAlertTextStringName,
         @"CustomTextPlaceHolderKey.swipeHint" : kIBGEdgeSwipeStartAlertTextStringName,
         @"CustomTextPlaceHolderKey.invalidEmailMessage" : kIBGInvalidEmailMessageStringName,
-        @"CustomTextPlaceHolderKey.invalidCommentMessage" : kIBGInvalidCommentMessageStringName,
         @"CustomTextPlaceHolderKey.invocationHeader" : kIBGInvocationTitleStringName,
         @"CustomTextPlaceHolderKey.reportQuestion" : kIBGAskAQuestionStringName,
         @"CustomTextPlaceHolderKey.reportBug" : kIBGReportBugStringName,
@@ -210,7 +191,7 @@
         @"CustomTextPlaceHolderKey.reproStepsListDescription" : kIBGReproStepsListHeader,
         @"CustomTextPlaceHolderKey.reproStepsListEmptyStateDescription" : kIBGReproStepsListEmptyStateLabel,
         @"CustomTextPlaceHolderKey.reproStepsListItemTitle" : kIBGReproStepsListItemName,
-        
+
         @"CustomTextPlaceHolderKey.okButtonText" : kIBGOkButtonTitleStringName,
         @"CustomTextPlaceHolderKey.audio" : kIBGAudioStringName,
         @"CustomTextPlaceHolderKey.image" : kIBGImageStringName,

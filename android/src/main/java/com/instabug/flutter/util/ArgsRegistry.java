@@ -16,7 +16,6 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
 import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
-import com.instabug.library.visualusersteps.State;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -34,21 +33,8 @@ public final class ArgsRegistry {
     public static final ArgsMap<Integer> sdkLogLevels = new ArgsMap<Integer>() {{
         put("LogLevel.none", LogLevel.NONE);
         put("LogLevel.error", LogLevel.ERROR);
-        put("LogLevel.warning", LogLevel.ERROR); // Deprecated
-        put("LogLevel.info", LogLevel.DEBUG); // Deprecated
         put("LogLevel.debug", LogLevel.DEBUG);
         put("LogLevel.verbose", LogLevel.VERBOSE);
-    }};
-
-    @SuppressWarnings("DeprecatedIsStillUsed")
-    @Deprecated()
-    public static final ArgsMap<Integer> logLevels = new ArgsMap<Integer>() {{
-        put("LogLevel.none", com.instabug.apm.model.LogLevel.NONE);
-        put("LogLevel.error", com.instabug.apm.model.LogLevel.ERROR);
-        put("LogLevel.warning", com.instabug.apm.model.LogLevel.WARNING);
-        put("LogLevel.info", com.instabug.apm.model.LogLevel.INFO);
-        put("LogLevel.debug", com.instabug.apm.model.LogLevel.DEBUG);
-        put("LogLevel.verbose", com.instabug.apm.model.LogLevel.VERBOSE);
     }};
 
     public static ArgsMap<InstabugInvocationEvent> invocationEvents = new ArgsMap<InstabugInvocationEvent>() {{
@@ -112,13 +98,6 @@ public final class ArgsRegistry {
         put("ExtendedBugReportMode.disabled", ExtendedBugReport.State.DISABLED);
     }};
 
-    @Deprecated()
-    public static final ArgsMap<State> reproStates = new ArgsMap<State>() {{
-        put("ReproStepsMode.enabledWithNoScreenshots", State.ENABLED_WITH_NO_SCREENSHOTS);
-        put("ReproStepsMode.enabled", State.ENABLED);
-        put("ReproStepsMode.disabled", State.DISABLED);
-    }};
-
     public static final ArgsMap<Integer> reproModes = new ArgsMap<Integer>() {{
         put("ReproStepsMode.enabledWithNoScreenshots", ReproMode.EnableWithNoScreenshots);
         put("ReproStepsMode.enabled", ReproMode.EnableWithScreenshots);
@@ -158,7 +137,6 @@ public final class ArgsRegistry {
         put("CustomTextPlaceHolderKey.shakeHint", Key.SHAKE_HINT);
         put("CustomTextPlaceHolderKey.swipeHint", Key.SWIPE_HINT);
         put("CustomTextPlaceHolderKey.invalidEmailMessage", Key.INVALID_EMAIL_MESSAGE);
-        put("CustomTextPlaceHolderKey.invalidCommentMessage", Key.INVALID_COMMENT_MESSAGE);
         put("CustomTextPlaceHolderKey.emailFieldHint", Key.EMAIL_FIELD_HINT);
         put("CustomTextPlaceHolderKey.commentFieldHintForBugReport", Key.COMMENT_FIELD_HINT_FOR_BUG_REPORT);
         put("CustomTextPlaceHolderKey.commentFieldHintForFeedback", Key.COMMENT_FIELD_HINT_FOR_FEEDBACK);

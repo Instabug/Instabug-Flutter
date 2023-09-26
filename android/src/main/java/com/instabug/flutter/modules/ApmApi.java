@@ -8,7 +8,6 @@ import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
-import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
 
@@ -41,7 +40,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     @Override
     public void setColdAppLaunchEnabled(@NonNull Boolean isEnabled) {
         try {
-            APM.setAppLaunchEnabled(isEnabled);
+            APM.setColdAppLaunchEnabled(isEnabled);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,16 +50,6 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     public void setAutoUITraceEnabled(@NonNull Boolean isEnabled) {
         try {
             APM.setAutoUITraceEnabled(isEnabled);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void setLogLevel(@NonNull String level) {
-        try {
-            final int resolvedLevel = ArgsRegistry.logLevels.get(level);
-            APM.setLogLevel(resolvedLevel);
         } catch (Exception e) {
             e.printStackTrace();
         }
