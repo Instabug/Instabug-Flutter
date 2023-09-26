@@ -27,8 +27,6 @@ class SessionReplay {
   /// SessionReplay.setEnabled(true); // Enable Session Replay
   /// SessionReplay.setEnabled(false); // Disable Session Replay
   /// ```
-  ///
-  /// For more information, see [Enabling/Disabling Session Replay](https://docs.instabug.com/docs/android-session-replay#enablingdisabling-session-replay).
   static Future<void> setEnabled(bool isEnabled) async {
     return _host.setEnabled(isEnabled);
   }
@@ -44,8 +42,6 @@ class SessionReplay {
   /// await SessionReplay.setNetworkLogsEnabled(true); // Enable network logs
   /// await SessionReplay.setNetworkLogsEnabled(false); // Disable network logs
   /// ```
-  ///
-  /// For more information, see [Network Logs](https://docs.instabug.com/docs/android-session-replay#network).
   static Future<void> setNetworkLogsEnabled(bool isEnabled) async {
     return _host.setNetworkLogsEnabled(isEnabled);
   }
@@ -61,8 +57,6 @@ class SessionReplay {
   /// await SessionReplay.setInstabugLogsEnabled(true); // Enable Instabug logs
   /// await SessionReplay.setInstabugLogsEnabled(false); // Disable Instabug logs
   /// ```
-  ///
-  /// For more information, see [Instabug Logs](https://docs.instabug.com/docs/android-session-replay#instabug-logs).
   static Future<void> setInstabugLogsEnabled(bool isEnabled) async {
     return _host.setInstabugLogsEnabled(isEnabled);
   }
@@ -78,8 +72,6 @@ class SessionReplay {
   /// await SessionReplay.setUserStepsEnabled(true); // Enable user steps
   /// await SessionReplay.setUserStepsEnabled(false); // Disable user steps
   /// ```
-  ///
-  /// For more information, see [User Steps](https://docs.instabug.com/docs/android-session-replay#user-steps).
   static Future<void> setUserStepsEnabled(bool isEnabled) async {
     return _host.setUserStepsEnabled(isEnabled);
   }
