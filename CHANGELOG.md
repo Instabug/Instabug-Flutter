@@ -4,7 +4,7 @@
 
 ### Added
 
-- Adds support for Session Replay, which includes capturing session details, visual reproduction of sessions as well as support for user steps, network and Instabug logs. ([#395](https://github.com/Instabug/Instabug-Flutter/pull/395)). 
+- Add support for Session Replay, which includes capturing session details, visual reproduction of sessions as well as support for user steps, network and Instabug logs. ([#395](https://github.com/Instabug/Instabug-Flutter/pull/395)).
 
 ### Changed
 
