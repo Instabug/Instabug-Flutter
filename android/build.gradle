@@ -16,10 +16,6 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
-
-        maven {
-            url 'https://oss.sonatype.org/content/repositories/snapshots'
-        }
     }
 }
 
@@ -45,7 +41,7 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:v11.14.0.1-bdrthermea'
+    api 'com.instabug.library-bdrthermea:instabug:11.14.0.2'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
