@@ -351,13 +351,13 @@ class Instabug {
     }
   }
 
-  /// Sets the repro steps mode for bugs, crashes and session Replay.
+  /// Sets the repro steps mode for Bug Reporting, Crash Reporting and Session Replay.
   ///
   /// [bug] repro steps mode for bug reports.
   /// [crash] repro steps mode for crash reports.
   /// [sessionReplay] repro steps mode for session replay.
-  /// [all] repro steps mode for both bug and crash reports, when present it
-  /// overrides [bug] and [crash].
+  /// [all] repro steps mode for bug reports, crash reports and session replay.
+  /// If [all] is set, it will override the other modes.
   ///
   /// Example:
   /// ```dart
