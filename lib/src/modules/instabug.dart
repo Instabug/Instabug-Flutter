@@ -351,31 +351,36 @@ class Instabug {
     }
   }
 
-  /// Sets the repro steps mode for bugs and crashes.
+  /// Sets the repro steps mode for Bug Reporting, Crash Reporting and Session Replay.
   ///
   /// [bug] repro steps mode for bug reports.
   /// [crash] repro steps mode for crash reports.
-  /// [all] repro steps mode for both bug and crash reports, when present it
-  /// overrides [bug] and [crash].
+  /// [sessionReplay] repro steps mode for session replay.
+  /// [all] repro steps mode for bug reports, crash reports and session replay.
+  /// If [all] is set, it will override the other modes.
   ///
   /// Example:
   /// ```dart
   /// Instabug.setReproStepsConfig(
   ///   bug: ReproStepsMode.enabled,
   ///   crash: ReproStepsMode.disabled,
+  ///   sessionReplay: ReproStepsMode.enabled,
   /// );
   ///  ```
   static Future<void> setReproStepsConfig({
     ReproStepsMode? bug,
     ReproStepsMode? crash,
+    ReproStepsMode? sessionReplay,
     ReproStepsMode? all,
   }) async {
     var bugMode = bug;
     var crashMode = crash;
+    var sessionReplayMode = sessionReplay;
 
     if (all != null) {
       bugMode = all;
       crashMode = all;
+      sessionReplayMode = all;
     }
 
     // There's an issue with crashes repro steps with screenshots in the iOS SDK
@@ -389,6 +394,7 @@ class Instabug {
     return _host.setReproStepsConfig(
       bugMode.toString(),
       crashMode.toString(),
+      sessionReplayMode.toString(),
     );
   }
 

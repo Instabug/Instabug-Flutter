@@ -285,12 +285,14 @@
 - (void)testSetReproStepsConfig {
     NSString *bugMode = @"ReproStepsMode.enabled";
     NSString *crashMode = @"ReproStepsMode.disabled";
+    NSString *sessionReplayMode = @"ReproStepsMode.disabled";
     FlutterError *error;
 
-    [self.api setReproStepsConfigBugMode:bugMode crashMode:crashMode error:&error];
+    [self.api setReproStepsConfigBugMode:bugMode crashMode:crashMode sessionReplayMode:sessionReplayMode error:&error];
 
     OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeBug withMode:IBGUserStepsModeEnable]);
     OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeCrash withMode:IBGUserStepsModeDisable]);
+    OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeSessionReplay withMode:IBGUserStepsModeDisable]);
 }
 
 - (void)testReportScreenChange {

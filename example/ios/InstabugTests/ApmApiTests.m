@@ -61,7 +61,8 @@
     NSString *name = @"trace-name";
     XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
 
-    OCMStub([self.mAPM startExecutionTraceWithName:name]).andReturn([IBGExecutionTrace new]);
+    IBGExecutionTrace *mTrace = OCMClassMock([IBGExecutionTrace class]);
+    OCMStub([self.mAPM startExecutionTraceWithName:name]).andReturn(mTrace);
 
     [self.api startExecutionTraceId:expectedId name:name completion:^(NSString *actualId, FlutterError *error) {
         [expectation fulfill];
@@ -124,7 +125,7 @@
 
 - (void)testEndUITrace {
     FlutterError *error;
-    
+
     [self.api endUITraceWithError:&error];
 
     OCMVerify([self.mAPM endUITrace]);

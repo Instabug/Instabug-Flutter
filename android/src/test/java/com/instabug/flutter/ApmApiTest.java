@@ -14,6 +14,7 @@ import static org.mockito.Mockito.when;
 
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
+import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.modules.ApmApi;
 import com.instabug.flutter.util.GlobalMocks;
@@ -205,6 +206,7 @@ public class ApmApiTest {
         data.put("duration", requestDuration);
         data.put("serverErrorMessage", serverErrorMessage);
 
+        MockedConstruction<APMNetworkLogger> mAPMNetworkLogger = mockConstruction(APMNetworkLogger.class);
         MockedConstruction<JSONObject> mJSONObject = mockConstruction(JSONObject.class, (mock, context) -> when(mock.toString(anyInt())).thenReturn("{}"));
 
         api.networkLogAndroid(data);
@@ -228,6 +230,7 @@ public class ApmApiTest {
                 serverErrorMessage
         ));
 
+        mAPMNetworkLogger.close();
         mJSONObject.close();
     }
 }

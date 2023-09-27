@@ -149,7 +149,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     completion(Instabug.userAttributes, nil);
 }
 
-- (void)setReproStepsConfigBugMode:(nullable NSString *)bugMode crashMode:(nullable NSString *)crashMode error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+- (void)setReproStepsConfigBugMode:(nullable NSString *)bugMode crashMode:(nullable NSString *)crashMode sessionReplayMode:(nullable NSString *)sessionReplayMode error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     if (bugMode != nil) {
         IBGUserStepsMode resolvedBugMode = ArgsRegistry.reproModes[bugMode].integerValue;
         [Instabug setReproStepsFor:IBGIssueTypeBug withMode:resolvedBugMode];
@@ -158,6 +158,11 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     if (crashMode != nil) {
         IBGUserStepsMode resolvedCrashMode = ArgsRegistry.reproModes[crashMode].integerValue;
         [Instabug setReproStepsFor:IBGIssueTypeCrash withMode:resolvedCrashMode];
+    }
+    
+    if (sessionReplayMode != nil) {
+        IBGUserStepsMode resolvedSessionReplayMode = ArgsRegistry.reproModes[sessionReplayMode].integerValue;
+        [Instabug setReproStepsFor:IBGIssueTypeSessionReplay withMode:resolvedSessionReplayMode];
     }
 }
 
