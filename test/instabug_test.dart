@@ -288,7 +288,10 @@ void main() {
 
     verify(
       mHost.setReproStepsConfig(
-          bug.toString(), crash.toString(), sessionReplay.toString()),
+        bug.toString(),
+        crash.toString(),
+        sessionReplay.toString(),
+      ),
     ).called(1);
   });
 
