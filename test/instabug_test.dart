@@ -276,16 +276,22 @@ void main() {
   test('[setReproStepsConfig] should call host method', () async {
     const bug = ReproStepsMode.enabled;
     const crash = ReproStepsMode.enabledWithNoScreenshots;
+    const sessionReplay = ReproStepsMode.disabled;
 
     when(mBuildInfo.isIOS).thenReturn(false);
 
     await Instabug.setReproStepsConfig(
       bug: bug,
       crash: crash,
+      sessionReplay: sessionReplay,
     );
 
     verify(
-      mHost.setReproStepsConfig(bug.toString(), crash.toString()),
+      mHost.setReproStepsConfig(
+        bug.toString(),
+        crash.toString(),
+        sessionReplay.toString(),
+      ),
     ).called(1);
   });
 
@@ -297,7 +303,7 @@ void main() {
     await Instabug.setReproStepsConfig(all: all);
 
     verify(
-      mHost.setReproStepsConfig(all.toString(), all.toString()),
+      mHost.setReproStepsConfig(all.toString(), all.toString(), all.toString()),
     ).called(1);
   });
 

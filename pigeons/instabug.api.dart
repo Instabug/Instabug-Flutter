@@ -39,7 +39,11 @@ abstract class InstabugHostApi {
   @async
   Map<String, String>? getUserAttributes();
 
-  void setReproStepsConfig(String? bugMode, String? crashMode);
+  void setReproStepsConfig(
+    String? bugMode,
+    String? crashMode,
+    String? sessionReplayMode,
+  );
   void reportScreenChange(String screenName);
 
   void setCustomBrandingImage(String light, String dark);

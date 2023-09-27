@@ -26,7 +26,6 @@ import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
-import com.instabug.library.visualusersteps.State;
 
 import org.json.JSONObject;
 
@@ -276,7 +275,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     @Override
-    public void setReproStepsConfig(@Nullable String bugMode, @Nullable String crashMode) {
+    public void setReproStepsConfig(@Nullable String bugMode, @Nullable String crashMode, @Nullable String sessionReplayMode) {
         try {
             final ReproConfigurations.Builder builder = new ReproConfigurations.Builder();
 
@@ -288,6 +287,11 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             if (crashMode != null) {
                 final Integer resolvedCrashMode = ArgsRegistry.reproModes.get(crashMode);
                 builder.setIssueMode(IssueType.Crash, resolvedCrashMode);
+            }
+
+            if (sessionReplayMode != null) {
+                final Integer resolvedSessionReplayMode = ArgsRegistry.reproModes.get(sessionReplayMode);
+                builder.setIssueMode(IssueType.SessionReplay, resolvedSessionReplayMode);
             }
 
             final ReproConfigurations config = builder.build();
