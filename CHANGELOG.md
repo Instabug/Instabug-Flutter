@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v11.14.0...dev)
+## [12.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.1.0...v11.14.0)
 
 ### Added
 
