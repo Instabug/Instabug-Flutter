@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v11.14.0...dev)
 
+### Added
+
+- Add support for Session Replay, which includes capturing session details, visual reproduction of sessions as well as support for user steps, network and Instabug logs. ([#395](https://github.com/Instabug/Instabug-Flutter/pull/395)).
+
 ### Changed
 
 - **BREAKING** Remove deprecated APIs ([#385](https://github.com/Instabug/Instabug-Flutter/pull/385)). See migration guide for more details.

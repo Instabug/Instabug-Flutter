@@ -17,6 +17,7 @@ import com.instabug.flutter.modules.FeatureRequestsApi;
 import com.instabug.flutter.modules.InstabugApi;
 import com.instabug.flutter.modules.InstabugLogApi;
 import com.instabug.flutter.modules.RepliesApi;
+import com.instabug.flutter.modules.SessionReplayApi;
 import com.instabug.flutter.modules.SurveysApi;
 
 import java.util.concurrent.Callable;
@@ -88,6 +89,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
         InstabugApi.init(messenger, context, screenshotProvider);
         InstabugLogApi.init(messenger);
         RepliesApi.init(messenger);
+        SessionReplayApi.init(messenger);
         SurveysApi.init(messenger);
     }
 
