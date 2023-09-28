@@ -20,7 +20,7 @@ void main() {
     SessionReplay.$setHostApi(mHost);
   });
 
-  test('[enabled] should call host method', () async {
+  test('[setEnabled] should call host method', () async {
     const isEnabled = true;
     await SessionReplay.setEnabled(isEnabled);
 
