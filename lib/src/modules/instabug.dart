@@ -380,6 +380,9 @@ class Instabug {
   /// Reports that the screen has been changed (repro steps)
   /// [screenName] String containing the screen name
   static Future<void> reportScreenChange(String screenName) async {
+    // ignore: avoid_print
+    print('IBG-Flutter: Reporting screen change for $screenName');
+
     return _host.reportScreenChange(screenName);
   }
 
