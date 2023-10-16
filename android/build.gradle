@@ -16,6 +16,9 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+			url 'https://oss.sonatype.org/content/repositories/snapshots'
+		}
     }
 }
 
@@ -41,7 +44,7 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:12.1.0'
+    api 'com.instabug.library:instabug:12.1.0.5348056-SNAPSHOT'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
