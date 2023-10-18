@@ -14,7 +14,7 @@ generate_pigeon() {
   name_snake=$(basename $name_file .api.dart)
   name_pascal=$(echo "$name_snake" | perl -pe 's/(^|_)./uc($&)/ge;s/_//g')
 
-  flutter pub run pigeon \
+  dart run pigeon \
       --input "pigeons/$name_snake.api.dart" \
       --dart_out "$DIR_DART/$name_snake.api.g.dart" \
       --objc_header_out "$DIR_IOS/${name_pascal}Pigeon.h" \
