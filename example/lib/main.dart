@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'dart:io' show Platform;
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter_example/native_channels/instabug_example_native_host.dart';
 
 void main() {
   runZonedGuarded(
@@ -174,6 +176,31 @@ class _MyHomePageState extends State<MyHomePage> {
     FeatureRequests.show();
   }
 
+  void reportNDKCrash() {
+    if (Platform.isAndroid) {
+      InstabugExampleNativeHost.sendNDKCrash();
+    } else {
+      // Show an alert dialog to the user
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('NDK Crashes'),
+            content: Text(
+              'NDK crashes are only available on Android.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   void toggleReportType(ReportType reportType) {
     if (reportTypes.contains(reportType)) {
       reportTypes.remove(reportType);
@@ -339,6 +366,10 @@ class _MyHomePageState extends State<MyHomePage> {
               InstabugButton(
                 onPressed: showFeatureRequests,
                 text: 'Show Feature Requests',
+              ),
+              InstabugButton(
+                onPressed: reportNDKCrash,
+                text: 'Throw Unhandled NDK C++ Crash',
               ),
               SectionTitle('Color Theme'),
               ButtonBar(
