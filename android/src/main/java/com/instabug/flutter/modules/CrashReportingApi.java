@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.instabug.crash.CrashReporting;
+import com.instabug.flutter.R;
 import com.instabug.flutter.generated.CrashReportingPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.library.Feature;
@@ -46,4 +47,12 @@ public class CrashReportingApi implements CrashReportingPigeon.CrashReportingHos
         }
     }
 
+    @Override
+    public void setNDKCrashesEnabled(@NonNull Boolean isEnabled) {
+        if (isEnabled) {
+            CrashReporting.setNDKCrashesState(Feature.State.ENABLED);
+        } else {
+            CrashReporting.setNDKCrashesState(Feature.State.DISABLED);
+        }
+    }
 }

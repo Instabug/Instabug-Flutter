@@ -1,5 +1,6 @@
+apply from: './native.gradle'
 group 'com.instabug.flutter'
-version '12.1.0'
+version "${project.ext.instabug.version}"
 
 buildscript {
     repositories {

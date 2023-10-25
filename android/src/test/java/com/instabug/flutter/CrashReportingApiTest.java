@@ -77,4 +77,23 @@ public class CrashReportingApiTest {
 
         reflected.verify(() -> MockReflected.crashReportException(any(JSONObject.class), eq(isHandled)));
     }
+
+
+    @Test
+    public void testSetNDKCrashesEnabledGivenTrue() {
+        boolean isEnabled = true;
+
+        api.setEnabled(isEnabled);
+
+        mCrashReporting.verify(() -> CrashReporting.setState(Feature.State.ENABLED));
+    }
+
+    @Test
+    public void testSetNDKCrashesEnabledGivenFalse() {
+        boolean isEnabled = false;
+
+        api.setNDKCrashesEnabled(isEnabled);
+
+        mCrashReporting.verify(() -> CrashReporting.setNDKCrashesState(Feature.State.DISABLED));
+    }
 }

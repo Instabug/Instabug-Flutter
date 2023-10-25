@@ -4,4 +4,5 @@ import 'package:pigeon/pigeon.dart';
 abstract class CrashReportingHostApi {
   void setEnabled(bool isEnabled);
   void send(String jsonCrash, bool isHandled);
+  void setNDKCrashesEnabled(bool isEnabled);
 }

@@ -1,0 +1,3 @@
+project.ext.instabug = [
+        version: '12.1.0',
+]
