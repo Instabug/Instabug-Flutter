@@ -59,6 +59,12 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.22.1'
+        }
+    }
 
     configurations.all {
         resolutionStrategy.force 'org.hamcrest:hamcrest-core:1.3'
