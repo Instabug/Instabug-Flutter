@@ -383,14 +383,6 @@ class Instabug {
       sessionReplayMode = all;
     }
 
-    // There's an issue with crashes repro steps with screenshots in the iOS SDK
-    // at the moment, so we'll map enabled with screenshots to enabled with no
-    // screenshots to avoid storing the images on disk if it's not needed until
-    // this issue is fixed in a future version.
-    if (IBGBuildInfo.I.isIOS && crashMode == ReproStepsMode.enabled) {
-      crashMode = ReproStepsMode.enabledWithNoScreenshots;
-    }
-
     return _host.setReproStepsConfig(
       bugMode.toString(),
       crashMode.toString(),
