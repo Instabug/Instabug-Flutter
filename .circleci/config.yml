@@ -71,6 +71,34 @@ commands:
       - run:
           name: Configure Captain Platform
           command: echo 'export CAPTAIN_PLATFORM=<<parameters.platform>>' >> $BASH_ENV
+  # This runs `flutter pub get` and `dart pub get` if we pass parameter `generate_pigeons` to the job it also runs the following:
+  #   - `sh ./scripts/pigeon.sh`
+  #   - `dart run build_runner build --delete-conflicting-outputs`
+  install_flutter_and_dart_packages:
+    parameters:
+      generate_pigeons:
+        type: boolean
+    steps:
+      - run:
+          name: Install Flutter Packages
+          command: flutter pub get
+      - run:
+          name: Install Dart Packages
+          command: dart pub get
+          description: Install Dart Packages (for dart explicit packages)
+      - when:
+          condition:
+            equal:
+              - <<parameters.generate_pigeons>>
+              - true
+          steps:
+            - run:
+                name: Generate Pigeons
+                command: sh ./scripts/pigeon.sh
+            - run:
+                name: Build Pigeons
+                command: dart run build_runner build --delete-conflicting-outputs
+
 
 jobs:
   danger:
@@ -95,9 +123,8 @@ jobs:
       - image: cirrusci/flutter:<<parameters.version>>
     steps:
       - checkout
-      - run: flutter pub get
-      - run: sh ./scripts/pigeon.sh
-      - run: dart run build_runner build --delete-conflicting-outputs
+      - install_flutter_and_dart_packages:
+          generate_pigeons: true
       - run: flutter test --coverage
       - run:
           working_directory: coverage
@@ -182,7 +209,8 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - run: flutter pub get
+      - install_flutter_and_dart_packages:
+          generate_pigeons: false
       - run:
           name: Check Format
           command: dart format . --set-exit-if-changed
@@ -192,9 +220,8 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - run: flutter pub get
-      - run: sh ./scripts/pigeon.sh
-      - run: dart run build_runner build --delete-conflicting-outputs
+      - install_flutter_and_dart_packages:
+          generate_pigeons: true
       - run:
           name: Perform Static Analysis
           command: flutter analyze
@@ -204,9 +231,8 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - run: flutter pub get
-      - run: sh ./scripts/pigeon.sh
-      - run: dart run build_runner build --delete-conflicting-outputs
+      - install_flutter_and_dart_packages:
+          generate_pigeons: true
       - run:
           name: Check Package Score
           command: dart run pana --no-warning --exit-code-threshold 0
