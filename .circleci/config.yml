@@ -82,10 +82,11 @@ commands:
       - run:
           name: Install Flutter Packages
           command: flutter pub get
+          
+      # Installs Dart Packages (for dart explicit packages)
       - run:
           name: Install Dart Packages
           command: dart pub get
-          description: Install Dart Packages (for dart explicit packages)
       - when:
           condition:
             equal:
@@ -238,7 +239,34 @@ jobs:
           command: dart run pana --no-warning --exit-code-threshold 0
       - run: flutter pub publish --dry-run
 
-  release:
+#  release:
+#    macos:
+#      xcode: 13.4.1
+#    working_directory: "~"
+#    steps:
+#      - checkout:
+#          path: ~/project
+#      - flutter/install_sdk_and_pub:
+#          flutter_version: 3.3.6
+#          app-dir: project
+#      - install_flutter_and_dart_packages:
+#          working_directory: ~/project
+#          generate_pigeons: true
+#      - run:
+#          name: Clone Escape
+#          command: git clone git@github.com:Instabug/Escape.git
+#      - run:
+#          name: Build Escape
+#          working_directory: Escape
+#          command: |
+#            swift build -c release
+#            cp -f .build/release/Escape /usr/local/bin/escape
+#      - run:
+#          name: Publish Package
+#          working_directory: project
+#          command: Escape flutter publish
+
+  test_failing_release:
     macos:
       xcode: 13.4.1
     working_directory: "~"
@@ -249,22 +277,16 @@ jobs:
           flutter_version: 3.3.6
           app-dir: project
       - run:
+          name: Install pub packages
+          working_directory: ~/project
+          command: dart pub get
+      - run:
           name: Generate Pigeons
           working_directory: project
           command: sh ./scripts/pigeon.sh
       - run:
           name: Clone Escape
           command: git clone git@github.com:Instabug/Escape.git
-      - run:
-          name: Build Escape
-          working_directory: Escape
-          command: |
-            swift build -c release
-            cp -f .build/release/Escape /usr/local/bin/escape
-      - run:
-          name: Publish Package
-          working_directory: project
-          command: Escape flutter publish
 
 workflows:
   version: 2
@@ -290,23 +312,19 @@ workflows:
       - verify_pub:
           requires:
             - lint_flutter
-      - hold_release:
+#      - hold_release:
+#          type: approval
+#          requires:
+#            - danger
+#            - test_flutter-stable
+#            - test_flutter-2.10.5
+#            - test_android
+#            - e2e_android_captain
+#            - test_ios
+#            - e2e_ios_captain
+#            - verify_pub
+      - test_hold_release:
           type: approval
+      - test_failing_release:
           requires:
-            - danger
-            - test_flutter-stable
-            - test_flutter-2.10.5
-            - test_android
-            - e2e_android_captain
-            - test_ios
-            - e2e_ios_captain
-            - verify_pub
-          filters:
-            branches:
-              only: master
-      - release:
-          requires:
-            - hold_release
-          filters:
-            branches:
-              only: master
+            - test_hold_release
