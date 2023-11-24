@@ -249,6 +249,10 @@ jobs:
           flutter_version: 3.3.6
           app-dir: project
       - run:
+          name: Install pub packages
+          working_directory: ~/project
+          command: dart pub get
+      - run:
           name: Generate Pigeons
           working_directory: project
           command: sh ./scripts/pigeon.sh
