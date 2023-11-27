@@ -1,0 +1,26 @@
+<network-security-config>
+    <domain-config>
+        <!-- Make sure your URL Server here -->
+        <domain includeSubdomains="true">api.instabug.com</domain>
+        <domain includeSubdomains="true">api-apm.instabug.com</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <trust-anchors>
+            <certificates src="user"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </domain-config>
+
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="user"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </debug-overrides>
+
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="user"/>
+        </trust-anchors>
+    </base-config>
+</network-security-config>
