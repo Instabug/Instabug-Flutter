@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - Instabug (12.1.0)
+  - Instabug (12.2.0)
   - instabug_flutter (12.1.0):
     - Flutter
     - Instabug
@@ -8,7 +8,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - Instabug (from `https://ios-releases.instabug.com/custom/bdr-therma-14.4/11.14.0/Instabug.podspec`)
+  - Instabug (from `https://ios-releases.instabug.com/custom/feature-add-more-languages/12.2.0/Instabug.podspec`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
 
@@ -20,16 +20,16 @@ EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   Instabug:
-    :podspec: https://ios-releases.instabug.com/custom/bdr-therma-14.4/11.14.0/Instabug.podspec
+    :podspec: https://ios-releases.instabug.com/custom/feature-add-more-languages/12.2.0/Instabug.podspec
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  Instabug: d56b91e56e18709fdafd92584346d54f1725c08f
-  instabug_flutter: e8db3fa8919de01539f48aa3cb82c3b0d35cfb8a
+  Instabug: 6d20376c1d69f2c890b817836569e99db077aeb6
+  instabug_flutter: 01655dd98ccaa2ee7f99c86d38170a8b940d7d2d
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
 
-PODFILE CHECKSUM: f8804196c517ec6b30bbfe77801df61972082622
+PODFILE CHECKSUM: 2b3f498f11cc7e2cad5cd1769bb1e334741fdbc6
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.13.0
