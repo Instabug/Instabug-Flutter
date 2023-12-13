@@ -6,7 +6,7 @@
 
 - Bump Instabug iOS SDK to v12.4.0 ([#419](https://github.com/Instabug/Instabug-Flutter/pull/419)). See release notes for [v12.3.0](https://github.com/instabug/instabug-ios/releases/tag/12.3.0) and [v12.4.0](https://github.com/instabug/instabug-ios/releases/tag/12.4.0).
 
-## [12.2.0](https://github.com/Instabug/Instabug-Flutter/compare/12.1.0...12.2.0) (Tuesday, 14, 2023)
+## [12.2.0](https://github.com/Instabug/Instabug-Flutter/compare/12.1.0...12.2.0) (November 16, 2023)
 
 ### Changed
 
@@ -17,7 +17,7 @@
 
 - Re-enable screenshot capturing for Crash Reporting and Session Replay by removing redundant mapping ([#407](https://github.com/Instabug/Instabug-Flutter/pull/407)). 
 
-## [12.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v11.14.0...v12.1.0) (September, 28, 2023)
+## [12.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v11.14.0...v12.1.0) (September 28, 2023)
 
 ### Added
 
