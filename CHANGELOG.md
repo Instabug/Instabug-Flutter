@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased](https://github.com/Instabug/Instabug-React-Native/compare/v12.2.0...dev)
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v12.2.0...dev)
 
 ### Changed
 
