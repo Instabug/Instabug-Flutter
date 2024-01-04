@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v12.4.0...dev)
+
+### Changed
+
+- Bump Instabug Android SDK to v12.5.0 ([#424](https://github.com/Instabug/Instabug-Flutter/pull/424)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v12.5.0).
+
 ## [12.4.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.2.0...12.4.0) (December 13, 2023)
 
 ### Changed
@@ -16,7 +22,7 @@
 
 ### Fixed
 
-- Re-enable screenshot capturing for Crash Reporting and Session Replay by removing redundant mapping ([#407](https://github.com/Instabug/Instabug-Flutter/pull/407)). 
+- Re-enable screenshot capturing for Crash Reporting and Session Replay by removing redundant mapping ([#407](https://github.com/Instabug/Instabug-Flutter/pull/407)).
 
 ## [12.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v11.14.0...v12.1.0) (September 28, 2023)
 
