@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v12.5.0...dev)
+
+### Fixed
+
+- Fix an Android issue with `showSurvey` causing ANR when invoked from the main thread. The fix ensures its execution on the background thread by default. ([#454]()).
+
 ## [12.5.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.4.0...v12.5.0) (January 08 , 2024)
 
 ### Changed
