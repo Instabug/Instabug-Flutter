@@ -36,4 +36,9 @@ public class MockReflected {
      * CrashReporting.reportException
      */
     public static void crashReportException(JSONObject exception, boolean isHandled) {}
+
+    /**
+     * Surveys.showSurveyCP
+     */
+    public static void showSurveyCP(String surveyToken) {}
 }

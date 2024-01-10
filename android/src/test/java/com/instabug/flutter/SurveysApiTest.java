@@ -1,18 +1,22 @@
 package com.instabug.flutter;
 
+import static com.instabug.flutter.util.GlobalMocks.reflected;
 import static com.instabug.flutter.util.MockResult.makeResult;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 import com.instabug.flutter.generated.SurveysPigeon;
 import com.instabug.flutter.modules.SurveysApi;
 import com.instabug.flutter.util.GlobalMocks;
+import com.instabug.flutter.util.MockReflected;
 import com.instabug.library.Feature;
+import com.instabug.library.Platform;
 import com.instabug.survey.Survey;
 import com.instabug.survey.Surveys;
 import com.instabug.survey.callbacks.OnDismissCallback;
@@ -83,12 +87,22 @@ public class SurveysApiTest {
     }
 
     @Test
+    public void testShowSurveyCp() {
+        String token = "survey-token";
+
+        api.showSurveyCP(token);
+
+        reflected.verify(() -> MockReflected.showSurveyCP(token));
+    }
+
+    @Test
     public void testShowSurvey() {
         String token = "survey-token";
 
         api.showSurvey(token);
 
-        mSurveys.verify(() -> Surveys.showSurvey(token));
+        reflected.verify(() -> MockReflected.showSurveyCP(token));
+        mSurveys.verify(() -> Surveys.showSurvey(token), never());
     }
 
     @Test

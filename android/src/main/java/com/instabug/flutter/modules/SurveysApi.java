@@ -1,21 +1,29 @@
 package com.instabug.flutter.modules;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import com.instabug.flutter.generated.SurveysPigeon;
+import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
 import com.instabug.library.Feature;
+import com.instabug.library.Platform;
 import com.instabug.survey.Survey;
 import com.instabug.survey.Surveys;
 import com.instabug.survey.callbacks.OnDismissCallback;
 import com.instabug.survey.callbacks.OnShowCallback;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
 public class SurveysApi implements SurveysPigeon.SurveysHostApi {
+
+    private final String TAG = InstabugApi.class.getName();
     private final SurveysPigeon.SurveysFlutterApi flutterApi;
 
     public static void init(BinaryMessenger messenger) {
@@ -42,9 +50,28 @@ public class SurveysApi implements SurveysPigeon.SurveysHostApi {
         Surveys.showSurveyIfAvailable();
     }
 
+    /**
+     * Displays a survey using reflection, eliminating the need to call it on a background thread.
+     * This variant does not return a boolean indicating the existence of the survey.
+     * Invoked through reflection.
+     */
+    @VisibleForTesting
+    public void showSurveyCP(@NonNull String surveyToken) {
+        try {
+            Method method = Reflection.getMethod(Class.forName("com.instabug.survey.Surveys"), "showSurveyCP", String.class);
+            if (method != null) {
+                method.invoke(null, surveyToken);
+            } else {
+                Log.e(TAG, "showSurveyCP was not found by reflection");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void showSurvey(@NonNull String surveyToken) {
-        Surveys.showSurvey(surveyToken);
+        showSurveyCP(surveyToken);
     }
 
     @Override
