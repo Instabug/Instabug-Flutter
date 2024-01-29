@@ -171,6 +171,7 @@ jobs:
   test_ios:
     macos:
       xcode: 13.4.1
+    resource_class: macos.m1.medium.gen1
     steps:
       - checkout
       - setup_ios
@@ -188,7 +189,7 @@ jobs:
   e2e_ios_captain:
     macos:
       xcode: 13.4.1
-    resource_class: macos.x86.medium.gen2
+    resource_class: macos.m1.medium.gen1
     steps:
       - checkout
       - setup_captain:
@@ -241,6 +242,7 @@ jobs:
   release:
     macos:
       xcode: 13.4.1
+    resource_class: macos.m1.medium.gen1
     working_directory: "~"
     steps:
       - checkout:
