@@ -2,19 +2,23 @@ version: 2.1
 
 orbs:
   android: circleci/android@2.0
-  flutter: circleci/flutter@1.0
+  flutter: circleci/flutter@2.0.2
   node: circleci/node@5.1.0
 
 commands:
   setup_flutter:
     steps:
       - flutter/install_sdk_and_pub:
-          flutter_version: 3.10.5
+          version: 3.10.5
       - run:
           name: Generate Pigeons
           command: sh ./scripts/pigeon.sh
   setup_ios:
     steps:
+      # Flutter doesn't support Apple Silicon yet, so we need to install Rosetta use Flutter on M1 machines.
+      - run:
+          name: Install Rosetta
+          command: softwareupdate --install-rosetta --agree-to-license
       - setup_flutter
       - run:
           name: Install CocoaPods
@@ -171,6 +175,7 @@ jobs:
   test_ios:
     macos:
       xcode: 13.4.1
+    resource_class: macos.m1.medium.gen1
     steps:
       - checkout
       - setup_ios
@@ -188,7 +193,7 @@ jobs:
   e2e_ios_captain:
     macos:
       xcode: 13.4.1
-    resource_class: macos.x86.medium.gen2
+    resource_class: macos.m1.medium.gen1
     steps:
       - checkout
       - setup_captain:
@@ -241,12 +246,13 @@ jobs:
   release:
     macos:
       xcode: 13.4.1
+    resource_class: macos.m1.medium.gen1
     working_directory: "~"
     steps:
       - checkout:
           path: ~/project
       - flutter/install_sdk_and_pub:
-          flutter_version: 3.3.6
+          version: 3.3.6
           app-dir: project
       - run:
           name: Install pub packages
