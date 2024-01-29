@@ -15,6 +15,10 @@ commands:
           command: sh ./scripts/pigeon.sh
   setup_ios:
     steps:
+      # Flutter doesn't support Apple Silicon yet, so we need to install Rosetta use Flutter on M1 machines.
+      - run:
+          name: Install Rosetta
+          command: softwareupdate --install-rosetta --agree-to-license
       - setup_flutter
       - run:
           name: Install CocoaPods
