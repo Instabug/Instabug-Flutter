@@ -180,11 +180,11 @@ class Instabug {
   }
 
   /// Sets the default value of the user's [email] and hides the email field from the reporting UI
-  /// and set the user's [name] to be included with all reports.
+  /// and set the user's [name] and [id] to be included with all reports.
   /// It also reset the chats on device to that email and removes user attributes,
   /// user data and completed surveys.
-  static Future<void> identifyUser(String email, [String? name]) async {
-    return _host.identifyUser(email, name);
+  static Future<void> identifyUser(String email, [String? name, String? id]) async {
+    return _host.identifyUser(email, name, id);
   }
 
   /// Sets the default value of the user's email to nil and show email field and remove user name

@@ -69,14 +69,26 @@ void main() {
     ).called(1);
   });
 
-  test('[identifyUser] should call host method', () async {
+  test('[identifyUser] should call host method with no ID', () async {
     const email = "inst@bug.com";
     const name = "Instabug";
 
     await Instabug.identifyUser(email, name);
 
     verify(
-      mHost.identifyUser(email, name),
+      mHost.identifyUser(email, name, null),
+    ).called(1);
+  });
+
+  test('[identifyUser] should call host method with an ID', () async {
+    const email = "inst@bug.com";
+    const name = "Instabug";
+    const id = "123";
+
+    await Instabug.identifyUser(email, name, id);
+
+    verify(
+      mHost.identifyUser(email, name, id),
     ).called(1);
   });
 
