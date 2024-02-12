@@ -1,0 +1,17 @@
+name: instabug_flutter_mono
+
+packages:
+  - packages/*
+
+scripts:
+  analyze:
+    exec: dart analyze .
+  pigeon:
+    exec: sh scripts/pigeon.sh
+    packageFilters:
+      fileExists: 'scripts/pigeon.sh'
+
+command:
+  bootstrap:
+    hooks:
+      post: melos pigeon

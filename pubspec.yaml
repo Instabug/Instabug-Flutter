@@ -1,0 +1,7 @@
+name: instabug_flutter_mono
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dev_dependencies:
+  melos: ^4.1.0
