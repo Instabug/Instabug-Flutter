@@ -5,7 +5,7 @@ VisualStudioVersion = 25.0.1703.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E2E", "E2E.csproj", "{99118060-0344-4CAD-AE3A-CC74A5E0F3C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instabug.Captain", "..\..\Instabug.Captain\Instabug.Captain\Instabug.Captain.csproj", "{597F3BAD-11D3-43B7-A95C-6C41CD2096A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instabug.Captain", "..\..\..\..\Instabug.Captain\Instabug.Captain\Instabug.Captain.csproj", "{597F3BAD-11D3-43B7-A95C-6C41CD2096A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

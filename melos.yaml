@@ -5,13 +5,36 @@ packages:
 
 scripts:
   analyze:
-    exec: dart analyze .
+    run: melos exec "dart analyze ."
+
+  format:
+    run: melos exec "dart format . --set-exit-if-changed"
+
   pigeon:
-    exec: sh scripts/pigeon.sh
+    run: melos exec "sh scripts/pigeon.sh"
     packageFilters:
       fileExists: 'scripts/pigeon.sh'
 
-command:
-  bootstrap:
-    hooks:
-      post: melos pigeon
+  generate:
+    run: melos exec "dart run build_runner build -d"
+    description: Build all generated files for Dart & Flutter packages in this project.t
+    packageFilters:
+      dependsOn: build_runner
+
+  test:
+    run: melos exec "flutter test"
+    description: Tests all packages.
+    packageFilters:
+      dependsOn: flutter_test
+
+  dryPublish:
+    run: melos exec "flutter pub publish --dry-run"
+    description: Tests publishing (dry run).
+    packageFilters:
+      flutter: true
+
+  score:
+    run: melos exec "dart run pana --no-warning --exit-code-threshold 0"
+    packageFilters:
+      flutter: true
+      dependsOn: pana

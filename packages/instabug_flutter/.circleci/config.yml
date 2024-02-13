@@ -9,9 +9,11 @@ commands:
   setup_flutter:
     steps:
       - flutter/install_sdk_and_pub:
+          app-dir: packages/instabug_flutter
           version: 3.10.5
       - run:
           name: Generate Pigeons
+          working_directory: packages/instabug_flutter
           command: sh ./scripts/pigeon.sh
   setup_ios:
     steps:
@@ -25,7 +27,7 @@ commands:
           command: sudo gem install cocoapods
       - run:
           name: Install Pods
-          working_directory: example/ios
+          working_directory: packages/instabug_flutter/example/ios
           command: pod install --repo-update
   setup_captain:
     parameters:
@@ -98,14 +100,17 @@ commands:
           steps:
             - run:
                 name: Generate Pigeons
-                command: sh ./scripts/pigeon.sh
+                working_directory: packages/instabug_flutter
+                command: ./scripts/pigeon.sh
             - run:
                 name: Build Pigeons
+                working_directory: packages/instabug_flutter
                 command: dart run build_runner build --delete-conflicting-outputs
 
 
 jobs:
   danger:
+    working_directory: packages/instabug_flutter
     executor:
       name: node/default
     steps:
@@ -117,9 +122,11 @@ jobs:
           at: coverage
       - run:
           name: Run Danger
+          working_directory: packages/instabug_flutter
           command: yarn danger ci
 
   test_flutter:
+    working_directory: packages/instabug_flutter
     parameters:
       version:
         type: string
@@ -129,16 +136,19 @@ jobs:
       - checkout
       - install_flutter_and_dart_packages:
           generate_pigeons: true
-      - run: flutter test --coverage
       - run:
-          working_directory: coverage
+          working_directory: packages/instabug_flutter
+          command: flutter test --coverage
+      - run:
+          working_directory: packages/instabug_flutter/coverage
           command: lcov --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
       - persist_to_workspace:
-          root: coverage
+          root: packages/instabug_flutter/coverage
           paths:
             - lcov.info
 
   test_android:
+    working_directory: packages/instabug_flutter
     executor:
       name: android/android-machine
       resource-class: xlarge
@@ -149,14 +159,15 @@ jobs:
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "Nexus 5"
-          post-emulator-launch-assemble-command: cd example && flutter build apk
-          run-tests-working-directory: example/android
+          post-emulator-launch-assemble-command: cd packages/instabug_flutter/example && flutter build apk
+          run-tests-working-directory: packages/instabug_flutter/example/android
           test-command: ./gradlew app:connectedAndroidTest -Ptarget=`pwd`/../test_driver/example.dart
       - android/run-tests:
-          working-directory: example/android
+          working-directory: packages/instabug_flutter/example/android
           test-command: ./gradlew test
 
   e2e_android_captain:
+    working_directory: packages/instabug_flutter
     executor:
       name: android/android-machine
       resource-class: xlarge
@@ -169,10 +180,11 @@ jobs:
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "pixel_4"
-          post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
-          test-command: cd e2e || true && dotnet test
+          post-emulator-launch-assemble-command: cd packages/instabug_flutter/example || true && flutter build apk --debug
+          test-command: cd packages/instabug_flutter/example && e2e || true && dotnet test
 
   test_ios:
+    working_directory: packages/instabug_flutter
     macos:
       xcode: 13.4.1
     resource_class: macos.m1.medium.gen1
@@ -181,7 +193,7 @@ jobs:
       - setup_ios
       - run:
           name: Build and run tests
-          working_directory: example/ios
+          working_directory: packages/instabug_flutter/example/ios
           command: |
             xcodebuild -allowProvisioningUpdates \
                        -workspace Runner.xcworkspace \
@@ -201,15 +213,16 @@ jobs:
       - setup_ios
       - run:
           name: Build Example App
-          working_directory: example
+          working_directory: packages/instabug_flutter/example
           command: flutter build ios --simulator
       - run:
           name: Run E2E Tests
           no_output_timeout: 30m
-          working_directory: e2e
+          working_directory: packages/instabug_flutter/e2e
           command: dotnet test
 
   format_flutter:
+    working_directory: packages/instabug_flutter
     docker:
       - image: cirrusci/flutter
     steps:
@@ -221,6 +234,7 @@ jobs:
           command: dart format . --set-exit-if-changed
 
   lint_flutter:
+    working_directory: packages/instabug_flutter
     docker:
       - image: cirrusci/flutter
     steps:
@@ -232,6 +246,7 @@ jobs:
           command: flutter analyze
 
   verify_pub:
+    working_directory: packages/instabug_flutter
     docker:
       - image: cirrusci/flutter
     steps:
@@ -256,11 +271,11 @@ jobs:
           app-dir: project
       - run:
           name: Install pub packages
-          working_directory: ~/project
+          working_directory: ~/project/packages/instabug_flutter
           command: dart pub get
       - run:
           name: Generate Pigeons
-          working_directory: project
+          working_directory: ~/project/packages/instabug_flutter
           command: sh ./scripts/pigeon.sh
       - run:
           name: Clone Escape
@@ -273,11 +288,10 @@ jobs:
             cp -f .build/release/Escape /usr/local/bin/escape
       - run:
           name: Publish Package
-          working_directory: project
+          working_directory: ~/project/packages/instabug_flutter
           command: Escape flutter publish
 
 workflows:
-  version: 2
   build-test-and-approval-deploy:
     jobs:
       - danger:

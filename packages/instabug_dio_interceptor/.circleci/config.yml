@@ -1,33 +1,50 @@
-version: 2
+version: 2.1
 jobs:
-   test:
+   instabug_dio_interceptor_test:
     docker:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - run: flutter doctor
-      - run: flutter pub get
-      - run: flutter pub run build_runner build --delete-conflicting-outputs
-      - run: flutter test
-      - run: flutter analyze .
-      - run: flutter pub publish --dry-run
-      
+      - run:
+          name: Flutter doctor
+          command: flutter doctor
+      - run:
+          name: Install Flutter Packages
+          working_directory: packages/instabug_dio_interceptor
+          command: flutter pub get
+      - run:
+          name: Generate code with build runner
+          working_directory: packages/instabug_dart_http_adapter
+          command: dart run build_runner build --delete-conflicting-outputs
+      - run:
+          name: Run tests
+          working_directory: packages/instabug_dio_interceptor
+          command: flutter test
+      - run:
+          name: Dart Analysis
+          working_directory: packages/instabug_dio_interceptor
+          command: dart analyze .
+      - run:
+          name: Publish dry run
+          working_directory: packages/instabug_dio_interceptor
+          command: flutter pub publish --dry-run
+
    release:
     docker:
       - image: cirrusci/flutter
+    working_directory: packages/instabug_dio_interceptor
     steps:
       - checkout
       - run: ./release.sh
 
 workflows:
-  version: 2
-  build-test:
+  build-instabug-dio-interceptor-test:
     jobs:
-      - test
+      - instabug_dio_interceptor_test
       - hold:
           type: approval
           requires:
-            - test
+            - instabug_dio_interceptor_test
           filters:
             branches:
               only: master
