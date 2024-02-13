@@ -1,0 +1,25 @@
+version: 2.1
+
+# this allows you to use CircleCI's dynamic configuration feature
+setup: true
+
+orbs:
+  path-filtering: circleci/path-filtering@0.1.1
+
+workflows:
+  filter_packages:
+    jobs:
+      - path-filtering/filter:
+          name: filter_instabug_dart_http_adapter
+          config-path: packages/instabug_dart_http_adapter/.circleci/config.yml
+          base-revision: master
+
+      - path-filtering/filter:
+          name: filter_instabug_dio_interceptor
+          config-path: packages/instabug_dio_interceptor/.circleci/config.yml
+          base-revision: master
+
+#      - path-filtering/filter:
+#          name: filter_instabug_flutter
+#          config-path: packages/instabug_flutter/.circleci/config.yml
+#          base-revision: master
