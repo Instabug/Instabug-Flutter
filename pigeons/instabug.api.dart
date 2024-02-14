@@ -8,7 +8,7 @@ abstract class InstabugHostApi {
   void show();
   void showWelcomeMessageWithMode(String mode);
 
-  void identifyUser(String email, String? name);
+  void identifyUser(String email, String? name, String? userId);
   void setUserData(String data);
   void logUserEvent(String name);
   void logOut();

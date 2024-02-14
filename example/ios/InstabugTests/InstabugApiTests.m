@@ -64,23 +64,15 @@
     OCMVerify([self.mInstabug showWelcomeMessageWithMode:IBGWelcomeMessageModeLive]);
 }
 
-- (void)testIdentifyUserGivenName {
+- (void)testIdentifyUser {
     NSString *email = @"inst@bug.com";
     NSString *name = @"John Doe";
+    NSString *userId = @"123";
     FlutterError *error;
 
-    [self.api identifyUserEmail:email name:name error:&error];
+    [self.api identifyUserEmail:email name:name userId:userId error:&error];
 
-    OCMVerify([self.mInstabug identifyUserWithEmail:email name:name]);
-}
-
-- (void)testIdentifyUserGivenNoName {
-    NSString *email = @"inst@bug.com";
-    FlutterError *error;
-
-    [self.api identifyUserEmail:email name:[NSNull null] error:&error];
-
-    OCMVerify([self.mInstabug identifyUserWithEmail:email name:nil]);
+    OCMVerify([self.mInstabug identifyUserWithID:userId email:email name:name]);
 }
 
 - (void)testSetUserData {

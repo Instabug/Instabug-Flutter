@@ -55,12 +55,8 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [Instabug showWelcomeMessageWithMode:resolvedMode];
 }
 
-- (void)identifyUserEmail:(NSString *)email name:(nullable NSString *)name error:(FlutterError *_Nullable *_Nonnull)error {
-    if ([name isKindOfClass:[NSNull class]]) {
-        [Instabug identifyUserWithEmail:email name:nil];
-    } else {
-        [Instabug identifyUserWithEmail:email name:name];
-    }
+- (void)identifyUserEmail:(NSString *)email name:(nullable NSString *)name userId:(nullable NSString *)userId error:(FlutterError *_Nullable *_Nonnull)error {
+    [Instabug identifyUserWithID:userId email:email name:name];
 }
 
 - (void)setUserDataData:(NSString *)data error:(FlutterError *_Nullable *_Nonnull)error {
