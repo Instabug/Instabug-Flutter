@@ -6,6 +6,10 @@
 
 - Support user identification using ID ([#435](https://github.com/Instabug/Instabug-Flutter/pull/435)).
 
+### Changed
+
+- Bump Instabug Android SDK to v12.7.1 ([#439](https://github.com/Instabug/Instabug-Flutter/pull/439)). See release notes for [v12.7.1](https://github.com/Instabug/Instabug-Android/releases/tag/v12.7.1).
+
 ## [12.5.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.4.0...v12.5.0) (January 08 , 2024)
 
 ### Changed
