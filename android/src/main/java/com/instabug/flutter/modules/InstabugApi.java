@@ -118,8 +118,8 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     @Override
-    public void identifyUser(@NonNull String email, @Nullable String name) {
-        Instabug.identifyUser(name, email);
+    public void identifyUser(@NonNull String email, @Nullable String name, @Nullable String userId) {
+        Instabug.identifyUser(name, email, userId);
     }
 
     @Override

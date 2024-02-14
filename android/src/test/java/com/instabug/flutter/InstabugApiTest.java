@@ -174,10 +174,11 @@ public class InstabugApiTest {
     public void testIdentifyUser() {
         String email = "inst@bug.com";
         String name = "John Doe";
+        String id = "123";
 
-        api.identifyUser(email, name);
+        api.identifyUser(email, name, id);
 
-        mInstabug.verify(() -> Instabug.identifyUser(name, email));
+        mInstabug.verify(() -> Instabug.identifyUser(name, email, id));
     }
 
     @Test

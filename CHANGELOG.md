@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v12.5.0...dev)
+
+### Added
+
+- Support user identification using ID ([#435](https://github.com/Instabug/Instabug-Flutter/pull/435)).
+
 ## [12.5.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.4.0...v12.5.0) (January 08 , 2024)
 
 ### Changed
