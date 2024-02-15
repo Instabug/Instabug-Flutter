@@ -91,7 +91,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "12.5.0"
+    version: "12.7.0"
   matcher:
     dependency: transitive
     description:
