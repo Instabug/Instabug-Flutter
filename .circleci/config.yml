@@ -251,6 +251,10 @@ jobs:
     steps:
       - checkout:
           path: ~/project
+      # Flutter doesn't support Apple Silicon yet, so we need to install Rosetta use Flutter on M1 machines.
+      - run:
+          name: Install Rosetta
+          command: softwareupdate --install-rosetta --agree-to-license
       - flutter/install_sdk_and_pub:
           version: 3.3.6
           app-dir: project
