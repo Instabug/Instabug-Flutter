@@ -1,0 +1,57 @@
+version: 2.1
+jobs:
+   instabug_dart_http_adapter_test:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run:
+          name: Flutter doctor
+          command: flutter doctor
+      - run:
+          name: Install Flutter Packages
+          working_directory: packages/instabug_dart_http_adapter
+          command: flutter pub get
+      - run:
+          name: Generate code with build runner
+          working_directory: packages/instabug_dart_http_adapter
+          command: dart run build_runner build --delete-conflicting-outputs
+      - run:
+          name: Run tests
+          working_directory: packages/instabug_dart_http_adapter
+          command: flutter test
+      - run:
+          name: Dart Analysis
+          working_directory: packages/instabug_dart_http_adapter
+          command: dart analyze --fatal-warnings lib
+      - run:
+          name: Publish dry run
+          working_directory: packages/instabug_dart_http_adapter
+          command: flutter pub publish --dry-run
+
+   release:
+    docker:
+      - image: cirrusci/flutter
+    working_directory: packages/instabug_dart_http_adapter
+    steps:
+      - checkout
+      - run: chmod +x release.sh
+      - run: ./release.sh
+
+workflows:
+  build-instabug-dart-http-adapter-test:
+    jobs:
+      - instabug_dart_http_adapter_test
+      - hold:
+          type: approval
+          requires:
+            - instabug_dart_http_adapter_test
+          filters:
+            branches:
+              only: master
+      - release:
+          requires:
+            - hold
+          filters:
+            branches:
+              only: master

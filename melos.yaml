@@ -1,0 +1,21 @@
+name: instabug_flutter_mono
+
+packages:
+  - packages/*
+
+scripts:
+  analyze:
+    exec: dart analyze .
+  format:
+    exec: dart format . --set-exit-if-changed
+  pigeon:
+    exec: sh scripts/pigeon.sh
+    packageFilters:
+      fileExists: 'scripts/pigeon.sh'
+  generate:
+    run: melos exec --depends-on=build_runner -- "dart run build_runner build -d"
+    description: Build all generated files for Dart & Flutter packages in this project.t
+
+  test:
+    run: melos exec --depends-on=flutter_test -- "flutter test"
+    description: Tests all pacakges.
