@@ -33,6 +33,13 @@ class APM {
 
   /// Starts an execution trace.
   /// [String] name of the trace.
+  ///
+  /// Deprecated: from version v12.7.2.
+  ///
+  /// Please migrate to the App Flows APIs: [startFlow], [setFlowAttribute], and [endFlow].
+  @Deprecated(
+    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated after <next_release_deprecation_version>',
+  )
   static Future<Trace> startExecutionTrace(String name) async {
     final id = IBGDateTime.instance.now();
     final traceId = await _host.startExecutionTrace(id.toString(), name);
@@ -54,6 +61,13 @@ class APM {
   /// [String] id of the trace.
   /// [String] key of attribute.
   /// [String] value of attribute.
+  ///
+  /// Deprecated: from version v12.7.2.
+  ///
+  /// Please migrate to the App Flows APIs: [startFlow], [setFlowAttribute], and [endFlow].
+  @Deprecated(
+    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated after <next_release_deprecation_version>',
+  )
   static Future<void> setExecutionTraceAttribute(
     String id,
     String key,
@@ -64,6 +78,13 @@ class APM {
 
   /// Ends an execution trace.
   /// [String] id of the trace.
+  ///
+  /// Deprecated: from version v12.7.2.
+  ///
+  /// Please migrate to the App Flows APIs: [startFlow], [setFlowAttribute], and [endFlow].
+  @Deprecated(
+    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated after <next_release_deprecation_version>',
+  )
   static Future<void> endExecutionTrace(String id) async {
     return _host.endExecutionTrace(id);
   }
