@@ -17,7 +17,7 @@ class Trace {
   ///
   /// Deprecated: from version v12.7.2.
   ///
-  /// Please migrate to the App Flows APIs: [startFlow], [setFlowAttribute], and [endFlow].
+  /// Please migrate to the App Flows APIs: [APM.startFlow], [APM.setFlowAttribute], and [APM.endFlow].
   @Deprecated(
     'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated after <next_release_deprecation_version>',
   )
@@ -30,7 +30,7 @@ class Trace {
   ///
   /// Deprecated: from version v12.7.2.
   ///
-  /// Please migrate to the App Flows APIs: [startFlow], [setFlowAttribute], and [endFlow].
+  /// Please migrate to the App Flows APIs: [APM.startFlow], [APM.setFlowAttribute], and [APM.endFlow].
   @Deprecated(
     'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated after <next_release_deprecation_version>',
   )
