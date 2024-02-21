@@ -112,7 +112,8 @@ class APM {
   ///
   /// To remove an attribute, set its [value] to null. Attributes cannot be added or
   /// modified after an AppFlow has concluded.
-  static Future<void> setFlowAttribute(String name, String key, String? value) async {
+  static Future<void> setFlowAttribute(
+      String name, String key, String? value) async {
     return _host.setFlowAttribute(name, key, value);
   }
 
