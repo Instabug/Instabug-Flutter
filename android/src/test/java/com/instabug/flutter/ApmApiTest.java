@@ -149,6 +149,39 @@ public class ApmApiTest {
     }
 
     @Test
+    public void testStartFlow() {
+        String appFlowName = "appFlowName";
+
+        api.startFlow(appFlowName);
+
+        mAPM.verify(() -> APM.startFlow(appFlowName));
+        mAPM.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testEndFlow() {
+        String appFlowName = "appFlowName";
+
+        api.startFlow(appFlowName);
+
+        mAPM.verify(() -> APM.startFlow(appFlowName));
+        mAPM.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testSetFlowAttribute() {
+        String appFlowName = "appFlowName";
+        String flowAttributeKey = "attributeKey";
+        String flowAttributeValue = "attributeValue";
+
+
+        api.setFlowAttribute(appFlowName, flowAttributeKey, flowAttributeValue);
+
+        mAPM.verify(() -> APM.setFlowAttribute(appFlowName, flowAttributeKey, flowAttributeValue));
+        mAPM.verifyNoMoreInteractions();
+    }
+
+    @Test
     public void testStartUITrace() {
         String name = "login";
 
