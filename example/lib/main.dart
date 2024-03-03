@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter_example/src/native/instabug_flutter_example_method_channel.dart';
+import 'src/widget/instabug_button.dart';
+import 'src/widget/instabug_text_field.dart';
 
 void main() {
   runZonedGuarded(
@@ -39,50 +41,6 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class InstabugButton extends StatelessWidget {
-  String text;
-  void Function()? onPressed;
-
-  InstabugButton({required this.text, this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.lightBlue),
-          foregroundColor: MaterialStateProperty.all(Colors.white),
-        ),
-        child: Text(text),
-      ),
-    );
-  }
-}
-
-class InstabugTextField extends StatelessWidget {
-  String label;
-  TextEditingController controller;
-
-  InstabugTextField({required this.label, required this.controller});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: label,
-        ),
-      ),
     );
   }
 }
@@ -518,21 +476,21 @@ class FatalCrashesContent extends StatelessWidget {
             throwUnhandledException(obj.methodThatDoesNotExist());
           },
         ),
-        InstabugButton(
+        const InstabugButton(
           text: 'Throw Native Fatal Crash',
           onPressed: InstabugFlutterExampleMethodChannel.sendNativeFatalCrash,
         ),
-        InstabugButton(
+        const InstabugButton(
           text: 'Send Native Fatal Hang',
           onPressed: InstabugFlutterExampleMethodChannel.sendNativeFatalHang,
         ),
         Platform.isAndroid
-            ? InstabugButton(
+            ? const InstabugButton(
           text: 'Send Native ANR',
           onPressed: InstabugFlutterExampleMethodChannel.sendAnr,
         )
             : const SizedBox.shrink(),
-        InstabugButton(
+        const InstabugButton(
           text: 'Throw Unhandled Native OOM Exception',
           onPressed: InstabugFlutterExampleMethodChannel.sendOom,
         ),
