@@ -5,6 +5,13 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            credentials {
+                username "instabug"
+                password System.getenv()["INSTABUG_REPOSITORY_PASSWORD"]
+            }
+            url "https://mvn.instabug.com/nexus/repository/instabug-internal/"
+        }
     }
 
     dependencies {
@@ -16,6 +23,13 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            credentials {
+                username "instabug"
+                password System.getenv()["INSTABUG_REPOSITORY_PASSWORD"]
+            }
+            url "https://mvn.instabug.com/nexus/repository/instabug-internal/"
+        }
     }
 }
 
@@ -41,7 +55,7 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:12.7.1'
+    api 'com.instabug.library:instabug:12.8.0.5679806-SNAPSHOT'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
