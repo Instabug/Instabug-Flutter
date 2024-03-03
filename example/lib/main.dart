@@ -1,11 +1,15 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
-import 'package:instabug_flutter_example/src/native/instabug_flutter_example_method_channel.dart';
+
+import 'src/native/instabug_flutter_example_method_channel.dart';
 import 'src/widget/instabug_button.dart';
+import 'src/widget/instabug_clipboard_input.dart';
 import 'src/widget/instabug_text_field.dart';
 
 void main() {
@@ -303,6 +307,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SectionTitle("Crashes"),
               const CrashReportingContent(),
+              SectionTitle("APM"),
+              const ApmBody(),
               SectionTitle('Color Theme'),
               ButtonBar(
                 mainAxisSize: MainAxisSize.max,
@@ -498,3 +504,67 @@ class FatalCrashesContent extends StatelessWidget {
     );
   }
 }
+
+class ApmBody extends StatelessWidget {
+
+  const ApmBody({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SectionTitle('Network'),
+        const NetworkContent(),
+      ],
+    );
+  }
+}
+
+class NetworkContent extends StatefulWidget {
+
+  const NetworkContent({Key? key}) : super(key: key);
+  final String defaultRequestUrl = 'https://jsonplaceholder.typicode.com/posts/1';
+
+  @override
+  State<NetworkContent> createState() => _NetworkContentState();
+}
+
+class _NetworkContentState extends State<NetworkContent> {
+
+  final endpointUrlController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        InstabugClipboardInput(
+          label: 'Endpoint Url',
+          controller: endpointUrlController,
+        ),
+        InstabugButton(
+          text: 'Send Request To Url',
+          onPressed: () => _sendRequestToUrl(endpointUrlController.text),
+        ),
+      ],
+    );
+  }
+
+  void _sendRequestToUrl(String text) async {
+    try {
+      String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
+      final response = await http.get(Uri.parse(url));
+
+      // Handle the response here
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        log(jsonEncode(jsonData));
+      } else {
+        log('Request failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      log('Error sending request: $e');
+    }
+  }
+}
+
+
