@@ -1,4 +1,6 @@
 #import <XCTest/XCTest.h>
+#import <instabug_flutter/InstabugFlutterPlugin.h>
+#import <instabug_flutter/SessionReplayApi.h>
 #import "OCMock/OCMock.h"
 #import "SessionReplayApi.h"
 #import "Instabug/IBGSessionReplay.h"
@@ -53,5 +55,18 @@
 
     OCMVerify([self.mSessionReplay setUserStepsEnabled:YES]);
 }
+
+- (void)testGetSessionReplayLink {
+    NSString *link = @"link";
+    id result = ^(NSString * result, FlutterError * error) {
+        XCTAssertEqualObjects(result, link);
+    };
+
+    OCMStub([self.mSessionReplay sessionReplayLink]).andReturn(link);
+    [self.api getSessionReplayLinkWithCompletion:result];
+    OCMVerify([self.mSessionReplay sessionReplayLink]);
+
+}
+
 
 @end

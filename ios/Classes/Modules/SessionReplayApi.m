@@ -27,4 +27,11 @@ extern void InitSessionReplayApi(id<FlutterBinaryMessenger> messenger) {
     IBGSessionReplay.userStepsEnabled = [isEnabled boolValue];
 }
 
+- (void)getSessionReplayLinkWithCompletion:(void (^)(NSString *, FlutterError *))completion {
+   NSString * link= IBGSessionReplay.sessionReplayLink;
+   completion(link,nil);
+
+}
+
+
 @end
