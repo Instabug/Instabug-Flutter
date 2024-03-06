@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v12.7.0...dev)
+
+### Added
+
+- Add Support for App flows APIs `APM.startFlow`, `APM.endFlow` and `APM.setTraceAttribute` ([#1138](https://github.com/Instabug/Instabug-Flutter/pull/446)).
+
+### Deprecated
+
+- Deprecate execution traces APIs `APM.startExecutionTrace`, `APM.setExecutionTraceAttribute`, `APM.endExecutionTrace`, `Trace.setAttribute` and `Trace.end` in favor of the new app flow APIs ([#1138](https://github.com/Instabug/Instabug-Flutter/pull/446)).
+
 ## [12.7.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.5.0...v12.7.0) (February 15, 2024)
 
 ### Added
