@@ -77,6 +77,12 @@ public class GlobalMocks {
 
         uri = mockStatic(Uri.class);
         uri.when(() -> Uri.fromFile(any())).thenReturn(mock(Uri.class));
+
+        Method mShowSurveyCP = MockReflected.class.getDeclaredMethod("showSurveyCP", String.class);
+        mShowSurveyCP.setAccessible(true);
+        reflection
+                .when(() -> Reflection.getMethod(Class.forName("com.instabug.survey.Surveys"), "showSurveyCP", String.class))
+                .thenReturn(mShowSurveyCP);
     }
 
     public static void close() {
