@@ -30,7 +30,7 @@ flutter_ios_podfile_setup
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
-  pod 'Instabug', :podspec => 'https://ios-releases.instabug.com/custom/feature-app-flow/12.7.0/Instabug.podspec'
+  pod 'Instabug', :podspec => 'https://ios-releases.instabug.com/custom/fix-app-flows-defects/12.7.1/Instabug.podspec'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
