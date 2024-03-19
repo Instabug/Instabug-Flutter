@@ -1,5 +1,12 @@
 # Changelog
 
+## [12.9.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.8.0...v12.9.0) (March 21, 2024)
+
+### Changed
+
+- Bump Instabug iOS SDK to v12.9.0 ([#451](https://github.com/Instabug/Instabug-Flutter/pull/451)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/12.9.0).
+
+
 ## [12.7.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.5.0...v12.7.0) (February 15, 2024)
 
 ### Added
