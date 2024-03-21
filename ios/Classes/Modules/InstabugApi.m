@@ -305,7 +305,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     }
 }
 
-- (void)willRedirectToAppStore {
+- (void)willRedirectToAppStoreWithError:(FlutterError * _Nullable __autoreleasing *)error {
     [Instabug willRedirectToAppStore];
 }
 
