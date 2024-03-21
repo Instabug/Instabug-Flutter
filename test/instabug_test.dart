@@ -383,4 +383,14 @@ void main() {
       mHost.clearFileAttachments(),
     ).called(1);
   });
+
+  test('[willRedirectToAppStore] should call host method', () async {
+    //arrange
+    await Instabug.willRedirectToAppStore();
+
+    //assert
+    verify(
+      mHost.willRedirectToAppStore(),
+    ).called(1);
+  });
 }

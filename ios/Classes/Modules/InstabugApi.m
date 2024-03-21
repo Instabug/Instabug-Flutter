@@ -305,4 +305,8 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     }
 }
 
+- (void)willRedirectToAppStore {
+    [Instabug willRedirectToAppStore];
+}
+
 @end

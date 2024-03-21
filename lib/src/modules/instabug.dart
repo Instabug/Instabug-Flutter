@@ -412,4 +412,9 @@ class Instabug {
     final darkKey = await dark.obtainKey(configuration);
     return _host.setCustomBrandingImage(lightKey.name, darkKey.name);
   }
+
+  /// This API has to be call when using custom app rating prompt
+  static Future<void> willRedirectToAppStore() async {
+    return _host.willRedirectToAppStore();
+  }
 }

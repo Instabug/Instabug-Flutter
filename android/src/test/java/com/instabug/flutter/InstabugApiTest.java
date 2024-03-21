@@ -493,7 +493,7 @@ public class InstabugApiTest {
 
     @Test
     public void testAddFileAttachmentWithData() {
-        byte[] data = new byte[] {65, 100};
+        byte[] data = new byte[]{65, 100};
         String name = "Issue";
 
         api.addFileAttachmentWithData(data, name);
@@ -548,5 +548,11 @@ public class InstabugApiTest {
         verify(networkLog).insert();
 
         mJSONObject.close();
+    }
+
+    @Test
+    public void testWillRedirectToAppStore() {
+        api.willRedirectToAppStore();
+        mInstabug.verify(Instabug::willRedirectToStore);
     }
 }

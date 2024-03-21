@@ -398,4 +398,11 @@
               ]);
 }
 
+- (void)testWillRedirectToAppStore {
+    FlutterError *error;
+    [self.api willRedirectToAppStoreWithError:&error];
+
+    OCMVerify([self.mInstabug willRedirectToAppStore]);
+}
+
 @end
