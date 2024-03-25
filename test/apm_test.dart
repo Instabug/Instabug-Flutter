@@ -97,6 +97,39 @@ void main() {
     ).called(1);
   });
 
+  test('[startFlow] should call host method', () async {
+    const flowName = "flow-name";
+
+    verify(
+      mHost.startFlow(flowName),
+    ).called(1);
+    verifyNoMoreInteractions(mHost);
+  });
+
+  test('[setFlowAttribute] should call host method', () async {
+    const flowName = "flow-name";
+    const flowAttributeKey = 'attribute-key';
+    const flowAttributeValue = 'attribute-value';
+
+    await APM.setFlowAttribute(flowName, flowAttributeKey, flowAttributeValue);
+
+    verify(
+      mHost.setFlowAttribute(flowName, flowAttributeKey, flowAttributeValue),
+    ).called(1);
+    verifyNoMoreInteractions(mHost);
+  });
+
+  test('[endFlow] should call host method', () async {
+    const flowName = "flow-name";
+
+    await APM.endFlow(flowName);
+
+    verify(
+      mHost.endFlow(flowName),
+    ).called(1);
+    verifyNoMoreInteractions(mHost);
+  });
+
   test('[startUITrace] should call host method', () async {
     const name = 'UI-trace';
 
