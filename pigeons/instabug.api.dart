@@ -54,4 +54,6 @@ abstract class InstabugHostApi {
   void clearFileAttachments();
 
   void networkLog(Map<String, Object> data);
+
+  void willRedirectToAppStore();
 }

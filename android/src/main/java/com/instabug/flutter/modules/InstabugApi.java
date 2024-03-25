@@ -76,7 +76,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {
         try {
-            if(isEnabled)
+            if (isEnabled)
                 Instabug.enable();
             else
                 Instabug.disable();
@@ -171,13 +171,12 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setValueForStringWithKey(@NonNull String value, @NonNull String key) {
-        if(ArgsRegistry.placeholders.containsKey(key)) {
+        if (ArgsRegistry.placeholders.containsKey(key)) {
             InstabugCustomTextPlaceHolder.Key resolvedKey = ArgsRegistry.placeholders.get(key);
             placeHolder.set(resolvedKey, value);
             Instabug.setCustomTextPlaceHolders(placeHolder);
-        }
-        else {
-            Log.i(TAG, "Instabug: " + key +  " is only relevant to iOS.");
+        } else {
+            Log.i(TAG, "Instabug: " + key + " is only relevant to iOS.");
         }
     }
 
@@ -396,5 +395,10 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         } catch (Exception e) {
             Log.e(TAG, "Network logging failed");
         }
+    }
+
+    @Override
+    public void willRedirectToAppStore() {
+        Instabug.willRedirectToStore();
     }
 }
