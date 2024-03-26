@@ -1,9 +1,9 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@2.0
+  android: circleci/android@2.5.0
   flutter: circleci/flutter@2.0.2
-  node: circleci/node@5.1.0
+  node: circleci/node@5.2.0
 
 commands:
   setup_flutter:
@@ -103,7 +103,6 @@ commands:
                 name: Build Pigeons
                 command: dart run build_runner build --delete-conflicting-outputs
 
-
 jobs:
   danger:
     executor:
@@ -142,7 +141,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: 2022.04.1
+      tag: 2024.01.1-ndk
     steps:
       - checkout
       - setup_flutter
@@ -160,7 +159,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: 2022.04.1
+      tag: 2024.01.1-ndk
     steps:
       - checkout
       - setup_captain:
