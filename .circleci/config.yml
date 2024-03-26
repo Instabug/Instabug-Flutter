@@ -140,8 +140,8 @@ jobs:
   test_android:
     executor:
       name: android/android-machine
-      resource-class: xlarge
-      tag: 2024.01.1-ndk
+#      resource-class: xlarge
+#      tag: 2024.01.1-ndk
     steps:
       - checkout
       - setup_flutter
@@ -158,8 +158,8 @@ jobs:
   e2e_android_captain:
     executor:
       name: android/android-machine
-      resource-class: xlarge
-      tag: 2024.01.1-ndk
+#      resource-class: xlarge
+#      tag: 2024.01.1-ndk
     steps:
       - checkout
       - setup_captain:
