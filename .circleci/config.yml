@@ -1,9 +1,9 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@2.0
+  android: circleci/android@2.5.0
   flutter: circleci/flutter@2.0.2
-  node: circleci/node@5.1.0
+  node: circleci/node@5.2.0
 
 commands:
   setup_flutter:
@@ -103,7 +103,6 @@ commands:
                 name: Build Pigeons
                 command: dart run build_runner build --delete-conflicting-outputs
 
-
 jobs:
   danger:
     executor:
@@ -142,14 +141,14 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: 2022.04.1
+      tag: default
     steps:
       - checkout
       - setup_flutter
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
-          additional-avd-args: -d "Nexus 5"
-          post-emulator-launch-assemble-command: cd example && flutter build apk
+          # additional-avd-args: -d "Nexus 5"
+          post-emulator-launch-assemble-command: cd "example" && flutter build apk
           run-tests-working-directory: example/android
           test-command: ./gradlew app:connectedAndroidTest -Ptarget=`pwd`/../test_driver/example.dart
       - android/run-tests:
@@ -160,7 +159,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: 2022.04.1
+      tag: default
     steps:
       - checkout
       - setup_captain:
@@ -168,9 +167,9 @@ jobs:
       - setup_flutter
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
-          additional-avd-args: -d "pixel_4"
-          post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
-          test-command: cd e2e || true && dotnet test
+          # additional-avd-args: -d "pixel_4"
+          post-emulator-launch-assemble-command: cd "example" || true && flutter build apk --debug
+          test-command: cd "e2e" || true && dotnet test
 
   test_ios:
     macos:
