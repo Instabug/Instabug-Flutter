@@ -1,14 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:instabug_http_client/instabug_http_client.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 
 Future<void> main() async {
   runApp(const MyApp());
-  Instabug.start(
-      'ed6f659591566da19b67857e1b9d40ab', [InvocationEvent.floatingButton]);
+  Instabug.init(
+      token: 'ed6f659591566da19b67857e1b9d40ab',
+      invocationEvents: [InvocationEvent.floatingButton]);
   final client = InstabugHttpClient();
   final response = await client.get(Uri.parse('https://google.com'));
-  print(response.body);
+  log(response.body);
 }
 
 class MyApp extends StatelessWidget {
@@ -58,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
