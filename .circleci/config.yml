@@ -5,13 +5,16 @@ orbs:
   flutter: circleci/flutter@2.0.2
   node: circleci/node@5.1.0
 
+
 commands:
   setup_flutter:
     steps:
       - flutter/install_sdk_and_pub:
+          app-dir: packages/instabug_flutter
           version: 3.10.5
       - run:
           name: Generate Pigeons
+          working_directory: packages/instabug_flutter
           command: sh ./scripts/pigeon.sh
   setup_ios:
     steps:
@@ -25,7 +28,7 @@ commands:
           command: sudo gem install cocoapods
       - run:
           name: Install Pods
-          working_directory: example/ios
+          working_directory: packages/instabug_flutter/example/ios
           command: pod install --repo-update
   setup_captain:
     parameters:
@@ -98,28 +101,238 @@ commands:
           steps:
             - run:
                 name: Generate Pigeons
-                command: sh ./scripts/pigeon.sh
+                working_directory: packages/instabug_flutter
+                command: ./scripts/pigeon.sh
             - run:
                 name: Build Pigeons
+                working_directory: packages/instabug_flutter
                 command: dart run build_runner build --delete-conflicting-outputs
 
+parameters:
+  is_changes_detected_for_instabug_dart_http_adapter:
+    type: boolean
+    default: false
+  is_changes_detected_for_instabug_dio_interceptor:
+    type: boolean
+    default: false
+  is_changes_detected_for_instabug_flutter:
+    type: boolean
+    default: false
 
 jobs:
+  extract_pr_info:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: extract base branch
+          command: |
+            BASE_BRANCH=$(curl -s -H "Authorization: token ${DANGER_GITHUB_API_TOKEN}" $(echo ${CIRCLE_PULL_REQUEST} | sed "s/\/pull\//\/pulls\//" | sed "s/github.com/api.github.com\/repos/") | jq ".base.ref" | tr -d "\042" )
+            PR_NUMBER=$(echo ${CIRCLE_PULL_REQUEST} | cut -d "/" -f 7)
+            echo "export BASE_BRANCH=$BASE_BRANCH" >> $BASH_ENV
+            echo "export PR_NUMBER=$PR_NUMBER" >> $BASH_ENV
+      - run:
+          name: Verify Base Branch and PR number
+          command: |
+            # Verify that the BASE_BRANCH environment variable is set.
+            echo "Base Branch: $BASE_BRANCH"
+            echo "PR NUMBER: $PR_NUMBER"
+            printenv BASE_BRANCH
+            printenv PR_NUMBER
+      - run:
+          name: Persist environment variables
+          command: cp $BASH_ENV bash.env
+      - persist_to_workspace:
+          root: .
+          paths:
+            - bash.env
+  check_for_changes:
+    parameters:
+      path_to_check:
+        type: string
+        description: "The sub-path within the repo to check for changes."
+      result_env_var:
+        type: string
+        description: "The environment variable name to store the result of the check."
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: |
+          cat bash.env >> $BASH_ENV
+      - run:
+          name: Verify Base Branch and PR number
+          command: |
+            # this should print the branch and pr number
+            echo "Base Branch: $BASE_BRANCH"
+            echo "PR NUMBER: $PR_NUMBER"
+            printenv BASE_BRANCH
+            printenv PR_NUMBER
+      - run:
+          name: Check for changes in << parameters.path_to_check >>
+          command: |
+            # Check for changes
+            if git diff --name-only origin/$BASE_BRANCH...HEAD | grep "<< parameters.path_to_check >>"; then
+              echo 'export << parameters.result_env_var >>=true' >> $BASH_ENV
+              echo "Changes detected in << parameters.path_to_check >>"
+            else
+              echo 'export << parameters.result_env_var >>=false' >> $BASH_ENV
+              echo "No changes detected in << parameters.path_to_check >>"
+            fi
+
+  # Instabug Dart Http Adapter
+  test_instabug_dart_http_adapter:
+    parameters:
+      is_changes_detected_for_instabug_dart_http_adapter:
+        type: boolean
+        default: false
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run:
+          name: Condition check for running tests
+          command: |
+            if [ "$IS_CHANGES_DETECTED_FOR_INSTABUG_DART_HTTP_ADAPTER" = "false" ] && [ << parameters.is_changes_detected_for_instabug_dart_http_adapter >> = false ]; then
+              echo "Skipping tests because no changes were detected."
+              circleci-agent step halt
+            fi
+      - run:
+          name: Flutter doctor
+          command: flutter doctor
+      - run:
+          name: Install Flutter Packages
+          working_directory: packages/instabug_dart_http_adapter
+          command: flutter pub get
+      - run:
+          name: Generate code with build runner
+          working_directory: packages/instabug_dart_http_adapter
+          command: dart run build_runner build --delete-conflicting-outputs
+      - run:
+          name: Run tests
+          working_directory: packages/instabug_dart_http_adapter
+          command: flutter test
+      - run:
+          name: Dart Analysis
+          working_directory: packages/instabug_dart_http_adapter
+          command: dart analyze --fatal-warnings lib
+      - run:
+          name: Publish dry run
+          working_directory: packages/instabug_dart_http_adapter
+          command: flutter pub publish --dry-run
+  release_instabug_dart_http_adapter:
+    docker:
+      - image: cirrusci/flutter
+    working_directory: packages/instabug_dart_http_adapter
+    steps:
+      - checkout
+      - run: chmod +x release.sh
+      - run: ./release.sh
+  # -----------------------------------------------------------------------
+
+
+  # Instabug Dio Interceptor
+
+  test_instabug_dio_interceptor:
+    parameters:
+      is_changes_detected_for_instabug_dio_interceptor:
+        type: boolean
+        default: false
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run:
+          name: Condition check for running tests
+          command: |
+            if [ "IS_CHANGES_DETECTED_FOR_INSTABUG_DIO_INTERCEPTOR" = "false" ] && [ << parameters.is_changes_detected_for_instabug_dio_interceptor >> = false ]; then
+              echo "Skipping tests because no changes were detected."
+              circleci-agent step halt
+            fi
+      - run:
+          name: Flutter doctor
+          command: flutter doctor
+      - run:
+          name: Install Flutter Packages
+          working_directory: packages/instabug_dio_interceptor
+          command: flutter pub get
+      - run:
+          name: Generate code with build runner
+          working_directory: packages/instabug_dart_http_adapter
+          command: dart run build_runner build --delete-conflicting-outputs
+      - run:
+          name: Run tests
+          working_directory: packages/instabug_dio_interceptor
+          command: flutter test
+      - run:
+          name: Dart Analysis
+          working_directory: packages/instabug_dio_interceptor
+          command: dart analyze .
+      - run:
+          name: Publish dry run
+          working_directory: packages/instabug_dio_interceptor
+          command: flutter pub publish --dry-run
+
+  release_instabug_dio_interceptor:
+    docker:
+      - image: cirrusci/flutter
+    working_directory: packages/instabug_dio_interceptor
+    steps:
+      - checkout
+      - run: ./release.sh
+
+  # -----------------------------------------------------------------------
+
+  # Instabug Flutter SDK
   danger:
+    parameters:
+      is_changes_detected_for_instabug_dio_interceptor:
+        type: boolean
+        default: false
+    working_directory: packages/instabug_flutter
     executor:
       name: node/default
     steps:
       - checkout
+      - run:
+          name: Condition check for running tests
+          command: |
+            if [ "IS_CHANGES_DETECTED_FOR_INSTABUG_DIO_INTERCEPTOR" = "false" ] && [ << parameters.is_changes_detected_for_instabug_dio_interceptor >> = false ]; then
+              echo "Skipping tests because no changes were detected."
+              circleci-agent step halt
+            fi
+      - run:
+          name: Check directory
+          command: |
+            pwd
+            ls
       - node/install-packages:
+          app-dir: packages/instabug_flutter
           pkg-manager: yarn
           override-ci-command: yarn install --frozen-lockfile --network-concurrency 1
       - attach_workspace:
           at: coverage
       - run:
+          name: Check pwd n ls
+          command: |
+            pwd
+            ls
+      - run:
+          name: ck pwd n ls in packages/instabug_flutter
+          working_directory: packages/instabug_flutter
+          command: |
+            pwd
+            ls
+      - run:
           name: Run Danger
-          command: yarn danger ci
+          working_directory: packages/instabug_flutter
+          command: cd packages/instabug_flutter && yarn danger ci
 
   test_flutter:
+    working_directory: packages/instabug_flutter
     parameters:
       version:
         type: string
@@ -129,16 +342,19 @@ jobs:
       - checkout
       - install_flutter_and_dart_packages:
           generate_pigeons: true
-      - run: flutter test --coverage
       - run:
-          working_directory: coverage
+          working_directory: packages/instabug_flutter
+          command: flutter test --coverage
+      - run:
+          working_directory: packages/instabug_flutter/coverage
           command: lcov --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
       - persist_to_workspace:
-          root: coverage
+          root: packages/instabug_flutter/coverage
           paths:
             - lcov.info
 
   test_android:
+    working_directory: packages/instabug_flutter
     executor:
       name: android/android-machine
       resource-class: xlarge
@@ -149,14 +365,15 @@ jobs:
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "Nexus 5"
-          post-emulator-launch-assemble-command: cd example && flutter build apk
-          run-tests-working-directory: example/android
+          post-emulator-launch-assemble-command: cd packages/instabug_flutter/example && flutter build apk
+          run-tests-working-directory: packages/instabug_flutter/example/android
           test-command: ./gradlew app:connectedAndroidTest -Ptarget=`pwd`/../test_driver/example.dart
       - android/run-tests:
-          working-directory: example/android
+          working-directory: packages/instabug_flutter/example/android
           test-command: ./gradlew test
 
   e2e_android_captain:
+    working_directory: packages/instabug_flutter
     executor:
       name: android/android-machine
       resource-class: xlarge
@@ -169,10 +386,11 @@ jobs:
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           additional-avd-args: -d "pixel_4"
-          post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
-          test-command: cd e2e || true && dotnet test
+          post-emulator-launch-assemble-command: cd packages/instabug_flutter/example || true && flutter build apk --debug
+          test-command: cd packages/instabug_flutter/example && e2e || true && dotnet test
 
   test_ios:
+    working_directory: packages/instabug_flutter
     macos:
       xcode: 13.4.1
     resource_class: macos.m1.medium.gen1
@@ -181,7 +399,7 @@ jobs:
       - setup_ios
       - run:
           name: Build and run tests
-          working_directory: example/ios
+          working_directory: packages/instabug_flutter/example/ios
           command: |
             xcodebuild -allowProvisioningUpdates \
                        -workspace Runner.xcworkspace \
@@ -201,15 +419,16 @@ jobs:
       - setup_ios
       - run:
           name: Build Example App
-          working_directory: example
+          working_directory: packages/instabug_flutter/example
           command: flutter build ios --simulator
       - run:
           name: Run E2E Tests
           no_output_timeout: 30m
-          working_directory: e2e
+          working_directory: packages/instabug_flutter/e2e
           command: dotnet test
 
   format_flutter:
+    working_directory: packages/instabug_flutter
     docker:
       - image: cirrusci/flutter
     steps:
@@ -221,6 +440,7 @@ jobs:
           command: dart format . --set-exit-if-changed
 
   lint_flutter:
+    working_directory: packages/instabug_flutter
     docker:
       - image: cirrusci/flutter
     steps:
@@ -229,9 +449,13 @@ jobs:
           generate_pigeons: true
       - run:
           name: Perform Static Analysis
-          command: flutter analyze
+          command: |
+            ls
+            pwd
+            flutter analyze
 
   verify_pub:
+    working_directory: packages/instabug_flutter
     docker:
       - image: cirrusci/flutter
     steps:
@@ -243,7 +467,7 @@ jobs:
           command: dart run pana --no-warning --exit-code-threshold 0
       - run: flutter pub publish --dry-run
 
-  release:
+  release_instabug_flutter:
     macos:
       xcode: 13.4.1
     resource_class: macos.m1.medium.gen1
@@ -257,14 +481,14 @@ jobs:
           command: softwareupdate --install-rosetta --agree-to-license
       - flutter/install_sdk_and_pub:
           version: 3.3.6
-          app-dir: project
+          app-dir: project/packages/instabug_flutter
       - run:
           name: Install pub packages
-          working_directory: ~/project
+          working_directory: ~/project/packages/instabug_flutter
           command: dart pub get
       - run:
           name: Generate Pigeons
-          working_directory: project
+          working_directory: ~/project/packages/instabug_flutter
           command: sh ./scripts/pigeon.sh
       - run:
           name: Clone Escape
@@ -277,34 +501,108 @@ jobs:
             cp -f .build/release/Escape /usr/local/bin/escape
       - run:
           name: Publish Package
-          working_directory: project
+          working_directory: ~/project/packages/instabug_flutter
           command: Escape flutter publish
+
+
 
 workflows:
   version: 2
-  build-test-and-approval-deploy:
+  build-instabug_dart_http_adapter:
     jobs:
+      - extract_pr_info
+      - check_for_changes:
+          path_to_check: "packages/instabug_dart_http_adapter"
+          result_env_var: "IS_CHANGES_DETECTED_FOR_INSTABUG_DART_HTTP_ADAPTER"
+          requires:
+            - extract_pr_info
+      - test_instabug_dart_http_adapter:
+          requires:
+            - check_for_changes
+          is_changes_detected_for_instabug_dart_http_adapter: << pipeline.parameters.is_changes_detected_for_instabug_dart_http_adapter >>
+      - hold_instabug_dart_http_adapter:
+          type: approval
+          requires:
+            - test_instabug_dart_http_adapter
+          filters:
+            branches:
+              only: master
+
+      - release_instabug_dart_http_adapter:
+          requires:
+            - hold_instabug_dart_http_adapter
+          filters:
+            branches:
+              only: master
+
+  build-instabug-dio-interceptor:
+    jobs:
+      - extract_pr_info
+      - check_for_changes:
+          path_to_check: "packages/instabug_dio_interceptor"
+          result_env_var: "IS_CHANGES_DETECTED_FOR_INSTABUG_DIO_INTERCEPTOR"
+          requires:
+            - extract_pr_info
+      - test_instabug_dio_interceptor:
+          requires:
+            - check_for_changes
+          is_changes_detected_for_instabug_dio_interceptor: << pipeline.parameters.is_changes_detected_for_instabug_dio_interceptor >>
+      - hold_instabug_dio_interceptor:
+          type: approval
+          requires:
+            - test_instabug_dio_interceptor
+          filters:
+            branches:
+              only: master
+      - release_instabug_dio_interceptor:
+          requires:
+            - hold_instabug_dio_interceptor
+          filters:
+            branches:
+              only: master
+
+  build-test-and-approval-deploy-instabug-flutter:
+    jobs:
+      - extract_pr_info
+      - check_for_changes:
+          path_to_check: "packages/instabug_flutter"
+          result_env_var: "IS_CHANGES_DETECTED_FOR_INSTABUG_FLUTTER"
+          requires:
+            - extract_pr_info
       - danger:
           requires:
             - test_flutter-stable
+            - check_for_changes
       - test_flutter:
           name: test_flutter-stable
           version: stable
       - test_flutter:
           name: test_flutter-2.10.5
           version: 2.10.5
-      - test_android
-      - e2e_android_captain
-      - test_ios
-      - e2e_ios_captain
-      - format_flutter
+      - test_android:
+          requires:
+            - check_for_changes
+      - e2e_android_captain:
+          requires:
+            - check_for_changes
+      - test_ios:
+          requires:
+            - check_for_changes
+      - e2e_ios_captain:
+          requires:
+            - check_for_changes
+      - format_flutter:
+          requires:
+            - check_for_changes
       - lint_flutter:
           requires:
             - format_flutter
+            - check_for_changes
       - verify_pub:
           requires:
             - lint_flutter
-      - hold_release:
+            - check_for_changes
+      - hold_release_instabug_flutter:
           type: approval
           requires:
             - danger
@@ -318,9 +616,10 @@ workflows:
           filters:
             branches:
               only: master
-      - release:
+      - release_instabug_flutter:
           requires:
-            - hold_release
+            - hold_release_instabug_flutter
           filters:
             branches:
               only: master
+
