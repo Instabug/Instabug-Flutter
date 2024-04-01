@@ -148,7 +148,7 @@ jobs:
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
           # additional-avd-args: -d "Nexus 5"
-          additional-avd-args: -d "pixel_4"
+#          additional-avd-args: -d "pixel_4"
           post-emulator-launch-assemble-command: cd example && flutter build apk
           run-tests-working-directory: example/android
           test-command: ./gradlew app:connectedAndroidTest -Ptarget=`pwd`/../test_driver/example.dart
@@ -168,7 +168,7 @@ jobs:
       - setup_flutter
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
-          additional-avd-args: -d "pixel_4"
+#          additional-avd-args: -d "pixel_4"
           post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
           test-command: cd e2e || true && dotnet test
 
