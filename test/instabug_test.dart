@@ -385,7 +385,6 @@ void main() {
   });
 
   test('[willRedirectToStore] should call host method', () async {
-    //arrange
     await Instabug.willRedirectToStore();
 
     //assert
