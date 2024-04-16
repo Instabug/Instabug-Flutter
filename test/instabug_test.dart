@@ -384,13 +384,13 @@ void main() {
     ).called(1);
   });
 
-  test('[willRedirectToAppStore] should call host method', () async {
+  test('[willRedirectToStore] should call host method', () async {
     //arrange
-    await Instabug.willRedirectToAppStore();
+    await Instabug.willRedirectToStore();
 
     //assert
     verify(
-      mHost.willRedirectToAppStore(),
+      mHost.willRedirectToStore(),
     ).called(1);
   });
 }

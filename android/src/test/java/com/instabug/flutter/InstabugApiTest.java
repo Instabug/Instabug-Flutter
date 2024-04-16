@@ -551,8 +551,8 @@ public class InstabugApiTest {
     }
 
     @Test
-    public void testWillRedirectToAppStore() {
-        api.willRedirectToAppStore();
+    public void testWillRedirectToStore() {
+        api.willRedirectToStore();
         mInstabug.verify(Instabug::willRedirectToStore);
     }
 }

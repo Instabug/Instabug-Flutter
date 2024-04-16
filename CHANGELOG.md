@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-React-Native/compare/v12.7.0...dev)
+
+### Added
+
+- Adds custom app rating api ([#453](https://github.com/Instabug/Instabug-Flutter/pull/453))
+
+
 ## [12.7.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.5.0...v12.7.0) (February 15, 2024)
 
 ### Added

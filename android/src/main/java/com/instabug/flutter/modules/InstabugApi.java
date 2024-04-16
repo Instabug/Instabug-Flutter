@@ -398,7 +398,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     @Override
-    public void willRedirectToAppStore() {
+    public void willRedirectToStore() {
         Instabug.willRedirectToStore();
     }
 }

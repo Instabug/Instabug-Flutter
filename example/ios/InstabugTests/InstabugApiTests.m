@@ -400,7 +400,7 @@
 
 - (void)testWillRedirectToAppStore {
     FlutterError *error;
-    [self.api willRedirectToAppStoreWithError:&error];
+    [self.api willRedirectToStoreWithError:&error];
 
     OCMVerify([self.mInstabug willRedirectToAppStore]);
 }
