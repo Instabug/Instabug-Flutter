@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@2.5.0
+  android: circleci/android@2.4.0
   flutter: circleci/flutter@2.0.2
   node: circleci/node@5.2.0
 
@@ -165,7 +165,7 @@ jobs:
       - setup_captain:
           platform: android
       - setup_flutter
-      - android/run-ui-tests:
+      - android/start-emulator-and-run-tests:
           system-image: system-images;android-29;default;x86
 #          additional-avd-args: -d "pixel_4"
           post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
