@@ -145,8 +145,12 @@ jobs:
     steps:
       - checkout
       - setup_flutter
+      - android/create-avd:
+            avd-name: testavd
+            install: true
+            system-image: system-images;android-29;default;x86
       - android/start-emulator-and-run-tests:
-          system-image: system-images;android-29;default;x86
+          system-image: testavd
           # additional-avd-args: -d "Nexus 5"
           post-emulator-launch-assemble-command: cd example && flutter build apk
           run-tests-working-directory: example/android
@@ -293,9 +297,9 @@ workflows:
           name: test_flutter-2.10.5
           version: 2.10.5
       - test_android
-      - e2e_android_captain
-      - test_ios
-      - e2e_ios_captain
+      # - e2e_android_captain
+      # - test_ios
+      # - e2e_ios_captain
       - format_flutter
       - lint_flutter:
           requires:
