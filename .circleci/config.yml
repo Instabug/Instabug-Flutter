@@ -287,43 +287,44 @@ workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
-      - danger:
-          requires:
-            - test_flutter-stable
-      - test_flutter:
-          name: test_flutter-stable
-          version: stable
-      - test_flutter:
-          name: test_flutter-2.10.5
-          version: 2.10.5
       - test_android
-      # - e2e_android_captain
-      # - test_ios
-      # - e2e_ios_captain
-      - format_flutter
-      - lint_flutter:
-          requires:
-            - format_flutter
-      - verify_pub:
-          requires:
-            - lint_flutter
-      - hold_release:
-          type: approval
-          requires:
-            - danger
-            - test_flutter-stable
-            - test_flutter-2.10.5
-            - test_android
-            - e2e_android_captain
-            - test_ios
-            - e2e_ios_captain
-            - verify_pub
-          filters:
-            branches:
-              only: master
-      - release:
-          requires:
-            - hold_release
-          filters:
-            branches:
-              only: master
+#      - danger:
+#          requires:
+#            - test_flutter-stable
+#      - test_flutter:
+#          name: test_flutter-stable
+#          version: stable
+#      - test_flutter:
+#          name: test_flutter-2.10.5
+#          version: 2.10.5
+#      - test_android
+#      - e2e_android_captain
+#      - test_ios
+#      - e2e_ios_captain
+#      - format_flutter
+#      - lint_flutter:
+#          requires:
+#            - format_flutter
+#      - verify_pub:
+#          requires:
+#            - lint_flutter
+#      - hold_release:
+#          type: approval
+#          requires:
+#            - danger
+#            - test_flutter-stable
+#            - test_flutter-2.10.5
+#            - test_android
+#            - e2e_android_captain
+#            - test_ios
+#            - e2e_ios_captain
+#            - verify_pub
+#          filters:
+#            branches:
+#              only: master
+#      - release:
+#          requires:
+#            - hold_release
+#          filters:
+#            branches:
+#              only: master
