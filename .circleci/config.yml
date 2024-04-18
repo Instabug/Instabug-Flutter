@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@2.4.0
+  android: circleci/android@2.5.0
   flutter: circleci/flutter@2.0.2
   node: circleci/node@5.2.0
 
@@ -145,13 +145,9 @@ jobs:
     steps:
       - checkout
       - setup_flutter
-      - android/create-avd:
-            avd-name: testavd
-            install: true
-            system-image: system-images;android-29;default;x86
       - android/start-emulator-and-run-tests:
-          system-image: testavd
-          # additional-avd-args: -d "Nexus 5"
+          # system-image: system-images;android-29;default;x86
+          additional-avd-args: -d "Nexus 5"
           post-emulator-launch-assemble-command: cd example && flutter build apk
           run-tests-working-directory: example/android
           test-command: ./gradlew app:connectedAndroidTest -Ptarget=`pwd`/../test_driver/example.dart
