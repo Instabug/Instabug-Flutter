@@ -145,7 +145,8 @@ jobs:
     steps:
       - checkout
       - setup_flutter
-      - android/start-emulator-and-run-tests:
+      -
+      - android/run-ui-tests:
           # system-image: system-images;android-29;default;x86
 #          additional-avd-args: -d "Nexus 5"
           post-emulator-launch-assemble-command: cd example && flutter build apk
