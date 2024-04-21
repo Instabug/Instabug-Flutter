@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -88,6 +88,7 @@
 		A964F0D42132F93F7E4DEB73 /* Pods-InstabugUITests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugUITests.profile.xcconfig"; path = "Target Support Files/Pods-InstabugUITests/Pods-InstabugUITests.profile.xcconfig"; sourceTree = "<group>"; };
 		B03C8370EEFE061BDDDA1DA1 /* Pods-InstabugUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugUITests.debug.xcconfig"; path = "Target Support Files/Pods-InstabugUITests/Pods-InstabugUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BA5633844585BB93FE7BCCE7 /* Pods-InstabugTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugTests.profile.xcconfig"; path = "Target Support Files/Pods-InstabugTests/Pods-InstabugTests.profile.xcconfig"; sourceTree = "<group>"; };
+		BE26C80C2BD55575009FECCF /* IBGCrashReporting+CP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IBGCrashReporting+CP.h"; sourceTree = "<group>"; };
 		BF9025BBD0A6FD7B193E903A /* Pods-InstabugTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugTests.debug.xcconfig"; path = "Target Support Files/Pods-InstabugTests/Pods-InstabugTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C090017925D9A030006F3DAE /* InstabugTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstabugTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C090017D25D9A031006F3DAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -255,6 +256,7 @@
 		CC78720A2938D1C5008CB2A5 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				BE26C80C2BD55575009FECCF /* IBGCrashReporting+CP.h */,
 				CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */,
 				CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */,
 				CC198C62293E2392007077C8 /* IBGSurvey+Test.h */,
@@ -344,7 +346,7 @@
 		97C146E61CF9000F007C117D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1510;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					97C146ED1CF9000F007C117D = {
@@ -447,10 +449,12 @@
 		};
 		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}",
 			);
 			name = "Thin Binary";
 			outputPaths = (
@@ -478,6 +482,7 @@
 		};
 		9740EEB61CF901F6004384FC /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -674,7 +679,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -760,7 +765,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -809,7 +814,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;

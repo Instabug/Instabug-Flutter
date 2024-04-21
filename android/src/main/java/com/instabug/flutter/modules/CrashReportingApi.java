@@ -1,17 +1,24 @@
 package com.instabug.flutter.modules;
 
+import static com.instabug.crash.CrashReporting.getFingerprintObject;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.instabug.crash.CrashReporting;
+import com.instabug.crash.models.IBGNonFatalException;
 import com.instabug.flutter.generated.CrashReportingPigeon;
+import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.library.Feature;
+import com.instabug.library.InstabugColorTheme;
 
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
@@ -41,6 +48,28 @@ public class CrashReportingApi implements CrashReportingPigeon.CrashReportingHos
             if (method != null) {
                 method.invoke(null, exceptionObject, isHandled);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendNonFatalError(@NonNull String jsonCrash, @Nullable Map<String, String> userAttributes, @Nullable String fingerprint, @NonNull String nonFatalExceptionLevel) {
+        try {
+            Method method = Reflection.getMethod(Class.forName("com.instabug.crash.CrashReporting"), "reportException", JSONObject.class, boolean.class,
+                    Map.class, JSONObject.class, IBGNonFatalException.Level.class);
+            final JSONObject exceptionObject = new JSONObject(jsonCrash);
+
+            JSONObject fingerprintObj = null;
+            if (fingerprint != null) {
+                fingerprintObj = getFingerprintObject(fingerprint);
+//                Method getFingerPrintMethod = Reflection.getMethod(Class.forName("com.instabug.crash.CrashReporting"), "getFingerprintObject", String.class);
+//                fingerprintObj = (JSONObject) getFingerPrintMethod.invoke(fingerprint);
+            }
+            IBGNonFatalException.Level nonFatalExceptionLevelType = ArgsRegistry.nonFatalExceptionLevel.get(nonFatalExceptionLevel);
+
+            method.invoke(null, exceptionObject, true, userAttributes, fingerprintObj, nonFatalExceptionLevelType);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

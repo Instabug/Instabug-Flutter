@@ -10,6 +10,8 @@ import 'package:instabug_flutter/src/models/exception_data.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:stack_trace/stack_trace.dart';
 
+enum NonFatalExceptionLevel { error, critical, info, warning }
+
 class CrashReporting {
   static var _host = CrashReportingHostApi();
   static bool enabled = true;
@@ -44,8 +46,18 @@ class CrashReporting {
   static Future<void> reportHandledCrash(
     Object exception, [
     StackTrace? stack,
+    Map<String, String>? userAttributes,
+    String? fingerprint,
+    NonFatalExceptionLevel nonFatalExceptionLevel =
+        NonFatalExceptionLevel.error,
   ]) async {
-    await _sendCrash(exception, stack ?? StackTrace.current, true);
+    await _sendHandledCrash(
+      exception,
+      stack ?? StackTrace.current,
+      userAttributes,
+      fingerprint,
+      nonFatalExceptionLevel,
+    );
   }
 
   static Future<void> _reportUnhandledCrash(
@@ -79,5 +91,38 @@ class CrashReporting {
     );
 
     return _host.send(jsonEncode(crashData), handled);
+  }
+
+  static Future<void> _sendHandledCrash(
+    Object exception,
+    StackTrace stack,
+    Map<String, String>? userAttributes,
+    String? fingerprint,
+    NonFatalExceptionLevel? nonFatalExceptionLevel,
+  ) async {
+    final trace = Trace.from(stack);
+    final frames = trace.frames
+        .map(
+          (frame) => ExceptionData(
+            file: frame.uri.toString(),
+            methodName: frame.member,
+            lineNumber: frame.line,
+            column: frame.column ?? 0,
+          ),
+        )
+        .toList();
+
+    final crashData = CrashData(
+      os: IBGBuildInfo.instance.operatingSystem,
+      message: exception.toString(),
+      exception: frames,
+    );
+
+    return _host.sendNonFatalError(
+      jsonEncode(crashData),
+      userAttributes,
+      fingerprint,
+      nonFatalExceptionLevel.toString(),
+    );
   }
 }

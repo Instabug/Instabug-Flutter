@@ -14,7 +14,7 @@ void main() {
       );
 
       FlutterError.onError = (FlutterErrorDetails details) {
-        Zone.current.handleUncaughtError(details.exception, details.stack!);
+        Zone.current.handleUncaughtError(details.exception, details.stack??StackTrace.current);
       };
 
       runApp(MyApp());
@@ -41,8 +41,8 @@ class MyApp extends StatelessWidget {
 }
 
 class InstabugButton extends StatelessWidget {
-  String text;
-  void Function()? onPressed;
+  final String text;
+  final void Function()? onPressed;
 
   InstabugButton({required this.text, this.onPressed});
 
@@ -64,18 +64,21 @@ class InstabugButton extends StatelessWidget {
 }
 
 class InstabugTextField extends StatelessWidget {
-  String label;
-  TextEditingController controller;
+  final String label;
+  final TextEditingController controller;
+  final FormFieldValidator<String>? validator;
 
-  InstabugTextField({required this.label, required this.controller});
+  InstabugTextField(
+      {required this.label, required this.controller, this.validator});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
+        validator: validator,
         decoration: InputDecoration(
           labelText: label,
         ),
@@ -85,7 +88,7 @@ class InstabugTextField extends StatelessWidget {
 }
 
 class SectionTitle extends StatelessWidget {
-  String text;
+  final String text;
 
   SectionTitle(this.text);
 
@@ -122,6 +125,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final primaryColorController = TextEditingController();
   final screenNameController = TextEditingController();
+
+  var crashFormKey = GlobalKey<FormState>();
+  final crashNameController = TextEditingController();
+  final crashfingerPrintController = TextEditingController();
+  final crashUserAttributeKeyController = TextEditingController();
+
+  final crashUserAttributeValueController = TextEditingController();
+
+  NonFatalExceptionLevel crashType = NonFatalExceptionLevel.error;
 
   void restartInstabug() {
     Instabug.setEnabled(false);
@@ -350,7 +362,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white),
                       foregroundColor:
-                          MaterialStateProperty.all(Colors.lightBlue),
+                      MaterialStateProperty.all(Colors.lightBlue),
                     ),
                     child: const Text('Light'),
                   ),
@@ -363,6 +375,107 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: const Text('Dark'),
                   ),
                 ],
+              ),
+              SectionTitle('Crash section'),
+              Form(
+                key: crashFormKey,
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: InstabugTextField(
+                              label: "Crash title",
+                              controller: crashNameController,
+                              validator: (value) {
+                                if (value
+                                    ?.trim()
+                                    .isNotEmpty == true) return null;
+
+                                return 'this field is required';
+                              },
+                            )),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: InstabugTextField(
+                              label: "User Attribute  key",
+                              controller: crashUserAttributeKeyController,
+                              validator: (value) {
+                                if (crashUserAttributeValueController
+                                    .text.isNotEmpty) {
+                                  if (value
+                                      ?.trim()
+                                      .isNotEmpty == true) return null;
+
+                                  return 'this field is required';
+                                }
+                                return null;
+                              },
+                            )),
+                        Expanded(
+                            child: InstabugTextField(
+                              label: "User Attribute  Value",
+                              controller: crashUserAttributeValueController,
+                              validator: (value) {
+                                if (crashUserAttributeKeyController
+                                    .text.isNotEmpty) {
+                                  if (value
+                                      ?.trim()
+                                      .isNotEmpty == true) return null;
+
+                                  return 'this field is required';
+                                }
+                                return null;
+                              },
+                            )),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: InstabugTextField(
+                              label: "Fingerprint",
+                              controller: crashfingerPrintController,
+                            )),
+                        Expanded(
+                            child: DropdownButton<NonFatalExceptionLevel>(
+                              value: crashType,
+                              items: NonFatalExceptionLevel.values
+                                  .map((e) =>
+                                  DropdownMenuItem(
+                                    value: e,
+                                    child: Text(e.toString()),
+                                  ))
+                                  .toList(),
+                              onChanged: (NonFatalExceptionLevel? value) {
+                                crashType = value!;
+                              },
+                            )),
+                      ],
+                    ),
+                    InstabugButton(text: 'Send Non Fatal Crash',
+                      onPressed: () {
+                        if (crashFormKey.currentState?.validate() == true) {
+                          Map<String, String>? userAttributes = null;
+                          if (crashUserAttributeKeyController.text.isNotEmpty) {
+                            userAttributes = {
+                              crashUserAttributeKeyController
+                                  .text: crashUserAttributeValueController.text
+                            };
+                          }
+                          CrashReporting.reportHandledCrash(
+                              new Exception(crashNameController.text),
+                              null,
+                              userAttributes, crashfingerPrintController.text,
+                              crashType);
+                        }
+                      },
+                    )
+                  ],
+                ),
               ),
             ],
           )), // This trailing comma makes auto-formatting nicer for build methods.

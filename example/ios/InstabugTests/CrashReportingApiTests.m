@@ -4,6 +4,7 @@
 #import "Instabug/IBGCrashReporting.h"
 #import "Instabug/Instabug.h"
 #import "Util/Instabug+Test.h"
+#import "Util/IBGCrashReporting+CP.h"
 
 @interface CrashReportingApiTests : XCTestCase
 
@@ -36,8 +37,26 @@
     FlutterError *error;
 
     [self.api sendJsonCrash:jsonCrash isHandled:isHandled error:&error];
+    
+    OCMVerify([self.mCrashReporting cp_reportFatalCrashWithStackTrace:@{}]);
+}
 
-    OCMVerify([self.mInstabug reportCrashWithStackTrace:@{} handled:isHandled]);
+
+- (void)testSendNonFatalErrorJsonCrash {
+    NSString *jsonCrash = @"{}";
+    NSString *fingerPrint = @"fingerprint";
+    NSDictionary *userAttributes = @{ @"key" : @"value",  };
+    NSString *ibgNonFatalLevel = @"NonFatalExceptionLevel.error";
+    
+    FlutterError *error;
+    
+    [self.api sendNonFatalErrorJsonCrash:jsonCrash userAttributes:userAttributes fingerprint:fingerPrint nonFatalExceptionLevel:ibgNonFatalLevel error:&error];
+    
+    OCMVerify([self.mCrashReporting cp_reportNonFatalCrashWithStackTrace:@{}
+           level:IBGNonFatalLevelError
+         groupingString:fingerPrint
+        userAttributes:userAttributes
+              ]);
 }
 
 @end

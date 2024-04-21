@@ -1,5 +1,6 @@
 package com.instabug.flutter;
 
+import static com.instabug.crash.CrashReporting.getFingerprintObject;
 import static com.instabug.flutter.util.GlobalMocks.reflected;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -7,8 +8,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 
 import com.instabug.crash.CrashReporting;
+import com.instabug.crash.models.IBGNonFatalException;
 import com.instabug.flutter.generated.CrashReportingPigeon;
 import com.instabug.flutter.modules.CrashReportingApi;
+import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.GlobalMocks;
 import com.instabug.flutter.util.MockReflected;
 import com.instabug.library.Feature;
@@ -18,6 +21,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
@@ -76,5 +82,19 @@ public class CrashReportingApiTest {
         api.send(jsonCrash, isHandled);
 
         reflected.verify(() -> MockReflected.crashReportException(any(JSONObject.class), eq(isHandled)));
+    }
+
+    @Test
+    public void testSendNonFatalError() {
+        String jsonCrash = "{}";
+        boolean isHandled = true;
+        Map<String, String> userAttributes = new HashMap<>();
+        String fingerPrint = "test";
+        String level = ArgsRegistry.nonFatalExceptionLevel.keySet().iterator().next();
+        JSONObject finger = getFingerprintObject(fingerPrint);
+        IBGNonFatalException.Level lev = ArgsRegistry.nonFatalExceptionLevel.get(level);
+        api.sendNonFatalError(jsonCrash, userAttributes, fingerPrint, level);
+
+        reflected.verify(() -> MockReflected.crashReportException(any(JSONObject.class), eq(isHandled), eq(userAttributes), eq(finger), eq(lev)));
     }
 }
