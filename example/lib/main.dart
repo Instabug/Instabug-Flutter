@@ -79,8 +79,11 @@ class InstabugTextField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         validator: validator,
+
         decoration: InputDecoration(
           labelText: label,
+            helperText: ''
+
         ),
       ),
     );
@@ -440,22 +443,41 @@ class _MyHomePageState extends State<MyHomePage> {
                               label: "Fingerprint",
                               controller: crashfingerPrintController,
                             )),
-                        Expanded(
-                            child: DropdownButton<NonFatalExceptionLevel>(
-                              value: crashType,
-                              items: NonFatalExceptionLevel.values
-                                  .map((e) =>
-                                  DropdownMenuItem(
-                                    value: e,
-                                    child: Text(e.toString()),
-                                  ))
-                                  .toList(),
-                              onChanged: (NonFatalExceptionLevel? value) {
-                                crashType = value!;
-                              },
-                            )),
                       ],
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        children: <Widget>[
+
+
+                          Expanded(
+                              flex: 5,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButtonFormField<NonFatalExceptionLevel>(
+                                  value: crashType,
+                                  decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      isDense: true
+
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                  items: NonFatalExceptionLevel.values
+                                      .map((e) =>
+                                      DropdownMenuItem(
+                                        value: e,
+                                        child: Text(e.toString()),
+                                      ))
+                                      .toList(),
+                                  onChanged: (NonFatalExceptionLevel? value) {
+                                    crashType = value!;
+                                  },
+                                ),
+                              )),
+                        ],
+                      ),
+                    ),
+SizedBox(height: 8,),
                     InstabugButton(text: 'Send Non Fatal Crash',
                       onPressed: () {
                         if (crashFormKey.currentState?.validate() == true) {
