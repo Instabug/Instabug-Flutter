@@ -145,7 +145,6 @@ jobs:
     steps:
       - checkout
       - setup_flutter
-      -
       - android/run-ui-tests:
           # system-image: system-images;android-29;default;x86
 #          additional-avd-args: -d "Nexus 5"
