@@ -4,7 +4,7 @@
 
 ### Added
 
-- Add Support for App flows APIs `APM.startFlow`, `APM.endFlow` and `APM.setTraceAttribute` ([#1138](https://github.com/Instabug/Instabug-Flutter/pull/446)).
+- Add support for App Flows APIs `APM.startFlow`, `APM.endFlow` and `APM.setFlowAttribute` ([#1138](https://github.com/Instabug/Instabug-Flutter/pull/446)).
 
 ### Deprecated
 
