@@ -63,4 +63,15 @@ class SessionReplay {
   static Future<void> setUserStepsEnabled(bool isEnabled) async {
     return _host.setUserStepsEnabled(isEnabled);
   }
+
+  /// Retrieves current session's replay link.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// await SessionReplay.getSessionReplayLink();
+  /// ```
+  static Future<String> getSessionReplayLink() async {
+    return _host.getSessionReplayLink();
+  }
 }
