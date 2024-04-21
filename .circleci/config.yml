@@ -152,7 +152,7 @@ jobs:
           run-tests-working-directory: example/android
           test-command: ./gradlew app:connectedAndroidTest -Ptarget=`pwd`/../test_driver/example.dart
       - android/start-emulator-and-run-tests:
-          working-directory: example/android
+          run-tests-working-directory: example/android
           test-command: ./gradlew test
 
   e2e_android_captain:
