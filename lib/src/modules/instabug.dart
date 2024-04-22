@@ -413,7 +413,11 @@ class Instabug {
     return _host.setCustomBrandingImage(lightKey.name, darkKey.name);
   }
 
-  /// This API has to be call when using custom app rating prompt
+  /// Allows detection of app review sessions which are submitted through custom prompts.
+  ///
+  /// Use this when utilizing a custom app rating prompt. It should be called
+  /// once the user clicks on the Call to Action (CTA) that redirects them to the app store.
+  /// Helps track session data for insights on user interactions during review submission.
   static Future<void> willRedirectToStore() async {
     return _host.willRedirectToStore();
   }
