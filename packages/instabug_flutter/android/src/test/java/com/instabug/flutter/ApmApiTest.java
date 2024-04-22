@@ -1,17 +1,5 @@
 package com.instabug.flutter;
 
-import static com.instabug.flutter.util.GlobalMocks.reflected;
-import static com.instabug.flutter.util.MockResult.makeResult;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockConstruction;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
@@ -19,7 +7,7 @@ import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.modules.ApmApi;
 import com.instabug.flutter.util.GlobalMocks;
 import com.instabug.flutter.util.MockReflected;
-
+import io.flutter.plugin.common.BinaryMessenger;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
@@ -31,12 +19,17 @@ import org.mockito.MockedStatic;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.flutter.plugin.common.BinaryMessenger;
+import static com.instabug.flutter.util.GlobalMocks.reflected;
+import static com.instabug.flutter.util.MockResult.makeResult;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 
 public class ApmApiTest {
     private final ApmApi api = new ApmApi();
     private MockedStatic<APM> mAPM;
+    private MockedStatic<APM> mInternalAPM;
     private MockedStatic<ApmPigeon.ApmHostApi> mHostApi;
 
     @Before
@@ -232,5 +225,60 @@ public class ApmApiTest {
 
         mAPMNetworkLogger.close();
         mJSONObject.close();
+    }
+
+    @Test
+    public void testStartUiTraceCP() {
+        String screenName = "screen-name";
+        long microTimeStamp = System.currentTimeMillis() / 1000;
+        long traceId = System.currentTimeMillis();
+
+
+        api.startCpUiTrace(screenName, microTimeStamp, traceId);
+
+        reflected.verify(() -> MockReflected.startUiTraceCP(screenName, microTimeStamp, traceId));
+        reflected.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testReportScreenLoadingCP() {
+        long startTimeStampMicro = System.currentTimeMillis() / 1000;
+        long durationMicro = System.currentTimeMillis() / 1000;
+        long uiTraceId = System.currentTimeMillis();
+
+        api.reportScreenLoading(startTimeStampMicro, durationMicro, uiTraceId);
+
+        reflected.verify(() -> MockReflected.reportScreenLoadingCP(startTimeStampMicro, durationMicro, uiTraceId));
+        reflected.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testEndScreenLoading() {
+        long timeStampMicro = System.currentTimeMillis() / 1000;
+        long uiTraceId = System.currentTimeMillis();
+
+        api.endScreenLoading(timeStampMicro, uiTraceId);
+
+        reflected.verify(() -> MockReflected.endScreenLoadingCP(timeStampMicro, uiTraceId));
+        reflected.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testisEnabled() {
+        // TODO: Add test here as we need setInstance method in [APMInternal]
+    }
+
+    @Test
+    public void testIsScreenLoadingMonitoringEnabled() {
+        // TODO: Add test here as we need setInstance method in [APMInternal]
+    }
+
+    @Test
+    public void testSetScreenLoadingMonitoringEnabled() {
+        boolean isEnabled = false;
+
+        api.setScreenLoadingMonitoringEnabled(isEnabled);
+
+        mAPM.verify(() -> APM.setScreenLoadingEnabled(isEnabled));
     }
 }

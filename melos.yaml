@@ -4,6 +4,9 @@ packages:
   - packages/*
 
 scripts:
+  get:
+    run: melos exec "flutter pub get"
+
   analyze:
     run: melos exec "dart analyze ."
 

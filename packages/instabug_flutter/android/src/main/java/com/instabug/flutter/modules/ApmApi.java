@@ -1,23 +1,23 @@
 package com.instabug.flutter.modules;
 
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
 import com.instabug.apm.APM;
+import com.instabug.apm.InternalAPM;
+import com.instabug.apm.configuration.cp.APMFeature;
+import com.instabug.apm.configuration.cp.FeatureAvailabilityCallback;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
-
+import io.flutter.plugin.common.BinaryMessenger;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-
-import io.flutter.plugin.common.BinaryMessenger;
 
 public class ApmApi implements ApmPigeon.ApmHostApi {
     private final String TAG = ApmApi.class.getName();
@@ -185,6 +185,82 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
                 Log.e(TAG, "APMNetworkLogger.log was not found by reflection");
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+    @Override
+    public void startCpUiTrace(@NonNull @NotNull String screenName, @NonNull @NotNull Long microTimeStamp, @NonNull @NotNull Long traceId) {
+        try {
+            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.APM"), "startUiTraceCP", String.class, long.class, long.class);
+            if (method != null) {
+                method.invoke(null, screenName, microTimeStamp, traceId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void reportScreenLoading(@NonNull @NotNull Long startTimeStampMicro, @NonNull @NotNull Long durationMicro, @NonNull @NotNull Long uiTraceId) {
+        try {
+            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.APM"), "reportScreenLoadingCP", long.class, long.class, long.class);
+            if (method != null) {
+                method.invoke(null, startTimeStampMicro, durationMicro, uiTraceId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void endScreenLoading(@NonNull @NotNull Long timeStampMicro, @NonNull @NotNull Long uiTraceId) {
+        try {
+            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.APM"), "endScreenLoadingCP", long.class, long.class);
+            if (method != null) {
+                method.invoke(null, timeStampMicro, uiTraceId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void isEnabled(@NonNull @NotNull ApmPigeon.Result<Boolean> result) {
+        try {
+            InternalAPM.INSTANCE._isFeatureEnabled(APMFeature.APM, new FeatureAvailabilityCallback() {
+                @Override
+                public void invoke(boolean isFeatureAvailable) {
+                    result.success(isFeatureAvailable);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void isScreenLoadingMonitoringEnabled(@NonNull @NotNull ApmPigeon.Result<Boolean> result) {
+        try {
+            InternalAPM.INSTANCE._isFeatureEnabled(APMFeature.SCREEN_LOADING, new FeatureAvailabilityCallback() {
+                @Override
+                public void invoke(boolean isFeatureAvailable) {
+                    result.success(isFeatureAvailable);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setScreenLoadingMonitoringEnabled(@NonNull @NotNull Boolean isEnabled) {
+        try {
+            APM.setScreenLoadingEnabled(isEnabled);
         } catch (Exception e) {
             e.printStackTrace();
         }
