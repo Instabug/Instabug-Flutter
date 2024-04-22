@@ -68,6 +68,34 @@ class SectionTitle extends StatelessWidget {
   }
 }
 
+class Page extends StatelessWidget {
+  final String title;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
+  final List<Widget> children;
+
+  const Page({
+    Key? key,
+    required this.title,
+    this.scaffoldKey,
+    required this.children,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: AppBar(title: Text(title)),
+      body: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          padding: const EdgeInsets.only(top: 20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: children,
+          )),
+    );
+  }
+}
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
@@ -135,17 +163,17 @@ class _MyHomePageState extends State<MyHomePage> {
     Surveys.showSurvey('PMqUZXqarkOR2yGKiENB4w');
   }
 
-  final _scaffoldKey=GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void getCurrentSessionReplaylink() async {
-    final result=await SessionReplay.getSessionReplayLink();
-    if(result==null){
+    final result = await SessionReplay.getSessionReplayLink();
+    if (result == null) {
       const snackBar = SnackBar(
         content: Text('No Link Found'),
       );
       ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
-    }else{
-      var  snackBar = SnackBar(
+    } else {
+      var snackBar = SnackBar(
         content: Text(result),
       );
       ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
@@ -183,193 +211,202 @@ class _MyHomePageState extends State<MyHomePage> {
     Instabug.setColorTheme(colorTheme);
   }
 
+  void _navigateToCrashes() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const CrashesPage()),
+    );
+  }
+
+  void _navigateToApm() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ApmPage()),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(title: Text(widget.title)),
-      body: SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
-          padding: const EdgeInsets.only(top: 20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(
-                    left: 20.0, right: 20.0, bottom: 20.0),
-                child: const Text(
-                  'Hello Instabug\'s awesome user! The purpose of this application is to show you the different options for customizing the SDK and how easy it is to integrate it to your existing app',
-                  textAlign: TextAlign.center,
-                ),
+    return Page(
+      scaffoldKey: _scaffoldKey,
+      title: widget.title,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+          child: const Text(
+            'Hello Instabug\'s awesome user! The purpose of this application is to show you the different options for customizing the SDK and how easy it is to integrate it to your existing app',
+            textAlign: TextAlign.center,
+          ),
+        ),
+        InstabugButton(
+          onPressed: restartInstabug,
+          text: 'Restart Instabug',
+        ),
+        SectionTitle('Primary Color'),
+        InstabugTextField(
+          controller: primaryColorController,
+          label: 'Enter primary color',
+        ),
+        InstabugButton(
+          text: 'Change Primary Color',
+          onPressed: changePrimaryColor,
+        ),
+        SectionTitle('Change Invocation Event'),
+        ButtonBar(
+          mainAxisSize: MainAxisSize.min,
+          alignment: MainAxisAlignment.start,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () => setInvocationEvent(InvocationEvent.none),
+              style: buttonStyle,
+              child: const Text('None'),
+            ),
+            ElevatedButton(
+              onPressed: () => setInvocationEvent(InvocationEvent.shake),
+              style: buttonStyle,
+              child: const Text('Shake'),
+            ),
+            ElevatedButton(
+              onPressed: () => setInvocationEvent(InvocationEvent.screenshot),
+              style: buttonStyle,
+              child: const Text('Screenshot'),
+            ),
+          ],
+        ),
+        ButtonBar(
+          mainAxisSize: MainAxisSize.min,
+          alignment: MainAxisAlignment.start,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () =>
+                  setInvocationEvent(InvocationEvent.floatingButton),
+              style: buttonStyle,
+              child: const Text('Floating Button'),
+            ),
+            ElevatedButton(
+              onPressed: () =>
+                  setInvocationEvent(InvocationEvent.twoFingersSwipeLeft),
+              style: buttonStyle,
+              child: const Text('Two Fingers Swipe Left'),
+            ),
+          ],
+        ),
+        InstabugButton(
+          onPressed: show,
+          text: 'Invoke',
+        ),
+        InstabugButton(
+          onPressed: setOnDismissCallback,
+          text: 'Set On Dismiss Callback',
+        ),
+        SectionTitle('Repro Steps'),
+        InstabugTextField(
+          controller: screenNameController,
+          label: 'Enter screen name',
+        ),
+        InstabugButton(
+          text: 'Report Screen Change',
+          onPressed: reportScreenChange,
+        ),
+        InstabugButton(
+          onPressed: sendBugReport,
+          text: 'Send Bug Report',
+        ),
+        InstabugButton(
+          onPressed: showManualSurvey,
+          text: 'Show Manual Survey',
+        ),
+        SectionTitle('Change Report Types'),
+        ButtonBar(
+          mainAxisSize: MainAxisSize.min,
+          alignment: MainAxisAlignment.start,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () => toggleReportType(ReportType.bug),
+              style: buttonStyle,
+              child: const Text('Bug'),
+            ),
+            ElevatedButton(
+              onPressed: () => toggleReportType(ReportType.feedback),
+              style: buttonStyle,
+              child: const Text('Feedback'),
+            ),
+            ElevatedButton(
+              onPressed: () => toggleReportType(ReportType.question),
+              style: buttonStyle,
+              child: const Text('Question'),
+            ),
+          ],
+        ),
+        InstabugButton(
+          onPressed: changeFloatingButtonEdge,
+          text: 'Move Floating Button to Left',
+        ),
+        InstabugButton(
+          onPressed: sendFeedback,
+          text: 'Send Feedback',
+        ),
+        InstabugButton(
+          onPressed: showNpsSurvey,
+          text: 'Show NPS Survey',
+        ),
+        InstabugButton(
+          onPressed: showManualSurvey,
+          text: 'Show Multiple Questions Survey',
+        ),
+        InstabugButton(
+          onPressed: showFeatureRequests,
+          text: 'Show Feature Requests',
+        ),
+        InstabugButton(
+          onPressed: _navigateToCrashes,
+          text: 'Crashes',
+        ),
+        InstabugButton(
+          onPressed: _navigateToApm,
+          text: 'APM',
+        ),
+        SectionTitle('Color Theme'),
+        ButtonBar(
+          mainAxisSize: MainAxisSize.max,
+          alignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () => setColorTheme(ColorTheme.light),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white),
+                foregroundColor: MaterialStateProperty.all(Colors.lightBlue),
               ),
-              InstabugButton(
-                onPressed: restartInstabug,
-                text: 'Restart Instabug',
+              child: const Text('Light'),
+            ),
+            ElevatedButton(
+              onPressed: () => setColorTheme(ColorTheme.dark),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.black),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
-              SectionTitle('Primary Color'),
-              InstabugTextField(
-                controller: primaryColorController,
-                label: 'Enter primary color',
-              ),
-              InstabugButton(
-                text: 'Change Primary Color',
-                onPressed: changePrimaryColor,
-              ),
-              SectionTitle('Change Invocation Event'),
-              ButtonBar(
-                mainAxisSize: MainAxisSize.min,
-                alignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () => setInvocationEvent(InvocationEvent.none),
-                    style: buttonStyle,
-                    child: const Text('None'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => setInvocationEvent(InvocationEvent.shake),
-                    style: buttonStyle,
-                    child: const Text('Shake'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () =>
-                        setInvocationEvent(InvocationEvent.screenshot),
-                    style: buttonStyle,
-                    child: const Text('Screenshot'),
-                  ),
-                ],
-              ),
-              ButtonBar(
-                mainAxisSize: MainAxisSize.min,
-                alignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () =>
-                        setInvocationEvent(InvocationEvent.floatingButton),
-                    style: buttonStyle,
-                    child: const Text('Floating Button'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () =>
-                        setInvocationEvent(InvocationEvent.twoFingersSwipeLeft),
-                    style: buttonStyle,
-                    child: const Text('Two Fingers Swipe Left'),
-                  ),
-                ],
-              ),
-              InstabugButton(
-                onPressed: show,
-                text: 'Invoke',
-              ),
-              InstabugButton(
-                onPressed: setOnDismissCallback,
-                text: 'Set On Dismiss Callback',
-              ),
-              SectionTitle('Repro Steps'),
-              InstabugTextField(
-                controller: screenNameController,
-                label: 'Enter screen name',
-              ),
-              InstabugButton(
-                text: 'Report Screen Change',
-                onPressed: reportScreenChange,
-              ),
-              InstabugButton(
-                onPressed: sendBugReport,
-                text: 'Send Bug Report',
-              ),
-              InstabugButton(
-                onPressed: showManualSurvey,
-                text: 'Show Manual Survey',
-              ),
-              SectionTitle('Change Report Types'),
-              ButtonBar(
-                mainAxisSize: MainAxisSize.min,
-                alignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () => toggleReportType(ReportType.bug),
-                    style: buttonStyle,
-                    child: const Text('Bug'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => toggleReportType(ReportType.feedback),
-                    style: buttonStyle,
-                    child: const Text('Feedback'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => toggleReportType(ReportType.question),
-                    style: buttonStyle,
-                    child: const Text('Question'),
-                  ),
-                ],
-              ),
-              InstabugButton(
-                onPressed: changeFloatingButtonEdge,
-                text: 'Move Floating Button to Left',
-              ),
-              InstabugButton(
-                onPressed: sendFeedback,
-                text: 'Send Feedback',
-              ),
-              InstabugButton(
-                onPressed: showNpsSurvey,
-                text: 'Show NPS Survey',
-              ),
-              InstabugButton(
-                onPressed: showManualSurvey,
-                text: 'Show Multiple Questions Survey',
-              ),
-              InstabugButton(
-                onPressed: showFeatureRequests,
-                text: 'Show Feature Requests',
-              ),
-              SectionTitle("Crashes"),
-              const CrashReportingContent(),
-              SectionTitle("APM"),
-              const ApmBody(),
-              SectionTitle('Color Theme'),
-              ButtonBar(
-                mainAxisSize: MainAxisSize.max,
-                alignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () => setColorTheme(ColorTheme.light),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.white),
-                      foregroundColor:
-                          MaterialStateProperty.all(Colors.lightBlue),
-                    ),
-                    child: const Text('Light'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => setColorTheme(ColorTheme.dark),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.black),
-                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                    ),
-                    child: const Text('Dark'),
-                  ),
-
-
-                  SectionTitle('Sessions Replay'),
-                  InstabugButton(
-                    onPressed: getCurrentSessionReplaylink,
-                    text: 'Get current session replay link',
-                  ),
-                ],
-              ),
-            ],
-          )), // This trailing comma makes auto-formatting nicer for build methods.
+              child: const Text('Dark'),
+            ),
+            SectionTitle('Sessions Replay'),
+            InstabugButton(
+              onPressed: getCurrentSessionReplaylink,
+              text: 'Get current session replay link',
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
 
-class CrashReportingContent extends StatelessWidget {
-  const CrashReportingContent({Key? key}) : super(key: key);
+class CrashesPage extends StatelessWidget {
+  const CrashesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Page(
+      title: 'Crashes',
       children: [
         SectionTitle('Non-Fatal Crashes'),
         const NonFatalCrashesContent(),
@@ -385,11 +422,9 @@ class CrashReportingContent extends StatelessWidget {
 class NonFatalCrashesContent extends StatelessWidget {
   const NonFatalCrashesContent({Key? key}) : super(key: key);
 
-
   void throwHandledException(dynamic error) {
     try {
       if (error is! Error) {
-        // Convert non-Error types to Error
         const String appName = 'Flutter Test App';
         final errorMessage = error?.toString() ?? 'Unknown Error';
         error = Exception('Handled Error: $errorMessage from $appName');
@@ -397,8 +432,8 @@ class NonFatalCrashesContent extends StatelessWidget {
       throw error;
     } catch (err) {
       if (err is Error) {
-        // Simulate crash reporting by printing the error to the console
-        log('throwHandledException: Crash report for ${err.runtimeType} is Sent!', name: 'NonFatalCrashesWidget');
+        log('throwHandledException: Crash report for ${err.runtimeType} is Sent!',
+            name: 'NonFatalCrashesWidget');
       }
     }
   }
@@ -424,9 +459,8 @@ class NonFatalCrashesContent extends StatelessWidget {
         ),
         InstabugButton(
           text: 'Throw RangeError',
-          onPressed: () =>
-              throwHandledException(
-                  RangeError.range(5, 0, 3, 'Index out of range')),
+          onPressed: () => throwHandledException(
+              RangeError.range(5, 0, 3, 'Index out of range')),
         ),
         InstabugButton(
           text: 'Throw FormatException',
@@ -436,14 +470,14 @@ class NonFatalCrashesContent extends StatelessWidget {
         InstabugButton(
           text: 'Throw NoSuchMethodError',
           onPressed: () {
-            // This intentionally triggers a NoSuchMethodError
             dynamic obj;
             throwHandledException(obj.methodThatDoesNotExist());
           },
         ),
         InstabugButton(
           text: 'Throw Handled Native Exception',
-          onPressed: InstabugFlutterExampleMethodChannel.sendNativeNonFatalCrash,
+          onPressed:
+              InstabugFlutterExampleMethodChannel.sendNativeNonFatalCrash,
         ),
       ],
     );
@@ -451,13 +485,10 @@ class NonFatalCrashesContent extends StatelessWidget {
 }
 
 class FatalCrashesContent extends StatelessWidget {
-
   const FatalCrashesContent({Key? key}) : super(key: key);
-
 
   void throwUnhandledException(dynamic error) {
     if (error is! Error) {
-      // Convert non-Error types to Error
       const String appName = 'Flutter Test App';
       final errorMessage = error?.toString() ?? 'Unknown Error';
       error = Exception('Unhandled Error: $errorMessage from $appName');
@@ -473,9 +504,8 @@ class FatalCrashesContent extends StatelessWidget {
       children: [
         InstabugButton(
           text: 'Throw Exception',
-          onPressed: () =>
-              throwUnhandledException(
-                  Exception('This is a generic exception.')),
+          onPressed: () => throwUnhandledException(
+              Exception('This is a generic exception.')),
         ),
         InstabugButton(
           text: 'Throw StateError',
@@ -484,15 +514,13 @@ class FatalCrashesContent extends StatelessWidget {
         ),
         InstabugButton(
           text: 'Throw ArgumentError',
-          onPressed: () =>
-              throwUnhandledException(
-                  ArgumentError('This is an ArgumentError.')),
+          onPressed: () => throwUnhandledException(
+              ArgumentError('This is an ArgumentError.')),
         ),
         InstabugButton(
           text: 'Throw RangeError',
-          onPressed: () =>
-              throwUnhandledException(
-                  RangeError.range(5, 0, 3, 'Index out of range')),
+          onPressed: () => throwUnhandledException(
+              RangeError.range(5, 0, 3, 'Index out of range')),
         ),
         InstabugButton(
           text: 'Throw FormatException',
@@ -517,9 +545,9 @@ class FatalCrashesContent extends StatelessWidget {
         ),
         Platform.isAndroid
             ? const InstabugButton(
-          text: 'Send Native ANR',
-          onPressed: InstabugFlutterExampleMethodChannel.sendAnr,
-        )
+                text: 'Send Native ANR',
+                onPressed: InstabugFlutterExampleMethodChannel.sendAnr,
+              )
             : const SizedBox.shrink(),
         const InstabugButton(
           text: 'Throw Unhandled Native OOM Exception',
@@ -530,36 +558,32 @@ class FatalCrashesContent extends StatelessWidget {
   }
 }
 
-class ApmBody extends StatelessWidget {
-
-  const ApmBody({Key? key}) : super(key: key);
+class ApmPage extends StatelessWidget {
+  const ApmPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SectionTitle('Network'),
-        const NetworkContent(),
-        SectionTitle('Traces'),
-        const TracesContent(),
-        SectionTitle('Flows'),
-        const FlowsContent(),
-      ],
-    );
+    return Page(children: [
+      SectionTitle('Network'),
+      const NetworkContent(),
+      SectionTitle('Traces'),
+      const TracesContent(),
+      SectionTitle('Flows'),
+      const FlowsContent(),
+    ], title: 'APM');
   }
 }
 
 class NetworkContent extends StatefulWidget {
-
   const NetworkContent({Key? key}) : super(key: key);
-  final String defaultRequestUrl = 'https://jsonplaceholder.typicode.com/posts/1';
+  final String defaultRequestUrl =
+      'https://jsonplaceholder.typicode.com/posts/1';
 
   @override
   State<NetworkContent> createState() => _NetworkContentState();
 }
 
 class _NetworkContentState extends State<NetworkContent> {
-
   final endpointUrlController = TextEditingController();
 
   @override
@@ -604,7 +628,6 @@ class TracesContent extends StatefulWidget {
 }
 
 class _TracesContentState extends State<TracesContent> {
-
   final traceNameController = TextEditingController();
   final traceKeyAttributeController = TextEditingController();
   final traceValueAttributeController = TextEditingController();
@@ -647,8 +670,7 @@ class _TracesContentState extends State<TracesContent> {
                   traceNameController.text,
                   delayInMilliseconds: 5000,
                 ),
-                margin:
-                const EdgeInsetsDirectional.only(
+                margin: const EdgeInsetsDirectional.only(
                   start: 10.0,
                   end: 20.0,
                 ),
@@ -691,7 +713,9 @@ class _TracesContentState extends State<TracesContent> {
           text: 'Set Trace Attribute',
           onPressed: () => _setTraceAttribute(
             trace,
-            traceKeyAttribute: traceKeyAttributeController.text, traceValueAttribute: traceValueAttributeController.text,),
+            traceKeyAttribute: traceKeyAttributeController.text,
+            traceValueAttribute: traceValueAttributeController.text,
+          ),
         ),
         InstabugButton(
           text: 'End Trace',
@@ -701,10 +725,11 @@ class _TracesContentState extends State<TracesContent> {
     );
   }
 
-  void _startTrace(String traceName, {
-        int delayInMilliseconds = 0,
-      }) {
-    if(traceName.trim().isNotEmpty) {
+  void _startTrace(
+    String traceName, {
+    int delayInMilliseconds = 0,
+  }) {
+    if (traceName.trim().isNotEmpty) {
       log('_startTrace — traceName: $traceName, delay in Milliseconds: $delayInMilliseconds');
       log('traceName: $traceName');
       Future.delayed(
@@ -721,7 +746,7 @@ class _TracesContentState extends State<TracesContent> {
     if (didTraceEnd == true) {
       log('_endTrace — Please, start a new trace before setting attributes.');
     }
-    if(trace == null) {
+    if (trace == null) {
       log('_endTrace — Please, start a trace before ending it.');
     }
     log('_endTrace — ending Trace.');
@@ -730,10 +755,10 @@ class _TracesContentState extends State<TracesContent> {
   }
 
   void _setTraceAttribute(
-      Trace? trace, {
-        required String traceKeyAttribute,
-        required String traceValueAttribute,
-      }) {
+    Trace? trace, {
+    required String traceKeyAttribute,
+    required String traceValueAttribute,
+  }) {
     if (trace == null) {
       log('_setTraceAttribute — Please, start a trace before setting attributes.');
     }
@@ -759,7 +784,6 @@ class FlowsContent extends StatefulWidget {
 }
 
 class _FlowsContentState extends State<FlowsContent> {
-
   final flowNameController = TextEditingController();
   final flowKeyAttributeController = TextEditingController();
   final flowValueAttributeController = TextEditingController();
@@ -800,8 +824,7 @@ class _FlowsContentState extends State<FlowsContent> {
                   flowNameController.text,
                   delayInMilliseconds: 5000,
                 ),
-                margin:
-                const EdgeInsetsDirectional.only(
+                margin: const EdgeInsetsDirectional.only(
                   start: 10.0,
                   end: 20.0,
                 ),
