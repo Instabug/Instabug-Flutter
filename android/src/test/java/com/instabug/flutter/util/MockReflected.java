@@ -1,9 +1,7 @@
 package com.instabug.flutter.util;
 
 import android.graphics.Bitmap;
-
 import androidx.annotation.Nullable;
-
 import org.json.JSONObject;
 
 /**
@@ -36,4 +34,10 @@ public class MockReflected {
      * CrashReporting.reportException
      */
     public static void crashReportException(JSONObject exception, boolean isHandled) {}
+
+    public static void startUiTraceCP(String screenName, Long microTimeStamp, Long traceId) {}
+
+    public static void reportScreenLoadingCP(Long startTimeStampMicro, Long durationMicro, Long uiTraceId) {}
+
+    public static void endScreenLoadingCP(Long timeStampMicro, Long uiTraceId) {}
 }

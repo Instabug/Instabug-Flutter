@@ -1,19 +1,18 @@
 package com.instabug.flutter.util;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
-
 import org.json.JSONObject;
 import org.mockito.MockedStatic;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import java.lang.reflect.Method;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 
 public class GlobalMocks {
     public static MockedStatic<ThreadManager> threadManager;
@@ -77,6 +76,18 @@ public class GlobalMocks {
 
         uri = mockStatic(Uri.class);
         uri.when(() -> Uri.fromFile(any())).thenReturn(mock(Uri.class));
+
+        Method mStartUiTraceCP = MockReflected.class.getDeclaredMethod("startUiTraceCP", String.class, Long.class, Long.class);
+        mStartUiTraceCP.setAccessible(true);
+        reflection.when(() -> Reflection.getMethod(Class.forName("com.instabug.apm.APM"), "startUiTraceCP", String.class, Long.class, Long.class)).thenReturn(mStartUiTraceCP);
+
+        Method mReportScreenLoadingCP = MockReflected.class.getDeclaredMethod("reportScreenLoadingCP", Long.class, Long.class, Long.class);
+        mReportScreenLoadingCP.setAccessible(true);
+        reflection.when(() -> Reflection.getMethod(Class.forName("com.instabug.apm.APM"), "reportScreenLoadingCP", Long.class, Long.class, Long.class)).thenReturn(mReportScreenLoadingCP);
+
+        Method mEndScreenLoadingCP = MockReflected.class.getDeclaredMethod("endScreenLoadingCP", Long.class, Long.class);
+        mEndScreenLoadingCP.setAccessible(true);
+        reflection.when(() -> Reflection.getMethod(Class.forName("com.instabug.apm.APM"), "endScreenLoadingCP", Long.class, Long.class)).thenReturn(mEndScreenLoadingCP);
     }
 
     public static void close() {
