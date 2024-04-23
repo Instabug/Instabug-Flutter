@@ -1,7 +1,16 @@
 import 'dart:async';
+import 'dart:developer';
+import 'dart:io';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+
+import 'src/native/instabug_flutter_example_method_channel.dart';
+import 'src/widget/instabug_button.dart';
+import 'src/widget/instabug_clipboard_input.dart';
+import 'src/widget/instabug_text_field.dart';
 
 void main() {
   runZonedGuarded(
@@ -36,50 +45,6 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class InstabugButton extends StatelessWidget {
-  String text;
-  void Function()? onPressed;
-
-  InstabugButton({required this.text, this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.lightBlue),
-          foregroundColor: MaterialStateProperty.all(Colors.white),
-        ),
-        child: Text(text),
-      ),
-    );
-  }
-}
-
-class InstabugTextField extends StatelessWidget {
-  String label;
-  TextEditingController controller;
-
-  InstabugTextField({required this.label, required this.controller});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: label,
-        ),
-      ),
     );
   }
 }
@@ -358,6 +323,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: showFeatureRequests,
                 text: 'Show Feature Requests',
               ),
+              SectionTitle("Crashes"),
+              const CrashReportingContent(),
+              SectionTitle("APM"),
+              const ApmBody(),
               SectionTitle('Color Theme'),
               ButtonBar(
                 mainAxisSize: MainAxisSize.max,
@@ -394,3 +363,545 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+class CrashReportingContent extends StatelessWidget {
+  const CrashReportingContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SectionTitle('Non-Fatal Crashes'),
+        const NonFatalCrashesContent(),
+        SectionTitle('Fatal Crashes'),
+        const Text('Fatal Crashes can only be tested in release mode'),
+        const Text('Most of these buttons will crash the application'),
+        const FatalCrashesContent(),
+      ],
+    );
+  }
+}
+
+class NonFatalCrashesContent extends StatelessWidget {
+  const NonFatalCrashesContent({Key? key}) : super(key: key);
+
+
+  void throwHandledException(dynamic error) {
+    try {
+      if (error is! Error) {
+        // Convert non-Error types to Error
+        const String appName = 'Flutter Test App';
+        final errorMessage = error?.toString() ?? 'Unknown Error';
+        error = Exception('Handled Error: $errorMessage from $appName');
+      }
+      throw error;
+    } catch (err) {
+      if (err is Error) {
+        // Simulate crash reporting by printing the error to the console
+        log('throwHandledException: Crash report for ${err.runtimeType} is Sent!', name: 'NonFatalCrashesWidget');
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        InstabugButton(
+          text: 'Throw Exception',
+          onPressed: () =>
+              throwHandledException(Exception('This is a generic exception.')),
+        ),
+        InstabugButton(
+          text: 'Throw StateError',
+          onPressed: () =>
+              throwHandledException(StateError('This is a StateError.')),
+        ),
+        InstabugButton(
+          text: 'Throw ArgumentError',
+          onPressed: () =>
+              throwHandledException(ArgumentError('This is an ArgumentError.')),
+        ),
+        InstabugButton(
+          text: 'Throw RangeError',
+          onPressed: () =>
+              throwHandledException(
+                  RangeError.range(5, 0, 3, 'Index out of range')),
+        ),
+        InstabugButton(
+          text: 'Throw FormatException',
+          onPressed: () =>
+              throwHandledException(UnsupportedError('Invalid format.')),
+        ),
+        InstabugButton(
+          text: 'Throw NoSuchMethodError',
+          onPressed: () {
+            // This intentionally triggers a NoSuchMethodError
+            dynamic obj;
+            throwHandledException(obj.methodThatDoesNotExist());
+          },
+        ),
+        InstabugButton(
+          text: 'Throw Handled Native Exception',
+          onPressed: InstabugFlutterExampleMethodChannel.sendNativeNonFatalCrash,
+        ),
+      ],
+    );
+  }
+}
+
+class FatalCrashesContent extends StatelessWidget {
+
+  const FatalCrashesContent({Key? key}) : super(key: key);
+
+
+  void throwUnhandledException(dynamic error) {
+    if (error is! Error) {
+      // Convert non-Error types to Error
+      const String appName = 'Flutter Test App';
+      final errorMessage = error?.toString() ?? 'Unknown Error';
+      error = Exception('Unhandled Error: $errorMessage from $appName');
+    }
+    throw error;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        InstabugButton(
+          text: 'Throw Exception',
+          onPressed: () =>
+              throwUnhandledException(
+                  Exception('This is a generic exception.')),
+        ),
+        InstabugButton(
+          text: 'Throw StateError',
+          onPressed: () =>
+              throwUnhandledException(StateError('This is a StateError.')),
+        ),
+        InstabugButton(
+          text: 'Throw ArgumentError',
+          onPressed: () =>
+              throwUnhandledException(
+                  ArgumentError('This is an ArgumentError.')),
+        ),
+        InstabugButton(
+          text: 'Throw RangeError',
+          onPressed: () =>
+              throwUnhandledException(
+                  RangeError.range(5, 0, 3, 'Index out of range')),
+        ),
+        InstabugButton(
+          text: 'Throw FormatException',
+          onPressed: () =>
+              throwUnhandledException(UnsupportedError('Invalid format.')),
+        ),
+        InstabugButton(
+          text: 'Throw NoSuchMethodError',
+          onPressed: () {
+            // This intentionally triggers a NoSuchMethodError
+            dynamic obj;
+            throwUnhandledException(obj.methodThatDoesNotExist());
+          },
+        ),
+        const InstabugButton(
+          text: 'Throw Native Fatal Crash',
+          onPressed: InstabugFlutterExampleMethodChannel.sendNativeFatalCrash,
+        ),
+        const InstabugButton(
+          text: 'Send Native Fatal Hang',
+          onPressed: InstabugFlutterExampleMethodChannel.sendNativeFatalHang,
+        ),
+        Platform.isAndroid
+            ? const InstabugButton(
+          text: 'Send Native ANR',
+          onPressed: InstabugFlutterExampleMethodChannel.sendAnr,
+        )
+            : const SizedBox.shrink(),
+        const InstabugButton(
+          text: 'Throw Unhandled Native OOM Exception',
+          onPressed: InstabugFlutterExampleMethodChannel.sendOom,
+        ),
+      ],
+    );
+  }
+}
+
+class ApmBody extends StatelessWidget {
+
+  const ApmBody({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SectionTitle('Network'),
+        const NetworkContent(),
+        SectionTitle('Traces'),
+        const TracesContent(),
+        SectionTitle('Flows'),
+        const FlowsContent(),
+      ],
+    );
+  }
+}
+
+class NetworkContent extends StatefulWidget {
+
+  const NetworkContent({Key? key}) : super(key: key);
+  final String defaultRequestUrl = 'https://jsonplaceholder.typicode.com/posts/1';
+
+  @override
+  State<NetworkContent> createState() => _NetworkContentState();
+}
+
+class _NetworkContentState extends State<NetworkContent> {
+
+  final endpointUrlController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        InstabugClipboardInput(
+          label: 'Endpoint Url',
+          controller: endpointUrlController,
+        ),
+        InstabugButton(
+          text: 'Send Request To Url',
+          onPressed: () => _sendRequestToUrl(endpointUrlController.text),
+        ),
+      ],
+    );
+  }
+
+  void _sendRequestToUrl(String text) async {
+    try {
+      String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
+      final response = await http.get(Uri.parse(url));
+
+      // Handle the response here
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        log(jsonEncode(jsonData));
+      } else {
+        log('Request failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      log('Error sending request: $e');
+    }
+  }
+}
+
+class TracesContent extends StatefulWidget {
+  const TracesContent({Key? key}) : super(key: key);
+
+  @override
+  State<TracesContent> createState() => _TracesContentState();
+}
+
+class _TracesContentState extends State<TracesContent> {
+
+  final traceNameController = TextEditingController();
+  final traceKeyAttributeController = TextEditingController();
+  final traceValueAttributeController = TextEditingController();
+
+  bool? didTraceEnd;
+
+  Trace? trace;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return Column(
+      children: [
+        InstabugTextField(
+          label: 'Trace name',
+          labelStyle: textTheme.labelMedium,
+          controller: traceNameController,
+        ),
+        SizedBox.fromSize(
+          size: const Size.fromHeight(10.0),
+        ),
+        Row(
+          children: [
+            Flexible(
+              flex: 5,
+              child: InstabugButton.smallFontSize(
+                text: 'Start Trace',
+                onPressed: () => _startTrace(traceNameController.text),
+                margin: const EdgeInsetsDirectional.only(
+                  start: 20.0,
+                  end: 10.0,
+                ),
+              ),
+            ),
+            Flexible(
+              flex: 5,
+              child: InstabugButton.smallFontSize(
+                text: 'Start Trace With Delay',
+                onPressed: () => _startTrace(
+                  traceNameController.text,
+                  delayInMilliseconds: 5000,
+                ),
+                margin:
+                const EdgeInsetsDirectional.only(
+                  start: 10.0,
+                  end: 20.0,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Flexible(
+              flex: 5,
+              child: InstabugTextField(
+                label: 'Trace Key Attribute',
+                controller: traceKeyAttributeController,
+                labelStyle: textTheme.labelMedium,
+                margin: const EdgeInsetsDirectional.only(
+                  end: 10.0,
+                  start: 20.0,
+                ),
+              ),
+            ),
+            Flexible(
+              flex: 5,
+              child: InstabugTextField(
+                label: 'Trace Value Attribute',
+                labelStyle: textTheme.labelMedium,
+                controller: traceValueAttributeController,
+                margin: const EdgeInsetsDirectional.only(
+                  start: 10.0,
+                  end: 20.0,
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox.fromSize(
+          size: const Size.fromHeight(10.0),
+        ),
+        InstabugButton(
+          text: 'Set Trace Attribute',
+          onPressed: () => _setTraceAttribute(
+            trace,
+            traceKeyAttribute: traceKeyAttributeController.text, traceValueAttribute: traceValueAttributeController.text,),
+        ),
+        InstabugButton(
+          text: 'End Trace',
+          onPressed: () => _endTrace(),
+        ),
+      ],
+    );
+  }
+
+  void _startTrace(String traceName, {
+        int delayInMilliseconds = 0,
+      }) {
+    if(traceName.trim().isNotEmpty) {
+      log('_startTrace — traceName: $traceName, delay in Milliseconds: $delayInMilliseconds');
+      log('traceName: $traceName');
+      Future.delayed(
+          Duration(milliseconds: delayInMilliseconds),
+          () => APM
+              .startExecutionTrace(traceName)
+              .then((value) => trace = value));
+    } else {
+      log('startTrace - Please enter a trace name');
+    }
+  }
+
+  void _endTrace() {
+    if (didTraceEnd == true) {
+      log('_endTrace — Please, start a new trace before setting attributes.');
+    }
+    if(trace == null) {
+      log('_endTrace — Please, start a trace before ending it.');
+    }
+    log('_endTrace — ending Trace.');
+    trace?.end();
+    didTraceEnd = true;
+  }
+
+  void _setTraceAttribute(
+      Trace? trace, {
+        required String traceKeyAttribute,
+        required String traceValueAttribute,
+      }) {
+    if (trace == null) {
+      log('_setTraceAttribute — Please, start a trace before setting attributes.');
+    }
+    if (didTraceEnd == true) {
+      log('_setTraceAttribute — Please, start a new trace before setting attributes.');
+    }
+    if (traceKeyAttribute.trim().isEmpty) {
+      log('_setTraceAttribute — Please, fill the trace key attribute input before settings attributes.');
+    }
+    if (traceValueAttribute.trim().isEmpty) {
+      log('_setTraceAttribute — Please, fill the trace value attribute input before settings attributes.');
+    }
+    log('_setTraceAttribute — setting attributes -> key: $traceKeyAttribute, value: $traceValueAttribute.');
+    trace?.setAttribute(traceKeyAttribute, traceValueAttribute);
+  }
+}
+
+class FlowsContent extends StatefulWidget {
+  const FlowsContent({Key? key}) : super(key: key);
+
+  @override
+  State<FlowsContent> createState() => _FlowsContentState();
+}
+
+class _FlowsContentState extends State<FlowsContent> {
+
+  final flowNameController = TextEditingController();
+  final flowKeyAttributeController = TextEditingController();
+  final flowValueAttributeController = TextEditingController();
+
+  bool? didFlowEnd;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return Column(
+      children: [
+        InstabugTextField(
+          label: 'Flow name',
+          labelStyle: textTheme.labelMedium,
+          controller: flowNameController,
+        ),
+        SizedBox.fromSize(
+          size: const Size.fromHeight(10.0),
+        ),
+        Row(
+          children: [
+            Flexible(
+              flex: 5,
+              child: InstabugButton.smallFontSize(
+                text: 'Start Flow',
+                onPressed: () => _startFlow(flowNameController.text),
+                margin: const EdgeInsetsDirectional.only(
+                  start: 20.0,
+                  end: 10.0,
+                ),
+              ),
+            ),
+            Flexible(
+              flex: 5,
+              child: InstabugButton.smallFontSize(
+                text: 'Start flow With Delay',
+                onPressed: () => _startFlow(
+                  flowNameController.text,
+                  delayInMilliseconds: 5000,
+                ),
+                margin:
+                const EdgeInsetsDirectional.only(
+                  start: 10.0,
+                  end: 20.0,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Flexible(
+              flex: 5,
+              child: InstabugTextField(
+                label: 'Flow Key Attribute',
+                controller: flowKeyAttributeController,
+                labelStyle: textTheme.labelMedium,
+                margin: const EdgeInsetsDirectional.only(
+                  end: 10.0,
+                  start: 20.0,
+                ),
+              ),
+            ),
+            Flexible(
+              flex: 5,
+              child: InstabugTextField(
+                label: 'Flow Value Attribute',
+                labelStyle: textTheme.labelMedium,
+                controller: flowValueAttributeController,
+                margin: const EdgeInsetsDirectional.only(
+                  start: 10.0,
+                  end: 20.0,
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox.fromSize(
+          size: const Size.fromHeight(10.0),
+        ),
+        InstabugButton(
+          text: 'Set Flow Attribute',
+          onPressed: () => _setFlowAttribute(
+            flowNameController.text,
+            flowKeyAttribute: flowKeyAttributeController.text,
+            flowValueAttribute: flowValueAttributeController.text,
+          ),
+        ),
+        InstabugButton(
+          text: 'End Flow',
+          onPressed: () => _endFlow(flowNameController.text),
+        ),
+      ],
+    );
+  }
+
+  void _startFlow(String flowName, {
+        int delayInMilliseconds = 0,
+      }) {
+    if(flowName.trim().isNotEmpty) {
+      log('_startFlow — flowName: $flowName, delay in Milliseconds: $delayInMilliseconds');
+      log('flowName: $flowName');
+      Future.delayed(
+          Duration(milliseconds: delayInMilliseconds),
+          () => APM
+              .startFlow(flowName));
+    } else {
+      log('_startFlow - Please enter a flow name');
+    }
+  }
+
+  void _endFlow(String flowName) {
+    if(flowName.trim().isEmpty) {
+      log('_endFlow - Please enter a flow name');
+    }
+    if (didFlowEnd == true) {
+      log('_endFlow — Please, start a new flow before setting attributes.');
+    }
+    log('_endFlow — ending Flow.');
+    didFlowEnd = true;
+  }
+
+  void _setFlowAttribute(String flowName,{
+    required String flowKeyAttribute,
+    required String flowValueAttribute,
+  }) {
+    if(flowName.trim().isEmpty) {
+      log('_endFlow - Please enter a flow name');
+    }
+    if (didFlowEnd == true) {
+      log('_setFlowAttribute — Please, start a new flow before setting attributes.');
+    }
+    if (flowKeyAttribute.trim().isEmpty) {
+      log('_setFlowAttribute — Please, fill the flow key attribute input before settings attributes.');
+    }
+    if (flowValueAttribute.trim().isEmpty) {
+      log('_setFlowAttribute — Please, fill the flow value attribute input before settings attributes.');
+    }
+    log('_setFlowAttribute — setting attributes -> key: $flowKeyAttribute, value: $flowValueAttribute.');
+    APM.setFlowAttribute(flowName, flowKeyAttribute, flowValueAttribute);
+  }
+}
+
+
+
