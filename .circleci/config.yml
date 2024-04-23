@@ -162,6 +162,7 @@ jobs:
       - setup_flutter
       - android/start-emulator-and-run-tests:
           run-tests-working-directory: e2e
+          system-image: system-images;android-33;default;x86
           post-emulator-launch-assemble-command: cd example && flutter build apk --debug
           test-command: dotnet test
 

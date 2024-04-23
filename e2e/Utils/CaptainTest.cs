@@ -9,7 +9,7 @@ public class CaptainTest : IDisposable
   {
     AndroidApp = Path.GetFullPath("../../../../example/build/app/outputs/flutter-apk/app-debug.apk"),
     AndroidAppId = "com.instabug.flutter.example",
-    AndroidVersion = "11",
+    AndroidVersion = "13",
     IosApp = Path.GetFullPath("../../../../example/build/ios/iphonesimulator/Runner.app"),
     IosAppId = "com.instabug.InstabugSample",
     IosVersion = "17.4",
