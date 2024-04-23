@@ -47,7 +47,7 @@ commands:
           steps:
             - run:
                 name: Install XCUITest Driver
-                command: appium driver install xcuitest@4.35.0
+                command: appium driver install xcuitest@7.14.0
       - when:
           condition:
             equal:
@@ -56,7 +56,7 @@ commands:
           steps:
             - run:
                 name: Install UIAutomator2 Driver
-                command: appium driver install uiautomator2@2.29.5
+                command: appium driver install uiautomator2@3.1.0
       - run:
           name: Launch Appium
           # Enable --relaxed-security for `mobile: shell` command that Captain uses internally.
@@ -168,7 +168,7 @@ jobs:
 
   test_ios:
     macos:
-      xcode: 15.3.0
+      xcode: 15.2.0
     resource_class: macos.m1.medium.gen1
     environment:
       INSTABUG_SOURCEMAPS_UPLOAD_DISABLE: true
@@ -189,7 +189,7 @@ jobs:
 
   e2e_ios_captain:
     macos:
-      xcode: 15.3.0
+      xcode: 15.2.0
     resource_class: macos.m1.medium.gen1
     steps:
       - advanced-checkout/shallow-checkout
@@ -242,7 +242,7 @@ jobs:
 
   release:
     macos:
-      xcode: 15.3.0
+      xcode: 15.2.0
     resource_class: macos.m1.medium.gen1
     working_directory: "~"
     steps:
