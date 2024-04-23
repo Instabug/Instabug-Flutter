@@ -143,7 +143,6 @@ jobs:
       name: android/android-machine
       resource-class: xlarge
       tag: default
-    working_directory: ~/project/examples/
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter
@@ -173,7 +172,6 @@ jobs:
     macos:
       xcode: 13.4.1
     resource_class: macos.m1.medium.gen1
-    working_directory: ~/project/examples/
     environment:
       INSTABUG_SOURCEMAPS_UPLOAD_DISABLE: true
     steps:
@@ -181,7 +179,7 @@ jobs:
       - setup_ios
       - run:
           name: Build and run tests
-          working_directory: ios
+          working_directory:  ~/project/examples/ios
           command: |
             xcodebuild -allowProvisioningUpdates \
                 -workspace InstabugExample.xcworkspace \
