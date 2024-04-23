@@ -99,6 +99,7 @@ void main() {
 
   test('[startFlow] should call host method', () async {
     const flowName = "flow-name";
+    await APM.startFlow(flowName);
 
     verify(
       mHost.startFlow(flowName),
