@@ -170,17 +170,17 @@ class _MyHomePageState extends State<MyHomePage> {
     Surveys.showSurvey('PMqUZXqarkOR2yGKiENB4w');
   }
 
-  final _scaffoldKey=GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void getCurrentSessionReplaylink() async {
-    final result=await SessionReplay.getSessionReplayLink();
-    if(result==null){
+    final result = await SessionReplay.getSessionReplayLink();
+    if (result == null) {
       const snackBar = SnackBar(
         content: Text('No Link Found'),
       );
       ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
-    }else{
-      var  snackBar = SnackBar(
+    } else {
+      var snackBar = SnackBar(
         content: Text(result),
       );
       ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
@@ -380,8 +380,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     child: const Text('Dark'),
                   ),
-
-
                   SectionTitle('Sessions Replay'),
                   InstabugButton(
                     onPressed: getCurrentSessionReplaylink,
