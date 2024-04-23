@@ -166,6 +166,7 @@ jobs:
           command: flutter build apk --debug
       - android/start-emulator-and-run-tests:
           run-tests-working-directory: e2e
+          post-emulator-launch-assemble-command:
           test-command: dotnet test
 
   test_ios:
