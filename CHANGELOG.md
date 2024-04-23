@@ -1,9 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v12.7.0...dev)
+## [Unreleased](https://github.com/Instabug/Instabug-React-Native/compare/v12.7.0...dev)
 
 ### Added
 
+- Adds custom app rating api ([#453](https://github.com/Instabug/Instabug-Flutter/pull/453))
 - Add `SessionReplay.getSessionReplayLink` API which retrieves the current session's replay link ([#445](hhttps://github.com/Instabug/Instabug-Flutter/pull/445)).
 
 ## [12.7.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.5.0...v12.7.0) (February 15, 2024)
