@@ -108,7 +108,7 @@ jobs:
     executor:
       name: node/default
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - node/install-packages:
           pkg-manager: yarn
           override-ci-command: yarn install --frozen-lockfile --network-concurrency 1
@@ -125,7 +125,7 @@ jobs:
     docker:
       - image: cirrusci/flutter:<<parameters.version>>
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
           generate_pigeons: true
       - run: flutter test --coverage
@@ -144,10 +144,10 @@ jobs:
       tag: default
     working_directory: ~/project/examples/
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - setup_flutter
       - android/run-tests:
-          working-directory: android
+          working-directory: ~/project/examples/android
           test-command: ./gradlew test
 
   e2e_android_captain:
@@ -156,14 +156,14 @@ jobs:
       resource-class: xlarge
       tag: default
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - setup_captain:
           platform: android
       - setup_flutter
       - run:
           name: Build Example App
           working_directory: example
-          command: flutter build apk --denug
+          command: flutter build apk --debug
       - android/run-tests:
           working-directory: e2e
           test-command: dotnet test
@@ -176,11 +176,11 @@ jobs:
     environment:
       INSTABUG_SOURCEMAPS_UPLOAD_DISABLE: true
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - setup_ios
       - run:
           name: Build and run tests
-          working_directory: example/ios
+          working_directory: ios
           command: |
             xcodebuild -allowProvisioningUpdates \
                 -workspace InstabugExample.xcworkspace \
@@ -195,7 +195,7 @@ jobs:
       xcode: 13.4.1
     resource_class: macos.m1.medium.gen1
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - setup_captain:
           platform: ios
       - setup_ios
@@ -213,7 +213,7 @@ jobs:
     docker:
       - image: cirrusci/flutter
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
           generate_pigeons: false
       - run:
@@ -224,7 +224,7 @@ jobs:
     docker:
       - image: cirrusci/flutter
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
           generate_pigeons: true
       - run:
@@ -235,7 +235,7 @@ jobs:
     docker:
       - image: cirrusci/flutter
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
           generate_pigeons: true
       - run:
@@ -249,7 +249,7 @@ jobs:
     resource_class: macos.m1.medium.gen1
     working_directory: "~"
     steps:
-      - checkout:
+      - advanced-checkout/shallow-checkout:
           path: ~/project
       # Flutter doesn't support Apple Silicon yet, so we need to install Rosetta use Flutter on M1 machines.
       - run:
