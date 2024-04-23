@@ -164,8 +164,8 @@ jobs:
           name: Build Example App
           working_directory: example
           command: flutter build apk --debug
-      - android/run-tests:
-          working-directory: e2e
+      - android/start-emulator-and-run-tests:
+          run-tests-working-directory: e2e
           test-command: dotnet test
 
   test_ios:
