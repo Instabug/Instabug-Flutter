@@ -142,11 +142,12 @@ jobs:
       name: android/android-machine
       resource-class: xlarge
       tag: default
+    working_directory: ~/project/examples/
     steps:
       - checkout
       - setup_flutter
-      - android/start-emulator-and-run-tests:
-          run-tests-working-directory: example/android
+      - android/run-tests:
+          working-directory: android
           test-command: ./gradlew test
 
   e2e_android_captain:
@@ -159,16 +160,21 @@ jobs:
       - setup_captain:
           platform: android
       - setup_flutter
+      - run:
+          name: Build Example App
+          working_directory: example
+          command: flutter build apk --denug
       - android/start-emulator-and-run-tests:
-          system-image: system-images;android-29;default;x86
-          #          additional-avd-args: -d "pixel_4"
-          post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
-          test-command: cd e2e || true && dotnet test
+          working-directory: e2e
+          test-command: dotnet test
 
   test_ios:
     macos:
       xcode: 13.4.1
     resource_class: macos.m1.medium.gen1
+    working_directory: ~/project/examples/
+    environment:
+      INSTABUG_SOURCEMAPS_UPLOAD_DISABLE: true
     steps:
       - checkout
       - setup_ios
@@ -177,11 +183,12 @@ jobs:
           working_directory: example/ios
           command: |
             xcodebuild -allowProvisioningUpdates \
-                       -workspace Runner.xcworkspace \
-                       -scheme Runner \
-                       -sdk iphonesimulator \
-                       -destination 'name=iPhone 12 Pro Max' \
-                       test | xcpretty
+                -workspace InstabugExample.xcworkspace \
+                -scheme InstabugExample \
+                -resultBundlePath coverage/result.xcresult \
+                -sdk iphonesimulator \
+                -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.5' \
+                test | xcpretty
 
   e2e_ios_captain:
     macos:
