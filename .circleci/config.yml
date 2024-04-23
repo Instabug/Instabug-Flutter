@@ -182,8 +182,8 @@ jobs:
           working_directory:  ~/project/example/ios
           command: |
             xcodebuild -allowProvisioningUpdates \
-                -workspace InstabugExample.xcworkspace \
-                -scheme InstabugExample \
+                -workspace Runner.xcworkspace \
+                -scheme Runner \
                 -resultBundlePath coverage/result.xcresult \
                 -sdk iphonesimulator \
                 -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.5' \
