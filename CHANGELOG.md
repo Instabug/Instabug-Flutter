@@ -6,6 +6,11 @@
 
 - Adds custom app rating api ([#453](https://github.com/Instabug/Instabug-Flutter/pull/453))
 - Add `SessionReplay.getSessionReplayLink` API which retrieves the current session's replay link ([#445](hhttps://github.com/Instabug/Instabug-Flutter/pull/445)).
+- Add support for App Flows APIs `APM.startFlow`, `APM.endFlow` and `APM.setFlowAttribute` ([#446](https://github.com/Instabug/Instabug-Flutter/pull/446)).
+
+### Deprecated
+
+- Deprecate execution traces APIs `APM.startExecutionTrace`, `APM.setExecutionTraceAttribute`, `APM.endExecutionTrace`, `Trace.setAttribute` and `Trace.end` in favor of the new app flow APIs ([#446](https://github.com/Instabug/Instabug-Flutter/pull/446)).
 
 ### Changed
 - Bump Instabug Android SDK to v13.0.0 ([#455](https://github.com/Instabug/Instabug-Flutter/pull/455)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v13.0.0).

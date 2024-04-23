@@ -114,6 +114,35 @@
     OCMVerify([mTrace end]);
 }
 
+- (void) testStartFlow {
+    NSString* appFlowName = @"app-flow-name";
+    FlutterError *error;
+    
+    [self.api startFlowName:appFlowName error:&error];
+    
+    OCMVerify([self.mAPM startFlowWithName:appFlowName]);
+}
+
+- (void) testEndFlow {
+    NSString* appFlowName = @"app-flow-name";
+    FlutterError *error;
+    
+    [self.api endFlowName:appFlowName error:&error];
+    
+    OCMVerify([self.mAPM endFlowWithName:appFlowName]);
+}
+
+- (void) testSetFlowAttribute {
+    NSString* appFlowName = @"app-flow-name";
+    NSString* attributeKey = @"attribute-key";
+    NSString* attributeValue = @"attribute-value";
+    FlutterError *error;
+    
+    [self.api setFlowAttributeName:appFlowName key:attributeKey value:attributeValue error:&error];
+    
+    OCMVerify([self.mAPM setAttributeForFlowWithName:appFlowName key:attributeKey value:attributeValue]);
+}
+
 - (void)testStartUITrace {
     NSString *name = @"login";
     FlutterError *error;
