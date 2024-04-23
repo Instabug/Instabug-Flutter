@@ -225,7 +225,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(title: Text(widget.title)),
       body: SingleChildScrollView(
           physics: ClampingScrollPhysics(),
-          padding: const EdgeInsets.only(top: 20.0,bottom: 16),
+          padding: const EdgeInsets.only(top: 20.0, bottom: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -380,7 +380,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     child: const Text('Dark'),
                   ),
-
                 ],
               ),
               SectionTitle('Sessions Replay'),
@@ -388,7 +387,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: getCurrentSessionReplaylink,
                 text: 'Get current session replay link',
               ),
-
             ],
           )), // This trailing comma makes auto-formatting nicer for build methods.
     );
