@@ -4,6 +4,7 @@ orbs:
   android: circleci/android@2.5.0
   flutter: circleci/flutter@2.0.2
   node: circleci/node@5.2.0
+  advanced-checkout: vsco/advanced-checkout@1.1.0
 
 commands:
   setup_flutter:
