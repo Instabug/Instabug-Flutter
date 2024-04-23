@@ -179,7 +179,7 @@ jobs:
       - setup_ios
       - run:
           name: Build and run tests
-          working_directory:  ~/project/examples/ios
+          working_directory:  ~/project/example/ios
           command: |
             xcodebuild -allowProvisioningUpdates \
                 -workspace InstabugExample.xcworkspace \
