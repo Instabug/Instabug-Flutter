@@ -147,7 +147,7 @@ jobs:
       - advanced-checkout/shallow-checkout
       - setup_flutter
       - android/run-tests:
-          working-directory: ~/project/examples/android
+          working-directory: example/android
           test-command: ./gradlew test
 
   e2e_android_captain:
