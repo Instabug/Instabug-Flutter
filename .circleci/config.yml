@@ -160,13 +160,9 @@ jobs:
       - setup_captain:
           platform: android
       - setup_flutter
-      - run:
-          name: Build Example App
-          working_directory: example
-          command: flutter build apk --debug
       - android/start-emulator-and-run-tests:
           run-tests-working-directory: e2e
-          post-emulator-launch-assemble-command:
+          post-emulator-launch-assemble-command: cd ../example && flutter build apk --debug
           test-command: dotnet test
 
   test_ios:
@@ -187,7 +183,7 @@ jobs:
                 -scheme Runner \
                 -resultBundlePath coverage/result.xcresult \
                 -sdk iphonesimulator \
-                -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.5' \
+                -destination 'platform=iOS Simulator,name=iPhone 15 Pro Max,OS=17.4' \
                 test | xcpretty
 
   e2e_ios_captain:
