@@ -7,6 +7,10 @@
 - Adds custom app rating api ([#453](https://github.com/Instabug/Instabug-Flutter/pull/453))
 - Add `SessionReplay.getSessionReplayLink` API which retrieves the current session's replay link ([#445](hhttps://github.com/Instabug/Instabug-Flutter/pull/445)).
 
+### Changed
+- Bump Instabug Android SDK to v13.0.0 ([#456](https://github.com/Instabug/Instabug-Flutter/pull/456)). See release notes for [v13.0.0](https://github.com/Instabug/Instabug-Android/releases/tag/v13.0.0).
+
+
 ## [12.7.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.5.0...v12.7.0) (February 15, 2024)
 
 ### Added
