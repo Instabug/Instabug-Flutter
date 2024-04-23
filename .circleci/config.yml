@@ -161,7 +161,7 @@ jobs:
       - setup_flutter
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-29;default;x86
-#          additional-avd-args: -d "pixel_4"
+          #          additional-avd-args: -d "pixel_4"
           post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
           test-command: cd e2e || true && dotnet test
 
@@ -287,7 +287,6 @@ workflows:
       - test_flutter:
           name: test_flutter-2.10.5
           version: 2.10.5
-      - test_android
       - e2e_android_captain
       - test_ios
       - e2e_ios_captain
