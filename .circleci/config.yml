@@ -146,12 +146,6 @@ jobs:
       - checkout
       - setup_flutter
       - android/start-emulator-and-run-tests:
-          # system-image: system-images;android-29;default;x86
-#          additional-avd-args: -d "Nexus 5"
-          post-emulator-launch-assemble-command: cd example && flutter build apk
-          run-tests-working-directory: example/android
-          test-command: ./gradlew app:connectedAndroidTest -Ptarget=`pwd`/../test_driver/example.dart
-      - android/start-emulator-and-run-tests:
           run-tests-working-directory: example/android
           test-command: ./gradlew test
 
@@ -284,43 +278,43 @@ workflows:
   build-test-and-approval-deploy:
     jobs:
       - test_android
-#      - danger:
-#          requires:
-#            - test_flutter-stable
-#      - test_flutter:
-#          name: test_flutter-stable
-#          version: stable
-#      - test_flutter:
-#          name: test_flutter-2.10.5
-#          version: 2.10.5
-#      - test_android
-#      - e2e_android_captain
-#      - test_ios
-#      - e2e_ios_captain
-#      - format_flutter
-#      - lint_flutter:
-#          requires:
-#            - format_flutter
-#      - verify_pub:
-#          requires:
-#            - lint_flutter
-#      - hold_release:
-#          type: approval
-#          requires:
-#            - danger
-#            - test_flutter-stable
-#            - test_flutter-2.10.5
-#            - test_android
-#            - e2e_android_captain
-#            - test_ios
-#            - e2e_ios_captain
-#            - verify_pub
-#          filters:
-#            branches:
-#              only: master
-#      - release:
-#          requires:
-#            - hold_release
-#          filters:
-#            branches:
-#              only: master
+      - danger:
+          requires:
+            - test_flutter-stable
+      - test_flutter:
+          name: test_flutter-stable
+          version: stable
+      - test_flutter:
+          name: test_flutter-2.10.5
+          version: 2.10.5
+      - test_android
+      - e2e_android_captain
+      - test_ios
+      - e2e_ios_captain
+      - format_flutter
+      - lint_flutter:
+          requires:
+            - format_flutter
+      - verify_pub:
+          requires:
+            - lint_flutter
+      - hold_release:
+          type: approval
+          requires:
+            - danger
+            - test_flutter-stable
+            - test_flutter-2.10.5
+            - test_android
+            - e2e_android_captain
+            - test_ios
+            - e2e_ios_captain
+            - verify_pub
+          filters:
+            branches:
+              only: master
+      - release:
+          requires:
+            - hold_release
+          filters:
+            branches:
+              only: master
