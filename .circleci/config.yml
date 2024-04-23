@@ -164,7 +164,7 @@ jobs:
           name: Build Example App
           working_directory: example
           command: flutter build apk --denug
-      - android/start-emulator-and-run-tests:
+      - android/run-tests:
           working-directory: e2e
           test-command: dotnet test
 
