@@ -1,3 +1,4 @@
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
@@ -25,6 +26,7 @@ void main() {
   });
 
   test('[end] should call host method', () async {
+    // ignore: deprecated_member_use_from_same_package
     trace.end();
 
     verify(
@@ -35,6 +37,7 @@ void main() {
   test('[setAttribute] should call host method', () async {
     const key = "attr-key";
     const attribute = "Trace Attribute";
+    // ignore: deprecated_member_use_from_same_package
     trace.setAttribute(key, attribute);
 
     verify(
