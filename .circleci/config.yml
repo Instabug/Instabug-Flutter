@@ -163,6 +163,7 @@ jobs:
       - android/start-emulator-and-run-tests:
           run-tests-working-directory: e2e
           system-image: system-images;android-33;default;x86_64
+          no-window: false
           post-emulator-launch-assemble-command: cd example && flutter build apk --debug
           test-command: dotnet test
 
