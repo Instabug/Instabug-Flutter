@@ -192,7 +192,7 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void OnDismissCallbackIsCalled()
   {
-      ScrollDown();
+      ScrollUp();
 
     captain.FindByText("Set On Dismiss Callback").Tap();
     captain.FindByText("Invoke").Tap();
