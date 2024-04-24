@@ -1,6 +1,9 @@
 package com.instabug.flutter;
 
 import com.instabug.apm.APM;
+import com.instabug.apm.InternalAPM;
+import com.instabug.apm.configuration.cp.APMFeature;
+import com.instabug.apm.configuration.cp.FeatureAvailabilityCallback;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
@@ -27,20 +30,24 @@ import static org.mockito.Mockito.*;
 
 
 public class ApmApiTest {
+
+    private final BinaryMessenger mMessenger = mock(BinaryMessenger.class);
     private final ApmApi api = new ApmApi();
     private MockedStatic<APM> mAPM;
-    private MockedStatic<APM> mInternalAPM;
+    private MockedStatic<InternalAPM> mInternalApmStatic;
     private MockedStatic<ApmPigeon.ApmHostApi> mHostApi;
 
     @Before
     public void setUp() throws NoSuchMethodException {
         mAPM = mockStatic(APM.class);
+        mInternalApmStatic = mockStatic(InternalAPM.class);
         mHostApi = mockStatic(ApmPigeon.ApmHostApi.class);
         GlobalMocks.setUp();
     }
 
     @After
     public void cleanUp() {
+        mInternalApmStatic.close();
         mAPM.close();
         mHostApi.close();
         GlobalMocks.close();
@@ -264,14 +271,41 @@ public class ApmApiTest {
     }
 
     @Test
-    public void testisEnabled() {
-        // TODO: Add test here as we need setInstance method in [APMInternal]
+    public void testIsEnabled() {
+        boolean expected = true;
+        ApmPigeon.Result<Boolean> result = makeResult((actual) -> assertEquals(expected, actual));
+        InternalAPM._isFeatureEnabledCP(eq(APMFeature.SCREEN_LOADING), any(FeatureAvailabilityCallback.class));
+        doAnswer(invocation -> {
+            FeatureAvailabilityCallback callback = invocation.getArgument(1);
+            callback.invoke(expected);
+            return null;
+        }).when(InternalAPM.class);
+
+        api.isEnabled(result);
+
+        verify(result).success(expected);
     }
 
     @Test
     public void testIsScreenLoadingMonitoringEnabled() {
-        // TODO: Add test here as we need setInstance method in [APMInternal]
+        boolean expected = true;
+        ApmPigeon.Result<Boolean> result = spy(makeResult((actual) -> assertEquals(expected, actual)));
+
+        mInternalApmStatic.when(() -> InternalAPM._isFeatureEnabledCP(any(), any())).thenAnswer(
+                invocation -> {
+                    FeatureAvailabilityCallback callback = (FeatureAvailabilityCallback) invocation.getArguments()[1];
+                    callback.invoke(expected);
+                    return null;
+                });
+
+        api.isScreenLoadingMonitoringEnabled(result);
+
+        mInternalApmStatic.verify(() -> InternalAPM._isFeatureEnabledCP(any(), any()));
+        mInternalApmStatic.verifyNoMoreInteractions();
+
+        verify(result).success(expected);
     }
+
 
     @Test
     public void testSetScreenLoadingMonitoringEnabled() {

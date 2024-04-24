@@ -232,7 +232,8 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     @Override
     public void isEnabled(@NonNull @NotNull ApmPigeon.Result<Boolean> result) {
         try {
-            InternalAPM.INSTANCE._isFeatureEnabled(APMFeature.APM, new FeatureAvailabilityCallback() {
+            // Todo: Remove this !IMP!
+            InternalAPM._isFeatureEnabledCP(APMFeature.SCREEN_LOADING, new FeatureAvailabilityCallback() {
                 @Override
                 public void invoke(boolean isFeatureAvailable) {
                     result.success(isFeatureAvailable);
@@ -246,7 +247,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     @Override
     public void isScreenLoadingMonitoringEnabled(@NonNull @NotNull ApmPigeon.Result<Boolean> result) {
         try {
-            InternalAPM.INSTANCE._isFeatureEnabled(APMFeature.SCREEN_LOADING, new FeatureAvailabilityCallback() {
+            InternalAPM._isFeatureEnabledCP(APMFeature.SCREEN_LOADING, new FeatureAvailabilityCallback() {
                 @Override
                 public void invoke(boolean isFeatureAvailable) {
                     result.success(isFeatureAvailable);

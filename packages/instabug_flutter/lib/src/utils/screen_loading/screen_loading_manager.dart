@@ -138,6 +138,7 @@ class ScreenLoadingManager {
     final duration = extendedEndTimeInMicroseconds -
         _currentScreenLoadingTrace!.startTimeInMicroseconds;
     _currentScreenLoadingTrace?.duration = duration;
+    log('Ending screen loading capture — duration: $duration');
     _currentScreenLoadingTrace?.endTimeInMicroseconds =
         extendedEndTimeInMicroseconds;
     // Ends screen loading trace

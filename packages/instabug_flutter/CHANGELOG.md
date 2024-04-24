@@ -5,6 +5,7 @@
 ### Added
 
 - Add `SessionReplay.getSessionReplayLink` API which retrieves the current session's replay link ([#445](hhttps://github.com/Instabug/Instabug-Flutter/pull/445)).
+- Support screen loading monitoring through the usage of the `InstabugCaptureScreenLoading` widget ([#---](hhttps://github.com/Instabug/Instabug-Flutter/pull/---)).
 
 ## [12.7.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.5.0...v12.7.0) (February 15, 2024)
 
