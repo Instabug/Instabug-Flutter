@@ -225,6 +225,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _navigateToComplex() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ComplexPage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -366,6 +372,10 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: _navigateToApm,
           text: 'APM',
+        ),
+        InstabugButton(
+          onPressed: _navigateToComplex,
+          text: 'Complex',
         ),
         SectionTitle('Sessions Replay'),
         InstabugButton(
@@ -776,6 +786,110 @@ class _TracesContentState extends State<TracesContent> {
   }
 }
 
+class ComplexPage extends StatefulWidget {
+  const ComplexPage({Key? key}) : super(key: key);
+
+  @override
+  State<ComplexPage> createState() => _ComplexPageState();
+}
+
+class _ComplexPageState extends State<ComplexPage> {
+  static const initialDepth = 10;
+  static const initialBreadth = 2;
+  final depthController = TextEditingController();
+  final breadthController = TextEditingController();
+  int depth = initialDepth;
+  int breadth = initialBreadth;
+
+  @override
+  void initState() {
+    super.initState();
+    depthController.text = depth.toString();
+    breadthController.text = breadth.toString();
+  }
+
+  void handleRender() {
+    setState(() {
+      breadth = int.tryParse(breadthController.text) ?? initialBreadth;
+      depth = int.tryParse(depthController.text) ?? initialBreadth;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return Page(
+      title: 'Complex',
+      children: [
+        InstabugTextField(
+          label: 'Depth (default: $initialDepth)',
+          labelStyle: textTheme.labelMedium,
+          controller: depthController,
+        ),
+        InstabugTextField(
+          label: 'Breadth (default: $initialBreadth)',
+          labelStyle: textTheme.labelMedium,
+          controller: breadthController,
+        ),
+        InstabugButton(
+          onPressed: handleRender,
+          text: 'Render',
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: NestedView(
+            depth: depth,
+            breadth: breadth,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class NestedView extends StatelessWidget {
+  final int depth;
+  final int breadth;
+  final Widget? child;
+
+  const NestedView({
+    Key? key,
+    required this.depth,
+    this.breadth = 1,
+    this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (depth == 0) {
+      return child ?? SizedBox.shrink();
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(),
+      ),
+      padding: const EdgeInsets.all(1),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('$depth'),
+          Row(
+            children: List.generate(
+              breadth,
+                  (index) => NestedView(
+                depth: depth - 1,
+                breadth: breadth,
+                child: child,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class FlowsContent extends StatefulWidget {
   const FlowsContent({Key? key}) : super(key: key);
 
@@ -923,8 +1037,5 @@ class _FlowsContentState extends State<FlowsContent> {
     }
     log('_setFlowAttribute — setting attributes -> key: $flowKeyAttribute, value: $flowValueAttribute.');
     APM.setFlowAttribute(flowName, flowKeyAttribute, flowValueAttribute);
-  }
+  }*/
 }
-
-
-
