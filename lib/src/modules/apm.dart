@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
-import 'dart:developer';
+import 'package:flutter/foundation.dart';
 
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
@@ -173,9 +173,8 @@ class APM {
     int startTimeInMicroseconds,
     int traceId,
   ) {
-    log(
-      'starting Ui trace — traceId: $traceId, screenName: $screenName, microTimeStamp: $startTimeInMicroseconds',
-      name: APM.tag,
+    debugPrint(
+      '${APM.tag}: starting Ui trace — traceId: $traceId, screenName: $screenName, microTimeStamp: $startTimeInMicroseconds',
     );
     return _host.startCpUiTrace(screenName, startTimeInMicroseconds, traceId);
   }
@@ -187,9 +186,8 @@ class APM {
     int durationInMicroseconds,
     int uiTraceId,
   ) {
-    log(
-      'reporting screen loading trace — traceId: $uiTraceId, startTimeInMicroseconds: $startTimeInMicroseconds, durationInMicroseconds: $durationInMicroseconds',
-      name: APM.tag,
+    debugPrint(
+      '${APM.tag}:reporting screen loading trace — traceId: $uiTraceId, startTimeInMicroseconds: $startTimeInMicroseconds, durationInMicroseconds: $durationInMicroseconds',
     );
     return _host.reportScreenLoading(
         startTimeInMicroseconds, durationInMicroseconds, uiTraceId);
@@ -199,9 +197,8 @@ class APM {
     int endTimeInMicroseconds,
     int uiTraceId,
   ) {
-    log(
-      'Extending screen loading trace — traceId: $uiTraceId, endTimeInMicroseconds: $endTimeInMicroseconds',
-      name: APM.tag,
+    debugPrint(
+      '${APM.tag}:Extending screen loading trace — traceId: $uiTraceId, endTimeInMicroseconds: $endTimeInMicroseconds',
     );
     return _host.endScreenLoading(endTimeInMicroseconds, uiTraceId);
   }
