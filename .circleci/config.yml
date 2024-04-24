@@ -72,7 +72,7 @@ commands:
             echo 'export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools' >> $BASH_ENV
       - run:
           name: Clone Captain
-          command: git clone -b dev git@github.com:Instabug/Captain.git ../Instabug.Captain
+          command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
       - run:
           name: Configure Captain Platform
           command: echo 'export CAPTAIN_PLATFORM=<<parameters.platform>>' >> $BASH_ENV
@@ -163,7 +163,7 @@ jobs:
       - android/start-emulator-and-run-tests:
           run-tests-working-directory: e2e
           additional-avd-args: --device 3
-          system-image: system-images;android-33;google_apis;x86_64
+          system-image: system-images;android-33;default;x86_64
           post-emulator-launch-assemble-command: cd example && flutter build apk --debug
           test-command: dotnet test
 
