@@ -367,6 +367,11 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: _navigateToApm,
           text: 'APM',
         ),
+        SectionTitle('Sessions Replay'),
+        InstabugButton(
+          onPressed: getCurrentSessionReplaylink,
+          text: 'Get current session replay link',
+        ),
         SectionTitle('Color Theme'),
         ButtonBar(
           mainAxisSize: MainAxisSize.max,
@@ -387,11 +392,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
               child: const Text('Dark'),
-            ),
-            SectionTitle('Sessions Replay'),
-            InstabugButton(
-              onPressed: getCurrentSessionReplaylink,
-              text: 'Get current session replay link',
             ),
           ],
         ),
