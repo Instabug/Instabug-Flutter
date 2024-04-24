@@ -69,6 +69,7 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void TwoFingersSwipeLeftInvocationEvent()
   {
+    ScrollUp();
     captain.FindByText("Two Fingers Swipe Left").Tap();
 
     Thread.Sleep(500);
