@@ -162,7 +162,7 @@ jobs:
       - setup_flutter
       - android/start-emulator-and-run-tests:
           run-tests-working-directory: e2e
-          additional-avd-args: --device "MediumPhone"
+          additional-avd-args: --device 3
           system-image: system-images;android-33;google_apis;x86_64
           post-emulator-launch-assemble-command: cd example && flutter build apk --debug
           test-command: dotnet test
