@@ -7,8 +7,8 @@ class InstabugCaptureScreenLoading extends StatefulWidget {
 
   const InstabugCaptureScreenLoading({
     Key? key,
-    required this.child,
     required this.screenName,
+    required this.child,
   }) : super(key: key);
   final Widget child;
   final String screenName;

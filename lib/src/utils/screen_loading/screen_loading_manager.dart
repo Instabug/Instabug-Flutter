@@ -29,7 +29,7 @@ class ScreenLoadingManager {
   Future<void> startUiTrace(String screenName) async {
     final isApmEnabled = await FlagsConfig.Apm.isEnabled();
     if (!isApmEnabled) {
-      log("Unable to start Ui Trace, as ${FlagsConfig.UiTrace.name} feature is disabled.",
+      log("Unable to start Ui Trace, as ${FlagsConfig.Apm.name} feature is disabled.",
           name: APM.tag);
       return;
     }
