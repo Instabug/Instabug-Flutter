@@ -174,7 +174,7 @@ class APM {
     int traceId,
   ) {
     debugPrint(
-      '${APM.tag}: starting Ui trace — traceId: $traceId, screenName: $screenName, microTimeStamp: $startTimeInMicroseconds',
+      '${APM.tag}: Starting Ui trace — traceId: $traceId, screenName: $screenName, microTimeStamp: $startTimeInMicroseconds',
     );
     return _host.startCpUiTrace(screenName, startTimeInMicroseconds, traceId);
   }
@@ -187,7 +187,7 @@ class APM {
     int uiTraceId,
   ) {
     debugPrint(
-      '${APM.tag}:reporting screen loading trace — traceId: $uiTraceId, startTimeInMicroseconds: $startTimeInMicroseconds, durationInMicroseconds: $durationInMicroseconds',
+      '${APM.tag}: Reporting screen loading trace — traceId: $uiTraceId, startTimeInMicroseconds: $startTimeInMicroseconds, durationInMicroseconds: $durationInMicroseconds',
     );
     return _host.reportScreenLoading(
         startTimeInMicroseconds, durationInMicroseconds, uiTraceId);

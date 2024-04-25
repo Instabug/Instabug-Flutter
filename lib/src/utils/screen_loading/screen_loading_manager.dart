@@ -57,9 +57,14 @@ class ScreenLoadingManager {
         screenName,
         startTimeInMicroseconds: startTimeInMicroseconds,
       );
+      debugPrint('${APM.tag} starting screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds');
+      _currentUiTrace?.didStartScreenLoading = true;
       _currentScreenLoadingTrace = trace;
       return true;
     }
+    debugPrint('${APM.tag} failed to start screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds');
+    debugPrint('${APM.tag} didStartScreenLoading: ${_currentUiTrace?.didStartScreenLoading}, isSameName: ${screenName ==
+        _currentUiTrace?.screenName}');
     return false;
   }
 
@@ -96,6 +101,16 @@ class ScreenLoadingManager {
       );
       return true;
     } else {
+      debugPrint(
+        '${APM.tag} failed to report screen loading trace — screenName: ${trace?.screenName}, '
+            'startTimeInMicroseconds: ${trace?.startTimeInMicroseconds}, '
+            'duration: $duration, '
+            'trace.duration: ${trace?.duration ?? 0}',
+      );
+      debugPrint(
+        '${APM.tag} didReportScreenLoading: ${_currentUiTrace?.didReportScreenLoading}, '
+            'isSameName: ${trace?.screenName == _currentScreenLoadingTrace?.screenName}',
+      );
       _reportScreenLoadingDroppedError(trace!);
     }
     return false;
