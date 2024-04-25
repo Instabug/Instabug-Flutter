@@ -7,12 +7,14 @@ class InstabugTextField extends StatelessWidget {
     required this.controller,
     this.labelStyle,
     this.margin,
+    this.keyboardType,
   }) : super(key: key);
 
   final String label;
   final TextEditingController controller;
   final EdgeInsetsGeometry? margin;
   final TextStyle? labelStyle;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class InstabugTextField extends StatelessWidget {
           ),
       child: TextField(
         controller: controller,
+        keyboardType: keyboardType,
         decoration: InputDecoration(
           labelText: label,
           labelStyle: labelStyle ?? Theme.of(context).textTheme.labelLarge,
