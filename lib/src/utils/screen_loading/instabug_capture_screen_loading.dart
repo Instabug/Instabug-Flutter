@@ -21,10 +21,11 @@ class InstabugCaptureScreenLoading extends StatefulWidget {
 class _InstabugCaptureScreenLoadingState
     extends State<InstabugCaptureScreenLoading> {
   ScreenLoadingTrace? trace;
+  final startTimeInMicroseconds = DateTime.now().microsecondsSinceEpoch;
 
-  _InstabugCaptureScreenLoadingState() {
-    final startTimeInMicroseconds = DateTime.now().microsecondsSinceEpoch;
-
+  @override
+  void initState() {
+    super.initState();
     ScreenLoadingManager.I.startScreenLoadingTrace(
       widget.screenName,
       startTimeInMicroseconds: startTimeInMicroseconds,
@@ -34,13 +35,6 @@ class _InstabugCaptureScreenLoadingState
       widget.screenName,
       startTimeInMicroseconds: startTimeInMicroseconds,
     );
-
-    // end
-  }
-
-  @override
-  void initState() {
-    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final endTimeInMicroseconds = DateTime.now().microsecondsSinceEpoch;
       ScreenLoadingManager.I.reportScreenLoading(

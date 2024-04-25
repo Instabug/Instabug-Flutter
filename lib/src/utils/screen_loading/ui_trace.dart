@@ -1,7 +1,8 @@
 class UiTrace {
   final String screenName;
   final int traceId;
-  bool isScreenLoadingTraceReported = false;
+  bool didReportScreenLoading = false;
+  bool didStartScreenLoading = false;
 
   UiTrace(
     this.screenName, {
@@ -16,5 +17,10 @@ class UiTrace {
       screenName ?? this.screenName,
       traceId: traceId ?? this.traceId,
     );
+  }
+
+  @override
+  String toString() {
+    return 'UiTrace{screenName: $screenName, traceId: $traceId, isFirstScreenLoadingReported: $didReportScreenLoading, isFirstScreenLoading: $didStartScreenLoading}';
   }
 }
