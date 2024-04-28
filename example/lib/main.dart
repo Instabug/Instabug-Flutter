@@ -185,6 +185,23 @@ class _MyHomePageState extends State<MyHomePage> {
     Surveys.showSurvey('PMqUZXqarkOR2yGKiENB4w');
   }
 
+  final _scaffoldKey=GlobalKey<ScaffoldState>();
+
+  void getCurrentSessionReplaylink() async {
+    final result=await SessionReplay.getSessionReplayLink();
+    if(result==null){
+      const snackBar = SnackBar(
+        content: Text('No Link Found'),
+      );
+      ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
+    }else{
+      var  snackBar = SnackBar(
+        content: Text(result),
+      );
+      ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
+    }
+  }
+
   void showFeatureRequests() {
     FeatureRequests.show();
   }
@@ -219,6 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(title: Text(widget.title)),
       body: SingleChildScrollView(
           physics: ClampingScrollPhysics(),
@@ -376,6 +394,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       foregroundColor: MaterialStateProperty.all(Colors.white),
                     ),
                     child: const Text('Dark'),
+                  ),
+
+
+                  SectionTitle('Sessions Replay'),
+                  InstabugButton(
+                    onPressed: getCurrentSessionReplaylink,
+                    text: 'Get current session replay link',
                   ),
                 ],
               ),
