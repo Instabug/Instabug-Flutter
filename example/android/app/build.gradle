@@ -44,7 +44,7 @@ android {
 
     defaultConfig {
         applicationId "com.instabug.flutter.example"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 18
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

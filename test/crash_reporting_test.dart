@@ -62,15 +62,15 @@ void main() {
         exception: frames,
       );
       final userAttributes = {"name": "flutter"};
-      const fingerPrint = "fingerprint122";
+      const fingerPrint = "fingerprint";
       const level = NonFatalExceptionLevel.critical;
 
       await CrashReporting.reportHandledCrash(
-          exception, stack, userAttributes, fingerPrint, level);
+          exception, stack, userAttributes, fingerPrint, level,);
 
       verify(
         mHost.sendNonFatalError(
-            jsonEncode(data), userAttributes, fingerPrint, level.toString()),
+            jsonEncode(data), userAttributes, fingerPrint, level.toString(),),
       ).called(1);
     }
   });
