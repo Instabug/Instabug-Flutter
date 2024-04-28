@@ -47,7 +47,7 @@ commands:
           steps:
             - run:
                 name: Install XCUITest Driver
-                command: appium driver install xcuitest@4.35.0
+                command: appium driver install xcuitest@7.14.0
       - when:
           condition:
             equal:
@@ -56,7 +56,7 @@ commands:
           steps:
             - run:
                 name: Install UIAutomator2 Driver
-                command: appium driver install uiautomator2@2.29.5
+                command: appium driver install uiautomator2@3.1.0
       - run:
           name: Launch Appium
           # Enable --relaxed-security for `mobile: shell` command that Captain uses internally.
@@ -162,13 +162,14 @@ jobs:
       - setup_flutter
       - android/start-emulator-and-run-tests:
           run-tests-working-directory: e2e
+          additional-avd-args: --device 3
           system-image: system-images;android-33;default;x86_64
           post-emulator-launch-assemble-command: cd example && flutter build apk --debug
           test-command: dotnet test
 
   test_ios:
     macos:
-      xcode: 15.3.0
+      xcode: 15.2.0
     resource_class: macos.m1.medium.gen1
     environment:
       INSTABUG_SOURCEMAPS_UPLOAD_DISABLE: true
@@ -184,12 +185,12 @@ jobs:
                 -scheme Runner \
                 -resultBundlePath coverage/result.xcresult \
                 -sdk iphonesimulator \
-                -destination 'platform=iOS Simulator,name=iPhone 15 Pro Max,OS=17.4' \
+                -destination 'platform=iOS Simulator,name=iPhone 15 Pro Max,OS=17.2' \
                 test | xcpretty
 
   e2e_ios_captain:
     macos:
-      xcode: 15.3.0
+      xcode: 15.2.0
     resource_class: macos.m1.medium.gen1
     steps:
       - advanced-checkout/shallow-checkout
@@ -242,7 +243,7 @@ jobs:
 
   release:
     macos:
-      xcode: 15.3.0
+      xcode: 15.2.0
     resource_class: macos.m1.medium.gen1
     working_directory: "~"
     steps:

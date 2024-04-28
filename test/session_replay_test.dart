@@ -47,7 +47,6 @@ void main() {
     ).called(1);
   });
 
-
   test('[setUserStepsEnabled] should call host method', () async {
     const isEnabled = true;
     await SessionReplay.setUserStepsEnabled(isEnabled);
@@ -61,7 +60,7 @@ void main() {
     const link = 'link';
     when(mHost.getSessionReplayLink()).thenAnswer((_) async => link);
 
-   final result= await SessionReplay.getSessionReplayLink();
+    final result = await SessionReplay.getSessionReplayLink();
     expect(result, link);
     verify(
       mHost.getSessionReplayLink(),
