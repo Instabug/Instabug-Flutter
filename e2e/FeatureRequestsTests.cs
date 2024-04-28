@@ -11,7 +11,7 @@ public class FeatureRequestsTests : CaptainTest
   public void ShowFeatureRequetsScreen()
   {
     ScrollDown();
-        ScrollDown();
+    ScrollDown();
 
     captain.FindByText("Show Feature Requests").Tap();
 

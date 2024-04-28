@@ -113,7 +113,7 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void MultipleScreenshotsInReproSteps()
   {
-      ScrollDown();
+    ScrollDown();
 
     captain.FindByText("Enter screen name").Tap();
     captain.Type("My Screen");
@@ -192,7 +192,7 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void OnDismissCallbackIsCalled()
   {
-      ScrollUp();
+    ScrollUp();
 
     captain.FindByText("Set On Dismiss Callback").Tap();
     captain.FindByText("Invoke").Tap();
