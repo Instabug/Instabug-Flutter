@@ -8,6 +8,4 @@ abstract class SessionReplayHostApi {
   void setUserStepsEnabled(bool isEnabled);
   @async
   String getSessionReplayLink();
-
-
 }

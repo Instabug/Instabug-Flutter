@@ -69,6 +69,7 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void TwoFingersSwipeLeftInvocationEvent()
   {
+    ScrollUp();
     captain.FindByText("Two Fingers Swipe Left").Tap();
 
     Thread.Sleep(500);
@@ -112,6 +113,8 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void MultipleScreenshotsInReproSteps()
   {
+    ScrollDown();
+
     captain.FindByText("Enter screen name").Tap();
     captain.Type("My Screen");
     captain.HideKeyboard();
@@ -189,6 +192,8 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void OnDismissCallbackIsCalled()
   {
+    ScrollUp();
+
     captain.FindByText("Set On Dismiss Callback").Tap();
     captain.FindByText("Invoke").Tap();
 

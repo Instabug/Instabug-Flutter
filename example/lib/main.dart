@@ -185,17 +185,17 @@ class _MyHomePageState extends State<MyHomePage> {
     Surveys.showSurvey('PMqUZXqarkOR2yGKiENB4w');
   }
 
-  final _scaffoldKey=GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void getCurrentSessionReplaylink() async {
-    final result=await SessionReplay.getSessionReplayLink();
-    if(result==null){
+    final result = await SessionReplay.getSessionReplayLink();
+    if (result == null) {
       const snackBar = SnackBar(
         content: Text('No Link Found'),
       );
       ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
-    }else{
-      var  snackBar = SnackBar(
+    } else {
+      var snackBar = SnackBar(
         content: Text(result),
       );
       ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
@@ -240,7 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(title: Text(widget.title)),
       body: SingleChildScrollView(
           physics: ClampingScrollPhysics(),
-          padding: const EdgeInsets.only(top: 20.0),
+          padding: const EdgeInsets.only(top: 20.0, bottom: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -375,7 +375,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SectionTitle('Color Theme'),
               ButtonBar(
-                mainAxisSize: MainAxisSize.max,
+                mainAxisSize: MainAxisSize.min,
                 alignment: MainAxisAlignment.center,
                 children: <Widget>[
                   ElevatedButton(
@@ -395,14 +395,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     child: const Text('Dark'),
                   ),
-
-
-                  SectionTitle('Sessions Replay'),
-                  InstabugButton(
-                    onPressed: getCurrentSessionReplaylink,
-                    text: 'Get current session replay link',
-                  ),
                 ],
+              ),
+              SectionTitle('Sessions Replay'),
+              InstabugButton(
+                onPressed: getCurrentSessionReplaylink,
+                text: 'Get current session replay link',
               ),
               SectionTitle('Crash section'),
               Form(
