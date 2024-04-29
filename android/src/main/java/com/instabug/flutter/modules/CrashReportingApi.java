@@ -2,8 +2,6 @@ package com.instabug.flutter.modules;
 
 import static com.instabug.crash.CrashReporting.getFingerprintObject;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -13,7 +11,6 @@ import com.instabug.flutter.generated.CrashReportingPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.library.Feature;
-import com.instabug.library.InstabugColorTheme;
 
 import org.json.JSONObject;
 
@@ -65,9 +62,9 @@ public class CrashReportingApi implements CrashReportingPigeon.CrashReportingHos
                 fingerprintObj = getFingerprintObject(fingerprint);
             }
             IBGNonFatalException.Level nonFatalExceptionLevelType = ArgsRegistry.nonFatalExceptionLevel.get(nonFatalExceptionLevel);
-
-            method.invoke(null, exceptionObject, true, userAttributes, fingerprintObj, nonFatalExceptionLevelType);
-
+            if (method != null) {
+                method.invoke(null, exceptionObject, true, userAttributes, fingerprintObj, nonFatalExceptionLevelType);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

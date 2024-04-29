@@ -510,8 +510,11 @@ class _MyHomePageState extends State<MyHomePage> {
               crashUserAttributeValueController.text
         };
       }
-      CrashReporting.reportHandledCrash(new Exception(crashNameController.text),
-          null, userAttributes, crashfingerPrintController.text, crashType);
+      CrashReporting.reportHandledCrash(
+          new Exception(crashNameController.text), null,
+          userAttributes: userAttributes,
+          fingerprint: crashfingerPrintController.text,
+          nonFatalExceptionLevel: crashType);
       ScaffoldMessenger.of(_scaffoldKey.currentContext!)
           .showSnackBar(SnackBar(content: Text("Crash sent")));
       crashNameController.text = '';

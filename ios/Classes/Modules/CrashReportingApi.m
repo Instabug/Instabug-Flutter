@@ -21,14 +21,15 @@ extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger) {
     NSDictionary *stackTrace = [NSJSONSerialization JSONObjectWithData:objectData
                                                                options:NSJSONReadingMutableContainers
                                                                  error:&jsonError];
-    NSInteger value = [isHandled integerValue];
-
-    if (value == 1) {
-        [IBGCrashReporting cp_reportNonFatalCrashWithStackTrace:stackTrace level:IBGNonFatalLevelError groupingString:nil userAttributes:nil
+    BOOL isNonFatal = [isHandled boolValue];
+    
+    if (isNonFatal) {
+        [IBGCrashReporting cp_reportNonFatalCrashWithStackTrace:stackTrace
+                                                          level:IBGNonFatalLevelError groupingString:nil userAttributes:nil
         ];
     } else {
         [IBGCrashReporting cp_reportFatalCrashWithStackTrace:stackTrace  ];
-    
+        
     }
 }
 
