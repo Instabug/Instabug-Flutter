@@ -502,22 +502,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
 SizedBox(height: 8,),
                     InstabugButton(text: 'Send Non Fatal Crash',
-                      onPressed: () {
-                        if (crashFormKey.currentState?.validate() == true) {
-                          Map<String, String>? userAttributes = null;
-                          if (crashUserAttributeKeyController.text.isNotEmpty) {
-                            userAttributes = {
-                              crashUserAttributeKeyController
-                                  .text: crashUserAttributeValueController.text
-                            };
-                          }
-                          CrashReporting.reportHandledCrash(
-                              new Exception(crashNameController.text),
-                              null,
-                              userAttributes, crashfingerPrintController.text,
-                              crashType);
-                        }
-                      },
+                      onPressed:   sendNonFatalCrash,
                     )
                   ],
                 ),
@@ -525,5 +510,29 @@ SizedBox(height: 8,),
             ],
           )), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void sendNonFatalCrash() {
+     if (crashFormKey.currentState?.validate() == true) {
+      Map<String, String>? userAttributes = null;
+      if (crashUserAttributeKeyController.text.isNotEmpty) {
+        userAttributes = {
+          crashUserAttributeKeyController
+              .text: crashUserAttributeValueController.text
+        };
+      }
+      CrashReporting.reportHandledCrash(
+          new Exception(crashNameController.text),
+          null,
+          userAttributes, crashfingerPrintController.text,
+          crashType);
+      ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(SnackBar(content: Text("Crash sent")));
+      crashNameController.text='';
+      crashfingerPrintController.text='';
+      crashUserAttributeValueController.text='';
+      crashUserAttributeKeyController.text='';
+
+
+    }
   }
 }
