@@ -6,6 +6,10 @@ abstract class CrashReportingHostApi {
 
   void send(String jsonCrash, bool isHandled);
 
-  void sendNonFatalError(String jsonCrash, Map<String, String>? userAttributes,
-      String? fingerprint, String nonFatalExceptionLevel,);
+  void sendNonFatalError(
+    String jsonCrash,
+    Map<String, String>? userAttributes,
+    String? fingerprint,
+    String nonFatalExceptionLevel,
+  );
 }

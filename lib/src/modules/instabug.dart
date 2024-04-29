@@ -24,7 +24,6 @@ enum InvocationEvent {
   none
 }
 
-
 enum WelcomeMessageMode { live, beta, disabled }
 
 enum IBGLocale {
