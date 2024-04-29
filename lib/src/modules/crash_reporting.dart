@@ -44,19 +44,18 @@ class CrashReporting {
   /// [Object] exception
   /// [StackTrace] stack
   static Future<void> reportHandledCrash(
-    Object exception, [
-    StackTrace? stack,
+    Object exception,
+    StackTrace? stack, {
     Map<String, String>? userAttributes,
     String? fingerprint,
-    NonFatalExceptionLevel nonFatalExceptionLevel =
-        NonFatalExceptionLevel.error,
-  ]) async {
+    NonFatalExceptionLevel level = NonFatalExceptionLevel.error,
+  }) async {
     await _sendHandledCrash(
       exception,
       stack ?? StackTrace.current,
       userAttributes,
       fingerprint,
-      nonFatalExceptionLevel,
+      level,
     );
   }
 
@@ -72,23 +71,7 @@ class CrashReporting {
     StackTrace stack,
     bool handled,
   ) async {
-    final trace = Trace.from(stack);
-    final frames = trace.frames
-        .map(
-          (frame) => ExceptionData(
-            file: frame.uri.toString(),
-            methodName: frame.member,
-            lineNumber: frame.line,
-            column: frame.column ?? 0,
-          ),
-        )
-        .toList();
-
-    final crashData = CrashData(
-      os: IBGBuildInfo.instance.operatingSystem,
-      message: exception.toString(),
-      exception: frames,
-    );
+    final crashData = getCrashDataFromException(stack, exception);
 
     return _host.send(jsonEncode(crashData), handled);
   }
@@ -100,6 +83,20 @@ class CrashReporting {
     String? fingerprint,
     NonFatalExceptionLevel? nonFatalExceptionLevel,
   ) async {
+    final crashData = getCrashDataFromException(stack, exception);
+
+    return _host.sendNonFatalError(
+      jsonEncode(crashData),
+      userAttributes,
+      fingerprint,
+      nonFatalExceptionLevel.toString(),
+    );
+  }
+
+  static CrashData getCrashDataFromException(
+    StackTrace stack,
+    Object exception,
+  ) {
     final trace = Trace.from(stack);
     final frames = trace.frames
         .map(
@@ -117,12 +114,6 @@ class CrashReporting {
       message: exception.toString(),
       exception: frames,
     );
-
-    return _host.sendNonFatalError(
-      jsonEncode(crashData),
-      userAttributes,
-      fingerprint,
-      nonFatalExceptionLevel.toString(),
-    );
+    return crashData;
   }
 }

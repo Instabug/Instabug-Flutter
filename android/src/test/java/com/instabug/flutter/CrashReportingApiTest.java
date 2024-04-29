@@ -88,13 +88,14 @@ public class CrashReportingApiTest {
     public void testSendNonFatalError() {
         String jsonCrash = "{}";
         boolean isHandled = true;
-        Map<String, String> userAttributes = new HashMap<>();
         String fingerPrint = "test";
-        String level = ArgsRegistry.nonFatalExceptionLevel.keySet().iterator().next();
-        JSONObject finger = getFingerprintObject(fingerPrint);
-        IBGNonFatalException.Level lev = ArgsRegistry.nonFatalExceptionLevel.get(level);
-        api.sendNonFatalError(jsonCrash, userAttributes, fingerPrint, level);
 
-        reflected.verify(() -> MockReflected.crashReportException(any(JSONObject.class), eq(isHandled), eq(userAttributes), eq(finger), eq(lev)));
+        Map<String, String> expectedUserAttributes = new HashMap<>();
+        String level = ArgsRegistry.nonFatalExceptionLevel.keySet().iterator().next();
+        JSONObject expectedFingerprint = getFingerprintObject(fingerPrint);
+        IBGNonFatalException.Level expectedLevel = ArgsRegistry.nonFatalExceptionLevel.get(level);
+        api.sendNonFatalError(jsonCrash, expectedUserAttributes, fingerPrint, level);
+
+        reflected.verify(() -> MockReflected.crashReportException(any(JSONObject.class), eq(isHandled), eq(expectedUserAttributes), eq(expectedFingerprint), eq(expectedLevel)));
     }
 }

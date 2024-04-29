@@ -66,11 +66,20 @@ void main() {
       const level = NonFatalExceptionLevel.critical;
 
       await CrashReporting.reportHandledCrash(
-          exception, stack, userAttributes, fingerPrint, level,);
+        exception,
+        stack,
+        userAttributes: userAttributes,
+        fingerprint: fingerPrint,
+        level: level,
+      );
 
       verify(
         mHost.sendNonFatalError(
-            jsonEncode(data), userAttributes, fingerPrint, level.toString(),),
+          jsonEncode(data),
+          userAttributes,
+          fingerPrint,
+          level.toString(),
+        ),
       ).called(1);
     }
   });

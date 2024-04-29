@@ -14,7 +14,8 @@ void main() {
       );
 
       FlutterError.onError = (FlutterErrorDetails details) {
-        Zone.current.handleUncaughtError(details.exception, details.stack??StackTrace.current);
+        Zone.current.handleUncaughtError(
+            details.exception, details.stack ?? StackTrace.current);
       };
 
       runApp(MyApp());
@@ -79,12 +80,7 @@ class InstabugTextField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         validator: validator,
-
-        decoration: InputDecoration(
-          labelText: label,
-            helperText: ''
-
-        ),
+        decoration: InputDecoration(labelText: label, helperText: ''),
       ),
     );
   }
@@ -383,7 +379,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white),
                       foregroundColor:
-                      MaterialStateProperty.all(Colors.lightBlue),
+                          MaterialStateProperty.all(Colors.lightBlue),
                     ),
                     child: const Text('Light'),
                   ),
@@ -411,86 +407,76 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget>[
                         Expanded(
                             child: InstabugTextField(
-                              label: "Crash title",
-                              controller: crashNameController,
-                              validator: (value) {
-                                if (value
-                                    ?.trim()
-                                    .isNotEmpty == true) return null;
+                          label: "Crash title",
+                          controller: crashNameController,
+                          validator: (value) {
+                            if (value?.trim().isNotEmpty == true) return null;
 
-                                return 'this field is required';
-                              },
-                            )),
+                            return 'this field is required';
+                          },
+                        )),
                       ],
                     ),
                     Row(
                       children: <Widget>[
                         Expanded(
                             child: InstabugTextField(
-                              label: "User Attribute  key",
-                              controller: crashUserAttributeKeyController,
-                              validator: (value) {
-                                if (crashUserAttributeValueController
-                                    .text.isNotEmpty) {
-                                  if (value
-                                      ?.trim()
-                                      .isNotEmpty == true) return null;
+                          label: "User Attribute  key",
+                          controller: crashUserAttributeKeyController,
+                          validator: (value) {
+                            if (crashUserAttributeValueController
+                                .text.isNotEmpty) {
+                              if (value?.trim().isNotEmpty == true) return null;
 
-                                  return 'this field is required';
-                                }
-                                return null;
-                              },
-                            )),
+                              return 'this field is required';
+                            }
+                            return null;
+                          },
+                        )),
                         Expanded(
                             child: InstabugTextField(
-                              label: "User Attribute  Value",
-                              controller: crashUserAttributeValueController,
-                              validator: (value) {
-                                if (crashUserAttributeKeyController
-                                    .text.isNotEmpty) {
-                                  if (value
-                                      ?.trim()
-                                      .isNotEmpty == true) return null;
+                          label: "User Attribute  Value",
+                          controller: crashUserAttributeValueController,
+                          validator: (value) {
+                            if (crashUserAttributeKeyController
+                                .text.isNotEmpty) {
+                              if (value?.trim().isNotEmpty == true) return null;
 
-                                  return 'this field is required';
-                                }
-                                return null;
-                              },
-                            )),
+                              return 'this field is required';
+                            }
+                            return null;
+                          },
+                        )),
                       ],
                     ),
                     Row(
                       children: <Widget>[
                         Expanded(
                             child: InstabugTextField(
-                              label: "Fingerprint",
-                              controller: crashfingerPrintController,
-                            )),
+                          label: "Fingerprint",
+                          controller: crashfingerPrintController,
+                        )),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Row(
                         children: <Widget>[
-
-
                           Expanded(
                               flex: 5,
                               child: DropdownButtonHideUnderline(
-                                child: DropdownButtonFormField<NonFatalExceptionLevel>(
+                                child: DropdownButtonFormField<
+                                    NonFatalExceptionLevel>(
                                   value: crashType,
                                   decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
-                                      isDense: true
-
-                                  ),
+                                      isDense: true),
                                   padding: EdgeInsets.zero,
                                   items: NonFatalExceptionLevel.values
-                                      .map((e) =>
-                                      DropdownMenuItem(
-                                        value: e,
-                                        child: Text(e.toString()),
-                                      ))
+                                      .map((e) => DropdownMenuItem(
+                                            value: e,
+                                            child: Text(e.toString()),
+                                          ))
                                       .toList(),
                                   onChanged: (NonFatalExceptionLevel? value) {
                                     crashType = value!;
@@ -500,9 +486,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
-SizedBox(height: 8,),
-                    InstabugButton(text: 'Send Non Fatal Crash',
-                      onPressed:   sendNonFatalCrash,
+                    SizedBox(
+                      height: 8,
+                    ),
+                    InstabugButton(
+                      text: 'Send Non Fatal Crash',
+                      onPressed: sendNonFatalCrash,
                     )
                   ],
                 ),
@@ -513,26 +502,25 @@ SizedBox(height: 8,),
   }
 
   void sendNonFatalCrash() {
-     if (crashFormKey.currentState?.validate() == true) {
+    if (crashFormKey.currentState?.validate() == true) {
       Map<String, String>? userAttributes = null;
       if (crashUserAttributeKeyController.text.isNotEmpty) {
         userAttributes = {
-          crashUserAttributeKeyController
-              .text: crashUserAttributeValueController.text
+          crashUserAttributeKeyController.text:
+              crashUserAttributeValueController.text
         };
       }
       CrashReporting.reportHandledCrash(
-          new Exception(crashNameController.text),
-          null,
-          userAttributes, crashfingerPrintController.text,
-          crashType);
-      ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(SnackBar(content: Text("Crash sent")));
-      crashNameController.text='';
-      crashfingerPrintController.text='';
-      crashUserAttributeValueController.text='';
-      crashUserAttributeKeyController.text='';
-
-
+          new Exception(crashNameController.text), null,
+          userAttributes: userAttributes,
+          fingerprint: crashfingerPrintController.text,
+          level: crashType);
+      ScaffoldMessenger.of(_scaffoldKey.currentContext!)
+          .showSnackBar(SnackBar(content: Text("Crash sent")));
+      crashNameController.text = '';
+      crashfingerPrintController.text = '';
+      crashUserAttributeValueController.text = '';
+      crashUserAttributeKeyController.text = '';
     }
   }
 }
