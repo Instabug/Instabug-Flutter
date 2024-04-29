@@ -68,9 +68,9 @@ void main() {
       await CrashReporting.reportHandledCrash(
         exception,
         stack,
-        userAttributes,
-        fingerPrint,
-        level,
+        userAttributes: userAttributes,
+        fingerprint: fingerPrint,
+        level: level,
       );
 
       verify(

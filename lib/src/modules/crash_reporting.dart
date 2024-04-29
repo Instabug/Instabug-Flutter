@@ -48,8 +48,7 @@ class CrashReporting {
     StackTrace? stack, {
     Map<String, String>? userAttributes,
     String? fingerprint,
-    NonFatalExceptionLevel level =
-        NonFatalExceptionLevel.error,
+    NonFatalExceptionLevel level = NonFatalExceptionLevel.error,
   }) async {
     await _sendHandledCrash(
       exception,
@@ -95,7 +94,9 @@ class CrashReporting {
   }
 
   static CrashData getCrashDataFromException(
-      StackTrace stack, Object exception,) {
+    StackTrace stack,
+    Object exception,
+  ) {
     final trace = Trace.from(stack);
     final frames = trace.frames
         .map(
