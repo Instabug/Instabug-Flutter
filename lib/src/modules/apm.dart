@@ -8,11 +8,12 @@ import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/models/trace.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
+import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:meta/meta.dart';
 
 class APM {
   static var _host = ApmHostApi();
-  static String tag = 'FLT-APM';
+  static String tag = 'Instabug - APM';
 
   /// @nodoc
   @visibleForTesting
@@ -35,16 +36,16 @@ class APM {
 
   /// Enables or disables the screenLoading Monitoring feature.
   /// [boolean] isEnabled
-  static Future<void> setScreenLoadingMonitoringEnabled(
+  static Future<void> setScreenLoadingEnabled(
       bool isEnabled,
       ) {
-    return _host.setScreenLoadingMonitoringEnabled(isEnabled);
+    return _host.setScreenLoadingEnabled(isEnabled);
   }
 
   /// @nodoc
   @internal
-  static Future<bool> isScreenLoadingMonitoringEnabled() async {
-    return _host.isScreenLoadingMonitoringEnabled();
+  static Future<bool> isScreenLoadingEnabled() async {
+    return _host.isScreenLoadingEnabled();
   }
 
   /// Enables or disables cold app launch tracking.
@@ -181,7 +182,7 @@ class APM {
 
   /// @nodoc
   @internal
-  static Future<void> reportScreenLoading(
+  static Future<void> reportScreenLoadingCP(
     int startTimeInMicroseconds,
     int durationInMicroseconds,
     int uiTraceId,
@@ -189,17 +190,27 @@ class APM {
     debugPrint(
       '${APM.tag}: Reporting screen loading trace — traceId: $uiTraceId, startTimeInMicroseconds: $startTimeInMicroseconds, durationInMicroseconds: $durationInMicroseconds',
     );
-    return _host.reportScreenLoading(
-        startTimeInMicroseconds, durationInMicroseconds, uiTraceId);
+    return _host.reportScreenLoadingCP(
+      startTimeInMicroseconds,
+      durationInMicroseconds,
+      uiTraceId,
+    );
   }
 
-  static Future<void> endScreenLoading(
+  /// @nodoc
+  @internal
+  static Future<void> endScreenLoadingCP(
     int endTimeInMicroseconds,
     int uiTraceId,
   ) {
     debugPrint(
-      '${APM.tag}:Extending screen loading trace — traceId: $uiTraceId, endTimeInMicroseconds: $endTimeInMicroseconds',
+      '${APM.tag}: Extending screen loading trace — traceId: $uiTraceId, endTimeInMicroseconds: $endTimeInMicroseconds',
     );
-    return _host.endScreenLoading(endTimeInMicroseconds, uiTraceId);
+    return _host.endScreenLoadingCP(endTimeInMicroseconds, uiTraceId);
+  }
+
+  /// Extends the currently active screen loading trace
+  static Future<void> endScreenLoading(){
+    return ScreenLoadingManager.I.endScreenLoading();
   }
 }

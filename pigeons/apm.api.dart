@@ -6,9 +6,9 @@ abstract class ApmHostApi {
   void setEnabled(bool isEnabled);
   @async
   bool isEnabled();
-  void setScreenLoadingMonitoringEnabled(bool isEnabled);
+  void setScreenLoadingEnabled(bool isEnabled);
   @async
-  bool isScreenLoadingMonitoringEnabled();
+  bool isScreenLoadingEnabled();
   void setColdAppLaunchEnabled(bool isEnabled);
   void setAutoUITraceEnabled(bool isEnabled);
 
@@ -31,7 +31,7 @@ abstract class ApmHostApi {
 
   void startCpUiTrace(String screenName, int microTimeStamp, int traceId);
 
-  void reportScreenLoading(int startTimeStampMicro, int durationMicro, int uiTraceId);
+  void reportScreenLoadingCP(int startTimeStampMicro, int durationMicro, int uiTraceId);
 
-  void endScreenLoading(int timeStampMicro, int uiTraceId);
+  void endScreenLoadingCP(int timeStampMicro, int uiTraceId);
 }

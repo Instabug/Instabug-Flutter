@@ -1,8 +1,9 @@
 class UiTrace {
   final String screenName;
   final int traceId;
-  bool didReportScreenLoading = false;
   bool didStartScreenLoading = false;
+  bool didReportScreenLoading = false;
+  bool didExtendScreenLoading = false;
 
   UiTrace(
     this.screenName, {

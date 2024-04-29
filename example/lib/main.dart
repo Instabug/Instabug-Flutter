@@ -11,6 +11,7 @@ import 'src/native/instabug_flutter_example_method_channel.dart';
 import 'src/widget/instabug_button.dart';
 import 'src/widget/instabug_clipboard_input.dart';
 import 'src/widget/instabug_text_field.dart';
+import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 
 void main() {
   runZonedGuarded(
@@ -72,11 +73,15 @@ class Page extends StatelessWidget {
   final String title;
   final GlobalKey<ScaffoldState>? scaffoldKey;
   final List<Widget> children;
+  final Widget? floatingActionButton;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
 
   const Page({
     Key? key,
     required this.title,
     this.scaffoldKey,
+    this.floatingActionButton,
+    this.floatingActionButtonLocation,
     required this.children,
   }) : super(key: key);
 
@@ -92,6 +97,8 @@ class Page extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: children,
           )),
+      floatingActionButton: floatingActionButton,
+      floatingActionButtonLocation: floatingActionButtonLocation,
     );
   }
 }
@@ -214,21 +221,33 @@ class _MyHomePageState extends State<MyHomePage> {
   void _navigateToCrashes() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const CrashesPage()),
+      MaterialPageRoute(
+        builder: (context) => const CrashesPage(),
+        settings: const RouteSettings(name: CrashesPage.screenName),
+      ),
     );
   }
 
   void _navigateToApm() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const ApmPage()),
+      MaterialPageRoute(
+        builder: (context) => const InstabugCaptureScreenLoading(
+          screenName: ApmPage.screenName,
+          child: ApmPage(),
+        ),
+        settings: const RouteSettings(name: ApmPage.screenName),
+      ),
     );
   }
 
   void _navigateToComplex() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const ComplexPage()),
+      MaterialPageRoute(
+        builder: (context) => const ComplexPage(),
+        settings: const RouteSettings(name: ComplexPage.screenName),
+      ),
     );
   }
 
@@ -411,6 +430,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class CrashesPage extends StatelessWidget {
+  static const screenName = 'crashes';
   const CrashesPage({Key? key}) : super(key: key);
 
   @override
@@ -568,19 +588,50 @@ class FatalCrashesContent extends StatelessWidget {
   }
 }
 
-class ApmPage extends StatelessWidget {
+class ApmPage extends StatefulWidget {
+  static const screenName = 'apm';
   const ApmPage({Key? key}) : super(key: key);
 
   @override
+  State<ApmPage> createState() => _ApmPageState();
+}
+
+class _ApmPageState extends State<ApmPage> {
+  void _navigateToScreenLoading() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ScreenLoadingPage(),
+        settings: const RouteSettings(
+          name: ScreenLoadingPage.screenName,
+        ),
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Page(children: [
-      SectionTitle('Network'),
-      const NetworkContent(),
-      SectionTitle('Traces'),
-      const TracesContent(),
-      SectionTitle('Flows'),
-      const FlowsContent(),
-    ], title: 'APM');
+    return Page(
+      title: 'APM',
+      children: [
+        SectionTitle('Network'),
+        const NetworkContent(),
+        SectionTitle('Traces'),
+        const TracesContent(),
+        SectionTitle('Flows'),
+        const FlowsContent(),
+        SectionTitle('Screen Loading'),
+        SizedBox.fromSize(
+          size: const Size.fromHeight(12),
+        ),
+        InstabugButton(
+          text: 'Screen Loading',
+          onPressed: _navigateToScreenLoading,
+        ),
+        SizedBox.fromSize(
+          size: const Size.fromHeight(12),
+        ),
+      ],
+    );
   }
 }
 
@@ -787,19 +838,31 @@ class _TracesContentState extends State<TracesContent> {
 }
 
 class ComplexPage extends StatefulWidget {
-  const ComplexPage({Key? key}) : super(key: key);
+  static const initialDepth = 10;
+  static const initialBreadth = 2;
+  static const screenName = 'complex';
+  final bool isMonitored;
+
+  const ComplexPage({
+    Key? key,
+    this.isMonitored = false,
+  }) : super(key: key);
+
+  const ComplexPage.monitored({
+    Key? key,
+    this.isMonitored = true,
+  }) : super(key: key);
 
   @override
   State<ComplexPage> createState() => _ComplexPageState();
 }
 
 class _ComplexPageState extends State<ComplexPage> {
-  static const initialDepth = 10;
-  static const initialBreadth = 2;
   final depthController = TextEditingController();
   final breadthController = TextEditingController();
-  int depth = initialDepth;
-  int breadth = initialBreadth;
+  int depth = ComplexPage.initialDepth;
+  int breadth = ComplexPage.initialBreadth;
+  GlobalKey _reloadKey = GlobalKey();
 
   @override
   void initState() {
@@ -808,44 +871,292 @@ class _ComplexPageState extends State<ComplexPage> {
     breadthController.text = breadth.toString();
   }
 
-  void handleRender() {
+  void _handleRender() {
     setState(() {
-      breadth = int.tryParse(breadthController.text) ?? initialBreadth;
-      depth = int.tryParse(depthController.text) ?? initialBreadth;
+      breadth = int.tryParse(breadthController.text) ?? ComplexPage.initialBreadth;
+      depth = int.tryParse(depthController.text) ?? ComplexPage.initialBreadth;
+      _reloadKey = GlobalKey();
     });
+  }
+
+  void _resetDidStartScreenLoading() {
+    ScreenLoadingManager.I.resetDidStartScreenLoading();
+  }
+
+  void _resetDidReportScreenLoading() {
+    ScreenLoadingManager.I.resetDidReportScreenLoading();
+  }
+
+  void _resetDidExtendScreenLoading() {
+    ScreenLoadingManager.I.resetDidExtendScreenLoading();
+  }
+
+  void _enableScreenLoading() {
+    APM.setScreenLoadingMonitoringEnabled(true);
+  }
+
+  void _disableScreenLoading() {
+    APM.setScreenLoadingMonitoringEnabled(false);
   }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    return _buildPage(textTheme);
+  }
+
+  Widget _buildPage(TextTheme textTheme) {
+    final content = [
+      InstabugTextField(
+        label: 'Depth (default: ${ComplexPage.initialDepth})',
+        labelStyle: textTheme.labelMedium,
+        controller: depthController,
+      ),
+      InstabugTextField(
+        label: 'Breadth (default: ${ComplexPage.initialBreadth})',
+        labelStyle: textTheme.labelMedium,
+        controller: breadthController,
+      ),
+      InstabugButton(
+        onPressed: _handleRender,
+        text: 'Render',
+      ),
+      SizedBox.fromSize(
+        size: const Size.fromHeight(
+          12.0,
+        ),
+      ),
+      InstabugButton(
+        onPressed: _enableScreenLoading,
+        text: 'Enable Screen loading',
+      ),
+      InstabugButton(
+        onPressed: _disableScreenLoading,
+        text: 'Disable Screen Loading',
+      ),
+      InstabugButton(
+        onPressed: _resetDidStartScreenLoading,
+        text: 'Reset Did Start Screen Loading',
+      ),
+      InstabugButton(
+        onPressed: _resetDidReportScreenLoading,
+        text: 'Reset Did Report Screen Loading',
+      ),
+      InstabugButton(
+        onPressed: _resetDidExtendScreenLoading,
+        text: 'Reset Did Extend Screen Loading',
+      ),
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: NestedView(
+          depth: depth,
+          breadth: breadth,
+        ),
+      ),
+    ];
+
+    if (widget.isMonitored) {
+      return KeyedSubtree(
+        key: _reloadKey,
+        child: InstabugCaptureScreenLoading(
+          screenName: ComplexPage.screenName,
+          child: Page(
+            title: 'Monitored Complex',
+            children: content,
+          ),
+        ),
+      );
+    } else {
+      return Page(
+        title: 'Complex',
+        children: content,
+      );
+    }
+  }
+}
+
+
+class ScreenLoadingPage extends StatefulWidget {
+  static const screenName = 'screenLoading';
+  const ScreenLoadingPage({Key? key}) : super(key: key);
+
+  @override
+  State<ScreenLoadingPage> createState() => _ScreenLoadingPageState();
+}
+
+class _ScreenLoadingPageState extends State<ScreenLoadingPage> {
+
+  final durationController = TextEditingController();
+  GlobalKey _reloadKey = GlobalKey();
+  final List<int> _capturedWidgets = [];
+  void _render() {
+    setState(() {
+      // Key can be changed to force reload and re-render
+      _reloadKey = GlobalKey();
+    });
+  }
+
+  void _addCapturedWidget() {
+    setState(() {
+      debugPrint('adding captured widget');
+      _capturedWidgets.add(0);
+    });
+  }
+
+  void _extendScreenLoading() {
+    final currentUiTrace = ScreenLoadingManager.I.currentUiTrace;
+    final currentScreenLoadingTrace = ScreenLoadingManager.I.currentScreenLoadingTrace;
+    final extendedEndTime = (currentScreenLoadingTrace?.endTimeInMicroseconds ?? 0) + (int.tryParse(durationController.text.toString()) ?? 0);
+    APM.endScreenLoading(
+      extendedEndTime,
+      currentUiTrace?.traceId ?? 0,
+    );
+  }
+
+  void _navigateToComplexPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ComplexPage.monitored(),
+        settings: const RouteSettings(
+          name: ComplexPage.screenName,
+        ),
+      ),
+    );
+  }
+
+  void _navigateToMonitoredScreenCapturePrematureExtensionPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const InstabugCaptureScreenLoading(
+          screenName: ScreenCapturePrematureExtensionPage.screenName,
+          child: ScreenCapturePrematureExtensionPage(),
+        ),
+        settings: const RouteSettings(
+          name: ScreenCapturePrematureExtensionPage.screenName,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Page(
-      title: 'Complex',
+      title: 'Screen Loading',
+      floatingActionButton: Container(
+        height: 40,
+        child: FloatingActionButton(
+          tooltip: 'Add',
+          onPressed: _addCapturedWidget,
+          child: const Icon(Icons.add, color: Colors.white, size: 28),
+        ),
+      ),
       children: [
-        InstabugTextField(
-          label: 'Depth (default: $initialDepth)',
-          labelStyle: textTheme.labelMedium,
-          controller: depthController,
+        SectionTitle('6x InstabugCaptureScreen'),
+        KeyedSubtree(
+          key: _reloadKey,
+          child: InstabugCaptureScreenLoading(
+            screenName: ScreenLoadingPage.screenName,
+            child: InstabugCaptureScreenLoading(
+              screenName: ScreenLoadingPage.screenName,
+              child: InstabugCaptureScreenLoading(
+                screenName: 'different screen name',
+                child: InstabugCaptureScreenLoading(
+                  screenName: ScreenLoadingPage.screenName,
+                  child: InstabugCaptureScreenLoading(
+                    screenName: ScreenLoadingPage.screenName,
+                    child: InstabugCaptureScreenLoading(
+                      screenName: ScreenLoadingPage.screenName,
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 12),
+                        child: InstabugButton(
+                          text: 'Reload',
+                          onPressed: _render, // Call _render function here
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
         InstabugTextField(
-          label: 'Breadth (default: $initialBreadth)',
-          labelStyle: textTheme.labelMedium,
-          controller: breadthController,
+          label: 'Duration',
+          controller: durationController,
+          keyboardType: TextInputType.number,
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 12),
+          child: InstabugButton(
+            text: 'Extend Screen Loading',
+            onPressed: _extendScreenLoading,
+          ),
         ),
         InstabugButton(
-          onPressed: handleRender,
-          text: 'Render',
+          text: 'Monitored Complex Page',
+          onPressed: _navigateToComplexPage,
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: NestedView(
-            depth: depth,
-            breadth: breadth,
+        InstabugButton(
+          text: 'Screen Capture Premature Extension Page',
+          onPressed: _navigateToMonitoredScreenCapturePrematureExtensionPage,
+        ),
+        SectionTitle('Dynamic Screen Loading list'),
+        SizedBox(
+          height: 100,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5, childAspectRatio: 5),
+              reverse: false,
+              shrinkWrap: true,
+              itemCount: _capturedWidgets.length,
+              itemBuilder: (context, index) {
+                return InstabugCaptureScreenLoading(
+                  screenName: ScreenLoadingPage.screenName,
+                  child: Text(index.toString()),
+                );
+              },
+            ),
           ),
-        )
+        ),
+        SizedBox.fromSize(
+          size: const Size.fromHeight(12),
+        ),
       ],
     );
   }
 }
+
+class ScreenCapturePrematureExtensionPage extends StatefulWidget {
+  static const screenName = 'screenCapturePrematureExtension';
+  const ScreenCapturePrematureExtensionPage({Key? key}) : super(key: key);
+
+
+  @override
+  State<ScreenCapturePrematureExtensionPage> createState() => _ScreenCapturePrematureExtensionPageState();
+}
+
+class _ScreenCapturePrematureExtensionPageState extends State<ScreenCapturePrematureExtensionPage> {
+  void _extendScreenLoading() {
+    APM.endScreenLoading();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    _extendScreenLoading();
+    return const Page(
+      title: 'Screen Capture Premature Extension',
+      children: [
+        Text('This page calls endScreenLoading before it fully renders allowing us to test the scenario of premature extension of screen loading'),
+      ],
+    );
+  }
+}
+
+
 
 class NestedView extends StatelessWidget {
   final int depth;
@@ -854,15 +1165,15 @@ class NestedView extends StatelessWidget {
 
   const NestedView({
     Key? key,
-    required this.depth,
-    this.breadth = 1,
+    this.depth = ComplexPage.initialDepth,
+    this.breadth = ComplexPage.initialDepth,
     this.child,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (depth == 0) {
-      return child ?? SizedBox.shrink();
+      return child ?? const SizedBox.shrink();
     }
 
     return Container(
@@ -877,7 +1188,7 @@ class NestedView extends StatelessWidget {
           Row(
             children: List.generate(
               breadth,
-                  (index) => NestedView(
+              (index) => NestedView(
                 depth: depth - 1,
                 breadth: breadth,
                 child: child,
@@ -1037,5 +1348,5 @@ class _FlowsContentState extends State<FlowsContent> {
     }
     log('_setFlowAttribute — setting attributes -> key: $flowKeyAttribute, value: $flowValueAttribute.');
     APM.setFlowAttribute(flowName, flowKeyAttribute, flowValueAttribute);
-  }*/
+  }
 }

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/flags_config.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_trace.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/ui_trace.dart';
@@ -52,6 +53,14 @@ class ScreenLoadingManager {
   void resetDidReportScreenLoading() {
     // Allows reporting a new screen loading capture trace in the same ui trace even if one was reported before by resetting the flag which is used for checking.
     _currentUiTrace?.didReportScreenLoading = false;
+    debugPrint('${APM.tag}: Resetting didExtendScreenLoading — setting didExtendScreenLoading: ${_currentUiTrace?.didExtendScreenLoading}');
+  }
+
+  /// @nodoc
+  @internal
+  void resetDidExtendScreenLoading() {
+    // Allows reporting a new screen loading capture trace in the same ui trace even if one was reported before by resetting the flag which is used for checking.
+    _currentUiTrace?.didExtendScreenLoading = false;
     debugPrint('${APM.tag}: Resetting didReportScreenLoading — setting didReportScreenLoading: ${_currentUiTrace?.didReportScreenLoading}');
   }
 
@@ -60,8 +69,6 @@ class ScreenLoadingManager {
     resetDidStartScreenLoading();
     final isApmEnabled = await FlagsConfig.Apm.isEnabled();
     if (!isApmEnabled) {
-      log("Unable to start Ui Trace, as ${FlagsConfig.Apm.name} feature is disabled.",
-          name: APM.tag);
       return;
     }
     final microTimeStamp = DateTime.now().microsecondsSinceEpoch;
@@ -72,20 +79,20 @@ class ScreenLoadingManager {
 
   /// @nodoc
   @internal
-  Future<bool> startScreenLoadingTrace(
+  Future<void> startScreenLoadingTrace(
     String screenName, {
     required int startTimeInMicroseconds,
   }) async {
-    final isScreenLoadingMonitoringEnabled =
+    final isScreenLoadingEnabled =
         await FlagsConfig.ScreenLoading.isEnabled();
-    if (!isScreenLoadingMonitoringEnabled) {
-      log("Unable to start Screen loading capture, as ${FlagsConfig.ScreenLoading.name} feature is disabled.",
-          name: APM.tag);
-      return false;
+    if (!isScreenLoadingEnabled) {
+      return;
     }
-    // only accepts the first widget with the same name
-    if (screenName == _currentUiTrace?.screenName &&
-        _currentUiTrace?.didStartScreenLoading == false) {
+
+    final isSameScreen = screenName == _currentUiTrace?.screenName;
+    final didStartLoading = _currentUiTrace?.didStartScreenLoading == true;
+
+    if (isSameScreen && !didStartLoading) {
       final trace = ScreenLoadingTrace(
         screenName,
         startTimeInMicroseconds: startTimeInMicroseconds,
@@ -93,53 +100,40 @@ class ScreenLoadingManager {
       debugPrint('${APM.tag} starting screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds');
       _currentUiTrace?.didStartScreenLoading = true;
       _currentScreenLoadingTrace = trace;
-      return true;
+      return;
     }
     debugPrint('${APM.tag} failed to start screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds');
     debugPrint('${APM.tag} didStartScreenLoading: ${_currentUiTrace?.didStartScreenLoading}, isSameName: ${screenName ==
         _currentUiTrace?.screenName}');
-    return false;
   }
 
   /// @nodoc
   @internal
-  Future<bool> reportScreenLoading(
-    ScreenLoadingTrace? trace, {
-    required int endTimeInMicroseconds,
-  }) async {
+  Future<void> reportScreenLoading(ScreenLoadingTrace? trace) async {
     int? duration;
     final isScreenLoadingMonitoringEnabled =
         await FlagsConfig.ScreenLoading.isEnabled();
     if (!isScreenLoadingMonitoringEnabled) {
-      log('Unable to report Screen loading capture, as ${FlagsConfig.ScreenLoading.name} feature is disabled.',
-          name: APM.tag);
+      return;
     }
 
-    // Handles if [endScreenLoading] was called prematurely
-    // As the endScreenLoading only extends the current screen loading trace
-    if (prematurelyEndedTraces.contains(trace)) {
-      log(
-        'Ending screen loading prematurely, as Screen loading was ended before full capture.',
-        name: APM.tag,
-      );
-      duration = 0;
-    }
+    final isSameScreen = trace?.screenName == _currentScreenLoadingTrace?.screenName;
+    final isReported = _currentUiTrace?.didReportScreenLoading == true; // Changed to isReported
+    final isValidTrace = trace != null;
 
     // Only report the first screen loading trace with the same name as the active UiTrace
-    if (trace?.screenName == _currentScreenLoadingTrace?.screenName &&
-        _currentUiTrace?.didReportScreenLoading == false) {
-      trace!.duration = (trace.endTimeInMicroseconds ?? 0) - (trace.startTimeInMicroseconds ?? 0);
+    if (isSameScreen && !isReported && isValidTrace) {
       _currentUiTrace?.didReportScreenLoading = true;
 
-      APM.reportScreenLoading(
-        trace.startTimeInMicroseconds,
-        duration ?? trace.duration!,
+      APM.reportScreenLoadingCP(
+        trace?.startTimeInMicroseconds ?? 0,
+        duration ?? trace?.duration ?? 0,
         _currentUiTrace?.traceId ?? 0,
       );
-      return true;
+      return;
     } else {
       debugPrint(
-        '${APM.tag} failed to report screen loading trace — screenName: ${trace?.screenName}, '
+        '${APM.tag}: failed to report screen loading trace — screenName: ${trace?.screenName}, '
             'startTimeInMicroseconds: ${trace?.startTimeInMicroseconds}, '
             'duration: $duration, '
             'trace.duration: ${trace?.duration ?? 0}',
@@ -150,7 +144,7 @@ class ScreenLoadingManager {
       );
       _reportScreenLoadingDroppedError(trace!);
     }
-    return false;
+    return;
   }
 
   void _reportScreenLoadingDroppedError(ScreenLoadingTrace trace) {
@@ -167,15 +161,25 @@ class ScreenLoadingManager {
     // end time -> 0
     final isScreenLoadingEnabled = await FlagsConfig.ScreenLoading.isEnabled();
     if (!isScreenLoadingEnabled) {
-      log(
-        "Unable to extend Screen loading capture, as ${FlagsConfig.ScreenLoading.name} feature is disabled.",
-        name: APM.tag,
+      return;
+    }
+
+    // TODO: endscreen loading only called once
+    final didExtendScreenLoading = _currentUiTrace?.didExtendScreenLoading  == true;
+    if (didExtendScreenLoading) {
+      InstabugLogger.I.e(
+        'endScreenLoading has already been called for the current screen visit. Multiple calls to this API are not allowed during a single screen visit, only the first call will be considered.',
+        tag: APM.tag,
       );
+      return;
     }
 
     // Handles no active screen loading trace - cannot end
-    if (_currentScreenLoadingTrace?.startTimeInMicroseconds == null) {
-      log("Unable to end Screen loading capture, as there is no active Screen loading capture.");
+    final didStartScreenLoading = _currentScreenLoadingTrace?.startTimeInMicroseconds != null;
+    if (!didStartScreenLoading) {
+      InstabugLogger.I.e(
+        "endScreenLoading wasn’t called as there is no active screen Loading trace.",
+        tag: APM.tag,);
       return;
     }
     final extendedEndTimeInMicroseconds = DateTime.now().microsecondsSinceEpoch;
@@ -183,27 +187,28 @@ class ScreenLoadingManager {
     final duration = extendedEndTimeInMicroseconds -
         _currentScreenLoadingTrace!.startTimeInMicroseconds;
     // cannot extend as the trace has not ended yet.
-    // we set the end to 0 and leave it to be reported.
+    // we report the end/extension as 0 and can be overritten later on.
     var didEndScreenLoadingPrematurely = _currentScreenLoadingTrace?.endTimeInMicroseconds == null;
     if (didEndScreenLoadingPrematurely) {
       _currentScreenLoadingTrace?.endTimeInMicroseconds = 0;
       prematurelyEndedTraces.add(_currentScreenLoadingTrace!);
-      log(
-        "Screen loading was ended before full capture. Ending screen loading prematurely.",
-        name: APM.tag,
+      InstabugLogger.I.e(
+        "endScreenLoading was called too early in the Screen Loading cycle. Please make sure to call the API after the screen is done loading.",
+        tag: APM.tag,
       );
       debugPrint('${APM.tag}: endTimeInMicroseconds: ${_currentScreenLoadingTrace?.endTimeInMicroseconds}, '
           'didEndScreenLoadingPrematurely: $didEndScreenLoadingPrematurely');
-    } else {
-      log('Ending screen loading capture — duration: $duration');
-      _currentScreenLoadingTrace?.endTimeInMicroseconds =
-          extendedEndTimeInMicroseconds;
     }
+    debugPrint('${APM.tag}: Ending screen loading capture — duration: $duration');
+    _currentScreenLoadingTrace?.endTimeInMicroseconds =
+        extendedEndTimeInMicroseconds;
     // Ends screen loading trace
-    APM.endScreenLoading(
+    APM.endScreenLoadingCP(
       extendedEndTimeInMicroseconds,
       _currentUiTrace?.traceId ?? 0,
     );
+    _currentUiTrace?.didExtendScreenLoading = true;
+
     return;
   }
 }

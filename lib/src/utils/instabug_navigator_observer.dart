@@ -26,7 +26,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
       Future<dynamic>.delayed(const Duration(milliseconds: 1000), () {
         // If this route is in the array, report it and remove it from the list
         if (_steps.contains(newRoute)) {
-          Instabug.reportScreenChange(newRoute.settings.name.toString());
+          Instabug.reportScreenChange(screenName);
           _steps.remove(newRoute);
         }
       });

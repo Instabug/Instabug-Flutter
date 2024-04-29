@@ -50,7 +50,7 @@ void main() {
   test('[setScreenLoadingMonitoringEnabled] should call host method', () async {
     const enabled = true;
 
-    await APM.setScreenLoadingMonitoringEnabled(enabled);
+    await APM.setScreenLoadingEnabled(enabled);
 
     verify(
       mHost.setScreenLoadingMonitoringEnabled(enabled),
@@ -59,7 +59,7 @@ void main() {
 
   test('[isScreenLoadingMonitoringEnabled] should call host method', () async {
     when(mHost.isScreenLoadingMonitoringEnabled()).thenAnswer((_) async => true);
-    await APM.isScreenLoadingMonitoringEnabled();
+    await APM.isScreenLoadingEnabled();
 
     verify(
       mHost.isScreenLoadingMonitoringEnabled(),
@@ -218,7 +218,7 @@ void main() {
     final durationMicro = DateTime.now().microsecondsSinceEpoch;
     final uiTraceId = DateTime.now().millisecondsSinceEpoch;
 
-    await APM.reportScreenLoading(
+    await APM.reportScreenLoadingCP(
         startTimeStampMicro, durationMicro, uiTraceId);
 
     verify(
@@ -231,7 +231,7 @@ void main() {
     final timeStampMicro = DateTime.now().microsecondsSinceEpoch;
     final uiTraceId = DateTime.now().millisecondsSinceEpoch;
 
-    await APM.endScreenLoading(timeStampMicro, uiTraceId);
+    await APM.endScreenLoadingCP(timeStampMicro, uiTraceId);
 
     verify(
       mHost.endScreenLoading(timeStampMicro, uiTraceId),

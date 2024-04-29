@@ -22,6 +22,7 @@ class _InstabugCaptureScreenLoadingState
     extends State<InstabugCaptureScreenLoading> {
   ScreenLoadingTrace? trace;
   final startTimeInMicroseconds = DateTime.now().microsecondsSinceEpoch;
+  final stopwatch = Stopwatch()..start();
 
   @override
   void initState() {
@@ -36,12 +37,13 @@ class _InstabugCaptureScreenLoadingState
       startTimeInMicroseconds: startTimeInMicroseconds,
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final endTimeInMicroseconds = DateTime.now().microsecondsSinceEpoch;
+      stopwatch.stop();
+      final duration = stopwatch.elapsedMicroseconds;
+      trace?.duration = duration;
+      trace?.endTimeInMicroseconds = startTimeInMicroseconds + duration;
       ScreenLoadingManager.I.reportScreenLoading(
         trace,
-        endTimeInMicroseconds: endTimeInMicroseconds,
       );
-      trace?.endTimeInMicroseconds = endTimeInMicroseconds;
     });
   }
 

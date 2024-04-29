@@ -15,7 +15,7 @@ extension FeatureExtensions on FlagsConfig {
       case FlagsConfig.Apm:
         return await APM.isEnabled();
       case FlagsConfig.ScreenLoading:
-        return await APM.isScreenLoadingMonitoringEnabled();
+        return await APM.isScreenLoadingEnabled();
       default:
         return false;
     }
