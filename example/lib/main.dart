@@ -514,7 +514,7 @@ class _MyHomePageState extends State<MyHomePage> {
           new Exception(crashNameController.text), null,
           userAttributes: userAttributes,
           fingerprint: crashfingerPrintController.text,
-          nonFatalExceptionLevel: crashType);
+          level: crashType);
       ScaffoldMessenger.of(_scaffoldKey.currentContext!)
           .showSnackBar(SnackBar(content: Text("Crash sent")));
       crashNameController.text = '';
