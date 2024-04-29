@@ -21,7 +21,7 @@
 ### Added
 
 - Support user identification using ID ([#435](https://github.com/Instabug/Instabug-Flutter/pull/435)).
-- add grouping key , error level & user attributes to `CrashReporting.reportHandledCrash`([#455](https://github.com/Instabug/Instabug-Flutter/pull/455)).
+- Add support for passing a grouping fingerprint, error level, and user attributes to the `CrashReporting.reportHandledCrash` non-fatals API ([#461](https://github.com/Instabug/Instabug-Flutter/pull/461)).
 
 
 ### Changed
