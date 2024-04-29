@@ -63,8 +63,6 @@ public class CrashReportingApi implements CrashReportingPigeon.CrashReportingHos
             JSONObject fingerprintObj = null;
             if (fingerprint != null) {
                 fingerprintObj = getFingerprintObject(fingerprint);
-//                Method getFingerPrintMethod = Reflection.getMethod(Class.forName("com.instabug.crash.CrashReporting"), "getFingerprintObject", String.class);
-//                fingerprintObj = (JSONObject) getFingerPrintMethod.invoke(fingerprint);
             }
             IBGNonFatalException.Level nonFatalExceptionLevelType = ArgsRegistry.nonFatalExceptionLevel.get(nonFatalExceptionLevel);
 
