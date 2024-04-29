@@ -1,23 +1,20 @@
 package com.instabug.flutter.modules;
 
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
+import androidx.annotation.Nullable;
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
-
+import io.flutter.plugin.common.BinaryMessenger;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-
-import io.flutter.plugin.common.BinaryMessenger;
 
 public class ApmApi implements ApmPigeon.ApmHostApi {
     private final String TAG = ApmApi.class.getName();
@@ -93,6 +90,33 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
                     }
                 }
         );
+    }
+
+    @Override
+    public void startFlow(@NonNull String name) {
+        try {
+            APM.startFlow(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setFlowAttribute(@NonNull String name, @NonNull String key, @Nullable String value) {
+        try {
+            APM.setFlowAttribute(name, key, value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void endFlow(@NonNull String name) {
+        try {
+            APM.endFlow(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

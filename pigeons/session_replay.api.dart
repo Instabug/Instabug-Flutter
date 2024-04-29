@@ -6,4 +6,6 @@ abstract class SessionReplayHostApi {
   void setNetworkLogsEnabled(bool isEnabled);
   void setInstabugLogsEnabled(bool isEnabled);
   void setUserStepsEnabled(bool isEnabled);
+  @async
+  String getSessionReplayLink();
 }

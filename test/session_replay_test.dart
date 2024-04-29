@@ -55,4 +55,15 @@ void main() {
       mHost.setUserStepsEnabled(isEnabled),
     ).called(1);
   });
+
+  test('[getSessionReplayLink] should call host method', () async {
+    const link = 'link';
+    when(mHost.getSessionReplayLink()).thenAnswer((_) async => link);
+
+    final result = await SessionReplay.getSessionReplayLink();
+    expect(result, link);
+    verify(
+      mHost.getSessionReplayLink(),
+    ).called(1);
+  });
 }
