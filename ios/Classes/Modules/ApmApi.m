@@ -57,15 +57,12 @@ NSMutableDictionary *traces;
 }
 
 - (void)startFlowName:(nonnull NSString *)name error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
-    [IBGAPM startFlowWithName:name];
 }
 
 - (void)setFlowAttributeName:(nonnull NSString *)name key:(nonnull NSString *)key value:(nullable NSString *)value error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
-    [IBGAPM setAttributeForFlowWithName:name key:key value:value];
 }
 
 - (void)endFlowName:(nonnull NSString *)name error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
-    [IBGAPM endFlowWithName:name];
 }
 
 - (void)startUITraceName:(NSString *)name error:(FlutterError *_Nullable *_Nonnull)error {
