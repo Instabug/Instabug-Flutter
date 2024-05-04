@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
@@ -23,7 +21,8 @@ class ScreenLoadingManager {
 
   /// @nodoc
   @internal
-  ScreenLoadingTrace? get currentScreenLoadingTrace => _currentScreenLoadingTrace;
+  ScreenLoadingTrace? get currentScreenLoadingTrace =>
+      _currentScreenLoadingTrace;
 
   /// @nodoc
   @internal
@@ -39,13 +38,13 @@ class ScreenLoadingManager {
     _instance = instance;
   }
 
-
   /// @nodoc
   @internal
   void resetDidStartScreenLoading() {
     // Allows starting a new screen loading capture trace in the same ui trace (without navigating out and in to the same screen)
     _currentUiTrace?.didStartScreenLoading = false;
-    debugPrint('${APM.tag}: Resetting didStartScreenLoading — setting didStartScreenLoading: ${_currentUiTrace?.didStartScreenLoading}');
+    debugPrint(
+        '${APM.tag}: Resetting didStartScreenLoading — setting didStartScreenLoading: ${_currentUiTrace?.didStartScreenLoading}');
   }
 
   /// @nodoc
@@ -53,7 +52,8 @@ class ScreenLoadingManager {
   void resetDidReportScreenLoading() {
     // Allows reporting a new screen loading capture trace in the same ui trace even if one was reported before by resetting the flag which is used for checking.
     _currentUiTrace?.didReportScreenLoading = false;
-    debugPrint('${APM.tag}: Resetting didExtendScreenLoading — setting didExtendScreenLoading: ${_currentUiTrace?.didExtendScreenLoading}');
+    debugPrint(
+        '${APM.tag}: Resetting didExtendScreenLoading — setting didExtendScreenLoading: ${_currentUiTrace?.didExtendScreenLoading}');
   }
 
   /// @nodoc
@@ -61,7 +61,8 @@ class ScreenLoadingManager {
   void resetDidExtendScreenLoading() {
     // Allows reporting a new screen loading capture trace in the same ui trace even if one was reported before by resetting the flag which is used for checking.
     _currentUiTrace?.didExtendScreenLoading = false;
-    debugPrint('${APM.tag}: Resetting didReportScreenLoading — setting didReportScreenLoading: ${_currentUiTrace?.didReportScreenLoading}');
+    debugPrint(
+        '${APM.tag}: Resetting didReportScreenLoading — setting didReportScreenLoading: ${_currentUiTrace?.didReportScreenLoading}');
   }
 
   @internal
@@ -83,8 +84,7 @@ class ScreenLoadingManager {
     String screenName, {
     required int startTimeInMicroseconds,
   }) async {
-    final isScreenLoadingEnabled =
-        await FlagsConfig.ScreenLoading.isEnabled();
+    final isScreenLoadingEnabled = await FlagsConfig.ScreenLoading.isEnabled();
     if (!isScreenLoadingEnabled) {
       return;
     }
@@ -97,14 +97,16 @@ class ScreenLoadingManager {
         screenName,
         startTimeInMicroseconds: startTimeInMicroseconds,
       );
-      debugPrint('${APM.tag} starting screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds');
+      debugPrint(
+          '${APM.tag} starting screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds');
       _currentUiTrace?.didStartScreenLoading = true;
       _currentScreenLoadingTrace = trace;
       return;
     }
-    debugPrint('${APM.tag} failed to start screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds');
-    debugPrint('${APM.tag} didStartScreenLoading: ${_currentUiTrace?.didStartScreenLoading}, isSameName: ${screenName ==
-        _currentUiTrace?.screenName}');
+    debugPrint(
+        '${APM.tag} failed to start screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds');
+    debugPrint(
+        '${APM.tag} didStartScreenLoading: ${_currentUiTrace?.didStartScreenLoading}, isSameName: ${screenName == _currentUiTrace?.screenName}');
   }
 
   /// @nodoc
@@ -117,8 +119,10 @@ class ScreenLoadingManager {
       return;
     }
 
-    final isSameScreen = trace?.screenName == _currentScreenLoadingTrace?.screenName;
-    final isReported = _currentUiTrace?.didReportScreenLoading == true; // Changed to isReported
+    final isSameScreen =
+        trace?.screenName == _currentScreenLoadingTrace?.screenName;
+    final isReported = _currentUiTrace?.didReportScreenLoading ==
+        true; // Changed to isReported
     final isValidTrace = trace != null;
 
     // Only report the first screen loading trace with the same name as the active UiTrace
@@ -134,13 +138,13 @@ class ScreenLoadingManager {
     } else {
       debugPrint(
         '${APM.tag}: failed to report screen loading trace — screenName: ${trace?.screenName}, '
-            'startTimeInMicroseconds: ${trace?.startTimeInMicroseconds}, '
-            'duration: $duration, '
-            'trace.duration: ${trace?.duration ?? 0}',
+        'startTimeInMicroseconds: ${trace?.startTimeInMicroseconds}, '
+        'duration: $duration, '
+        'trace.duration: ${trace?.duration ?? 0}',
       );
       debugPrint(
         '${APM.tag} didReportScreenLoading: ${_currentUiTrace?.didReportScreenLoading}, '
-            'isSameName: ${trace?.screenName == _currentScreenLoadingTrace?.screenName}',
+        'isSameName: ${trace?.screenName == _currentScreenLoadingTrace?.screenName}',
       );
       _reportScreenLoadingDroppedError(trace!);
     }
@@ -165,7 +169,8 @@ class ScreenLoadingManager {
     }
 
     // TODO: endscreen loading only called once
-    final didExtendScreenLoading = _currentUiTrace?.didExtendScreenLoading  == true;
+    final didExtendScreenLoading =
+        _currentUiTrace?.didExtendScreenLoading == true;
     if (didExtendScreenLoading) {
       InstabugLogger.I.e(
         'endScreenLoading has already been called for the current screen visit. Multiple calls to this API are not allowed during a single screen visit, only the first call will be considered.',
@@ -175,33 +180,38 @@ class ScreenLoadingManager {
     }
 
     // Handles no active screen loading trace - cannot end
-    final didStartScreenLoading = _currentScreenLoadingTrace?.startTimeInMicroseconds != null;
+    final didStartScreenLoading =
+        _currentScreenLoadingTrace?.startTimeInMicroseconds != null;
     if (!didStartScreenLoading) {
       InstabugLogger.I.e(
         "endScreenLoading wasn’t called as there is no active screen Loading trace.",
-        tag: APM.tag,);
+        tag: APM.tag,
+      );
       return;
     }
-    final extendedEndTimeInMicroseconds = DateTime.now().microsecondsSinceEpoch;
+    var extendedEndTimeInMicroseconds = DateTime.now().microsecondsSinceEpoch;
 
-    final duration = extendedEndTimeInMicroseconds -
+    var duration = extendedEndTimeInMicroseconds -
         _currentScreenLoadingTrace!.startTimeInMicroseconds;
     // cannot extend as the trace has not ended yet.
-    // we report the end/extension as 0 and can be overritten later on.
-    var didEndScreenLoadingPrematurely = _currentScreenLoadingTrace?.endTimeInMicroseconds == null;
+    // we report the extension timestamp as 0 and can be override later on.
+    final didEndScreenLoadingPrematurely =
+        _currentScreenLoadingTrace?.endTimeInMicroseconds == null;
     if (didEndScreenLoadingPrematurely) {
-      _currentScreenLoadingTrace?.endTimeInMicroseconds = 0;
-      prematurelyEndedTraces.add(_currentScreenLoadingTrace!);
+      extendedEndTimeInMicroseconds = 0;
+      duration = 0;
+
       InstabugLogger.I.e(
         "endScreenLoading was called too early in the Screen Loading cycle. Please make sure to call the API after the screen is done loading.",
         tag: APM.tag,
       );
-      debugPrint('${APM.tag}: endTimeInMicroseconds: ${_currentScreenLoadingTrace?.endTimeInMicroseconds}, '
-          'didEndScreenLoadingPrematurely: $didEndScreenLoadingPrematurely');
     }
-    debugPrint('${APM.tag}: Ending screen loading capture — duration: $duration');
-    _currentScreenLoadingTrace?.endTimeInMicroseconds =
-        extendedEndTimeInMicroseconds;
+    debugPrint(
+        '${APM.tag}: endTimeInMicroseconds: ${_currentScreenLoadingTrace?.endTimeInMicroseconds}, '
+        'didEndScreenLoadingPrematurely: $didEndScreenLoadingPrematurely, extendedEndTimeInMicroseconds: $extendedEndTimeInMicroseconds.');
+    debugPrint(
+        '${APM.tag}: Ending screen loading capture — duration: $duration');
+
     // Ends screen loading trace
     APM.endScreenLoadingCP(
       extendedEndTimeInMicroseconds,

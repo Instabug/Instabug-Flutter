@@ -53,16 +53,16 @@ void main() {
     await APM.setScreenLoadingEnabled(enabled);
 
     verify(
-      mHost.setScreenLoadingMonitoringEnabled(enabled),
+      mHost.setScreenLoadingEnabled(enabled),
     ).called(1);
   });
 
   test('[isScreenLoadingMonitoringEnabled] should call host method', () async {
-    when(mHost.isScreenLoadingMonitoringEnabled()).thenAnswer((_) async => true);
+    when(mHost.isScreenLoadingEnabled()).thenAnswer((_) async => true);
     await APM.isScreenLoadingEnabled();
 
     verify(
-      mHost.isScreenLoadingMonitoringEnabled(),
+      mHost.isScreenLoadingEnabled(),
     ).called(1);
   });
 
@@ -222,7 +222,7 @@ void main() {
         startTimeStampMicro, durationMicro, uiTraceId);
 
     verify(
-      mHost.reportScreenLoading(startTimeStampMicro, durationMicro, uiTraceId),
+      mHost.reportScreenLoadingCP(startTimeStampMicro, durationMicro, uiTraceId),
     ).called(1);
     verifyNoMoreInteractions(mHost);
   });
@@ -234,7 +234,7 @@ void main() {
     await APM.endScreenLoadingCP(timeStampMicro, uiTraceId);
 
     verify(
-      mHost.endScreenLoading(timeStampMicro, uiTraceId),
+      mHost.endScreenLoadingCP(timeStampMicro, uiTraceId),
     ).called(1);
     verifyNoMoreInteractions(mHost);
   });
