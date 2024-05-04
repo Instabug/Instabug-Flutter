@@ -156,8 +156,10 @@ class ScreenLoadingManager {
       trace,
     );
     debugPrint('${APM.tag}: Droping the screen loading capture — $trace');
-    // Todo: !IMP - Check if this should only be logged
-    CrashReporting.reportHandledCrash(error, error.stackTrace);
+    InstabugLogger.I.e(
+      'Dropping the screen loading capture',
+      tag: APM.tag,
+    );
   }
 
   /// Extends the already ended screen loading adding a stage to it

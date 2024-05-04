@@ -146,6 +146,17 @@ class Instabug {
     Surveys.$setup();
   }
 
+  /// @nodoc
+  @internal
+  static Future<bool> isEnabled() async {
+    return _host.isEnabled();
+  }
+  /// @nodoc
+  @internal
+  static Future<bool> isBuilt() async {
+    return _host.isBuilt();
+  }
+
   /// Enables or disables Instabug functionality.
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {

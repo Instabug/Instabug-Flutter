@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_trace.dart';
 
@@ -27,24 +28,32 @@ class _InstabugCaptureScreenLoadingState
   @override
   void initState() {
     super.initState();
-    ScreenLoadingManager.I.startScreenLoadingTrace(
-      widget.screenName,
-      startTimeInMicroseconds: startTimeInMicroseconds,
-    );
+    _initCapturing();
+  }
 
-    trace = ScreenLoadingTrace(
-      widget.screenName,
-      startTimeInMicroseconds: startTimeInMicroseconds,
-    );
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      stopwatch.stop();
-      final duration = stopwatch.elapsedMicroseconds;
-      trace?.duration = duration;
-      trace?.endTimeInMicroseconds = startTimeInMicroseconds + duration;
-      ScreenLoadingManager.I.reportScreenLoading(
-        trace,
+  Future<void> _initCapturing() async {
+    final isEnabled = await Instabug.isEnabled();
+    final isBuilt = await Instabug.isBuilt();
+    if (isEnabled && isBuilt) {
+      ScreenLoadingManager.I.startScreenLoadingTrace(
+        widget.screenName,
+        startTimeInMicroseconds: startTimeInMicroseconds,
       );
-    });
+
+      trace = ScreenLoadingTrace(
+        widget.screenName,
+        startTimeInMicroseconds: startTimeInMicroseconds,
+      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        stopwatch.stop();
+        final duration = stopwatch.elapsedMicroseconds;
+        trace?.duration = duration;
+        trace?.endTimeInMicroseconds = startTimeInMicroseconds + duration;
+        ScreenLoadingManager.I.reportScreenLoading(
+          trace,
+        );
+      });
+    }
   }
 
   @override

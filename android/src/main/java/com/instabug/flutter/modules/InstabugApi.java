@@ -21,6 +21,7 @@ import com.instabug.library.ui.onboarding.WelcomeMessage;
 import io.flutter.FlutterInjector;
 import io.flutter.embedding.engine.loader.FlutterLoader;
 import io.flutter.plugin.common.BinaryMessenger;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -74,6 +75,18 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             e.printStackTrace();
         }
     }
+
+    @NonNull
+    @NotNull
+    @Override
+    public Boolean isEnabled() {
+        return Instabug.isEnabled();
+    }
+
+    @NonNull
+    @NotNull
+    @Override
+    public Boolean isBuilt() { return Instabug.isBuilt(); }
 
     @Override
     public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {

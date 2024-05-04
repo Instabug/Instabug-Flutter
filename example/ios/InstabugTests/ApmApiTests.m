@@ -54,23 +54,23 @@
     [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
-- (void)testSetScreenLoadingMonitoringEnabled {
+- (void)testSetScreenLoadingEnabled {
     
     NSNumber *isEnabled = @1;
     FlutterError *error;
 
-    [self.api setScreenLoadingMonitoringEnabledIsEnabled:isEnabled error:&error];
+    [self.api setScreenLoadingEnabledIsEnabled:isEnabled error:&error];
 
     OCMVerify([self.mAPM setScreenLoadingEnabled:YES]);
 }
 
-- (void)testIsScreenLoadingMonitoringEnabled {
+- (void)testIsScreenLoadingEnabled {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
 
     BOOL isScreenLoadingMonitoringEnabled = YES;
     OCMStub([self.mAPM screenLoadingEnabled]).andReturn(isScreenLoadingMonitoringEnabled);
 
-    [self.api isScreenLoadingMonitoringEnabledWithCompletion:^(NSNumber *isEnabledNumber, FlutterError *error) {
+    [self.api isScreenLoadingEnabledWithCompletion:^(NSNumber *isEnabledNumber, FlutterError *error) {
         [expectation fulfill];
         
         XCTAssertEqualObjects(isEnabledNumber, @(isScreenLoadingMonitoringEnabled));
@@ -233,7 +233,7 @@
     NSTimeInterval startTimeStampMicroMUS = [startTimeStampMicro doubleValue];
     NSTimeInterval durationMUS = [durationMicro doubleValue];
 
-    [self.api reportScreenLoadingStartTimeStampMicro:startTimeStampMicro durationMicro:durationMicro uiTraceId:uiTraceId error:&error];
+    [self.api reportScreenLoadingCPStartTimeStampMicro:startTimeStampMicro durationMicro:durationMicro uiTraceId:uiTraceId error:&error];
 
     OCMVerify([self.mAPM reportScreenLoadingCPWithStartTimestampMUS:startTimeStampMicroMUS durationMUS:durationMUS]);
 }
@@ -244,7 +244,7 @@
     FlutterError *error;
     
     NSTimeInterval endScreenLoadingCPWithEndTimestampMUS = [timeStampMicro doubleValue];
-    [self.api endScreenLoadingTimeStampMicro:timeStampMicro uiTraceId:uiTraceId error:&error];
+    [self.api endScreenLoadingCPTimeStampMicro:timeStampMicro uiTraceId:uiTraceId error:&error];
 
     OCMVerify([self.mAPM endScreenLoadingCPWithEndTimestampMUS:endScreenLoadingCPWithEndTimestampMUS]);
 }

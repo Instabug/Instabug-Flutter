@@ -234,7 +234,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     }
 
     @Override
-    public void reportScreenLoading(@NonNull @NotNull Long startTimeStampMicro, @NonNull @NotNull Long durationMicro, @NonNull @NotNull Long uiTraceId) {
+    public void reportScreenLoadingCP(@NonNull @NotNull Long startTimeStampMicro, @NonNull @NotNull Long durationMicro, @NonNull @NotNull Long uiTraceId) {
         try {
             Method method = Reflection.getMethod(Class.forName("com.instabug.apm.APM"), "reportScreenLoadingCP", long.class, long.class, long.class);
             if (method != null) {
@@ -246,7 +246,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     }
 
     @Override
-    public void endScreenLoading(@NonNull @NotNull Long timeStampMicro, @NonNull @NotNull Long uiTraceId) {
+    public void endScreenLoadingCP(@NonNull @NotNull Long timeStampMicro, @NonNull @NotNull Long uiTraceId) {
         try {
             Method method = Reflection.getMethod(Class.forName("com.instabug.apm.APM"), "endScreenLoadingCP", long.class, long.class);
             if (method != null) {
@@ -260,7 +260,6 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     @Override
     public void isEnabled(@NonNull @NotNull ApmPigeon.Result<Boolean> result) {
         try {
-            // Todo: Remove this !IMP!
             InternalAPM._isFeatureEnabledCP(APMFeature.SCREEN_LOADING, new FeatureAvailabilityCallback() {
                 @Override
                 public void invoke(boolean isFeatureAvailable) {
@@ -273,7 +272,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     }
 
     @Override
-    public void isScreenLoadingMonitoringEnabled(@NonNull @NotNull ApmPigeon.Result<Boolean> result) {
+    public void isScreenLoadingEnabled(@NonNull @NotNull ApmPigeon.Result<Boolean> result) {
         try {
             InternalAPM._isFeatureEnabledCP(APMFeature.SCREEN_LOADING, new FeatureAvailabilityCallback() {
                 @Override
@@ -287,7 +286,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     }
 
     @Override
-    public void setScreenLoadingMonitoringEnabled(@NonNull @NotNull Boolean isEnabled) {
+    public void setScreenLoadingEnabled(@NonNull @NotNull Boolean isEnabled) {
         try {
             APM.setScreenLoadingEnabled(isEnabled);
         } catch (Exception e) {

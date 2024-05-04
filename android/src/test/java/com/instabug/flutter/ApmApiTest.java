@@ -286,7 +286,7 @@ public class ApmApiTest {
         long durationMicro = System.currentTimeMillis() / 1000;
         long uiTraceId = System.currentTimeMillis();
 
-        api.reportScreenLoading(startTimeStampMicro, durationMicro, uiTraceId);
+        api.reportScreenLoadingCP(startTimeStampMicro, durationMicro, uiTraceId);
 
         reflected.verify(() -> MockReflected.reportScreenLoadingCP(startTimeStampMicro, durationMicro, uiTraceId));
         reflected.verifyNoMoreInteractions();
@@ -297,7 +297,7 @@ public class ApmApiTest {
         long timeStampMicro = System.currentTimeMillis() / 1000;
         long uiTraceId = System.currentTimeMillis();
 
-        api.endScreenLoading(timeStampMicro, uiTraceId);
+        api.endScreenLoadingCP(timeStampMicro, uiTraceId);
 
         reflected.verify(() -> MockReflected.endScreenLoadingCP(timeStampMicro, uiTraceId));
         reflected.verifyNoMoreInteractions();
@@ -331,7 +331,7 @@ public class ApmApiTest {
                     return null;
                 });
 
-        api.isScreenLoadingMonitoringEnabled(result);
+        api.isScreenLoadingEnabled(result);
 
         mInternalApmStatic.verify(() -> InternalAPM._isFeatureEnabledCP(any(), any()));
         mInternalApmStatic.verifyNoMoreInteractions();
@@ -344,7 +344,7 @@ public class ApmApiTest {
     public void testSetScreenLoadingMonitoringEnabled() {
         boolean isEnabled = false;
 
-        api.setScreenLoadingMonitoringEnabled(isEnabled);
+        api.setScreenLoadingEnabled(isEnabled);
 
         mAPM.verify(() -> APM.setScreenLoadingEnabled(isEnabled));
     }
