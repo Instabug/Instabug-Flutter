@@ -76,14 +76,12 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         }
     }
 
-    @NonNull
     @NotNull
     @Override
     public Boolean isEnabled() {
         return Instabug.isEnabled();
     }
 
-    @NonNull
     @NotNull
     @Override
     public Boolean isBuilt() { return Instabug.isBuilt(); }

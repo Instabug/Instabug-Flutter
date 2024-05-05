@@ -172,7 +172,6 @@ class ScreenLoadingManager {
       return;
     }
 
-    // TODO: endscreen loading only called once
     final didExtendScreenLoading =
         _currentUiTrace?.didExtendScreenLoading == true;
     if (didExtendScreenLoading) {

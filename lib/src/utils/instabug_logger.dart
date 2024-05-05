@@ -28,7 +28,7 @@ class InstabugLogger implements Logger {
     _instance = instance;
   }
 
-  LogLevel _logLevel = LogLevel.none;
+  LogLevel _logLevel = LogLevel.error;
 
   set logLevel(LogLevel level) {
     _logLevel = level;

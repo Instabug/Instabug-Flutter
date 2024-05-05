@@ -14,6 +14,7 @@ import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
+import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:meta/meta.dart';
 
 enum InvocationEvent {
@@ -175,6 +176,7 @@ class Instabug {
     LogLevel debugLogsLevel = LogLevel.error,
   }) async {
     $setup();
+    InstabugLogger.I.logLevel = debugLogsLevel;
     return _host.init(
       token,
       invocationEvents.mapToString(),
