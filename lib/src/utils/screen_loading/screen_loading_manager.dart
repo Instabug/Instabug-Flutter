@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
@@ -191,7 +193,7 @@ class ScreenLoadingManager {
       );
       return;
     }
-    var extendedEndTimeInMicroseconds = DateTime.now().microsecondsSinceEpoch;
+    var extendedEndTimeInMicroseconds = Timeline.now;
 
     var duration = extendedEndTimeInMicroseconds -
         _currentScreenLoadingTrace!.startTimeInMicroseconds;

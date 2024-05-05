@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'dart:developer' as developer;
-import 'package:logging/logging.dart' as logging;
+
+import 'package:logging/logging.dart';
 
 abstract class Logger {
   void log(
@@ -75,13 +76,13 @@ extension LogLevelExtension on LogLevel {
   int getValue() {
     switch (this) {
       case LogLevel.none:
-        return logging.Level.OFF.value;
+        return Level.OFF.value;
       case LogLevel.error:
-        return logging.Level.SEVERE.value;
+        return Level.SEVERE.value;
       case LogLevel.debug:
-        return logging.Level.FINE.value;
+        return Level.FINE.value;
       case LogLevel.verbose:
-        return logging.Level.ALL.value;
+        return Level.ALL.value;
     }
   }
 }

@@ -892,11 +892,11 @@ class _ComplexPageState extends State<ComplexPage> {
   }
 
   void _enableScreenLoading() {
-    APM.setScreenLoadingMonitoringEnabled(true);
+    APM.setScreenLoadingEnabled(true);
   }
 
   void _disableScreenLoading() {
-    APM.setScreenLoadingMonitoringEnabled(false);
+    APM.setScreenLoadingEnabled(false);
   }
 
   @override
@@ -1007,7 +1007,7 @@ class _ScreenLoadingPageState extends State<ScreenLoadingPage> {
     final currentUiTrace = ScreenLoadingManager.I.currentUiTrace;
     final currentScreenLoadingTrace = ScreenLoadingManager.I.currentScreenLoadingTrace;
     final extendedEndTime = (currentScreenLoadingTrace?.endTimeInMicroseconds ?? 0) + (int.tryParse(durationController.text.toString()) ?? 0);
-    APM.endScreenLoading(
+    APM.endScreenLoadingCP(
       extendedEndTime,
       currentUiTrace?.traceId ?? 0,
     );
