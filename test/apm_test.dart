@@ -94,6 +94,7 @@ void main() {
     when(mHost.startExecutionTrace(id.toString(), name))
         .thenAnswer((_) async => id.toString());
 
+    // ignore: deprecated_member_use_from_same_package
     final trace = await APM.startExecutionTrace(name);
 
     expect(trace.id, id.toString());
@@ -108,6 +109,7 @@ void main() {
     const key = "attr-key";
     const attribute = "Trace Attribute";
 
+    // ignore: deprecated_member_use_from_same_package
     await APM.setExecutionTraceAttribute(id, key, attribute);
 
     verify(
@@ -118,6 +120,7 @@ void main() {
   test('[endExecutionTrace] should call host method', () async {
     final id = DateTime.now().toString();
 
+    // ignore: deprecated_member_use_from_same_package
     await APM.endExecutionTrace(id);
 
     verify(
@@ -127,6 +130,7 @@ void main() {
 
   test('[startFlow] should call host method', () async {
     const flowName = "flow-name";
+    await APM.startFlow(flowName);
 
     verify(
       mHost.startFlow(flowName),

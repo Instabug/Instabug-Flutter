@@ -1,9 +1,10 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@2.0
+  android: circleci/android@2.5.0
   flutter: circleci/flutter@2.0.2
-  node: circleci/node@5.1.0
+  node: circleci/node@5.2.0
+  advanced-checkout: vsco/advanced-checkout@1.1.0
 
 commands:
   setup_flutter:
@@ -46,7 +47,7 @@ commands:
           steps:
             - run:
                 name: Install XCUITest Driver
-                command: appium driver install xcuitest@4.35.0
+                command: appium driver install xcuitest@7.14.0
       - when:
           condition:
             equal:
@@ -55,7 +56,7 @@ commands:
           steps:
             - run:
                 name: Install UIAutomator2 Driver
-                command: appium driver install uiautomator2@2.29.5
+                command: appium driver install uiautomator2@3.1.0
       - run:
           name: Launch Appium
           # Enable --relaxed-security for `mobile: shell` command that Captain uses internally.
@@ -103,13 +104,12 @@ commands:
                 name: Build Pigeons
                 command: dart run build_runner build --delete-conflicting-outputs
 
-
 jobs:
   danger:
     executor:
       name: node/default
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - node/install-packages:
           pkg-manager: yarn
           override-ci-command: yarn install --frozen-lockfile --network-concurrency 1
@@ -126,7 +126,7 @@ jobs:
     docker:
       - image: cirrusci/flutter:<<parameters.version>>
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
           generate_pigeons: true
       - run: flutter test --coverage
@@ -142,16 +142,10 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: 2022.04.1
+      tag: default
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - setup_flutter
-      - android/start-emulator-and-run-tests:
-          system-image: system-images;android-30;google_apis;x86
-          additional-avd-args: -d "Nexus 5"
-          post-emulator-launch-assemble-command: cd example && flutter build apk
-          run-tests-working-directory: example/android
-          test-command: ./gradlew app:connectedAndroidTest -Ptarget=`pwd`/../test_driver/example.dart
       - android/run-tests:
           working-directory: example/android
           test-command: ./gradlew test
@@ -160,42 +154,46 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: 2022.04.1
+      tag: default
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - setup_captain:
           platform: android
       - setup_flutter
       - android/start-emulator-and-run-tests:
-          system-image: system-images;android-30;google_apis;x86
-          additional-avd-args: -d "pixel_4"
-          post-emulator-launch-assemble-command: cd example || true && flutter build apk --debug
-          test-command: cd e2e || true && dotnet test
+          run-tests-working-directory: e2e
+          additional-avd-args: --device 3
+          system-image: system-images;android-33;default;x86_64
+          post-emulator-launch-assemble-command: cd example && flutter build apk --debug
+          test-command: dotnet test
 
   test_ios:
     macos:
-      xcode: 13.4.1
+      xcode: 15.2.0
     resource_class: macos.m1.medium.gen1
+    environment:
+      INSTABUG_SOURCEMAPS_UPLOAD_DISABLE: true
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - setup_ios
       - run:
           name: Build and run tests
-          working_directory: example/ios
+          working_directory:  ~/project/example/ios
           command: |
             xcodebuild -allowProvisioningUpdates \
-                       -workspace Runner.xcworkspace \
-                       -scheme Runner \
-                       -sdk iphonesimulator \
-                       -destination 'name=iPhone 12 Pro Max' \
-                       test | xcpretty
+                -workspace Runner.xcworkspace \
+                -scheme Runner \
+                -resultBundlePath coverage/result.xcresult \
+                -sdk iphonesimulator \
+                -destination 'platform=iOS Simulator,name=iPhone 15 Pro Max,OS=17.2' \
+                test | xcpretty
 
   e2e_ios_captain:
     macos:
-      xcode: 13.4.1
+      xcode: 15.2.0
     resource_class: macos.m1.medium.gen1
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - setup_captain:
           platform: ios
       - setup_ios
@@ -213,7 +211,7 @@ jobs:
     docker:
       - image: cirrusci/flutter
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
           generate_pigeons: false
       - run:
@@ -224,7 +222,7 @@ jobs:
     docker:
       - image: cirrusci/flutter
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
           generate_pigeons: true
       - run:
@@ -235,7 +233,7 @@ jobs:
     docker:
       - image: cirrusci/flutter
     steps:
-      - checkout
+      - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
           generate_pigeons: true
       - run:
@@ -245,11 +243,11 @@ jobs:
 
   release:
     macos:
-      xcode: 13.4.1
+      xcode: 15.2.0
     resource_class: macos.m1.medium.gen1
     working_directory: "~"
     steps:
-      - checkout:
+      - advanced-checkout/shallow-checkout:
           path: ~/project
       # Flutter doesn't support Apple Silicon yet, so we need to install Rosetta use Flutter on M1 machines.
       - run:
@@ -284,6 +282,7 @@ workflows:
   version: 2
   build-test-and-approval-deploy:
     jobs:
+      - test_android
       - danger:
           requires:
             - test_flutter-stable
@@ -293,7 +292,6 @@ workflows:
       - test_flutter:
           name: test_flutter-2.10.5
           version: 2.10.5
-      - test_android
       - e2e_android_captain
       - test_ios
       - e2e_ios_captain

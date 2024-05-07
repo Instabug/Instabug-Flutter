@@ -25,6 +25,7 @@ void main() {
   });
 
   test('[end] should call host method', () async {
+    // ignore: deprecated_member_use_from_same_package
     trace.end();
 
     verify(
@@ -35,6 +36,7 @@ void main() {
   test('[setAttribute] should call host method', () async {
     const key = "attr-key";
     const attribute = "Trace Attribute";
+    // ignore: deprecated_member_use_from_same_package
     trace.setAttribute(key, attribute);
 
     verify(
