@@ -5,6 +5,13 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            credentials {
+                username "instabug"
+                password System.getenv()["INSTABUG_REPOSITORY_PASSWORD"]
+            }
+            url "https://mvn.instabug.com/nexus/repository/instabug-internal/"
+        }
     }
 
     dependencies {
@@ -16,6 +23,13 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            credentials {
+                username "instabug"
+                password System.getenv()["INSTABUG_REPOSITORY_PASSWORD"]
+            }
+            url "https://mvn.instabug.com/nexus/repository/instabug-internal/"
+        }
     }
 }
 
