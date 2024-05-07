@@ -9,11 +9,11 @@ public class CaptainTest : IDisposable
   {
     AndroidApp = Path.GetFullPath("../../../../example/build/app/outputs/flutter-apk/app-debug.apk"),
     AndroidAppId = "com.instabug.flutter.example",
-    AndroidVersion = "11",
+    AndroidVersion = "13",
     IosApp = Path.GetFullPath("../../../../example/build/ios/iphonesimulator/Runner.app"),
     IosAppId = "com.instabug.InstabugSample",
-    IosVersion = "15.5",
-    IosDevice = "iPhone 13 Pro Max"
+    IosVersion = "17.2",
+    IosDevice = "iPhone 15 Pro Max"
   };
   protected static readonly Captain captain = new(_config);
 

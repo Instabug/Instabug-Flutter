@@ -11,6 +11,8 @@ public class FeatureRequestsTests : CaptainTest
   public void ShowFeatureRequetsScreen()
   {
     ScrollDown();
+    ScrollDown();
+
     captain.FindByText("Show Feature Requests").Tap();
 
     var screenTitle = captain.FindById(
