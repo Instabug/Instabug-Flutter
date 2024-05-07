@@ -15,11 +15,9 @@ class Trace {
   /// [String] key of attribute.
   /// [String] value of attribute.
   ///
-  /// Deprecated: from version v12.7.2.
-  ///
   /// Please migrate to the App Flows APIs: [APM.startFlow], [APM.setFlowAttribute], and [APM.endFlow].
   @Deprecated(
-    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated after <next_release_deprecation_version>',
+    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated in v13.0.0',
   )
   void setAttribute(String key, String value) {
     APM.setExecutionTraceAttribute(id, key, value);
@@ -28,11 +26,9 @@ class Trace {
 
   /// Ends Execution Trace
   ///
-  /// Deprecated: from version v12.7.2.
-  ///
   /// Please migrate to the App Flows APIs: [APM.startFlow], [APM.setFlowAttribute], and [APM.endFlow].
   @Deprecated(
-    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated after <next_release_deprecation_version>',
+    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated in v13.0.0',
   )
   void end() {
     APM.endExecutionTrace(id);
