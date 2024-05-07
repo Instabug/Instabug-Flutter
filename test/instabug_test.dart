@@ -383,4 +383,13 @@ void main() {
       mHost.clearFileAttachments(),
     ).called(1);
   });
+
+  test('[willRedirectToStore] should call host method', () async {
+    await Instabug.willRedirectToStore();
+
+    //assert
+    verify(
+      mHost.willRedirectToStore(),
+    ).called(1);
+  });
 }

@@ -34,11 +34,9 @@ class APM {
   /// Starts an execution trace.
   /// [String] name of the trace.
   ///
-  /// Deprecated: from version v12.7.2.
-  ///
   /// Please migrate to the App Flows APIs: [startFlow], [setFlowAttribute], and [endFlow].
   @Deprecated(
-    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated after <next_release_deprecation_version>',
+    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated in v13.0.0',
   )
   static Future<Trace> startExecutionTrace(String name) async {
     final id = IBGDateTime.instance.now();
@@ -62,11 +60,9 @@ class APM {
   /// [String] key of attribute.
   /// [String] value of attribute.
   ///
-  /// Deprecated: from version v12.7.2.
-  ///
   /// Please migrate to the App Flows APIs: [startFlow], [setFlowAttribute], and [endFlow].
   @Deprecated(
-    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated after <next_release_deprecation_version>',
+    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated in v13.0.0',
   )
   static Future<void> setExecutionTraceAttribute(
     String id,
@@ -79,11 +75,9 @@ class APM {
   /// Ends an execution trace.
   /// [String] id of the trace.
   ///
-  /// Deprecated: from version v12.7.2.
-  ///
   /// Please migrate to the App Flows APIs: [startFlow], [setFlowAttribute], and [endFlow].
   @Deprecated(
-    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated after <next_release_deprecation_version>',
+    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated in v13.0.0',
   )
   static Future<void> endExecutionTrace(String id) async {
     return _host.endExecutionTrace(id);
@@ -113,7 +107,10 @@ class APM {
   /// To remove an attribute, set its [value] to null. Attributes cannot be added or
   /// modified after an AppFlow has concluded.
   static Future<void> setFlowAttribute(
-      String name, String key, String? value) async {
+    String name,
+    String key,
+    String? value,
+  ) async {
     return _host.setFlowAttribute(name, key, value);
   }
 
