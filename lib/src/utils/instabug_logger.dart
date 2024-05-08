@@ -2,6 +2,7 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 
 abstract class Logger {
   void log(
@@ -44,7 +45,7 @@ class InstabugLogger implements Logger {
       developer.log(
         message,
         name: tag,
-        time: DateTime.now(),
+        time: IBGDateTime.I.now(),
         level: level.getValue(),
       );
     }

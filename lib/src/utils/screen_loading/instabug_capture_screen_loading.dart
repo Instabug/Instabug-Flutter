@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_trace.dart';
 
@@ -21,7 +22,7 @@ class InstabugCaptureScreenLoading extends StatefulWidget {
 class _InstabugCaptureScreenLoadingState
     extends State<InstabugCaptureScreenLoading> {
   ScreenLoadingTrace? trace;
-  final startTimeInMicroseconds = DateTime.now().microsecondsSinceEpoch;
+  final startTimeInMicroseconds = IBGDateTime.I.now().microsecondsSinceEpoch;
   final stopwatch = Stopwatch()..start();
 
   @override

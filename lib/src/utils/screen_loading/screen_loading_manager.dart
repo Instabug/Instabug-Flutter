@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
+import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/flags_config.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/route_matcher.dart';
@@ -87,8 +88,8 @@ class ScreenLoadingManager {
       return;
     }
 
-    final microTimeStamp = DateTime.now().microsecondsSinceEpoch;
-    final uiTraceId = DateTime.now().millisecondsSinceEpoch;
+    final microTimeStamp = IBGDateTime.I.now().microsecondsSinceEpoch;
+    final uiTraceId = IBGDateTime.I.now().millisecondsSinceEpoch;
     APM.startCpUiTrace(screenName, microTimeStamp, uiTraceId);
     _currentUiTrace = UiTrace(screenName, traceId: uiTraceId);
   }
