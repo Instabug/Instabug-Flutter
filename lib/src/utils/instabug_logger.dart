@@ -2,7 +2,6 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
-import 'package:logging/logging.dart';
 
 abstract class Logger {
   void log(
@@ -30,6 +29,7 @@ class InstabugLogger implements Logger {
 
   LogLevel _logLevel = LogLevel.error;
 
+  // ignore: avoid_setters_without_getters
   set logLevel(LogLevel level) {
     _logLevel = level;
   }
@@ -73,16 +73,20 @@ class InstabugLogger implements Logger {
 }
 
 extension LogLevelExtension on LogLevel {
+  /// Returns the severity level to be used in the `developer.log` function.
+  ///
+  /// The severity level is a value between 0 and 2000.
+  /// The values used here are based on the `package:logging` `Level` class.
   int getValue() {
     switch (this) {
       case LogLevel.none:
-        return Level.OFF.value;
+        return 2000;
       case LogLevel.error:
-        return Level.SEVERE.value;
+        return 1000;
       case LogLevel.debug:
-        return Level.FINE.value;
+        return 500;
       case LogLevel.verbose:
-        return Level.ALL.value;
+        return 0;
     }
   }
 }
