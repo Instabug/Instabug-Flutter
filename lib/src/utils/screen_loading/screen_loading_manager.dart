@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
+import 'package:instabug_flutter/src/utils/instabug_montonic_clock.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/flags_config.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/route_matcher.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_trace.dart';
@@ -105,6 +104,7 @@ class ScreenLoadingManager {
   Future<void> startScreenLoadingTrace(
     String screenName, {
     required int startTimeInMicroseconds,
+    required int startMonotonicTimeInMicroseconds,
   }) async {
     final isScreenLoadingEnabled = await FlagsConfig.screenLoading.isEnabled();
     if (!isScreenLoadingEnabled) {
@@ -129,6 +129,7 @@ class ScreenLoadingManager {
       final trace = ScreenLoadingTrace(
         screenName,
         startTimeInMicroseconds: startTimeInMicroseconds,
+        startMonotonicTimeInMicroseconds: startMonotonicTimeInMicroseconds,
       );
       InstabugLogger.I.d(
         'starting screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds',
@@ -244,10 +245,15 @@ class ScreenLoadingManager {
       );
       return;
     }
-    var extendedEndTimeInMicroseconds = Timeline.now;
 
-    var duration = extendedEndTimeInMicroseconds -
-        _currentScreenLoadingTrace!.startTimeInMicroseconds;
+    final extendedMonotonicEndTimeInMicroseconds = InstabugMonotonicClock.I.now;
+
+    var duration = extendedMonotonicEndTimeInMicroseconds -
+        _currentScreenLoadingTrace!.startMonotonicTimeInMicroseconds;
+
+    var extendedEndTimeInMicroseconds =
+        _currentScreenLoadingTrace!.startTimeInMicroseconds + duration;
+
     // cannot extend as the trace has not ended yet.
     // we report the extension timestamp as 0 and can be override later on.
     final didEndScreenLoadingPrematurely =
