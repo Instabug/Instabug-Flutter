@@ -73,7 +73,7 @@ class ScreenLoadingManager {
   @internal
   Future<void> startUiTrace(String screenName) async {
     resetDidStartScreenLoading();
-    final isApmEnabled = await FlagsConfig.Apm.isEnabled();
+    final isApmEnabled = await FlagsConfig.apm.isEnabled();
     if (!isApmEnabled) {
       return;
     }
@@ -89,7 +89,7 @@ class ScreenLoadingManager {
     String screenName, {
     required int startTimeInMicroseconds,
   }) async {
-    final isScreenLoadingEnabled = await FlagsConfig.ScreenLoading.isEnabled();
+    final isScreenLoadingEnabled = await FlagsConfig.screenLoading.isEnabled();
     if (!isScreenLoadingEnabled) {
       return;
     }
@@ -122,7 +122,7 @@ class ScreenLoadingManager {
   Future<void> reportScreenLoading(ScreenLoadingTrace? trace) async {
     int? duration;
     final isScreenLoadingMonitoringEnabled =
-        await FlagsConfig.ScreenLoading.isEnabled();
+        await FlagsConfig.screenLoading.isEnabled();
     if (!isScreenLoadingMonitoringEnabled) {
       return;
     }
@@ -170,7 +170,7 @@ class ScreenLoadingManager {
   /// Extends the already ended screen loading adding a stage to it
   Future<void> endScreenLoading() async {
     // end time -> 0
-    final isScreenLoadingEnabled = await FlagsConfig.ScreenLoading.isEnabled();
+    final isScreenLoadingEnabled = await FlagsConfig.screenLoading.isEnabled();
     if (!isScreenLoadingEnabled) {
       return;
     }
