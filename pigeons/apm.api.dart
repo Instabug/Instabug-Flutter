@@ -2,7 +2,6 @@ import 'package:pigeon/pigeon.dart';
 
 @HostApi()
 abstract class ApmHostApi {
-
   void setEnabled(bool isEnabled);
   @async
   bool isEnabled();
@@ -31,7 +30,11 @@ abstract class ApmHostApi {
 
   void startCpUiTrace(String screenName, int microTimeStamp, int traceId);
 
-  void reportScreenLoadingCP(int startTimeStampMicro, int durationMicro, int uiTraceId);
+  void reportScreenLoadingCP(
+    int startTimeStampMicro,
+    int durationMicro,
+    int uiTraceId,
+  );
 
   void endScreenLoadingCP(int timeStampMicro, int uiTraceId);
 }

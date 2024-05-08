@@ -223,10 +223,17 @@ void main() {
     final uiTraceId = DateTime.now().millisecondsSinceEpoch;
 
     await APM.reportScreenLoadingCP(
-        startTimeStampMicro, durationMicro, uiTraceId);
+      startTimeStampMicro,
+      durationMicro,
+      uiTraceId,
+    );
 
     verify(
-      mHost.reportScreenLoadingCP(startTimeStampMicro, durationMicro, uiTraceId),
+      mHost.reportScreenLoadingCP(
+        startTimeStampMicro,
+        durationMicro,
+        uiTraceId,
+      ),
     ).called(1);
     verifyNoMoreInteractions(mHost);
   });

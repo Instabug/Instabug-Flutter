@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_trace.dart';
 

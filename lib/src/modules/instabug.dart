@@ -152,6 +152,7 @@ class Instabug {
   static Future<bool> isEnabled() async {
     return _host.isEnabled();
   }
+
   /// @nodoc
   @internal
   static Future<bool> isBuilt() async {

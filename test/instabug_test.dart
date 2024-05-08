@@ -43,7 +43,6 @@ void main() {
 
     final actual = await Instabug.isEnabled();
 
-
     verify(
       mHost.isEnabled(),
     ).called(1);

@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
-import 'package:instabug_flutter/instabug_flutter.dart';
 import 'dart:developer' as developer;
 
+import 'package:flutter/foundation.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:logging/logging.dart';
 
 abstract class Logger {

@@ -36,9 +36,7 @@ class APM {
 
   /// Enables or disables the screenLoading Monitoring feature.
   /// [boolean] isEnabled
-  static Future<void> setScreenLoadingEnabled(
-      bool isEnabled,
-      ) {
+  static Future<void> setScreenLoadingEnabled(bool isEnabled) {
     return _host.setScreenLoadingEnabled(isEnabled);
   }
 
@@ -213,7 +211,7 @@ class APM {
   }
 
   /// Extends the currently active screen loading trace
-  static Future<void> endScreenLoading(){
+  static Future<void> endScreenLoading() {
     return ScreenLoadingManager.I.endScreenLoading();
   }
 }

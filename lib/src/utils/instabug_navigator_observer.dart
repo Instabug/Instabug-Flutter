@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/modules/instabug.dart';

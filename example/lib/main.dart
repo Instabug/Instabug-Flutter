@@ -600,7 +600,8 @@ class _ApmPageState extends State<ApmPage> {
   void _navigateToScreenLoading() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const ScreenLoadingPage(),
+      MaterialPageRoute(
+        builder: (context) => const ScreenLoadingPage(),
         settings: const RouteSettings(
           name: ScreenLoadingPage.screenName,
         ),
@@ -873,7 +874,8 @@ class _ComplexPageState extends State<ComplexPage> {
 
   void _handleRender() {
     setState(() {
-      breadth = int.tryParse(breadthController.text) ?? ComplexPage.initialBreadth;
+      breadth =
+          int.tryParse(breadthController.text) ?? ComplexPage.initialBreadth;
       depth = int.tryParse(depthController.text) ?? ComplexPage.initialBreadth;
       _reloadKey = GlobalKey();
     });
@@ -975,7 +977,6 @@ class _ComplexPageState extends State<ComplexPage> {
   }
 }
 
-
 class ScreenLoadingPage extends StatefulWidget {
   static const screenName = 'screenLoading';
   const ScreenLoadingPage({Key? key}) : super(key: key);
@@ -985,7 +986,6 @@ class ScreenLoadingPage extends StatefulWidget {
 }
 
 class _ScreenLoadingPageState extends State<ScreenLoadingPage> {
-
   final durationController = TextEditingController();
   GlobalKey _reloadKey = GlobalKey();
   final List<int> _capturedWidgets = [];
@@ -1005,8 +1005,11 @@ class _ScreenLoadingPageState extends State<ScreenLoadingPage> {
 
   void _extendScreenLoading() {
     final currentUiTrace = ScreenLoadingManager.I.currentUiTrace;
-    final currentScreenLoadingTrace = ScreenLoadingManager.I.currentScreenLoadingTrace;
-    final extendedEndTime = (currentScreenLoadingTrace?.endTimeInMicroseconds ?? 0) + (int.tryParse(durationController.text.toString()) ?? 0);
+    final currentScreenLoadingTrace =
+        ScreenLoadingManager.I.currentScreenLoadingTrace;
+    final extendedEndTime =
+        (currentScreenLoadingTrace?.endTimeInMicroseconds ?? 0) +
+            (int.tryParse(durationController.text.toString()) ?? 0);
     APM.endScreenLoadingCP(
       extendedEndTime,
       currentUiTrace?.traceId ?? 0,
@@ -1108,7 +1111,8 @@ class _ScreenLoadingPageState extends State<ScreenLoadingPage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5, childAspectRatio: 5),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 5, childAspectRatio: 5),
               reverse: false,
               shrinkWrap: true,
               itemCount: _capturedWidgets.length,
@@ -1133,16 +1137,16 @@ class ScreenCapturePrematureExtensionPage extends StatefulWidget {
   static const screenName = 'screenCapturePrematureExtension';
   const ScreenCapturePrematureExtensionPage({Key? key}) : super(key: key);
 
-
   @override
-  State<ScreenCapturePrematureExtensionPage> createState() => _ScreenCapturePrematureExtensionPageState();
+  State<ScreenCapturePrematureExtensionPage> createState() =>
+      _ScreenCapturePrematureExtensionPageState();
 }
 
-class _ScreenCapturePrematureExtensionPageState extends State<ScreenCapturePrematureExtensionPage> {
+class _ScreenCapturePrematureExtensionPageState
+    extends State<ScreenCapturePrematureExtensionPage> {
   void _extendScreenLoading() {
     APM.endScreenLoading();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -1150,13 +1154,12 @@ class _ScreenCapturePrematureExtensionPageState extends State<ScreenCapturePrema
     return const Page(
       title: 'Screen Capture Premature Extension',
       children: [
-        Text('This page calls endScreenLoading before it fully renders allowing us to test the scenario of premature extension of screen loading'),
+        Text(
+            'This page calls endScreenLoading before it fully renders allowing us to test the scenario of premature extension of screen loading'),
       ],
     );
   }
 }
-
-
 
 class NestedView extends StatelessWidget {
   final int depth;
@@ -1304,23 +1307,22 @@ class _FlowsContentState extends State<FlowsContent> {
     );
   }
 
-  void _startFlow(String flowName, {
-        int delayInMilliseconds = 0,
-      }) {
-    if(flowName.trim().isNotEmpty) {
+  void _startFlow(
+    String flowName, {
+    int delayInMilliseconds = 0,
+  }) {
+    if (flowName.trim().isNotEmpty) {
       log('_startFlow — flowName: $flowName, delay in Milliseconds: $delayInMilliseconds');
       log('flowName: $flowName');
-      Future.delayed(
-          Duration(milliseconds: delayInMilliseconds),
-          () => APM
-              .startFlow(flowName));
+      Future.delayed(Duration(milliseconds: delayInMilliseconds),
+          () => APM.startFlow(flowName));
     } else {
       log('_startFlow - Please enter a flow name');
     }
   }
 
   void _endFlow(String flowName) {
-    if(flowName.trim().isEmpty) {
+    if (flowName.trim().isEmpty) {
       log('_endFlow - Please enter a flow name');
     }
     if (didFlowEnd == true) {
@@ -1330,11 +1332,12 @@ class _FlowsContentState extends State<FlowsContent> {
     didFlowEnd = true;
   }
 
-  void _setFlowAttribute(String flowName,{
+  void _setFlowAttribute(
+    String flowName, {
     required String flowKeyAttribute,
     required String flowValueAttribute,
   }) {
-    if(flowName.trim().isEmpty) {
+    if (flowName.trim().isEmpty) {
       log('_endFlow - Please enter a flow name');
     }
     if (didFlowEnd == true) {

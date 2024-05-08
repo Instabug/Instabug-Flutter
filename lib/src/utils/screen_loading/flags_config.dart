@@ -7,7 +7,6 @@ enum FlagsConfig {
 }
 
 extension FeatureExtensions on FlagsConfig {
-
   String get name => _getName();
 
   Future<bool> isEnabled() async {

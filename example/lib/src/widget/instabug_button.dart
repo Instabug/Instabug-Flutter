@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class InstabugButton extends StatelessWidget {
-  const InstabugButton({Key? key,
+  const InstabugButton({
+    Key? key,
     required this.text,
     this.onPressed,
     this.fontSize,
@@ -22,20 +23,23 @@ class InstabugButton extends StatelessWidget {
 
   final EdgeInsetsGeometry? margin;
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: margin ?? const EdgeInsets.symmetric(
-        horizontal: 20.0,
-      ),
+      margin: margin ??
+          const EdgeInsets.symmetric(
+            horizontal: 20.0,
+          ),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.lightBlue,
           foregroundColor: Colors.white,
-          textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: fontSize),
+          textStyle: Theme.of(context)
+              .textTheme
+              .labelLarge
+              ?.copyWith(fontSize: fontSize),
         ),
         child: Text(text),
       ),
