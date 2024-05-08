@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/flags_config.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/route_matcher.dart';
@@ -74,10 +75,16 @@ class ScreenLoadingManager {
   @internal
   Future<void> startUiTrace(String screenName) async {
     resetDidStartScreenLoading();
+
+    // TODO: On Android, FlagsConfig.apm.isEnabled isn't implemented correctly
+    // so we skip the isApmEnabled check on Android and only check on iOS.
+    // This is a temporary fix until we implement the isEnabled check correctly.
+    // We need to fix this in the future.
     final isApmEnabled = await FlagsConfig.apm.isEnabled();
-    if (!isApmEnabled) {
+    if (!isApmEnabled && IBGBuildInfo.I.isIOS) {
       return;
     }
+
     final microTimeStamp = DateTime.now().microsecondsSinceEpoch;
     final uiTraceId = DateTime.now().millisecondsSinceEpoch;
     APM.startCpUiTrace(screenName, microTimeStamp, uiTraceId);
