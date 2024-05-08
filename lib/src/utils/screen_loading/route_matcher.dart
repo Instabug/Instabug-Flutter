@@ -82,6 +82,11 @@ class RouteMatcher {
   }
 
   List<String> _segmentPath(String path) {
-    return path.split('/').where((s) => s.isNotEmpty).toList();
+    final pathWithoutQuery = path.split('?').first;
+
+    return pathWithoutQuery
+        .split('/')
+        .where((segment) => segment.isNotEmpty)
+        .toList();
   }
 }
