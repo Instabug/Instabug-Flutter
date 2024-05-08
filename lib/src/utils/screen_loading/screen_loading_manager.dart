@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/flags_config.dart';
+import 'package:instabug_flutter/src/utils/screen_loading/route_matcher.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_trace.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/ui_trace.dart';
 import 'package:meta/meta.dart';
@@ -94,7 +95,10 @@ class ScreenLoadingManager {
       return;
     }
 
-    final isSameScreen = screenName == _currentUiTrace?.screenName;
+    final isSameScreen = RouteMatcher.I.match(
+      routePath: screenName,
+      actualPath: _currentUiTrace?.screenName,
+    );
     final didStartLoading = _currentUiTrace?.didStartScreenLoading == true;
 
     if (isSameScreen && !didStartLoading) {
@@ -113,7 +117,7 @@ class ScreenLoadingManager {
       '${APM.tag} failed to start screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds',
     );
     debugPrint(
-      '${APM.tag} didStartScreenLoading: ${_currentUiTrace?.didStartScreenLoading}, isSameName: ${screenName == _currentUiTrace?.screenName}',
+      '${APM.tag} didStartScreenLoading: $didStartLoading, isSameScreen: $isSameScreen',
     );
   }
 
@@ -127,8 +131,10 @@ class ScreenLoadingManager {
       return;
     }
 
-    final isSameScreen =
-        trace?.screenName == _currentScreenLoadingTrace?.screenName;
+    final isSameScreen = RouteMatcher.I.match(
+      routePath: _currentScreenLoadingTrace?.screenName,
+      actualPath: trace?.screenName,
+    );
     final isReported = _currentUiTrace?.didReportScreenLoading ==
         true; // Changed to isReported
     final isValidTrace = trace != null;
@@ -151,8 +157,8 @@ class ScreenLoadingManager {
         'trace.duration: ${trace?.duration ?? 0}',
       );
       debugPrint(
-        '${APM.tag} didReportScreenLoading: ${_currentUiTrace?.didReportScreenLoading}, '
-        'isSameName: ${trace?.screenName == _currentScreenLoadingTrace?.screenName}',
+        '${APM.tag} didReportScreenLoading: $isReported, '
+        'isSameName: $isSameScreen',
       );
       _reportScreenLoadingDroppedError(trace!);
     }
