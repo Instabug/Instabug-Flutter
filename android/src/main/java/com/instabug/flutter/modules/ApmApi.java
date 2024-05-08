@@ -222,57 +222,45 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
 
     @Override
-    public void startCpUiTrace(@NonNull @NotNull String screenName, @NonNull @NotNull Long microTimeStamp, @NonNull @NotNull Long traceId) {
+    public void startCpUiTrace(@NonNull String screenName, @NonNull Long microTimeStamp, @NonNull Long traceId) {
         try {
-            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.APM"), "startUiTraceCP", String.class, long.class, long.class);
-            if (method != null) {
-                method.invoke(null, screenName, microTimeStamp, traceId);
-            }
+            InternalAPM._startUiTraceCP(screenName, microTimeStamp, traceId);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void reportScreenLoadingCP(@NonNull @NotNull Long startTimeStampMicro, @NonNull @NotNull Long durationMicro, @NonNull @NotNull Long uiTraceId) {
+    public void reportScreenLoadingCP(@NonNull Long startTimeStampMicro, @NonNull Long durationMicro, @NonNull Long uiTraceId) {
         try {
-            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.APM"), "reportScreenLoadingCP", long.class, long.class, long.class);
-            if (method != null) {
-                method.invoke(null, startTimeStampMicro, durationMicro, uiTraceId);
-            }
+            InternalAPM._reportScreenLoadingCP(startTimeStampMicro, durationMicro, uiTraceId);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void endScreenLoadingCP(@NonNull @NotNull Long timeStampMicro, @NonNull @NotNull Long uiTraceId) {
+    public void endScreenLoadingCP(@NonNull Long timeStampMicro, @NonNull Long uiTraceId) {
         try {
-            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.APM"), "endScreenLoadingCP", long.class, long.class);
-            if (method != null) {
-                method.invoke(null, timeStampMicro, uiTraceId);
-            }
+            InternalAPM._endScreenLoadingCP(timeStampMicro, uiTraceId);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void isEnabled(@NonNull @NotNull ApmPigeon.Result<Boolean> result) {
+    public void isEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
         try {
-            InternalAPM._isFeatureEnabledCP(APMFeature.SCREEN_LOADING, "InstabugCaptureScreenLoading", new FeatureAvailabilityCallback() {
-                @Override
-                public void invoke(boolean isFeatureAvailable) {
-                    result.success(isFeatureAvailable);
-                }
-            });
+            // TODO: replace true with an actual implementation of APM.isEnabled once implemented
+            // in the Android SDK.
+            result.success(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void isScreenLoadingEnabled(@NonNull @NotNull ApmPigeon.Result<Boolean> result) {
+    public void isScreenLoadingEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
         try {
             InternalAPM._isFeatureEnabledCP(APMFeature.SCREEN_LOADING, "InstabugCaptureScreenLoading", new FeatureAvailabilityCallback() {
                 @Override
@@ -286,7 +274,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     }
 
     @Override
-    public void setScreenLoadingEnabled(@NonNull @NotNull Boolean isEnabled) {
+    public void setScreenLoadingEnabled(@NonNull Boolean isEnabled) {
         try {
             APM.setScreenLoadingEnabled(isEnabled);
         } catch (Exception e) {
