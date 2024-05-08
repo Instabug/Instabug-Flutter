@@ -85,6 +85,12 @@ class ScreenLoadingManager {
     // We need to fix this in the future.
     final isApmEnabled = await FlagsConfig.apm.isEnabled();
     if (!isApmEnabled && IBGBuildInfo.I.isIOS) {
+      InstabugLogger.I.e(
+        'APM is disabled, skipping starting the UI trace for screen: $screenName.\n'
+        'Please refer to the documentation for how to enable APM on your app: '
+        'https://docs.instabug.com/docs/react-native-apm-disabling-enabling',
+        tag: APM.tag,
+      );
       return;
     }
 
@@ -102,6 +108,14 @@ class ScreenLoadingManager {
   }) async {
     final isScreenLoadingEnabled = await FlagsConfig.screenLoading.isEnabled();
     if (!isScreenLoadingEnabled) {
+      if (IBGBuildInfo.I.isIOS) {
+        InstabugLogger.I.e(
+          'Screen loading monitoring is disabled, skipping starting screen loading monitoring for screen: $screenName.\n'
+          'Please refer to the documentation for how to enable screen loading monitoring on your app: '
+          'https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking',
+          tag: APM.tag,
+        );
+      }
       return;
     }
 
@@ -138,9 +152,16 @@ class ScreenLoadingManager {
   @internal
   Future<void> reportScreenLoading(ScreenLoadingTrace? trace) async {
     int? duration;
-    final isScreenLoadingMonitoringEnabled =
-        await FlagsConfig.screenLoading.isEnabled();
-    if (!isScreenLoadingMonitoringEnabled) {
+    final isScreenLoadingEnabled = await FlagsConfig.screenLoading.isEnabled();
+    if (!isScreenLoadingEnabled) {
+      if (IBGBuildInfo.I.isIOS) {
+        InstabugLogger.I.e(
+          'Screen loading monitoring is disabled, skipping reporting screen loading time for screen: ${trace?.screenName}.\n'
+          'Please refer to the documentation for how to enable screen loading monitoring on your app: '
+          'https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking',
+          tag: APM.tag,
+        );
+      }
       return;
     }
 
@@ -192,6 +213,14 @@ class ScreenLoadingManager {
     // end time -> 0
     final isScreenLoadingEnabled = await FlagsConfig.screenLoading.isEnabled();
     if (!isScreenLoadingEnabled) {
+      if (IBGBuildInfo.I.isIOS) {
+        InstabugLogger.I.e(
+          'Screen loading monitoring is disabled, skipping ending screen loading monitoring with APM.endScreenLoading().\n'
+          'Please refer to the documentation for how to enable screen loading monitoring in your app: '
+          'https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking',
+          tag: APM.tag,
+        );
+      }
       return;
     }
 
