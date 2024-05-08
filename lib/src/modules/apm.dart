@@ -1,13 +1,13 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/models/trace.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
+import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:meta/meta.dart';
 
@@ -175,8 +175,9 @@ class APM {
     int startTimeInMicroseconds,
     int traceId,
   ) {
-    debugPrint(
-      '${APM.tag}: Starting Ui trace — traceId: $traceId, screenName: $screenName, microTimeStamp: $startTimeInMicroseconds',
+    InstabugLogger.I.d(
+      'Starting Ui trace — traceId: $traceId, screenName: $screenName, microTimeStamp: $startTimeInMicroseconds',
+      tag: APM.tag,
     );
     return _host.startCpUiTrace(screenName, startTimeInMicroseconds, traceId);
   }
@@ -188,8 +189,9 @@ class APM {
     int durationInMicroseconds,
     int uiTraceId,
   ) {
-    debugPrint(
-      '${APM.tag}: Reporting screen loading trace — traceId: $uiTraceId, startTimeInMicroseconds: $startTimeInMicroseconds, durationInMicroseconds: $durationInMicroseconds',
+    InstabugLogger.I.d(
+      'Reporting screen loading trace — traceId: $uiTraceId, startTimeInMicroseconds: $startTimeInMicroseconds, durationInMicroseconds: $durationInMicroseconds',
+      tag: APM.tag,
     );
     return _host.reportScreenLoadingCP(
       startTimeInMicroseconds,
@@ -204,8 +206,9 @@ class APM {
     int endTimeInMicroseconds,
     int uiTraceId,
   ) {
-    debugPrint(
-      '${APM.tag}: Extending screen loading trace — traceId: $uiTraceId, endTimeInMicroseconds: $endTimeInMicroseconds',
+    InstabugLogger.I.d(
+      'Extending screen loading trace — traceId: $uiTraceId, endTimeInMicroseconds: $endTimeInMicroseconds',
+      tag: APM.tag,
     );
     return _host.endScreenLoadingCP(endTimeInMicroseconds, uiTraceId);
   }

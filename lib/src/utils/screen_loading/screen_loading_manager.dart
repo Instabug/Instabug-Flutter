@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
@@ -47,8 +46,9 @@ class ScreenLoadingManager {
   void resetDidStartScreenLoading() {
     // Allows starting a new screen loading capture trace in the same ui trace (without navigating out and in to the same screen)
     _currentUiTrace?.didStartScreenLoading = false;
-    debugPrint(
-      '${APM.tag}: Resetting didStartScreenLoading — setting didStartScreenLoading: ${_currentUiTrace?.didStartScreenLoading}',
+    InstabugLogger.I.d(
+      'Resetting didStartScreenLoading — setting didStartScreenLoading: ${_currentUiTrace?.didStartScreenLoading}',
+      tag: APM.tag,
     );
   }
 
@@ -57,8 +57,9 @@ class ScreenLoadingManager {
   void resetDidReportScreenLoading() {
     // Allows reporting a new screen loading capture trace in the same ui trace even if one was reported before by resetting the flag which is used for checking.
     _currentUiTrace?.didReportScreenLoading = false;
-    debugPrint(
-      '${APM.tag}: Resetting didExtendScreenLoading — setting didExtendScreenLoading: ${_currentUiTrace?.didExtendScreenLoading}',
+    InstabugLogger.I.d(
+      'Resetting didExtendScreenLoading — setting didExtendScreenLoading: ${_currentUiTrace?.didExtendScreenLoading}',
+      tag: APM.tag,
     );
   }
 
@@ -67,8 +68,9 @@ class ScreenLoadingManager {
   void resetDidExtendScreenLoading() {
     // Allows reporting a new screen loading capture trace in the same ui trace even if one was reported before by resetting the flag which is used for checking.
     _currentUiTrace?.didExtendScreenLoading = false;
-    debugPrint(
-      '${APM.tag}: Resetting didReportScreenLoading — setting didReportScreenLoading: ${_currentUiTrace?.didReportScreenLoading}',
+    InstabugLogger.I.d(
+      'Resetting didReportScreenLoading — setting didReportScreenLoading: ${_currentUiTrace?.didReportScreenLoading}',
+      tag: APM.tag,
     );
   }
 
@@ -113,18 +115,21 @@ class ScreenLoadingManager {
         screenName,
         startTimeInMicroseconds: startTimeInMicroseconds,
       );
-      debugPrint(
-        '${APM.tag} starting screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds',
+      InstabugLogger.I.d(
+        'starting screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds',
+        tag: APM.tag,
       );
       _currentUiTrace?.didStartScreenLoading = true;
       _currentScreenLoadingTrace = trace;
       return;
     }
-    debugPrint(
-      '${APM.tag} failed to start screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds',
+    InstabugLogger.I.d(
+      'failed to start screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds',
+      tag: APM.tag,
     );
-    debugPrint(
-      '${APM.tag} didStartScreenLoading: $didStartLoading, isSameScreen: $isSameScreen',
+    InstabugLogger.I.d(
+      'didStartScreenLoading: $didStartLoading, isSameScreen: $isSameScreen',
+      tag: APM.tag,
     );
   }
 
@@ -157,15 +162,17 @@ class ScreenLoadingManager {
       );
       return;
     } else {
-      debugPrint(
-        '${APM.tag}: failed to report screen loading trace — screenName: ${trace?.screenName}, '
+      InstabugLogger.I.d(
+        'Failed to report screen loading trace — screenName: ${trace?.screenName}, '
         'startTimeInMicroseconds: ${trace?.startTimeInMicroseconds}, '
         'duration: $duration, '
         'trace.duration: ${trace?.duration ?? 0}',
+        tag: APM.tag,
       );
-      debugPrint(
-        '${APM.tag} didReportScreenLoading: $isReported, '
+      InstabugLogger.I.d(
+        'didReportScreenLoading: $isReported, '
         'isSameName: $isSameScreen',
+        tag: APM.tag,
       );
       _reportScreenLoadingDroppedError(trace!);
     }
@@ -173,9 +180,8 @@ class ScreenLoadingManager {
   }
 
   void _reportScreenLoadingDroppedError(ScreenLoadingTrace trace) {
-    debugPrint('${APM.tag}: Droping the screen loading capture — $trace');
     InstabugLogger.I.e(
-      'Dropping the screen loading capture',
+      'Dropping the screen loading capture — $trace',
       tag: APM.tag,
     );
   }
@@ -225,11 +231,14 @@ class ScreenLoadingManager {
         tag: APM.tag,
       );
     }
-    debugPrint(
-        '${APM.tag}: endTimeInMicroseconds: ${_currentScreenLoadingTrace?.endTimeInMicroseconds}, '
-        'didEndScreenLoadingPrematurely: $didEndScreenLoadingPrematurely, extendedEndTimeInMicroseconds: $extendedEndTimeInMicroseconds.');
-    debugPrint(
-      '${APM.tag}: Ending screen loading capture — duration: $duration',
+    InstabugLogger.I.d(
+      'endTimeInMicroseconds: ${_currentScreenLoadingTrace?.endTimeInMicroseconds}, '
+      'didEndScreenLoadingPrematurely: $didEndScreenLoadingPrematurely, extendedEndTimeInMicroseconds: $extendedEndTimeInMicroseconds.',
+      tag: APM.tag,
+    );
+    InstabugLogger.I.d(
+      'Ending screen loading capture — duration: $duration',
+      tag: APM.tag,
     );
 
     // Ends screen loading trace

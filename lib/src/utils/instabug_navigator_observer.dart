@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/modules/instabug.dart';
+import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 
 class InstabugNavigatorObserver extends NavigatorObserver {
@@ -29,7 +30,8 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         }
       });
     } catch (e) {
-      debugPrint('[INSTABUG] - Reporting screen failed');
+      InstabugLogger.I.e('Reporting screen change failed:', tag: Instabug.tag);
+      InstabugLogger.I.e(e.toString(), tag: Instabug.tag);
     }
   }
 

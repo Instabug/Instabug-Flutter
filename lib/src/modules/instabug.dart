@@ -132,6 +132,8 @@ enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 class Instabug {
   static var _host = InstabugHostApi();
 
+  static const tag = 'Instabug';
+
   /// @nodoc
   @visibleForTesting
   // ignore: use_setters_to_change_properties
