@@ -101,16 +101,12 @@ class ScreenLoadingManager {
 
   /// @nodoc
   @internal
-  Future<void> startScreenLoadingTrace(
-    String screenName, {
-    required int startTimeInMicroseconds,
-    required int startMonotonicTimeInMicroseconds,
-  }) async {
+  Future<void> startScreenLoadingTrace(ScreenLoadingTrace trace) async {
     final isScreenLoadingEnabled = await FlagsConfig.screenLoading.isEnabled();
     if (!isScreenLoadingEnabled) {
       if (IBGBuildInfo.I.isIOS) {
         InstabugLogger.I.e(
-          'Screen loading monitoring is disabled, skipping starting screen loading monitoring for screen: $screenName.\n'
+          'Screen loading monitoring is disabled, skipping starting screen loading monitoring for screen: ${trace.screenName}.\n'
           'Please refer to the documentation for how to enable screen loading monitoring on your app: '
           'https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking',
           tag: APM.tag,
@@ -120,19 +116,15 @@ class ScreenLoadingManager {
     }
 
     final isSameScreen = RouteMatcher.I.match(
-      routePath: screenName,
+      routePath: trace.screenName,
       actualPath: _currentUiTrace?.screenName,
     );
+
     final didStartLoading = _currentUiTrace?.didStartScreenLoading == true;
 
     if (isSameScreen && !didStartLoading) {
-      final trace = ScreenLoadingTrace(
-        screenName,
-        startTimeInMicroseconds: startTimeInMicroseconds,
-        startMonotonicTimeInMicroseconds: startMonotonicTimeInMicroseconds,
-      );
       InstabugLogger.I.d(
-        'starting screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds',
+        'starting screen loading trace — screenName: ${trace.screenName}, startTimeInMicroseconds: ${trace.startTimeInMicroseconds}',
         tag: APM.tag,
       );
       _currentUiTrace?.didStartScreenLoading = true;
@@ -140,7 +132,7 @@ class ScreenLoadingManager {
       return;
     }
     InstabugLogger.I.d(
-      'failed to start screen loading trace — screenName: $screenName, startTimeInMicroseconds: $startTimeInMicroseconds',
+      'failed to start screen loading trace — screenName: ${trace.screenName}, startTimeInMicroseconds: ${trace.startTimeInMicroseconds}',
       tag: APM.tag,
     );
     InstabugLogger.I.d(
@@ -166,10 +158,8 @@ class ScreenLoadingManager {
       return;
     }
 
-    final isSameScreen = RouteMatcher.I.match(
-      routePath: _currentScreenLoadingTrace?.screenName,
-      actualPath: trace?.screenName,
-    );
+    final isSameScreen = _currentScreenLoadingTrace == trace;
+
     final isReported = _currentUiTrace?.didReportScreenLoading ==
         true; // Changed to isReported
     final isValidTrace = trace != null;
