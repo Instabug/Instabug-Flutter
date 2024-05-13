@@ -53,6 +53,21 @@ class ScreenLoadingManager {
   }
 
   /// @nodoc
+  Future<bool> _checkInstabugSDKBuilt(String apiName) async {
+    // Check if Instabug SDK is Built
+    final isInstabugSDKBuilt = await Instabug.isBuilt();
+    if (!isInstabugSDKBuilt) {
+      InstabugLogger.I.e(
+        ' Instabug API {$apiName} was called before the SDK is built. To build it, first by following the instructions at this link:\n'
+        'https://docs.instabug.com/reference#showing-and-manipulating-the-invocation',
+        tag: APM.tag,
+      );
+    }
+    return isInstabugSDKBuilt;
+  }
+  
+  
+  /// @nodoc
   @internal
   void resetDidReportScreenLoading() {
     // Allows reporting a new screen loading capture trace in the same ui trace even if one was reported before by resetting the flag which is used for checking.
@@ -78,6 +93,9 @@ class ScreenLoadingManager {
   Future<void> startUiTrace(String screenName) async {
     resetDidStartScreenLoading();
 
+    final isSDKBuilt = await _checkInstabugSDKBuilt("APM.startUITrace()");
+    if (!isSDKBuilt) return;
+
     // TODO: On Android, FlagsConfig.apm.isEnabled isn't implemented correctly
     // so we skip the isApmEnabled check on Android and only check on iOS.
     // This is a temporary fix until we implement the isEnabled check correctly.
@@ -102,6 +120,9 @@ class ScreenLoadingManager {
   /// @nodoc
   @internal
   Future<void> startScreenLoadingTrace(ScreenLoadingTrace trace) async {
+    final isSDKBuilt = await _checkInstabugSDKBuilt("startScreenLoadingTrace");
+    if (!isSDKBuilt) return;
+
     final isScreenLoadingEnabled = await FlagsConfig.screenLoading.isEnabled();
     if (!isScreenLoadingEnabled) {
       if (IBGBuildInfo.I.isIOS) {
@@ -144,6 +165,9 @@ class ScreenLoadingManager {
   /// @nodoc
   @internal
   Future<void> reportScreenLoading(ScreenLoadingTrace? trace) async {
+    final isSDKBuilt = await _checkInstabugSDKBuilt("reportScreenLoading");
+    if (!isSDKBuilt) return;
+
     int? duration;
     final isScreenLoadingEnabled = await FlagsConfig.screenLoading.isEnabled();
     if (!isScreenLoadingEnabled) {
@@ -194,14 +218,16 @@ class ScreenLoadingManager {
 
   void _reportScreenLoadingDroppedError(ScreenLoadingTrace trace) {
     InstabugLogger.I.e(
-      'Dropping the screen loading capture — $trace',
+      "Screen Loading trace dropped as the trace isn't from the current screen, or another trace was reported before the current one. — $trace",
       tag: APM.tag,
     );
   }
 
   /// Extends the already ended screen loading adding a stage to it
   Future<void> endScreenLoading() async {
-    // end time -> 0
+    final isSDKBuilt = await _checkInstabugSDKBuilt("endScreenLoading");
+    if (!isSDKBuilt) return;
+
     final isScreenLoadingEnabled = await FlagsConfig.screenLoading.isEnabled();
     if (!isScreenLoadingEnabled) {
       if (IBGBuildInfo.I.isIOS) {
@@ -263,7 +289,7 @@ class ScreenLoadingManager {
       tag: APM.tag,
     );
     InstabugLogger.I.d(
-      'Ending screen loading capture — duration: $duration',
+      'Ending screen loading capture — duration: $extendedEndTimeInMicroseconds',
       tag: APM.tag,
     );
 
