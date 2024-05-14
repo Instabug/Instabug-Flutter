@@ -8,7 +8,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - Instabug (from `https://ios-releases.instabug.com/custom/feature-flutter-screenloading/13.0.0/Instabug.podspec`)
+  - Instabug (from `https://ios-releases.instabug.com/custom/fix-duration-negative-value/13.0.0/Instabug.podspec`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
 
@@ -20,16 +20,16 @@ EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   Instabug:
-    :podspec: https://ios-releases.instabug.com/custom/feature-flutter-screenloading/13.0.0/Instabug.podspec
+    :podspec: https://ios-releases.instabug.com/custom/fix-duration-negative-value/13.0.0/Instabug.podspec
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  Instabug: fa52de4a6cac26cde0a60ec5e0540f2461a06fe2
+  Instabug: 5ecf627ee263a0b84ffed7513880ac0b8344ea92
   instabug_flutter: b80c4b8748d1da660a8f0cc0b2e5f4375898761c
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
 
-PODFILE CHECKSUM: 03fc227efec8d8485f83d3825510bdf640d8a087
+PODFILE CHECKSUM: 4933fb1062e47dc0f6aac54f99a69de4ed731241
 
 COCOAPODS: 1.15.2

@@ -21,6 +21,7 @@ void main() {
       Instabug.init(
         token: 'ed6f659591566da19b67857e1b9d40ab',
         invocationEvents: [InvocationEvent.floatingButton],
+        debugLogsLevel: LogLevel.verbose,
       );
 
       FlutterError.onError = (FlutterErrorDetails details) {
@@ -431,6 +432,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class CrashesPage extends StatelessWidget {
   static const screenName = 'crashes';
+
   const CrashesPage({Key? key}) : super(key: key);
 
   @override
@@ -590,6 +592,7 @@ class FatalCrashesContent extends StatelessWidget {
 
 class ApmPage extends StatefulWidget {
   static const screenName = 'apm';
+
   const ApmPage({Key? key}) : super(key: key);
 
   @override
@@ -874,6 +877,9 @@ class _ComplexPageState extends State<ComplexPage> {
 
   void _handleRender() {
     setState(() {
+      APM
+          .isScreenLoadingEnabled()
+          .then((value) => debugPrint("isScreenLoadingEnabled: $value"));
       breadth =
           int.tryParse(breadthController.text) ?? ComplexPage.initialBreadth;
       depth = int.tryParse(depthController.text) ?? ComplexPage.initialBreadth;
@@ -979,6 +985,7 @@ class _ComplexPageState extends State<ComplexPage> {
 
 class ScreenLoadingPage extends StatefulWidget {
   static const screenName = 'screenLoading';
+
   const ScreenLoadingPage({Key? key}) : super(key: key);
 
   @override
@@ -989,6 +996,7 @@ class _ScreenLoadingPageState extends State<ScreenLoadingPage> {
   final durationController = TextEditingController();
   GlobalKey _reloadKey = GlobalKey();
   final List<int> _capturedWidgets = [];
+
   void _render() {
     setState(() {
       // Key can be changed to force reload and re-render
@@ -1135,6 +1143,7 @@ class _ScreenLoadingPageState extends State<ScreenLoadingPage> {
 
 class ScreenCapturePrematureExtensionPage extends StatefulWidget {
   static const screenName = 'screenCapturePrematureExtension';
+
   const ScreenCapturePrematureExtensionPage({Key? key}) : super(key: key);
 
   @override
