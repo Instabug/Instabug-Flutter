@@ -46,7 +46,7 @@ android {
     }
 }
 dependencies {
-    api 'com.instabug.library:instabug:13.0.1.5819387-SNAPSHOT'
+    api 'com.instabug.library:instabug:13.0.1.5819402-SNAPSHOT'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
 }
