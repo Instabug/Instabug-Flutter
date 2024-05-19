@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter_example/src/native/instabug_flutter_example_method_channel.dart';
 
 void main() {
   runZonedGuarded(
@@ -369,6 +372,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: showFeatureRequests,
                 text: 'Show Feature Requests',
               ),
+              SectionTitle("Crashes"),
+              const CrashReportingContent(),
               SectionTitle('Color Theme'),
               ButtonBar(
                 mainAxisSize: MainAxisSize.min,
@@ -522,5 +527,171 @@ class _MyHomePageState extends State<MyHomePage> {
       crashUserAttributeValueController.text = '';
       crashUserAttributeKeyController.text = '';
     }
+  }
+}
+
+class CrashReportingContent extends StatelessWidget {
+  const CrashReportingContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SectionTitle('Non-Fatal Crashes'),
+        const NonFatalCrashesContent(),
+        SectionTitle('Fatal Crashes'),
+        const Text('Fatal Crashes can only be tested in release mode'),
+        const Text('Most of these buttons will crash the application'),
+        const FatalCrashesContent(),
+      ],
+    );
+  }
+}
+
+class NonFatalCrashesContent extends StatelessWidget {
+  const NonFatalCrashesContent({Key? key}) : super(key: key);
+
+
+  void throwHandledException(dynamic error) {
+    try {
+      if (error is! Error) {
+        // Convert non-Error types to Error
+        const String appName = 'Flutter Test App';
+        final errorMessage = error?.toString() ?? 'Unknown Error';
+        error = Exception('Handled Error: $errorMessage from $appName');
+      }
+      throw error;
+    } catch (err) {
+      if (err is Error) {
+        // Simulate crash reporting by printing the error to the console
+        log('throwHandledException: Crash report for ${err.runtimeType} is Sent!', name: 'NonFatalCrashesWidget');
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        InstabugButton(
+          text: 'Throw Exception',
+          onPressed: () =>
+              throwHandledException(Exception('This is a generic exception.')),
+        ),
+        InstabugButton(
+          text: 'Throw StateError',
+          onPressed: () =>
+              throwHandledException(StateError('This is a StateError.')),
+        ),
+        InstabugButton(
+          text: 'Throw ArgumentError',
+          onPressed: () =>
+              throwHandledException(ArgumentError('This is an ArgumentError.')),
+        ),
+        InstabugButton(
+          text: 'Throw RangeError',
+          onPressed: () =>
+              throwHandledException(
+                  RangeError.range(5, 0, 3, 'Index out of range')),
+        ),
+        InstabugButton(
+          text: 'Throw FormatException',
+          onPressed: () =>
+              throwHandledException(UnsupportedError('Invalid format.')),
+        ),
+        InstabugButton(
+          text: 'Throw NoSuchMethodError',
+          onPressed: () {
+            // This intentionally triggers a NoSuchMethodError
+            dynamic obj;
+            throwHandledException(obj.methodThatDoesNotExist());
+          },
+        ),
+        InstabugButton(
+          text: 'Throw Handled Native Exception',
+          onPressed: InstabugFlutterExampleMethodChannel.sendNativeNonFatalCrash,
+        ),
+      ],
+    );
+  }
+}
+
+class FatalCrashesContent extends StatelessWidget {
+
+  const FatalCrashesContent({Key? key}) : super(key: key);
+
+
+  void throwUnhandledException(dynamic error) {
+    if (error is! Error) {
+      // Convert non-Error types to Error
+      const String appName = 'Flutter Test App';
+      final errorMessage = error?.toString() ?? 'Unknown Error';
+      error = Exception('Unhandled Error: $errorMessage from $appName');
+    }
+    throw error;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        InstabugButton(
+          text: 'Throw Exception',
+          onPressed: () =>
+              throwUnhandledException(
+                  Exception('This is a generic exception.')),
+        ),
+        InstabugButton(
+          text: 'Throw StateError',
+          onPressed: () =>
+              throwUnhandledException(StateError('This is a StateError.')),
+        ),
+        InstabugButton(
+          text: 'Throw ArgumentError',
+          onPressed: () =>
+              throwUnhandledException(
+                  ArgumentError('This is an ArgumentError.')),
+        ),
+        InstabugButton(
+          text: 'Throw RangeError',
+          onPressed: () =>
+              throwUnhandledException(
+                  RangeError.range(5, 0, 3, 'Index out of range')),
+        ),
+        InstabugButton(
+          text: 'Throw FormatException',
+          onPressed: () =>
+              throwUnhandledException(UnsupportedError('Invalid format.')),
+        ),
+        InstabugButton(
+          text: 'Throw NoSuchMethodError',
+          onPressed: () {
+            // This intentionally triggers a NoSuchMethodError
+            dynamic obj;
+            throwUnhandledException(obj.methodThatDoesNotExist());
+          },
+        ),
+        InstabugButton(
+          text: 'Throw Native Fatal Crash',
+          onPressed: InstabugFlutterExampleMethodChannel.sendNativeFatalCrash,
+        ),
+        InstabugButton(
+          text: 'Send Native Fatal Hang',
+          onPressed: InstabugFlutterExampleMethodChannel.sendNativeFatalHang,
+        ),
+        Platform.isAndroid
+            ? InstabugButton(
+          text: 'Send Native ANR',
+          onPressed: InstabugFlutterExampleMethodChannel.sendAnr,
+        )
+            : const SizedBox.shrink(),
+        InstabugButton(
+          text: 'Throw Unhandled Native OOM Exception',
+          onPressed: InstabugFlutterExampleMethodChannel.sendOom,
+        ),
+      ],
+    );
   }
 }
