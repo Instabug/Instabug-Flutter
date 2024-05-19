@@ -197,12 +197,12 @@ class ScreenLoadingManager {
         'isSameName: $isSameScreen',
         tag: APM.tag,
       );
-      _reportScreenLoadingDroppedError(trace!);
+      _reportScreenLoadingDroppedError(trace);
     }
     return;
   }
 
-  void _reportScreenLoadingDroppedError(ScreenLoadingTrace trace) {
+  void _reportScreenLoadingDroppedError(ScreenLoadingTrace? trace) {
     InstabugLogger.I.e(
       'Dropping the screen loading capture — $trace',
       tag: APM.tag,
