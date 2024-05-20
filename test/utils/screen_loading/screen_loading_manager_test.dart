@@ -240,11 +240,13 @@ void main() {
       when(IBGBuildInfo.I.isIOS).thenReturn(true);
       when(mDateTime.now()).thenReturn(time);
 
-      await ScreenLoadingManager.I.startScreenLoadingTrace(
+      final trace = ScreenLoadingTrace(
         screenName,
         startTimeInMicroseconds: time.microsecondsSinceEpoch,
         startMonotonicTimeInMicroseconds: time.microsecondsSinceEpoch,
       );
+
+      await ScreenLoadingManager.I.startScreenLoadingTrace(trace);
 
       final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
       final actualScreenLoadingTrace =
@@ -294,11 +296,13 @@ void main() {
           .thenAnswer((_) async => false);
       when(IBGBuildInfo.I.isIOS).thenReturn(false);
 
-      await ScreenLoadingManager.I.startScreenLoadingTrace(
+      final trace = ScreenLoadingTrace(
         screenName,
         startTimeInMicroseconds: time.microsecondsSinceEpoch,
         startMonotonicTimeInMicroseconds: time.microsecondsSinceEpoch,
       );
+
+      await ScreenLoadingManager.I.startScreenLoadingTrace(trace);
 
       final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
       final actualScreenLoadingTrace =
@@ -348,11 +352,13 @@ void main() {
         ),
       ).thenReturn(isSameScreen);
 
-      await ScreenLoadingManager.I.startScreenLoadingTrace(
+      final trace = ScreenLoadingTrace(
         screenName,
         startTimeInMicroseconds: time.microsecondsSinceEpoch,
         startMonotonicTimeInMicroseconds: time.microsecondsSinceEpoch,
       );
+
+      await ScreenLoadingManager.I.startScreenLoadingTrace(trace);
 
       final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
       final actualScreenLoadingTrace =
@@ -419,12 +425,13 @@ void main() {
           actualPath: screenName,
         ),
       ).thenReturn(true);
-
-      await ScreenLoadingManager.I.startScreenLoadingTrace(
+      final trace = ScreenLoadingTrace(
         screenName,
         startTimeInMicroseconds: time.microsecondsSinceEpoch,
         startMonotonicTimeInMicroseconds: time.microsecondsSinceEpoch,
       );
+
+      await ScreenLoadingManager.I.startScreenLoadingTrace(trace);
 
       final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
 
@@ -1311,7 +1318,9 @@ void main() {
         true,
       );
       verify(mHost.isScreenLoadingEnabled()).called(1);
-      final extendedTime = endTime.add(const Duration(microseconds: duration)).microsecondsSinceEpoch;
+      final extendedTime = endTime
+          .add(const Duration(microseconds: duration))
+          .microsecondsSinceEpoch;
       verify(
         mInstabugLogger.d(
           'endTimeInMicroseconds: ${screenLoadingTrace.endTimeInMicroseconds}, '

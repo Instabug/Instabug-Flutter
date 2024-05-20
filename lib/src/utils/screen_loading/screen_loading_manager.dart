@@ -9,8 +9,14 @@ import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_trace.d
 import 'package:instabug_flutter/src/utils/screen_loading/ui_trace.dart';
 import 'package:meta/meta.dart';
 
+/// @nodoc
+@internal
 class ScreenLoadingManager {
   ScreenLoadingManager._();
+
+  @internal
+  @visibleForTesting
+  ScreenLoadingManager.init();
 
   static ScreenLoadingManager _instance = ScreenLoadingManager._();
 
@@ -19,21 +25,12 @@ class ScreenLoadingManager {
   /// Shorthand for [instance]
   static ScreenLoadingManager get I => instance;
   static const tag = "ScreenLoadingManager";
-  UiTrace? _currentUiTrace;
-  ScreenLoadingTrace? _currentScreenLoadingTrace;
-
-  /// @nodoc
-  @internal
-  ScreenLoadingTrace? get currentScreenLoadingTrace =>
-      _currentScreenLoadingTrace;
+  UiTrace? currentUiTrace;
+  ScreenLoadingTrace? currentScreenLoadingTrace;
 
   /// @nodoc
   @internal
   final List<ScreenLoadingTrace> prematurelyEndedTraces = [];
-
-  /// @nodoc
-  @internal
-  UiTrace? get currentUiTrace => _currentUiTrace;
 
   @visibleForTesting
   // ignore: use_setters_to_change_properties
@@ -45,9 +42,9 @@ class ScreenLoadingManager {
   @internal
   void resetDidStartScreenLoading() {
     // Allows starting a new screen loading capture trace in the same ui trace (without navigating out and in to the same screen)
-    _currentUiTrace?.didStartScreenLoading = false;
+    currentUiTrace?.didStartScreenLoading = false;
     InstabugLogger.I.d(
-      'Resetting didStartScreenLoading — setting didStartScreenLoading: ${_currentUiTrace?.didStartScreenLoading}',
+      'Resetting didStartScreenLoading — setting didStartScreenLoading: ${currentUiTrace?.didStartScreenLoading}',
       tag: APM.tag,
     );
   }
@@ -79,9 +76,9 @@ class ScreenLoadingManager {
   @internal
   void resetDidReportScreenLoading() {
     // Allows reporting a new screen loading capture trace in the same ui trace even if one was reported before by resetting the flag which is used for checking.
-    _currentUiTrace?.didReportScreenLoading = false;
+    currentUiTrace?.didReportScreenLoading = false;
     InstabugLogger.I.d(
-      'Resetting didExtendScreenLoading — setting didExtendScreenLoading: ${_currentUiTrace?.didExtendScreenLoading}',
+      'Resetting didExtendScreenLoading — setting didExtendScreenLoading: ${currentUiTrace?.didExtendScreenLoading}',
       tag: APM.tag,
     );
   }
@@ -90,9 +87,9 @@ class ScreenLoadingManager {
   @internal
   void resetDidExtendScreenLoading() {
     // Allows reporting a new screen loading capture trace in the same ui trace even if one was reported before by resetting the flag which is used for checking.
-    _currentUiTrace?.didExtendScreenLoading = false;
+    currentUiTrace?.didExtendScreenLoading = false;
     InstabugLogger.I.d(
-      'Resetting didReportScreenLoading — setting didReportScreenLoading: ${_currentUiTrace?.didReportScreenLoading}',
+      'Resetting didReportScreenLoading — setting didReportScreenLoading: ${currentUiTrace?.didReportScreenLoading}',
       tag: APM.tag,
     );
   }
@@ -124,7 +121,7 @@ class ScreenLoadingManager {
       final microTimeStamp = IBGDateTime.I.now().microsecondsSinceEpoch;
       final uiTraceId = IBGDateTime.I.now().millisecondsSinceEpoch;
       APM.startCpUiTrace(screenName, microTimeStamp, uiTraceId);
-      _currentUiTrace = UiTrace(screenName, traceId: uiTraceId);
+      currentUiTrace = UiTrace(screenName, traceId: uiTraceId);
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
     }
@@ -155,18 +152,18 @@ class ScreenLoadingManager {
 
       final isSameScreen = RouteMatcher.I.match(
         routePath: trace.screenName,
-        actualPath: _currentUiTrace?.screenName,
+        actualPath: currentUiTrace?.screenName,
       );
 
-      final didStartLoading = _currentUiTrace?.didStartScreenLoading == true;
+      final didStartLoading = currentUiTrace?.didStartScreenLoading == true;
 
       if (isSameScreen && !didStartLoading) {
         InstabugLogger.I.d(
           'starting screen loading trace — screenName: ${trace.screenName}, startTimeInMicroseconds: ${trace.startTimeInMicroseconds}',
           tag: APM.tag,
         );
-        _currentUiTrace?.didStartScreenLoading = true;
-        _currentScreenLoadingTrace = trace;
+        currentUiTrace?.didStartScreenLoading = true;
+        currentScreenLoadingTrace = trace;
         return;
       }
       InstabugLogger.I.d(
@@ -206,20 +203,20 @@ class ScreenLoadingManager {
         return;
       }
 
-      final isSameScreen = _currentScreenLoadingTrace == trace;
+      final isSameScreen = currentScreenLoadingTrace == trace;
 
-      final isReported = _currentUiTrace?.didReportScreenLoading ==
+      final isReported = currentUiTrace?.didReportScreenLoading ==
           true; // Changed to isReported
       final isValidTrace = trace != null;
 
       // Only report the first screen loading trace with the same name as the active UiTrace
       if (isSameScreen && !isReported && isValidTrace) {
-        _currentUiTrace?.didReportScreenLoading = true;
+        currentUiTrace?.didReportScreenLoading = true;
 
         APM.reportScreenLoadingCP(
           trace?.startTimeInMicroseconds ?? 0,
           duration ?? trace?.duration ?? 0,
-          _currentUiTrace?.traceId ?? 0,
+          currentUiTrace?.traceId ?? 0,
         );
         return;
       } else {
@@ -235,7 +232,7 @@ class ScreenLoadingManager {
           'isSameName: $isSameScreen',
           tag: APM.tag,
         );
-        _reportScreenLoadingDroppedError(trace!);
+        _reportScreenLoadingDroppedError(trace);
       }
       return;
     } catch (error, stackTrace) {
@@ -243,7 +240,7 @@ class ScreenLoadingManager {
     }
   }
 
-  void _reportScreenLoadingDroppedError(ScreenLoadingTrace trace) {
+  void _reportScreenLoadingDroppedError(ScreenLoadingTrace? trace) {
     InstabugLogger.I.e(
       "Screen Loading trace dropped as the trace isn't from the current screen, or another trace was reported before the current one. — $trace",
       tag: APM.tag,
@@ -272,7 +269,7 @@ class ScreenLoadingManager {
       }
 
       final didExtendScreenLoading =
-          _currentUiTrace?.didExtendScreenLoading == true;
+          currentUiTrace?.didExtendScreenLoading == true;
       if (didExtendScreenLoading) {
         InstabugLogger.I.e(
           'endScreenLoading has already been called for the current screen visit. Multiple calls to this API are not allowed during a single screen visit, only the first call will be considered.',
@@ -283,7 +280,7 @@ class ScreenLoadingManager {
 
       // Handles no active screen loading trace - cannot end
       final didStartScreenLoading =
-          _currentScreenLoadingTrace?.startTimeInMicroseconds != null;
+          currentScreenLoadingTrace?.startTimeInMicroseconds != null;
       if (!didStartScreenLoading) {
         InstabugLogger.I.e(
           "endScreenLoading wasn’t called as there is no active screen Loading trace.",
@@ -296,15 +293,15 @@ class ScreenLoadingManager {
           InstabugMonotonicClock.I.now;
 
       var duration = extendedMonotonicEndTimeInMicroseconds -
-          _currentScreenLoadingTrace!.startMonotonicTimeInMicroseconds;
+          currentScreenLoadingTrace!.startMonotonicTimeInMicroseconds;
 
       var extendedEndTimeInMicroseconds =
-          _currentScreenLoadingTrace!.startTimeInMicroseconds + duration;
+          currentScreenLoadingTrace!.startTimeInMicroseconds + duration;
 
       // cannot extend as the trace has not ended yet.
       // we report the extension timestamp as 0 and can be override later on.
       final didEndScreenLoadingPrematurely =
-          _currentScreenLoadingTrace?.endTimeInMicroseconds == null;
+          currentScreenLoadingTrace?.endTimeInMicroseconds == null;
       if (didEndScreenLoadingPrematurely) {
         extendedEndTimeInMicroseconds = 0;
         duration = 0;
@@ -315,7 +312,7 @@ class ScreenLoadingManager {
         );
       }
       InstabugLogger.I.d(
-        'endTimeInMicroseconds: ${_currentScreenLoadingTrace?.endTimeInMicroseconds}, '
+        'endTimeInMicroseconds: ${currentScreenLoadingTrace?.endTimeInMicroseconds}, '
         'didEndScreenLoadingPrematurely: $didEndScreenLoadingPrematurely, extendedEndTimeInMicroseconds: $extendedEndTimeInMicroseconds.',
         tag: APM.tag,
       );
@@ -327,9 +324,9 @@ class ScreenLoadingManager {
       // Ends screen loading trace
       APM.endScreenLoadingCP(
         extendedEndTimeInMicroseconds,
-        _currentUiTrace?.traceId ?? 0,
+        currentUiTrace?.traceId ?? 0,
       );
-      _currentUiTrace?.didExtendScreenLoading = true;
+      currentUiTrace?.didExtendScreenLoading = true;
 
       return;
     } catch (error, stackTrace) {
