@@ -14,10 +14,6 @@ import Flutter
             methodCallHandler.handle(methodCall, result: result)
         }
         GeneratedPluginRegistrant.register(with: self)
-        if let path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).last {
-            print("path: \(path)")
-        }
-
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 }
