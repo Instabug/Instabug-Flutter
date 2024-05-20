@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
+import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
@@ -31,6 +32,7 @@ class ScreenLoadingManagerNoResets extends ScreenLoadingManager {
 
 @GenerateMocks([
   ApmHostApi,
+  InstabugHostApi,
   InstabugLogger,
   IBGDateTime,
   InstabugMonotonicClock,
@@ -42,7 +44,8 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   late ScreenLoadingManager mScreenLoadingManager;
-  late MockApmHostApi mHost;
+  late MockApmHostApi mApmHost;
+  late MockInstabugHostApi mInstabugHost;
   late MockInstabugLogger mInstabugLogger;
   late IBGDateTime mDateTime;
   late IBGBuildInfo mIBGBuildInfo;
@@ -52,15 +55,18 @@ void main() {
 
   setUp(() {
     mScreenLoadingManager = ScreenLoadingManager.init();
-    mHost = MockApmHostApi();
+    mApmHost = MockApmHostApi();
+    mInstabugHost = MockInstabugHostApi();
     mInstabugLogger = MockInstabugLogger();
     mDateTime = MockIBGDateTime();
     mIBGBuildInfo = MockIBGBuildInfo();
     mRouteMatcher = MockRouteMatcher();
     mInstabugMonotonicClock = MockInstabugMonotonicClock();
+    when(mInstabugHost.isBuilt()).thenAnswer((_) async => true);
 
     ScreenLoadingManager.setInstance(mScreenLoadingManager);
-    APM.$setHostApi(mHost);
+    APM.$setHostApi(mApmHost);
+    Instabug.$setHostApi(mInstabugHost);
     InstabugLogger.setInstance(mInstabugLogger);
     IBGDateTime.setInstance(mDateTime);
     IBGBuildInfo.setInstance(mIBGBuildInfo);
@@ -158,6 +164,25 @@ void main() {
       when(mDateTime.now()).thenReturn(time);
     });
 
+    test('[startUiTrace] with SDK not build should Log error', () async {
+      mScreenLoadingManager.currentUiTrace = uiTrace;
+      when(mInstabugHost.isBuilt()).thenAnswer((_) async => false);
+
+      await ScreenLoadingManager.I.startUiTrace(screenName);
+
+      final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
+      expect(actualUiTrace, null);
+
+      verify(
+        mInstabugLogger.e(
+          'Instabug API {APM.InstabugCaptureScreenLoading} was called before the SDK is built. To build it, first by following the instructions at this link:\n'
+          'https://docs.instabug.com/reference#showing-and-manipulating-the-invocation',
+          tag: APM.tag,
+        ),
+      ).called(1);
+      verifyNever(mApmHost.startCpUiTrace(any, any, any));
+    });
+
     test('[startUiTrace] with APM disabled on iOS Platform should Log error',
         () async {
       mScreenLoadingManager.currentUiTrace = uiTrace;
@@ -176,7 +201,7 @@ void main() {
           tag: APM.tag,
         ),
       ).called(1);
-      verifyNever(mHost.startCpUiTrace(any, any, any));
+      verifyNever(mApmHost.startCpUiTrace(any, any, any));
     });
 
     test(
@@ -196,16 +221,10 @@ void main() {
       expect(actualUiTrace?.screenName, screenName);
       expect(actualUiTrace?.traceId, time.millisecondsSinceEpoch);
       verify(
-        mHost.startCpUiTrace(
+        mApmHost.startCpUiTrace(
           screenName,
           time.microsecondsSinceEpoch,
           time.millisecondsSinceEpoch,
-        ),
-      ).called(1);
-      verify(
-        mInstabugLogger.d(
-          'Starting Ui trace — traceId: ${time.millisecondsSinceEpoch}, screenName: $screenName, microTimeStamp: ${time.microsecondsSinceEpoch}',
-          tag: APM.tag,
         ),
       ).called(1);
     });
@@ -215,6 +234,7 @@ void main() {
     late DateTime time;
     late UiTrace uiTrace;
     late int traceId;
+    late ScreenLoadingTrace screenLoadingTrace;
     setUp(() {
       mScreenLoadingManager = ScreenLoadingManagerNoResets.init();
       time = DateTime.now();
@@ -222,8 +242,42 @@ void main() {
       uiTrace = UiTrace(screenName, traceId: traceId);
       mScreenLoadingManager.currentUiTrace = uiTrace;
       when(mDateTime.now()).thenReturn(time);
+
+      screenLoadingTrace = ScreenLoadingTrace(
+        screenName,
+        startTimeInMicroseconds: time.microsecondsSinceEpoch,
+        startMonotonicTimeInMicroseconds: time.microsecondsSinceEpoch,
+      );
       ScreenLoadingManager.setInstance(mScreenLoadingManager);
     });
+
+    test('[startScreenLoadingTrace] with SDK not build should Log error',
+        () async {
+      when(mInstabugHost.isBuilt()).thenAnswer((_) async => false);
+
+      await ScreenLoadingManager.I.startScreenLoadingTrace(screenLoadingTrace);
+
+      final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
+      final actualScreenLoadingTrace =
+          ScreenLoadingManager.I.currentScreenLoadingTrace;
+
+      expect(
+        actualUiTrace?.didStartScreenLoading,
+        false,
+      );
+      expect(
+        actualScreenLoadingTrace,
+        null,
+      );
+      verify(
+        mInstabugLogger.e(
+          'Instabug API {APM.InstabugCaptureScreenLoading} was called before the SDK is built. To build it, first by following the instructions at this link:\n'
+          'https://docs.instabug.com/reference#showing-and-manipulating-the-invocation',
+          tag: APM.tag,
+        ),
+      ).called(1);
+    });
+
     test(
         '[startScreenLoadingTrace] with screen loading disabled on iOS Platform should log error',
         () async {
@@ -231,11 +285,7 @@ void main() {
           .thenAnswer((_) async => false);
       when(IBGBuildInfo.I.isIOS).thenReturn(true);
 
-      await ScreenLoadingManager.I.startScreenLoadingTrace(
-        screenName,
-        startTimeInMicroseconds: time.microsecondsSinceEpoch,
-        startMonotonicTimeInMicroseconds: time.microsecondsSinceEpoch,
-      );
+      await ScreenLoadingManager.I.startScreenLoadingTrace(screenLoadingTrace);
 
       final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
       final actualScreenLoadingTrace =
@@ -252,7 +302,8 @@ void main() {
       verify(
         mInstabugLogger.e(
           'Screen loading monitoring is disabled, skipping starting screen loading monitoring for screen: $screenName.\n'
-          'Please refer to the documentation for how to enable screen loading monitoring on your app: https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking',
+          'Please refer to the documentation for how to enable screen loading monitoring on your app: https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking'
+          "If Screen Loading is enabled but you're still seeing this message, please reach out to support.",
           tag: APM.tag,
         ),
       ).called(1);
@@ -266,11 +317,7 @@ void main() {
           .thenAnswer((_) async => false);
       when(IBGBuildInfo.I.isIOS).thenReturn(false);
 
-      await ScreenLoadingManager.I.startScreenLoadingTrace(
-        screenName,
-        startTimeInMicroseconds: time.microsecondsSinceEpoch,
-        startMonotonicTimeInMicroseconds: time.microsecondsSinceEpoch,
-      );
+      await ScreenLoadingManager.I.startScreenLoadingTrace(screenLoadingTrace);
 
       final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
       final actualScreenLoadingTrace =
@@ -284,11 +331,11 @@ void main() {
         actualScreenLoadingTrace,
         null,
       );
-      verify(mHost.isScreenLoadingEnabled()).called(1);
+      verify(mApmHost.isScreenLoadingEnabled()).called(1);
     });
 
     test(
-        '[startScreenLoadingTrace] with screen loading enabled with in different screen should log error',
+        '[startScreenLoadingTrace] with screen loading enabled with different screen should log error',
         () async {
       const isSameScreen = false;
       when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
@@ -300,11 +347,7 @@ void main() {
         ),
       ).thenReturn(isSameScreen);
 
-      await ScreenLoadingManager.I.startScreenLoadingTrace(
-        screenName,
-        startTimeInMicroseconds: time.microsecondsSinceEpoch,
-        startMonotonicTimeInMicroseconds: time.microsecondsSinceEpoch,
-      );
+      await ScreenLoadingManager.I.startScreenLoadingTrace(screenLoadingTrace);
 
       final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
       final actualScreenLoadingTrace =
@@ -320,13 +363,7 @@ void main() {
       );
       verify(
         mInstabugLogger.d(
-          'failed to start screen loading trace — screenName: $screenName, startTimeInMicroseconds: ${time.microsecondsSinceEpoch}',
-          tag: APM.tag,
-        ),
-      ).called(1);
-      verify(
-        mInstabugLogger.d(
-          'didStartScreenLoading: ${actualUiTrace?.didStartScreenLoading}, isSameScreen: $isSameScreen',
+          argThat(contains('failed to start screen loading trace')),
           tag: APM.tag,
         ),
       ).called(1);
@@ -347,11 +384,7 @@ void main() {
         ),
       ).thenReturn(isSameScreen);
 
-      await ScreenLoadingManager.I.startScreenLoadingTrace(
-        screenName,
-        startTimeInMicroseconds: time.microsecondsSinceEpoch,
-        startMonotonicTimeInMicroseconds: time.microsecondsSinceEpoch,
-      );
+      await ScreenLoadingManager.I.startScreenLoadingTrace(screenLoadingTrace);
 
       final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
 
@@ -369,7 +402,7 @@ void main() {
       );
       verify(
         mInstabugLogger.d(
-          'starting screen loading trace — screenName: $screenName, startTimeInMicroseconds: ${time.microsecondsSinceEpoch}',
+          argThat(contains('starting screen loading trace')),
           tag: APM.tag,
         ),
       ).called(1);
@@ -397,6 +430,37 @@ void main() {
       mScreenLoadingManager.currentUiTrace?.didStartScreenLoading = true;
       mScreenLoadingManager.currentScreenLoadingTrace = screenLoadingTrace;
       mScreenLoadingManager.currentUiTrace = uiTrace;
+    });
+
+    test('[reportScreenLoading] with SDK not build should Log error', () async {
+      when(mInstabugHost.isBuilt()).thenAnswer((_) async => false);
+
+      await ScreenLoadingManager.I.reportScreenLoading(screenLoadingTrace);
+
+      final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
+      final actualScreenLoadingTrace =
+          ScreenLoadingManager.I.currentScreenLoadingTrace;
+
+      expect(
+        actualUiTrace?.didReportScreenLoading,
+        false,
+      );
+      expect(
+        actualScreenLoadingTrace?.startTimeInMicroseconds,
+        time.microsecondsSinceEpoch,
+      );
+      expect(
+        actualScreenLoadingTrace?.endTimeInMicroseconds,
+        null,
+      );
+      verify(
+        mInstabugLogger.e(
+          'Instabug API {APM.InstabugCaptureScreenLoading} was called before the SDK is built. To build it, first by following the instructions at this link:\n'
+          'https://docs.instabug.com/reference#showing-and-manipulating-the-invocation',
+          tag: APM.tag,
+        ),
+      ).called(1);
+      verifyNever(mApmHost.reportScreenLoadingCP(any, any, any));
     });
 
     test(
@@ -427,11 +491,12 @@ void main() {
       verify(
         mInstabugLogger.e(
           'Screen loading monitoring is disabled, skipping reporting screen loading time for screen: $screenName.\n'
-          'Please refer to the documentation for how to enable screen loading monitoring on your app: https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking',
+          'Please refer to the documentation for how to enable screen loading monitoring on your app: https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking'
+          "If Screen Loading is enabled but you're still seeing this message, please reach out to support.",
           tag: APM.tag,
         ),
       ).called(1);
-      verifyNever(mHost.reportScreenLoadingCP(any, any, any));
+      verifyNever(mApmHost.reportScreenLoadingCP(any, any, any));
     });
 
     test(
@@ -462,11 +527,11 @@ void main() {
         actualScreenLoadingTrace?.endTimeInMicroseconds,
         null,
       );
-      verifyNever(mHost.reportScreenLoadingCP(any, any, any));
+      verifyNever(mApmHost.reportScreenLoadingCP(any, any, any));
     });
 
     test(
-        '[reportScreenLoading] with screen loading enabled with in different screen should log error',
+        '[reportScreenLoading] with screen loading enabled with different screen should log error',
         () async {
       const isSameScreen = false;
       when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
@@ -478,8 +543,14 @@ void main() {
         ),
       ).thenReturn(isSameScreen);
 
+      final differentTrace = ScreenLoadingTrace(
+        'different screenName',
+        startTimeInMicroseconds: 2500,
+        startMonotonicTimeInMicroseconds: 2500,
+      );
+
       await ScreenLoadingManager.I.reportScreenLoading(
-        screenLoadingTrace,
+        differentTrace,
       );
 
       final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
@@ -498,26 +569,10 @@ void main() {
         actualScreenLoadingTrace?.startTimeInMicroseconds,
         time.microsecondsSinceEpoch,
       );
-      verifyNever(mHost.reportScreenLoadingCP(any, any, any));
-      verify(
-        mInstabugLogger.d(
-          'Failed to report screen loading trace — screenName: $screenName, '
-          'startTimeInMicroseconds: ${time.microsecondsSinceEpoch}, '
-          'duration: $duration, '
-          'trace.duration: ${screenLoadingTrace.duration ?? 0}',
-          tag: APM.tag,
-        ),
-      );
-      verify(
-        mInstabugLogger.d(
-          'didReportScreenLoading: ${uiTrace.didReportScreenLoading == true}, '
-          'isSameName: $isSameScreen',
-          tag: APM.tag,
-        ),
-      );
+      verifyNever(mApmHost.reportScreenLoadingCP(any, any, any));
       verify(
         mInstabugLogger.e(
-          argThat(contains('Dropping the screen loading capture')),
+          "Screen Loading trace dropped as the trace isn't from the current screen, or another trace was reported before the current one. — $differentTrace",
           tag: APM.tag,
         ),
       );
@@ -549,26 +604,10 @@ void main() {
         time.microsecondsSinceEpoch,
       );
 
-      verifyNever(mHost.reportScreenLoadingCP(any, any, any));
-      verify(
-        mInstabugLogger.d(
-          'Failed to report screen loading trace — screenName: $screenName, '
-          'startTimeInMicroseconds: ${time.microsecondsSinceEpoch}, '
-          'duration: $duration, '
-          'trace.duration: ${screenLoadingTrace.duration ?? 0}',
-          tag: APM.tag,
-        ),
-      );
-      verify(
-        mInstabugLogger.d(
-          'didReportScreenLoading: ${uiTrace.didReportScreenLoading == true}, '
-          'isSameName: $isSameScreen',
-          tag: APM.tag,
-        ),
-      );
+      verifyNever(mApmHost.reportScreenLoadingCP(any, any, any));
       verify(
         mInstabugLogger.e(
-          argThat(contains('Dropping the screen loading capture')),
+          "Screen Loading trace dropped as the trace isn't from the current screen, or another trace was reported before the current one. — $screenLoadingTrace",
           tag: APM.tag,
         ),
       );
@@ -596,7 +635,7 @@ void main() {
       final actualScreenLoadingTrace =
           ScreenLoadingManager.I.currentScreenLoadingTrace;
 
-      verifyNever(mHost.reportScreenLoadingCP(any, any, any));
+      verifyNever(mApmHost.reportScreenLoadingCP(any, any, any));
       expect(
         actualUiTrace?.didReportScreenLoading,
         false,
@@ -606,24 +645,8 @@ void main() {
         null,
       );
       verify(
-        mInstabugLogger.d(
-          'Failed to report screen loading trace — screenName: null, '
-          'startTimeInMicroseconds: ${expectedScreenLoadingTrace?.startTimeInMicroseconds}, '
-          'duration: null, '
-          'trace.duration: 0',
-          tag: APM.tag,
-        ),
-      );
-      verify(
-        mInstabugLogger.d(
-          'didReportScreenLoading: ${uiTrace.didReportScreenLoading == true}, '
-          'isSameName: $isSameScreen',
-          tag: APM.tag,
-        ),
-      );
-      verify(
         mInstabugLogger.e(
-          argThat(contains('Dropping the screen loading capture')),
+          "Screen Loading trace dropped as the trace isn't from the current screen, or another trace was reported before the current one. — $expectedScreenLoadingTrace",
           tag: APM.tag,
         ),
       );
@@ -667,7 +690,7 @@ void main() {
         screenLoadingTrace.duration,
       );
       verify(
-        mHost.reportScreenLoadingCP(
+        mApmHost.reportScreenLoadingCP(
           time.microsecondsSinceEpoch,
           duration,
           time.millisecondsSinceEpoch,
@@ -675,7 +698,7 @@ void main() {
       ).called(1);
       verify(
         mInstabugLogger.d(
-          'Reporting screen loading trace — traceId: ${uiTrace.traceId}, startTimeInMicroseconds: ${screenLoadingTrace.startTimeInMicroseconds}, durationInMicroseconds: ${screenLoadingTrace.duration}',
+          argThat(contains('Reporting screen loading trace')),
           tag: APM.tag,
         ),
       );
@@ -714,6 +737,27 @@ void main() {
       mScreenLoadingManager.currentScreenLoadingTrace = screenLoadingTrace;
     });
 
+    test('[endScreenLoading] with SDK not build should Log error', () async {
+      when(mInstabugHost.isBuilt()).thenAnswer((_) async => false);
+
+      await ScreenLoadingManager.I.endScreenLoading();
+
+      final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
+
+      expect(
+        actualUiTrace?.didExtendScreenLoading,
+        false,
+      );
+      verify(
+        mInstabugLogger.e(
+          'Instabug API {endScreenLoading} was called before the SDK is built. To build it, first by following the instructions at this link:\n'
+          'https://docs.instabug.com/reference#showing-and-manipulating-the-invocation',
+          tag: APM.tag,
+        ),
+      ).called(1);
+      verifyNever(mApmHost.endScreenLoadingCP(any, any));
+    });
+
     test(
         '[endScreenLoading] with screen loading disabled on iOS Platform should log error',
         () async {
@@ -732,11 +776,12 @@ void main() {
       verify(
         mInstabugLogger.e(
           'Screen loading monitoring is disabled, skipping ending screen loading monitoring with APM.endScreenLoading().\n'
-          'Please refer to the documentation for how to enable screen loading monitoring in your app: https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking',
+          'Please refer to the documentation for how to enable screen loading monitoring in your app: https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking'
+          "If Screen Loading is enabled but you're still seeing this message, please reach out to support.",
           tag: APM.tag,
         ),
       ).called(1);
-      verifyNever(mHost.endScreenLoadingCP(any, any));
+      verifyNever(mApmHost.endScreenLoadingCP(any, any));
     });
 
     test(
@@ -754,7 +799,7 @@ void main() {
         actualUiTrace?.didExtendScreenLoading,
         false,
       );
-      verifyNever(mHost.endScreenLoadingCP(any, any));
+      verifyNever(mApmHost.endScreenLoadingCP(any, any));
     });
 
     test('[endScreenLoading] with a previously extended trace should log error',
@@ -775,7 +820,7 @@ void main() {
           tag: APM.tag,
         ),
       );
-      verifyNever(mHost.endScreenLoadingCP(any, any));
+      verifyNever(mApmHost.endScreenLoadingCP(any, any));
     });
 
     test('[endScreenLoading] with no active screen loading should log error',
@@ -798,7 +843,7 @@ void main() {
           tag: APM.tag,
         ),
       );
-      verifyNever(mHost.endScreenLoadingCP(any, any));
+      verifyNever(mApmHost.endScreenLoadingCP(any, any));
     });
 
     test(
@@ -830,7 +875,7 @@ void main() {
           tag: APM.tag,
         ),
       );
-      verify(mHost.endScreenLoadingCP(prematureDuration, uiTrace.traceId))
+      verify(mApmHost.endScreenLoadingCP(prematureDuration, uiTrace.traceId))
           .called(1);
     });
 
@@ -862,8 +907,8 @@ void main() {
         actualUiTrace?.didExtendScreenLoading,
         true,
       );
-      verify(mHost.isScreenLoadingEnabled()).called(1);
-      verify(mHost.endScreenLoadingCP(
+      verify(mApmHost.isScreenLoadingEnabled()).called(1);
+      verify(mApmHost.endScreenLoadingCP(
               extendedEndTimeInMicroseconds, uiTrace.traceId))
           .called(1);
     });

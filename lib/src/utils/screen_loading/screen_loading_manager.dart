@@ -65,7 +65,7 @@ class ScreenLoadingManager {
     final isInstabugSDKBuilt = await Instabug.isBuilt();
     if (!isInstabugSDKBuilt) {
       InstabugLogger.I.e(
-        ' Instabug API {$apiName} was called before the SDK is built. To build it, first by following the instructions at this link:\n'
+        'Instabug API {$apiName} was called before the SDK is built. To build it, first by following the instructions at this link:\n'
         'https://docs.instabug.com/reference#showing-and-manipulating-the-invocation',
         tag: APM.tag,
       );
