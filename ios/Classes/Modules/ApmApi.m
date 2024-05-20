@@ -32,16 +32,13 @@ NSMutableDictionary *traces;
 }
 
 - (void)setScreenLoadingEnabledIsEnabled:(nonnull NSNumber *)isEnabled error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
-    [IBGAPM setScreenLoadingEnabled:isEnabled];
+    [IBGAPM setScreenLoadingEnabled:[isEnabled boolValue]];
 }
 
 
 - (void)isScreenLoadingEnabledWithCompletion:(nonnull void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion {
-    
-    BOOL isScreenLoadingMonitoringEnabled = IBGAPM.screenLoadingEnabled;
-    
-    NSNumber *isEnabledNumber = @(isScreenLoadingMonitoringEnabled);
-    
+    BOOL isScreenLoadingEnabled = IBGAPM.screenLoadingEnabled;
+    NSNumber *isEnabledNumber = @(isScreenLoadingEnabled);
     completion(isEnabledNumber, nil);
 }
 

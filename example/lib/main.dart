@@ -1003,17 +1003,35 @@ class _ScreenLoadingPageState extends State<ScreenLoadingPage> {
     });
   }
 
-  void _extendScreenLoading() {
-    final currentUiTrace = ScreenLoadingManager.I.currentUiTrace;
-    final currentScreenLoadingTrace =
-        ScreenLoadingManager.I.currentScreenLoadingTrace;
-    final extendedEndTime =
-        (currentScreenLoadingTrace?.endTimeInMicroseconds ?? 0) +
-            (int.tryParse(durationController.text.toString()) ?? 0);
-    APM.endScreenLoadingCP(
-      extendedEndTime,
-      currentUiTrace?.traceId ?? 0,
-    );
+  ///This is the production implementation as [APM.endScreenLoading()] is the method which users use from [APM] class
+  void _extendScreenLoading() async {
+    APM.endScreenLoading();
+  }
+
+  ///This is a testing implementation as [APM.endScreenLoadingCP()] is marked as @internal method,
+  ///Therefor we check if SCL is enabled before proceeding
+  ///This check is internally done inside the production method [APM.endScreenLoading()]
+  void _extendScreenLoadingTestingEnvironment() async {
+    final isScreenLoadingEnabled = await APM.isScreenLoadingEnabled();
+    if (isScreenLoadingEnabled) {
+      final currentUiTrace = ScreenLoadingManager.I.currentUiTrace;
+      final currentScreenLoadingTrace =
+          ScreenLoadingManager.I.currentScreenLoadingTrace;
+      final extendedEndTime =
+          (currentScreenLoadingTrace?.endTimeInMicroseconds ?? 0) +
+              (int.tryParse(durationController.text.toString()) ?? 0);
+      APM.endScreenLoadingCP(
+        extendedEndTime,
+        currentUiTrace?.traceId ?? 0,
+      );
+    } else {
+      debugPrint(
+        'Screen loading monitoring is disabled, skipping ending screen loading monitoring with APM.endScreenLoading().\n'
+        'Please refer to the documentation for how to enable screen loading monitoring in your app: '
+        'https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking'
+        "If Screen Loading is enabled but you're still seeing this message, please reach out to support.",
+      );
+    }
   }
 
   void _navigateToComplexPage() {
@@ -1091,12 +1109,21 @@ class _ScreenLoadingPageState extends State<ScreenLoadingPage> {
           keyboardType: TextInputType.number,
         ),
         Container(
-          margin: const EdgeInsets.only(top: 12),
-          child: InstabugButton(
-            text: 'Extend Screen Loading',
-            onPressed: _extendScreenLoading,
-          ),
-        ),
+            margin: const EdgeInsets.only(top: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                InstabugButton(
+                  text: 'Extend Screen Loading (Testing)',
+                  onPressed: _extendScreenLoadingTestingEnvironment,
+                ),
+                InstabugButton(
+                  text: 'Extend Screen Loading (Production)',
+                  onPressed: _extendScreenLoading,
+                ),
+              ],
+            )),
         InstabugButton(
           text: 'Monitored Complex Page',
           onPressed: _navigateToComplexPage,

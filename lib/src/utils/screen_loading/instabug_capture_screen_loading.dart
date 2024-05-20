@@ -30,25 +30,20 @@ class _InstabugCaptureScreenLoadingState
   @override
   void initState() {
     super.initState();
-    ScreenLoadingManager.I.startScreenLoadingTrace(
-      widget.screenName,
-      startTimeInMicroseconds: startTimeInMicroseconds,
-      startMonotonicTimeInMicroseconds: startMonotonicTimeInMicroseconds,
-    );
-
     trace = ScreenLoadingTrace(
       widget.screenName,
       startTimeInMicroseconds: startTimeInMicroseconds,
       startMonotonicTimeInMicroseconds: startMonotonicTimeInMicroseconds,
     );
+
+    ScreenLoadingManager.I.startScreenLoadingTrace(trace!);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       stopwatch.stop();
       final duration = stopwatch.elapsedMicroseconds;
       trace?.duration = duration;
       trace?.endTimeInMicroseconds = startTimeInMicroseconds + duration;
-      ScreenLoadingManager.I.reportScreenLoading(
-        trace,
-      );
+      ScreenLoadingManager.I.reportScreenLoading(trace);
     });
   }
 
