@@ -12,6 +12,7 @@ import 'src/widget/instabug_button.dart';
 import 'src/widget/instabug_clipboard_input.dart';
 import 'src/widget/instabug_text_field.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
+import 'package:instabug_flutter/src/utils/screen_loading/route_wrapper.dart';
 
 void main() {
   runZonedGuarded(
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const RouteWrapper(child:  MyHomePage(title: 'Flutter Demo Home Page') , routes: {},),
     );
   }
 }

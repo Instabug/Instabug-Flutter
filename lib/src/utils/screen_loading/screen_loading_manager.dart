@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart' show WidgetBuilder, BuildContext;
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
@@ -333,6 +334,31 @@ class ScreenLoadingManager {
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
     }
+  }
+
+  /// Wraps the given routes with [InstabugCaptureScreenLoading] widgets.
+  ///
+  /// This allows Instabug to automatically capture screen loading times.
+  ///
+  /// Example usage:
+  ///
+  /// Map<String, WidgetBuilder> routes = {
+  /// '/home': (context) => const HomePage(),
+  /// '/settings': (context) => const SettingsPage(),
+  /// };
+  ///
+  /// Map<String, WidgetBuilder> wrappedRoutes =
+  /// ScreenLoadingAutomaticManager.wrapRoutes( routes)
+  static Map<String, WidgetBuilder> wrapRoutes(
+      Map<String, WidgetBuilder> routes,
+      ) {
+    return {
+      for (final entry in routes.entries)
+        entry.key: (BuildContext context) => InstabugCaptureScreenLoading(
+          screenName: entry.key,
+          child: entry.value(context),
+        ),
+    };
   }
 }
 
