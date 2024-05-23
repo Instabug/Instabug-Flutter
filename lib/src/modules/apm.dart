@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:flutter/widgets.dart' show WidgetBuilder;
+import 'package:flutter/widgets.dart' show WidgetBuilder, debugPrint;
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/models/trace.dart';
@@ -222,7 +222,10 @@ class APM {
   /// Wraps the given routes with [InstabugCaptureScreenLoading] widgets.
   /// This allows Instabug to automatically capture screen loading times.
   static Map<String, WidgetBuilder> wrapRoutes(
-      Map<String, WidgetBuilder> routes) {
-    return ScreenLoadingManager.wrapRoutes(routes);
+    Map<String, WidgetBuilder> routes, {
+    List<String> exclude = const [],
+  }) {
+    final x = ScreenLoadingManager.wrapRoutes(routes, exclude: exclude);
+    return x;
   }
 }

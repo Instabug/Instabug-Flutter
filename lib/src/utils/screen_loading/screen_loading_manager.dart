@@ -350,18 +350,32 @@ class ScreenLoadingManager {
   /// Map<String, WidgetBuilder> wrappedRoutes =
   /// ScreenLoadingAutomaticManager.wrapRoutes( routes)
   static Map<String, WidgetBuilder> wrapRoutes(
-      Map<String, WidgetBuilder> routes,
-      ) {
-    return {
-      for (final entry in routes.entries)
-        entry.key: (BuildContext context) => InstabugCaptureScreenLoading(
-          screenName: entry.key,
-          child: entry.value(context),
-        ),
-    };
+    Map<String, WidgetBuilder> routes, {
+    List<String> exclude = const [],
+  }) {
+    final excludedRoutes = <String, bool>{};
+    for (final route in exclude) {
+      excludedRoutes[route] = true;
+    }
+
+    final wrappedRoutes = <String, WidgetBuilder>{};
+    for (final entry in routes.entries) {
+      if (!excludedRoutes.containsKey(entry.key)) {
+        wrappedRoutes[entry.key] =
+            (BuildContext context) => InstabugCaptureScreenLoading(
+                  screenName: entry.key,
+                  child: entry.value(context),
+                );
+      } else {
+        wrappedRoutes[entry.key] = entry.value;
+      }
+    }
+
+    return wrappedRoutes;
   }
 }
 
+@internal
 class DropScreenLoadingError extends Error {
   final ScreenLoadingTrace trace;
 

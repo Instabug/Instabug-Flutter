@@ -14,27 +14,38 @@ class RouteWrapper extends StatelessWidget {
   /// The initial route to navigate to.
   final String? initialRoute;
 
+  final List<String> exclude;
+
   /// Creates a new instance of [RouteWrapper].
   const RouteWrapper(
-      {Key? key, required this.child, required this.routes, this.initialRoute})
+      {Key? key,
+      required this.child,
+      required this.routes,
+      this.initialRoute,
+      this.exclude = const []})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Navigator(
-      // observers: [InstabugNavigatorObserver()],
+      observers: [InstabugNavigatorObserver()],
       initialRoute: initialRoute,
       onGenerateRoute: (settings) {
         final route = routes[settings.name];
 
         if (route == null) return null; //Guard case
 
+        // if(exclude.contains(settings.name)) {
+        //   return null ;
+        // }
         return MaterialPageRoute(
-          builder: (context) => InstabugCaptureScreenLoading(
-            screenName: settings.name ?? "",
-            child: route.call(context),
-          ),
+          builder: (context) {
+            debugPrint("[RouteWrapper] Screen: ${settings.name} wrapped: ");
+            return InstabugCaptureScreenLoading(
+              screenName: settings.name ?? "",
+              child: route.call(context),
+            );
+          },
           settings: settings,
         );
       },
