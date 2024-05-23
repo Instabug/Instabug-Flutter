@@ -96,6 +96,36 @@ class ScreenLoadingManager {
     );
   }
 
+  /// The function `sanitizeScreenName` removes leading and trailing slashes from a screen name in Dart.
+  ///
+  /// Args:
+  ///   screenName (String): The `sanitizeScreenName` function is designed to remove a specific character
+  /// ('/') from the beginning and end of a given `screenName` string. If the `screenName` is equal to
+  /// '/', it will return 'ROOT_PAGE'. Otherwise, it will remove the character from the beginning and end
+  /// if
+  ///
+  /// Returns:
+  ///   The `sanitizeScreenName` function returns the sanitized screen name after removing any leading or
+  /// trailing '/' characters. If the input `screenName` is equal to '/', it returns 'ROOT_PAGE'.
+
+  @internal
+  String sanitizeScreenName(String screenName) {
+    const characterToBeRemoved = '/';
+    final lastIndex = screenName.length - 1;
+    var sanitizedScreenName = screenName;
+
+    if (screenName == characterToBeRemoved) {
+      return 'ROOT_PAGE';
+    }
+    if (screenName[0] == characterToBeRemoved) {
+      sanitizedScreenName = sanitizedScreenName.substring(1);
+    }
+    if (screenName[lastIndex] == characterToBeRemoved) {
+      sanitizedScreenName = sanitizedScreenName.substring(0, lastIndex - 1);
+    }
+    return sanitizedScreenName;
+  }
+
   @internal
   Future<void> startUiTrace(String screenName) async {
     try {
@@ -120,10 +150,11 @@ class ScreenLoadingManager {
         return;
       }
 
+      final sanitizedScreenName = sanitizeScreenName(screenName);
       final microTimeStamp = IBGDateTime.I.now().microsecondsSinceEpoch;
       final uiTraceId = IBGDateTime.I.now().millisecondsSinceEpoch;
-      APM.startCpUiTrace(screenName, microTimeStamp, uiTraceId);
-      currentUiTrace = UiTrace(screenName, traceId: uiTraceId);
+      APM.startCpUiTrace(sanitizedScreenName, microTimeStamp, uiTraceId);
+      currentUiTrace = UiTrace(sanitizedScreenName, traceId: uiTraceId);
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
     }
