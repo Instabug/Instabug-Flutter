@@ -31,7 +31,7 @@ class _InstabugCaptureScreenLoadingState
   void initState() {
     super.initState();
     trace = ScreenLoadingTrace(
-      widget.screenName,
+      ScreenLoadingManager.I.sanitizeScreenName(widget.screenName),
       startTimeInMicroseconds: startTimeInMicroseconds,
       startMonotonicTimeInMicroseconds: startMonotonicTimeInMicroseconds,
     );
