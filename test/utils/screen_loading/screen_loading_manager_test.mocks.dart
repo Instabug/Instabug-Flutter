@@ -3,16 +3,20 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
-import 'dart:typed_data' as _i5;
+import 'dart:async' as _i5;
+import 'dart:typed_data' as _i7;
 
-import 'package:instabug_flutter/instabug_flutter.dart' as _i7;
-import 'package:instabug_flutter/src/generated/apm.api.g.dart' as _i2;
-import 'package:instabug_flutter/src/generated/instabug.api.g.dart' as _i4;
-import 'package:instabug_flutter/src/utils/ibg_build_info.dart' as _i10;
-import 'package:instabug_flutter/src/utils/ibg_date_time.dart' as _i8;
-import 'package:instabug_flutter/src/utils/instabug_logger.dart' as _i6;
-import 'package:instabug_flutter/src/utils/instabug_montonic_clock.dart' as _i9;
+import 'package:flutter/foundation.dart' as _i3;
+import 'package:flutter/src/widgets/framework.dart' as _i2;
+import 'package:flutter/src/widgets/notification_listener.dart' as _i13;
+import 'package:instabug_flutter/instabug_flutter.dart' as _i9;
+import 'package:instabug_flutter/src/generated/apm.api.g.dart' as _i4;
+import 'package:instabug_flutter/src/generated/instabug.api.g.dart' as _i6;
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart' as _i12;
+import 'package:instabug_flutter/src/utils/ibg_date_time.dart' as _i10;
+import 'package:instabug_flutter/src/utils/instabug_logger.dart' as _i8;
+import 'package:instabug_flutter/src/utils/instabug_montonic_clock.dart'
+    as _i11;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -36,77 +40,138 @@ class _FakeDateTime_0 extends _i1.SmartFake implements DateTime {
         );
 }
 
+class _FakeWidget_1 extends _i1.SmartFake implements _i2.Widget {
+  _FakeWidget_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+
+  @override
+  String toString({_i3.DiagnosticLevel? minLevel = _i3.DiagnosticLevel.info}) =>
+      super.toString();
+}
+
+class _FakeInheritedWidget_2 extends _i1.SmartFake
+    implements _i2.InheritedWidget {
+  _FakeInheritedWidget_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+
+  @override
+  String toString({_i3.DiagnosticLevel? minLevel = _i3.DiagnosticLevel.info}) =>
+      super.toString();
+}
+
+class _FakeDiagnosticsNode_3 extends _i1.SmartFake
+    implements _i3.DiagnosticsNode {
+  _FakeDiagnosticsNode_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+
+  @override
+  String toString({
+    _i3.TextTreeConfiguration? parentConfiguration,
+    _i3.DiagnosticLevel? minLevel = _i3.DiagnosticLevel.info,
+  }) =>
+      super.toString();
+}
+
+class _FakeElement_4 extends _i1.SmartFake implements _i2.Element {
+  _FakeElement_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+
+  @override
+  String toString({_i3.DiagnosticLevel? minLevel = _i3.DiagnosticLevel.info}) =>
+      super.toString();
+}
+
 /// A class which mocks [ApmHostApi].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
+class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
   MockApmHostApi() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<void> setEnabled(bool? arg_isEnabled) => (super.noSuchMethod(
+  _i5.Future<void> setEnabled(bool? arg_isEnabled) => (super.noSuchMethod(
         Invocation.method(
           #setEnabled,
           [arg_isEnabled],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<bool> isEnabled() => (super.noSuchMethod(
+  _i5.Future<bool> isEnabled() => (super.noSuchMethod(
         Invocation.method(
           #isEnabled,
           [],
         ),
-        returnValue: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 
   @override
-  _i3.Future<void> setScreenLoadingEnabled(bool? arg_isEnabled) =>
+  _i5.Future<void> setScreenLoadingEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
         Invocation.method(
           #setScreenLoadingEnabled,
           [arg_isEnabled],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<bool> isScreenLoadingEnabled() => (super.noSuchMethod(
+  _i5.Future<bool> isScreenLoadingEnabled() => (super.noSuchMethod(
         Invocation.method(
           #isScreenLoadingEnabled,
           [],
         ),
-        returnValue: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 
   @override
-  _i3.Future<void> setColdAppLaunchEnabled(bool? arg_isEnabled) =>
+  _i5.Future<void> setColdAppLaunchEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
         Invocation.method(
           #setColdAppLaunchEnabled,
           [arg_isEnabled],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setAutoUITraceEnabled(bool? arg_isEnabled) =>
+  _i5.Future<void> setAutoUITraceEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
         Invocation.method(
           #setAutoUITraceEnabled,
           [arg_isEnabled],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<String?> startExecutionTrace(
+  _i5.Future<String?> startExecutionTrace(
     String? arg_id,
     String? arg_name,
   ) =>
@@ -118,21 +183,21 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
             arg_name,
           ],
         ),
-        returnValue: _i3.Future<String?>.value(),
-      ) as _i3.Future<String?>);
+        returnValue: _i5.Future<String?>.value(),
+      ) as _i5.Future<String?>);
 
   @override
-  _i3.Future<void> startFlow(String? arg_name) => (super.noSuchMethod(
+  _i5.Future<void> startFlow(String? arg_name) => (super.noSuchMethod(
         Invocation.method(
           #startFlow,
           [arg_name],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setFlowAttribute(
+  _i5.Future<void> setFlowAttribute(
     String? arg_name,
     String? arg_key,
     String? arg_value,
@@ -146,22 +211,22 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
             arg_value,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> endFlow(String? arg_name) => (super.noSuchMethod(
+  _i5.Future<void> endFlow(String? arg_name) => (super.noSuchMethod(
         Invocation.method(
           #endFlow,
           [arg_name],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setExecutionTraceAttribute(
+  _i5.Future<void> setExecutionTraceAttribute(
     String? arg_id,
     String? arg_key,
     String? arg_value,
@@ -175,63 +240,63 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
             arg_value,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> endExecutionTrace(String? arg_id) => (super.noSuchMethod(
+  _i5.Future<void> endExecutionTrace(String? arg_id) => (super.noSuchMethod(
         Invocation.method(
           #endExecutionTrace,
           [arg_id],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> startUITrace(String? arg_name) => (super.noSuchMethod(
+  _i5.Future<void> startUITrace(String? arg_name) => (super.noSuchMethod(
         Invocation.method(
           #startUITrace,
           [arg_name],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> endUITrace() => (super.noSuchMethod(
+  _i5.Future<void> endUITrace() => (super.noSuchMethod(
         Invocation.method(
           #endUITrace,
           [],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> endAppLaunch() => (super.noSuchMethod(
+  _i5.Future<void> endAppLaunch() => (super.noSuchMethod(
         Invocation.method(
           #endAppLaunch,
           [],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> networkLogAndroid(Map<String?, Object?>? arg_data) =>
+  _i5.Future<void> networkLogAndroid(Map<String?, Object?>? arg_data) =>
       (super.noSuchMethod(
         Invocation.method(
           #networkLogAndroid,
           [arg_data],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> startCpUiTrace(
+  _i5.Future<void> startCpUiTrace(
     String? arg_screenName,
     int? arg_microTimeStamp,
     int? arg_traceId,
@@ -245,12 +310,12 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
             arg_traceId,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> reportScreenLoadingCP(
+  _i5.Future<void> reportScreenLoadingCP(
     int? arg_startTimeStampMicro,
     int? arg_durationMicro,
     int? arg_uiTraceId,
@@ -264,12 +329,12 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
             arg_uiTraceId,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> endScreenLoadingCP(
+  _i5.Future<void> endScreenLoadingCP(
     int? arg_timeStampMicro,
     int? arg_uiTraceId,
   ) =>
@@ -281,49 +346,49 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
             arg_uiTraceId,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 }
 
 /// A class which mocks [InstabugHostApi].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockInstabugHostApi extends _i1.Mock implements _i4.InstabugHostApi {
+class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
   MockInstabugHostApi() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<void> setEnabled(bool? arg_isEnabled) => (super.noSuchMethod(
+  _i5.Future<void> setEnabled(bool? arg_isEnabled) => (super.noSuchMethod(
         Invocation.method(
           #setEnabled,
           [arg_isEnabled],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<bool> isEnabled() => (super.noSuchMethod(
+  _i5.Future<bool> isEnabled() => (super.noSuchMethod(
         Invocation.method(
           #isEnabled,
           [],
         ),
-        returnValue: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 
   @override
-  _i3.Future<bool> isBuilt() => (super.noSuchMethod(
+  _i5.Future<bool> isBuilt() => (super.noSuchMethod(
         Invocation.method(
           #isBuilt,
           [],
         ),
-        returnValue: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 
   @override
-  _i3.Future<void> init(
+  _i5.Future<void> init(
     String? arg_token,
     List<String?>? arg_invocationEvents,
     String? arg_debugLogsLevel,
@@ -337,33 +402,33 @@ class MockInstabugHostApi extends _i1.Mock implements _i4.InstabugHostApi {
             arg_debugLogsLevel,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> show() => (super.noSuchMethod(
+  _i5.Future<void> show() => (super.noSuchMethod(
         Invocation.method(
           #show,
           [],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> showWelcomeMessageWithMode(String? arg_mode) =>
+  _i5.Future<void> showWelcomeMessageWithMode(String? arg_mode) =>
       (super.noSuchMethod(
         Invocation.method(
           #showWelcomeMessageWithMode,
           [arg_mode],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> identifyUser(
+  _i5.Future<void> identifyUser(
     String? arg_email,
     String? arg_name,
     String? arg_userId,
@@ -377,94 +442,94 @@ class MockInstabugHostApi extends _i1.Mock implements _i4.InstabugHostApi {
             arg_userId,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setUserData(String? arg_data) => (super.noSuchMethod(
+  _i5.Future<void> setUserData(String? arg_data) => (super.noSuchMethod(
         Invocation.method(
           #setUserData,
           [arg_data],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> logUserEvent(String? arg_name) => (super.noSuchMethod(
+  _i5.Future<void> logUserEvent(String? arg_name) => (super.noSuchMethod(
         Invocation.method(
           #logUserEvent,
           [arg_name],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> logOut() => (super.noSuchMethod(
+  _i5.Future<void> logOut() => (super.noSuchMethod(
         Invocation.method(
           #logOut,
           [],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setLocale(String? arg_locale) => (super.noSuchMethod(
+  _i5.Future<void> setLocale(String? arg_locale) => (super.noSuchMethod(
         Invocation.method(
           #setLocale,
           [arg_locale],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setColorTheme(String? arg_theme) => (super.noSuchMethod(
+  _i5.Future<void> setColorTheme(String? arg_theme) => (super.noSuchMethod(
         Invocation.method(
           #setColorTheme,
           [arg_theme],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setWelcomeMessageMode(String? arg_mode) =>
+  _i5.Future<void> setWelcomeMessageMode(String? arg_mode) =>
       (super.noSuchMethod(
         Invocation.method(
           #setWelcomeMessageMode,
           [arg_mode],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setPrimaryColor(int? arg_color) => (super.noSuchMethod(
+  _i5.Future<void> setPrimaryColor(int? arg_color) => (super.noSuchMethod(
         Invocation.method(
           #setPrimaryColor,
           [arg_color],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setSessionProfilerEnabled(bool? arg_enabled) =>
+  _i5.Future<void> setSessionProfilerEnabled(bool? arg_enabled) =>
       (super.noSuchMethod(
         Invocation.method(
           #setSessionProfilerEnabled,
           [arg_enabled],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setValueForStringWithKey(
+  _i5.Future<void> setValueForStringWithKey(
     String? arg_value,
     String? arg_key,
   ) =>
@@ -476,73 +541,73 @@ class MockInstabugHostApi extends _i1.Mock implements _i4.InstabugHostApi {
             arg_key,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> appendTags(List<String?>? arg_tags) => (super.noSuchMethod(
+  _i5.Future<void> appendTags(List<String?>? arg_tags) => (super.noSuchMethod(
         Invocation.method(
           #appendTags,
           [arg_tags],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> resetTags() => (super.noSuchMethod(
+  _i5.Future<void> resetTags() => (super.noSuchMethod(
         Invocation.method(
           #resetTags,
           [],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<List<String?>?> getTags() => (super.noSuchMethod(
+  _i5.Future<List<String?>?> getTags() => (super.noSuchMethod(
         Invocation.method(
           #getTags,
           [],
         ),
-        returnValue: _i3.Future<List<String?>?>.value(),
-      ) as _i3.Future<List<String?>?>);
+        returnValue: _i5.Future<List<String?>?>.value(),
+      ) as _i5.Future<List<String?>?>);
 
   @override
-  _i3.Future<void> addExperiments(List<String?>? arg_experiments) =>
+  _i5.Future<void> addExperiments(List<String?>? arg_experiments) =>
       (super.noSuchMethod(
         Invocation.method(
           #addExperiments,
           [arg_experiments],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> removeExperiments(List<String?>? arg_experiments) =>
+  _i5.Future<void> removeExperiments(List<String?>? arg_experiments) =>
       (super.noSuchMethod(
         Invocation.method(
           #removeExperiments,
           [arg_experiments],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> clearAllExperiments() => (super.noSuchMethod(
+  _i5.Future<void> clearAllExperiments() => (super.noSuchMethod(
         Invocation.method(
           #clearAllExperiments,
           [],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setUserAttribute(
+  _i5.Future<void> setUserAttribute(
     String? arg_value,
     String? arg_key,
   ) =>
@@ -554,41 +619,41 @@ class MockInstabugHostApi extends _i1.Mock implements _i4.InstabugHostApi {
             arg_key,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> removeUserAttribute(String? arg_key) => (super.noSuchMethod(
+  _i5.Future<void> removeUserAttribute(String? arg_key) => (super.noSuchMethod(
         Invocation.method(
           #removeUserAttribute,
           [arg_key],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<String?> getUserAttributeForKey(String? arg_key) =>
+  _i5.Future<String?> getUserAttributeForKey(String? arg_key) =>
       (super.noSuchMethod(
         Invocation.method(
           #getUserAttributeForKey,
           [arg_key],
         ),
-        returnValue: _i3.Future<String?>.value(),
-      ) as _i3.Future<String?>);
+        returnValue: _i5.Future<String?>.value(),
+      ) as _i5.Future<String?>);
 
   @override
-  _i3.Future<Map<String?, String?>?> getUserAttributes() => (super.noSuchMethod(
+  _i5.Future<Map<String?, String?>?> getUserAttributes() => (super.noSuchMethod(
         Invocation.method(
           #getUserAttributes,
           [],
         ),
-        returnValue: _i3.Future<Map<String?, String?>?>.value(),
-      ) as _i3.Future<Map<String?, String?>?>);
+        returnValue: _i5.Future<Map<String?, String?>?>.value(),
+      ) as _i5.Future<Map<String?, String?>?>);
 
   @override
-  _i3.Future<void> setReproStepsConfig(
+  _i5.Future<void> setReproStepsConfig(
     String? arg_bugMode,
     String? arg_crashMode,
     String? arg_sessionReplayMode,
@@ -602,23 +667,23 @@ class MockInstabugHostApi extends _i1.Mock implements _i4.InstabugHostApi {
             arg_sessionReplayMode,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> reportScreenChange(String? arg_screenName) =>
+  _i5.Future<void> reportScreenChange(String? arg_screenName) =>
       (super.noSuchMethod(
         Invocation.method(
           #reportScreenChange,
           [arg_screenName],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setCustomBrandingImage(
+  _i5.Future<void> setCustomBrandingImage(
     String? arg_light,
     String? arg_dark,
   ) =>
@@ -630,22 +695,22 @@ class MockInstabugHostApi extends _i1.Mock implements _i4.InstabugHostApi {
             arg_dark,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> setFont(String? arg_font) => (super.noSuchMethod(
+  _i5.Future<void> setFont(String? arg_font) => (super.noSuchMethod(
         Invocation.method(
           #setFont,
           [arg_font],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> addFileAttachmentWithURL(
+  _i5.Future<void> addFileAttachmentWithURL(
     String? arg_filePath,
     String? arg_fileName,
   ) =>
@@ -657,13 +722,13 @@ class MockInstabugHostApi extends _i1.Mock implements _i4.InstabugHostApi {
             arg_fileName,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> addFileAttachmentWithData(
-    _i5.Uint8List? arg_data,
+  _i5.Future<void> addFileAttachmentWithData(
+    _i7.Uint8List? arg_data,
     String? arg_fileName,
   ) =>
       (super.noSuchMethod(
@@ -674,52 +739,52 @@ class MockInstabugHostApi extends _i1.Mock implements _i4.InstabugHostApi {
             arg_fileName,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> clearFileAttachments() => (super.noSuchMethod(
+  _i5.Future<void> clearFileAttachments() => (super.noSuchMethod(
         Invocation.method(
           #clearFileAttachments,
           [],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> networkLog(Map<String?, Object?>? arg_data) =>
+  _i5.Future<void> networkLog(Map<String?, Object?>? arg_data) =>
       (super.noSuchMethod(
         Invocation.method(
           #networkLog,
           [arg_data],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i3.Future<void> willRedirectToStore() => (super.noSuchMethod(
+  _i5.Future<void> willRedirectToStore() => (super.noSuchMethod(
         Invocation.method(
           #willRedirectToStore,
           [],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 }
 
 /// A class which mocks [InstabugLogger].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockInstabugLogger extends _i1.Mock implements _i6.InstabugLogger {
+class MockInstabugLogger extends _i1.Mock implements _i8.InstabugLogger {
   MockInstabugLogger() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  set logLevel(_i7.LogLevel? level) => super.noSuchMethod(
+  set logLevel(_i9.LogLevel? level) => super.noSuchMethod(
         Invocation.setter(
           #logLevel,
           level,
@@ -730,7 +795,7 @@ class MockInstabugLogger extends _i1.Mock implements _i6.InstabugLogger {
   @override
   void log(
     String? message, {
-    required _i7.LogLevel? level,
+    required _i9.LogLevel? level,
     String? tag = r'',
   }) =>
       super.noSuchMethod(
@@ -791,7 +856,7 @@ class MockInstabugLogger extends _i1.Mock implements _i6.InstabugLogger {
 /// A class which mocks [IBGDateTime].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIBGDateTime extends _i1.Mock implements _i8.IBGDateTime {
+class MockIBGDateTime extends _i1.Mock implements _i10.IBGDateTime {
   MockIBGDateTime() {
     _i1.throwOnMissingStub(this);
   }
@@ -816,7 +881,7 @@ class MockIBGDateTime extends _i1.Mock implements _i8.IBGDateTime {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockInstabugMonotonicClock extends _i1.Mock
-    implements _i9.InstabugMonotonicClock {
+    implements _i11.InstabugMonotonicClock {
   MockInstabugMonotonicClock() {
     _i1.throwOnMissingStub(this);
   }
@@ -831,7 +896,7 @@ class MockInstabugMonotonicClock extends _i1.Mock
 /// A class which mocks [IBGBuildInfo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIBGBuildInfo extends _i1.Mock implements _i10.IBGBuildInfo {
+class MockIBGBuildInfo extends _i1.Mock implements _i12.IBGBuildInfo {
   MockIBGBuildInfo() {
     _i1.throwOnMissingStub(this);
   }
@@ -870,7 +935,7 @@ class MockIBGBuildInfo extends _i1.Mock implements _i10.IBGBuildInfo {
 /// A class which mocks [RouteMatcher].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockRouteMatcher extends _i1.Mock implements _i7.RouteMatcher {
+class MockRouteMatcher extends _i1.Mock implements _i9.RouteMatcher {
   MockRouteMatcher() {
     _i1.throwOnMissingStub(this);
   }
@@ -891,4 +956,326 @@ class MockRouteMatcher extends _i1.Mock implements _i7.RouteMatcher {
         ),
         returnValue: false,
       ) as bool);
+}
+
+/// A class which mocks [BuildContext].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockBuildContext extends _i1.Mock implements _i2.BuildContext {
+  @override
+  _i2.Widget get widget => (super.noSuchMethod(
+        Invocation.getter(#widget),
+        returnValue: _FakeWidget_1(
+          this,
+          Invocation.getter(#widget),
+        ),
+        returnValueForMissingStub: _FakeWidget_1(
+          this,
+          Invocation.getter(#widget),
+        ),
+      ) as _i2.Widget);
+
+  @override
+  bool get mounted => (super.noSuchMethod(
+        Invocation.getter(#mounted),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  bool get debugDoingBuild => (super.noSuchMethod(
+        Invocation.getter(#debugDoingBuild),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  _i2.InheritedWidget dependOnInheritedElement(
+    _i2.InheritedElement? ancestor, {
+    Object? aspect,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #dependOnInheritedElement,
+          [ancestor],
+          {#aspect: aspect},
+        ),
+        returnValue: _FakeInheritedWidget_2(
+          this,
+          Invocation.method(
+            #dependOnInheritedElement,
+            [ancestor],
+            {#aspect: aspect},
+          ),
+        ),
+        returnValueForMissingStub: _FakeInheritedWidget_2(
+          this,
+          Invocation.method(
+            #dependOnInheritedElement,
+            [ancestor],
+            {#aspect: aspect},
+          ),
+        ),
+      ) as _i2.InheritedWidget);
+
+  @override
+  void visitAncestorElements(_i2.ConditionalElementVisitor? visitor) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #visitAncestorElements,
+          [visitor],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void visitChildElements(_i2.ElementVisitor? visitor) => super.noSuchMethod(
+        Invocation.method(
+          #visitChildElements,
+          [visitor],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void dispatchNotification(_i13.Notification? notification) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #dispatchNotification,
+          [notification],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i3.DiagnosticsNode describeElement(
+    String? name, {
+    _i3.DiagnosticsTreeStyle? style = _i3.DiagnosticsTreeStyle.errorProperty,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #describeElement,
+          [name],
+          {#style: style},
+        ),
+        returnValue: _FakeDiagnosticsNode_3(
+          this,
+          Invocation.method(
+            #describeElement,
+            [name],
+            {#style: style},
+          ),
+        ),
+        returnValueForMissingStub: _FakeDiagnosticsNode_3(
+          this,
+          Invocation.method(
+            #describeElement,
+            [name],
+            {#style: style},
+          ),
+        ),
+      ) as _i3.DiagnosticsNode);
+
+  @override
+  _i3.DiagnosticsNode describeWidget(
+    String? name, {
+    _i3.DiagnosticsTreeStyle? style = _i3.DiagnosticsTreeStyle.errorProperty,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #describeWidget,
+          [name],
+          {#style: style},
+        ),
+        returnValue: _FakeDiagnosticsNode_3(
+          this,
+          Invocation.method(
+            #describeWidget,
+            [name],
+            {#style: style},
+          ),
+        ),
+        returnValueForMissingStub: _FakeDiagnosticsNode_3(
+          this,
+          Invocation.method(
+            #describeWidget,
+            [name],
+            {#style: style},
+          ),
+        ),
+      ) as _i3.DiagnosticsNode);
+
+  @override
+  List<_i3.DiagnosticsNode> describeMissingAncestor(
+          {required Type? expectedAncestorType}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #describeMissingAncestor,
+          [],
+          {#expectedAncestorType: expectedAncestorType},
+        ),
+        returnValue: <_i3.DiagnosticsNode>[],
+        returnValueForMissingStub: <_i3.DiagnosticsNode>[],
+      ) as List<_i3.DiagnosticsNode>);
+
+  @override
+  _i3.DiagnosticsNode describeOwnershipChain(String? name) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #describeOwnershipChain,
+          [name],
+        ),
+        returnValue: _FakeDiagnosticsNode_3(
+          this,
+          Invocation.method(
+            #describeOwnershipChain,
+            [name],
+          ),
+        ),
+        returnValueForMissingStub: _FakeDiagnosticsNode_3(
+          this,
+          Invocation.method(
+            #describeOwnershipChain,
+            [name],
+          ),
+        ),
+      ) as _i3.DiagnosticsNode);
+}
+
+/// A class which mocks [Widget].
+///
+/// See the documentation for Mockito's code generation for more information.
+// ignore: must_be_immutable
+class MockWidget extends _i1.Mock implements _i2.Widget {
+  @override
+  _i2.Element createElement() => (super.noSuchMethod(
+        Invocation.method(
+          #createElement,
+          [],
+        ),
+        returnValue: _FakeElement_4(
+          this,
+          Invocation.method(
+            #createElement,
+            [],
+          ),
+        ),
+        returnValueForMissingStub: _FakeElement_4(
+          this,
+          Invocation.method(
+            #createElement,
+            [],
+          ),
+        ),
+      ) as _i2.Element);
+
+  @override
+  String toStringShort() => (super.noSuchMethod(
+        Invocation.method(
+          #toStringShort,
+          [],
+        ),
+        returnValue: '',
+        returnValueForMissingStub: '',
+      ) as String);
+
+  @override
+  void debugFillProperties(_i3.DiagnosticPropertiesBuilder? properties) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #debugFillProperties,
+          [properties],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  String toStringShallow({
+    String? joiner = r', ',
+    _i3.DiagnosticLevel? minLevel = _i3.DiagnosticLevel.debug,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #toStringShallow,
+          [],
+          {
+            #joiner: joiner,
+            #minLevel: minLevel,
+          },
+        ),
+        returnValue: '',
+        returnValueForMissingStub: '',
+      ) as String);
+
+  @override
+  String toStringDeep({
+    String? prefixLineOne = r'',
+    String? prefixOtherLines,
+    _i3.DiagnosticLevel? minLevel = _i3.DiagnosticLevel.debug,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #toStringDeep,
+          [],
+          {
+            #prefixLineOne: prefixLineOne,
+            #prefixOtherLines: prefixOtherLines,
+            #minLevel: minLevel,
+          },
+        ),
+        returnValue: '',
+        returnValueForMissingStub: '',
+      ) as String);
+
+  @override
+  _i3.DiagnosticsNode toDiagnosticsNode({
+    String? name,
+    _i3.DiagnosticsTreeStyle? style,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #toDiagnosticsNode,
+          [],
+          {
+            #name: name,
+            #style: style,
+          },
+        ),
+        returnValue: _FakeDiagnosticsNode_3(
+          this,
+          Invocation.method(
+            #toDiagnosticsNode,
+            [],
+            {
+              #name: name,
+              #style: style,
+            },
+          ),
+        ),
+        returnValueForMissingStub: _FakeDiagnosticsNode_3(
+          this,
+          Invocation.method(
+            #toDiagnosticsNode,
+            [],
+            {
+              #name: name,
+              #style: style,
+            },
+          ),
+        ),
+      ) as _i3.DiagnosticsNode);
+
+  @override
+  List<_i3.DiagnosticsNode> debugDescribeChildren() => (super.noSuchMethod(
+        Invocation.method(
+          #debugDescribeChildren,
+          [],
+        ),
+        returnValue: <_i3.DiagnosticsNode>[],
+        returnValueForMissingStub: <_i3.DiagnosticsNode>[],
+      ) as List<_i3.DiagnosticsNode>);
+
+  @override
+  String toString({_i3.DiagnosticLevel? minLevel = _i3.DiagnosticLevel.info}) =>
+      super.toString();
 }
