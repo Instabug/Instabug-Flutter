@@ -39,6 +39,7 @@ class ScreenLoadingManagerNoResets extends ScreenLoadingManager {
   IBGBuildInfo,
   RouteMatcher,
 ])
+@GenerateNiceMocks([MockSpec<BuildContext>(), MockSpec<Widget>()])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +52,8 @@ void main() {
   late IBGBuildInfo mIBGBuildInfo;
   late MockRouteMatcher mRouteMatcher;
   late InstabugMonotonicClock mInstabugMonotonicClock;
+  late MockWidget mockScreen;
+  late MockBuildContext mockBuildContext;
   const screenName = 'screen1';
 
   setUp(() {
@@ -911,6 +914,104 @@ void main() {
       verify(mApmHost.endScreenLoadingCP(
               extendedEndTimeInMicroseconds, uiTrace.traceId))
           .called(1);
+    });
+  });
+
+  group('sanitize screen name tests', () {
+    test('screen name equals to [/] should be replaced bu [ROOT_PAGE]', () {
+      const screenName  = '/';
+      final sanitizedScreenName = ScreenLoadingManager.I.sanitizeScreenName(screenName);
+      expect(sanitizedScreenName, "ROOT_PAGE");
+    });
+
+    test('screen name prefixed with [/] should omit [/] char', () {
+      const screenName  = '/Home';
+      final sanitizedScreenName = ScreenLoadingManager.I.sanitizeScreenName(screenName);
+      expect(sanitizedScreenName, "Home");
+    });
+
+    test('screen name suffixed with [/] should omit [/] char', () {
+      const screenName  = '/Home';
+      final sanitizedScreenName = ScreenLoadingManager.I.sanitizeScreenName(screenName);
+      expect(sanitizedScreenName, "Home");
+    });
+
+    test('screen name without [/] on edges should return the same ', () {
+      const screenName  = 'Home';
+      final sanitizedScreenName = ScreenLoadingManager.I.sanitizeScreenName(screenName);
+      expect(sanitizedScreenName, "Home");
+    });
+    test('screen name prefixed with [//] and suffixed with [/] should omit first and last[/] char', () {
+      const screenName  = '//Home/';
+      final sanitizedScreenName = ScreenLoadingManager.I.sanitizeScreenName(screenName);
+      expect(sanitizedScreenName, "/Home");
+    });
+
+  });
+
+  group('wrapRoutes', () {
+    setUp(() {
+      mockBuildContext = MockBuildContext();
+      mockScreen = MockWidget();
+    });
+    test('wraps routes with InstabugCaptureScreenLoading widgets', () {
+      // Create a map of routes
+      final routes = {
+        '/home': (context) => mockScreen,
+        '/settings': (context) => mockScreen,
+      };
+
+      // Wrap the routes
+      final wrappedRoutes = ScreenLoadingManager.wrapRoutes(routes);
+
+      // Verify that the routes are wrapped correctly
+      expect(wrappedRoutes, isA<Map<String, WidgetBuilder>>());
+      expect(wrappedRoutes.length, equals(routes.length));
+      for (final route in wrappedRoutes.entries) {
+        expect(
+            route.value(mockBuildContext), isA<InstabugCaptureScreenLoading>());
+      }
+    });
+
+    test('does not wrap excluded routes', () {
+      // Create a map of routes
+      final routes = {
+        '/home': (context) => mockScreen,
+        '/settings': (context) => mockScreen,
+      };
+
+      // Exclude the '/home' route
+      final wrappedRoutes =
+          ScreenLoadingManager.wrapRoutes(routes, exclude: ['/home']);
+
+      // Verify that the '/home' route is not wrapped
+      expect(wrappedRoutes['/home'], equals(routes['/home']));
+
+      // Verify that the '/settings' route is wrapped
+      expect(wrappedRoutes['/settings']?.call(mockBuildContext),
+          isA<InstabugCaptureScreenLoading>());
+    });
+
+    test('handles empty routes map', () {
+      // Create an empty map of routes
+      final routes = <String, WidgetBuilder>{};
+
+      // Wrap the routes
+      final wrappedRoutes = ScreenLoadingManager.wrapRoutes(routes);
+
+      // Verify that the returned map is empty
+      expect(wrappedRoutes, isEmpty);
+    });
+
+    test('handles null routes map', () {
+      // Create a null map of routes
+      Map<String, WidgetBuilder>? routes;
+
+      // Wrap the routes
+      final wrappedRoutes = ScreenLoadingManager.wrapRoutes(routes ?? {});
+
+      // Verify that the returned map is empty
+      expect(wrappedRoutes, isEmpty);
     });
   });
 }
