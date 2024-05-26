@@ -917,6 +917,38 @@ void main() {
     });
   });
 
+  group('sanitize screen name tests', () {
+    test('screen name equals to [/] should be replaced bu [ROOT_PAGE]', () {
+      const screenName  = '/';
+      final sanitizedScreenName = ScreenLoadingManager.I.sanitizeScreenName(screenName);
+      expect(sanitizedScreenName, "ROOT_PAGE");
+    });
+
+    test('screen name prefixed with [/] should omit [/] char', () {
+      const screenName  = '/Home';
+      final sanitizedScreenName = ScreenLoadingManager.I.sanitizeScreenName(screenName);
+      expect(sanitizedScreenName, "Home");
+    });
+
+    test('screen name suffixed with [/] should omit [/] char', () {
+      const screenName  = '/Home';
+      final sanitizedScreenName = ScreenLoadingManager.I.sanitizeScreenName(screenName);
+      expect(sanitizedScreenName, "Home");
+    });
+
+    test('screen name without [/] on edges should return the same ', () {
+      const screenName  = 'Home';
+      final sanitizedScreenName = ScreenLoadingManager.I.sanitizeScreenName(screenName);
+      expect(sanitizedScreenName, "Home");
+    });
+    test('screen name prefixed with [//] and suffixed with [/] should omit first and last[/] char', () {
+      const screenName  = '//Home/';
+      final sanitizedScreenName = ScreenLoadingManager.I.sanitizeScreenName(screenName);
+      expect(sanitizedScreenName, "/Home");
+    });
+
+  });
+
   group('wrapRoutes', () {
     setUp(() {
       mockBuildContext = MockBuildContext();
@@ -936,14 +968,15 @@ void main() {
       expect(wrappedRoutes, isA<Map<String, WidgetBuilder>>());
       expect(wrappedRoutes.length, equals(routes.length));
       for (final route in wrappedRoutes.entries) {
-        expect(route.value(mockBuildContext), isA<InstabugCaptureScreenLoading>());
+        expect(
+            route.value(mockBuildContext), isA<InstabugCaptureScreenLoading>());
       }
     });
 
     test('does not wrap excluded routes', () {
       // Create a map of routes
       final routes = {
-        '/home': (context) =>mockScreen,
+        '/home': (context) => mockScreen,
         '/settings': (context) => mockScreen,
       };
 
@@ -955,7 +988,8 @@ void main() {
       expect(wrappedRoutes['/home'], equals(routes['/home']));
 
       // Verify that the '/settings' route is wrapped
-      expect(wrappedRoutes['/settings']?.call(mockBuildContext), isA<InstabugCaptureScreenLoading>());
+      expect(wrappedRoutes['/settings']?.call(mockBuildContext),
+          isA<InstabugCaptureScreenLoading>());
     });
 
     test('handles empty routes map', () {
