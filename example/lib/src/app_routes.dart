@@ -6,8 +6,8 @@ final appRoutes = {
   /// Home Widget specified in MaterialApp() other wise the the Flutter engine
   /// will throw a Runtime exception deo to Flutter restrictions
 
-  // "/": (BuildContext context) =>
-  //     const MyHomePage(title: 'Flutter Demo Home Pag'),
+  "/": (BuildContext context) =>
+      const MyHomePage(title: 'Flutter Demo Home Pag'),
   CrashesPage.screenName: (BuildContext context) => const CrashesPage(),
   ComplexPage.screenName: (BuildContext context) => const ComplexPage(),
   ApmPage.screenName: (BuildContext context) => const ApmPage(),
