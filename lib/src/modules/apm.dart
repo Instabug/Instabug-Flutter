@@ -225,7 +225,6 @@ class APM {
     Map<String, WidgetBuilder> routes, {
     List<String> exclude = const [],
   }) {
-    final x = ScreenLoadingManager.wrapRoutes(routes, exclude: exclude);
-    return x;
+    return ScreenLoadingManager.wrapRoutes(routes, exclude: exclude);
   }
 }
