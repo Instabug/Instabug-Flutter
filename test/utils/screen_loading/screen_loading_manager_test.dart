@@ -806,13 +806,11 @@ void main() {
         () async {
       uiTrace.didExtendScreenLoading = true;
       when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
+      when(FlagsConfig.endScreenLoading.isEnabled())
+          .thenAnswer((_) async => true);
       when(IBGBuildInfo.I.isIOS).thenReturn(false);
 
       await ScreenLoadingManager.I.endScreenLoading();
-
-      final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
-      final actualScreenLoadingTrace =
-          ScreenLoadingManager.I.currentScreenLoadingTrace;
 
       verify(
         mInstabugLogger.e(
@@ -828,6 +826,8 @@ void main() {
       uiTrace.didStartScreenLoading = false;
       mScreenLoadingManager.currentScreenLoadingTrace = null;
       when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
+      when(FlagsConfig.endScreenLoading.isEnabled())
+          .thenAnswer((_) async => true);
       when(IBGBuildInfo.I.isIOS).thenReturn(false);
 
       await ScreenLoadingManager.I.endScreenLoading();
@@ -857,13 +857,13 @@ void main() {
       const prematureDuration = 0;
       mScreenLoadingManager.currentScreenLoadingTrace = screenLoadingTrace;
       when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
+      when(FlagsConfig.endScreenLoading.isEnabled())
+          .thenAnswer((_) async => true);
       when(IBGBuildInfo.I.isIOS).thenReturn(false);
 
       await ScreenLoadingManager.I.endScreenLoading();
 
       final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
-      final actualScreenLoadingTrace =
-          ScreenLoadingManager.I.currentScreenLoadingTrace;
 
       expect(
         actualUiTrace?.didExtendScreenLoading,
@@ -881,7 +881,8 @@ void main() {
 
     test('[endScreenLoading] should End screen loading', () async {
       when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
-      when(FlagsConfig.endScreenLoading.isEnabled()).thenAnswer((_) async => true);
+      when(FlagsConfig.endScreenLoading.isEnabled())
+          .thenAnswer((_) async => true);
       when(IBGBuildInfo.I.isIOS).thenReturn(false);
       when(mDateTime.now()).thenReturn(time);
       final startMonotonicTime = 250;
