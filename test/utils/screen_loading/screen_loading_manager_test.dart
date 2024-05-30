@@ -881,6 +881,7 @@ void main() {
 
     test('[endScreenLoading] should End screen loading', () async {
       when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
+      when(FlagsConfig.endScreenLoading.isEnabled()).thenAnswer((_) async => true);
       when(IBGBuildInfo.I.isIOS).thenReturn(false);
       when(mDateTime.now()).thenReturn(time);
       final startMonotonicTime = 250;

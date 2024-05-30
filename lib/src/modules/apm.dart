@@ -218,7 +218,6 @@ class APM {
     return ScreenLoadingManager.I.endScreenLoading();
   }
 
-
   /// @nodoc
   @internal
   static Future<bool> isEndScreenLoadingEnabled() async {
