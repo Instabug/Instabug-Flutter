@@ -43,11 +43,11 @@ part 'src/components/flows_content.dart';
 
 void main() {
   runZonedGuarded(
-    () {
+    ()  async{
       WidgetsFlutterBinding.ensureInitialized();
 
-      Instabug.init(
-        token: 'ed6f659591566da19b67857e1b9d40ab',
+       await Instabug.init(
+        token: 'f9ba477fcac05cc99bbd043d1024fa5b',
         invocationEvents: [InvocationEvent.floatingButton],
         debugLogsLevel: LogLevel.verbose,
       );
@@ -69,10 +69,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      navigatorObservers: [
-        InstabugNavigatorObserver(),
-      ],
-      routes: APM.wrapRoutes(appRoutes , exclude: [CrashesPage.screenName]),
+      // navigatorObservers: [
+      //   InstabugNavigatorObserver(),
+      // ],
+      // routes: APM.wrapRoutes(appRoutes , exclude: [CrashesPage.screenName]),
+      home:  RouteWrapper(routes: appRoutes,exclude: const [CrashesPage.screenName]),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,

@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart' show BuildContext;
+import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter_example/main.dart';
 
 final appRoutes = {
@@ -10,7 +11,7 @@ final appRoutes = {
       const MyHomePage(title: 'Flutter Demo Home Pag'),
   CrashesPage.screenName: (BuildContext context) => const CrashesPage(),
   ComplexPage.screenName: (BuildContext context) => const ComplexPage(),
-  ApmPage.screenName: (BuildContext context) => const ApmPage(),
+  ApmPage.screenName: (BuildContext context) => const InstabugCaptureScreenLoading(screenName:ApmPage.screenName, child: ApmPage()),
   ScreenLoadingPage.screenName: (BuildContext context) =>
       const ScreenLoadingPage(),
   ScreenCapturePrematureExtensionPage.screenName: (BuildContext context) =>

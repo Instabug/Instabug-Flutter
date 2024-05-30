@@ -18,3 +18,4 @@ export 'src/modules/surveys.dart';
 export 'src/utils/instabug_navigator_observer.dart';
 export 'src/utils/screen_loading/instabug_capture_screen_loading.dart';
 export 'src/utils/screen_loading/route_matcher.dart';
+export 'src/utils/screen_loading/route_wrapper.dart';
