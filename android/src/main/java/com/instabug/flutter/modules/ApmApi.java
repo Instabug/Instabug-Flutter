@@ -1,8 +1,10 @@
 package com.instabug.flutter.modules;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.instabug.apm.APM;
 import com.instabug.apm.InternalAPM;
 import com.instabug.apm.configuration.cp.APMFeature;
@@ -12,7 +14,9 @@ import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
+
 import io.flutter.plugin.common.BinaryMessenger;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
@@ -219,8 +223,6 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     }
 
 
-
-
     @Override
     public void startCpUiTrace(@NonNull String screenName, @NonNull Long microTimeStamp, @NonNull Long traceId) {
         try {
@@ -250,16 +252,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
     @Override
     public void isEndScreenLoadingEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
-        try {
-            InternalAPM._isFeatureEnabledCP(APMFeature.SCREEN_LOADING, "InstabugCaptureScreenLoading", new FeatureAvailabilityCallback() {
-                @Override
-                public void invoke(boolean isFeatureAvailable) {
-                    result.success(isFeatureAvailable);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        isScreenLoadingEnabled(result);
     }
 
     @Override
