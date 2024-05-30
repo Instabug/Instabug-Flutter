@@ -249,6 +249,20 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     }
 
     @Override
+    public void isEndScreenLoadingEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
+        try {
+            InternalAPM._isFeatureEnabledCP(APMFeature.SCREEN_LOADING, "InstabugCaptureScreenLoading", new FeatureAvailabilityCallback() {
+                @Override
+                public void invoke(boolean isFeatureAvailable) {
+                    result.success(isFeatureAvailable);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void isEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
         try {
             // TODO: replace true with an actual implementation of APM.isEnabled once implemented
