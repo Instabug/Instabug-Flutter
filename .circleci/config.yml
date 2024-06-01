@@ -143,9 +143,9 @@ jobs:
       name: android/android-machine
       resource-class: xlarge
       tag: default
-      java:
-        version: 'oraclejdk8'
     steps:
+      - android/change-java-version:
+          java-version: 8 
       - advanced-checkout/shallow-checkout
       - setup_flutter
       - android/run-tests:
@@ -157,9 +157,9 @@ jobs:
       name: android/android-machine
       resource-class: xlarge
       tag: default
-      java:
-        version: 'oraclejdk8'
     steps:
+      - android/change-java-version:
+          java-version: 8 
       - advanced-checkout/shallow-checkout
       - setup_captain:
           platform: android
