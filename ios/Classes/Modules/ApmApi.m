@@ -124,5 +124,11 @@ NSMutableDictionary *traces;
     [IBGAPM endScreenLoadingCPWithEndTimestampMUS:endScreenLoadingCPWithEndTimestampMUS];
 }
 
+- (void)isEndScreenLoadingEnabledWithCompletion:(nonnull void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion {
+    BOOL isEndScreenLoadingEnabled = IBGAPM.endScreenLoadingEnabled;
+    NSNumber *isEnabledNumber = @(isEndScreenLoadingEnabled);
+    completion(isEnabledNumber, nil);
+}
+
 
 @end

@@ -9,6 +9,8 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+// to maintain supported versions prior to Flutter 3.3
+// ignore: unused_import
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
