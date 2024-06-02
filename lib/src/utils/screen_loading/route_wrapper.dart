@@ -22,7 +22,7 @@ class RouteWrapper extends StatelessWidget {
       required this.child,
       required this.routes,
       this.initialRoute,
-      this.exclude = const []})
+      this.exclude = const [],})
       : super(key: key);
 
   @override
