@@ -282,6 +282,15 @@ class MockApmHostApi extends _i1.Mock implements _i3.ApmHostApi {
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<bool> isEndScreenLoadingEnabled() => (super.noSuchMethod(
+        Invocation.method(
+          #isEndScreenLoadingEnabled,
+          [],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 }
 
 /// A class which mocks [InstabugHostApi].

@@ -34,6 +34,7 @@ NSObject<FlutterMessageCodec> *ApmHostApiGetCodec(void);
 - (void)startCpUiTraceScreenName:(NSString *)screenName microTimeStamp:(NSNumber *)microTimeStamp traceId:(NSNumber *)traceId error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)reportScreenLoadingCPStartTimeStampMicro:(NSNumber *)startTimeStampMicro durationMicro:(NSNumber *)durationMicro uiTraceId:(NSNumber *)uiTraceId error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)endScreenLoadingCPTimeStampMicro:(NSNumber *)timeStampMicro uiTraceId:(NSNumber *)uiTraceId error:(FlutterError *_Nullable *_Nonnull)error;
+- (void)isEndScreenLoadingEnabledWithCompletion:(void (^)(NSNumber *_Nullable, FlutterError *_Nullable))completion;
 @end
 
 extern void ApmHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ApmHostApi> *_Nullable api);

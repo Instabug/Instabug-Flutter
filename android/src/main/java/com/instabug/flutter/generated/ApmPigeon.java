@@ -104,6 +104,8 @@ public class ApmPigeon {
 
     void endScreenLoadingCP(@NonNull Long timeStampMicro, @NonNull Long uiTraceId);
 
+    void isEndScreenLoadingEnabled(@NonNull Result<Boolean> result);
+
     /** The codec used by ApmHostApi. */
     static @NonNull MessageCodec<Object> getCodec() {
       return new StandardMessageCodec();
@@ -578,6 +580,33 @@ public class ApmPigeon {
                   wrapped = wrappedError;
                 }
                 reply.reply(wrapped);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.instabug_flutter.ApmHostApi.isEndScreenLoadingEnabled", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                Result<Boolean> resultCallback =
+                    new Result<Boolean>() {
+                      public void success(Boolean result) {
+                        wrapped.add(0, result);
+                        reply.reply(wrapped);
+                      }
+
+                      public void error(Throwable error) {
+                        ArrayList<Object> wrappedError = wrapError(error);
+                        reply.reply(wrappedError);
+                      }
+                    };
+
+                api.isEndScreenLoadingEnabled(resultCallback);
               });
         } else {
           channel.setMessageHandler(null);

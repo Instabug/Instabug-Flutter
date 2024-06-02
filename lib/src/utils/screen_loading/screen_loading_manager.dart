@@ -120,7 +120,8 @@ class ScreenLoadingManager {
       sanitizedScreenName = sanitizedScreenName.substring(1);
     }
     if (screenName[lastIndex] == characterToBeRemoved) {
-      sanitizedScreenName = sanitizedScreenName.substring(0, sanitizedScreenName.length - 1);
+      sanitizedScreenName =
+          sanitizedScreenName.substring(0, sanitizedScreenName.length - 1);
     }
     return sanitizedScreenName;
   }
