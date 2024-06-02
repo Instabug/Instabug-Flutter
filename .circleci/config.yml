@@ -144,6 +144,8 @@ jobs:
       resource-class: xlarge
       tag: default
     steps:
+      - android/change-java-version:
+          java-version: 8 
       - advanced-checkout/shallow-checkout
       - setup_flutter
       - android/run-tests:
@@ -156,6 +158,8 @@ jobs:
       resource-class: xlarge
       tag: default
     steps:
+      - android/change-java-version:
+          java-version: 8 
       - advanced-checkout/shallow-checkout
       - setup_captain:
           platform: android

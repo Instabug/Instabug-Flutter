@@ -227,4 +227,10 @@ class APM {
   }) {
     return ScreenLoadingManager.wrapRoutes(routes, exclude: exclude);
   }
+
+  /// @nodoc
+  @internal
+  static Future<bool> isEndScreenLoadingEnabled() async {
+    return _host.isEndScreenLoadingEnabled();
+  }
 }

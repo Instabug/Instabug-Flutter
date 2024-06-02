@@ -249,4 +249,13 @@ void main() {
     ).called(1);
     verifyNoMoreInteractions(mHost);
   });
+
+  test('[isSEndScreenLoadingEnabled] should call host method', () async {
+    when(mHost.isEndScreenLoadingEnabled()).thenAnswer((_) async => true);
+    await APM.isEndScreenLoadingEnabled();
+
+    verify(
+      mHost.isEndScreenLoadingEnabled(),
+    ).called(1);
+  });
 }

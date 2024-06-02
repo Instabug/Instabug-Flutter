@@ -14,7 +14,6 @@ import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_trace.d
 import 'package:instabug_flutter/src/utils/screen_loading/ui_trace.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-
 import 'screen_loading_manager_test.mocks.dart';
 
 class ScreenLoadingManagerNoResets extends ScreenLoadingManager {
@@ -302,7 +301,7 @@ void main() {
       verify(
         mInstabugLogger.e(
           'Screen loading monitoring is disabled, skipping starting screen loading monitoring for screen: $screenName.\n'
-          'Please refer to the documentation for how to enable screen loading monitoring on your app: https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking'
+          'Please refer to the documentation for how to enable screen loading monitoring on your app: https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking '
           "If Screen Loading is enabled but you're still seeing this message, please reach out to support.",
           tag: APM.tag,
         ),
@@ -491,7 +490,7 @@ void main() {
       verify(
         mInstabugLogger.e(
           'Screen loading monitoring is disabled, skipping reporting screen loading time for screen: $screenName.\n'
-          'Please refer to the documentation for how to enable screen loading monitoring on your app: https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking'
+          'Please refer to the documentation for how to enable screen loading monitoring on your app: https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking '
           "If Screen Loading is enabled but you're still seeing this message, please reach out to support.",
           tag: APM.tag,
         ),
@@ -776,7 +775,7 @@ void main() {
       verify(
         mInstabugLogger.e(
           'Screen loading monitoring is disabled, skipping ending screen loading monitoring with APM.endScreenLoading().\n'
-          'Please refer to the documentation for how to enable screen loading monitoring in your app: https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking'
+          'Please refer to the documentation for how to enable screen loading monitoring in your app: https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking '
           "If Screen Loading is enabled but you're still seeing this message, please reach out to support.",
           tag: APM.tag,
         ),
@@ -806,13 +805,11 @@ void main() {
         () async {
       uiTrace.didExtendScreenLoading = true;
       when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
+      when(FlagsConfig.endScreenLoading.isEnabled())
+          .thenAnswer((_) async => true);
       when(IBGBuildInfo.I.isIOS).thenReturn(false);
 
       await ScreenLoadingManager.I.endScreenLoading();
-
-      final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
-      final actualScreenLoadingTrace =
-          ScreenLoadingManager.I.currentScreenLoadingTrace;
 
       verify(
         mInstabugLogger.e(
@@ -828,6 +825,8 @@ void main() {
       uiTrace.didStartScreenLoading = false;
       mScreenLoadingManager.currentScreenLoadingTrace = null;
       when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
+      when(FlagsConfig.endScreenLoading.isEnabled())
+          .thenAnswer((_) async => true);
       when(IBGBuildInfo.I.isIOS).thenReturn(false);
 
       await ScreenLoadingManager.I.endScreenLoading();
@@ -857,13 +856,13 @@ void main() {
       const prematureDuration = 0;
       mScreenLoadingManager.currentScreenLoadingTrace = screenLoadingTrace;
       when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
+      when(FlagsConfig.endScreenLoading.isEnabled())
+          .thenAnswer((_) async => true);
       when(IBGBuildInfo.I.isIOS).thenReturn(false);
 
       await ScreenLoadingManager.I.endScreenLoading();
 
       final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
-      final actualScreenLoadingTrace =
-          ScreenLoadingManager.I.currentScreenLoadingTrace;
 
       expect(
         actualUiTrace?.didExtendScreenLoading,
@@ -881,9 +880,11 @@ void main() {
 
     test('[endScreenLoading] should End screen loading', () async {
       when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
+      when(FlagsConfig.endScreenLoading.isEnabled())
+          .thenAnswer((_) async => true);
       when(IBGBuildInfo.I.isIOS).thenReturn(false);
       when(mDateTime.now()).thenReturn(time);
-      final startMonotonicTime = 250;
+      const startMonotonicTime = 250;
       mScreenLoadingManager.currentScreenLoadingTrace
           ?.startMonotonicTimeInMicroseconds = startMonotonicTime;
 
@@ -908,9 +909,12 @@ void main() {
         true,
       );
       verify(mApmHost.isScreenLoadingEnabled()).called(1);
-      verify(mApmHost.endScreenLoadingCP(
-              extendedEndTimeInMicroseconds, uiTrace.traceId))
-          .called(1);
+      verify(
+        mApmHost.endScreenLoadingCP(
+          extendedEndTimeInMicroseconds,
+          uiTrace.traceId,
+        ),
+      ).called(1);
     });
   });
 }
