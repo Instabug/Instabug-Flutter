@@ -250,7 +250,6 @@ void main() {
       ]),
     );
 
-
     verify(
       mHost.addFeatureFlags(<String, String>{
         "name1": "variant1",

@@ -3,5 +3,4 @@ class IBGFeatureFlag {
   String? variant;
 
   IBGFeatureFlag({required this.name, this.variant});
-
 }
