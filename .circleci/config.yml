@@ -162,8 +162,6 @@ jobs:
       - setup_captain:
           platform: android
       - setup_flutter
-      - android/change-java-version:
-          java-version: 11
       - android/start-emulator-and-run-tests:
           run-tests-working-directory: e2e
           additional-avd-args: --device 3
