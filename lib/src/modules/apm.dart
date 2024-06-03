@@ -219,6 +219,12 @@ class APM {
     return ScreenLoadingManager.I.endScreenLoading();
   }
 
+  /// @nodoc
+  @internal
+  static Future<bool> isEndScreenLoadingEnabled() async {
+    return _host.isEndScreenLoadingEnabled();
+  }
+
   /// Wraps the given routes with [InstabugCaptureScreenLoading] widgets.
   /// This allows Instabug to automatically capture screen loading times.
   static Map<String, WidgetBuilder> wrapRoutes(
