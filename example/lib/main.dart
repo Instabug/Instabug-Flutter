@@ -7,11 +7,10 @@ void main() {
   runZonedGuarded(
     () {
       WidgetsFlutterBinding.ensureInitialized();
-
       Instabug.init(
-        token: 'ed6f659591566da19b67857e1b9d40ab',
-        invocationEvents: [InvocationEvent.floatingButton],
-      );
+          token: 'deb1910a7342814af4e4c9210c786f35',
+          invocationEvents: [InvocationEvent.floatingButton],
+          debugLogsLevel: LogLevel.verbose);
 
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
@@ -122,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final primaryColorController = TextEditingController();
   final screenNameController = TextEditingController();
+  final featureFlagsController = TextEditingController();
 
   void restartInstabug() {
     Instabug.setEnabled(false);
@@ -387,8 +387,40 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: getCurrentSessionReplaylink,
                 text: 'Get current session replay link',
               ),
+
+              SectionTitle('FeatureFlags'),
+              InstabugTextField(
+                controller: featureFlagsController,
+                label: 'Feature Flag name',
+              ),
+              InstabugButton(
+                onPressed: () => setFeatureFlag(),
+                text:'SetFeatureFlag',
+              ),
+              InstabugButton(
+                onPressed: () => removeFeatureFlag(),
+                text:'RemoveFeatureFlag',
+              ),
+              InstabugButton(
+                onPressed: () =>removeAllFeatureFlags(),
+                text:'RemoveAllFeatureFlags',
+              ),
             ],
           )), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  setFeatureFlag() {
+    Instabug.addFeatureFlags([IBGFeatureFlag(name: featureFlagsController.text)]);
+
+  }
+
+  removeFeatureFlag() {
+    Instabug.removeFeatureFlags([featureFlagsController.text]);
+
+  }
+
+  removeAllFeatureFlags() {
+    Instabug.clearAllFeatureFlags();
   }
 }

@@ -224,6 +224,39 @@
     OCMVerify([self.mInstabug clearAllExperiments]);
 }
 
+- (void)testAddFeatureFlags {
+  NSDictionary *featureFlagsMap = @{ @"key13" : @"value1", @"key2" : @"value2"};
+    FlutterError *error;
+
+  [self.api addFeatureFlagsFeatureFlagsMap:featureFlagsMap error:&error];
+  OCMVerify([self.mInstabug addFeatureFlags: [OCMArg checkWithBlock:^(id value) {
+    NSArray<IBGFeatureFlag *> *featureFlags = value;
+    NSString* firstFeatureFlagName = [featureFlags objectAtIndex:0 ].name;
+    NSString* firstFeatureFlagKey = [[featureFlagsMap allKeys] objectAtIndex:0] ;
+    if([ firstFeatureFlagKey isEqualToString: firstFeatureFlagName]){
+      return YES;
+    }
+    return  NO;
+  }]]);
+}
+
+- (void)testRemoveFeatureFlags {
+  NSArray *featureFlags = @[@"exp1", @"exp2"];
+    FlutterError *error;
+
+  [self.api removeFeatureFlagsFeatureFlag:featureFlags error:&error];
+  OCMVerify([self.mInstabug removeFeatureFlags:featureFlags]);
+}
+
+- (void)testRemoveAllFeatureFlags {
+    FlutterError *error;
+
+  [self.api removeAllFeatureFlagsWithError:&error];
+  OCMVerify([self.mInstabug removeAllFeatureFlags]);
+}
+
+
+
 - (void)testSetUserAttribute {
     NSString *key = @"is_premium";
     NSString *value = @"true";

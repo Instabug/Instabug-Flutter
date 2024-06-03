@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
+import 'package:instabug_flutter/src/models/ibg_feature_flag.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:meta/meta.dart';
@@ -240,6 +241,25 @@ class Instabug {
   /// Clears all experiments from the next report.
   static Future<void> clearAllExperiments() async {
     return _host.clearAllExperiments();
+  }
+
+  /// Adds FeatureFlags to the next report.
+  static Future<void> addFeatureFlags(List<IBGFeatureFlag> featureFlags) async {
+    final map=<String,String>{};
+    for (final value in featureFlags) {
+      map[value.name]=value.variant??'';
+    }
+    return _host.addFeatureFlags(map);
+  }
+
+  /// Removes certain FeatureFlags from the next report.
+  static Future<void> removeFeatureFlags(List<String> featureFlags) async {
+    return _host.removeFeatureFlags(featureFlags);
+  }
+
+  /// Clears all FeatureFlags from the next report.
+  static Future<void> clearAllFeatureFlags() async {
+    return _host.removeAllFeatureFlags();
   }
 
   /// Add custom user attribute [value] with a [key] that is going to be sent with each feedback, bug or crash.
