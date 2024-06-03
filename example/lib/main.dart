@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
 }
 
 class InstabugButton extends StatelessWidget {
-  String text;
-  void Function()? onPressed;
+  final String text;
+  final void Function()? onPressed;
 
   InstabugButton({required this.text, this.onPressed});
 
@@ -63,8 +63,8 @@ class InstabugButton extends StatelessWidget {
 }
 
 class InstabugTextField extends StatelessWidget {
-  String label;
-  TextEditingController controller;
+  final String label;
+  final TextEditingController controller;
 
   InstabugTextField({required this.label, required this.controller});
 
@@ -84,7 +84,7 @@ class InstabugTextField extends StatelessWidget {
 }
 
 class SectionTitle extends StatelessWidget {
-  String text;
+  final String text;
 
   SectionTitle(this.text);
 
@@ -209,8 +209,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void changePrimaryColor() {
-    String text = 'FF' + primaryColorController.text.replaceAll('#', '');
-    Color color = Color(int.parse(text, radix: 16));
+    var text = 'FF' + primaryColorController.text.replaceAll('#', '');
+    var color = Color(int.parse(text, radix: 16));
     Instabug.setPrimaryColor(color);
   }
 
@@ -387,7 +387,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: getCurrentSessionReplaylink,
                 text: 'Get current session replay link',
               ),
-
               SectionTitle('FeatureFlags'),
               InstabugTextField(
                 controller: featureFlagsController,
@@ -395,15 +394,15 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               InstabugButton(
                 onPressed: () => setFeatureFlag(),
-                text:'SetFeatureFlag',
+                text: 'SetFeatureFlag',
               ),
               InstabugButton(
                 onPressed: () => removeFeatureFlag(),
-                text:'RemoveFeatureFlag',
+                text: 'RemoveFeatureFlag',
               ),
               InstabugButton(
-                onPressed: () =>removeAllFeatureFlags(),
-                text:'RemoveAllFeatureFlags',
+                onPressed: () => removeAllFeatureFlags(),
+                text: 'RemoveAllFeatureFlags',
               ),
             ],
           )), // This trailing comma makes auto-formatting nicer for build methods.
@@ -411,13 +410,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   setFeatureFlag() {
-    Instabug.addFeatureFlags([IBGFeatureFlag(name: featureFlagsController.text)]);
-
+    Instabug.addFeatureFlags(
+        [IBGFeatureFlag(name: featureFlagsController.text)]);
   }
 
   removeFeatureFlag() {
     Instabug.removeFeatureFlags([featureFlagsController.text]);
-
   }
 
   removeAllFeatureFlags() {

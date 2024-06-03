@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
-import 'package:instabug_flutter/src/models/ibg_feature_flag.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:meta/meta.dart';
@@ -232,14 +231,14 @@ class Instabug {
 
   /// Adds experiments to the next report.
   @Deprecated(
-      'Please migrate to the new FeatureRequests APIs: Instabug.addFeatureFlags.')
+      'Please migrate to the new FeatureRequests APIs: Instabug.addFeatureFlags.',)
   static Future<void> addExperiments(List<String> experiments) async {
     return _host.addExperiments(experiments);
   }
 
   /// Removes certain experiments from the next report.
   @Deprecated(
-      'Please migrate to the new FeatureRequests APIs: Instabug.removeFeatureFlags.')
+      'Please migrate to the new FeatureRequests APIs: Instabug.removeFeatureFlags.',)
   static Future<void> removeExperiments(List<String> experiments) async {
     return _host.removeExperiments(experiments);
   }
@@ -247,7 +246,7 @@ class Instabug {
   /// Clears all experiments from the next report.
 
   @Deprecated(
-      'Please migrate to the new FeatureRequests APIs: Instabug.clearAllFeatureFlags.')
+      'Please migrate to the new FeatureRequests APIs: Instabug.clearAllFeatureFlags.',)
   static Future<void> clearAllExperiments() async {
     return _host.clearAllExperiments();
   }

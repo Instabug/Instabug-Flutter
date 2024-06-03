@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
-import 'package:instabug_flutter/src/models/ibg_feature_flag.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:mockito/annotations.dart';
@@ -244,9 +243,10 @@ void main() {
     await Instabug.addFeatureFlags(
       List.of([
         IBGFeatureFlag(name: 'name1', variant: 'variant1'),
-        IBGFeatureFlag(name: 'name1', variant: 'variant1'),
+        IBGFeatureFlag(name: 'name2', variant: 'variant2'),
       ]),
     );
+
 
     verify(
       mHost.addFeatureFlags(<String, String>{
