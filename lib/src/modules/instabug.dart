@@ -1,9 +1,11 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
+
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unnecessary_import
 import 'dart:typed_data';
+
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unnecessary_import
 import 'dart:ui';
@@ -229,25 +231,32 @@ class Instabug {
   }
 
   /// Adds experiments to the next report.
+  @Deprecated(
+      'Please migrate to the new FeatureRequests APIs: Instabug.addFeatureFlags.')
   static Future<void> addExperiments(List<String> experiments) async {
     return _host.addExperiments(experiments);
   }
 
   /// Removes certain experiments from the next report.
+  @Deprecated(
+      'Please migrate to the new FeatureRequests APIs: Instabug.removeFeatureFlags.')
   static Future<void> removeExperiments(List<String> experiments) async {
     return _host.removeExperiments(experiments);
   }
 
   /// Clears all experiments from the next report.
+
+  @Deprecated(
+      'Please migrate to the new FeatureRequests APIs: Instabug.clearAllFeatureFlags.')
   static Future<void> clearAllExperiments() async {
     return _host.clearAllExperiments();
   }
 
   /// Adds FeatureFlags to the next report.
   static Future<void> addFeatureFlags(List<IBGFeatureFlag> featureFlags) async {
-    final map=<String,String>{};
+    final map = <String, String>{};
     for (final value in featureFlags) {
-      map[value.name]=value.variant??'';
+      map[value.name] = value.variant ?? '';
     }
     return _host.addFeatureFlags(map);
   }
