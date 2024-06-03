@@ -258,6 +258,7 @@ class Instabug {
     for (final value in featureFlags) {
       map[value.name] = value.variant ?? '';
     }
+
     return _host.addFeatureFlags(map);
   }
 
