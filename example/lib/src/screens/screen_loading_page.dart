@@ -52,9 +52,9 @@ class _ScreenLoadingPageState extends State<ScreenLoadingPage> {
     } else {
       debugPrint(
         'Screen loading monitoring is disabled, skipping ending screen loading monitoring with APM.endScreenLoading().\n'
-            'Please refer to the documentation for how to enable screen loading monitoring in your app: '
-            'https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking'
-            "If Screen Loading is enabled but you're still seeing this message, please reach out to support.",
+        'Please refer to the documentation for how to enable screen loading monitoring in your app: '
+        'https://docs.instabug.com/docs/flutter-apm-screen-loading#disablingenabling-screen-loading-tracking'
+        "If Screen Loading is enabled but you're still seeing this message, please reach out to support.",
       );
     }
   }

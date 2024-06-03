@@ -43,7 +43,6 @@ class _ComplexPageState extends State<ComplexPage> {
     });
   }
 
-
   void _resetDidStartScreenLoading() {
     ScreenLoadingManager.I.resetDidStartScreenLoading();
   }

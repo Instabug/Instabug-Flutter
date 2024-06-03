@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [
         InstabugNavigatorObserver(),
       ],
-      routes: APM.wrapRoutes(appRoutes , exclude: [CrashesPage.screenName]),
+      routes: APM.wrapRoutes(appRoutes, exclude: [CrashesPage.screenName]),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
