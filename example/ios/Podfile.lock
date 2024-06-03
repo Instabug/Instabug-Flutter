@@ -2,8 +2,8 @@ PODS:
   - Flutter (1.0.0)
   - Instabug (13.1.0)
   - instabug_flutter (12.7.0):
-    - Flutter
-    - Instabug (= 13.1.0)
+  - Flutter
+  - Instabug (= 13.1.0)
   - OCMock (3.6)
 
 DEPENDENCIES:
