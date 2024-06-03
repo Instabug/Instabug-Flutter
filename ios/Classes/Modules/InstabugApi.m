@@ -321,6 +321,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
             
         }
     }
+    [Instabug addFeatureFlags:featureFlags];
 }
 
 
@@ -331,7 +332,12 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
 
 - (void)removeFeatureFlagsFeatureFlag:(nonnull NSArray<NSString *> *)featureFlags error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    @try {
         [Instabug removeFeatureFlags:featureFlags];
+    } @catch (NSException *exception) {
+        NSLog(@"%@", exception);
+
+    }
 }
 
 
