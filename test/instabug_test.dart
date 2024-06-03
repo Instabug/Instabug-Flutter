@@ -214,6 +214,7 @@ void main() {
   test('[addExperiments] should call host method', () async {
     const experiments = ["exp-1", "exp-2"];
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.addExperiments(experiments);
 
     verify(
@@ -224,6 +225,7 @@ void main() {
   test('[removeExperiments] should call host method', () async {
     const experiments = ["exp-1", "exp-2"];
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.removeExperiments(experiments);
 
     verify(
@@ -232,6 +234,7 @@ void main() {
   });
 
   test('[clearAllExperiments] should call host method', () async {
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.clearAllExperiments();
 
     verify(
