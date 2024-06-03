@@ -4,6 +4,7 @@ enum FlagsConfig {
   apm,
   uiTrace,
   screenLoading,
+  endScreenLoading,
 }
 
 extension FeatureExtensions on FlagsConfig {
@@ -13,6 +14,8 @@ extension FeatureExtensions on FlagsConfig {
         return APM.isEnabled();
       case FlagsConfig.screenLoading:
         return APM.isScreenLoadingEnabled();
+      case FlagsConfig.endScreenLoading:
+        return APM.isEndScreenLoadingEnabled();
       default:
         return false;
     }

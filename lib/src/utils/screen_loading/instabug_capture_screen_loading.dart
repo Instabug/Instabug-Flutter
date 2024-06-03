@@ -38,7 +38,9 @@ class _InstabugCaptureScreenLoadingState
 
     ScreenLoadingManager.I.startScreenLoadingTrace(trace!);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    // to maintain supported versions prior to Flutter 3.0.0
+    // ignore: invalid_null_aware_operator
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       stopwatch.stop();
       final duration = stopwatch.elapsedMicroseconds;
       trace?.duration = duration;

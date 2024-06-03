@@ -81,6 +81,23 @@
     [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
+- (void)testIsEndScreenLoadingEnabled {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
+
+    BOOL isEndScreenLoadingEnabled = YES;
+    OCMStub([self.mAPM endScreenLoadingEnabled]).andReturn(isEndScreenLoadingEnabled);
+
+    [self.api isEndScreenLoadingEnabledWithCompletion:^(NSNumber *isEnabledNumber, FlutterError *error) {
+        [expectation fulfill];
+        
+        XCTAssertEqualObjects(isEnabledNumber, @(isEndScreenLoadingEnabled));
+        
+        XCTAssertNil(error);
+    }];
+
+    [self waitForExpectations:@[expectation] timeout:5.0];
+}
+
 - (void)testSetColdAppLaunchEnabled {
     NSNumber *isEnabled = @1;
     FlutterError *error;

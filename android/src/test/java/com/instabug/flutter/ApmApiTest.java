@@ -10,7 +10,9 @@ import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.modules.ApmApi;
 import com.instabug.flutter.util.GlobalMocks;
 import com.instabug.flutter.util.MockReflected;
+
 import io.flutter.plugin.common.BinaryMessenger;
+
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
@@ -276,8 +278,8 @@ public class ApmApiTest {
 
         api.startCpUiTrace(screenName, microTimeStamp, traceId);
 
-        reflected.verify(() -> MockReflected.startUiTraceCP(screenName, microTimeStamp, traceId));
-        reflected.verifyNoMoreInteractions();
+        mInternalApmStatic.verify(() -> InternalAPM._startUiTraceCP(screenName, microTimeStamp, traceId));
+        mInternalApmStatic.verifyNoMoreInteractions();
     }
 
     @Test
@@ -288,8 +290,8 @@ public class ApmApiTest {
 
         api.reportScreenLoadingCP(startTimeStampMicro, durationMicro, uiTraceId);
 
-        reflected.verify(() -> MockReflected.reportScreenLoadingCP(startTimeStampMicro, durationMicro, uiTraceId));
-        reflected.verifyNoMoreInteractions();
+        mInternalApmStatic.verify(() -> InternalAPM._reportScreenLoadingCP(startTimeStampMicro, durationMicro, uiTraceId));
+        mInternalApmStatic.verifyNoMoreInteractions();
     }
 
     @Test
@@ -299,20 +301,19 @@ public class ApmApiTest {
 
         api.endScreenLoadingCP(timeStampMicro, uiTraceId);
 
-        reflected.verify(() -> MockReflected.endScreenLoadingCP(timeStampMicro, uiTraceId));
-        reflected.verifyNoMoreInteractions();
+        mInternalApmStatic.verify(() -> InternalAPM._endScreenLoadingCP(timeStampMicro, uiTraceId));
+        mInternalApmStatic.verifyNoMoreInteractions();
     }
 
     @Test
     public void testIsEnabled() {
         boolean expected = true;
-        ApmPigeon.Result<Boolean> result = makeResult((actual) -> assertEquals(expected, actual));
-        InternalAPM._isFeatureEnabledCP(eq(APMFeature.SCREEN_LOADING), any(FeatureAvailabilityCallback.class));
-        doAnswer(invocation -> {
+        ApmPigeon.Result<Boolean> result = spy(makeResult((actual) -> assertEquals(expected, actual)));
+        mInternalApmStatic.when(() -> InternalAPM._isFeatureEnabledCP(eq(APMFeature.SCREEN_LOADING), any(), any(FeatureAvailabilityCallback.class))).thenAnswer(invocation -> {
             FeatureAvailabilityCallback callback = invocation.getArgument(1);
             callback.invoke(expected);
             return null;
-        }).when(InternalAPM.class);
+        });
 
         api.isEnabled(result);
 
@@ -320,23 +321,46 @@ public class ApmApiTest {
     }
 
     @Test
-    public void testIsScreenLoadingMonitoringEnabled() {
+    public void testIsScreenLoadingEnabled() {
         boolean expected = true;
         ApmPigeon.Result<Boolean> result = spy(makeResult((actual) -> assertEquals(expected, actual)));
 
-        mInternalApmStatic.when(() -> InternalAPM._isFeatureEnabledCP(any(), any())).thenAnswer(
+        mInternalApmStatic.when(() -> InternalAPM._isFeatureEnabledCP(any(), any(), any())).thenAnswer(
                 invocation -> {
-                    FeatureAvailabilityCallback callback = (FeatureAvailabilityCallback) invocation.getArguments()[1];
+                    FeatureAvailabilityCallback callback = (FeatureAvailabilityCallback) invocation.getArguments()[2];
                     callback.invoke(expected);
                     return null;
                 });
 
+
         api.isScreenLoadingEnabled(result);
 
-        mInternalApmStatic.verify(() -> InternalAPM._isFeatureEnabledCP(any(), any()));
+        mInternalApmStatic.verify(() -> InternalAPM._isFeatureEnabledCP(any(), any(), any()));
         mInternalApmStatic.verifyNoMoreInteractions();
 
         verify(result).success(expected);
+    }
+
+    @Test
+    public void testIsEndScreenLoadingEnabled() {
+        boolean expected = true;
+        ApmPigeon.Result<Boolean> result = spy(makeResult((actual) -> assertEquals(expected, actual)));
+
+        mInternalApmStatic.when(() -> InternalAPM._isFeatureEnabledCP(any(), any(), any())).thenAnswer(
+                invocation -> {
+                    FeatureAvailabilityCallback callback = (FeatureAvailabilityCallback) invocation.getArguments()[2];
+                    callback.invoke(expected);
+                    return null;
+                });
+
+
+        api.isEndScreenLoadingEnabled(result);
+
+        mInternalApmStatic.verify(() -> InternalAPM._isFeatureEnabledCP(any(), any(), any()));
+        mInternalApmStatic.verifyNoMoreInteractions();
+
+        verify(result).success(expected);
+
     }
 
 

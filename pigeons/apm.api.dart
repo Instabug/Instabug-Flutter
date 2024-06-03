@@ -37,4 +37,7 @@ abstract class ApmHostApi {
   );
 
   void endScreenLoadingCP(int timeStampMicro, int uiTraceId);
+
+  @async
+  bool isEndScreenLoadingEnabled();
 }
