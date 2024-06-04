@@ -7,10 +7,13 @@ import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/models/trace.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
+import 'package:instabug_flutter/src/utils/instabug_logger.dart';
+import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:meta/meta.dart';
 
 class APM {
   static var _host = ApmHostApi();
+  static String tag = 'Instabug - APM';
 
   /// @nodoc
   @visibleForTesting
@@ -23,6 +26,24 @@ class APM {
   /// [boolean] isEnabled
   static Future<void> setEnabled(bool isEnabled) async {
     return _host.setEnabled(isEnabled);
+  }
+
+  /// @nodoc
+  @internal
+  static Future<bool> isEnabled() async {
+    return _host.isEnabled();
+  }
+
+  /// Enables or disables the screenLoading Monitoring feature.
+  /// [boolean] isEnabled
+  static Future<void> setScreenLoadingEnabled(bool isEnabled) {
+    return _host.setScreenLoadingEnabled(isEnabled);
+  }
+
+  /// @nodoc
+  @internal
+  static Future<bool> isScreenLoadingEnabled() async {
+    return _host.isScreenLoadingEnabled();
   }
 
   /// Enables or disables cold app launch tracking.
@@ -145,5 +166,61 @@ class APM {
     if (IBGBuildInfo.instance.isAndroid) {
       return _host.networkLogAndroid(data.toJson());
     }
+  }
+
+  /// @nodoc
+  @internal
+  static Future<void> startCpUiTrace(
+    String screenName,
+    int startTimeInMicroseconds,
+    int traceId,
+  ) {
+    InstabugLogger.I.d(
+      'Starting Ui trace — traceId: $traceId, screenName: $screenName, microTimeStamp: $startTimeInMicroseconds',
+      tag: APM.tag,
+    );
+    return _host.startCpUiTrace(screenName, startTimeInMicroseconds, traceId);
+  }
+
+  /// @nodoc
+  @internal
+  static Future<void> reportScreenLoadingCP(
+    int startTimeInMicroseconds,
+    int durationInMicroseconds,
+    int uiTraceId,
+  ) {
+    InstabugLogger.I.d(
+      'Reporting screen loading trace — traceId: $uiTraceId, startTimeInMicroseconds: $startTimeInMicroseconds, durationInMicroseconds: $durationInMicroseconds',
+      tag: APM.tag,
+    );
+    return _host.reportScreenLoadingCP(
+      startTimeInMicroseconds,
+      durationInMicroseconds,
+      uiTraceId,
+    );
+  }
+
+  /// @nodoc
+  @internal
+  static Future<void> endScreenLoadingCP(
+    int endTimeInMicroseconds,
+    int uiTraceId,
+  ) {
+    InstabugLogger.I.d(
+      'Extending screen loading trace — traceId: $uiTraceId, endTimeInMicroseconds: $endTimeInMicroseconds',
+      tag: APM.tag,
+    );
+    return _host.endScreenLoadingCP(endTimeInMicroseconds, uiTraceId);
+  }
+
+  /// Extends the currently active screen loading trace
+  static Future<void> endScreenLoading() {
+    return ScreenLoadingManager.I.endScreenLoading();
+  }
+
+  /// @nodoc
+  @internal
+  static Future<bool> isEndScreenLoadingEnabled() async {
+    return _host.isEndScreenLoadingEnabled();
   }
 }

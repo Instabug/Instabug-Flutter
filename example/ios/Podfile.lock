@@ -8,7 +8,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - Instabug (from `https://ios-releases.instabug.com/custom/feature-app-flow/12.9.2/Instabug.podspec`)
+  - Instabug (from `https://ios-releases.instabug.com/custom/feature-flutter-screenloading/13.0.0/Instabug.podspec`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
 
@@ -20,7 +20,7 @@ EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   Instabug:
-    :podspec: https://ios-releases.instabug.com/custom/feature-app-flow/12.9.2/Instabug.podspec
+    :podspec: https://ios-releases.instabug.com/custom/feature-flutter-screenloading/13.0.0/Instabug.podspec
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
 
@@ -30,6 +30,6 @@ SPEC CHECKSUMS:
   instabug_flutter: b80c4b8748d1da660a8f0cc0b2e5f4375898761c
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
 
-PODFILE CHECKSUM: b94c9d524631ae452aca8e0eb227b7176d0e6302
+PODFILE CHECKSUM: 03fc227efec8d8485f83d3825510bdf640d8a087
 
 COCOAPODS: 1.15.2

@@ -1,6 +1,8 @@
 #import "Instabug.h"
 #import "ApmApi.h"
 #import "ArgsRegistry.h"
+#import "IBGAPM+PrivateAPIs.h"
+#import "IBGTimeIntervalUnits.h"
 
 void InitApmApi(id<FlutterBinaryMessenger> messenger) {
     ApmApi *api = [[ApmApi alloc] init];
@@ -19,6 +21,25 @@ NSMutableDictionary *traces;
 
 - (void)setEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
     IBGAPM.enabled = [isEnabled boolValue];
+}
+
+- (void)isEnabledWithCompletion:(nonnull void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion {
+    BOOL isEnabled = IBGAPM.enabled;
+    
+    NSNumber *isEnabledNumber = @(isEnabled);
+    
+    completion(isEnabledNumber, nil);
+}
+
+- (void)setScreenLoadingEnabledIsEnabled:(nonnull NSNumber *)isEnabled error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    [IBGAPM setScreenLoadingEnabled:[isEnabled boolValue]];
+}
+
+
+- (void)isScreenLoadingEnabledWithCompletion:(nonnull void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion {
+    BOOL isScreenLoadingEnabled = IBGAPM.screenLoadingEnabled;
+    NSNumber *isEnabledNumber = @(isScreenLoadingEnabled);
+    completion(isEnabledNumber, nil);
 }
 
 - (void)setColdAppLaunchEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
@@ -83,5 +104,31 @@ NSMutableDictionary *traces;
 - (void)networkLogAndroidData:(NSDictionary<NSString *, id> *)data error:(FlutterError *_Nullable *_Nonnull)error {
     // Android Only
 }
+
+
+- (void)startCpUiTraceScreenName:(nonnull NSString *)screenName microTimeStamp:(nonnull NSNumber *)microTimeStamp traceId:(nonnull NSNumber *)traceId error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    NSTimeInterval startTimeStampMUS = [microTimeStamp doubleValue];
+    [IBGAPM startUITraceCPWithName:screenName startTimestampMUS:startTimeStampMUS];
+}
+
+
+
+- (void)reportScreenLoadingCPStartTimeStampMicro:(nonnull NSNumber *)startTimeStampMicro durationMicro:(nonnull NSNumber *)durationMicro uiTraceId:(nonnull NSNumber *)uiTraceId error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    NSTimeInterval startTimeStampMicroMUS = [startTimeStampMicro doubleValue];
+    NSTimeInterval durationMUS = [durationMicro doubleValue];
+    [IBGAPM reportScreenLoadingCPWithStartTimestampMUS:startTimeStampMicroMUS durationMUS:durationMUS];
+}
+
+- (void)endScreenLoadingCPTimeStampMicro:(nonnull NSNumber *)timeStampMicro uiTraceId:(nonnull NSNumber *)uiTraceId error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    NSTimeInterval endScreenLoadingCPWithEndTimestampMUS = [timeStampMicro doubleValue];
+    [IBGAPM endScreenLoadingCPWithEndTimestampMUS:endScreenLoadingCPWithEndTimestampMUS];
+}
+
+- (void)isEndScreenLoadingEnabledWithCompletion:(nonnull void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion {
+    BOOL isEndScreenLoadingEnabled = IBGAPM.endScreenLoadingEnabled;
+    NSNumber *isEnabledNumber = @(isEndScreenLoadingEnabled);
+    completion(isEnabledNumber, nil);
+}
+
 
 @end

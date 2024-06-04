@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -71,6 +71,7 @@
 		2001D1432B8F501000885261 /* InstabugExampleMethodCallHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugExampleMethodCallHandler.m; sourceTree = "<group>"; };
 		2001D1452B8F504C00885261 /* InstabugExampleMethodCallHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstabugExampleMethodCallHandler.h; sourceTree = "<group>"; };
 		206286EC2ABD0A1F00925509 /* SessionReplayApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionReplayApiTests.m; sourceTree = "<group>"; };
+		20CE6BF92BC6DCA400105F88 /* Apm+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Apm+Test.h"; sourceTree = "<group>"; };
 		243EF14638ECA64074771B11 /* Pods-InstabugTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugTests.release.xcconfig"; path = "Target Support Files/Pods-InstabugTests/Pods-InstabugTests.release.xcconfig"; sourceTree = "<group>"; };
 		354EA318B622513FE3FD25E4 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
@@ -260,6 +261,7 @@
 		CC78720A2938D1C5008CB2A5 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				20CE6BF92BC6DCA400105F88 /* Apm+Test.h */,
 				CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */,
 				CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */,
 				CC198C62293E2392007077C8 /* IBGSurvey+Test.h */,

@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   android: circleci/android@2.5.0
-  flutter: circleci/flutter@2.0.2
+  flutter: circleci/flutter@2.0.4
   node: circleci/node@5.2.0
   advanced-checkout: vsco/advanced-checkout@1.1.0
 
@@ -142,7 +142,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: default
+      tag: 2024.01.1
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter
@@ -154,7 +154,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: default
+      tag: 2024.01.1
     steps:
       - advanced-checkout/shallow-checkout
       - setup_captain:

@@ -22,7 +22,7 @@ class InstabugClipboardIconButton extends StatelessWidget {
   Future<void> _getClipboardContent() async {
     final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
     final clipboardText = clipboardData?.text;
-    if(clipboardText != null && clipboardText.isNotEmpty) {
+    if (clipboardText != null && clipboardText.isNotEmpty) {
       onPaste?.call(clipboardText);
     }
   }
