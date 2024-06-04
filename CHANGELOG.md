@@ -7,6 +7,14 @@
 - Bump Instabug iOS SDK to v13.1.0 ([#1227](https://github.com/Instabug/Instabug-Flutter/pull/1227)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/13.1.0).
 - Bump Instabug Android SDK to v13.1.1 ([#474](https://github.com/Instabug/Instabug-Flutter/pull/474)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v13.1.1).
 
+## Added
+
+- Add support for FeatureFlags APIs `Instabug.addFeatureFlags`, `Instabug.removeFeatureFlags` and `Instabug.clearAllFeatureFlags` ([#471](https://github.com/Instabug/Instabug-Flutter/pull/471)).
+
+### Deprecated
+
+- Deprecate execution traces APIs `Instabug.startExecuti# Changelog
+
 
 ## [13.0.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.7.0...dev) (April 29, 2024)
 

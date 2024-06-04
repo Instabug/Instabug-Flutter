@@ -214,6 +214,7 @@ void main() {
   test('[addExperiments] should call host method', () async {
     const experiments = ["exp-1", "exp-2"];
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.addExperiments(experiments);
 
     verify(
@@ -224,6 +225,7 @@ void main() {
   test('[removeExperiments] should call host method', () async {
     const experiments = ["exp-1", "exp-2"];
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.removeExperiments(experiments);
 
     verify(
@@ -232,10 +234,45 @@ void main() {
   });
 
   test('[clearAllExperiments] should call host method', () async {
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.clearAllExperiments();
 
     verify(
       mHost.clearAllExperiments(),
+    ).called(1);
+  });
+
+  test('[addFeatureFlags] should call host method', () async {
+    await Instabug.addFeatureFlags(
+      List.of([
+        IBGFeatureFlag(name: 'name1', variant: 'variant1'),
+        IBGFeatureFlag(name: 'name2', variant: 'variant2'),
+      ]),
+    );
+
+    verify(
+      mHost.addFeatureFlags(<String, String>{
+        "name1": "variant1",
+        "name2": "variant2",
+      }),
+    ).called(1);
+  });
+
+  test('[removeFeatureFlags] should call host method', () async {
+    const featureFlags = ["exp-1", "exp-2"];
+
+    await Instabug.removeFeatureFlags(featureFlags);
+
+    verify(
+      mHost.removeFeatureFlags(featureFlags),
+    ).called(1);
+  });
+
+  test('[clearAllFeatureFlags] should call host method', () async {
+    await Instabug.clearAllFeatureFlags();
+
+    verify(
+      mHost.removeAllFeatureFlags(),
     ).called(1);
   });
 

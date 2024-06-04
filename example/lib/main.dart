@@ -7,11 +7,10 @@ void main() {
   runZonedGuarded(
     () {
       WidgetsFlutterBinding.ensureInitialized();
-
       Instabug.init(
-        token: 'ed6f659591566da19b67857e1b9d40ab',
-        invocationEvents: [InvocationEvent.floatingButton],
-      );
+          token: 'deb1910a7342814af4e4c9210c786f35',
+          invocationEvents: [InvocationEvent.floatingButton],
+          debugLogsLevel: LogLevel.verbose);
 
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
@@ -41,8 +40,8 @@ class MyApp extends StatelessWidget {
 }
 
 class InstabugButton extends StatelessWidget {
-  String text;
-  void Function()? onPressed;
+  final String text;
+  final void Function()? onPressed;
 
   InstabugButton({required this.text, this.onPressed});
 
@@ -64,8 +63,8 @@ class InstabugButton extends StatelessWidget {
 }
 
 class InstabugTextField extends StatelessWidget {
-  String label;
-  TextEditingController controller;
+  final String label;
+  final TextEditingController controller;
 
   InstabugTextField({required this.label, required this.controller});
 
@@ -85,7 +84,7 @@ class InstabugTextField extends StatelessWidget {
 }
 
 class SectionTitle extends StatelessWidget {
-  String text;
+  final String text;
 
   SectionTitle(this.text);
 
@@ -122,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final primaryColorController = TextEditingController();
   final screenNameController = TextEditingController();
+  final featureFlagsController = TextEditingController();
 
   void restartInstabug() {
     Instabug.setEnabled(false);
@@ -209,8 +209,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void changePrimaryColor() {
-    String text = 'FF' + primaryColorController.text.replaceAll('#', '');
-    Color color = Color(int.parse(text, radix: 16));
+    var text = 'FF' + primaryColorController.text.replaceAll('#', '');
+    var color = Color(int.parse(text, radix: 16));
     Instabug.setPrimaryColor(color);
   }
 
@@ -387,8 +387,38 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: getCurrentSessionReplaylink,
                 text: 'Get current session replay link',
               ),
+              SectionTitle('FeatureFlags'),
+              InstabugTextField(
+                controller: featureFlagsController,
+                label: 'Feature Flag name',
+              ),
+              InstabugButton(
+                onPressed: () => setFeatureFlag(),
+                text: 'SetFeatureFlag',
+              ),
+              InstabugButton(
+                onPressed: () => removeFeatureFlag(),
+                text: 'RemoveFeatureFlag',
+              ),
+              InstabugButton(
+                onPressed: () => removeAllFeatureFlags(),
+                text: 'RemoveAllFeatureFlags',
+              ),
             ],
           )), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  setFeatureFlag() {
+    Instabug.addFeatureFlags(
+        [IBGFeatureFlag(name: featureFlagsController.text)]);
+  }
+
+  removeFeatureFlag() {
+    Instabug.removeFeatureFlags([featureFlagsController.text]);
+  }
+
+  removeAllFeatureFlags() {
+    Instabug.clearAllFeatureFlags();
   }
 }
