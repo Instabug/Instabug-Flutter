@@ -146,8 +146,6 @@ jobs:
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter
-      - android/change-java-version:
-          java-version: 8 
       - android/run-tests:
           working-directory: example/android
           test-command: ./gradlew test
@@ -162,8 +160,6 @@ jobs:
       - setup_captain:
           platform: android
       - setup_flutter
-      - android/change-java-version:
-          java-version: 8 
       - android/start-emulator-and-run-tests:
           run-tests-working-directory: e2e
           additional-avd-args: --device 3
