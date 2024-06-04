@@ -136,7 +136,6 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void ChangeReportTypes()
   {
-    ScrollDown();
     captain.FindByText("Bug", exact: true).Tap();
 
     if (Platform.IsAndroid)

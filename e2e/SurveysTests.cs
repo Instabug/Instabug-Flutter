@@ -10,7 +10,6 @@ public class SurveysTests : CaptainTest
   [Fact]
   public void ShowManualSurvey()
   {
-    ScrollDown();
     captain.FindByText("Show Manual Survey").Tap();
 
     captain.WaitForAssertion(() =>
