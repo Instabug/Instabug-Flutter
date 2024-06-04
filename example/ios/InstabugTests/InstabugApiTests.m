@@ -241,12 +241,19 @@
 }
 
 - (void)testRemoveFeatureFlags {
-  NSArray *featureFlags = @[@"exp1", @"exp2"];
+  NSArray *featureFlags = @[@"exp1"];
     FlutterError *error;
-
+    
   [self.api removeFeatureFlagsFeatureFlag:featureFlags error:&error];
-  OCMVerify([self.mInstabug removeFeatureFlags:featureFlags]);
-}
+    OCMVerify([self.mInstabug removeFeatureFlags: [OCMArg checkWithBlock:^(id value) {
+      NSArray<IBGFeatureFlag *> *featureFlagsObJ = value;
+      NSString* firstFeatureFlagName = [featureFlagsObJ objectAtIndex:0 ].name;
+      NSString* firstFeatureFlagKey = [featureFlags firstObject] ;
+      if([ firstFeatureFlagKey isEqualToString: firstFeatureFlagName]){
+        return YES;
+      }
+      return  NO;
+    }]]);}
 
 - (void)testRemoveAllFeatureFlags {
     FlutterError *error;
