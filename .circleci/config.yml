@@ -142,7 +142,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: default
+      tag: 2024.01.1
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter
@@ -156,7 +156,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: default
+      tag: 2024.01.1
     steps:
       - advanced-checkout/shallow-checkout
       - setup_captain:
