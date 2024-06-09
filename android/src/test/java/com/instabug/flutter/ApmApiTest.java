@@ -1,24 +1,17 @@
 package com.instabug.flutter;
 
-import static com.instabug.flutter.util.GlobalMocks.reflected;
-import static com.instabug.flutter.util.MockResult.makeResult;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockConstruction;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.instabug.apm.APM;
+import com.instabug.apm.InternalAPM;
+import com.instabug.apm.configuration.cp.APMFeature;
+import com.instabug.apm.configuration.cp.FeatureAvailabilityCallback;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.modules.ApmApi;
 import com.instabug.flutter.util.GlobalMocks;
 import com.instabug.flutter.util.MockReflected;
+
+import io.flutter.plugin.common.BinaryMessenger;
 
 import org.json.JSONObject;
 import org.junit.After;
@@ -31,23 +24,32 @@ import org.mockito.MockedStatic;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.flutter.plugin.common.BinaryMessenger;
+import static com.instabug.flutter.util.GlobalMocks.reflected;
+import static com.instabug.flutter.util.MockResult.makeResult;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 
 public class ApmApiTest {
+
+    private final BinaryMessenger mMessenger = mock(BinaryMessenger.class);
     private final ApmApi api = new ApmApi();
     private MockedStatic<APM> mAPM;
+    private MockedStatic<InternalAPM> mInternalApmStatic;
     private MockedStatic<ApmPigeon.ApmHostApi> mHostApi;
 
     @Before
     public void setUp() throws NoSuchMethodException {
         mAPM = mockStatic(APM.class);
+        mInternalApmStatic = mockStatic(InternalAPM.class);
         mHostApi = mockStatic(ApmPigeon.ApmHostApi.class);
         GlobalMocks.setUp();
     }
 
     @After
     public void cleanUp() {
+        mInternalApmStatic.close();
         mAPM.close();
         mHostApi.close();
         GlobalMocks.close();
@@ -265,5 +267,109 @@ public class ApmApiTest {
 
         mAPMNetworkLogger.close();
         mJSONObject.close();
+    }
+
+    @Test
+    public void testStartUiTraceCP() {
+        String screenName = "screen-name";
+        long microTimeStamp = System.currentTimeMillis() / 1000;
+        long traceId = System.currentTimeMillis();
+
+
+        api.startCpUiTrace(screenName, microTimeStamp, traceId);
+
+        mInternalApmStatic.verify(() -> InternalAPM._startUiTraceCP(screenName, microTimeStamp, traceId));
+        mInternalApmStatic.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testReportScreenLoadingCP() {
+        long startTimeStampMicro = System.currentTimeMillis() / 1000;
+        long durationMicro = System.currentTimeMillis() / 1000;
+        long uiTraceId = System.currentTimeMillis();
+
+        api.reportScreenLoadingCP(startTimeStampMicro, durationMicro, uiTraceId);
+
+        mInternalApmStatic.verify(() -> InternalAPM._reportScreenLoadingCP(startTimeStampMicro, durationMicro, uiTraceId));
+        mInternalApmStatic.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testEndScreenLoading() {
+        long timeStampMicro = System.currentTimeMillis() / 1000;
+        long uiTraceId = System.currentTimeMillis();
+
+        api.endScreenLoadingCP(timeStampMicro, uiTraceId);
+
+        mInternalApmStatic.verify(() -> InternalAPM._endScreenLoadingCP(timeStampMicro, uiTraceId));
+        mInternalApmStatic.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testIsEnabled() {
+        boolean expected = true;
+        ApmPigeon.Result<Boolean> result = spy(makeResult((actual) -> assertEquals(expected, actual)));
+        mInternalApmStatic.when(() -> InternalAPM._isFeatureEnabledCP(eq(APMFeature.SCREEN_LOADING), any(), any(FeatureAvailabilityCallback.class))).thenAnswer(invocation -> {
+            FeatureAvailabilityCallback callback = invocation.getArgument(1);
+            callback.invoke(expected);
+            return null;
+        });
+
+        api.isEnabled(result);
+
+        verify(result).success(expected);
+    }
+
+    @Test
+    public void testIsScreenLoadingEnabled() {
+        boolean expected = true;
+        ApmPigeon.Result<Boolean> result = spy(makeResult((actual) -> assertEquals(expected, actual)));
+
+        mInternalApmStatic.when(() -> InternalAPM._isFeatureEnabledCP(any(), any(), any())).thenAnswer(
+                invocation -> {
+                    FeatureAvailabilityCallback callback = (FeatureAvailabilityCallback) invocation.getArguments()[2];
+                    callback.invoke(expected);
+                    return null;
+                });
+
+
+        api.isScreenLoadingEnabled(result);
+
+        mInternalApmStatic.verify(() -> InternalAPM._isFeatureEnabledCP(any(), any(), any()));
+        mInternalApmStatic.verifyNoMoreInteractions();
+
+        verify(result).success(expected);
+    }
+
+    @Test
+    public void testIsEndScreenLoadingEnabled() {
+        boolean expected = true;
+        ApmPigeon.Result<Boolean> result = spy(makeResult((actual) -> assertEquals(expected, actual)));
+
+        mInternalApmStatic.when(() -> InternalAPM._isFeatureEnabledCP(any(), any(), any())).thenAnswer(
+                invocation -> {
+                    FeatureAvailabilityCallback callback = (FeatureAvailabilityCallback) invocation.getArguments()[2];
+                    callback.invoke(expected);
+                    return null;
+                });
+
+
+        api.isEndScreenLoadingEnabled(result);
+
+        mInternalApmStatic.verify(() -> InternalAPM._isFeatureEnabledCP(any(), any(), any()));
+        mInternalApmStatic.verifyNoMoreInteractions();
+
+        verify(result).success(expected);
+
+    }
+
+
+    @Test
+    public void testSetScreenLoadingMonitoringEnabled() {
+        boolean isEnabled = false;
+
+        api.setScreenLoadingEnabled(isEnabled);
+
+        mAPM.verify(() -> APM.setScreenLoadingEnabled(isEnabled));
     }
 }
