@@ -1,10 +1,10 @@
+import 'package:flutter/widgets.dart' show WidgetBuilder, BuildContext;
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/instabug_montonic_clock.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/flags_config.dart';
-import 'package:instabug_flutter/src/utils/screen_loading/route_matcher.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_trace.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/ui_trace.dart';
 import 'package:meta/meta.dart';
@@ -120,7 +120,8 @@ class ScreenLoadingManager {
       sanitizedScreenName = sanitizedScreenName.substring(1);
     }
     if (screenName[lastIndex] == characterToBeRemoved) {
-      sanitizedScreenName = sanitizedScreenName.substring(0, lastIndex - 1);
+      sanitizedScreenName =
+          sanitizedScreenName.substring(0, sanitizedScreenName.length - 1);
     }
     return sanitizedScreenName;
   }
@@ -382,8 +383,47 @@ class ScreenLoadingManager {
       _logExceptionErrorAndStackTrace(error, stackTrace);
     }
   }
+
+  /// Wraps the given routes with [InstabugCaptureScreenLoading] widgets.
+  ///
+  /// This allows Instabug to automatically capture screen loading times.
+  ///
+  /// Example usage:
+  ///
+  /// Map<String, WidgetBuilder> routes = {
+  /// '/home': (context) => const HomePage(),
+  /// '/settings': (context) => const SettingsPage(),
+  /// };
+  ///
+  /// Map<String, WidgetBuilder> wrappedRoutes =
+  /// ScreenLoadingAutomaticManager.wrapRoutes( routes)
+  static Map<String, WidgetBuilder> wrapRoutes(
+    Map<String, WidgetBuilder> routes, {
+    List<String> exclude = const [],
+  }) {
+    final excludedRoutes = <String, bool>{};
+    for (final route in exclude) {
+      excludedRoutes[route] = true;
+    }
+
+    final wrappedRoutes = <String, WidgetBuilder>{};
+    for (final entry in routes.entries) {
+      if (!excludedRoutes.containsKey(entry.key)) {
+        wrappedRoutes[entry.key] =
+            (BuildContext context) => InstabugCaptureScreenLoading(
+                  screenName: entry.key,
+                  child: entry.value(context),
+                );
+      } else {
+        wrappedRoutes[entry.key] = entry.value;
+      }
+    }
+
+    return wrappedRoutes;
+  }
 }
 
+@internal
 class DropScreenLoadingError extends Error {
   final ScreenLoadingTrace trace;
 

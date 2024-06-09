@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/widgets.dart' show WidgetBuilder;
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/models/trace.dart';
@@ -222,5 +223,14 @@ class APM {
   @internal
   static Future<bool> isEndScreenLoadingEnabled() async {
     return _host.isEndScreenLoadingEnabled();
+  }
+
+  /// Wraps the given routes with [InstabugCaptureScreenLoading] widgets.
+  /// This allows Instabug to automatically capture screen loading times.
+  static Map<String, WidgetBuilder> wrapRoutes(
+    Map<String, WidgetBuilder> routes, {
+    List<String> exclude = const [],
+  }) {
+    return ScreenLoadingManager.wrapRoutes(routes, exclude: exclude);
   }
 }
