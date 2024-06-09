@@ -36,8 +36,9 @@ class ScreenLoadingManagerNoResets extends ScreenLoadingManager {
   InstabugMonotonicClock,
   IBGBuildInfo,
   RouteMatcher,
+  BuildContext,
+  Widget,
 ])
-@GenerateNiceMocks([MockSpec<BuildContext>(), MockSpec<Widget>()])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
