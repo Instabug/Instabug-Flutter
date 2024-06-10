@@ -25,4 +25,9 @@ extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger) {
     }
 }
 
+- (void)sendNonFatalErrorJsonCrash:(nonnull NSString *)jsonCrash userAttributes:(nullable NSDictionary<NSString *,NSString *> *)userAttributes fingerprint:(nullable NSString *)fingerprint nonFatalExceptionLevel:(nonnull NSString *)nonFatalExceptionLevel error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+    <#code#>
+}
+
+
 @end
