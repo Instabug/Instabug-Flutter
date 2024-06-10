@@ -61,9 +61,9 @@ class FatalCrashesContent extends StatelessWidget {
         ),
         Platform.isAndroid
             ? const InstabugButton(
-          text: 'Send Native ANR',
-          onPressed: InstabugFlutterExampleMethodChannel.sendAnr,
-        )
+                text: 'Send Native ANR',
+                onPressed: InstabugFlutterExampleMethodChannel.sendAnr,
+              )
             : const SizedBox.shrink(),
         const InstabugButton(
           text: 'Throw Unhandled Native OOM Exception',

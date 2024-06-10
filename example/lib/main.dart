@@ -22,7 +22,6 @@ part 'src/screens/complex_page.dart';
 
 part 'src/screens/apm_page.dart';
 
-
 part 'src/screens/my_home_page.dart';
 
 part 'src/components/fatal_crashes_content.dart';
@@ -68,7 +67,7 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [
         InstabugNavigatorObserver(),
       ],
-      routes:appRoutes,
+      routes: appRoutes,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,

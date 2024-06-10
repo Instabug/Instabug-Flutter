@@ -31,7 +31,7 @@ class NestedView extends StatelessWidget {
           Row(
             children: List.generate(
               breadth,
-                  (index) => NestedView(
+              (index) => NestedView(
                 depth: depth - 1,
                 breadth: breadth,
                 child: child,

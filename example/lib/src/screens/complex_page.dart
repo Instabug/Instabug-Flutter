@@ -43,8 +43,6 @@ class _ComplexPageState extends State<ComplexPage> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -85,8 +83,8 @@ class _ComplexPageState extends State<ComplexPage> {
       return KeyedSubtree(
         key: _reloadKey,
         child: Page(
-            title: 'Monitored Complex',
-            children: content,
+          title: 'Monitored Complex',
+          children: content,
         ),
       );
     } else {

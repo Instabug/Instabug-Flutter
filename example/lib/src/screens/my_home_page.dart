@@ -129,12 +129,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // );
   }
 
-
   void _navigateToApm() {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>  ApmPage(),
+        builder: (context) => ApmPage(),
         settings: const RouteSettings(name: ApmPage.screenName),
       ),
     );
@@ -263,7 +262,6 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: showManualSurvey,
           text: 'Show Manual Survey',
         ),
-
         InstabugButton(
           onPressed: changeFloatingButtonEdge,
           text: 'Move Floating Button to Left',

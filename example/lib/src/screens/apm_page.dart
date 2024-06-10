@@ -10,8 +10,6 @@ class ApmPage extends StatefulWidget {
 }
 
 class _ApmPageState extends State<ApmPage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Page(
@@ -27,7 +25,6 @@ class _ApmPageState extends State<ApmPage> {
         SizedBox.fromSize(
           size: const Size.fromHeight(12),
         ),
-
       ],
     );
   }

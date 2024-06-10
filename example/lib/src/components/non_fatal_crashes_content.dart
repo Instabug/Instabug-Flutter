@@ -58,7 +58,7 @@ class NonFatalCrashesContent extends StatelessWidget {
         const InstabugButton(
           text: 'Throw Handled Native Exception',
           onPressed:
-          InstabugFlutterExampleMethodChannel.sendNativeNonFatalCrash,
+              InstabugFlutterExampleMethodChannel.sendNativeNonFatalCrash,
         ),
       ],
     );
