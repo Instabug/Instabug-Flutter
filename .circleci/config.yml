@@ -47,7 +47,7 @@ commands:
           steps:
             - run:
                 name: Install XCUITest Driver
-                command: appium driver install xcuitest@7.14.0
+                command: appium driver install xcuitest@4.35.0
       - when:
           condition:
             equal:
@@ -142,7 +142,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: default
+      tag: 2024.01.1
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter
@@ -154,7 +154,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: default
+      tag: 2024.01.1
     steps:
       - advanced-checkout/shallow-checkout
       - setup_captain:

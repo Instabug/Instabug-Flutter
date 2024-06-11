@@ -8,12 +8,15 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 
+import com.instabug.crash.models.IBGNonFatalException;
+
 import org.json.JSONObject;
 import org.mockito.MockedStatic;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 public class GlobalMocks {
     public static MockedStatic<ThreadManager> threadManager;
@@ -74,6 +77,15 @@ public class GlobalMocks {
                 .when(() -> Reflection.getMethod(Class.forName("com.instabug.crash.CrashReporting"), "reportException",
                         JSONObject.class, boolean.class))
                 .thenReturn(mCrashReportException);
+
+        Method mCrashReportNonFatalException = MockReflected.class.getDeclaredMethod("crashReportException", JSONObject.class, boolean.class,
+                Map.class, JSONObject.class, IBGNonFatalException.Level.class);
+        mCrashReportNonFatalException.setAccessible(true);
+        reflection
+                .when(() -> Reflection.getMethod(Class.forName("com.instabug.crash.CrashReporting"), "reportException",
+                        JSONObject.class, boolean.class,
+                        Map.class, JSONObject.class, IBGNonFatalException.Level.class))
+                .thenReturn(mCrashReportNonFatalException);
 
         uri = mockStatic(Uri.class);
         uri.when(() -> Uri.fromFile(any())).thenReturn(mock(Uri.class));
