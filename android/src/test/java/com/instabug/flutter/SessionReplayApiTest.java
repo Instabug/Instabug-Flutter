@@ -3,6 +3,7 @@ package com.instabug.flutter;
 import com.instabug.flutter.generated.SessionReplayPigeon;
 import com.instabug.flutter.modules.SessionReplayApi;
 import com.instabug.flutter.util.GlobalMocks;
+import com.instabug.library.OnSessionReplayLinkReady;
 import com.instabug.library.sessionreplay.SessionReplay;
 import io.flutter.plugin.common.BinaryMessenger;
 import org.junit.After;
@@ -14,6 +15,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
 
 
 public class SessionReplayApiTest {
@@ -79,28 +82,28 @@ public class SessionReplayApiTest {
 
         mSessionReplay.verify(() -> SessionReplay.setUserStepsEnabled(true));
     }
-//    @Test
-//    public void testGetSessionReplayLink() {
-//        SessionReplayPigeon.Result<String> result = mock(SessionReplayPigeon.Result.class);
-//        String link="instabug link";
-//
-//        mSessionReplay.when(() -> SessionReplay.getSessionReplayLink(any())).thenAnswer(
-//                invocation -> {
-//                    OnSessionReplayLinkReady callback = (OnSessionReplayLinkReady) invocation.getArguments()[0];
-//                    callback.onSessionReplayLinkReady(link);
-//                    return callback;
-//                });
-//        api.getSessionReplayLink(result);
-//
-//
-//        mSessionReplay.verify(() -> SessionReplay.getSessionReplayLink(any()));
-//        mSessionReplay.verifyNoMoreInteractions();
-//
-//
-//        verify(result, timeout(1000)).success(link);
-//
-//
-//    }
+    @Test
+    public void testGetSessionReplayLink() {
+        SessionReplayPigeon.Result<String> result = mock(SessionReplayPigeon.Result.class);
+        String link="instabug link";
+
+        mSessionReplay.when(() -> SessionReplay.getSessionReplayLink(any())).thenAnswer(
+                invocation -> {
+                    OnSessionReplayLinkReady callback = (OnSessionReplayLinkReady) invocation.getArguments()[0];
+                    callback.onSessionReplayLinkReady(link);
+                    return callback;
+                });
+        api.getSessionReplayLink(result);
+
+
+        mSessionReplay.verify(() -> SessionReplay.getSessionReplayLink(any()));
+        mSessionReplay.verifyNoMoreInteractions();
+
+
+        verify(result, timeout(1000)).success(link);
+
+
+    }
 
 }
 
