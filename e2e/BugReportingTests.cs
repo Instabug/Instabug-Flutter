@@ -113,7 +113,7 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void MultipleScreenshotsInReproSteps()
   {
-    ScrollDown();
+    ScrollDownLittle();
 
     captain.FindByText("Enter screen name").Tap();
     captain.Type("My Screen");

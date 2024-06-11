@@ -48,7 +48,8 @@ void main() {
       );
 
       FlutterError.onError = (FlutterErrorDetails details) {
-        Zone.current.handleUncaughtError(details.exception, details.stack!);
+        Zone.current.handleUncaughtError(
+            details.exception, details.stack ?? StackTrace.current);
       };
 
       runApp(const MyApp());

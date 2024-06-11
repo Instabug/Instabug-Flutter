@@ -2,6 +2,7 @@ package com.instabug.flutter.util;
 
 import androidx.annotation.NonNull;
 
+import com.instabug.crash.models.IBGNonFatalException;
 import com.instabug.library.LogLevel;
 import com.instabug.bug.BugReporting;
 import com.instabug.bug.invocation.Option;
@@ -56,7 +57,12 @@ public final class ArgsRegistry {
         put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
         put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
     }};
-
+   public static ArgsMap<IBGNonFatalException.Level> nonFatalExceptionLevel = new ArgsMap<IBGNonFatalException.Level>() {{
+        put("NonFatalExceptionLevel.critical", IBGNonFatalException.Level.CRITICAL);
+        put("NonFatalExceptionLevel.error", IBGNonFatalException.Level.ERROR);
+        put("NonFatalExceptionLevel.warning", IBGNonFatalException.Level.WARNING);
+        put("NonFatalExceptionLevel.info", IBGNonFatalException.Level.INFO);
+    }};
     public static final ArgsMap<InstabugFloatingButtonEdge> floatingButtonEdges = new ArgsMap<InstabugFloatingButtonEdge>() {{
         put("FloatingButtonEdge.left", InstabugFloatingButtonEdge.LEFT);
         put("FloatingButtonEdge.right", InstabugFloatingButtonEdge.RIGHT);

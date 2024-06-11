@@ -4,7 +4,11 @@ import android.graphics.Bitmap;
 
 import androidx.annotation.Nullable;
 
+import com.instabug.crash.models.IBGNonFatalException;
+
 import org.json.JSONObject;
+
+import java.util.Map;
 
 /**
  * Includes fake implementations of methods called by reflection.
@@ -36,4 +40,6 @@ public class MockReflected {
      * CrashReporting.reportException
      */
     public static void crashReportException(JSONObject exception, boolean isHandled) {}
+    public static void crashReportException(JSONObject exception, boolean isHandled, Map<String,String> userAttributes, JSONObject fingerPrint, IBGNonFatalException.Level level) {}
+
 }
