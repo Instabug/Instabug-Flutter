@@ -22,14 +22,14 @@ extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger) {
                                                                options:NSJSONReadingMutableContainers
                                                                  error:&jsonError];
     BOOL isNonFatal = [isHandled boolValue];
-    
+
     if (isNonFatal) {
         [IBGCrashReporting cp_reportNonFatalCrashWithStackTrace:stackTrace
                                                           level:IBGNonFatalLevelError groupingString:nil userAttributes:nil
         ];
     } else {
         [IBGCrashReporting cp_reportFatalCrashWithStackTrace:stackTrace  ];
-        
+
     }
 }
 
@@ -44,6 +44,6 @@ extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger) {
                                                       level: level
                                              groupingString:fingerprint
                                              userAttributes:userAttributes];
-    
+
 }
 @end

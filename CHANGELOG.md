@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v13.0.0...dev)
+## [13.1.1](https://github.com/Instabug/Instabug-Flutter/compare/v13.0.0...dev) (Jun,11 2024)
 
 ### Added
 - Add support for passing a grouping fingerprint, error level, and user attributes to the `CrashReporting.reportHandledCrash` non-fatals API ([#461](https://github.com/Instabug/Instabug-Flutter/pull/461)).
