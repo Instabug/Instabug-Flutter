@@ -1,5 +1,7 @@
 #import "Instabug.h"
 #import "CrashReportingApi.h"
+#import "../Util/IBGCrashReporting+CP.h"
+#import "ArgsRegistry.h"
 
 extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger) {
     CrashReportingApi *api = [[CrashReportingApi alloc] init];
@@ -19,15 +21,29 @@ extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger) {
     NSDictionary *stackTrace = [NSJSONSerialization JSONObjectWithData:objectData
                                                                options:NSJSONReadingMutableContainers
                                                                  error:&jsonError];
-    SEL reportCrashWithStackTraceSEL = NSSelectorFromString(@"reportCrashWithStackTrace:handled:");
-    if ([[Instabug class] respondsToSelector:reportCrashWithStackTraceSEL]) {
-        [[Instabug class] performSelector:reportCrashWithStackTraceSEL withObject:stackTrace withObject:isHandled];
+    BOOL isNonFatal = [isHandled boolValue];
+
+    if (isNonFatal) {
+        [IBGCrashReporting cp_reportNonFatalCrashWithStackTrace:stackTrace
+                                                          level:IBGNonFatalLevelError groupingString:nil userAttributes:nil
+        ];
+    } else {
+        [IBGCrashReporting cp_reportFatalCrashWithStackTrace:stackTrace  ];
+
     }
 }
 
-- (void)sendNonFatalErrorJsonCrash:(nonnull NSString *)jsonCrash userAttributes:(nullable NSDictionary<NSString *,NSString *> *)userAttributes fingerprint:(nullable NSString *)fingerprint nonFatalExceptionLevel:(nonnull NSString *)nonFatalExceptionLevel error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
-    <#code#>
+- (void)sendNonFatalErrorJsonCrash:(nonnull NSString *)jsonCrash userAttributes:(nullable NSDictionary<NSString *,NSString *> *)userAttributes fingerprint:(nullable NSString *)fingerprint nonFatalExceptionLevel:(nonnull NSString *)nonFatalExceptionLevel error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    NSError *jsonError;
+    NSData *objectData = [jsonCrash dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *stackTrace = [NSJSONSerialization JSONObjectWithData:objectData
+                                                               options:NSJSONReadingMutableContainers
+                                                                 error:&jsonError];
+    IBGNonFatalLevel level = (ArgsRegistry.nonFatalExceptionLevel[nonFatalExceptionLevel]).integerValue;
+    [IBGCrashReporting cp_reportNonFatalCrashWithStackTrace:stackTrace
+                                                      level: level
+                                             groupingString:fingerprint
+                                             userAttributes:userAttributes];
+
 }
-
-
 @end

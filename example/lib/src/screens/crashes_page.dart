@@ -16,7 +16,8 @@ class CrashesPage extends StatelessWidget {
         Text('Fatal Crashes can only be tested in release mode'),
         Text('Most of these buttons will crash the application'),
         FatalCrashesContent(),
-      ],
+        SectionTitle('Crash section'),
+      ], // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

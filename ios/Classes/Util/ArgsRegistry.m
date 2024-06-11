@@ -93,6 +93,16 @@
         @"ExtendedBugReportMode.disabled" : @(IBGExtendedBugReportModeDisabled),
     };
 }
++ (ArgsDictionary *)nonFatalExceptionLevel {
+    return @{
+        @"NonFatalExceptionLevel.info" : @(IBGNonFatalLevelInfo),
+        @"NonFatalExceptionLevel.error" : @(IBGNonFatalLevelError),
+        @"NonFatalExceptionLevel.warning" : @(IBGNonFatalLevelWarning),
+        @"NonFatalExceptionLevel.critical" : @(IBGNonFatalLevelCritical)
+
+
+    };
+}
 
 + (ArgsDictionary *)reproModes {
     return @{
