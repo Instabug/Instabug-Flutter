@@ -30,7 +30,7 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-  pod 'Instabug', :podspec => 'https://ios-releases.instabug.com/custom/feature-add-more-languages/12.1.0/Instabug.podspec'
+  pod 'Instabug', :podspec => 'https://ios-releases.instabug.com/custom/feature-add-more-languages/13.1.1/Instabug.podspec'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
