@@ -1,15 +1,24 @@
 package com.instabug.flutter.modules;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.instabug.apm.APM;
+import com.instabug.apm.InternalAPM;
+import com.instabug.apm.configuration.cp.APMFeature;
+import com.instabug.apm.configuration.cp.FeatureAvailabilityCallback;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
+import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
+
 import io.flutter.plugin.common.BinaryMessenger;
+
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
@@ -202,13 +211,80 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
                 serverErrorMessage = (String) data.get("serverErrorMessage");
             }
 
-            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class);
+            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class, APMCPNetworkLog.W3CExternalTraceAttributes.class);
             if (method != null) {
-                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage);
+                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage, null);
             } else {
                 Log.e(TAG, "APMNetworkLogger.log was not found by reflection");
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void startCpUiTrace(@NonNull String screenName, @NonNull Long microTimeStamp, @NonNull Long traceId) {
+        try {
+            InternalAPM._startUiTraceCP(screenName, microTimeStamp, traceId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void reportScreenLoadingCP(@NonNull Long startTimeStampMicro, @NonNull Long durationMicro, @NonNull Long uiTraceId) {
+        try {
+            InternalAPM._reportScreenLoadingCP(startTimeStampMicro, durationMicro, uiTraceId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void endScreenLoadingCP(@NonNull Long timeStampMicro, @NonNull Long uiTraceId) {
+        try {
+            InternalAPM._endScreenLoadingCP(timeStampMicro, uiTraceId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void isEndScreenLoadingEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
+        isScreenLoadingEnabled(result);
+    }
+
+    @Override
+    public void isEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
+        try {
+            // TODO: replace true with an actual implementation of APM.isEnabled once implemented
+            // in the Android SDK.
+            result.success(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void isScreenLoadingEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
+        try {
+            InternalAPM._isFeatureEnabledCP(APMFeature.SCREEN_LOADING, "InstabugCaptureScreenLoading", new FeatureAvailabilityCallback() {
+                @Override
+                public void invoke(boolean isFeatureAvailable) {
+                    result.success(isFeatureAvailable);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setScreenLoadingEnabled(@NonNull Boolean isEnabled) {
+        try {
+            APM.setScreenLoadingEnabled(isEnabled);
         } catch (Exception e) {
             e.printStackTrace();
         }

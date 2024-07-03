@@ -43,6 +43,26 @@ class _ComplexPageState extends State<ComplexPage> {
     });
   }
 
+  void _resetDidStartScreenLoading() {
+    ScreenLoadingManager.I.resetDidStartScreenLoading();
+  }
+
+  void _resetDidReportScreenLoading() {
+    ScreenLoadingManager.I.resetDidReportScreenLoading();
+  }
+
+  void _resetDidExtendScreenLoading() {
+    ScreenLoadingManager.I.resetDidExtendScreenLoading();
+  }
+
+  void _enableScreenLoading() {
+    APM.setScreenLoadingEnabled(true);
+  }
+
+  void _disableScreenLoading() {
+    APM.setScreenLoadingEnabled(false);
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -70,6 +90,26 @@ class _ComplexPageState extends State<ComplexPage> {
           12.0,
         ),
       ),
+      InstabugButton(
+        onPressed: _enableScreenLoading,
+        text: 'Enable Screen loading',
+      ),
+      InstabugButton(
+        onPressed: _disableScreenLoading,
+        text: 'Disable Screen Loading',
+      ),
+      InstabugButton(
+        onPressed: _resetDidStartScreenLoading,
+        text: 'Reset Did Start Screen Loading',
+      ),
+      InstabugButton(
+        onPressed: _resetDidReportScreenLoading,
+        text: 'Reset Did Report Screen Loading',
+      ),
+      InstabugButton(
+        onPressed: _resetDidExtendScreenLoading,
+        text: 'Reset Did Extend Screen Loading',
+      ),
       SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: NestedView(
@@ -82,9 +122,12 @@ class _ComplexPageState extends State<ComplexPage> {
     if (widget.isMonitored) {
       return KeyedSubtree(
         key: _reloadKey,
-        child: Page(
-          title: 'Monitored Complex',
-          children: content,
+        child: InstabugCaptureScreenLoading(
+          screenName: ComplexPage.screenName,
+          child: Page(
+            title: 'Monitored Complex',
+            children: content,
+          ),
         ),
       );
     } else {

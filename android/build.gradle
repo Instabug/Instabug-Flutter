@@ -1,5 +1,5 @@
 group 'com.instabug.flutter'
-version '13.1.1'
+version '13.4.0'
 
 buildscript {
     repositories {
@@ -41,10 +41,11 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:13.1.1'
-
+    api 'com.instabug.library:instabug:13.4.1'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
+    testImplementation "io.mockk:mockk:1.13.13"
+
 }
 
 // add upload_symbols task

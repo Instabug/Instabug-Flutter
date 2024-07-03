@@ -5,8 +5,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
+import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/network_manager.dart';
+import 'package:instabug_flutter/src/utils/w3c_header_utils.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -17,6 +19,8 @@ import 'network_logger_test.mocks.dart';
   InstabugHostApi,
   IBGBuildInfo,
   NetworkManager,
+  W3CHeaderUtils,
+  FeatureFlagsManager,
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +40,7 @@ void main() {
 
   setUpAll(() {
     APM.$setHostApi(mApmHost);
+    FeatureFlagsManager().$setHostApi(mInstabugHost);
     NetworkLogger.$setHostApi(mInstabugHost);
     NetworkLogger.$setManager(mManager);
     IBGBuildInfo.setInstance(mBuildInfo);
@@ -46,6 +51,13 @@ void main() {
     reset(mInstabugHost);
     reset(mBuildInfo);
     reset(mManager);
+    when(mInstabugHost.isW3CFeatureFlagsEnabled()).thenAnswer(
+      (_) => Future.value({
+        "isW3cExternalTraceIDEnabled": true,
+        "isW3cExternalGeneratedHeaderEnabled": true,
+        "isW3cCaughtHeaderEnabled": true,
+      }),
+    );
   });
 
   test('[networkLog] should call 1 host method on iOS', () async {
@@ -53,7 +65,7 @@ void main() {
     when(mManager.obfuscateLog(data)).thenReturn(data);
     when(mManager.omitLog(data)).thenReturn(false);
 
-    await logger.networkLog(data);
+    await logger.networkLogInternal(data);
 
     verify(
       mInstabugHost.networkLog(data.toJson()),
@@ -69,7 +81,7 @@ void main() {
     when(mManager.obfuscateLog(data)).thenReturn(data);
     when(mManager.omitLog(data)).thenReturn(false);
 
-    await logger.networkLog(data);
+    await logger.networkLogInternal(data);
 
     verify(
       mInstabugHost.networkLog(data.toJson()),
@@ -87,7 +99,7 @@ void main() {
     when(mManager.obfuscateLog(data)).thenReturn(obfuscated);
     when(mManager.omitLog(data)).thenReturn(false);
 
-    await logger.networkLog(data);
+    await logger.networkLogInternal(data);
 
     verify(
       mManager.obfuscateLog(data),
@@ -109,7 +121,7 @@ void main() {
     when(mManager.obfuscateLog(data)).thenReturn(data);
     when(mManager.omitLog(data)).thenReturn(omit);
 
-    await logger.networkLog(data);
+    await logger.networkLogInternal(data);
 
     verify(
       mManager.omitLog(data),
