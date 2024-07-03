@@ -6,15 +6,17 @@ import androidx.annotation.Nullable;
 import com.instabug.apm.APM;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
+import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
 import io.flutter.plugin.common.BinaryMessenger;
+import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ApmApi implements ApmPigeon.ApmHostApi {
     private final String TAG = ApmApi.class.getName();
@@ -201,10 +203,65 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
             if (data.containsKey("serverErrorMessage")) {
                 serverErrorMessage = (String) data.get("serverErrorMessage");
             }
+            Boolean w3cc = null;
+            Long partialId = null;
+            Long etst = null;
+            String wgeti = null;
+            String wceti = null;
 
-            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class);
+            try {
+                w3cc = (Boolean) data.get("w3cc");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                partialId = (Long) data.get("partialId");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                etst = (Long) data.get("etst");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+
+                wgeti = (String) data.get("wgeti");
+                if (Objects.equals(wgeti, "null")) {
+                    wgeti = null;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            try {
+                wceti = (String) data.get("wceti");
+
+                if (Objects.equals(wceti, "null")) {
+                    wceti = null;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            APMCPNetworkLog.W3CExternalTraceAttributes w3cExternalTraceAttributes =
+                    new APMCPNetworkLog.W3CExternalTraceAttributes(
+                            w3cc, partialId, etst, wgeti, wceti
+
+                    );
+
+
+            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class,APMCPNetworkLog.W3CExternalTraceAttributes.class);
             if (method != null) {
-                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage);
+                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage,w3cExternalTraceAttributes);
             } else {
                 Log.e(TAG, "APMNetworkLogger.log was not found by reflection");
             }

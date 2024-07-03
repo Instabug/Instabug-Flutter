@@ -21,8 +21,12 @@ import android.app.Application;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
+import com.instabug.apm.InternalAPM;
+import com.instabug.apm.configuration.cp.APMFeature;
+import com.instabug.apm.configuration.cp.FeaturesChangeListener;
 import com.instabug.bug.BugReporting;
 import com.instabug.flutter.generated.InstabugPigeon;
+import com.instabug.flutter.generated.SurveysPigeon;
 import com.instabug.flutter.modules.InstabugApi;
 import com.instabug.flutter.util.GlobalMocks;
 import com.instabug.flutter.util.MockReflected;
@@ -38,6 +42,8 @@ import com.instabug.library.ReproMode;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+import com.instabug.survey.Surveys;
+import com.instabug.survey.callbacks.OnShowCallback;
 
 import org.json.JSONObject;
 import org.junit.After;
@@ -70,7 +76,10 @@ public class InstabugApiTest {
     @Before
     public void setUp() throws NoSuchMethodException {
         mCustomTextPlaceHolder = mockConstruction(InstabugCustomTextPlaceHolder.class);
-        api = spy(new InstabugApi(mContext, screenshotProvider));
+
+        BinaryMessenger mMessenger = mock(BinaryMessenger.class);
+        final InstabugPigeon.FeatureFlagsFlutterApi flutterApi = new InstabugPigeon.FeatureFlagsFlutterApi(mMessenger);
+        api = spy(new InstabugApi(mContext, screenshotProvider, flutterApi));
         mInstabug = mockStatic(Instabug.class);
         mBugReporting = mockStatic(BugReporting.class);
         mHostApi = mockStatic(InstabugPigeon.InstabugHostApi.class);
@@ -554,5 +563,33 @@ public class InstabugApiTest {
     public void testWillRedirectToStore() {
         api.willRedirectToStore();
         mInstabug.verify(Instabug::willRedirectToStore);
+    }
+
+    @Test
+    public void testBindOnW3CFeatureFlagChangeCallback() {
+        MockedStatic<InternalAPM> internalAPM = mockStatic(InternalAPM.class);
+
+        api.bindOnW3CFeatureFlagChangeCallback();
+
+
+        internalAPM.verify(() -> InternalAPM._registerCPFeaturesChangeListener(any(FeaturesChangeListener.class)));
+  internalAPM.close();
+    }
+
+    @Test
+    public void isW3FeatureFlagsEnabled() {
+        MockedStatic<InternalAPM> internalAPM = mockStatic(InternalAPM.class);
+
+        when(InternalAPM._isFeatureEnabledCP(eq(APMFeature.W3C_CAPTURED_HEADER_ATTACHING), anyString())).thenReturn(true);
+        when(InternalAPM._isFeatureEnabledCP(eq(APMFeature.W3C_EXTERNAL_TRACE_ID), anyString())).thenReturn(true);
+        when(InternalAPM._isFeatureEnabledCP(eq(APMFeature.W3C_GENERATED_HEADER_ATTACHING), anyString())).thenReturn(false);
+
+
+        Map<String, Boolean> flags = api.isW3FeatureFlagsEnabled();
+        assertEquals(false, flags.get("isW3ExternalGeneratedHeaderEnabled"));
+        assertEquals(true, flags.get("isW3ExternalTraceIDEnabled"));
+        assertEquals(true, flags.get("isW3CaughtHeaderEnabled"));
+        internalAPM.close();
+
     }
 }

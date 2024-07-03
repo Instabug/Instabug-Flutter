@@ -11,6 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
+import com.instabug.apm.InternalAPM;
+import com.instabug.apm.configuration.cp.APMFeature;
+import com.instabug.apm.configuration.cp.APMFeaturesAvailability;
+import com.instabug.apm.configuration.cp.FeaturesChangeListener;
+import com.instabug.flutter.generated.RepliesPigeon;
+import com.instabug.flutter.generated.SurveysPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.Reflection;
@@ -49,14 +55,19 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     private final Callable<Bitmap> screenshotProvider;
     private final InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
 
+    private final InstabugPigeon.FeatureFlagsFlutterApi featureFlagsFlutterApi;
+
     public static void init(BinaryMessenger messenger, Context context, Callable<Bitmap> screenshotProvider) {
-        final InstabugApi api = new InstabugApi(context, screenshotProvider);
+        final InstabugPigeon.FeatureFlagsFlutterApi flutterApi = new InstabugPigeon.FeatureFlagsFlutterApi(messenger);
+
+        final InstabugApi api = new InstabugApi(context, screenshotProvider, flutterApi);
         InstabugPigeon.InstabugHostApi.setup(messenger, api);
     }
 
-    public InstabugApi(Context context, Callable<Bitmap> screenshotProvider) {
+    public InstabugApi(Context context, Callable<Bitmap> screenshotProvider, InstabugPigeon.FeatureFlagsFlutterApi featureFlagsFlutterApi) {
         this.context = context;
         this.screenshotProvider = screenshotProvider;
+        this.featureFlagsFlutterApi = featureFlagsFlutterApi;
     }
 
     @VisibleForTesting
@@ -390,11 +401,49 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             networkLog.setRequestHeaders((new JSONObject((HashMap<String, String>) data.get("requestHeaders"))).toString(4));
             networkLog.setResponseHeaders((new JSONObject((HashMap<String, String>) data.get("responseHeaders"))).toString(4));
             networkLog.setTotalDuration(((Number) data.get("duration")).longValue() / 1000);
-
             networkLog.insert();
         } catch (Exception e) {
             Log.e(TAG, "Network logging failed");
         }
+    }
+
+    @Override
+    public void bindOnW3CFeatureFlagChangeCallback() {
+
+        try {
+            InternalAPM._registerCPFeaturesChangeListener(new FeaturesChangeListener() {
+                @Override
+                public void invoke(@NonNull APMFeaturesAvailability apmFeaturesAvailability) {
+                    ThreadManager.runOnMainThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            featureFlagsFlutterApi.onW3CFeatureFlagChange(apmFeaturesAvailability.isW3CExternalTraceIdAvailable(), apmFeaturesAvailability.getShouldAttachGeneratedHeader(), apmFeaturesAvailability.getShouldAttachCapturedHeader(), new InstabugPigeon.FeatureFlagsFlutterApi.Reply<Void>() {
+                                @Override
+                                public void reply(Void reply) {
+
+                                }
+                            });
+                        }
+                    });
+                }
+
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @NonNull
+    @Override
+    public Map<String, Boolean> isW3FeatureFlagsEnabled() {
+        Map<String, Boolean> params = new HashMap<String, Boolean>();
+        params.put("isW3ExternalTraceIDEnabled", InternalAPM._isFeatureEnabledCP(APMFeature.W3C_EXTERNAL_TRACE_ID, " "));
+        params.put("isW3ExternalGeneratedHeaderEnabled", InternalAPM._isFeatureEnabledCP(APMFeature.W3C_GENERATED_HEADER_ATTACHING, " "));
+        params.put("isW3CaughtHeaderEnabled", InternalAPM._isFeatureEnabledCP(APMFeature.W3C_CAPTURED_HEADER_ATTACHING, " "));
+
+
+        return params;
     }
 
     @Override

@@ -1,5 +1,10 @@
 import 'package:pigeon/pigeon.dart';
 
+@FlutterApi()
+abstract class FeatureFlagsFlutterApi {
+  void onW3CFeatureFlagChange(bool isW3ExternalTraceIDEnabled,bool isW3ExternalGeneratedHeaderEnabled,bool isW3CaughtHeaderEnabled);
+}
+
 @HostApi()
 abstract class InstabugHostApi {
   void setEnabled(bool isEnabled);
@@ -54,6 +59,10 @@ abstract class InstabugHostApi {
   void clearFileAttachments();
 
   void networkLog(Map<String, Object> data);
+
+  void bindOnW3CFeatureFlagChangeCallback();
+
+  Map<String,bool> isW3FeatureFlagsEnabled();
 
   void willRedirectToStore();
 }
