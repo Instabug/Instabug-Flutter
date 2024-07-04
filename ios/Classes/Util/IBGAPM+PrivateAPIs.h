@@ -2,7 +2,6 @@
 
 #import "IBGAPM.h"
 
-
 @interface IBGAPM (PrivateAPIs)
 
 @property (class, atomic, assign) BOOL networkEnabled;
