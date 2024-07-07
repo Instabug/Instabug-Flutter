@@ -1,12 +1,8 @@
 package com.instabug.flutter.modules;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.instabug.flutter.generated.SessionReplayPigeon;
-import com.instabug.library.OnSessionReplayLinkReady;
 import com.instabug.library.sessionreplay.SessionReplay;
-
 import io.flutter.plugin.common.BinaryMessenger;
 
 public class SessionReplayApi implements SessionReplayPigeon.SessionReplayHostApi {
