@@ -1,6 +1,16 @@
 # Changelog
 
-## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v13.0.0...dev)
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v13.1.1...dev)
+
+### Changed
+
+- Bump Instabug Android SDK to v13.2.0 ([#482](https://github.com/Instabug/Instabug-Flutter/pull/482)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v13.2.0).
+- Bump Instabug iOS SDK to v13.2.0 ([#483](https://github.com/Instabug/Instabug-Flutter/pull/483)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/13.2.0).
+
+## [13.1.1](https://github.com/Instabug/Instabug-Flutter/compare/v13.0.0...dev) (Jun,11 2024)
+
+### Added
+- Add support for passing a grouping fingerprint, error level, and user attributes to the `CrashReporting.reportHandledCrash` non-fatals API ([#461](https://github.com/Instabug/Instabug-Flutter/pull/461)).
 
 ### Changed
 

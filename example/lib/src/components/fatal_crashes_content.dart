@@ -5,7 +5,7 @@ class FatalCrashesContent extends StatelessWidget {
 
   void throwUnhandledException(dynamic error) {
     if (error is! Error) {
-      const String appName = 'Flutter Test App';
+      const appName = 'Flutter Test App';
       final errorMessage = error?.toString() ?? 'Unknown Error';
       error = Exception('Unhandled Error: $errorMessage from $appName');
     }

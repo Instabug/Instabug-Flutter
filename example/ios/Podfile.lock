@@ -1,35 +1,33 @@
 PODS:
   - Flutter (1.0.0)
-  - Instabug (13.1.0)
-  - instabug_flutter (13.0.0):
+  - Instabug (13.2.0)
+  - instabug_flutter (13.1.1):
     - Flutter
-    - Instabug (= 13.1.0)
+    - Instabug (= 13.2.0)
   - OCMock (3.6)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - Instabug (from `https://ios-releases.instabug.com/custom/feature-flutter-screenloading/13.0.0/Instabug.podspec`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
 
 SPEC REPOS:
   trunk:
+    - Instabug
     - OCMock
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  Instabug:
-    :podspec: https://ios-releases.instabug.com/custom/feature-flutter-screenloading/13.0.0/Instabug.podspec
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
 
 SPEC CHECKSUMS:
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  Instabug: 3d55eff7ea55adf22df404908a2b954b8b585c29
-  instabug_flutter: 8b86ee14635a4b0ebfb4f760a108c7b0606c47e4
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  Instabug: aee76898789d17c55b36c7fbaa697e443effe3b1
+  instabug_flutter: 3862054366a3d2c4a93c6817b48467267b79eb89
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
 
-PODFILE CHECKSUM: 03fc227efec8d8485f83d3825510bdf640d8a087
+PODFILE CHECKSUM: 8231e33156f35cebaa9094db274874933be79de7
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.13.0

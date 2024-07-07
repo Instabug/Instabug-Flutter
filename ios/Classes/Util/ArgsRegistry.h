@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <Instabug/IBGTypes.h>
+#import <Instabug/Instabug.h>
 
 typedef NSDictionary<NSString *, NSNumber *> ArgsDictionary;
 
@@ -17,6 +17,8 @@ typedef NSDictionary<NSString *, NSNumber *> ArgsDictionary;
 + (ArgsDictionary *)actionTypes;
 + (ArgsDictionary *)extendedBugReportStates;
 + (ArgsDictionary *)reproModes;
++ (ArgsDictionary *)nonFatalExceptionLevel;
+
 + (ArgsDictionary *)locales;
 + (NSDictionary<NSString *, NSString *> *)placeholders;
 

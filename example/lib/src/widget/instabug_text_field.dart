@@ -8,6 +8,7 @@ class InstabugTextField extends StatelessWidget {
     this.labelStyle,
     this.margin,
     this.keyboardType,
+    this.validator,
   }) : super(key: key);
 
   final String label;
@@ -15,6 +16,7 @@ class InstabugTextField extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final TextStyle? labelStyle;
   final TextInputType? keyboardType;
+  final FormFieldValidator<String>? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +25,10 @@ class InstabugTextField extends StatelessWidget {
           const EdgeInsets.symmetric(
             horizontal: 20.0,
           ),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         keyboardType: keyboardType,
+        validator: validator,
         decoration: InputDecoration(
           labelText: label,
           labelStyle: labelStyle ?? Theme.of(context).textTheme.labelLarge,
