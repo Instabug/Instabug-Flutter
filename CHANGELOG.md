@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v13.1.1...dev)
+## [13.2.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.1.1...v13.2.0)
+
+### Added
+
+- Add support for capturing screen loading time in APM ([#477](https://github.com/Instabug/Instabug-Flutter/pull/477)).
 
 ### Changed
 
@@ -10,13 +14,13 @@
 ## [13.1.1](https://github.com/Instabug/Instabug-Flutter/compare/v13.0.0...dev) (Jun,11 2024)
 
 ### Added
+
 - Add support for passing a grouping fingerprint, error level, and user attributes to the `CrashReporting.reportHandledCrash` non-fatals API ([#461](https://github.com/Instabug/Instabug-Flutter/pull/461)).
 
 ### Changed
 
 - Bump Instabug iOS SDK to v13.1.0 ([#1227](https://github.com/Instabug/Instabug-Flutter/pull/1227)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/13.1.0).
 - Bump Instabug Android SDK to v13.1.1 ([#474](https://github.com/Instabug/Instabug-Flutter/pull/474)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v13.1.1).
-
 
 ## [13.0.0](https://github.com/Instabug/Instabug-Flutter/compare/v12.7.0...dev) (April 29, 2024)
 
