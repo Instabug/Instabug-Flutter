@@ -11,4 +11,8 @@ final appRoutes = {
   CrashesPage.screenName: (BuildContext context) => const CrashesPage(),
   ComplexPage.screenName: (BuildContext context) => const ComplexPage(),
   ApmPage.screenName: (BuildContext context) => const ApmPage(),
+  ScreenLoadingPage.screenName: (BuildContext context) =>
+      const ScreenLoadingPage(),
+  ScreenCapturePrematureExtensionPage.screenName: (BuildContext context) =>
+      const ScreenCapturePrematureExtensionPage(),
 };

@@ -30,7 +30,7 @@ class _NetworkContentState extends State<NetworkContent> {
 
   void _sendRequestToUrl(String text) async {
     try {
-      var url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
+      String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
       final response = await http.get(Uri.parse(url));
 
       // Handle the response here

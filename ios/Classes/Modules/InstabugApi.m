@@ -19,6 +19,15 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     Instabug.enabled = [isEnabled boolValue];
 }
 
+- (nullable NSNumber *)isBuiltWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    return @(YES);
+}
+
+
+- (nullable NSNumber *)isEnabledWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    return @(Instabug.enabled);
+}
+
 - (void)initToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents debugLogsLevel:(NSString *)debugLogsLevel error:(FlutterError *_Nullable *_Nonnull)error {
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
@@ -308,5 +317,6 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 - (void)willRedirectToStoreWithError:(FlutterError * _Nullable __autoreleasing *)error {
     [Instabug willRedirectToAppStore];
 }
+
 
 @end

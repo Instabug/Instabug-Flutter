@@ -1,7 +1,6 @@
 package com.instabug.flutter.util;
 
 import android.graphics.Bitmap;
-
 import androidx.annotation.Nullable;
 
 import com.instabug.crash.models.IBGNonFatalException;
@@ -42,4 +41,10 @@ public class MockReflected {
     public static void crashReportException(JSONObject exception, boolean isHandled) {}
     public static void crashReportException(JSONObject exception, boolean isHandled, Map<String,String> userAttributes, JSONObject fingerPrint, IBGNonFatalException.Level level) {}
 
+
+    public static void startUiTraceCP(String screenName, Long microTimeStamp, Long traceId) {}
+
+    public static void reportScreenLoadingCP(Long startTimeStampMicro, Long durationMicro, Long uiTraceId) {}
+
+    public static void endScreenLoadingCP(Long timeStampMicro, Long uiTraceId) {}
 }
