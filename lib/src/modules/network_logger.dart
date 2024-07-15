@@ -75,4 +75,5 @@ class NetworkLogger {
     await _host.networkLog(obfuscated.toJson());
     await APM.networkLogAndroid(obfuscated);
   }
+
 }

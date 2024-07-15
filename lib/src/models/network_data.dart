@@ -16,6 +16,11 @@ class NetworkData {
     required this.startTime,
     this.errorCode = 0,
     this.errorDomain = '',
+    this.isW3cHeaderFound,
+    this.partialId,
+    this.networkStartTimeInSeconds,
+    this.w3CGeneratedHeader,
+    this.w3CCaughtHeader,
   });
 
   final String url;
@@ -35,6 +40,12 @@ class NetworkData {
   final int errorCode;
   final String errorDomain;
 
+  final bool? isW3cHeaderFound;
+  final num? partialId;
+  final num? networkStartTimeInSeconds;
+  final String? w3CGeneratedHeader;
+  final String? w3CCaughtHeader;
+
   NetworkData copyWith({
     String? url,
     String? method,
@@ -52,25 +63,35 @@ class NetworkData {
     DateTime? startTime,
     int? errorCode,
     String? errorDomain,
+    bool? isW3cHeaderFound,
+    num? partialId,
+    num? networkStartTimeInSeconds,
+    String? w3CGeneratedHeader,
+    String? w3CCaughtHeader,
   }) {
     return NetworkData(
-      url: url ?? this.url,
-      method: method ?? this.method,
-      requestBody: requestBody ?? this.requestBody,
-      responseBody: responseBody ?? this.responseBody,
-      requestBodySize: requestBodySize ?? this.requestBodySize,
-      responseBodySize: responseBodySize ?? this.responseBodySize,
-      status: status ?? this.status,
-      requestHeaders: requestHeaders ?? this.requestHeaders,
-      responseHeaders: responseHeaders ?? this.responseHeaders,
-      duration: duration ?? this.duration,
-      requestContentType: requestContentType ?? this.requestContentType,
-      responseContentType: responseContentType ?? this.responseContentType,
-      endTime: endTime ?? this.endTime,
-      startTime: startTime ?? this.startTime,
-      errorCode: errorCode ?? this.errorCode,
-      errorDomain: errorDomain ?? this.errorDomain,
-    );
+        url: url ?? this.url,
+        method: method ?? this.method,
+        requestBody: requestBody ?? this.requestBody,
+        responseBody: responseBody ?? this.responseBody,
+        requestBodySize: requestBodySize ?? this.requestBodySize,
+        responseBodySize: responseBodySize ?? this.responseBodySize,
+        status: status ?? this.status,
+        requestHeaders: requestHeaders ?? this.requestHeaders,
+        responseHeaders: responseHeaders ?? this.responseHeaders,
+        duration: duration ?? this.duration,
+        requestContentType: requestContentType ?? this.requestContentType,
+        responseContentType: responseContentType ?? this.responseContentType,
+        endTime: endTime ?? this.endTime,
+        startTime: startTime ?? this.startTime,
+        errorCode: errorCode ?? this.errorCode,
+        errorDomain: errorDomain ?? this.errorDomain,
+        isW3cHeaderFound: isW3cHeaderFound ?? this.isW3cHeaderFound,
+        partialId: partialId ?? this.partialId,
+        networkStartTimeInSeconds:
+            networkStartTimeInSeconds ?? this.networkStartTimeInSeconds,
+        w3CCaughtHeader: w3CGeneratedHeader ?? this.w3CCaughtHeader,
+        w3CGeneratedHeader: w3CGeneratedHeader ?? this.w3CGeneratedHeader,);
   }
 
   Map<String, dynamic> toJson() {
@@ -92,6 +113,11 @@ class NetworkData {
       'responseBodySize': responseBodySize,
       'errorDomain': errorDomain,
       'errorCode': errorCode,
+      "isW3cHeaderFound": isW3cHeaderFound,
+      "partialId": partialId,
+      "networkStartTimeInSeconds": networkStartTimeInSeconds,
+      "w3CGeneratedHeader": w3CGeneratedHeader,
+      "w3CCaughtHeader": w3CCaughtHeader,
     };
   }
 }

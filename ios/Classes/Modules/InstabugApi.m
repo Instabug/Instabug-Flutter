@@ -5,7 +5,7 @@
 #import "IBGNetworkLogger+CP.h"
 #import "InstabugApi.h"
 #import "ArgsRegistry.h"
-
+#import "../Util/IBGAPM+PrivateAPIs.h"
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue:((float)(rgbValue & 0xFF)) / 255.0 alpha:((float)((rgbValue & 0xFF000000) >> 24)) / 255.0];
 
 extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
@@ -308,5 +308,20 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 - (void)willRedirectToStoreWithError:(FlutterError * _Nullable __autoreleasing *)error {
     [Instabug willRedirectToAppStore];
 }
+
+- (void)bindOnW3CFeatureFlagChangeCallbackWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+}
+
+
+- (nullable NSDictionary<NSString *,NSNumber *> *)isW3FeatureFlagsEnabledWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+    NSDictionary<NSString * , NSNumber *> *result= @{
+        @"isW3ExternalTraceIDEnabled":[NSNumber numberWithBool:IBGAPM.w3ExternalTraceIDEnabled] ,
+        @"isW3ExternalGeneratedHeaderEnabled":[NSNumber numberWithBool:IBGAPM.w3ExternalGeneratedHeaderEnabled] ,
+        @"isW3CaughtHeaderEnabled":[NSNumber numberWithBool:IBGAPM.w3CaughtHeaderEnabled] ,
+    
+    };
+    return  result;
+}
+
 
 @end

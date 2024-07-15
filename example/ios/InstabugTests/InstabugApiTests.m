@@ -6,6 +6,7 @@
 #import "Util/Instabug+Test.h"
 #import "Util/IBGNetworkLogger+Test.h"
 #import "Flutter/Flutter.h"
+#import "instabug_flutter/IBGAPM+PrivateAPIs.h"
 
 @interface InstabugTests : XCTestCase
 
@@ -403,6 +404,26 @@
     [self.api willRedirectToStoreWithError:&error];
 
     OCMVerify([self.mInstabug willRedirectToAppStore]);
+}
+- (void) testIsW3FeatureFlagsEnabled{
+    FlutterError *error;
+
+    id mock = OCMClassMock([IBGAPM class]);
+    NSNumber *expectedValue = @(YES);
+    NSNumber *expectedValue2 = @(NO);
+
+    OCMStub([mock w3ExternalTraceIDEnabled]).andReturn([expectedValue boolValue]);
+    OCMStub([mock w3ExternalGeneratedHeaderEnabled]).andReturn([expectedValue boolValue]);
+    OCMStub([mock w3CaughtHeaderEnabled]).andReturn([expectedValue boolValue]);
+    
+
+    
+    NSDictionary<NSString* , NSNumber *> * result= [self.api isW3FeatureFlagsEnabledWithError:&error];
+        
+    XCTAssertEqual(result[@"isW3ExternalTraceIDEnabled"],expectedValue);
+    XCTAssertEqual(result[@"isW3ExternalGeneratedHeaderEnabled"],expectedValue);
+    XCTAssertEqual(result[@"isW3CaughtHeaderEnabled"],expectedValue);
+    
 }
 
 @end

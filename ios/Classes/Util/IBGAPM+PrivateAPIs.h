@@ -1,6 +1,6 @@
 
 
-#import "IBGAPM.h"
+#import "Instabug/IBGAPM.h"
 
 @interface IBGAPM (PrivateAPIs)
 
