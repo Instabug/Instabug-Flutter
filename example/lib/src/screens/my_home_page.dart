@@ -19,7 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final primaryColorController = TextEditingController();
   final screenNameController = TextEditingController();
-
+  final featureFlagsController  = TextEditingController();
   void restartInstabug() {
     Instabug.setEnabled(false);
     Instabug.setEnabled(true);
@@ -345,9 +345,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
   }
+
   setFeatureFlag() {
     Instabug.addFeatureFlags(
-        [IBGFeatureFlag(name: featureFlagsController.text)]);
+        [FeatureFlag(name: featureFlagsController.text)]);
   }
 
   removeFeatureFlag() {
