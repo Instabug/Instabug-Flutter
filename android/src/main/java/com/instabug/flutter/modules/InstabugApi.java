@@ -13,9 +13,7 @@ import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
-import com.instabug.library.*;
 import com.instabug.library.Feature;
-import com.instabug.library.IBGFeature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
@@ -43,10 +41,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
-import io.flutter.FlutterInjector;
-import io.flutter.plugin.common.BinaryMessenger;
-import io.flutter.embedding.engine.loader.FlutterLoader;
 
 public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     private final String TAG = InstabugApi.class.getName();
@@ -134,8 +128,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void identifyUser(@NonNull String email, @Nullable String name, @Nullable String userId) {
-        Instabug.
-                identifyUser(name, email, userId);
+        Instabug.identifyUser(name, email, userId);
     }
 
     @Override

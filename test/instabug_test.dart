@@ -270,8 +270,8 @@ void main() {
   test('[addFeatureFlags] should call host method', () async {
     await Instabug.addFeatureFlags(
       List.of([
-        IBGFeatureFlag(name: 'name1', variant: 'variant1'),
-        IBGFeatureFlag(name: 'name2', variant: 'variant2'),
+        FeatureFlag(name: 'name1', variant: 'variant1'),
+        FeatureFlag(name: 'name2', variant: 'variant2'),
       ]),
     );
 

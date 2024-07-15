@@ -272,8 +272,8 @@ class Instabug {
     return _host.clearAllExperiments();
   }
 
-  /// Adds FeatureFlags to the next report.
-  static Future<void> addFeatureFlags(List<IBGFeatureFlag> featureFlags) async {
+  /// Adds feature flags to the next report.
+  static Future<void> addFeatureFlags(List<FeatureFlag> featureFlags) async {
     final map = <String, String>{};
     for (final value in featureFlags) {
       map[value.name] = value.variant ?? '';
@@ -282,12 +282,12 @@ class Instabug {
     return _host.addFeatureFlags(map);
   }
 
-  /// Removes certain FeatureFlags from the next report.
+  /// Removes certain feature flags from the next report.
   static Future<void> removeFeatureFlags(List<String> featureFlags) async {
     return _host.removeFeatureFlags(featureFlags);
   }
 
-  /// Clears all FeatureFlags from the next report.
+  /// Clears all feature flags from the next report.
   static Future<void> clearAllFeatureFlags() async {
     return _host.removeAllFeatureFlags();
   }

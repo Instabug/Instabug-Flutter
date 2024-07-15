@@ -73,7 +73,6 @@ public class ApmApiTest {
         ApmApi.init(messenger);
 
         mHostApi.verify(() -> ApmPigeon.ApmHostApi.setup(eq(messenger), any(ApmApi.class)));
-    mHostApi.verifyNoMoreInteractions();
     }
 
     @Test

@@ -4,11 +4,11 @@
 
 ## Added
 
-- Add support for FeatureFlags APIs `Instabug.addFeatureFlags`, `Instabug.removeFeatureFlags` and `Instabug.clearAllFeatureFlags` ([#471](https://github.com/Instabug/Instabug-Flutter/pull/471)).
+- Add support for Feature Flags APIs `Instabug.addFeatureFlags`, `Instabug.removeFeatureFlags` and `Instabug.clearAllFeatureFlags` ([#1230](https://github.com/Instabug/Instabug-Flutter/pull/471)).
 
 ### Deprecated
 
-- Deprecate execution traces APIs `Instabug.startExecuti# Changelog
+- Deprecate Experiments APIs `Instabug.addExperiments`, `Instabug.removeExperiments` and `Instabug.clearAllExperiments` in favor of the new Feature Flags APIs ([#1230](https://github.com/Instabug/Instabug-Flutter/pull/471)).
 
 ## [13.2.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.1.1...v13.2.0)
 

@@ -325,7 +325,36 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+        SectionTitle('FeatureFlags'),
+        InstabugTextField(
+          controller: featureFlagsController,
+          label: 'Feature Flag name',
+        ),
+        InstabugButton(
+          onPressed: () => setFeatureFlag(),
+          text: 'SetFeatureFlag',
+        ),
+        InstabugButton(
+          onPressed: () => removeFeatureFlag(),
+          text: 'RemoveFeatureFlag',
+        ),
+        InstabugButton(
+          onPressed: () => removeAllFeatureFlags(),
+          text: 'RemoveAllFeatureFlags',
+        ),
       ],
     );
+  }
+  setFeatureFlag() {
+    Instabug.addFeatureFlags(
+        [IBGFeatureFlag(name: featureFlagsController.text)]);
+  }
+
+  removeFeatureFlag() {
+    Instabug.removeFeatureFlags([featureFlagsController.text]);
+  }
+
+  removeAllFeatureFlags() {
+    Instabug.clearAllFeatureFlags();
   }
 }

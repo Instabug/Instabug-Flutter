@@ -45,10 +45,12 @@ void main() {
   runZonedGuarded(
     () {
       WidgetsFlutterBinding.ensureInitialized();
+
       Instabug.init(
-          token: 'deb1910a7342814af4e4c9210c786f35',
-          invocationEvents: [InvocationEvent.floatingButton],
-          debugLogsLevel: LogLevel.verbose);
+        token: 'ed6f659591566da19b67857e1b9d40ab',
+        invocationEvents: [InvocationEvent.floatingButton],
+        debugLogsLevel: LogLevel.verbose,
+      );
 
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
@@ -76,18 +78,5 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
-  }
-
-  setFeatureFlag() {
-    Instabug.addFeatureFlags(
-        [IBGFeatureFlag(name: featureFlagsController.text)]);
-  }
-
-  removeFeatureFlag() {
-    Instabug.removeFeatureFlags([featureFlagsController.text]);
-  }
-
-  removeAllFeatureFlags() {
-    Instabug.clearAllFeatureFlags();
   }
 }
