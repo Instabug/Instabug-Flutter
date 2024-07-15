@@ -19,6 +19,15 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     Instabug.enabled = [isEnabled boolValue];
 }
 
+- (nullable NSNumber *)isBuiltWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    return @(YES);
+}
+
+
+- (nullable NSNumber *)isEnabledWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    return @(Instabug.enabled);
+}
+
 - (void)initToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents debugLogsLevel:(NSString *)debugLogsLevel error:(FlutterError *_Nullable *_Nonnull)error {
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
@@ -318,7 +327,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
         }
         else{
             [featureFlags addObject:[[IBGFeatureFlag alloc] initWithName:key variant:variant]];
-            
+
         }
     }
     [Instabug addFeatureFlags:featureFlags];
@@ -332,7 +341,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
 
 - (void)removeFeatureFlagsFeatureFlag:(nonnull NSArray<NSString *> *)featureFlags error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
-    
+
     NSMutableArray<IBGFeatureFlag *> *features = [NSMutableArray array];
        for(id item in featureFlags){
                [features addObject:[[IBGFeatureFlag alloc] initWithName:item]];

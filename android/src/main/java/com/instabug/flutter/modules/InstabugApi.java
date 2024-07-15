@@ -6,15 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-
-import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.generated.InstabugPigeon;
+import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
+import com.instabug.library.*;
 import com.instabug.library.Feature;
 import com.instabug.library.IBGFeature;
 import com.instabug.library.Instabug;
@@ -28,7 +27,10 @@ import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
-
+import io.flutter.FlutterInjector;
+import io.flutter.embedding.engine.loader.FlutterLoader;
+import io.flutter.plugin.common.BinaryMessenger;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -87,6 +89,16 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             e.printStackTrace();
         }
     }
+
+    @NotNull
+    @Override
+    public Boolean isEnabled() {
+        return Instabug.isEnabled();
+    }
+
+    @NotNull
+    @Override
+    public Boolean isBuilt() { return Instabug.isBuilt(); }
 
     @Override
     public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {

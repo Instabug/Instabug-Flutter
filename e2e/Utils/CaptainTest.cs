@@ -36,6 +36,15 @@ public class CaptainTest : IDisposable
     );
   }
 
+
+ protected void ScrollDownLittle()
+  {
+    captain.Swipe(
+        start: new Point(captain.Window.Size.Width / 2, captain.Window.Size.Height - 200),
+        end: new Point(captain.Window.Size.Width / 2, captain.Window.Size.Height - 220)
+    );
+  }
+
   protected void ScrollUp()
   {
     captain.Swipe(

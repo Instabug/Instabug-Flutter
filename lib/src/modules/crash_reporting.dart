@@ -10,6 +10,8 @@ import 'package:instabug_flutter/src/models/exception_data.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:stack_trace/stack_trace.dart';
 
+enum NonFatalExceptionLevel { error, critical, info, warning }
+
 class CrashReporting {
   static var _host = CrashReportingHostApi();
   static bool enabled = true;
@@ -42,10 +44,19 @@ class CrashReporting {
   /// [Object] exception
   /// [StackTrace] stack
   static Future<void> reportHandledCrash(
-    Object exception, [
-    StackTrace? stack,
-  ]) async {
-    await _sendCrash(exception, stack ?? StackTrace.current, true);
+    Object exception,
+    StackTrace? stack, {
+    Map<String, String>? userAttributes,
+    String? fingerprint,
+    NonFatalExceptionLevel level = NonFatalExceptionLevel.error,
+  }) async {
+    await _sendHandledCrash(
+      exception,
+      stack ?? StackTrace.current,
+      userAttributes,
+      fingerprint,
+      level,
+    );
   }
 
   static Future<void> _reportUnhandledCrash(
@@ -60,6 +71,32 @@ class CrashReporting {
     StackTrace stack,
     bool handled,
   ) async {
+    final crashData = getCrashDataFromException(stack, exception);
+
+    return _host.send(jsonEncode(crashData), handled);
+  }
+
+  static Future<void> _sendHandledCrash(
+    Object exception,
+    StackTrace stack,
+    Map<String, String>? userAttributes,
+    String? fingerprint,
+    NonFatalExceptionLevel? nonFatalExceptionLevel,
+  ) async {
+    final crashData = getCrashDataFromException(stack, exception);
+
+    return _host.sendNonFatalError(
+      jsonEncode(crashData),
+      userAttributes,
+      fingerprint,
+      nonFatalExceptionLevel.toString(),
+    );
+  }
+
+  static CrashData getCrashDataFromException(
+    StackTrace stack,
+    Object exception,
+  ) {
     final trace = Trace.from(stack);
     final frames = trace.frames
         .map(
@@ -77,7 +114,6 @@ class CrashReporting {
       message: exception.toString(),
       exception: frames,
     );
-
-    return _host.send(jsonEncode(crashData), handled);
+    return crashData;
   }
 }

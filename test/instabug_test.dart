@@ -37,6 +37,31 @@ void main() {
     ).called(1);
   });
 
+  test('[isEnabled] should call host method', () async {
+    const expected = true;
+    when(mHost.isEnabled()).thenAnswer((_) async => expected);
+
+    final actual = await Instabug.isEnabled();
+
+    verify(
+      mHost.isEnabled(),
+    ).called(1);
+    expect(actual, expected);
+  });
+
+  test('[isBuilt] should call host method', () async {
+    const expected = true;
+    when(mHost.isBuilt()).thenAnswer((_) async => expected);
+
+    final actual = await Instabug.isBuilt();
+
+    verify(
+      mHost.isBuilt(),
+    ).called(1);
+
+    expect(actual, expected);
+  });
+
   test('[start] should call host method', () async {
     const token = "068ba9a8c3615035e163dc5f829c73be";
     const events = [InvocationEvent.shake, InvocationEvent.screenshot];
