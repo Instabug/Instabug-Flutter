@@ -52,7 +52,7 @@ void main() {
     reset(mBuildInfo);
     reset(mManager);
     when(mInstabugHost.isW3FeatureFlagsEnabled()).thenAnswer(
-          (_) => Future.value({
+      (_) => Future.value({
         "isW3ExternalTraceIDEnabled": true,
         "isW3ExternalGeneratedHeaderEnabled": true,
         "isW3CaughtHeaderEnabled": true,
@@ -61,7 +61,6 @@ void main() {
   });
 
   test('[networkLog] should call 1 host method on iOS', () async {
-
     when(mBuildInfo.isAndroid).thenReturn(false);
     when(mManager.obfuscateLog(any)).thenReturn(data);
     when(mManager.omitLog(any)).thenReturn(false);

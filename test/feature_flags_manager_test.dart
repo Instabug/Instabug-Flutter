@@ -133,7 +133,7 @@ void main() {
 
   test('[registerW3CFlagsListener] should call host method', () async {
     when(mInstabugHost.isW3FeatureFlagsEnabled()).thenAnswer(
-          (_) => Future.value({
+      (_) => Future.value({
         "isW3ExternalTraceIDEnabled": true,
         "isW3ExternalGeneratedHeaderEnabled": true,
         "isW3CaughtHeaderEnabled": true,

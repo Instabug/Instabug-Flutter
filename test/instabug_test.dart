@@ -68,7 +68,7 @@ void main() {
     const token = "068ba9a8c3615035e163dc5f829c73be";
     const events = [InvocationEvent.shake, InvocationEvent.screenshot];
     when(mHost.isW3FeatureFlagsEnabled()).thenAnswer(
-          (_) => Future.value({
+      (_) => Future.value({
         "isW3ExternalTraceIDEnabled": true,
         "isW3ExternalGeneratedHeaderEnabled": true,
         "isW3CaughtHeaderEnabled": true,
