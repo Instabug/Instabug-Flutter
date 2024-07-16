@@ -5,8 +5,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
+import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/network_manager.dart';
+import 'package:instabug_flutter/src/utils/w3_header_utils.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -17,6 +19,8 @@ import 'network_logger_test.mocks.dart';
   InstabugHostApi,
   IBGBuildInfo,
   NetworkManager,
+  W3HeaderUtils,
+  FeatureFlagsManager,
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -143,4 +147,6 @@ void main() {
       mManager.setOmitLogCallback(callback),
     ).called(1);
   });
+
+
 }

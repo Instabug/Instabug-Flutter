@@ -3,6 +3,7 @@ package com.instabug.flutter.util;
 import android.graphics.Bitmap;
 import androidx.annotation.Nullable;
 
+import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
 import com.instabug.crash.models.IBGNonFatalException;
 
 import org.json.JSONObject;
@@ -33,7 +34,7 @@ public class MockReflected {
     /**
      * APMNetworkLogger.log
      */
-    public static void apmNetworkLog(long requestStartTime, long requestDuration, String requestHeaders, String requestBody, long requestBodySize, String requestMethod, String requestUrl, String responseHeaders, String responseBody, String responseBodySize, long statusCode, int responseContentType, String errorMessage, String var18, @Nullable String gqlQueryName, @Nullable String serverErrorMessage) {}
+    public static void apmNetworkLog(long requestStartTime, long requestDuration, String requestHeaders, String requestBody, long requestBodySize, String requestMethod, String requestUrl, String responseHeaders, String responseBody, String responseBodySize, long statusCode, int responseContentType, String errorMessage, String var18, @Nullable String gqlQueryName, @Nullable String serverErrorMessage, APMCPNetworkLog.W3CExternalTraceAttributes attributes) {}
 
     /**
      * CrashReporting.reportException

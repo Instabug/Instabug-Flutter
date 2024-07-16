@@ -15,14 +15,14 @@ import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
+
 import io.flutter.plugin.common.BinaryMessenger;
-import org.json.JSONException;
-import org.jetbrains.annotations.NotNull;
+
 import org.json.JSONObject;
+
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class ApmApi implements ApmPigeon.ApmHostApi {
     private final String TAG = ApmApi.class.getName();
@@ -209,38 +209,45 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
             if (data.containsKey("serverErrorMessage")) {
                 serverErrorMessage = (String) data.get("serverErrorMessage");
             }
-            Boolean w3cc = null;
-            Long partialId = null;
-            Long etst = null;
-            String wgeti = null;
-            String wceti = null;
+            Boolean isW3cHeaderFound = null;
+            Number partialId = null;
+            Number networkStartTimeInSeconds = null;
+            String w3CGeneratedHeader = null;
+            String w3CCaughtHeader = null;
 
             try {
-                w3cc = (Boolean) data.get("w3cc");
-
+                if (data.containsKey("isW3cHeaderFound")) {
+                    isW3cHeaderFound = (Boolean) data.get("isW3cHeaderFound");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             try {
-                partialId = (Long) data.get("partialId");
+                if (data.containsKey("partialId")) {
 
+
+                    partialId = ((Number) data.get("duration"));
+
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             try {
-                etst = (Long) data.get("etst");
-
+                if (data.containsKey("networkStartTimeInSeconds")) {
+                    networkStartTimeInSeconds = ((Number) data.get("networkStartTimeInSeconds"));
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             try {
 
-                wgeti = (String) data.get("wgeti");
-                if (Objects.equals(wgeti, "null")) {
-                    wgeti = null;
+                if (data.containsKey("w3CGeneratedHeader")) {
+
+                    w3CGeneratedHeader = (String) data.get("w3CGeneratedHeader");
+
                 }
 
             } catch (Exception e) {
@@ -249,25 +256,27 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
 
             try {
-                wceti = (String) data.get("wceti");
+                if (data.containsKey("w3CCaughtHeader")) {
+                    w3CCaughtHeader = (String) data.get("w3CCaughtHeader");
 
-                if (Objects.equals(wceti, "null")) {
-                    wceti = null;
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
             APMCPNetworkLog.W3CExternalTraceAttributes w3cExternalTraceAttributes =
-                    new APMCPNetworkLog.W3CExternalTraceAttributes(
-                            w3cc, partialId, etst, wgeti, wceti
+                    null;
+            if (isW3cHeaderFound != null) {
+                w3cExternalTraceAttributes = new APMCPNetworkLog.W3CExternalTraceAttributes(
+                        isW3cHeaderFound, partialId==null?null:partialId.longValue(), networkStartTimeInSeconds==null?null:networkStartTimeInSeconds.longValue(), w3CGeneratedHeader, w3CCaughtHeader
 
-                    );
+                );
+            }
 
 
-            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class,APMCPNetworkLog.W3CExternalTraceAttributes.class);
+            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class, APMCPNetworkLog.W3CExternalTraceAttributes.class);
             if (method != null) {
-                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage,w3cExternalTraceAttributes);
+                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage, w3cExternalTraceAttributes);
             } else {
                 Log.e(TAG, "APMNetworkLogger.log was not found by reflection");
             }

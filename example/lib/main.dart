@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter_example/src/app_routes.dart';
+import 'package:instabug_flutter_example/src/components/instabug_http_client.dart';
 import 'package:instabug_flutter_example/src/widget/nested_view.dart';
 
 import 'src/native/instabug_flutter_example_method_channel.dart';

@@ -90,7 +90,7 @@ class NetworkData {
         partialId: partialId ?? this.partialId,
         networkStartTimeInSeconds:
             networkStartTimeInSeconds ?? this.networkStartTimeInSeconds,
-        w3CCaughtHeader: w3CGeneratedHeader ?? this.w3CCaughtHeader,
+        w3CCaughtHeader: w3CCaughtHeader ?? this.w3CCaughtHeader,
         w3CGeneratedHeader: w3CGeneratedHeader ?? this.w3CGeneratedHeader,);
   }
 

@@ -36,8 +36,8 @@ void main() {
         "isW3CaughtHeaderEnabled": true,
       }),
     );
-    final m = await FeatureFlagsManager.isW3ExternalTraceID;
-    expect(m, true);
+    final isW3ExternalTraceID = await FeatureFlagsManager.isW3ExternalTraceID;
+    expect(isW3ExternalTraceID, true);
     verify(
       mInstabugHost.isW3FeatureFlagsEnabled(),
     ).called(1);
@@ -52,8 +52,8 @@ void main() {
         "isW3CaughtHeaderEnabled": false,
       }),
     );
-    final m = await FeatureFlagsManager.isW3CaughtHeader;
-    expect(m, false);
+    final isW3CaughtHeader = await FeatureFlagsManager.isW3CaughtHeader;
+    expect(isW3CaughtHeader, false);
     verify(
       mInstabugHost.isW3FeatureFlagsEnabled(),
     ).called(1);
@@ -87,8 +87,8 @@ void main() {
     );
     await FeatureFlagsManager.registerW3CFlagsListener();
 
-    final m = await FeatureFlagsManager.isW3ExternalTraceID;
-    expect(m, true);
+    final isW3ExternalTraceID = await FeatureFlagsManager.isW3ExternalTraceID;
+    expect(isW3ExternalTraceID, true);
     verify(
       mInstabugHost.isW3FeatureFlagsEnabled(),
     ).called(1);
@@ -105,8 +105,8 @@ void main() {
     );
     await FeatureFlagsManager.registerW3CFlagsListener();
 
-    final m = await FeatureFlagsManager.isW3CaughtHeader;
-    expect(m, false);
+    final isW3CaughtHeader = await FeatureFlagsManager.isW3CaughtHeader;
+    expect(isW3CaughtHeader, false);
     verify(
       mInstabugHost.isW3FeatureFlagsEnabled(),
     ).called(1);
@@ -124,8 +124,8 @@ void main() {
     );
     await FeatureFlagsManager.registerW3CFlagsListener();
 
-    final m = await FeatureFlagsManager.isW3ExternalGeneratedHeader;
-    expect(m, true);
+    final isW3ExternalGeneratedHeader = await FeatureFlagsManager.isW3ExternalGeneratedHeader;
+    expect(isW3ExternalGeneratedHeader, true);
     verify(
       mInstabugHost.isW3FeatureFlagsEnabled(),
     ).called(1);
@@ -133,11 +133,6 @@ void main() {
 
   test('[registerW3CFlagsListener] should call host method', () async {
     FeatureFlagsManager.registerW3CFlagsListener();
-
-    // ServicesBinding.instance.defaultBinaryMessenger.send(
-    //   'dev.flutter.pigeon.instabug_flutter.InstabugHostApi.bindOnW3CFeatureFlagChangeCallback',
-    //   const StandardMethodCodec().encodeSuccessEnvelope('{"result":true}'),
-    // );
 
     verify(
       mInstabugHost.bindOnW3CFeatureFlagChangeCallback(),

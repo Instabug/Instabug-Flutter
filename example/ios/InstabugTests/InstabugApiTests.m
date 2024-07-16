@@ -396,9 +396,139 @@
                                                duration:duration.integerValue
                                            gqlQueryName:nil
                                      serverErrorMessage:nil
+                                          isW3cCaughted:nil
+                                              partialID:nil
+                                              timestamp:nil
+                                generatedW3CTraceparent:nil
+                                 caughtedW3CTraceparent:nil
+               
+                                      
+
+              ]);
+}
+- (void)testNetworkLogWithW3Caught {
+    NSString *url = @"https://example.com";
+    NSString *requestBody = @"hi";
+    NSNumber *requestBodySize = @17;
+    NSString *responseBody = @"{\"hello\":\"world\"}";
+    NSNumber *responseBodySize = @153;
+    NSString *method = @"POST";
+    NSNumber *responseCode = @201;
+    NSString *responseContentType = @"application/json";
+    NSNumber *duration = @23000;
+    NSNumber *startTime = @1670156107523;
+    NSDictionary *requestHeaders = @{ @"Accepts": @"application/json",@"traceparent":@"1234"};
+    NSDictionary *responseHeaders = @{ @"Content-Type": @"text/plain" };
+    NSDictionary *data = @{
+        @"url": url,
+        @"requestBody": requestBody,
+        @"requestBodySize": requestBodySize,
+        @"responseBody": responseBody,
+        @"responseBodySize": responseBodySize,
+        @"method": method,
+        @"responseCode": responseCode,
+        @"requestHeaders": requestHeaders,
+        @"responseHeaders": responseHeaders,
+        @"responseContentType": responseContentType,
+        @"duration": duration,
+        @"startTime": startTime,
+        @"isW3cHeaderFound":@1,
+        @"w3CCaughtHeader":@"1234"
+    };
+    
+    FlutterError* error;
+
+    [self.api networkLogData:data error:&error];
+    
+    OCMVerify([self.mNetworkLogger addNetworkLogWithUrl:url
+                                                 method:method
+                                            requestBody:requestBody
+                                        requestBodySize:requestBodySize.integerValue
+                                           responseBody:responseBody
+                                       responseBodySize:responseBodySize.integerValue
+                                           responseCode:(int32_t) responseCode.integerValue
+                                         requestHeaders:requestHeaders
+                                        responseHeaders:responseHeaders
+                                            contentType:responseContentType
+                                            errorDomain:nil
+                                              errorCode:0
+                                              startTime:startTime.integerValue * 1000
+                                               duration:duration.integerValue
+                                           gqlQueryName:nil
+                                     serverErrorMessage:nil
+                                          isW3cCaughted:@1
+                                              partialID:nil
+                                              timestamp:nil
+                                generatedW3CTraceparent:nil
+                                 caughtedW3CTraceparent:@"1234"
+               
+                                      
+
               ]);
 }
 
+- (void)testNetworkLogWithW3GeneratedHeader {
+    NSString *url = @"https://example.com";
+    NSString *requestBody = @"hi";
+    NSNumber *requestBodySize = @17;
+    NSString *responseBody = @"{\"hello\":\"world\"}";
+    NSNumber *responseBodySize = @153;
+    NSString *method = @"POST";
+    NSNumber *responseCode = @201;
+    NSString *responseContentType = @"application/json";
+    NSNumber *duration = @23000;
+    NSNumber *startTime = @1670156107523;
+    NSDictionary *requestHeaders = @{ @"Accepts": @"application/json" };
+    NSDictionary *responseHeaders = @{ @"Content-Type": @"text/plain" };
+    NSDictionary *data = @{
+        @"url": url,
+        @"requestBody": requestBody,
+        @"requestBodySize": requestBodySize,
+        @"responseBody": responseBody,
+        @"responseBodySize": responseBodySize,
+        @"method": method,
+        @"responseCode": responseCode,
+        @"requestHeaders": requestHeaders,
+        @"responseHeaders": responseHeaders,
+        @"responseContentType": responseContentType,
+        @"duration": duration,
+        @"startTime": startTime,
+        @"isW3cHeaderFound": @0,
+        @"partialId": @12,
+        @"networkStartTimeInSeconds": @34,
+        @"w3CGeneratedHeader": @"12-34",
+        
+    };
+    FlutterError* error;
+
+    [self.api networkLogData:data error:&error];
+    
+    OCMVerify([self.mNetworkLogger addNetworkLogWithUrl:url
+                                                 method:method
+                                            requestBody:requestBody
+                                        requestBodySize:requestBodySize.integerValue
+                                           responseBody:responseBody
+                                       responseBodySize:responseBodySize.integerValue
+                                           responseCode:(int32_t) responseCode.integerValue
+                                         requestHeaders:requestHeaders
+                                        responseHeaders:responseHeaders
+                                            contentType:responseContentType
+                                            errorDomain:nil
+                                              errorCode:0
+                                              startTime:startTime.integerValue * 1000
+                                               duration:duration.integerValue
+                                           gqlQueryName:nil
+                                     serverErrorMessage:nil
+                                          isW3cCaughted:@0
+                                              partialID:@12
+                                              timestamp:@34
+                                generatedW3CTraceparent:@"12-34"
+                                 caughtedW3CTraceparent:nil
+               
+                                      
+
+              ]);
+}
 - (void)testWillRedirectToAppStore {
     FlutterError *error;
     [self.api willRedirectToStoreWithError:&error];

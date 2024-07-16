@@ -6,7 +6,6 @@ import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 
 class W3HeaderUtils {
   static Random _random = Random();
-  static final _featureFlagManager = FeatureFlagsManager();
 
 
   W3HeaderUtils();
@@ -56,40 +55,4 @@ class W3HeaderUtils {
     };
   }
 
-  static Future<NetworkData> addW3Header(NetworkData data) async {
-    final networkData = data.copyWith();
-    final w3Flags = await Future.wait([
-      FeatureFlagsManager.isW3ExternalTraceID,
-      FeatureFlagsManager.isW3CaughtHeader,
-      FeatureFlagsManager.isW3ExternalGeneratedHeader,
-    ]);
-    final isW3ExternalTraceIDEnabled = w3Flags[0];
-    final isW3CaughtHeaderEnabled = w3Flags[1];
-    final isW3ExternalGeneratedHeaderEnabled = w3Flags[2];
-
-    if (isW3ExternalTraceIDEnabled == false) {
-      return data;
-    }
-    final isW3HeaderFound = data.requestHeaders.containsKey("traceparent");
-
-    if (data.requestHeaders.containsKey("traceparent") &&
-        isW3CaughtHeaderEnabled) {
-      return networkData.copyWith(
-        isW3cHeaderFound: isW3HeaderFound,
-        w3CCaughtHeader: data.requestHeaders.toString(),
-      );
-    } else if (isW3ExternalGeneratedHeaderEnabled) {
-      final w3HeaderData = generateW3CHeader(networkData.startTime.millisecondsSinceEpoch);
-
-      final int timestampInSeconds = w3HeaderData['timestampInSeconds'];
-      final int partialId = w3HeaderData['partialId'];
-      final w3cHeader = w3HeaderData['w3cHeader'].toString();
-      return networkData.copyWith(
-        partialId: partialId,
-        networkStartTimeInSeconds: timestampInSeconds,
-        w3CGeneratedHeader: w3cHeader,
-      );
-    }
-    return networkData;
-  }
 }

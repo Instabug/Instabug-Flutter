@@ -35,8 +35,9 @@ class FeatureFlagsManager implements FeatureFlagsFlutterApi {
 
   static Future<bool> get isW3ExternalGeneratedHeader async {
     if (IBGBuildInfo.instance.isAndroid) {
-      return Future.value(_isAndroidW3CaughtHeader);
+      return Future.value(_isAndroidW3ExternalGeneratedHeader);
     }
+
     return ((await _host.isW3FeatureFlagsEnabled())[
             'isW3ExternalGeneratedHeaderEnabled']) ??
         false;
