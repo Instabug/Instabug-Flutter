@@ -249,7 +249,7 @@ class Instabug {
 
   /// Adds experiments to the next report.
   @Deprecated(
-    'Please migrate to the new FeatureRequests APIs: Instabug.addFeatureFlags.',
+    'Please migrate to the new feature flags APIs: Instabug.addFeatureFlags.',
   )
   static Future<void> addExperiments(List<String> experiments) async {
     return _host.addExperiments(experiments);
@@ -257,7 +257,7 @@ class Instabug {
 
   /// Removes certain experiments from the next report.
   @Deprecated(
-    'Please migrate to the new FeatureRequests APIs: Instabug.removeFeatureFlags.',
+    'Please migrate to the new feature flags APIs: Instabug.removeFeatureFlags.',
   )
   static Future<void> removeExperiments(List<String> experiments) async {
     return _host.removeExperiments(experiments);
@@ -266,7 +266,7 @@ class Instabug {
   /// Clears all experiments from the next report.
 
   @Deprecated(
-    'Please migrate to the new FeatureRequests APIs: Instabug.clearAllFeatureFlags.',
+    'Please migrate to the new feature flags APIs: Instabug.clearAllFeatureFlags.',
   )
   static Future<void> clearAllExperiments() async {
     return _host.clearAllExperiments();
