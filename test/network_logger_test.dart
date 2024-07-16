@@ -40,6 +40,7 @@ void main() {
 
   setUpAll(() {
     APM.$setHostApi(mApmHost);
+    FeatureFlagsManager.$setHostApi(mInstabugHost);
     NetworkLogger.$setHostApi(mInstabugHost);
     NetworkLogger.$setManager(mManager);
     IBGBuildInfo.setInstance(mBuildInfo);
@@ -50,12 +51,20 @@ void main() {
     reset(mInstabugHost);
     reset(mBuildInfo);
     reset(mManager);
+    when(mInstabugHost.isW3FeatureFlagsEnabled()).thenAnswer(
+          (_) => Future.value({
+        "isW3ExternalTraceIDEnabled": true,
+        "isW3ExternalGeneratedHeaderEnabled": true,
+        "isW3CaughtHeaderEnabled": true,
+      }),
+    );
   });
 
   test('[networkLog] should call 1 host method on iOS', () async {
+
     when(mBuildInfo.isAndroid).thenReturn(false);
-    when(mManager.obfuscateLog(data)).thenReturn(data);
-    when(mManager.omitLog(data)).thenReturn(false);
+    when(mManager.obfuscateLog(any)).thenReturn(data);
+    when(mManager.omitLog(any)).thenReturn(false);
 
     await logger.networkLog(data);
 

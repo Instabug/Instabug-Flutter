@@ -1,8 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:instabug_flutter/instabug_flutter.dart';
-import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 
 class W3HeaderUtils {
   static Random _random = Random();

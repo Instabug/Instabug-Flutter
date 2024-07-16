@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
@@ -103,6 +101,7 @@ void main() {
         "isW3CaughtHeaderEnabled": false,
       }),
     );
+
     await FeatureFlagsManager.registerW3CFlagsListener();
 
     final isW3CaughtHeader = await FeatureFlagsManager.isW3CaughtHeader;
@@ -133,7 +132,15 @@ void main() {
   });
 
   test('[registerW3CFlagsListener] should call host method', () async {
-    FeatureFlagsManager.registerW3CFlagsListener();
+    when(mInstabugHost.isW3FeatureFlagsEnabled()).thenAnswer(
+          (_) => Future.value({
+        "isW3ExternalTraceIDEnabled": true,
+        "isW3ExternalGeneratedHeaderEnabled": true,
+        "isW3CaughtHeaderEnabled": true,
+      }),
+    );
+
+    await FeatureFlagsManager.registerW3CFlagsListener();
 
     verify(
       mInstabugHost.bindOnW3CFeatureFlagChangeCallback(),

@@ -11,13 +11,25 @@ typedef OnW3CFeatureFlagChange = void Function(bool isW3ExternalTraceIDEnabled,
 
 class FeatureFlagsManager implements FeatureFlagsFlutterApi {
   static InstabugHostApi _host = InstabugHostApi();
-  static final _instance = FeatureFlagsManager();
+  static FeatureFlagsManager _instance = FeatureFlagsManager();
 
   /// @nodoc
   @visibleForTesting
   // ignore: use_setters_to_change_properties
   static void $setHostApi(InstabugHostApi host) {
     _host = host;
+  }
+
+  // FeatureFlagsManager({InstabugHostApi? instabugHostApi}) {
+  //   if (instabugHostApi != null) {
+  //     _host = instabugHostApi;
+  //   }
+  // }
+
+  @visibleForTesting
+  // ignore: use_setters_to_change_properties
+  static void $setFeatureFlagsManager(FeatureFlagsManager featureFlagsManager) {
+    _instance = featureFlagsManager;
   }
 
   static bool _isAndroidW3ExternalTraceID = false;
@@ -54,6 +66,7 @@ class FeatureFlagsManager implements FeatureFlagsFlutterApi {
 
   static Future<void> registerW3CFlagsListener() async {
     FeatureFlagsFlutterApi.setup(_instance);
+
     final featureFlags = await _host.isW3FeatureFlagsEnabled();
     _isAndroidW3CaughtHeader = featureFlags['isW3CaughtHeaderEnabled'] ?? false;
     _isAndroidW3ExternalTraceID =

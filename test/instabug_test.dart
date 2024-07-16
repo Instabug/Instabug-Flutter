@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
+import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -24,6 +25,7 @@ void main() {
 
   setUpAll(() {
     Instabug.$setHostApi(mHost);
+    FeatureFlagsManager.$setHostApi(mHost);
     IBGBuildInfo.setInstance(mBuildInfo);
   });
 
@@ -65,7 +67,13 @@ void main() {
   test('[start] should call host method', () async {
     const token = "068ba9a8c3615035e163dc5f829c73be";
     const events = [InvocationEvent.shake, InvocationEvent.screenshot];
-
+    when(mHost.isW3FeatureFlagsEnabled()).thenAnswer(
+          (_) => Future.value({
+        "isW3ExternalTraceIDEnabled": true,
+        "isW3ExternalGeneratedHeaderEnabled": true,
+        "isW3CaughtHeaderEnabled": true,
+      }),
+    );
     await Instabug.init(
       token: token,
       invocationEvents: events,

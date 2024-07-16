@@ -106,7 +106,7 @@ class NetworkLogger {
       final int timestampInSeconds = w3HeaderData['timestampInSeconds'];
       final int partialId = w3HeaderData['partialId'];
       final w3cHeader = w3HeaderData['w3cHeader'].toString();
-      final headers = networkData.requestHeaders;
+      final headers = networkData.requestHeaders.map((key, value) => MapEntry(key, value));
       headers['traceparent'] = w3cHeader;
       return networkData.copyWith(
         partialId: partialId,

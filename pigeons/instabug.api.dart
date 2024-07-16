@@ -3,7 +3,7 @@ import 'package:pigeon/pigeon.dart';
 @FlutterApi()
 abstract class FeatureFlagsFlutterApi {
   void onW3CFeatureFlagChange(bool isW3ExternalTraceIDEnabled,
-      bool isW3ExternalGeneratedHeaderEnabled, bool isW3CaughtHeaderEnabled);
+      bool isW3ExternalGeneratedHeaderEnabled, bool isW3CaughtHeaderEnabled,);
 }
 
 @HostApi()

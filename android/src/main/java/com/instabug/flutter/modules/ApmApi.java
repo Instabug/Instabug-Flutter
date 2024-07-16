@@ -227,7 +227,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
                 if (data.containsKey("partialId")) {
 
 
-                    partialId = ((Number) data.get("duration"));
+                    partialId = ((Number) data.get("partialId"));
 
                 }
             } catch (Exception e) {
