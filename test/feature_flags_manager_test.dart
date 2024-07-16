@@ -8,7 +8,7 @@ import 'package:mockito/mockito.dart';
 
 import 'feature_flags_manager_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<InstabugHostApi>(), MockSpec<IBGBuildInfo>()])
+@GenerateMocks([InstabugHostApi, IBGBuildInfo])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
