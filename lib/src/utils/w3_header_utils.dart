@@ -35,8 +35,8 @@ class W3HeaderUtils {
   /// @returns w3c header
   static Map<String, dynamic> generateW3CHeader(int networkStartTime) {
     final partialIdData = generateTracePartialId();
-    final String hexStringPartialId = partialIdData['hexStringPartialId'];
-    final int numberPartialId = partialIdData['numberPartialId'];
+    final hexStringPartialId = partialIdData['hexStringPartialId'] as String;
+    final numberPartialId = partialIdData['numberPartialId'] as int;
 
     final timestampInSeconds = (networkStartTime / 1000).floor();
     final hexaDigitsTimestamp =

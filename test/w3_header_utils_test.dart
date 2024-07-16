@@ -6,7 +6,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'w3_header_utils_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<Random>()])
+@GenerateMocks([Random])
 void main() {
   final mRandom = MockRandom();
 

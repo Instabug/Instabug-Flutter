@@ -103,8 +103,8 @@ class NetworkLogger {
         networkData.startTime.millisecondsSinceEpoch,
       );
 
-      final int timestampInSeconds = w3HeaderData['timestampInSeconds'];
-      final int partialId = w3HeaderData['partialId'];
+      final timestampInSeconds = w3HeaderData['timestampInSeconds'] as int;
+      final partialId = w3HeaderData['partialId'] as int;
       final w3cHeader = w3HeaderData['w3cHeader'].toString();
       final headers =
           networkData.requestHeaders.map((key, value) => MapEntry(key, value));
