@@ -1,24 +1,22 @@
 package com.instabug.flutter;
 
+import com.instabug.flutter.generated.SessionReplayPigeon;
+import com.instabug.flutter.modules.SessionReplayApi;
+import com.instabug.flutter.util.GlobalMocks;
+import com.instabug.library.OnSessionReplayLinkReady;
+import com.instabug.library.sessionreplay.SessionReplay;
+import io.flutter.plugin.common.BinaryMessenger;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.MockedStatic;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
-
-import com.instabug.flutter.generated.SessionReplayPigeon;
-import com.instabug.flutter.modules.SessionReplayApi;
-import com.instabug.flutter.util.GlobalMocks;
-import com.instabug.library.OnSessionReplayLinkReady;
-import com.instabug.library.sessionreplay.SessionReplay;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.MockedStatic;
-
-import io.flutter.plugin.common.BinaryMessenger;
 
 
 public class SessionReplayApiTest {

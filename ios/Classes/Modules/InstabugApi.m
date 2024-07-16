@@ -19,6 +19,15 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     Instabug.enabled = [isEnabled boolValue];
 }
 
+- (nullable NSNumber *)isBuiltWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    return @(YES);
+}
+
+
+- (nullable NSNumber *)isEnabledWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    return @(Instabug.enabled);
+}
+
 - (void)initToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents debugLogsLevel:(NSString *)debugLogsLevel error:(FlutterError *_Nullable *_Nonnull)error {
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
@@ -309,16 +318,16 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [Instabug willRedirectToAppStore];
 }
 
-- (void)bindOnW3CFeatureFlagChangeCallbackWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+- (void)bindOnW3CFeatureFlagChangeCallbackWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
 }
 
 
-- (nullable NSDictionary<NSString *,NSNumber *> *)isW3FeatureFlagsEnabledWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+- (nullable NSDictionary<NSString *,NSNumber *> *)isW3FeatureFlagsEnabledWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     NSDictionary<NSString * , NSNumber *> *result= @{
         @"isW3ExternalTraceIDEnabled":[NSNumber numberWithBool:IBGAPM.w3ExternalTraceIDEnabled] ,
         @"isW3ExternalGeneratedHeaderEnabled":[NSNumber numberWithBool:IBGAPM.w3ExternalGeneratedHeaderEnabled] ,
         @"isW3CaughtHeaderEnabled":[NSNumber numberWithBool:IBGAPM.w3CaughtHeaderEnabled] ,
-    
+
     };
     return  result;
 }

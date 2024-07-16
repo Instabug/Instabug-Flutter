@@ -13,6 +13,7 @@ import 'src/native/instabug_flutter_example_method_channel.dart';
 import 'src/widget/instabug_button.dart';
 import 'src/widget/instabug_clipboard_input.dart';
 import 'src/widget/instabug_text_field.dart';
+import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 
 import 'src/widget/section_title.dart';
 
@@ -21,6 +22,10 @@ part 'src/screens/crashes_page.dart';
 part 'src/screens/complex_page.dart';
 
 part 'src/screens/apm_page.dart';
+
+part 'src/screens/screen_capture_premature_extension_page.dart';
+
+part 'src/screens/screen_loading_page.dart';
 
 part 'src/screens/my_home_page.dart';
 
@@ -48,8 +53,7 @@ void main() {
       );
 
       FlutterError.onError = (FlutterErrorDetails details) {
-        Zone.current.handleUncaughtError(
-            details.exception, details.stack ?? StackTrace.current);
+        Zone.current.handleUncaughtError(details.exception, details.stack!);
       };
 
       runApp(const MyApp());
@@ -68,7 +72,7 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [
         InstabugNavigatorObserver(),
       ],
-      routes: appRoutes,
+      routes: APM.wrapRoutes(appRoutes, exclude: [CrashesPage.screenName]),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,

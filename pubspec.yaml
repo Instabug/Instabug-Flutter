@@ -1,5 +1,5 @@
 name: instabug_flutter
-version: 13.1.1
+version: 13.2.0
 description: >-
   Instabug empowers mobile teams to monitor, prioritize, and debug
   performance and stability issues throughout the app development lifecycle.
@@ -34,5 +34,5 @@ flutter:
         pluginClass: InstabugFlutterPlugin
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.14.0 <4.0.0"
   flutter: ">=1.17.0"

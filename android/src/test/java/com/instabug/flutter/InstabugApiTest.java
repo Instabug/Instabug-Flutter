@@ -63,6 +63,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import io.flutter.plugin.common.BinaryMessenger;
+import org.mockito.verification.VerificationMode;
 
 public class InstabugApiTest {
     private final Callable<Bitmap> screenshotProvider = () -> mock(Bitmap.class);
@@ -162,6 +163,20 @@ public class InstabugApiTest {
         api.setEnabled(isEnabled);
 
         mInstabug.verify(Instabug::disable);
+    }
+
+    @Test
+    public void testIsEnabled() {
+        api.isEnabled();
+
+        mInstabug.verify(Instabug::isEnabled);
+    }
+
+    @Test
+    public void testIsBuilt() {
+        api.isBuilt();
+
+        mInstabug.verify(Instabug::isBuilt);
     }
 
     @Test

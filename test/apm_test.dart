@@ -38,6 +38,34 @@ void main() {
     ).called(1);
   });
 
+  test('[isEnabled] should call host method', () async {
+    when(mHost.isEnabled()).thenAnswer((_) async => true);
+    await APM.isEnabled();
+
+    verify(
+      mHost.isEnabled(),
+    ).called(1);
+  });
+
+  test('[setScreenLoadingMonitoringEnabled] should call host method', () async {
+    const enabled = true;
+
+    await APM.setScreenLoadingEnabled(enabled);
+
+    verify(
+      mHost.setScreenLoadingEnabled(enabled),
+    ).called(1);
+  });
+
+  test('[isScreenLoadingMonitoringEnabled] should call host method', () async {
+    when(mHost.isScreenLoadingEnabled()).thenAnswer((_) async => true);
+    await APM.isScreenLoadingEnabled();
+
+    verify(
+      mHost.isScreenLoadingEnabled(),
+    ).called(1);
+  });
+
   test('[setColdAppLaunchEnabled] should call host method', () async {
     const enabled = true;
 
@@ -173,6 +201,61 @@ void main() {
 
     verify(
       mHost.networkLogAndroid(data.toJson()),
+    ).called(1);
+  });
+
+  test('[startCpUiTrace] should call host method', () async {
+    const screenName = 'screen-name';
+    final microTimeStamp = DateTime.now().microsecondsSinceEpoch;
+    final traceId = DateTime.now().millisecondsSinceEpoch;
+
+    await APM.startCpUiTrace(screenName, microTimeStamp, traceId);
+
+    verify(
+      mHost.startCpUiTrace(screenName, microTimeStamp, traceId),
+    ).called(1);
+    verifyNoMoreInteractions(mHost);
+  });
+
+  test('[reportScreenLoading] should call host method', () async {
+    final startTimeStampMicro = DateTime.now().microsecondsSinceEpoch;
+    final durationMicro = DateTime.now().microsecondsSinceEpoch;
+    final uiTraceId = DateTime.now().millisecondsSinceEpoch;
+
+    await APM.reportScreenLoadingCP(
+      startTimeStampMicro,
+      durationMicro,
+      uiTraceId,
+    );
+
+    verify(
+      mHost.reportScreenLoadingCP(
+        startTimeStampMicro,
+        durationMicro,
+        uiTraceId,
+      ),
+    ).called(1);
+    verifyNoMoreInteractions(mHost);
+  });
+
+  test('[endScreenLoading] should call host method', () async {
+    final timeStampMicro = DateTime.now().microsecondsSinceEpoch;
+    final uiTraceId = DateTime.now().millisecondsSinceEpoch;
+
+    await APM.endScreenLoadingCP(timeStampMicro, uiTraceId);
+
+    verify(
+      mHost.endScreenLoadingCP(timeStampMicro, uiTraceId),
+    ).called(1);
+    verifyNoMoreInteractions(mHost);
+  });
+
+  test('[isSEndScreenLoadingEnabled] should call host method', () async {
+    when(mHost.isEndScreenLoadingEnabled()).thenAnswer((_) async => true);
+    await APM.isEndScreenLoadingEnabled();
+
+    verify(
+      mHost.isEndScreenLoadingEnabled(),
     ).called(1);
   });
 }

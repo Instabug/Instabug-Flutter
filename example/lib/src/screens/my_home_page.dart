@@ -106,8 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void changePrimaryColor() {
-    var text = 'FF' + primaryColorController.text.replaceAll('#', '');
-    var color = Color(int.parse(text, radix: 16));
+    String text = 'FF' + primaryColorController.text.replaceAll('#', '');
+    Color color = Color(int.parse(text, radix: 16));
     Instabug.setPrimaryColor(color);
   }
 
@@ -133,7 +133,10 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ApmPage(),
+        builder: (context) => const InstabugCaptureScreenLoading(
+          screenName: ApmPage.screenName,
+          child: ApmPage(),
+        ),
         settings: const RouteSettings(name: ApmPage.screenName),
       ),
     );
@@ -215,28 +218,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-        const SectionTitle('Change Report Types'),
-        ButtonBar(
-          mainAxisSize: MainAxisSize.min,
-          alignment: MainAxisAlignment.start,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () => toggleReportType(ReportType.bug),
-              style: buttonStyle,
-              child: const Text('Bug'),
-            ),
-            ElevatedButton(
-              onPressed: () => toggleReportType(ReportType.feedback),
-              style: buttonStyle,
-              child: const Text('Feedback'),
-            ),
-            ElevatedButton(
-              onPressed: () => toggleReportType(ReportType.question),
-              style: buttonStyle,
-              child: const Text('Question'),
-            ),
-          ],
-        ),
         InstabugButton(
           onPressed: show,
           text: 'Invoke',
@@ -261,6 +242,28 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: showManualSurvey,
           text: 'Show Manual Survey',
+        ),
+        const SectionTitle('Change Report Types'),
+        ButtonBar(
+          mainAxisSize: MainAxisSize.min,
+          alignment: MainAxisAlignment.start,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () => toggleReportType(ReportType.bug),
+              style: buttonStyle,
+              child: const Text('Bug'),
+            ),
+            ElevatedButton(
+              onPressed: () => toggleReportType(ReportType.feedback),
+              style: buttonStyle,
+              child: const Text('Feedback'),
+            ),
+            ElevatedButton(
+              onPressed: () => toggleReportType(ReportType.question),
+              style: buttonStyle,
+              child: const Text('Question'),
+            ),
+          ],
         ),
         InstabugButton(
           onPressed: changeFloatingButtonEdge,

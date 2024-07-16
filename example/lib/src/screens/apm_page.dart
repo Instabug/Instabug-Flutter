@@ -10,6 +10,18 @@ class ApmPage extends StatefulWidget {
 }
 
 class _ApmPageState extends State<ApmPage> {
+  void _navigateToScreenLoading() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ScreenLoadingPage(),
+        settings: const RouteSettings(
+          name: ScreenLoadingPage.screenName,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Page(
@@ -22,6 +34,13 @@ class _ApmPageState extends State<ApmPage> {
         const SectionTitle('Flows'),
         const FlowsContent(),
         const SectionTitle('Screen Loading'),
+        SizedBox.fromSize(
+          size: const Size.fromHeight(12),
+        ),
+        InstabugButton(
+          text: 'Screen Loading',
+          onPressed: _navigateToScreenLoading,
+        ),
         SizedBox.fromSize(
           size: const Size.fromHeight(12),
         ),
