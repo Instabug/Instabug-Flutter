@@ -1,13 +1,10 @@
-import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:meta/meta.dart';
 
 typedef OnW3CFeatureFlagChange = void Function(bool isW3ExternalTraceIDEnabled,
-    bool isW3ExternalGeneratedHeaderEnabled, bool isW3CaughtHeaderEnabled);
+    bool isW3ExternalGeneratedHeaderEnabled, bool isW3CaughtHeaderEnabled,);
 
 class FeatureFlagsManager implements FeatureFlagsFlutterApi {
   static InstabugHostApi _host = InstabugHostApi();
