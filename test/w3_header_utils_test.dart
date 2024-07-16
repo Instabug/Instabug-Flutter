@@ -14,7 +14,7 @@ void main() {
     W3HeaderUtils.$setRandom(mRandom);
   });
   setUp(() {
-    when(mRandom.nextInt(any)).thenReturnInOrder([217222]);
+    when(mRandom.nextInt(any)).thenReturn(217222);
   });
 
   tearDown(() {
