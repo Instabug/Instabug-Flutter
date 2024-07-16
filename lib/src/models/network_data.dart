@@ -70,28 +70,29 @@ class NetworkData {
     String? w3CCaughtHeader,
   }) {
     return NetworkData(
-        url: url ?? this.url,
-        method: method ?? this.method,
-        requestBody: requestBody ?? this.requestBody,
-        responseBody: responseBody ?? this.responseBody,
-        requestBodySize: requestBodySize ?? this.requestBodySize,
-        responseBodySize: responseBodySize ?? this.responseBodySize,
-        status: status ?? this.status,
-        requestHeaders: requestHeaders ?? this.requestHeaders,
-        responseHeaders: responseHeaders ?? this.responseHeaders,
-        duration: duration ?? this.duration,
-        requestContentType: requestContentType ?? this.requestContentType,
-        responseContentType: responseContentType ?? this.responseContentType,
-        endTime: endTime ?? this.endTime,
-        startTime: startTime ?? this.startTime,
-        errorCode: errorCode ?? this.errorCode,
-        errorDomain: errorDomain ?? this.errorDomain,
-        isW3cHeaderFound: isW3cHeaderFound ?? this.isW3cHeaderFound,
-        partialId: partialId ?? this.partialId,
-        networkStartTimeInSeconds:
-            networkStartTimeInSeconds ?? this.networkStartTimeInSeconds,
-        w3CCaughtHeader: w3CCaughtHeader ?? this.w3CCaughtHeader,
-        w3CGeneratedHeader: w3CGeneratedHeader ?? this.w3CGeneratedHeader,);
+      url: url ?? this.url,
+      method: method ?? this.method,
+      requestBody: requestBody ?? this.requestBody,
+      responseBody: responseBody ?? this.responseBody,
+      requestBodySize: requestBodySize ?? this.requestBodySize,
+      responseBodySize: responseBodySize ?? this.responseBodySize,
+      status: status ?? this.status,
+      requestHeaders: requestHeaders ?? this.requestHeaders,
+      responseHeaders: responseHeaders ?? this.responseHeaders,
+      duration: duration ?? this.duration,
+      requestContentType: requestContentType ?? this.requestContentType,
+      responseContentType: responseContentType ?? this.responseContentType,
+      endTime: endTime ?? this.endTime,
+      startTime: startTime ?? this.startTime,
+      errorCode: errorCode ?? this.errorCode,
+      errorDomain: errorDomain ?? this.errorDomain,
+      isW3cHeaderFound: isW3cHeaderFound ?? this.isW3cHeaderFound,
+      partialId: partialId ?? this.partialId,
+      networkStartTimeInSeconds:
+          networkStartTimeInSeconds ?? this.networkStartTimeInSeconds,
+      w3CCaughtHeader: w3CCaughtHeader ?? this.w3CCaughtHeader,
+      w3CGeneratedHeader: w3CGeneratedHeader ?? this.w3CGeneratedHeader,
+    );
   }
 
   Map<String, dynamic> toJson() {

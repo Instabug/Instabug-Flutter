@@ -124,7 +124,8 @@ void main() {
     );
     await FeatureFlagsManager.registerW3CFlagsListener();
 
-    final isW3ExternalGeneratedHeader = await FeatureFlagsManager.isW3ExternalGeneratedHeader;
+    final isW3ExternalGeneratedHeader =
+        await FeatureFlagsManager.isW3ExternalGeneratedHeader;
     expect(isW3ExternalGeneratedHeader, true);
     verify(
       mInstabugHost.isW3FeatureFlagsEnabled(),

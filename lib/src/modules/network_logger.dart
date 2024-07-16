@@ -100,7 +100,8 @@ class NetworkLogger {
       );
     } else if (isW3ExternalGeneratedHeaderEnabled) {
       final w3HeaderData = W3HeaderUtils.generateW3CHeader(
-          networkData.startTime.millisecondsSinceEpoch,);
+        networkData.startTime.millisecondsSinceEpoch,
+      );
 
       final int timestampInSeconds = w3HeaderData['timestampInSeconds'];
       final int partialId = w3HeaderData['partialId'];

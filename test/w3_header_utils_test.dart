@@ -10,29 +10,27 @@ import 'w3_header_utils_test.mocks.dart';
 void main() {
   final mRandom = MockRandom();
 
-  setUpAll((){
+  setUpAll(() {
     W3HeaderUtils.$setRandom(mRandom);
   });
   setUp(() {
     when(mRandom.nextInt(any)).thenReturnInOrder([217222]);
   });
 
-  tearDown((){
+  tearDown(() {
     reset(mRandom);
   });
 
   test('generateTracePartialId should generate a non-zero hex string', () {
-    final hexString = W3HeaderUtils
-        .generateTracePartialId()['hexStringPartialId']
-        .toString();
+    final hexString =
+        W3HeaderUtils.generateTracePartialId()['hexStringPartialId'].toString();
     expect(hexString, isNot('00000000'));
   });
 
   test('generateTracePartialId should return 8 chars long generated hex string',
       () {
-    final hexString = W3HeaderUtils
-        .generateTracePartialId()['hexStringPartialId']
-        .toString();
+    final hexString =
+        W3HeaderUtils.generateTracePartialId()['hexStringPartialId'].toString();
     expect(hexString.length, 8);
   });
 
@@ -40,12 +38,13 @@ void main() {
       'generateW3CHeader should return {version}-{trace-id}-{parent-id}-{trace-flag} format header',
       () {
     const date = 1716210104248;
-    final hexString0=217222.toRadixString(16).padLeft(8, '0');
+    final hexString0 = 217222.toRadixString(16).padLeft(8, '0');
 
     final expectedHeader = <String, dynamic>{
       'timestampInSeconds': (1716210104248 / 1000).floor(),
-      'partialId':  217222,
-      'w3cHeader': '00-664b49b8${hexString0}664b49b8$hexString0-4942472d$hexString0-01',
+      'partialId': 217222,
+      'w3cHeader':
+          '00-664b49b8${hexString0}664b49b8$hexString0-4942472d$hexString0-01',
     };
     final generatedHeader = W3HeaderUtils.generateW3CHeader(date);
     expect(generatedHeader, expectedHeader);

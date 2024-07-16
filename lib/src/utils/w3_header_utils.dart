@@ -7,7 +7,6 @@ import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 class W3HeaderUtils {
   static Random _random = Random();
 
-
   W3HeaderUtils();
 
   @visibleForTesting
@@ -54,5 +53,4 @@ class W3HeaderUtils {
       'w3cHeader': '00-$traceId-$parentId-01',
     };
   }
-
 }

@@ -147,6 +147,4 @@ void main() {
       mManager.setOmitLogCallback(callback),
     ).called(1);
   });
-
-
 }
