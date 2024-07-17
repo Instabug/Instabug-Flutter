@@ -340,7 +340,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 }
 
 
-- (void)removeFeatureFlagsFeatureFlag:(nonnull NSArray<NSString *> *)featureFlags error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+- (void)removeFeatureFlagsFeatureFlags:(nonnull NSArray<NSString *> *)featureFlags error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
 
     NSMutableArray<IBGFeatureFlag *> *features = [NSMutableArray array];
        for(id item in featureFlags){
