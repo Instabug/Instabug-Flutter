@@ -244,7 +244,7 @@
   NSArray *featureFlags = @[@"exp1"];
     FlutterError *error;
     
-  [self.api removeFeatureFlagsFeatureFlag:featureFlags error:&error];
+  [self.api removeFeatureFlagsFeatureFlags:featureFlags error:&error];
     OCMVerify([self.mInstabug removeFeatureFlags: [OCMArg checkWithBlock:^(id value) {
       NSArray<IBGFeatureFlag *> *featureFlagsObJ = value;
       NSString* firstFeatureFlagName = [featureFlagsObJ objectAtIndex:0 ].name;
