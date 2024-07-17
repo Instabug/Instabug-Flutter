@@ -20,6 +20,15 @@ class _MyHomePageState extends State<MyHomePage> {
   final primaryColorController = TextEditingController();
   final screenNameController = TextEditingController();
   final featureFlagsController = TextEditingController();
+
+  @override
+  void dispose() {
+    featureFlagsController.dispose();
+    screenNameController.dispose();
+    primaryColorController.dispose();
+    super.dispose();
+  }
+
   void restartInstabug() {
     Instabug.setEnabled(false);
     Instabug.setEnabled(true);

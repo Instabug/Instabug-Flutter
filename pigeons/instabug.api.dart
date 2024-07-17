@@ -32,7 +32,7 @@ abstract class InstabugHostApi {
   void removeExperiments(List<String> experiments);
   void clearAllExperiments();
   void addFeatureFlags(Map<String, String> featureFlagsMap);
-  void removeFeatureFlags(List<String> featureFlag);
+  void removeFeatureFlags(List<String> featureFlags);
   void removeAllFeatureFlags();
 
   void setUserAttribute(String value, String key);

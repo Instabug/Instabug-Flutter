@@ -352,9 +352,9 @@ public class InstabugApiTest {
        Map<String,String > featureFlags = new HashMap<>();
         featureFlags.put("key1","variant1");
         api.addFeatureFlags(featureFlags);
-        List<IBGFeatureFlag> s=new ArrayList<IBGFeatureFlag>();
-        s.add(new IBGFeatureFlag("key1","variant1"));
-        mInstabug.verify(() -> Instabug.addFeatureFlags(s));
+        List<IBGFeatureFlag> flags=new ArrayList<IBGFeatureFlag>();
+        flags.add(new IBGFeatureFlag("key1","variant1"));
+        mInstabug.verify(() -> Instabug.addFeatureFlags(flags));
     }
 
     @Test
