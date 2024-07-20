@@ -10,8 +10,7 @@ class NetworkContent extends StatefulWidget {
 }
 
 class _NetworkContentState extends State<NetworkContent> {
-  final endpointUrlController =
-      TextEditingController(text: 'https://httpbin.org/get');
+  final endpointUrlController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +31,7 @@ class _NetworkContentState extends State<NetworkContent> {
   void _sendRequestToUrl(String text) async {
     try {
       String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
-      final client = InstabugHttpClient();
-
-      final response =
-          await client.get(Uri.parse(url), headers: {"traceparent": "12356"});
+      final response = await http.get(Uri.parse(url));
 
       // Handle the response here
       if (response.statusCode == 200) {
