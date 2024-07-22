@@ -125,7 +125,7 @@ class NetworkLogger {
     if (isW3HeaderFound && isW3CaughtHeaderEnabled) {
       final w3Map = {
         "isW3cHeaderFound": isW3HeaderFound,
-        "w3CCaughtHeader": header['traceparent'].toString()
+        "w3CCaughtHeader": header['traceparent'].toString(),
       };
       _w3Headers[startTime] = w3Map;
       return header['traceparent'].toString();
