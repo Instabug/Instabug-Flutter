@@ -62,8 +62,8 @@ void main() {
 
   test('[networkLog] should call 1 host method on iOS', () async {
     when(mBuildInfo.isAndroid).thenReturn(false);
-    when(mManager.obfuscateLog(any)).thenReturn(data);
-    when(mManager.omitLog(any)).thenReturn(false);
+    when(mManager.obfuscateLog(data)).thenReturn(data);
+    when(mManager.omitLog(data)).thenReturn(false);
 
     await logger.networkLog(data);
 

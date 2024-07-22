@@ -46,6 +46,58 @@ class NetworkData {
   final String? w3CGeneratedHeader;
   final String? w3CCaughtHeader;
 
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is NetworkData &&
+          runtimeType == other.runtimeType &&
+          url == other.url &&
+          method == other.method &&
+          requestBody == other.requestBody &&
+          responseBody == other.responseBody &&
+          requestBodySize == other.requestBodySize &&
+          responseBodySize == other.responseBodySize &&
+          status == other.status &&
+          requestHeaders == other.requestHeaders &&
+          responseHeaders == other.responseHeaders &&
+          duration == other.duration &&
+          requestContentType == other.requestContentType &&
+          responseContentType == other.responseContentType &&
+          endTime == other.endTime &&
+          startTime == other.startTime &&
+          errorCode == other.errorCode &&
+          errorDomain == other.errorDomain &&
+          isW3cHeaderFound == other.isW3cHeaderFound &&
+          partialId == other.partialId &&
+          networkStartTimeInSeconds == other.networkStartTimeInSeconds &&
+          w3CGeneratedHeader == other.w3CGeneratedHeader &&
+          w3CCaughtHeader == other.w3CCaughtHeader;
+
+  @override
+  int get hashCode =>
+      url.hashCode ^
+      method.hashCode ^
+      requestBody.hashCode ^
+      responseBody.hashCode ^
+      requestBodySize.hashCode ^
+      responseBodySize.hashCode ^
+      status.hashCode ^
+      requestHeaders.hashCode ^
+      responseHeaders.hashCode ^
+      duration.hashCode ^
+      requestContentType.hashCode ^
+      responseContentType.hashCode ^
+      endTime.hashCode ^
+      startTime.hashCode ^
+      errorCode.hashCode ^
+      errorDomain.hashCode ^
+      isW3cHeaderFound.hashCode ^
+      partialId.hashCode ^
+      networkStartTimeInSeconds.hashCode ^
+      w3CGeneratedHeader.hashCode ^
+      w3CCaughtHeader.hashCode;
+
   NetworkData copyWith({
     String? url,
     String? method,
