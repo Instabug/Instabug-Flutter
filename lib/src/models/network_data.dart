@@ -46,7 +46,6 @@ class NetworkData {
   final String? w3CGeneratedHeader;
   final String? w3CCaughtHeader;
 
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
