@@ -535,7 +535,7 @@
 
     OCMVerify([self.mInstabug willRedirectToAppStore]);
 }
-- (void) testIsW3FeatureFlagsEnabled{
+- (void) testisW3CFeatureFlagsEnabled{
     FlutterError *error;
 
     id mock = OCMClassMock([IBGAPM class]);
@@ -548,11 +548,11 @@
     
 
     
-    NSDictionary<NSString* , NSNumber *> * result= [self.api isW3FeatureFlagsEnabledWithError:&error];
+    NSDictionary<NSString* , NSNumber *> * result= [self.api isW3CFeatureFlagsEnabledWithError:&error];
         
-    XCTAssertEqual(result[@"isW3ExternalTraceIDEnabled"],expectedValue);
-    XCTAssertEqual(result[@"isW3ExternalGeneratedHeaderEnabled"],expectedValue);
-    XCTAssertEqual(result[@"isW3CaughtHeaderEnabled"],expectedValue);
+    XCTAssertEqual(result[@"isW3cExternalTraceIDEnabled"],expectedValue);
+    XCTAssertEqual(result[@"isW3cExternalGeneratedHeaderEnabled"],expectedValue);
+    XCTAssertEqual(result[@"isW3cCaughtHeaderEnabled"],expectedValue);
     
 }
 

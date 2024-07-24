@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class W3HeaderUtils {
+class W3CHeaderUtils {
   static Random _random = Random();
 
-  W3HeaderUtils();
+  W3CHeaderUtils();
 
   @visibleForTesting
   // ignore: use_setters_to_change_properties

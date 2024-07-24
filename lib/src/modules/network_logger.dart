@@ -8,13 +8,13 @@ import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/modules/apm.dart';
 import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/network_manager.dart';
-import 'package:instabug_flutter/src/utils/w3_header_utils.dart';
+import 'package:instabug_flutter/src/utils/w3c_header_utils.dart';
 
 class NetworkLogger {
   static var _host = InstabugHostApi();
   static var _manager = NetworkManager();
 
-  static final _w3Headers = <int, Map<String, dynamic>>{};
+  static final _w3cHeaders = <int, Map<String, dynamic>>{};
 
   /// @nodoc
   @visibleForTesting
@@ -70,7 +70,7 @@ class NetworkLogger {
   }
 
   Future<void> networkLog(NetworkData data) async {
-    final networkData = await _addW3Header(data);
+    final networkData = await _addW3CHeader(data);
     final omit = await _manager.omitLog(networkData);
     if (omit) return;
     final obfuscated = await _manager.obfuscateLog(networkData);
@@ -78,14 +78,14 @@ class NetworkLogger {
     await APM.networkLogAndroid(obfuscated);
   }
 
-  Future<NetworkData> _addW3Header(NetworkData data) async {
+  Future<NetworkData> _addW3CHeader(NetworkData data) async {
     final networkData = data.copyWith();
     final startTime = networkData.startTime.millisecondsSinceEpoch;
-    final w3Data = _w3Headers[startTime];
-    if (w3Data != null) {
-      final isW3cHeaderFound = w3Data['isW3cHeaderFound'] as bool?;
+    final w3cData = _w3cHeaders[startTime];
+    if (w3cData != null) {
+      final isW3cHeaderFound = w3cData['isW3cHeaderFound'] as bool?;
       if (isW3cHeaderFound != null) {
-        _w3Headers.remove(data.startTime.millisecondsSinceEpoch);
+        _w3cHeaders.remove(data.startTime.millisecondsSinceEpoch);
 
         if (isW3cHeaderFound == true) {
           return networkData.copyWith(
@@ -94,10 +94,10 @@ class NetworkLogger {
           );
         } else {
           return networkData.copyWith(
-            partialId: w3Data['partialId'] as num?,
+            partialId: w3cData['partialId'] as num?,
             networkStartTimeInSeconds:
-                w3Data['networkStartTimeInSeconds'] as num?,
-            w3CGeneratedHeader: w3Data['w3CGeneratedHeader'] as String?,
+                w3cData['networkStartTimeInSeconds'] as num?,
+            w3CGeneratedHeader: w3cData['w3CGeneratedHeader'] as String?,
             isW3cHeaderFound: false,
           );
         }
@@ -106,49 +106,49 @@ class NetworkLogger {
     return networkData;
   }
 
-  Future<String?> getW3Header(
+  Future<String?> getW3CHeader(
     Map<String, dynamic> header,
     int startTime,
   ) async {
-    final w3Flags = await Future.wait([
+    final w3cFlags = await Future.wait([
       FeatureFlagsManager.isW3ExternalTraceID,
       FeatureFlagsManager.isW3CaughtHeader,
       FeatureFlagsManager.isW3ExternalGeneratedHeader,
     ]);
 
-    final isW3ExternalTraceIDEnabled = w3Flags[0];
-    final isW3CaughtHeaderEnabled = w3Flags[1];
-    final isW3ExternalGeneratedHeaderEnabled = w3Flags[2];
+    final isW3CExternalTraceIDEnabled = w3cFlags[0];
+    final isW3CCaughtHeaderEnabled = w3cFlags[1];
+    final isW3CExternalGeneratedHeaderEnabled = w3cFlags[2];
 
-    if (isW3ExternalTraceIDEnabled == false) {
+    if (isW3CExternalTraceIDEnabled == false) {
       return null;
     }
 
-    final isW3HeaderFound = header.containsKey("traceparent");
+    final isW3cHeaderFound = header.containsKey("traceparent");
 
-    if (isW3HeaderFound && isW3CaughtHeaderEnabled) {
-      final w3Map = {
-        "isW3cHeaderFound": isW3HeaderFound,
+    if (isW3cHeaderFound && isW3CCaughtHeaderEnabled) {
+      final w3cMap = {
+        "isW3cHeaderFound": isW3cHeaderFound,
         "w3CCaughtHeader": header['traceparent'].toString(),
       };
-      _w3Headers[startTime] = w3Map;
+      _w3cHeaders[startTime] = w3cMap;
       return header['traceparent'].toString();
-    } else if (isW3ExternalGeneratedHeaderEnabled) {
-      final w3HeaderData = W3HeaderUtils.generateW3CHeader(
+    } else if (isW3CExternalGeneratedHeaderEnabled) {
+      final w3cHeaderData = W3CHeaderUtils.generateW3CHeader(
         startTime,
       );
 
-      final timestampInSeconds = w3HeaderData['timestampInSeconds'] as int;
-      final partialId = w3HeaderData['partialId'] as int;
-      final w3cHeader = w3HeaderData['w3cHeader'].toString();
+      final timestampInSeconds = w3cHeaderData['timestampInSeconds'] as int;
+      final partialId = w3cHeaderData['partialId'] as int;
+      final w3cHeader = w3cHeaderData['w3cHeader'].toString();
 
-      final w3Map = {
+      final w3cMap = {
         "partialId": partialId,
         "networkStartTimeInSeconds": timestampInSeconds,
         "w3CGeneratedHeader": w3cHeader,
         "isW3cHeaderFound": false,
       };
-      _w3Headers[startTime] = w3Map;
+      _w3cHeaders[startTime] = w3cMap;
 
       return w3cHeader;
     }

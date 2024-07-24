@@ -3,9 +3,9 @@ import 'package:pigeon/pigeon.dart';
 @FlutterApi()
 abstract class FeatureFlagsFlutterApi {
   void onW3CFeatureFlagChange(
-    bool isW3ExternalTraceIDEnabled,
-    bool isW3ExternalGeneratedHeaderEnabled,
-    bool isW3CaughtHeaderEnabled,
+    bool isW3cExternalTraceIDEnabled,
+    bool isW3cExternalGeneratedHeaderEnabled,
+    bool isW3cCaughtHeaderEnabled,
   );
 }
 
@@ -68,7 +68,7 @@ abstract class InstabugHostApi {
 
   void bindOnW3CFeatureFlagChangeCallback();
 
-  Map<String, bool> isW3FeatureFlagsEnabled();
+  Map<String, bool> isW3CFeatureFlagsEnabled();
 
   void willRedirectToStore();
 }

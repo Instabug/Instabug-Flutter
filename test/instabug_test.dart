@@ -67,11 +67,11 @@ void main() {
   test('[start] should call host method', () async {
     const token = "068ba9a8c3615035e163dc5f829c73be";
     const events = [InvocationEvent.shake, InvocationEvent.screenshot];
-    when(mHost.isW3FeatureFlagsEnabled()).thenAnswer(
+    when(mHost.isW3CFeatureFlagsEnabled()).thenAnswer(
       (_) => Future.value({
-        "isW3ExternalTraceIDEnabled": true,
-        "isW3ExternalGeneratedHeaderEnabled": true,
-        "isW3CaughtHeaderEnabled": true,
+        "isW3cExternalTraceIDEnabled": true,
+        "isW3cExternalGeneratedHeaderEnabled": true,
+        "isW3cCaughtHeaderEnabled": true,
       }),
     );
     await Instabug.init(

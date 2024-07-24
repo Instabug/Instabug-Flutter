@@ -356,11 +356,11 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 }
 
 
-- (nullable NSDictionary<NSString *,NSNumber *> *)isW3FeatureFlagsEnabledWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+- (nullable NSDictionary<NSString *,NSNumber *> *)isW3CFeatureFlagsEnabledWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     NSDictionary<NSString * , NSNumber *> *result= @{
-        @"isW3ExternalTraceIDEnabled":[NSNumber numberWithBool:IBGAPM.w3ExternalTraceIDEnabled] ,
-        @"isW3ExternalGeneratedHeaderEnabled":[NSNumber numberWithBool:IBGAPM.w3ExternalGeneratedHeaderEnabled] ,
-        @"isW3CaughtHeaderEnabled":[NSNumber numberWithBool:IBGAPM.w3CaughtHeaderEnabled] ,
+        @"isW3cExternalTraceIDEnabled":[NSNumber numberWithBool:IBGAPM.w3ExternalTraceIDEnabled] ,
+        @"isW3cExternalGeneratedHeaderEnabled":[NSNumber numberWithBool:IBGAPM.w3ExternalGeneratedHeaderEnabled] ,
+        @"isW3cCaughtHeaderEnabled":[NSNumber numberWithBool:IBGAPM.w3CaughtHeaderEnabled] ,
 
     };
     return  result;

@@ -8,7 +8,7 @@ import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/network_manager.dart';
-import 'package:instabug_flutter/src/utils/w3_header_utils.dart';
+import 'package:instabug_flutter/src/utils/w3c_header_utils.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -19,7 +19,7 @@ import 'network_logger_test.mocks.dart';
   InstabugHostApi,
   IBGBuildInfo,
   NetworkManager,
-  W3HeaderUtils,
+  W3CHeaderUtils,
   FeatureFlagsManager,
 ])
 void main() {
@@ -51,11 +51,11 @@ void main() {
     reset(mInstabugHost);
     reset(mBuildInfo);
     reset(mManager);
-    when(mInstabugHost.isW3FeatureFlagsEnabled()).thenAnswer(
+    when(mInstabugHost.isW3CFeatureFlagsEnabled()).thenAnswer(
       (_) => Future.value({
-        "isW3ExternalTraceIDEnabled": true,
-        "isW3ExternalGeneratedHeaderEnabled": true,
-        "isW3CaughtHeaderEnabled": true,
+        "isW3cExternalTraceIDEnabled": true,
+        "isW3cExternalGeneratedHeaderEnabled": true,
+        "isW3cCaughtHeaderEnabled": true,
       }),
     );
   });

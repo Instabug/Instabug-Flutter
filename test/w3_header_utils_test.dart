@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:instabug_flutter/src/utils/w3_header_utils.dart';
+import 'package:instabug_flutter/src/utils/w3c_header_utils.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'w3_header_utils_test.mocks.dart';
@@ -11,7 +11,7 @@ void main() {
   final mRandom = MockRandom();
 
   setUpAll(() {
-    W3HeaderUtils.$setRandom(mRandom);
+    W3CHeaderUtils.$setRandom(mRandom);
   });
   setUp(() {
     when(mRandom.nextInt(any)).thenReturn(217222);
@@ -23,14 +23,16 @@ void main() {
 
   test('generateTracePartialId should generate a non-zero hex string', () {
     final hexString =
-        W3HeaderUtils.generateTracePartialId()['hexStringPartialId'].toString();
+        W3CHeaderUtils.generateTracePartialId()['hexStringPartialId']
+            .toString();
     expect(hexString, isNot('00000000'));
   });
 
   test('generateTracePartialId should return 8 chars long generated hex string',
       () {
     final hexString =
-        W3HeaderUtils.generateTracePartialId()['hexStringPartialId'].toString();
+        W3CHeaderUtils.generateTracePartialId()['hexStringPartialId']
+            .toString();
     expect(hexString.length, 8);
   });
 
@@ -46,7 +48,7 @@ void main() {
       'w3cHeader':
           '00-664b49b8${hexString0}664b49b8$hexString0-4942472d$hexString0-01',
     };
-    final generatedHeader = W3HeaderUtils.generateW3CHeader(date);
+    final generatedHeader = W3CHeaderUtils.generateW3CHeader(date);
     expect(generatedHeader, expectedHeader);
   });
 
@@ -57,7 +59,7 @@ void main() {
       'partialId': 217222,
       'w3cHeader': "00-664b7bc000035086664b7bc000035086-4942472d00035086-01",
     };
-    final generatedHeader = W3HeaderUtils.generateW3CHeader(date);
+    final generatedHeader = W3CHeaderUtils.generateW3CHeader(date);
     expect(generatedHeader, expectedHeader);
   });
 }

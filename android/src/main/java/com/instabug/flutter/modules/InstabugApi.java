@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -23,9 +24,11 @@ import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+
 import io.flutter.FlutterInjector;
 import io.flutter.embedding.engine.loader.FlutterLoader;
 import io.flutter.plugin.common.BinaryMessenger;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
@@ -94,7 +97,9 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @NotNull
     @Override
-    public Boolean isBuilt() { return Instabug.isBuilt(); }
+    public Boolean isBuilt() {
+        return Instabug.isBuilt();
+    }
 
     @Override
     public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {
@@ -418,12 +423,15 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                     ThreadManager.runOnMainThread(new Runnable() {
                         @Override
                         public void run() {
-                            featureFlagsFlutterApi.onW3CFeatureFlagChange(apmFeaturesAvailability.isW3CExternalTraceIdAvailable(), apmFeaturesAvailability.getShouldAttachGeneratedHeader(), apmFeaturesAvailability.getShouldAttachCapturedHeader(), new InstabugPigeon.FeatureFlagsFlutterApi.Reply<Void>() {
-                                @Override
-                                public void reply(Void reply) {
+                            featureFlagsFlutterApi.onW3CFeatureFlagChange(apmFeaturesAvailability.isW3CExternalTraceIdAvailable(),
+                                    apmFeaturesAvailability.getShouldAttachGeneratedHeader(),
+                                    apmFeaturesAvailability.getShouldAttachCapturedHeader(),
+                                    new InstabugPigeon.FeatureFlagsFlutterApi.Reply<Void>() {
+                                        @Override
+                                        public void reply(Void reply) {
 
-                                }
-                            });
+                                        }
+                                    });
                         }
                     });
                 }
@@ -437,11 +445,11 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @NonNull
     @Override
-    public Map<String, Boolean> isW3FeatureFlagsEnabled() {
+    public Map<String, Boolean> isW3CFeatureFlagsEnabled() {
         Map<String, Boolean> params = new HashMap<String, Boolean>();
-        params.put("isW3ExternalTraceIDEnabled", InternalAPM._isFeatureEnabledCP(APMFeature.W3C_EXTERNAL_TRACE_ID, " "));
-        params.put("isW3ExternalGeneratedHeaderEnabled", InternalAPM._isFeatureEnabledCP(APMFeature.W3C_GENERATED_HEADER_ATTACHING, " "));
-        params.put("isW3CaughtHeaderEnabled", InternalAPM._isFeatureEnabledCP(APMFeature.W3C_CAPTURED_HEADER_ATTACHING, " "));
+        params.put("isW3cExternalTraceIDEnabled", InternalAPM._isFeatureEnabledCP(APMFeature.W3C_EXTERNAL_TRACE_ID, " "));
+        params.put("isW3cExternalGeneratedHeaderEnabled", InternalAPM._isFeatureEnabledCP(APMFeature.W3C_GENERATED_HEADER_ATTACHING, " "));
+        params.put("isW3cCaughtHeaderEnabled", InternalAPM._isFeatureEnabledCP(APMFeature.W3C_CAPTURED_HEADER_ATTACHING, " "));
 
 
         return params;

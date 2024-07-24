@@ -63,6 +63,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import io.flutter.plugin.common.BinaryMessenger;
+
 import org.mockito.verification.VerificationMode;
 
 public class InstabugApiTest {
@@ -588,11 +589,11 @@ public class InstabugApiTest {
 
 
         internalAPM.verify(() -> InternalAPM._registerCPFeaturesChangeListener(any(FeaturesChangeListener.class)));
-  internalAPM.close();
+        internalAPM.close();
     }
 
     @Test
-    public void isW3FeatureFlagsEnabled() {
+    public void isW3CFeatureFlagsEnabled() {
         MockedStatic<InternalAPM> internalAPM = mockStatic(InternalAPM.class);
 
         when(InternalAPM._isFeatureEnabledCP(eq(APMFeature.W3C_CAPTURED_HEADER_ATTACHING), anyString())).thenReturn(true);
@@ -600,10 +601,10 @@ public class InstabugApiTest {
         when(InternalAPM._isFeatureEnabledCP(eq(APMFeature.W3C_GENERATED_HEADER_ATTACHING), anyString())).thenReturn(false);
 
 
-        Map<String, Boolean> flags = api.isW3FeatureFlagsEnabled();
-        assertEquals(false, flags.get("isW3ExternalGeneratedHeaderEnabled"));
-        assertEquals(true, flags.get("isW3ExternalTraceIDEnabled"));
-        assertEquals(true, flags.get("isW3CaughtHeaderEnabled"));
+        Map<String, Boolean> flags = api.isW3CFeatureFlagsEnabled();
+        assertEquals(false, flags.get("isW3cExternalGeneratedHeaderEnabled"));
+        assertEquals(true, flags.get("isW3cExternalTraceIDEnabled"));
+        assertEquals(true, flags.get("isW3cCaughtHeaderEnabled"));
         internalAPM.close();
 
     }

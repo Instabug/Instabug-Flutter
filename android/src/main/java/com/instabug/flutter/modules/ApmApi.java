@@ -215,60 +215,40 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
             String w3CGeneratedHeader = null;
             String w3CCaughtHeader = null;
 
-            try {
-                if (data.containsKey("isW3cHeaderFound")) {
-                    isW3cHeaderFound = (Boolean) data.get("isW3cHeaderFound");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (data.containsKey("isW3cHeaderFound")) {
+                isW3cHeaderFound = (Boolean) data.get("isW3cHeaderFound");
             }
 
-            try {
-                if (data.containsKey("partialId")) {
+            if (data.containsKey("partialId")) {
 
 
-                    partialId = ((Number) data.get("partialId"));
+                partialId = ((Number) data.get("partialId"));
 
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            }
+            if (data.containsKey("networkStartTimeInSeconds")) {
+                networkStartTimeInSeconds = ((Number) data.get("networkStartTimeInSeconds"));
             }
 
-            try {
-                if (data.containsKey("networkStartTimeInSeconds")) {
-                    networkStartTimeInSeconds = ((Number) data.get("networkStartTimeInSeconds"));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            if (data.containsKey("w3CGeneratedHeader")) {
 
-            try {
+                w3CGeneratedHeader = (String) data.get("w3CGeneratedHeader");
 
-                if (data.containsKey("w3CGeneratedHeader")) {
-
-                    w3CGeneratedHeader = (String) data.get("w3CGeneratedHeader");
-
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
 
 
-            try {
-                if (data.containsKey("w3CCaughtHeader")) {
-                    w3CCaughtHeader = (String) data.get("w3CCaughtHeader");
+            if (data.containsKey("w3CCaughtHeader")) {
+                w3CCaughtHeader = (String) data.get("w3CCaughtHeader");
 
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+
 
             APMCPNetworkLog.W3CExternalTraceAttributes w3cExternalTraceAttributes =
                     null;
             if (isW3cHeaderFound != null) {
                 w3cExternalTraceAttributes = new APMCPNetworkLog.W3CExternalTraceAttributes(
-                        isW3cHeaderFound, partialId==null?null:partialId.longValue(), networkStartTimeInSeconds==null?null:networkStartTimeInSeconds.longValue(), w3CGeneratedHeader, w3CCaughtHeader
+                        isW3cHeaderFound, partialId == null ? null : partialId.longValue(),
+                        networkStartTimeInSeconds == null ? null : networkStartTimeInSeconds.longValue(),
+                        w3CGeneratedHeader, w3CCaughtHeader
 
                 );
             }
