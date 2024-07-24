@@ -25,7 +25,7 @@ void main() {
     reset(mInstabugHost);
   });
 
-  test('[isW3ExternalTraceID] should call host method on IOS', () async {
+  test('[isW3CExternalTraceID] should call host method on IOS', () async {
     when(mBuildInfo.isAndroid).thenReturn(false);
     when(mInstabugHost.isW3CFeatureFlagsEnabled()).thenAnswer(
       (_) => Future.value({
@@ -34,14 +34,14 @@ void main() {
         "isW3cCaughtHeaderEnabled": true,
       }),
     );
-    final isW3ExternalTraceID = await FeatureFlagsManager.isW3ExternalTraceID;
-    expect(isW3ExternalTraceID, true);
+    final isW3CExternalTraceID = await FeatureFlagsManager.isW3CExternalTraceID;
+    expect(isW3CExternalTraceID, true);
     verify(
       mInstabugHost.isW3CFeatureFlagsEnabled(),
     ).called(1);
   });
 
-  test('[isW3CaughtHeader] should call host method on IOS', () async {
+  test('[isW3CCaughtHeader] should call host method on IOS', () async {
     when(mBuildInfo.isAndroid).thenReturn(false);
     when(mInstabugHost.isW3CFeatureFlagsEnabled()).thenAnswer(
       (_) => Future.value({
@@ -50,14 +50,14 @@ void main() {
         "isW3cCaughtHeaderEnabled": false,
       }),
     );
-    final isW3CaughtHeader = await FeatureFlagsManager.isW3CaughtHeader;
+    final isW3CaughtHeader = await FeatureFlagsManager.isW3CCaughtHeader;
     expect(isW3CaughtHeader, false);
     verify(
       mInstabugHost.isW3CFeatureFlagsEnabled(),
     ).called(1);
   });
 
-  test('[isW3ExternalGeneratedHeader] should call host method on IOS',
+  test('[isW3CExternalGeneratedHeader] should call host method on IOS',
       () async {
     when(mBuildInfo.isAndroid).thenReturn(false);
     when(mInstabugHost.isW3CFeatureFlagsEnabled()).thenAnswer(
@@ -67,14 +67,14 @@ void main() {
         "isW3cCaughtHeaderEnabled": true,
       }),
     );
-    final m = await FeatureFlagsManager.isW3ExternalGeneratedHeader;
+    final m = await FeatureFlagsManager.isW3CExternalGeneratedHeader;
     expect(m, true);
     verify(
       mInstabugHost.isW3CFeatureFlagsEnabled(),
     ).called(1);
   });
 
-  test('[isW3ExternalTraceID] should call host method on Android', () async {
+  test('[isW3CExternalTraceID] should call host method on Android', () async {
     when(mBuildInfo.isAndroid).thenReturn(true);
     when(mInstabugHost.isW3CFeatureFlagsEnabled()).thenAnswer(
       (_) => Future.value({
@@ -85,14 +85,14 @@ void main() {
     );
     await FeatureFlagsManager.registerW3CFlagsListener();
 
-    final isW3ExternalTraceID = await FeatureFlagsManager.isW3ExternalTraceID;
-    expect(isW3ExternalTraceID, true);
+    final isW3CExternalTraceID = await FeatureFlagsManager.isW3CExternalTraceID;
+    expect(isW3CExternalTraceID, true);
     verify(
       mInstabugHost.isW3CFeatureFlagsEnabled(),
     ).called(1);
   });
 
-  test('[isW3CaughtHeader] should call host method on Android', () async {
+  test('[isW3CCaughtHeader] should call host method on Android', () async {
     when(mBuildInfo.isAndroid).thenReturn(true);
     when(mInstabugHost.isW3CFeatureFlagsEnabled()).thenAnswer(
       (_) => Future.value({
@@ -104,14 +104,14 @@ void main() {
 
     await FeatureFlagsManager.registerW3CFlagsListener();
 
-    final isW3CaughtHeader = await FeatureFlagsManager.isW3CaughtHeader;
+    final isW3CaughtHeader = await FeatureFlagsManager.isW3CCaughtHeader;
     expect(isW3CaughtHeader, false);
     verify(
       mInstabugHost.isW3CFeatureFlagsEnabled(),
     ).called(1);
   });
 
-  test('[isW3ExternalGeneratedHeader] should call host method on Android',
+  test('[isW3CExternalGeneratedHeader] should call host method on Android',
       () async {
     when(mBuildInfo.isAndroid).thenReturn(true);
     when(mInstabugHost.isW3CFeatureFlagsEnabled()).thenAnswer(
@@ -123,9 +123,9 @@ void main() {
     );
     await FeatureFlagsManager.registerW3CFlagsListener();
 
-    final isW3ExternalGeneratedHeader =
-        await FeatureFlagsManager.isW3ExternalGeneratedHeader;
-    expect(isW3ExternalGeneratedHeader, true);
+    final isW3CExternalGeneratedHeader =
+        await FeatureFlagsManager.isW3CExternalGeneratedHeader;
+    expect(isW3CExternalGeneratedHeader, true);
     verify(
       mInstabugHost.isW3CFeatureFlagsEnabled(),
     ).called(1);

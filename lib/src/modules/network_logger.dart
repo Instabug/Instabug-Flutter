@@ -111,9 +111,9 @@ class NetworkLogger {
     int startTime,
   ) async {
     final w3cFlags = await Future.wait([
-      FeatureFlagsManager.isW3ExternalTraceID,
-      FeatureFlagsManager.isW3CaughtHeader,
-      FeatureFlagsManager.isW3ExternalGeneratedHeader,
+      FeatureFlagsManager.isW3CExternalTraceID,
+      FeatureFlagsManager.isW3CCaughtHeader,
+      FeatureFlagsManager.isW3CExternalGeneratedHeader,
     ]);
 
     final isW3CExternalTraceIDEnabled = w3cFlags[0];
