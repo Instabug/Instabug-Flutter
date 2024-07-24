@@ -107,7 +107,9 @@ class NetworkLogger {
   }
 
   Future<String?> getW3Header(
-      Map<String, dynamic> header, int startTime,) async {
+    Map<String, dynamic> header,
+    int startTime,
+  ) async {
     final w3Flags = await Future.wait([
       FeatureFlagsManager.isW3ExternalTraceID,
       FeatureFlagsManager.isW3CaughtHeader,
