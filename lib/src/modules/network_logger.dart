@@ -94,10 +94,10 @@ class NetworkLogger {
           );
         } else {
           return networkData.copyWith(
-            partialId: w3Data['partialId'],
+            partialId: w3Data['partialId'] as num?,
             networkStartTimeInSeconds:
-                w3Data['networkStartTimeInSeconds'] as num,
-            w3CGeneratedHeader: w3Data['w3CGeneratedHeader'] as String,
+                w3Data['networkStartTimeInSeconds'] as num?,
+            w3CGeneratedHeader: w3Data['w3CGeneratedHeader'] as String?,
             isW3cHeaderFound: false,
           );
         }
@@ -107,7 +107,9 @@ class NetworkLogger {
   }
 
   Future<String?> getW3Header(
-      Map<String, dynamic> header, int startTime,) async {
+    Map<String, dynamic> header,
+    int startTime,
+  ) async {
     final w3Flags = await Future.wait([
       FeatureFlagsManager.isW3ExternalTraceID,
       FeatureFlagsManager.isW3CaughtHeader,
