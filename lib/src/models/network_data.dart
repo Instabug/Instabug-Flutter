@@ -1,3 +1,5 @@
+import 'package:instabug_flutter/src/models/w3c_header.dart';
+
 class NetworkData {
   const NetworkData({
     required this.url,
@@ -16,11 +18,7 @@ class NetworkData {
     required this.startTime,
     this.errorCode = 0,
     this.errorDomain = '',
-    this.isW3cHeaderFound,
-    this.partialId,
-    this.networkStartTimeInSeconds,
-    this.w3CGeneratedHeader,
-    this.w3CCaughtHeader,
+    this.w3cHeader,
   });
 
   final String url;
@@ -39,12 +37,7 @@ class NetworkData {
   final DateTime startTime;
   final int errorCode;
   final String errorDomain;
-
-  final bool? isW3cHeaderFound;
-  final num? partialId;
-  final num? networkStartTimeInSeconds;
-  final String? w3CGeneratedHeader;
-  final String? w3CCaughtHeader;
+  final W3CHeader? w3cHeader;
 
   @override
   bool operator ==(Object other) =>
@@ -67,11 +60,7 @@ class NetworkData {
           startTime == other.startTime &&
           errorCode == other.errorCode &&
           errorDomain == other.errorDomain &&
-          isW3cHeaderFound == other.isW3cHeaderFound &&
-          partialId == other.partialId &&
-          networkStartTimeInSeconds == other.networkStartTimeInSeconds &&
-          w3CGeneratedHeader == other.w3CGeneratedHeader &&
-          w3CCaughtHeader == other.w3CCaughtHeader;
+          w3cHeader == other.w3cHeader;
 
   @override
   int get hashCode =>
@@ -91,35 +80,26 @@ class NetworkData {
       startTime.hashCode ^
       errorCode.hashCode ^
       errorDomain.hashCode ^
-      isW3cHeaderFound.hashCode ^
-      partialId.hashCode ^
-      networkStartTimeInSeconds.hashCode ^
-      w3CGeneratedHeader.hashCode ^
-      w3CCaughtHeader.hashCode;
+      w3cHeader.hashCode;
 
-  NetworkData copyWith({
-    String? url,
-    String? method,
-    String? requestBody,
-    String? responseBody,
-    int? requestBodySize,
-    int? responseBodySize,
-    int? status,
-    Map<String, dynamic>? requestHeaders,
-    Map<String, dynamic>? responseHeaders,
-    int? duration,
-    String? requestContentType,
-    String? responseContentType,
-    DateTime? endTime,
-    DateTime? startTime,
-    int? errorCode,
-    String? errorDomain,
-    bool? isW3cHeaderFound,
-    num? partialId,
-    num? networkStartTimeInSeconds,
-    String? w3CGeneratedHeader,
-    String? w3CCaughtHeader,
-  }) {
+  NetworkData copyWith(
+      {String? url,
+      String? method,
+      String? requestBody,
+      String? responseBody,
+      int? requestBodySize,
+      int? responseBodySize,
+      int? status,
+      Map<String, dynamic>? requestHeaders,
+      Map<String, dynamic>? responseHeaders,
+      int? duration,
+      String? requestContentType,
+      String? responseContentType,
+      DateTime? endTime,
+      DateTime? startTime,
+      int? errorCode,
+      String? errorDomain,
+      W3CHeader? w3cHeader,}) {
     return NetworkData(
       url: url ?? this.url,
       method: method ?? this.method,
@@ -137,12 +117,7 @@ class NetworkData {
       startTime: startTime ?? this.startTime,
       errorCode: errorCode ?? this.errorCode,
       errorDomain: errorDomain ?? this.errorDomain,
-      isW3cHeaderFound: isW3cHeaderFound ?? this.isW3cHeaderFound,
-      partialId: partialId ?? this.partialId,
-      networkStartTimeInSeconds:
-          networkStartTimeInSeconds ?? this.networkStartTimeInSeconds,
-      w3CCaughtHeader: w3CCaughtHeader ?? this.w3CCaughtHeader,
-      w3CGeneratedHeader: w3CGeneratedHeader ?? this.w3CGeneratedHeader,
+      w3cHeader: w3cHeader ?? this.w3cHeader,
     );
   }
 
@@ -165,11 +140,11 @@ class NetworkData {
       'responseBodySize': responseBodySize,
       'errorDomain': errorDomain,
       'errorCode': errorCode,
-      "isW3cHeaderFound": isW3cHeaderFound,
-      "partialId": partialId,
-      "networkStartTimeInSeconds": networkStartTimeInSeconds,
-      "w3CGeneratedHeader": w3CGeneratedHeader,
-      "w3CCaughtHeader": w3CCaughtHeader,
+      "isW3cHeaderFound": w3cHeader?.isW3cHeaderFound,
+      "partialId": w3cHeader?.partialId,
+      "networkStartTimeInSeconds": w3cHeader?.networkStartTimeInSeconds,
+      "w3CGeneratedHeader": w3cHeader?.w3CGeneratedHeader,
+      "w3CCaughtHeader":w3cHeader?.w3CCaughtHeader,
     };
   }
 }
