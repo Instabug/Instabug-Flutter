@@ -44,10 +44,11 @@ void main() {
     final hexString0 = 217222.toRadixString(16).padLeft(8, '0');
 
     final expectedHeader = GeneratedW3Header(
-        timestampInSeconds: (1716210104248 / 1000).floor(),
-        partialId: 217222,
-        w3cHeader:
-            '00-664b49b8${hexString0}664b49b8$hexString0-4942472d$hexString0-01',);
+      timestampInSeconds: (1716210104248 / 1000).floor(),
+      partialId: 217222,
+      w3cHeader:
+          '00-664b49b8${hexString0}664b49b8$hexString0-4942472d$hexString0-01',
+    );
     final generatedHeader = W3CHeaderUtils.generateW3CHeader(date);
     expect(generatedHeader, expectedHeader);
   });
@@ -55,9 +56,10 @@ void main() {
   test('generateW3CHeader should correctly floor the timestamp', () {
     const date = 1716222912145;
     final expectedHeader = GeneratedW3Header(
-        timestampInSeconds: (1716222912145 / 1000).floor(),
-        partialId: 217222,
-        w3cHeader: "00-664b7bc000035086664b7bc000035086-4942472d00035086-01",);
+      timestampInSeconds: (1716222912145 / 1000).floor(),
+      partialId: 217222,
+      w3cHeader: "00-664b7bc000035086664b7bc000035086-4942472d00035086-01",
+    );
     final generatedHeader = W3CHeaderUtils.generateW3CHeader(date);
     expect(generatedHeader, expectedHeader);
   });
