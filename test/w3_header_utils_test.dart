@@ -47,7 +47,7 @@ void main() {
         timestampInSeconds: (1716210104248 / 1000).floor(),
         partialId: 217222,
         w3cHeader:
-            '00-664b49b8${hexString0}664b49b8$hexString0-4942472d$hexString0-01');
+            '00-664b49b8${hexString0}664b49b8$hexString0-4942472d$hexString0-01',);
     final generatedHeader = W3CHeaderUtils.generateW3CHeader(date);
     expect(generatedHeader, expectedHeader);
   });
@@ -57,7 +57,7 @@ void main() {
     final expectedHeader = GeneratedW3Header(
         timestampInSeconds: (1716222912145 / 1000).floor(),
         partialId: 217222,
-        w3cHeader: "00-664b7bc000035086664b7bc000035086-4942472d00035086-01");
+        w3cHeader: "00-664b7bc000035086664b7bc000035086-4942472d00035086-01",);
     final generatedHeader = W3CHeaderUtils.generateW3CHeader(date);
     expect(generatedHeader, expectedHeader);
   });
