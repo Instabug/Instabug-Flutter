@@ -1,18 +1,17 @@
-
-class W3CHeader{
+class W3CHeader {
   final bool? isW3cHeaderFound;
   final num? partialId;
   final num? networkStartTimeInSeconds;
   final String? w3CGeneratedHeader;
   final String? w3CCaughtHeader;
 
-
   W3CHeader({
-      this.isW3cHeaderFound,
-      this.partialId,
-      this.networkStartTimeInSeconds,
-      this.w3CGeneratedHeader,
-      this.w3CCaughtHeader,});
+    this.isW3cHeaderFound,
+    this.partialId,
+    this.networkStartTimeInSeconds,
+    this.w3CGeneratedHeader,
+    this.w3CCaughtHeader,
+  });
 
   @override
   bool operator ==(Object other) =>

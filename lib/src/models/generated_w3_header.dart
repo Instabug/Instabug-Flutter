@@ -1,4 +1,4 @@
-class GeneratedW3Header{
+class GeneratedW3Header {
   num timestampInSeconds;
   int partialId;
   String w3cHeader;

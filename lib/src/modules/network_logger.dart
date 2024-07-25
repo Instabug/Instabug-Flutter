@@ -15,7 +15,6 @@ class NetworkLogger {
   static var _host = InstabugHostApi();
   static var _manager = NetworkManager();
 
-
   /// @nodoc
   @visibleForTesting
   // ignore: use_setters_to_change_properties
@@ -77,7 +76,6 @@ class NetworkLogger {
     await APM.networkLogAndroid(obfuscated);
   }
 
-
   @internal
   Future<W3CHeader?> getW3CHeader(
     Map<String, dynamic> header,
@@ -99,12 +97,13 @@ class NetworkLogger {
 
     final w3cHeaderFound = header.entries
         .firstWhereOrNull(
-            (element) => element.key.toLowerCase() == 'traceparent',)
+          (element) => element.key.toLowerCase() == 'traceparent',
+        )
         ?.value as String?;
     final isW3cHeaderFound = w3cHeaderFound != null;
 
     if (isW3cHeaderFound && isW3CCaughtHeaderEnabled) {
-      return W3CHeader(isW3cHeaderFound: true,w3CCaughtHeader: w3cHeaderFound);
+      return W3CHeader(isW3cHeaderFound: true, w3CCaughtHeader: w3cHeaderFound);
     } else if (isW3CExternalGeneratedHeaderEnabled &&
         (isW3cHeaderFound == false)) {
       // make it structure
@@ -114,7 +113,7 @@ class NetworkLogger {
 
       return W3CHeader(
         isW3cHeaderFound: false,
-        partialId:  w3cHeaderData.partialId,
+        partialId: w3cHeaderData.partialId,
         networkStartTimeInSeconds: w3cHeaderData.timestampInSeconds,
         w3CGeneratedHeader: w3cHeaderData.w3cHeader,
       );

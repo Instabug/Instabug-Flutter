@@ -82,24 +82,25 @@ class NetworkData {
       errorDomain.hashCode ^
       w3cHeader.hashCode;
 
-  NetworkData copyWith(
-      {String? url,
-      String? method,
-      String? requestBody,
-      String? responseBody,
-      int? requestBodySize,
-      int? responseBodySize,
-      int? status,
-      Map<String, dynamic>? requestHeaders,
-      Map<String, dynamic>? responseHeaders,
-      int? duration,
-      String? requestContentType,
-      String? responseContentType,
-      DateTime? endTime,
-      DateTime? startTime,
-      int? errorCode,
-      String? errorDomain,
-      W3CHeader? w3cHeader,}) {
+  NetworkData copyWith({
+    String? url,
+    String? method,
+    String? requestBody,
+    String? responseBody,
+    int? requestBodySize,
+    int? responseBodySize,
+    int? status,
+    Map<String, dynamic>? requestHeaders,
+    Map<String, dynamic>? responseHeaders,
+    int? duration,
+    String? requestContentType,
+    String? responseContentType,
+    DateTime? endTime,
+    DateTime? startTime,
+    int? errorCode,
+    String? errorDomain,
+    W3CHeader? w3cHeader,
+  }) {
     return NetworkData(
       url: url ?? this.url,
       method: method ?? this.method,
@@ -144,7 +145,7 @@ class NetworkData {
       "partialId": w3cHeader?.partialId,
       "networkStartTimeInSeconds": w3cHeader?.networkStartTimeInSeconds,
       "w3CGeneratedHeader": w3cHeader?.w3CGeneratedHeader,
-      "w3CCaughtHeader":w3cHeader?.w3CCaughtHeader,
+      "w3CCaughtHeader": w3cHeader?.w3CCaughtHeader,
     };
   }
 }

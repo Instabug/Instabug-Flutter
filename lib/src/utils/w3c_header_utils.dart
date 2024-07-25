@@ -47,8 +47,9 @@ class W3CHeaderUtils {
     final parentId = '4942472d$hexStringPartialId';
 
     return GeneratedW3Header(
-        timestampInSeconds: timestampInSeconds,
-        partialId: numberPartialId,
-        w3cHeader: '00-$traceId-$parentId-01',);
+      timestampInSeconds: timestampInSeconds,
+      partialId: numberPartialId,
+      w3cHeader: '00-$traceId-$parentId-01',
+    );
   }
 }
