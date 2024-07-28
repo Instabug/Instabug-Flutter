@@ -1,25 +1,26 @@
 import 'package:instabug_flutter/src/models/w3c_header.dart';
 
 class NetworkData {
-  const NetworkData({
-    required this.url,
-    required this.method,
-    this.requestBody = '',
-    this.responseBody = '',
-    this.requestBodySize = 0,
-    this.responseBodySize = 0,
-    this.status,
-    this.requestHeaders = const <String, dynamic>{},
-    this.responseHeaders = const <String, dynamic>{},
-    this.duration,
-    this.requestContentType = '',
-    this.responseContentType = '',
-    this.endTime,
-    required this.startTime,
-    this.errorCode = 0,
-    this.errorDomain = '',
-    this.w3cHeader,
-  });
+  NetworkData(
+      {required this.url,
+      required this.method,
+      this.requestBody = '',
+      this.responseBody = '',
+      this.requestBodySize = 0,
+      this.responseBodySize = 0,
+      this.status,
+      this.requestHeaders = const <String, dynamic>{},
+      this.responseHeaders = const <String, dynamic>{},
+      this.duration,
+      this.requestContentType = '',
+      this.responseContentType = '',
+      this.endTime,
+      required this.startTime,
+      this.errorCode = 0,
+      this.errorDomain = '',
+      W3CHeader? w3cHeader}) {
+    _w3cHeader = w3cHeader;
+  }
 
   final String url;
   final String method;
@@ -37,7 +38,7 @@ class NetworkData {
   final DateTime startTime;
   final int errorCode;
   final String errorDomain;
-  final W3CHeader? w3cHeader;
+  W3CHeader? _w3cHeader;
 
   @override
   bool operator ==(Object other) =>
@@ -60,7 +61,7 @@ class NetworkData {
           startTime == other.startTime &&
           errorCode == other.errorCode &&
           errorDomain == other.errorDomain &&
-          w3cHeader == other.w3cHeader;
+          _w3cHeader == other._w3cHeader;
 
   @override
   int get hashCode =>
@@ -80,7 +81,7 @@ class NetworkData {
       startTime.hashCode ^
       errorCode.hashCode ^
       errorDomain.hashCode ^
-      w3cHeader.hashCode;
+      _w3cHeader.hashCode;
 
   NetworkData copyWith({
     String? url,
@@ -118,7 +119,7 @@ class NetworkData {
       startTime: startTime ?? this.startTime,
       errorCode: errorCode ?? this.errorCode,
       errorDomain: errorDomain ?? this.errorDomain,
-      w3cHeader: w3cHeader ?? this.w3cHeader,
+      w3cHeader: w3cHeader ?? _w3cHeader,
     );
   }
 
@@ -141,11 +142,11 @@ class NetworkData {
       'responseBodySize': responseBodySize,
       'errorDomain': errorDomain,
       'errorCode': errorCode,
-      "isW3cHeaderFound": w3cHeader?.isW3cHeaderFound,
-      "partialId": w3cHeader?.partialId,
-      "networkStartTimeInSeconds": w3cHeader?.networkStartTimeInSeconds,
-      "w3CGeneratedHeader": w3cHeader?.w3CGeneratedHeader,
-      "w3CCaughtHeader": w3cHeader?.w3CCaughtHeader,
+      "isW3cHeaderFound": _w3cHeader?.isW3cHeaderFound,
+      "partialId": _w3cHeader?.partialId,
+      "networkStartTimeInSeconds": _w3cHeader?.networkStartTimeInSeconds,
+      "w3CGeneratedHeader": _w3cHeader?.w3CGeneratedHeader,
+      "w3CCaughtHeader": _w3cHeader?.w3CCaughtHeader,
     };
   }
 }

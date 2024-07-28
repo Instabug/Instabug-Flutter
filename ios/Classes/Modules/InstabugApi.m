@@ -358,9 +358,9 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
 - (nullable NSDictionary<NSString *,NSNumber *> *)isW3CFeatureFlagsEnabledWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     NSDictionary<NSString * , NSNumber *> *result= @{
-        @"isW3cExternalTraceIDEnabled":[NSNumber numberWithBool:IBGAPM.w3ExternalTraceIDEnabled] ,
-        @"isW3cExternalGeneratedHeaderEnabled":[NSNumber numberWithBool:IBGAPM.w3ExternalGeneratedHeaderEnabled] ,
-        @"isW3cCaughtHeaderEnabled":[NSNumber numberWithBool:IBGAPM.w3CaughtHeaderEnabled] ,
+        @"isW3cExternalTraceIDEnabled":[NSNumber numberWithBool:IBGNetworkLogger.w3ExternalTraceIDEnabled] ,
+        @"isW3cExternalGeneratedHeaderEnabled":[NSNumber numberWithBool:IBGNetworkLogger.w3ExternalGeneratedHeaderEnabled] ,
+        @"isW3cCaughtHeaderEnabled":[NSNumber numberWithBool:IBGNetworkLogger.w3CaughtHeaderEnabled] ,
 
     };
     return  result;

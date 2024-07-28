@@ -69,6 +69,17 @@ class NetworkLogger {
   }
 
   Future<void> networkLog(NetworkData data) async {
+    final w3Header = await getW3CHeader(
+        data.requestHeaders, data.startTime.millisecondsSinceEpoch);
+    if (w3Header?.isW3cHeaderFound == false &&
+        w3Header?.w3CGeneratedHeader != null) {
+      data.requestHeaders['traceparent'] = w3Header?.w3CGeneratedHeader;
+    }
+    networkLogInternal(data);
+  }
+
+  @internal
+  Future<void> networkLogInternal(NetworkData data) async {
     final omit = await _manager.omitLog(data);
     if (omit) return;
     final obfuscated = await _manager.obfuscateLog(data);
