@@ -7,6 +7,7 @@
 #import "Util/IBGNetworkLogger+Test.h"
 #import "Flutter/Flutter.h"
 #import "instabug_flutter/IBGAPM+PrivateAPIs.h"
+#import "instabug_flutter/IBGNetworkLogger+CP.h"
 
 @interface InstabugTests : XCTestCase
 
