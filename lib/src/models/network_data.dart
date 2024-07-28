@@ -1,24 +1,25 @@
 import 'package:instabug_flutter/src/models/w3c_header.dart';
 
 class NetworkData {
-  NetworkData(
-      {required this.url,
-      required this.method,
-      this.requestBody = '',
-      this.responseBody = '',
-      this.requestBodySize = 0,
-      this.responseBodySize = 0,
-      this.status,
-      this.requestHeaders = const <String, dynamic>{},
-      this.responseHeaders = const <String, dynamic>{},
-      this.duration,
-      this.requestContentType = '',
-      this.responseContentType = '',
-      this.endTime,
-      required this.startTime,
-      this.errorCode = 0,
-      this.errorDomain = '',
-      W3CHeader? w3cHeader,}) {
+  NetworkData({
+    required this.url,
+    required this.method,
+    this.requestBody = '',
+    this.responseBody = '',
+    this.requestBodySize = 0,
+    this.responseBodySize = 0,
+    this.status,
+    this.requestHeaders = const <String, dynamic>{},
+    this.responseHeaders = const <String, dynamic>{},
+    this.duration,
+    this.requestContentType = '',
+    this.responseContentType = '',
+    this.endTime,
+    required this.startTime,
+    this.errorCode = 0,
+    this.errorDomain = '',
+    W3CHeader? w3cHeader,
+  }) {
     _w3cHeader = w3cHeader;
   }
 
