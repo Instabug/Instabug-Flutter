@@ -18,7 +18,7 @@ class NetworkData {
       required this.startTime,
       this.errorCode = 0,
       this.errorDomain = '',
-      W3CHeader? w3cHeader}) {
+      W3CHeader? w3cHeader,}) {
     _w3cHeader = w3cHeader;
   }
 
