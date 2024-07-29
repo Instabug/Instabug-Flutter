@@ -24,7 +24,7 @@ def flutter_root
 end
 
 require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
-pod 'Instabug', :podspec => 'https://ios-releases.instabug.com/custom/feature-add-w3c-header-base-cp/13.1.0/Instabug.podspec'
+pod 'Instabug', :podspec => 'https://ios-releases.instabug.com/custom/feature-w3c-header-cp-support/13.2.0/Instabug.podspec'
 
 flutter_ios_podfile_setup
 target 'Runner' do

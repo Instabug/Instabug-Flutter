@@ -65,7 +65,7 @@ void main() {
     when(mManager.obfuscateLog(data)).thenReturn(data);
     when(mManager.omitLog(data)).thenReturn(false);
 
-    await logger.networkLog(data);
+    await logger.networkLogInternal(data);
 
     verify(
       mInstabugHost.networkLog(data.toJson()),
@@ -81,7 +81,7 @@ void main() {
     when(mManager.obfuscateLog(data)).thenReturn(data);
     when(mManager.omitLog(data)).thenReturn(false);
 
-    await logger.networkLog(data);
+    await logger.networkLogInternal(data);
 
     verify(
       mInstabugHost.networkLog(data.toJson()),
@@ -99,7 +99,7 @@ void main() {
     when(mManager.obfuscateLog(data)).thenReturn(obfuscated);
     when(mManager.omitLog(data)).thenReturn(false);
 
-    await logger.networkLog(data);
+    await logger.networkLogInternal(data);
 
     verify(
       mManager.obfuscateLog(data),
@@ -121,7 +121,7 @@ void main() {
     when(mManager.obfuscateLog(data)).thenReturn(data);
     when(mManager.omitLog(data)).thenReturn(omit);
 
-    await logger.networkLog(data);
+    await logger.networkLogInternal(data);
 
     verify(
       mManager.omitLog(data),

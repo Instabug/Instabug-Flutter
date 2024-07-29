@@ -7,6 +7,7 @@
 #import "Util/IBGNetworkLogger+Test.h"
 #import "Flutter/Flutter.h"
 #import "instabug_flutter/IBGAPM+PrivateAPIs.h"
+#import "instabug_flutter/IBGNetworkLogger+CP.h"
 
 @interface InstabugTests : XCTestCase
 
@@ -538,7 +539,7 @@
 - (void) testisW3CFeatureFlagsEnabled{
     FlutterError *error;
 
-    id mock = OCMClassMock([IBGAPM class]);
+    id mock = OCMClassMock([IBGNetworkLogger class]);
     NSNumber *expectedValue = @(YES);
     NSNumber *expectedValue2 = @(NO);
 

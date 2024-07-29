@@ -11,15 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import com.instabug.apm.InternalAPM;
 import com.instabug.apm.configuration.cp.APMFeature;
-import com.instabug.apm.configuration.cp.APMFeaturesAvailability;
-import com.instabug.apm.configuration.cp.FeaturesChangeListener;
+
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
 import com.instabug.library.*;
+import com.instabug.library.internal.crossplatform.CoreFeature;
+import com.instabug.library.internal.crossplatform.CoreFeaturesState;
+import com.instabug.library.internal.crossplatform.FeaturesStateListener;
+import com.instabug.library.internal.crossplatform.InternalCore;
 import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
@@ -417,15 +419,15 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     public void bindOnW3CFeatureFlagChangeCallback() {
 
         try {
-            InternalAPM._registerCPFeaturesChangeListener(new FeaturesChangeListener() {
+            InternalCore.INSTANCE._setFeaturesStateListener(new FeaturesStateListener() {
                 @Override
-                public void invoke(@NonNull APMFeaturesAvailability apmFeaturesAvailability) {
+                public void invoke(@NonNull CoreFeaturesState featuresState) {
                     ThreadManager.runOnMainThread(new Runnable() {
                         @Override
                         public void run() {
-                            featureFlagsFlutterApi.onW3CFeatureFlagChange(apmFeaturesAvailability.isW3CExternalTraceIdAvailable(),
-                                    apmFeaturesAvailability.getShouldAttachGeneratedHeader(),
-                                    apmFeaturesAvailability.getShouldAttachCapturedHeader(),
+                            featureFlagsFlutterApi.onW3CFeatureFlagChange(featuresState.isW3CExternalTraceIdEnabled(),
+                                    featuresState.isAttachingGeneratedHeaderEnabled(),
+                                    featuresState.isAttachingCapturedHeaderEnabled(),
                                     new InstabugPigeon.FeatureFlagsFlutterApi.Reply<Void>() {
                                         @Override
                                         public void reply(Void reply) {
@@ -447,9 +449,9 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public Map<String, Boolean> isW3CFeatureFlagsEnabled() {
         Map<String, Boolean> params = new HashMap<String, Boolean>();
-        params.put("isW3cExternalTraceIDEnabled", InternalAPM._isFeatureEnabledCP(APMFeature.W3C_EXTERNAL_TRACE_ID, " "));
-        params.put("isW3cExternalGeneratedHeaderEnabled", InternalAPM._isFeatureEnabledCP(APMFeature.W3C_GENERATED_HEADER_ATTACHING, " "));
-        params.put("isW3cCaughtHeaderEnabled", InternalAPM._isFeatureEnabledCP(APMFeature.W3C_CAPTURED_HEADER_ATTACHING, " "));
+        params.put("isW3cExternalTraceIDEnabled", InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_EXTERNAL_TRACE_ID));
+        params.put("isW3cExternalGeneratedHeaderEnabled", InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_ATTACHING_GENERATED_HEADER));
+        params.put("isW3cCaughtHeaderEnabled", InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_ATTACHING_CAPTURED_HEADER));
 
 
         return params;
