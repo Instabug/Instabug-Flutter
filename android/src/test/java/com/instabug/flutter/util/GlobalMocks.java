@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 
+import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
 import com.instabug.crash.models.IBGNonFatalException;
 
 import org.json.JSONObject;
@@ -69,10 +70,10 @@ public class GlobalMocks {
                 .when(() -> Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "setCurrentPlatform", int.class))
                 .thenReturn(mSetCurrentPlatform);
 
-        Method mAPMNetworkLog = MockReflected.class.getDeclaredMethod("apmNetworkLog", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class);
+        Method mAPMNetworkLog = MockReflected.class.getDeclaredMethod("apmNetworkLog", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class, APMCPNetworkLog.W3CExternalTraceAttributes.class);
         mAPMNetworkLog.setAccessible(true);
         reflection
-                .when(() -> Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class))
+                .when(() -> Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class, APMCPNetworkLog.W3CExternalTraceAttributes.class))
                 .thenReturn(mAPMNetworkLog);
 
         Method mCrashReportException = MockReflected.class.getDeclaredMethod("crashReportException", JSONObject.class, boolean.class);

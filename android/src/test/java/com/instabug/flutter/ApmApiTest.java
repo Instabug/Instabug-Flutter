@@ -1,11 +1,27 @@
 package com.instabug.flutter;
 
+import static com.instabug.flutter.util.GlobalMocks.reflected;
+import static com.instabug.flutter.util.MockResult.makeResult;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockConstruction;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.instabug.apm.APM;
+import com.instabug.apm.InternalAPM;
+import com.instabug.apm.configuration.cp.APMFeature;
 import com.instabug.apm.InternalAPM;
 import com.instabug.apm.configuration.cp.APMFeature;
 import com.instabug.apm.configuration.cp.FeatureAvailabilityCallback;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
+import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.modules.ApmApi;
 import com.instabug.flutter.util.GlobalMocks;
@@ -262,7 +278,143 @@ public class ApmApiTest {
                 responseContentType,
                 errorDomain,
                 null,
-                serverErrorMessage
+                serverErrorMessage,
+                null
+        ));
+
+        mAPMNetworkLogger.close();
+        mJSONObject.close();
+    }
+
+    @Test
+    public void testNetworkLogAndroidWithCaughtW3Header() {
+        Map<String, Object> data = new HashMap<>();
+        String requestUrl = "https://example.com";
+        String requestBody = "hi";
+        String responseBody = "{\"hello\":\"world\"}";
+        String requestMethod = "POST";
+        String requestContentType = "text/plain";
+        String responseContentType = "application/json";
+        long requestBodySize = 20;
+        long responseBodySize = 50;
+        int responseCode = 401;
+        long requestDuration = 23000;
+        long requestStartTime = System.currentTimeMillis() / 1000;
+        HashMap<String, String> requestHeaders = new HashMap<>();
+        requestHeaders.put("traceparent","1234");
+        HashMap<String, String> responseHeaders = new HashMap<>();
+        String errorDomain = "ERROR_DOMAIN";
+        String serverErrorMessage = "SERVER_ERROR_MESSAGE";
+        data.put("url", requestUrl);
+        data.put("requestBody", requestBody);
+        data.put("responseBody", responseBody);
+        data.put("method", requestMethod);
+        data.put("requestContentType", requestContentType);
+        data.put("responseContentType", responseContentType);
+        data.put("requestBodySize", requestBodySize);
+        data.put("responseBodySize", responseBodySize);
+        data.put("errorDomain", errorDomain);
+        data.put("responseCode", responseCode);
+        data.put("requestDuration", requestDuration);
+        data.put("startTime", requestStartTime);
+        data.put("requestHeaders", requestHeaders);
+        data.put("responseHeaders", responseHeaders);
+        data.put("duration", requestDuration);
+        data.put("serverErrorMessage", serverErrorMessage);
+        data.put("isW3cHeaderFound", true);
+        data.put("w3CCaughtHeader", "1234");
+
+        MockedConstruction<APMNetworkLogger> mAPMNetworkLogger = mockConstruction(APMNetworkLogger.class);
+        MockedConstruction<JSONObject> mJSONObject = mockConstruction(JSONObject.class, (mock, context) -> when(mock.toString(anyInt())).thenReturn("{}"));
+
+        api.networkLogAndroid(data);
+
+        reflected.verify(() -> MockReflected.apmNetworkLog(
+                requestStartTime * 1000,
+                requestDuration / 1000,
+                "{}",
+                requestBody,
+                requestBodySize,
+                requestMethod,
+                requestUrl,
+                requestContentType,
+                "{}",
+                responseBody,
+                responseBodySize,
+                responseCode,
+                responseContentType,
+                errorDomain,
+                null,
+                serverErrorMessage,
+                 new APMCPNetworkLog.W3CExternalTraceAttributes(true,null,null,null,"1234")
+        ));
+
+        mAPMNetworkLogger.close();
+        mJSONObject.close();
+    }
+
+    @Test
+    public void testNetworkLogAndroidWithGeneratedW3Header() {
+        Map<String, Object> data = new HashMap<>();
+        String requestUrl = "https://example.com";
+        String requestBody = "hi";
+        String responseBody = "{\"hello\":\"world\"}";
+        String requestMethod = "POST";
+        String requestContentType = "text/plain";
+        String responseContentType = "application/json";
+        long requestBodySize = 20;
+        long responseBodySize = 50;
+        int responseCode = 401;
+        long requestDuration = 23000;
+        long requestStartTime = System.currentTimeMillis() / 1000;
+        HashMap<String, String> requestHeaders = new HashMap<>();
+        HashMap<String, String> responseHeaders = new HashMap<>();
+        String errorDomain = "ERROR_DOMAIN";
+        String serverErrorMessage = "SERVER_ERROR_MESSAGE";
+        data.put("url", requestUrl);
+        data.put("requestBody", requestBody);
+        data.put("responseBody", responseBody);
+        data.put("method", requestMethod);
+        data.put("requestContentType", requestContentType);
+        data.put("responseContentType", responseContentType);
+        data.put("requestBodySize", requestBodySize);
+        data.put("responseBodySize", responseBodySize);
+        data.put("errorDomain", errorDomain);
+        data.put("responseCode", responseCode);
+        data.put("requestDuration", requestDuration);
+        data.put("startTime", requestStartTime);
+        data.put("requestHeaders", requestHeaders);
+        data.put("responseHeaders", responseHeaders);
+        data.put("duration", requestDuration);
+        data.put("serverErrorMessage", serverErrorMessage);
+        data.put("isW3cHeaderFound", false);
+        data.put("partialId", 12);
+        data.put("networkStartTimeInSeconds", 34);
+        data.put("w3CGeneratedHeader", "12-34");
+
+        MockedConstruction<APMNetworkLogger> mAPMNetworkLogger = mockConstruction(APMNetworkLogger.class);
+        MockedConstruction<JSONObject> mJSONObject = mockConstruction(JSONObject.class, (mock, context) -> when(mock.toString(anyInt())).thenReturn("{}"));
+
+        api.networkLogAndroid(data);
+
+        reflected.verify(() -> MockReflected.apmNetworkLog(
+                requestStartTime * 1000,
+                requestDuration / 1000,
+                "{}",
+                requestBody,
+                requestBodySize,
+                requestMethod,
+                requestUrl,
+                requestContentType,
+                "{}",
+                responseBody,
+                responseBodySize,
+                responseCode,
+                responseContentType,
+                errorDomain,
+                null,
+                serverErrorMessage,
+                new APMCPNetworkLog.W3CExternalTraceAttributes(false,12L,34L,"12-34",null)
         ));
 
         mAPMNetworkLogger.close();

@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v13.2.0...dev)
+
+### Added
+
+- Add support for Trace network requests from Instabug using traceparent
+  header ([#481](https://github.com/Instabug/Instabug-Flutter/pull/481)).
+
 ## [13.2.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.1.1...v13.2.0)
 
 ### Added

@@ -1,12 +1,15 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
+import 'package:instabug_flutter/src/models/w3c_header.dart';
 import 'package:instabug_flutter/src/modules/apm.dart';
+import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
+import 'package:instabug_flutter/src/utils/iterable_ext.dart';
 import 'package:instabug_flutter/src/utils/network_manager.dart';
+import 'package:instabug_flutter/src/utils/w3c_header_utils.dart';
+import 'package:meta/meta.dart';
 
 class NetworkLogger {
   static var _host = InstabugHostApi();
@@ -66,13 +69,68 @@ class NetworkLogger {
   }
 
   Future<void> networkLog(NetworkData data) async {
+    final w3Header = await getW3CHeader(
+      data.requestHeaders,
+      data.startTime.millisecondsSinceEpoch,
+    );
+    if (w3Header?.isW3cHeaderFound == false &&
+        w3Header?.w3CGeneratedHeader != null) {
+      data.requestHeaders['traceparent'] = w3Header?.w3CGeneratedHeader;
+    }
+    networkLogInternal(data);
+  }
+
+  @internal
+  Future<void> networkLogInternal(NetworkData data) async {
     final omit = await _manager.omitLog(data);
-
     if (omit) return;
-
     final obfuscated = await _manager.obfuscateLog(data);
-
     await _host.networkLog(obfuscated.toJson());
     await APM.networkLogAndroid(obfuscated);
+  }
+
+  @internal
+  Future<W3CHeader?> getW3CHeader(
+    Map<String, dynamic> header,
+    int startTime,
+  ) async {
+    final w3cFlags = await Future.wait([
+      FeatureFlagsManager.isW3CExternalTraceID,
+      FeatureFlagsManager.isW3CCaughtHeader,
+      FeatureFlagsManager.isW3CExternalGeneratedHeader,
+    ]);
+
+    final isW3CExternalTraceIDEnabled = w3cFlags[0];
+    final isW3CCaughtHeaderEnabled = w3cFlags[1];
+    final isW3CExternalGeneratedHeaderEnabled = w3cFlags[2];
+
+    if (isW3CExternalTraceIDEnabled == false) {
+      return null;
+    }
+
+    final w3cHeaderFound = header.entries
+        .firstWhereOrNull(
+          (element) => element.key.toLowerCase() == 'traceparent',
+        )
+        ?.value as String?;
+    final isW3cHeaderFound = w3cHeaderFound != null;
+
+    if (isW3cHeaderFound && isW3CCaughtHeaderEnabled) {
+      return W3CHeader(isW3cHeaderFound: true, w3CCaughtHeader: w3cHeaderFound);
+    } else if (isW3CExternalGeneratedHeaderEnabled &&
+        (isW3cHeaderFound == false)) {
+      // make it structure
+      final w3cHeaderData = W3CHeaderUtils.generateW3CHeader(
+        startTime,
+      );
+
+      return W3CHeader(
+        isW3cHeaderFound: false,
+        partialId: w3cHeaderData.partialId,
+        networkStartTimeInSeconds: w3cHeaderData.timestampInSeconds,
+        w3CGeneratedHeader: w3cHeaderData.w3cHeader,
+      );
+    }
+    return null;
   }
 }
