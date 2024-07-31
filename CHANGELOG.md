@@ -10,6 +10,10 @@
 
 - Deprecate Experiments APIs `Instabug.addExperiments`, `Instabug.removeExperiments` and `Instabug.clearAllExperiments` in favor of the new Feature Flags APIs ([#471](https://github.com/Instabug/Instabug-Flutter/pull/471)).
 
+### Fixed
+
+- Fix APM network logging on Android ([#491](https://github.com/Instabug/Instabug-Flutter/pull/491)).
+
 ## [13.2.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.1.1...v13.2.0)
 
 ### Added
@@ -169,18 +173,18 @@
 
   Below is a list of all the affected APIs:
 
-    - `APM.startExecutionTrace`
-    - `BugReporting.setOnInvokeCallback`
-    - `BugReporting.setOnDismissCallback`
-    - `Instabug.getTags`
-    - `Instabug.getUserAttributeForKey`
-    - `Instabug.getUserAttributes`
-    - `Replies.getUnreadRepliesCount`
-    - `Replies.hasChats`
-    - `Replies.setOnNewReplyReceivedCallback`
-    - `Surveys.hasRespondToSurvey`
-    - `Surveys.setOnShowCallback`
-    - `Surveys.setOnDismissCallback`
+  - `APM.startExecutionTrace`
+  - `BugReporting.setOnInvokeCallback`
+  - `BugReporting.setOnDismissCallback`
+  - `Instabug.getTags`
+  - `Instabug.getUserAttributeForKey`
+  - `Instabug.getUserAttributes`
+  - `Replies.getUnreadRepliesCount`
+  - `Replies.hasChats`
+  - `Replies.setOnNewReplyReceivedCallback`
+  - `Surveys.hasRespondToSurvey`
+  - `Surveys.setOnShowCallback`
+  - `Surveys.setOnDismissCallback`
 
 ## [11.12.0](https://github.com/Instabug/Instabug-Flutter/compare/v11.10.1...v11.12.0) (May 30, 2023)
 
@@ -257,10 +261,10 @@
 - Deprecates Instabug.enableAndroid and Instabug.disableAndroid APIs in favour of the new API
   Instabug.setEnabled, which works on both platforms
 - Deprecates callbacks in favor of return values in the following APIs:
-    1. Replies.getUnreadRepliesCount
-    2. Replies.hasChats
-    3. Surveys.hasRespondedToSurvey
-    4. Surveys.getAvailableSurveys
+  1. Replies.getUnreadRepliesCount
+  2. Replies.hasChats
+  3. Surveys.hasRespondedToSurvey
+  4. Surveys.getAvailableSurveys
 
 ## 11.3.0 (2022-09-30)
 
