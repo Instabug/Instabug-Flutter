@@ -19,7 +19,7 @@ dev_dependencies:
     sdk: flutter
   lint: ^1.0.0
   # mockito v5.2.0 is needed for running Flutter 2 tests on CI
-  mockito: '>=5.2.0 <=5.4.2'
+  mockito: '>=5.2.0 <5.5.0'
   pana: ^0.21.0
   # pigeon v3.0.0 is needed for running Flutter 2 tests on CI
   pigeon: '>=3.0.0 <=10.1.5'
