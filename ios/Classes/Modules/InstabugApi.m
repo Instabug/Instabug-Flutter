@@ -318,5 +318,40 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [Instabug willRedirectToAppStore];
 }
 
+- (void)addFeatureFlagsFeatureFlagsMap:(nonnull NSDictionary<NSString *,NSString *> *)featureFlagsMap error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    NSMutableArray<IBGFeatureFlag *> *featureFlags = [NSMutableArray array];
+    for(id key in featureFlagsMap){
+        NSString* variant =((NSString * )[featureFlagsMap objectForKey:key]);
+        if ([variant length]==0) {
+            [featureFlags addObject:[[IBGFeatureFlag alloc] initWithName:key]];
+        }
+        else{
+            [featureFlags addObject:[[IBGFeatureFlag alloc] initWithName:key variant:variant]];
+
+        }
+    }
+    [Instabug addFeatureFlags:featureFlags];
+}
+
+
+- (void)removeAllFeatureFlagsWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    [Instabug removeAllFeatureFlags];
+
+}
+
+
+- (void)removeFeatureFlagsFeatureFlags:(nonnull NSArray<NSString *> *)featureFlags error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+
+    NSMutableArray<IBGFeatureFlag *> *features = [NSMutableArray array];
+       for(id item in featureFlags){
+               [features addObject:[[IBGFeatureFlag alloc] initWithName:item]];
+           }
+    @try {
+        [Instabug removeFeatureFlags:features];
+    } @catch (NSException *exception) {
+        NSLog(@"%@", exception);
+
+    }
+}
 
 @end
