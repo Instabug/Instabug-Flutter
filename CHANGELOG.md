@@ -2,7 +2,7 @@
 
 ## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v13.2.0...dev)
 
-## Added
+### Added
 
 - Add support for Feature Flags APIs `Instabug.addFeatureFlags`, `Instabug.removeFeatureFlags` and `Instabug.clearAllFeatureFlags` ([#471](https://github.com/Instabug/Instabug-Flutter/pull/471)).
 
