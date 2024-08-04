@@ -268,12 +268,10 @@ void main() {
   });
 
   test('[addFeatureFlags] should call host method', () async {
-    await Instabug.addFeatureFlags(
-      List.of([
-        FeatureFlag(name: 'name1', variant: 'variant1'),
-        FeatureFlag(name: 'name2', variant: 'variant2'),
-      ]),
-    );
+    await Instabug.addFeatureFlags([
+      FeatureFlag(name: 'name1', variant: 'variant1'),
+      FeatureFlag(name: 'name2', variant: 'variant2'),
+    ]);
 
     verify(
       mHost.addFeatureFlags(<String, String>{
