@@ -354,8 +354,4 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     }
 }
 
-
-
-
-
 @end
