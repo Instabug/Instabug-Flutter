@@ -8,7 +8,7 @@
 
 ### Deprecated
 
-- Deprecate Experiments APIs `Instabug.addExperiments`, `Instabug.removeExperiments` and `Instabug.clearAllExperiments` in favor of the new Feature Flags APIs ([#1230](https://github.com/Instabug/Instabug-Flutter/pull/471)).
+- Deprecate Experiments APIs `Instabug.addExperiments`, `Instabug.removeExperiments` and `Instabug.clearAllExperiments` in favor of the new Feature Flags APIs ([#471](https://github.com/Instabug/Instabug-Flutter/pull/471)).
 
 ## [13.2.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.1.1...v13.2.0)
 
