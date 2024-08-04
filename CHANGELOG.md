@@ -6,6 +6,10 @@
 
 - Add support for variants in Feature Flags through the APIs `Instabug.addFeatureFlags`, `Instabug.removeFeatureFlags` and `Instabug.clearAllFeatureFlags` ([#471](https://github.com/Instabug/Instabug-Flutter/pull/471)).
 
+### Changed
+
+- Bump Instabug Android SDK to v13.3.0 ([#492](https://github.com/Instabug/Instabug-Flutter/pull/492)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v13.3.0).
+
 ### Deprecated
 
 - Deprecate Experiments APIs `Instabug.addExperiments`, `Instabug.removeExperiments` and `Instabug.clearAllExperiments` in favor of the new Feature Flags APIs ([#471](https://github.com/Instabug/Instabug-Flutter/pull/471)).
