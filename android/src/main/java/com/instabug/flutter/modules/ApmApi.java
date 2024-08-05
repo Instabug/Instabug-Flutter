@@ -14,6 +14,7 @@ import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
+import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
@@ -210,9 +211,9 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
                 serverErrorMessage = (String) data.get("serverErrorMessage");
             }
 
-            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class);
+            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class, APMCPNetworkLog.W3CExternalTraceAttributes.class);
             if (method != null) {
-                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage);
+                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage, null);
             } else {
                 Log.e(TAG, "APMNetworkLogger.log was not found by reflection");
             }
