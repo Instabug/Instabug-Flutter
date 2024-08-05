@@ -262,7 +262,8 @@ public class ApmApiTest {
                 responseContentType,
                 errorDomain,
                 null,
-                serverErrorMessage
+                serverErrorMessage,
+                null
         ));
 
         mAPMNetworkLogger.close();
