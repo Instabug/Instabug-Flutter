@@ -81,7 +81,7 @@ void main() {
         '[resetDidStartScreenLoading] should set _currentUITrace?.didStartScreenLoading to false',
         () async {
       const expected = false;
-      final uiTrace = UiTrace('screen1', traceId: 1);
+      final uiTrace = UiTrace(screenName: 'screen1', traceId: 1);
       uiTrace.didStartScreenLoading = true;
       mScreenLoadingManager.currentUiTrace = uiTrace;
 
@@ -103,7 +103,7 @@ void main() {
         '[resetDidReportScreenLoading] should set _currentUITrace?.didReportScreenLoading to false',
         () async {
       const expected = false;
-      final uiTrace = UiTrace('screen1', traceId: 1);
+      final uiTrace = UiTrace(screenName: 'screen1', traceId: 1);
       uiTrace.didReportScreenLoading = true;
       mScreenLoadingManager.currentUiTrace = uiTrace;
 
@@ -125,7 +125,7 @@ void main() {
         '[resetDidExtendScreenLoading] should set _currentUITrace?.didExtendScreenLoading to false',
         () async {
       const expected = false;
-      final uiTrace = UiTrace('screen1', traceId: 1);
+      final uiTrace = UiTrace(screenName: 'screen1', traceId: 1);
       mScreenLoadingManager.currentUiTrace = uiTrace;
 
       ScreenLoadingManager.I.resetDidExtendScreenLoading();
@@ -160,7 +160,8 @@ void main() {
 
     setUp(() {
       time = DateTime.now();
-      uiTrace = UiTrace(screenName, traceId: time.millisecondsSinceEpoch);
+      uiTrace =
+          UiTrace(screenName: screenName, traceId: time.millisecondsSinceEpoch);
       ScreenLoadingManager.setInstance(ScreenLoadingManagerNoResets.init());
       mScreenLoadingManager.currentUiTrace = uiTrace;
       when(mDateTime.now()).thenReturn(time);
@@ -241,7 +242,7 @@ void main() {
       mScreenLoadingManager = ScreenLoadingManagerNoResets.init();
       time = DateTime.now();
       traceId = time.millisecondsSinceEpoch;
-      uiTrace = UiTrace(screenName, traceId: traceId);
+      uiTrace = UiTrace(screenName: screenName, traceId: traceId);
       mScreenLoadingManager.currentUiTrace = uiTrace;
       when(mDateTime.now()).thenReturn(time);
 
@@ -421,7 +422,7 @@ void main() {
     setUp(() {
       time = DateTime.now();
       traceId = time.millisecondsSinceEpoch;
-      uiTrace = UiTrace(screenName, traceId: traceId);
+      uiTrace = UiTrace(screenName: screenName, traceId: traceId);
       mScreenLoadingManager.currentUiTrace = uiTrace;
       when(mDateTime.now()).thenReturn(time);
       screenLoadingTrace = ScreenLoadingTrace(
@@ -719,7 +720,7 @@ void main() {
     setUp(() {
       time = DateTime.now();
       traceId = time.millisecondsSinceEpoch;
-      uiTrace = UiTrace(screenName, traceId: traceId);
+      uiTrace = UiTrace(screenName: screenName, traceId: traceId);
       duration = 1000;
       extendedMonotonic = 500;
       endTime = time.add(Duration(microseconds: duration ?? 0));

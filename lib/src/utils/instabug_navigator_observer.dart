@@ -20,7 +20,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
       );
 
       // Starts a the new UI trace which is exclusive to screen loading
-      ScreenLoadingManager.I.startUiTrace(maskedScreenName);
+      ScreenLoadingManager.I.startUiTrace(maskedScreenName, screenName);
       // If there is a step that hasn't been pushed yet
       if (_steps.isNotEmpty) {
         // Report the last step and remove it from the list
