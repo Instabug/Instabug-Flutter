@@ -21,6 +21,10 @@ void main() {
   final mScreenLoadingManager = MockScreenLoadingManager();
 
   late InstabugNavigatorObserver observer;
+  const screen = '/screen';
+  const previousScreen = '/previousScreen';
+  late Route route;
+  late Route previousRoute;
 
   setUpAll(() {
     Instabug.$setHostApi(mHost);
@@ -29,15 +33,11 @@ void main() {
 
   setUp(() {
     observer = InstabugNavigatorObserver();
+    route = createRoute(screen);
+    previousRoute = createRoute(previousScreen);
   });
 
   test('should report screen change when a route is pushed', () {
-    const screen = '/screen';
-    const previousScreen = '/previousScreen';
-
-    final route = createRoute(screen);
-    final previousRoute = createRoute(previousScreen);
-
     fakeAsync((async) {
       observer.didPush(route, previousRoute);
 
@@ -56,12 +56,6 @@ void main() {
   test(
       'should report screen change when a route is popped and previous is known',
       () {
-    const screen = '/screen';
-    const previousScreen = '/previousScreen';
-
-    final route = createRoute(screen);
-    final previousRoute = createRoute(previousScreen);
-
     fakeAsync((async) {
       observer.didPop(route, previousRoute);
 
@@ -80,13 +74,8 @@ void main() {
   test(
       'should not report screen change when a route is popped and previous is not known',
       () {
-    const screen = '/screen';
-    final route = createRoute(screen);
-
-    const previousRoute = null;
-
     fakeAsync((async) {
-      observer.didPop(route, previousRoute);
+      observer.didPop(route, null);
 
       async.elapse(const Duration(milliseconds: 1000));
 
