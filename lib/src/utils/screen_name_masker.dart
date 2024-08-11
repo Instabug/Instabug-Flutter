@@ -29,7 +29,7 @@ class ScreenNameMasker {
     _screenNameMaskingCallback = callback;
   }
 
-  String maskScreenName(String screen) {
+  String mask(String screen) {
     if (_screenNameMaskingCallback == null) {
       return screen;
     }
