@@ -231,6 +231,50 @@ void main() {
         ),
       ).called(1);
     });
+
+    test(
+        '[startUiTrace] with APM enabled should create a UI trace with the matching screen name',
+        () async {
+      when(FlagsConfig.apm.isEnabled()).thenAnswer((_) async => true);
+      when(IBGBuildInfo.I.isIOS).thenReturn(false);
+      when(
+        RouteMatcher.I.match(
+          routePath: anyNamed('routePath'),
+          actualPath: anyNamed('actualPath'),
+        ),
+      ).thenReturn(false);
+
+      const matchingScreenName = 'matching_screen_name';
+
+      await ScreenLoadingManager.I.startUiTrace(screenName, matchingScreenName);
+
+      final actualUiTrace = ScreenLoadingManager.I.currentUiTrace!;
+
+      actualUiTrace.matches(screenName);
+
+      verify(
+        mRouteMatcher.match(
+          routePath: screenName,
+          actualPath: matchingScreenName,
+        ),
+      ).called(1);
+
+      verifyNever(
+        mRouteMatcher.match(
+          routePath: anyNamed('routePath'),
+          actualPath: screenName,
+        ),
+      );
+
+      expect(actualUiTrace.screenName, screenName);
+      verify(
+        mApmHost.startCpUiTrace(
+          screenName,
+          any,
+          any,
+        ),
+      ).called(1);
+    });
   });
 
   group('startScreenLoadingTrace tests', () {
