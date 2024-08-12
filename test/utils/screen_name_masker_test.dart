@@ -37,4 +37,41 @@ void main() {
 
     expect(result, equals(masked));
   });
+
+  test('[mask] should fallback to "N/A" when callback returns an empty string',
+      () {
+    const fallback = 'N/A';
+    const screen = '/documents/314159265';
+    const masked = '';
+
+    ScreenNameMasker.I.setMaskingCallback((screen) {
+      if (screen.startsWith('/documents/')) {
+        return masked;
+      }
+
+      return screen;
+    });
+
+    final result = ScreenNameMasker.I.mask(screen);
+
+    expect(result, equals(fallback));
+  });
+
+  test('[mask] should trim masked screen name', () {
+    const screen = '/documents/314159265';
+    const masked = '  /documents/REDACTED   ';
+    const expected = '/documents/REDACTED';
+
+    ScreenNameMasker.I.setMaskingCallback((screen) {
+      if (screen.startsWith('/documents/')) {
+        return masked;
+      }
+
+      return screen;
+    });
+
+    final result = ScreenNameMasker.I.mask(screen);
+
+    expect(result, equals(expected));
+  });
 }
