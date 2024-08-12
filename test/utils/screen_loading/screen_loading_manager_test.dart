@@ -454,6 +454,92 @@ void main() {
         ),
       ).called(1);
     });
+
+    test(
+        '[startScreenLoadingTrace] should start screen loading trace when screen loading trace matches UI trace matching screen name',
+        () async {
+      const isSameScreen = true;
+      const matchingScreenName = 'matching_screen_name';
+      mScreenLoadingManager = ScreenLoadingManagerNoResets.init();
+      when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
+      when(IBGBuildInfo.I.isIOS).thenReturn(false);
+      when(mDateTime.now()).thenReturn(time);
+
+      // Match on matching screen name
+      when(
+        RouteMatcher.I.match(
+          routePath: screenName,
+          actualPath: matchingScreenName,
+        ),
+      ).thenReturn(isSameScreen);
+
+      when(
+        RouteMatcher.I.match(
+          routePath: screenName,
+          actualPath: screenName,
+        ),
+      ).thenReturn(!isSameScreen);
+
+      ScreenLoadingManager.I.currentUiTrace = uiTrace.copyWith(
+        matchingScreenName: matchingScreenName,
+      );
+
+      await ScreenLoadingManager.I.startScreenLoadingTrace(screenLoadingTrace);
+
+      final actualUiTrace = ScreenLoadingManager.I.currentUiTrace!;
+
+      expect(
+        ScreenLoadingManager.I.currentScreenLoadingTrace,
+        equals(screenLoadingTrace),
+      );
+      expect(
+        actualUiTrace.didStartScreenLoading,
+        isTrue,
+      );
+    });
+
+    test(
+        '[startScreenLoadingTrace] should not start screen loading trace when screen loading trace does not matches UI trace matching screen name',
+        () async {
+      const isSameScreen = false;
+      const matchingScreenName = 'matching_screen_name';
+      mScreenLoadingManager = ScreenLoadingManagerNoResets.init();
+      when(FlagsConfig.screenLoading.isEnabled()).thenAnswer((_) async => true);
+      when(IBGBuildInfo.I.isIOS).thenReturn(false);
+      when(mDateTime.now()).thenReturn(time);
+
+      // Don't match on matching screen name
+      when(
+        RouteMatcher.I.match(
+          routePath: screenName,
+          actualPath: matchingScreenName,
+        ),
+      ).thenReturn(isSameScreen);
+
+      when(
+        RouteMatcher.I.match(
+          routePath: screenName,
+          actualPath: screenName,
+        ),
+      ).thenReturn(!isSameScreen);
+
+      ScreenLoadingManager.I.currentUiTrace = uiTrace.copyWith(
+        matchingScreenName: matchingScreenName,
+      );
+
+      await ScreenLoadingManager.I.startScreenLoadingTrace(screenLoadingTrace);
+
+      final actualUiTrace = ScreenLoadingManager.I.currentUiTrace!;
+
+      expect(
+        ScreenLoadingManager.I.currentScreenLoadingTrace,
+        isNull,
+      );
+      expect(
+        actualUiTrace.didStartScreenLoading,
+        isFalse,
+      );
+    });
   });
 
   group('reportScreenLoading tests', () {
