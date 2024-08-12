@@ -28,7 +28,7 @@ class UiTrace {
   }) {
     return UiTrace(
       screenName: screenName ?? this.screenName,
-      matchingScreenName: screenName ?? this.screenName,
+      matchingScreenName: matchingScreenName ?? _matchingScreenName,
       traceId: traceId ?? this.traceId,
     );
   }
