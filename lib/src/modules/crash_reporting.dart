@@ -30,6 +30,13 @@ class CrashReporting {
     return _host.setEnabled(isEnabled);
   }
 
+
+  /// Enables and disables automatic NDK crash reporting on Android.
+  /// [boolean] isEnabled
+  static Future<void> setNDKEnabled(bool isEnabled) async {
+    return _host.setNDKEnabled(isEnabled);
+  }
+
   static Future<void> reportCrash(Object exception, StackTrace stack) async {
     if (IBGBuildInfo.instance.isReleaseMode && enabled) {
       await _reportUnhandledCrash(exception, stack);
