@@ -30,7 +30,6 @@ class CrashReporting {
     return _host.setEnabled(isEnabled);
   }
 
-
   /// Enables and disables automatic NDK crash reporting on Android.
   /// [boolean] isEnabled
   static Future<void> setNDKEnabled(bool isEnabled) async {
