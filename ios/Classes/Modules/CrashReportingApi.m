@@ -46,4 +46,9 @@ extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger) {
                                              userAttributes:userAttributes];
 
 }
+
+- (void)setNDKEnabledIsEnabled:(nonnull NSNumber *)isEnabled error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+    
+}
+
 @end

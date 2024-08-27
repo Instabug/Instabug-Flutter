@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v13.3.0...dev)
+
+### Added
+
+- Support enabling NDK crash capturing on Android ([#503](https://github.com/Instabug/Instabug-Flutter/pull/503)).
+
 ## [13.3.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.2.0...v13.3.0) (August 5, 2024)
 
 ### Added

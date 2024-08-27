@@ -6,6 +6,8 @@ abstract class CrashReportingHostApi {
 
   void send(String jsonCrash, bool isHandled);
 
+  void setNDKEnabled(bool isEnabled);
+
   void sendNonFatalError(
     String jsonCrash,
     Map<String, String>? userAttributes,

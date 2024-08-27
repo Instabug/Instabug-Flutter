@@ -37,6 +37,16 @@ void main() {
     ).called(1);
   });
 
+  test('[setNDKEnabled] should call host method', () async {
+    const enabled = true;
+
+    await CrashReporting.setNDKEnabled(enabled);
+
+    verify(
+      mHost.setNDKEnabled(enabled),
+    ).called(1);
+  });
+
   test('[reportHandledCrash] should call host method', () async {
     try {
       final params = <dynamic>[1, 2];

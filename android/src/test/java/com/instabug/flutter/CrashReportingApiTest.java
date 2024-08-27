@@ -98,4 +98,22 @@ public class CrashReportingApiTest {
 
         reflected.verify(() -> MockReflected.crashReportException(any(JSONObject.class), eq(isHandled), eq(expectedUserAttributes), eq(expectedFingerprint), eq(expectedLevel)));
     }
+
+    @Test
+    public void testSetNDKEnabledGivenTrue() {
+        boolean isEnabled = true;
+
+        api.setNDKEnabled(isEnabled);
+
+        mCrashReporting.verify(() -> CrashReporting.setNDKCrashesState(Feature.State.ENABLED));
+    }
+
+    @Test
+    public void testSetNDKEnabledGivenFalse() {
+        boolean isEnabled = false;
+
+        api.setNDKEnabled(isEnabled);
+
+        mCrashReporting.verify(() -> CrashReporting.setNDKCrashesState(Feature.State.DISABLED));
+    }
 }
