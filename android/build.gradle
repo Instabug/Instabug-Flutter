@@ -41,7 +41,8 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:13.3.0'
+    api 'com.instabug.library:instabug:13.3.0-fix'
+//    api 'com.instabug.library:instabug:13.3.0-network-spans'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"

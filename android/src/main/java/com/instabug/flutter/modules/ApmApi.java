@@ -1,5 +1,7 @@
 package com.instabug.flutter.modules;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -24,6 +26,9 @@ import org.json.JSONObject;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class ApmApi implements ApmPigeon.ApmHostApi {
     private final String TAG = ApmApi.class.getName();
@@ -176,6 +181,8 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     @Override
     public void networkLogAndroid(@NonNull Map<String, Object> data) {
         try {
+            Log.w(TAG, "networkLogAndroid" + Thread.currentThread().getName());
+
             APMNetworkLogger apmNetworkLogger = new APMNetworkLogger();
             final String requestUrl = (String) data.get("url");
             final String requestBody = (String) data.get("requestBody");
@@ -224,10 +231,33 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     }
 
 
+    private Executor exc1 = Executors.newSingleThreadExecutor();
+    //    private Executor exc2 = Executors.newSingleThreadExecutor();
+//    private Executor exc3 = Executors.newSingleThreadExecutor();
+    private Handler handler = new Handler(Looper.getMainLooper());
+
     @Override
     public void startCpUiTrace(@NonNull String screenName, @NonNull Long microTimeStamp, @NonNull Long traceId) {
         try {
-            InternalAPM._startUiTraceCP(screenName, microTimeStamp, traceId);
+            Log.w("AndroidNative", "startCpUiTrace " + Thread.currentThread().getName());
+            exc1.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            InternalAPM._startUiTraceCP(screenName, microTimeStamp, traceId);
+                        }
+                    });
+                }
+            });
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

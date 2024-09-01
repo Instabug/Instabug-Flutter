@@ -43,14 +43,29 @@ part 'src/components/flows_content.dart';
 
 void main() {
   runZonedGuarded(
-    () {
+    () async{
       WidgetsFlutterBinding.ensureInitialized();
 
-      Instabug.init(
-        token: 'ed6f659591566da19b67857e1b9d40ab',
+      APM.startCpUiTrace("TestScreen1", 1000, 1000);
+
+      await Instabug.init(
+        token: 'e19c3abd7c2af1560038c339ea31ac9e',
         invocationEvents: [InvocationEvent.floatingButton],
         debugLogsLevel: LogLevel.verbose,
       );
+
+      APM.startCpUiTrace("TestScreen2", 1000, 2000);
+
+      // Future.delayed(const Duration(seconds: 5)).then((_) {
+      // });
+
+      // Future.delayed(const Duration(seconds: 1)).then((value) {
+      //   APM.startCpUiTrace("TestScreen_$i", 1000, i*1000);
+      //   // for(int i =0 ; i<1000 ; i++){
+      //   //
+      //   //  // log("startCpUiTrace: Screen$i");
+      //   // }
+      // });
 
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);

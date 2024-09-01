@@ -36,6 +36,7 @@ class _NetworkContentState extends State<NetworkContent> {
       // Handle the response here
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
+        await NetworkLogger()..networkLog(NetworkData(url: jsonData['url'] ?? "url", method: "method", startTime: DateTime.now() , duration:1 , endTime: DateTime.now() ,errorCode: 0 , requestBodySize:0 , responseBodySize: 0 ));
         log(jsonEncode(jsonData));
       } else {
         log('Request failed with status: ${response.statusCode}');
