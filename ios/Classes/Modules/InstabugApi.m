@@ -8,12 +8,20 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue:((float)(rgbValue & 0xFF)) / 255.0 alpha:((float)((rgbValue & 0xFF000000) >> 24)) / 255.0];
 
-extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
-    InstabugApi *api = [[InstabugApi alloc] init];
+extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger, UIView *flutterView) {
+    InstabugFlutterApi *flutterApi = [[InstabugFlutterApi alloc] initWithBinaryMessenger:messenger];
+    InstabugApi *api = [[InstabugApi alloc] initWithFlutterApi:flutterApi flutterView:flutterView];
     InstabugHostApiSetup(messenger, api);
 }
 
 @implementation InstabugApi
+
+- (instancetype)initWithFlutterApi:(InstabugFlutterApi *)api flutterView:(UIView *)flutterView {
+    self = [super init];
+    self.flutterApi = api;
+    self.flutterView = flutterView;
+    return self;
+}
 
 - (void)setEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
     Instabug.enabled = [isEnabled boolValue];
@@ -28,6 +36,72 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     return @(Instabug.enabled);
 }
 
+- (CGPoint)getFlutterViewOrigin {
+    if (self.flutterView == nil) {
+        return CGPointZero;
+    }
+    
+    return self.flutterView.frame.origin;
+}
+
+- (void)setUpScreenMasking {
+    // Creating a weak version of the InstbugApi instance to make sure it's not
+    // leaked due to the screenshot masking handler though most of the time the
+    // InstabugApi instance will be present for the lifetime of the app.
+    __weak InstabugApi *weakSelf = self;
+
+    // Telling the iOS SDK about our screenshot masking handler.
+    [Instabug setScreenshotMaskingHandler:^(UIImage *screenshot, void (^completion)(UIImage *)) {
+        if (weakSelf == nil)
+            return;
+
+        // We ask the Dart side of the Flutter SDK about the positions of the private
+        // views just like we did on Android.
+        [weakSelf.flutterApi getPrivateViewsWithCompletion:^(NSArray<NSNumber *> *rectangles, FlutterError *error) {
+            if (error != nil) {
+                NSLog(@"IBG-Flutter: An error occurred while getting the private views from Flutter.");
+                NSLog(@"IBG-Flutter: %@", [error message]);
+            }
+            
+            // Start a graphics context for drawing the black rectangles in place of
+            // the private views.
+            CGSize size = screenshot.size;
+            CGFloat scale = 0;
+
+            UIGraphicsBeginImageContextWithOptions(size, false, scale);
+            CGContextRef context = UIGraphicsGetCurrentContext();
+            
+            [screenshot drawAtPoint:CGPointZero];
+            
+            CGPoint flutterOrigin = [weakSelf getFlutterViewOrigin];
+            
+            for (int i = 0; i < rectangles.count; i += 4) {
+                // Using the same encoding for private views locations as described
+                // in the Android implementation, though it's not mandatory of course.
+                CGFloat left = [rectangles[i] doubleValue];
+                CGFloat top = [rectangles[i + 1] doubleValue];
+                CGFloat right = [rectangles[i + 2] doubleValue];
+                CGFloat bottom = [rectangles[i + 3] doubleValue];
+                
+                CGRect rectangle = CGRectMake(flutterOrigin.x + left, flutterOrigin.y + top, right - left + 1, bottom - top + 1);
+                
+                CGContextSetFillColorWithColor(context, UIColor.blackColor.CGColor);
+                CGContextAddRect(context, rectangle);
+                CGContextDrawPath(context, kCGPathFill);
+            }
+
+            UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+
+            // Tell the iOS SDK that we have masked the screenshot through the
+            // completion handler rather than a return value.
+            // Also note that in this PoC the iOS SDK expects a UIImage back but
+            // it could be implemented to take an array of CGRect instead for efficiency.
+            completion(result);
+        }];
+    }];
+}
+
 - (void)initToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents debugLogsLevel:(NSString *)debugLogsLevel error:(FlutterError *_Nullable *_Nonnull)error {
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
@@ -39,6 +113,8 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
         [inv invoke];
     }
     
+    [self setUpScreenMasking];
+        
     // Disable automatic capturing of native iOS network logs to avoid duplicate
     // logs of the same request when using a native network client like cupertino_http
     [IBGNetworkLogger disableAutomaticCapturingOfNetworkLogs];
