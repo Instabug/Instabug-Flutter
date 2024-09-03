@@ -133,7 +133,13 @@ enum CustomTextPlaceHolderKey {
 
 enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 
-class Instabug {
+class PrivateViews {
+  static final Set<GlobalKey> _views = {};
+
+  static Set<GlobalKey> get views => _views;
+}
+
+class Instabug implements InstabugFlutterApi {
   static var _host = InstabugHostApi();
 
   static const tag = 'Instabug';
@@ -148,9 +154,43 @@ class Instabug {
   /// @nodoc
   @internal
   static void $setup() {
+    InstabugFlutterApi.setup(Instabug());
+
     BugReporting.$setup();
     Replies.$setup();
     Surveys.$setup();
+  }
+
+  /// @nodoc
+  @internal
+  @override
+  List<double> getPrivateViews() {
+    return PrivateViews.views.expand((key) {
+      final render = key.currentContext?.findRenderObject();
+
+      if (render == null) {
+        return <double>[];
+      }
+
+      final offset =
+          MatrixUtils.transformPoint(render.getTransformTo(null), Offset.zero);
+
+      // // Draw only if visible on the screen
+      // if (offset.dy > image.height ||
+      //     offset.dy + render.paintBounds.height < 0) {
+      //   print("Ignoring  view");
+      //   continue;
+      // }
+
+      final bounds = render.paintBounds.shift(offset);
+
+      return [
+        bounds.left,
+        bounds.top,
+        bounds.right,
+        bounds.bottom,
+      ];
+    }).toList();
   }
 
   /// @nodoc

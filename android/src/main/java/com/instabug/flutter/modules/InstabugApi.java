@@ -4,11 +4,16 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+
+import com.instabug.flutter.util.ScreenshotResult;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
@@ -45,17 +50,20 @@ import java.util.concurrent.Callable;
 public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     private final String TAG = InstabugApi.class.getName();
     private final Context context;
-    private final Callable<Bitmap> screenshotProvider;
+    private final Callable<ScreenshotResult> screenshotProvider;
     private final InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
+    private final InstabugPigeon.InstabugFlutterApi flutterApi;
 
-    public static void init(BinaryMessenger messenger, Context context, Callable<Bitmap> screenshotProvider) {
-        final InstabugApi api = new InstabugApi(context, screenshotProvider);
+    public static void init(BinaryMessenger messenger, Context context, Callable<ScreenshotResult> screenshotProvider) {
+        final InstabugPigeon.InstabugFlutterApi flutterApi = new InstabugPigeon.InstabugFlutterApi(messenger);
+        final InstabugApi api = new InstabugApi(context, screenshotProvider, flutterApi);
         InstabugPigeon.InstabugHostApi.setup(messenger, api);
     }
 
-    public InstabugApi(Context context, Callable<Bitmap> screenshotProvider) {
+    public InstabugApi(Context context, Callable<ScreenshotResult> screenshotProvider, InstabugPigeon.InstabugFlutterApi flutterApi) {
         this.context = context;
         this.screenshotProvider = screenshotProvider;
+        this.flutterApi = flutterApi;
     }
 
     @VisibleForTesting
@@ -112,7 +120,51 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 .setSdkDebugLogsLevel(parsedLogLevel)
                 .build();
 
-        Instabug.setScreenshotProvider(screenshotProvider);
+        Instabug.setAsyncScreenshotProvider(callbacks -> {
+            try {
+                // Get the original screenshot as a bitmap along with the pixel ratio of the device
+                // `screenshotProvider` here is the original synchronous screenshot provider that takes
+                // a screenshot and returns it without modifications.
+                //
+                // The actual implementation probably wouldn't use it like that but for the seek of the
+                // PoC I used it as is with a slight patch to return the pixel ratio as well with the
+                // bitmap to correctly place the rectangles on the screen.
+                ScreenshotResult result = screenshotProvider.call();
+                Bitmap bitmap = result.getScreenshot();
+                float pixelRatio = result.getPixelRatio();
+
+                // Create a canvas to mask the private views with black rectangles.
+                Canvas canvas = new Canvas(bitmap);
+
+                // Create a black filled paint for the rectangles.
+                Paint paint = new Paint();
+                paint.setColor(Color.BLACK);
+                paint.setStyle(Paint.Style.FILL);
+
+                // Asynchronously get the private views from the Flutter side.
+                flutterApi.getPrivateViews((List<Double> privateViews) -> {
+                    // Notice that reply is returned as a List<Double> where each each private view layout
+                    // occupies 4 indices as [left, top, right, bottom]
+                    //
+                    // This is up to the implementation though, I just avoided adding another data structure
+                    // on top of the list to make the communication faster.
+                    for (int i = 0; i < privateViews.size(); i += 4) {
+                        float left = privateViews.get(i).floatValue() * pixelRatio;
+                        float top = privateViews.get(i + 1).floatValue() * pixelRatio;
+                        float right = privateViews.get(i + 2).floatValue() * pixelRatio;
+                        float bottom = privateViews.get(i + 3).floatValue() * pixelRatio;
+
+                        // Mask the private view.
+                        canvas.drawRect(left, top, right, bottom, paint);
+                    }
+
+                    // Send the masked screenshot to the native SDK now that it has been masked
+                    callbacks.onCapturingSuccess(bitmap);
+                });
+            } catch (Exception e) {
+                callbacks.onCapturingFailure(e);
+            }
+        });
     }
 
     @Override

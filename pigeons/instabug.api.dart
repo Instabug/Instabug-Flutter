@@ -1,5 +1,10 @@
 import 'package:pigeon/pigeon.dart';
 
+@FlutterApi()
+abstract class InstabugFlutterApi {
+  List<double> getPrivateViews();
+}
+
 @HostApi()
 abstract class InstabugHostApi {
   void setEnabled(bool isEnabled);

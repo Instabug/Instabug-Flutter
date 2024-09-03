@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
@@ -19,6 +20,7 @@ import com.instabug.flutter.modules.InstabugLogApi;
 import com.instabug.flutter.modules.RepliesApi;
 import com.instabug.flutter.modules.SessionReplayApi;
 import com.instabug.flutter.modules.SurveysApi;
+import com.instabug.flutter.util.ScreenshotResult;
 
 import java.util.concurrent.Callable;
 
@@ -75,9 +77,9 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     }
 
     private static void register(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
-        final Callable<Bitmap> screenshotProvider = new Callable<Bitmap>() {
+        final Callable<ScreenshotResult> screenshotProvider = new Callable<ScreenshotResult>() {
             @Override
-            public Bitmap call() {
+            public ScreenshotResult call() {
                 return takeScreenshot(renderer);
             }
         };
@@ -94,7 +96,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     }
 
     @Nullable
-    private static Bitmap takeScreenshot(FlutterRenderer renderer) {
+    private static ScreenshotResult takeScreenshot(FlutterRenderer renderer) {
         try {
             final View view = activity.getWindow().getDecorView().getRootView();
 
@@ -102,7 +104,9 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
             final Bitmap bitmap = renderer.getBitmap();
             view.setDrawingCacheEnabled(false);
 
-            return bitmap;
+            final DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();
+
+            return new ScreenshotResult(displayMetrics.density, bitmap);
         } catch (Exception e) {
             Log.e(TAG, "Failed to take screenshot using " + renderer.toString() + ". Cause: " + e);
             return null;
