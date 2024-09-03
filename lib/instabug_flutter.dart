@@ -17,5 +17,7 @@ export 'src/modules/session_replay.dart';
 export 'src/modules/surveys.dart';
 // Utils
 export 'src/utils/instabug_navigator_observer.dart';
+export 'src/utils/private_views/instabug_private_view.dart';
+export 'src/utils/private_views/sliver_instabug_private_view.dart';
 export 'src/utils/screen_loading/instabug_capture_screen_loading.dart';
 export 'src/utils/screen_loading/route_matcher.dart';

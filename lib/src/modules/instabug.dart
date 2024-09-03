@@ -161,36 +161,42 @@ class Instabug implements InstabugFlutterApi {
     Surveys.$setup();
   }
 
+  Rect? _getLayoutInfo(GlobalKey key) {
+    final renderObject = key.currentContext?.findRenderObject();
+
+    if (renderObject == null) {
+      return null;
+    }
+
+    final globalOffset = _getRenderGlobalOffset(renderObject);
+
+    return renderObject.paintBounds.shift(globalOffset);
+  }
+
+  // The is the same implementation used in RenderBox.localToGlobal (a subclass of RenderObject)
+  Offset _getRenderGlobalOffset(RenderObject renderObject) {
+    return MatrixUtils.transformPoint(
+      renderObject.getTransformTo(null),
+      Offset.zero,
+    );
+  }
+
   /// @nodoc
   @internal
   @override
   List<double> getPrivateViews() {
-    return PrivateViews.views.expand((key) {
-      final render = key.currentContext?.findRenderObject();
-
-      if (render == null) {
-        return <double>[];
-      }
-
-      final offset =
-          MatrixUtils.transformPoint(render.getTransformTo(null), Offset.zero);
-
-      // // Draw only if visible on the screen
-      // if (offset.dy > image.height ||
-      //     offset.dy + render.paintBounds.height < 0) {
-      //   print("Ignoring  view");
-      //   continue;
-      // }
-
-      final bounds = render.paintBounds.shift(offset);
-
-      return [
-        bounds.left,
-        bounds.top,
-        bounds.right,
-        bounds.bottom,
-      ];
-    }).toList();
+    return PrivateViews.views
+        .map(_getLayoutInfo)
+        .where((bounds) => bounds != null)
+        .expand(
+          (bounds) => [
+            bounds!.left,
+            bounds.top,
+            bounds.right,
+            bounds.bottom,
+          ],
+        )
+        .toList();
   }
 
   /// @nodoc
