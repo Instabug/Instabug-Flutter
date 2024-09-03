@@ -20,9 +20,11 @@ class _NetworkContentState extends State<NetworkContent> {
           label: 'Endpoint Url',
           controller: endpointUrlController,
         ),
-        InstabugButton(
-          text: 'Send Request To Url',
-          onPressed: () => _sendRequestToUrl(endpointUrlController.text),
+        InstabugPrivateView(
+          child: InstabugButton(
+            text: 'Send Request To Url',
+            onPressed: () => _sendRequestToUrl(endpointUrlController.text),
+          ),
         ),
       ],
     );

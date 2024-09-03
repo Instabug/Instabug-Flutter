@@ -5,11 +5,14 @@ PODS:
     - Flutter
     - Instabug (= 13.3.0)
   - OCMock (3.6)
+  - webview_flutter_wkwebview (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
+  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
   trunk:
@@ -21,12 +24,15 @@ EXTERNAL SOURCES:
     :path: Flutter
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
+  webview_flutter_wkwebview:
+    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   Instabug: 4f26295103a330ec0236918359eef7ccaa74e2fa
   instabug_flutter: 6be22be13b3dda72b293151d2c009952bb20b940
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
+  webview_flutter_wkwebview: 2a23822e9039b7b1bc52e5add778e5d89ad488d1
 
 PODFILE CHECKSUM: 8f7552fd115ace1988c3db54a69e4a123c448f84
 
