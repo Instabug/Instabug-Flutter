@@ -6,6 +6,7 @@ import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
+import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -14,6 +15,7 @@ import 'instabug_test.mocks.dart';
 @GenerateMocks([
   InstabugHostApi,
   IBGBuildInfo,
+  ScreenNameMasker,
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -21,10 +23,12 @@ void main() {
 
   final mHost = MockInstabugHostApi();
   final mBuildInfo = MockIBGBuildInfo();
+  final mScreenNameMasker = MockScreenNameMasker();
 
   setUpAll(() {
     Instabug.$setHostApi(mHost);
     IBGBuildInfo.setInstance(mBuildInfo);
+    ScreenNameMasker.setInstance(mScreenNameMasker);
   });
 
   test('[setEnabled] should call host method', () async {
@@ -74,6 +78,16 @@ void main() {
     verify(
       mHost.init(token, events.mapToString(), LogLevel.error.toString()),
     ).called(1);
+  });
+
+  test(
+      '[setScreenNameMaskingCallback] should set masking callback on screen name masker',
+      () async {
+    String callback(String screen) => 'REDACTED/$screen';
+
+    Instabug.setScreenNameMaskingCallback(callback);
+
+    verify(mScreenNameMasker.setMaskingCallback(callback)).called(1);
   });
 
   test('[show] should call host method', () async {

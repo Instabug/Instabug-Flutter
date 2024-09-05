@@ -126,8 +126,16 @@ class ScreenLoadingManager {
     return sanitizedScreenName;
   }
 
+  /// Starts a new UI trace with [screenName] as the public screen name and
+  /// [matchingScreenName] as the screen name used for matching the UI trace
+  /// with a Screen Loading trace.
   @internal
-  Future<void> startUiTrace(String screenName) async {
+  Future<void> startUiTrace(
+    String screenName, [
+    String? matchingScreenName,
+  ]) async {
+    matchingScreenName ??= screenName;
+
     try {
       resetDidStartScreenLoading();
 
@@ -151,10 +159,19 @@ class ScreenLoadingManager {
       }
 
       final sanitizedScreenName = sanitizeScreenName(screenName);
+      final sanitizedMatchingScreenName =
+          sanitizeScreenName(matchingScreenName);
+
       final microTimeStamp = IBGDateTime.I.now().microsecondsSinceEpoch;
       final uiTraceId = IBGDateTime.I.now().millisecondsSinceEpoch;
+
       APM.startCpUiTrace(sanitizedScreenName, microTimeStamp, uiTraceId);
-      currentUiTrace = UiTrace(sanitizedScreenName, traceId: uiTraceId);
+
+      currentUiTrace = UiTrace(
+        screenName: sanitizedScreenName,
+        matchingScreenName: sanitizedMatchingScreenName,
+        traceId: uiTraceId,
+      );
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
     }
@@ -183,10 +200,7 @@ class ScreenLoadingManager {
         return;
       }
 
-      final isSameScreen = RouteMatcher.I.match(
-        routePath: trace.screenName,
-        actualPath: currentUiTrace?.screenName,
-      );
+      final isSameScreen = currentUiTrace?.matches(trace.screenName) == true;
 
       final didStartLoading = currentUiTrace?.didStartScreenLoading == true;
 

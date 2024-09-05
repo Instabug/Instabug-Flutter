@@ -19,6 +19,7 @@ import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
+import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:meta/meta.dart';
 
 enum InvocationEvent {
@@ -189,6 +190,14 @@ class Instabug {
       invocationEvents.mapToString(),
       debugLogsLevel.toString(),
     );
+  }
+
+  /// Sets a [callback] to be called wehenever a screen name is captured to mask
+  /// sensitive information in the screen name.
+  static void setScreenNameMaskingCallback(
+    ScreenNameMaskingCallback? callback,
+  ) {
+    ScreenNameMasker.I.setMaskingCallback(callback);
   }
 
   /// Shows the welcome message in a specific mode.
