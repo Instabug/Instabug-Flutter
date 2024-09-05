@@ -110,16 +110,15 @@ class ScreenLoadingManager {
   @internal
   String sanitizeScreenName(String screenName) {
     const characterToBeRemoved = '/';
-    final lastIndex = screenName.length - 1;
     var sanitizedScreenName = screenName;
 
     if (screenName == characterToBeRemoved) {
       return 'ROOT_PAGE';
     }
-    if (screenName[0] == characterToBeRemoved) {
+    if (screenName.startsWith(characterToBeRemoved)) {
       sanitizedScreenName = sanitizedScreenName.substring(1);
     }
-    if (screenName[lastIndex] == characterToBeRemoved) {
+    if (screenName.endsWith(characterToBeRemoved)) {
       sanitizedScreenName =
           sanitizedScreenName.substring(0, sanitizedScreenName.length - 1);
     }
