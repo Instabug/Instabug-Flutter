@@ -46,6 +46,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     private final String TAG = InstabugApi.class.getName();
@@ -102,6 +106,8 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public Boolean isBuilt() { return Instabug.isBuilt(); }
 
+    private static final ExecutorService screenshotExecutor = Executors.newSingleThreadExecutor();
+
     @Override
     public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {
         setCurrentPlatform();
@@ -121,6 +127,8 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 .build();
 
         Instabug.setAsyncScreenshotProvider(callbacks -> {
+            long totalStart = System.currentTimeMillis();
+
             try {
                 // Get the original screenshot as a bitmap along with the pixel ratio of the device
                 // `screenshotProvider` here is the original synchronous screenshot provider that takes
@@ -129,39 +137,58 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 // The actual implementation probably wouldn't use it like that but for the seek of the
                 // PoC I used it as is with a slight patch to return the pixel ratio as well with the
                 // bitmap to correctly place the rectangles on the screen.
-                ScreenshotResult result = screenshotProvider.call();
-                Bitmap bitmap = result.getScreenshot();
-                float pixelRatio = result.getPixelRatio();
-
-                // Create a canvas to mask the private views with black rectangles.
-                Canvas canvas = new Canvas(bitmap);
-
-                // Create a black filled paint for the rectangles.
-                Paint paint = new Paint();
-                paint.setColor(Color.BLACK);
-                paint.setStyle(Paint.Style.FILL);
+                CountDownLatch latch = new CountDownLatch(1);
+                AtomicReference<List<Double>> privateViews = new AtomicReference<>();
 
                 // Asynchronously get the private views from the Flutter side.
-                flutterApi.getPrivateViews((List<Double> privateViews) -> {
-                    // Notice that reply is returned as a List<Double> where each each private view layout
-                    // occupies 4 indices as [left, top, right, bottom]
-                    //
-                    // This is up to the implementation though, I just avoided adding another data structure
-                    // on top of the list to make the communication faster.
-                    for (int i = 0; i < privateViews.size(); i += 4) {
-                        float left = privateViews.get(i).floatValue() * pixelRatio;
-                        float top = privateViews.get(i + 1).floatValue() * pixelRatio;
-                        float right = privateViews.get(i + 2).floatValue() * pixelRatio;
-                        float bottom = privateViews.get(i + 3).floatValue() * pixelRatio;
+                long getPrivateViewsStart = System.currentTimeMillis();
+                flutterApi.getPrivateViews((List<Double> result) -> {
+                    Log.d("IBG-PV-Perf", "getPrivateViews took: " + (System.currentTimeMillis() - getPrivateViewsStart) + "ms");
+                    privateViews.set(result);
+                    latch.countDown();
+                });
 
-                        // Mask the private view.
-                        canvas.drawRect(left, top, right, bottom, paint);
+                long screenshotStart = System.currentTimeMillis();
+                ScreenshotResult result = screenshotProvider.call();
+                Log.d("IBG-PV-Perf", "Screenshot took: " + (System.currentTimeMillis() - screenshotStart) + "ms");
+
+                screenshotExecutor.execute(() -> {
+                    try {
+                        Bitmap bitmap = result.getScreenshot();
+                        float pixelRatio = result.getPixelRatio();
+
+                        latch.await();
+
+                        long drawingStart = System.currentTimeMillis();
+
+                        // Create a canvas to mask the private views with black rectangles.
+                        Canvas canvas = new Canvas(bitmap);
+
+                        // Create a black filled paint for the rectangles.
+                        Paint paint = new Paint();
+
+                        for (int i = 0; i < privateViews.get().size(); i += 4) {
+                            float left = privateViews.get().get(i).floatValue() * pixelRatio;
+                            float top = privateViews.get().get(i + 1).floatValue() * pixelRatio;
+                            float right = privateViews.get().get(i + 2).floatValue() * pixelRatio;
+                            float bottom = privateViews.get().get(i + 3).floatValue() * pixelRatio;
+
+                            // Mask the private view.
+                            canvas.drawRect(left, top, right, bottom, paint);
+                        }
+
+                        Log.d("IBG-PV-Perf", "Drawing took: " + (System.currentTimeMillis() - drawingStart) + "ms");
+
+                        // Send the masked screenshot to the native SDK now that it has been masked
+                        Log.d("IBG-PV-Perf", "Screenshot capturing succeeded, took " + (System.currentTimeMillis() - totalStart) + "ms");
+                        callbacks.onCapturingSuccess(bitmap);
+                    } catch (InterruptedException e) {
+                        Log.d("IBG-PV-Perf", "Screenshot capturing failed, took " + (System.currentTimeMillis() - totalStart) + "ms");
+                        callbacks.onCapturingFailure(e);
                     }
-
-                    // Send the masked screenshot to the native SDK now that it has been masked
-                    callbacks.onCapturingSuccess(bitmap);
                 });
             } catch (Exception e) {
+                Log.d("IBG-PV-Perf", "Screenshot capturing failed, took " + (System.currentTimeMillis() - totalStart) + "ms");
                 callbacks.onCapturingFailure(e);
             }
         });
