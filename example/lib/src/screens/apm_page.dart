@@ -9,8 +9,10 @@ class ApmPage extends StatefulWidget {
   State<ApmPage> createState() => _ApmPageState();
 }
 
-class _ApmPageState extends State<ApmPage> {
+class _ApmPageState extends State<ApmPage> with TickerProviderStateMixin {
   late WebViewController _webViewController;
+  late AnimationController _rotationController;
+  late AnimationController _sizeController;
 
   void _navigateToScreenLoading() {
     Navigator.push(
@@ -26,11 +28,28 @@ class _ApmPageState extends State<ApmPage> {
 
   @override
   void initState() {
+    _rotationController = AnimationController(
+      duration: const Duration(milliseconds: 150),
+      vsync: this,
+    )..repeat();
+
+    _sizeController = AnimationController(
+      duration: const Duration(milliseconds: 100),
+      vsync: this,
+    )..repeat(reverse: true);
+
     _webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(Uri.parse('https://flutter.dev'));
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _rotationController.dispose();
+    _sizeController.dispose();
+    super.dispose();
   }
 
   @override
@@ -68,8 +87,38 @@ class _ApmPageState extends State<ApmPage> {
                   height: 200,
                   child: WebViewWidget(controller: _webViewController),
                 ),
+                // RotationTransition(
+                //   turns: _rotationController,
+                //   child: InstabugPrivateView(
+                //     child: const SectionTitle('Network'),
+                //   ),
+                // ),
+                const SectionTitle('Network'),
+                Padding(
+                  padding: const EdgeInsets.all(55.0),
+                  child: InstabugPrivateView(
+                    child: RotationTransition(
+                      turns: _rotationController,
+                      child: Container(
+                        width: 150,
+                        height: 50,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ),
                 InstabugPrivateView(
-                  child: const SectionTitle('Network'),
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(-1, 0),
+                      end: const Offset(1, 0),
+                    ).animate(_sizeController),
+                    child: Container(
+                      width: 150,
+                      height: 50,
+                      color: Colors.red,
+                    ),
+                  ),
                 ),
                 const NetworkContent(),
                 const SectionTitle('Traces'),
