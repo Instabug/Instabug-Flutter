@@ -52,10 +52,11 @@ class _InstabugPrivateViewState extends State<InstabugPrivateView> {
 
   @override
   Widget build(BuildContext context) {
-    return VisibilityDetector(
-      key: _visibilityDetectorKey,
-      onVisibilityChanged: _onVisibilityChanged,
-      child: widget.child,
-    );
+    // return VisibilityDetector(
+    //   key: _visibilityDetectorKey,
+    //   onVisibilityChanged: _onVisibilityChanged,
+    //   child: widget.child,
+    // );
+    return widget.child;
   }
 }
