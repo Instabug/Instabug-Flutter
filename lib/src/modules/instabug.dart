@@ -11,6 +11,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unused_import
 import 'package:flutter/services.dart';
@@ -169,6 +170,17 @@ class Instabug implements InstabugFlutterApi {
     }
 
     final globalOffset = _getRenderGlobalOffset(renderObject);
+
+    if (renderObject is RenderProxyBox) {
+      if (renderObject.child == null) {
+        return null;
+      }
+
+      return MatrixUtils.transformRect(
+        renderObject.child!.getTransformTo(renderObject),
+        Offset.zero & renderObject.child!.size,
+      ).shift(globalOffset);
+    }
 
     return renderObject.paintBounds.shift(globalOffset);
   }
