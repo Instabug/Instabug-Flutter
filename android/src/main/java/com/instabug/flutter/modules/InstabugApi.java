@@ -106,7 +106,11 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public Boolean isBuilt() { return Instabug.isBuilt(); }
 
-    private static final ExecutorService screenshotExecutor = Executors.newSingleThreadExecutor();
+    private static final ExecutorService screenshotExecutor = Executors.newSingleThreadExecutor((runnable) -> {
+        Thread thread = new Thread(runnable);
+        thread.setName("IBG-Flutter-Screenshot");
+        return thread;
+    });
 
     @Override
     public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {
