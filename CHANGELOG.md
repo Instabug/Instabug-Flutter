@@ -6,6 +6,11 @@
 
 - Add support for masking screen names captured by Instabug through the `Instabug.setScreenNameMaskingCallback` API ([#500](https://github.com/Instabug/Instabug-Flutter/pull/500)).
 
+### Changed
+
+- Bump Instabug Android SDK to v13.4.0 ([#506](https://github.com/Instabug/Instabug-Flutter/pull/506)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v13.4.0).
+- Bump Instabug iOS SDK to v13.4.0 ([#506](https://github.com/Instabug/Instabug-Flutter/pull/506)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/13.4.0).
+
 ## [13.3.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.2.0...v13.3.0) (August 5, 2024)
 
 ### Added
