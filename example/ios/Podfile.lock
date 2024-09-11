@@ -1,9 +1,9 @@
 PODS:
   - Flutter (1.0.0)
-  - Instabug (13.3.0)
+  - Instabug (13.4.0)
   - instabug_flutter (13.3.0):
     - Flutter
-    - Instabug (= 13.3.0)
+    - Instabug (= 13.4.0)
   - OCMock (3.6)
 
 DEPENDENCIES:
@@ -24,8 +24,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  Instabug: 4f26295103a330ec0236918359eef7ccaa74e2fa
-  instabug_flutter: 6be22be13b3dda72b293151d2c009952bb20b940
+  Instabug: 183aa1e038d01ddc000f06835f46a9ea1f6c992b
+  instabug_flutter: ea66471d4f6c1a26ca7de18bf7046d271c863d4a
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
 
 PODFILE CHECKSUM: 8f7552fd115ace1988c3db54a69e4a123c448f84
