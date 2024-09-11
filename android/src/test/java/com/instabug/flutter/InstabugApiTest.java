@@ -17,16 +17,17 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+
+import static io.mockk.MockKKt.every;
+import static io.mockk.MockKKt.mockkStatic;
+
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
 import com.instabug.apm.InternalAPM;
-import com.instabug.apm.configuration.cp.APMFeature;
-import com.instabug.apm.configuration.cp.FeaturesChangeListener;
 import com.instabug.bug.BugReporting;
 import com.instabug.flutter.generated.InstabugPigeon;
-import com.instabug.flutter.generated.SurveysPigeon;
 import com.instabug.flutter.modules.InstabugApi;
 import com.instabug.flutter.util.GlobalMocks;
 import com.instabug.flutter.util.MockReflected;
@@ -40,6 +41,9 @@ import com.instabug.library.Platform;
 import com.instabug.library.ReproConfigurations;
 import com.instabug.library.ReproMode;
 import com.instabug.library.featuresflags.model.IBGFeatureFlag;
+import com.instabug.library.internal.crossplatform.CoreFeature;
+import com.instabug.library.internal.crossplatform.FeaturesStateListener;
+import com.instabug.library.internal.crossplatform.InternalCore;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
@@ -65,7 +69,11 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import io.flutter.plugin.common.BinaryMessenger;
+import kotlin.jvm.functions.Function1;
 
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.mockito.verification.VerificationMode;
 
 public class InstabugApiTest {
@@ -97,6 +105,7 @@ public class InstabugApiTest {
         mBugReporting.close();
         mHostApi.close();
         GlobalMocks.close();
+
     }
 
     @Test
@@ -359,11 +368,11 @@ public class InstabugApiTest {
 
     @Test
     public void testAddFeatureFlags() {
-       Map<String,String > featureFlags = new HashMap<>();
-        featureFlags.put("key1","variant1");
+        Map<String, String> featureFlags = new HashMap<>();
+        featureFlags.put("key1", "variant1");
         api.addFeatureFlags(featureFlags);
-        List<IBGFeatureFlag> flags=new ArrayList<IBGFeatureFlag>();
-        flags.add(new IBGFeatureFlag("key1","variant1"));
+        List<IBGFeatureFlag> flags = new ArrayList<IBGFeatureFlag>();
+        flags.add(new IBGFeatureFlag("key1", "variant1"));
         mInstabug.verify(() -> Instabug.addFeatureFlags(flags));
     }
 
@@ -609,31 +618,20 @@ public class InstabugApiTest {
         mInstabug.verify(Instabug::willRedirectToStore);
     }
 
-    @Test
-    public void testBindOnW3CFeatureFlagChangeCallback() {
-        MockedStatic<InternalAPM> internalAPM = mockStatic(InternalAPM.class);
-
-        api.bindOnW3CFeatureFlagChangeCallback();
-
-
-        internalAPM.verify(() -> InternalAPM._registerCPFeaturesChangeListener(any(FeaturesChangeListener.class)));
-        internalAPM.close();
-    }
 
     @Test
     public void isW3CFeatureFlagsEnabled() {
-        MockedStatic<InternalAPM> internalAPM = mockStatic(InternalAPM.class);
-
-        when(InternalAPM._isFeatureEnabledCP(eq(APMFeature.W3C_CAPTURED_HEADER_ATTACHING), anyString())).thenReturn(true);
-        when(InternalAPM._isFeatureEnabledCP(eq(APMFeature.W3C_EXTERNAL_TRACE_ID), anyString())).thenReturn(true);
-        when(InternalAPM._isFeatureEnabledCP(eq(APMFeature.W3C_GENERATED_HEADER_ATTACHING), anyString())).thenReturn(false);
+      MockedStatic<InternalCore> internalCoreMockedStatic=  mockStatic(InternalCore.class);
+        Boolean isW3cExternalGeneratedHeaderEnabled= InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_ATTACHING_GENERATED_HEADER);
+        Boolean isW3cExternalTraceIDEnabled= InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_EXTERNAL_TRACE_ID);
+        Boolean isW3cCaughtHeaderEnabled= InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_ATTACHING_CAPTURED_HEADER);
 
 
         Map<String, Boolean> flags = api.isW3CFeatureFlagsEnabled();
-        assertEquals(false, flags.get("isW3cExternalGeneratedHeaderEnabled"));
-        assertEquals(true, flags.get("isW3cExternalTraceIDEnabled"));
-        assertEquals(true, flags.get("isW3cCaughtHeaderEnabled"));
-        internalAPM.close();
+        assertEquals(isW3cExternalGeneratedHeaderEnabled, flags.get("isW3cExternalGeneratedHeaderEnabled"));
+        assertEquals(isW3cExternalTraceIDEnabled, flags.get("isW3cExternalTraceIDEnabled"));
+        assertEquals(isW3cCaughtHeaderEnabled, flags.get("isW3cCaughtHeaderEnabled"));
+        internalCoreMockedStatic.close();
 
     }
 }
