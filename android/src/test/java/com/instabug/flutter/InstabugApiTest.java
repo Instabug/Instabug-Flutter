@@ -17,10 +17,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
-import static io.mockk.MockKKt.every;
-import static io.mockk.MockKKt.mockkStatic;
-
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.net.Uri;
