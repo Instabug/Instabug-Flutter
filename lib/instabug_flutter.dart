@@ -1,6 +1,7 @@
 // Models
 export 'src/models/crash_data.dart';
 export 'src/models/exception_data.dart';
+export 'src/models/feature_flag.dart';
 export 'src/models/network_data.dart';
 export 'src/models/trace.dart';
 export 'src/models/w3c_header.dart';
@@ -20,3 +21,4 @@ export 'src/modules/surveys.dart';
 export 'src/utils/instabug_navigator_observer.dart';
 export 'src/utils/screen_loading/instabug_capture_screen_loading.dart';
 export 'src/utils/screen_loading/route_matcher.dart';
+export 'src/utils/screen_name_masker.dart' show ScreenNameMaskingCallback;

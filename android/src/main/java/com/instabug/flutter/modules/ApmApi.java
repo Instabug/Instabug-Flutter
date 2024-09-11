@@ -15,6 +15,7 @@ import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
+import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
 
 import io.flutter.plugin.common.BinaryMessenger;
 

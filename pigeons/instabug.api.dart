@@ -40,6 +40,9 @@ abstract class InstabugHostApi {
   void addExperiments(List<String> experiments);
   void removeExperiments(List<String> experiments);
   void clearAllExperiments();
+  void addFeatureFlags(Map<String, String> featureFlagsMap);
+  void removeFeatureFlags(List<String> featureFlags);
+  void removeAllFeatureFlags();
 
   void setUserAttribute(String value, String key);
   void removeUserAttribute(String key);

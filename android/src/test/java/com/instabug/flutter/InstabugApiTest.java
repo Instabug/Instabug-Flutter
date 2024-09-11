@@ -39,6 +39,7 @@ import com.instabug.library.LogLevel;
 import com.instabug.library.Platform;
 import com.instabug.library.ReproConfigurations;
 import com.instabug.library.ReproMode;
+import com.instabug.library.featuresflags.model.IBGFeatureFlag;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
@@ -54,6 +55,7 @@ import org.mockito.MockedStatic;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -353,6 +355,32 @@ public class InstabugApiTest {
         api.clearAllExperiments();
 
         mInstabug.verify(Instabug::clearAllExperiments);
+    }
+
+    @Test
+    public void testAddFeatureFlags() {
+       Map<String,String > featureFlags = new HashMap<>();
+        featureFlags.put("key1","variant1");
+        api.addFeatureFlags(featureFlags);
+        List<IBGFeatureFlag> flags=new ArrayList<IBGFeatureFlag>();
+        flags.add(new IBGFeatureFlag("key1","variant1"));
+        mInstabug.verify(() -> Instabug.addFeatureFlags(flags));
+    }
+
+    @Test
+    public void testRemoveFeatureFlags() {
+        List<String> featureFlags = Arrays.asList("premium", "star");
+
+        api.removeFeatureFlags(featureFlags);
+
+        mInstabug.verify(() -> Instabug.removeFeatureFlag(featureFlags));
+    }
+
+    @Test
+    public void testClearAllFeatureFlags() {
+        api.removeAllFeatureFlags();
+
+        mInstabug.verify(Instabug::removeAllFeatureFlags);
     }
 
     @Test

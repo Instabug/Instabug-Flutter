@@ -34,7 +34,7 @@ public class MockReflected {
     /**
      * APMNetworkLogger.log
      */
-    public static void apmNetworkLog(long requestStartTime, long requestDuration, String requestHeaders, String requestBody, long requestBodySize, String requestMethod, String requestUrl, String responseHeaders, String responseBody, String responseBodySize, long statusCode, int responseContentType, String errorMessage, String var18, @Nullable String gqlQueryName, @Nullable String serverErrorMessage, APMCPNetworkLog.W3CExternalTraceAttributes attributes) {}
+    public static void apmNetworkLog(long requestStartTime, long requestDuration, String requestHeaders, String requestBody, long requestBodySize, String requestMethod, String requestUrl, String responseHeaders, String responseBody, String responseBodySize, long statusCode, int responseContentType, String errorMessage, String var18, @Nullable String gqlQueryName, @Nullable String serverErrorMessage, @Nullable APMCPNetworkLog.W3CExternalTraceAttributes w3CExternalTraceAttributes) {}
 
     /**
      * CrashReporting.reportException

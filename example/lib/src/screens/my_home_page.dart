@@ -19,6 +19,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final primaryColorController = TextEditingController();
   final screenNameController = TextEditingController();
+  final featureFlagsController = TextEditingController();
+
+  @override
+  void dispose() {
+    featureFlagsController.dispose();
+    screenNameController.dispose();
+    primaryColorController.dispose();
+    super.dispose();
+  }
 
   void restartInstabug() {
     Instabug.setEnabled(false);
@@ -325,7 +334,36 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+        SectionTitle('FeatureFlags'),
+        InstabugTextField(
+          controller: featureFlagsController,
+          label: 'Feature Flag name',
+        ),
+        InstabugButton(
+          onPressed: () => setFeatureFlag(),
+          text: 'SetFeatureFlag',
+        ),
+        InstabugButton(
+          onPressed: () => removeFeatureFlag(),
+          text: 'RemoveFeatureFlag',
+        ),
+        InstabugButton(
+          onPressed: () => removeAllFeatureFlags(),
+          text: 'RemoveAllFeatureFlags',
+        ),
       ],
     );
+  }
+
+  setFeatureFlag() {
+    Instabug.addFeatureFlags([FeatureFlag(name: featureFlagsController.text)]);
+  }
+
+  removeFeatureFlag() {
+    Instabug.removeFeatureFlags([featureFlagsController.text]);
+  }
+
+  removeAllFeatureFlags() {
+    Instabug.clearAllFeatureFlags();
   }
 }

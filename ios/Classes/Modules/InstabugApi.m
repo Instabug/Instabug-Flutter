@@ -285,35 +285,35 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     NSNumber *networkStartTimeInSeconds = nil;
     NSString *w3CGeneratedHeader = nil;
     NSString *w3CCaughtHeader = nil;
-    
+
     if (data[@"gqlQueryName"] != [NSNull null]) {
         gqlQueryName = data[@"gqlQueryName"];
     }
     if (data[@"serverErrorMessage"] != [NSNull null]) {
         serverErrorMessage = data[@"serverErrorMessage"];
     }
-    
+
     if (data[@"partialId"] != [NSNull null]) {
         partialId = data[@"partialId"];
     }
-    
+
     if (data[@"isW3cHeaderFound"] != [NSNull null]) {
         isW3cHeaderFound = data[@"isW3cHeaderFound"];
     }
-    
+
     if (data[@"networkStartTimeInSeconds"] != [NSNull null]) {
         networkStartTimeInSeconds = data[@"networkStartTimeInSeconds"];
     }
-    
+
     if (data[@"w3CGeneratedHeader"] != [NSNull null]) {
         w3CGeneratedHeader = data[@"w3CGeneratedHeader"];
     }
-    
+
     if (data[@"w3CCaughtHeader"] != [NSNull null]) {
         w3CCaughtHeader = data[@"w3CCaughtHeader"];
     }
-    
-    
+
+
 
     SEL networkLogSEL = NSSelectorFromString(@"addNetworkLogWithUrl:method:requestBody:requestBodySize:responseBody:responseBodySize:responseCode:requestHeaders:responseHeaders:contentType:errorDomain:errorCode:startTime:duration:gqlQueryName:serverErrorMessage:isW3cCaughted:partialID:timestamp:generatedW3CTraceparent:caughtedW3CTraceparent:");
 
@@ -352,6 +352,41 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [Instabug willRedirectToAppStore];
 }
 
+- (void)addFeatureFlagsFeatureFlagsMap:(nonnull NSDictionary<NSString *,NSString *> *)featureFlagsMap error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    NSMutableArray<IBGFeatureFlag *> *featureFlags = [NSMutableArray array];
+    for(id key in featureFlagsMap){
+        NSString* variant =((NSString * )[featureFlagsMap objectForKey:key]);
+        if ([variant length]==0) {
+            [featureFlags addObject:[[IBGFeatureFlag alloc] initWithName:key]];
+        }
+        else{
+            [featureFlags addObject:[[IBGFeatureFlag alloc] initWithName:key variant:variant]];
+
+        }
+    }
+    [Instabug addFeatureFlags:featureFlags];
+}
+
+
+- (void)removeAllFeatureFlagsWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    [Instabug removeAllFeatureFlags];
+
+}
+
+
+- (void)removeFeatureFlagsFeatureFlags:(nonnull NSArray<NSString *> *)featureFlags error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+
+    NSMutableArray<IBGFeatureFlag *> *features = [NSMutableArray array];
+       for(id item in featureFlags){
+               [features addObject:[[IBGFeatureFlag alloc] initWithName:item]];
+           }
+    @try {
+        [Instabug removeFeatureFlags:features];
+    } @catch (NSException *exception) {
+        NSLog(@"%@", exception);
+
+    }
+}
 - (void)bindOnW3CFeatureFlagChangeCallbackWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
 }
 
