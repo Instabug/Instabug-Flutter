@@ -576,24 +576,23 @@
 
     OCMVerify([self.mInstabug willRedirectToAppStore]);
 }
-- (void) testisW3CFeatureFlagsEnabled{
+- (void)testisW3CFeatureFlagsEnabled{
     FlutterError *error;
 
     id mock = OCMClassMock([IBGNetworkLogger class]);
-    NSNumber *expectedValue = @(YES);
-    NSNumber *expectedValue2 = @(NO);
+    NSNumber *isW3cExternalTraceIDEnabled = @(YES);
 
-    OCMStub([mock w3ExternalTraceIDEnabled]).andReturn([expectedValue boolValue]);
-    OCMStub([mock w3ExternalGeneratedHeaderEnabled]).andReturn([expectedValue boolValue]);
-    OCMStub([mock w3CaughtHeaderEnabled]).andReturn([expectedValue boolValue]);
+    OCMStub([mock w3ExternalTraceIDEnabled]).andReturn([isW3cExternalTraceIDEnabled boolValue]);
+    OCMStub([mock w3ExternalGeneratedHeaderEnabled]).andReturn([isW3cExternalTraceIDEnabled boolValue]);
+    OCMStub([mock w3CaughtHeaderEnabled]).andReturn([isW3cExternalTraceIDEnabled boolValue]);
     
 
     
     NSDictionary<NSString* , NSNumber *> * result= [self.api isW3CFeatureFlagsEnabledWithError:&error];
         
-    XCTAssertEqual(result[@"isW3cExternalTraceIDEnabled"],expectedValue);
-    XCTAssertEqual(result[@"isW3cExternalGeneratedHeaderEnabled"],expectedValue);
-    XCTAssertEqual(result[@"isW3cCaughtHeaderEnabled"],expectedValue);
+    XCTAssertEqual(result[@"isW3cExternalTraceIDEnabled"],isW3cExternalTraceIDEnabled);
+    XCTAssertEqual(result[@"isW3cExternalGeneratedHeaderEnabled"],isW3cExternalTraceIDEnabled);
+    XCTAssertEqual(result[@"isW3cCaughtHeaderEnabled"],isW3cExternalTraceIDEnabled);
     
 }
 

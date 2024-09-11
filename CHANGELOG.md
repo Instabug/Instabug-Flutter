@@ -5,8 +5,7 @@
 ### Added
 
 - Add support for masking screen names captured by Instabug through the `Instabug.setScreenNameMaskingCallback` API ([#500](https://github.com/Instabug/Instabug-Flutter/pull/500)).
-- Add support for Trace network requests from Instabug using traceparent
-   header ([#481](https://github.com/Instabug/Instabug-Flutter/pull/481)).
+- Add support for tracing network requests from Instabug to services like Datadog and New Relic ([#481](https://github.com/Instabug/Instabug-Flutter/pull/481)).
 
 ## [13.3.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.2.0...v13.3.0) (August 5, 2024)
 

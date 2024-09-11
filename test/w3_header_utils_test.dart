@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:instabug_flutter/src/models/generated_w3_header.dart';
+import 'package:instabug_flutter/src/models/generated_w3c_header.dart';
 import 'package:instabug_flutter/src/utils/w3c_header_utils.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -23,17 +23,13 @@ void main() {
   });
 
   test('generateTracePartialId should generate a non-zero hex string', () {
-    final hexString =
-        W3CHeaderUtils.generateTracePartialId()['hexStringPartialId']
-            .toString();
+    final hexString = W3CHeaderUtils.generateTracePartialId().hexPartialId;
     expect(hexString, isNot('00000000'));
   });
 
   test('generateTracePartialId should return 8 chars long generated hex string',
       () {
-    final hexString =
-        W3CHeaderUtils.generateTracePartialId()['hexStringPartialId']
-            .toString();
+    final hexString = W3CHeaderUtils.generateTracePartialId().hexPartialId;
     expect(hexString.length, 8);
   });
 
@@ -43,7 +39,7 @@ void main() {
     const date = 1716210104248;
     final hexString0 = 217222.toRadixString(16).padLeft(8, '0');
 
-    final expectedHeader = GeneratedW3Header(
+    final expectedHeader = GeneratedW3CHeader(
       timestampInSeconds: (1716210104248 / 1000).floor(),
       partialId: 217222,
       w3cHeader:
@@ -55,7 +51,7 @@ void main() {
 
   test('generateW3CHeader should correctly floor the timestamp', () {
     const date = 1716222912145;
-    final expectedHeader = GeneratedW3Header(
+    final expectedHeader = GeneratedW3CHeader(
       timestampInSeconds: (1716222912145 / 1000).floor(),
       partialId: 217222,
       w3cHeader: "00-664b7bc000035086664b7bc000035086-4942472d00035086-01",

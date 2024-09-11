@@ -118,7 +118,7 @@ class NetworkLogger {
     if (isW3cHeaderFound && isW3CCaughtHeaderEnabled) {
       return W3CHeader(isW3cHeaderFound: true, w3CCaughtHeader: w3cHeaderFound);
     } else if (isW3CExternalGeneratedHeaderEnabled &&
-        (isW3cHeaderFound == false)) {
+        !isW3cHeaderFound) {
       // make it structure
       final w3cHeaderData = W3CHeaderUtils.generateW3CHeader(
         startTime,

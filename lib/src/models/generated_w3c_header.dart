@@ -1,9 +1,9 @@
-class GeneratedW3Header {
+class GeneratedW3CHeader {
   num timestampInSeconds;
   int partialId;
   String w3cHeader;
 
-  GeneratedW3Header({
+  GeneratedW3CHeader({
     required this.timestampInSeconds,
     required this.partialId,
     required this.w3cHeader,
@@ -12,7 +12,7 @@ class GeneratedW3Header {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is GeneratedW3Header &&
+      other is GeneratedW3CHeader &&
           runtimeType == other.runtimeType &&
           timestampInSeconds == other.timestampInSeconds &&
           partialId == other.partialId &&

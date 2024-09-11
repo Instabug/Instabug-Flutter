@@ -19,12 +19,6 @@ class FeatureFlagsManager implements FeatureFlagsFlutterApi {
     _host = host;
   }
 
-  // FeatureFlagsManager({InstabugHostApi? instabugHostApi}) {
-  //   if (instabugHostApi != null) {
-  //     _host = instabugHostApi;
-  //   }
-  // }
-
   @visibleForTesting
   // ignore: use_setters_to_change_properties
   static void $setFeatureFlagsManager(FeatureFlagsManager featureFlagsManager) {
