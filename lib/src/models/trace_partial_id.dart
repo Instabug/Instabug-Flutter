@@ -17,5 +17,4 @@ class TracePartialId {
 
   @override
   int get hashCode => numberPartialId.hashCode ^ hexPartialId.hashCode;
-  
 }

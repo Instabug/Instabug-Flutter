@@ -27,7 +27,9 @@ class W3CHeaderUtils {
     } while (hexString == '00000000');
 
     return TracePartialId(
-        numberPartialId: randomNumber, hexPartialId: hexString.toLowerCase(),);
+      numberPartialId: randomNumber,
+      hexPartialId: hexString.toLowerCase(),
+    );
   }
 
   /// Generate W3C header in the format of {version}-{trace-id}-{parent-id}-{trace-flag}
@@ -35,8 +37,8 @@ class W3CHeaderUtils {
   /// @returns w3c header
   static GeneratedW3CHeader generateW3CHeader(int networkStartTime) {
     final partialIdData = generateTracePartialId();
-    final hexStringPartialId =partialIdData.hexPartialId;
-    final numberPartialId =partialIdData.numberPartialId;
+    final hexStringPartialId = partialIdData.hexPartialId;
+    final numberPartialId = partialIdData.numberPartialId;
 
     final timestampInSeconds = (networkStartTime / 1000).floor();
     final hexaDigitsTimestamp =
