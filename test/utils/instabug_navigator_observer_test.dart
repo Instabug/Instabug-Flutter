@@ -92,6 +92,25 @@ void main() {
     });
   });
 
+  test('should fallback to "N/A" when the screen name is empty', () {
+    fakeAsync((async) {
+      final route = createRoute('');
+      const fallback = 'N/A';
+
+      observer.didPush(route, previousRoute);
+
+      async.elapse(const Duration(milliseconds: 1000));
+
+      verify(
+        mScreenLoadingManager.startUiTrace(fallback, fallback),
+      ).called(1);
+
+      verify(
+        mHost.reportScreenChange(fallback),
+      ).called(1);
+    });
+  });
+
   test('should mask screen name when masking callback is set', () {
     const maskedScreen = 'maskedScreen';
 
