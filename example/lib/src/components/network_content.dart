@@ -10,6 +10,8 @@ class NetworkContent extends StatefulWidget {
 }
 
 class _NetworkContentState extends State<NetworkContent> {
+  final http = InstabugHttpClient();
+
   final endpointUrlController = TextEditingController();
 
   @override

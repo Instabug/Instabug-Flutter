@@ -87,7 +87,6 @@
 		CC359DB82937720C0067A924 /* ApmApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApmApiTests.m; sourceTree = "<group>"; };
 		CC3D69E6293F47FC000DCE54 /* ArgsRegistryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArgsRegistryTests.m; sourceTree = "<group>"; };
 		CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Instabug+Test.h"; sourceTree = "<group>"; };
-		CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IBGNetworkLogger+Test.h"; sourceTree = "<group>"; };
 		CC9925D1293DEB0B001FD3EE /* CrashReportingApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrashReportingApiTests.m; sourceTree = "<group>"; };
 		CC9925D4293DF534001FD3EE /* FeatureRequestsApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeatureRequestsApiTests.m; sourceTree = "<group>"; };
 		CC9925D6293DFB03001FD3EE /* InstabugLogApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstabugLogApiTests.m; sourceTree = "<group>"; };
@@ -216,7 +215,6 @@
 			children = (
 				BE26C80C2BD55575009FECCF /* IBGCrashReporting+CP.h */,
 				CC78720E293CA8EE008CB2A5 /* Instabug+Test.h */,
-				CC787211293CAB28008CB2A5 /* IBGNetworkLogger+Test.h */,
 				CC198C62293E2392007077C8 /* IBGSurvey+Test.h */,
 			);
 			path = Util;
