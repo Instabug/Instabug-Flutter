@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instabug_flutter/src/utils/repro_steps_constants.dart';
 
 typedef ScreenNameMaskingCallback = String Function(String screen);
 
@@ -13,8 +14,6 @@ class ScreenNameMasker {
 
   /// Shorthand for [instance]
   static ScreenNameMasker get I => instance;
-
-  static const emptyScreenNameFallback = "N/A";
 
   ScreenNameMaskingCallback? _screenNameMaskingCallback;
 
@@ -37,7 +36,7 @@ class ScreenNameMasker {
     final maskedScreen = _screenNameMaskingCallback!(screen).trim();
 
     if (maskedScreen.isEmpty) {
-      return emptyScreenNameFallback;
+      return ReproStepsConstants.emptyScreenFallback;
     }
 
     return maskedScreen;
