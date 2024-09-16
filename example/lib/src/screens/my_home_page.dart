@@ -161,6 +161,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _navigateToGrid() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const GridPage(),
+        settings: const RouteSettings(name: GridPage.screenName),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Page(
@@ -305,6 +315,10 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: _navigateToComplex,
           text: 'Complex',
+        ),
+        InstabugButton(
+          onPressed: _navigateToGrid,
+          text: 'Grid',
         ),
         const SectionTitle('Sessions Replay'),
         InstabugButton(

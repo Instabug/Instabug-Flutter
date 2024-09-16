@@ -5,6 +5,7 @@
 #import "IBGNetworkLogger+CP.h"
 #import "InstabugApi.h"
 #import "ArgsRegistry.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue:((float)(rgbValue & 0xFF)) / 255.0 alpha:((float)((rgbValue & 0xFF000000) >> 24)) / 255.0];
 
@@ -40,7 +41,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger, UIView *flutte
     if (self.flutterView == nil) {
         return CGPointZero;
     }
-    
+
     return self.flutterView.frame.origin;
 }
 
@@ -52,6 +53,8 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger, UIView *flutte
 
     // Telling the iOS SDK about our screenshot masking handler.
     [Instabug setScreenshotMaskingHandler:^(UIImage *screenshot, void (^completion)(UIImage *)) {
+        CFTimeInterval startTime = 1000 * CACurrentMediaTime();
+
         if (weakSelf == nil)
             return;
 
@@ -62,7 +65,28 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger, UIView *flutte
                 NSLog(@"IBG-Flutter: An error occurred while getting the private views from Flutter.");
                 NSLog(@"IBG-Flutter: %@", [error message]);
             }
+
+            NSMutableArray<NSValue *> *privateViews = [[NSMutableArray alloc] init];
+            CGPoint flutterOrigin = [weakSelf getFlutterViewOrigin];
+
+            for (int i = 0; i < rectangles.count; i += 4) {
+                // Using the same encoding for private views locations as described
+                // in the Android implementation, though it's not mandatory of course.
+                CGFloat left = [rectangles[i] doubleValue];
+                CGFloat top = [rectangles[i + 1] doubleValue];
+                CGFloat right = [rectangles[i + 2] doubleValue];
+                CGFloat bottom = [rectangles[i + 3] doubleValue];
+
+                CGRect rectangle = CGRectMake(flutterOrigin.x + left, flutterOrigin.y + top, right - left + 1, bottom - top + 1);
+
+                [privateViews addObject:[NSValue valueWithCGRect:rectangle]];
+            }
             
+            CFTimeInterval rectanglesTime = 1000 * CACurrentMediaTime();
+            NSLog(@"IBG-PV-Perf: iOS getPrivateViews took: %f", rectanglesTime - startTime);
+
+            // MARK: Masking the screenshot with the private views.
+
             // Start a graphics context for drawing the black rectangles in place of
             // the private views.
             CGSize size = screenshot.size;
@@ -73,25 +97,17 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger, UIView *flutte
             
             [screenshot drawAtPoint:CGPointZero];
             
-            CGPoint flutterOrigin = [weakSelf getFlutterViewOrigin];
-            
-            for (int i = 0; i < rectangles.count; i += 4) {
-                // Using the same encoding for private views locations as described
-                // in the Android implementation, though it's not mandatory of course.
-                CGFloat left = [rectangles[i] doubleValue];
-                CGFloat top = [rectangles[i + 1] doubleValue];
-                CGFloat right = [rectangles[i + 2] doubleValue];
-                CGFloat bottom = [rectangles[i + 3] doubleValue];
-                
-                CGRect rectangle = CGRectMake(flutterOrigin.x + left, flutterOrigin.y + top, right - left + 1, bottom - top + 1);
-                
+            for (NSValue *rectangle in privateViews) {
                 CGContextSetFillColorWithColor(context, UIColor.blackColor.CGColor);
-                CGContextAddRect(context, rectangle);
+                CGContextAddRect(context, rectangle.CGRectValue);
                 CGContextDrawPath(context, kCGPathFill);
             }
 
             UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
+            
+            CFTimeInterval maskingTime = 1000 * CACurrentMediaTime();
+            NSLog(@"IBG-PV-Perf: masking took: %f", maskingTime - startTime);
 
             // Tell the iOS SDK that we have masked the screenshot through the
             // completion handler rather than a return value.
@@ -112,9 +128,9 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger, UIView *flutte
         [inv setArgument:&(platformID) atIndex:2];
         [inv invoke];
     }
-    
+
     [self setUpScreenMasking];
-        
+
     // Disable automatic capturing of native iOS network logs to avoid duplicate
     // logs of the same request when using a native network client like cupertino_http
     [IBGNetworkLogger disableAutomaticCapturingOfNetworkLogs];
@@ -235,12 +251,12 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger, UIView *flutte
         IBGUserStepsMode resolvedBugMode = ArgsRegistry.reproModes[bugMode].integerValue;
         [Instabug setReproStepsFor:IBGIssueTypeBug withMode:resolvedBugMode];
     }
-    
+
     if (crashMode != nil) {
         IBGUserStepsMode resolvedCrashMode = ArgsRegistry.reproModes[crashMode].integerValue;
         [Instabug setReproStepsFor:IBGIssueTypeCrash withMode:resolvedCrashMode];
     }
-    
+
     if (sessionReplayMode != nil) {
         IBGUserStepsMode resolvedSessionReplayMode = ArgsRegistry.reproModes[sessionReplayMode].integerValue;
         [Instabug setReproStepsFor:IBGIssueTypeSessionReplay withMode:resolvedSessionReplayMode];

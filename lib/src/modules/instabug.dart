@@ -10,6 +10,7 @@ import 'dart:typed_data';
 // ignore: unnecessary_import
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 // to maintain supported versions prior to Flutter 3.3
@@ -197,18 +198,28 @@ class Instabug implements InstabugFlutterApi {
   @internal
   @override
   List<double> getPrivateViews() {
-    return PrivateViews.views
-        .map(_getLayoutInfo)
-        .where((bounds) => bounds != null)
-        .expand(
-          (bounds) => [
-            bounds!.left,
-            bounds.top,
-            bounds.right,
-            bounds.bottom,
-          ],
-        )
-        .toList();
+    final stopwatch = Stopwatch()..start();
+
+    final result = <double>[];
+
+    for (final view in PrivateViews.views) {
+      final rect = _getLayoutInfo(view);
+
+      if (rect == null) continue;
+
+      result.addAll([
+        rect.left,
+        rect.top,
+        rect.right,
+        rect.bottom,
+      ]);
+    }
+
+    print(
+      "IBG-PV-Perf: Flutter getPrivateViews took: ${stopwatch.elapsedMilliseconds}ms",
+    );
+
+    return result;
   }
 
   /// @nodoc

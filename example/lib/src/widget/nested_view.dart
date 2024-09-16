@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter_example/main.dart';
 
 class NestedView extends StatelessWidget {
@@ -19,26 +20,28 @@ class NestedView extends StatelessWidget {
       return child ?? const SizedBox.shrink();
     }
 
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(),
-      ),
-      padding: const EdgeInsets.all(1),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('$depth'),
-          Row(
-            children: List.generate(
-              breadth,
-              (index) => NestedView(
-                depth: depth - 1,
-                breadth: breadth,
-                child: child,
+    return InstabugPrivateView(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(),
+        ),
+        padding: const EdgeInsets.all(1),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('$depth'),
+            Row(
+              children: List.generate(
+                breadth,
+                (index) => NestedView(
+                  depth: depth - 1,
+                  breadth: breadth,
+                  child: child,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,17 +1,13 @@
 import 'dart:async';
-import 'dart:ui' as ui;
 import 'dart:developer';
 import 'dart:io';
 import 'dart:convert';
-import 'dart:typed_data';
-import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter_example/src/app_routes.dart';
 import 'package:instabug_flutter_example/src/widget/nested_view.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'src/native/instabug_flutter_example_method_channel.dart';
@@ -25,6 +21,8 @@ import 'src/widget/section_title.dart';
 part 'src/screens/crashes_page.dart';
 
 part 'src/screens/complex_page.dart';
+
+part 'src/screens/grid_page.dart';
 
 part 'src/screens/apm_page.dart';
 
