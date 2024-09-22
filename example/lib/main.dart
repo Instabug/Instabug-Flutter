@@ -2,9 +2,12 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:instabug_dio_interceptor/instabug_dio_interceptor.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter_example/src/app_routes.dart';
 import 'package:instabug_flutter_example/src/widget/nested_view.dart';
