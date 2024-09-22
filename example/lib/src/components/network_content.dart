@@ -27,9 +27,10 @@ class _NetworkContentState extends State<NetworkContent> {
         Text("W3C Header Section"),
         InstabugButton(
           text: 'Send Request With Custom traceparent header',
-          onPressed: () => _sendRequestToUrl(endpointUrlController.text,headers: {
-            "traceparent":"Custom traceparent header"
-          }),
+          onPressed: () =>
+              _sendRequestToUrl(endpointUrlController.text, headers: {
+                "traceparent": "Custom traceparent header"
+              }),
         ),
         InstabugButton(
           text: 'Send Request  Without Custom traceparent header',
@@ -39,14 +40,42 @@ class _NetworkContentState extends State<NetworkContent> {
     );
   }
 
-  void _sendRequestToUrl(String text,{Map<String,String>? headers}) async {
+  void _sendRequestToUrl(String text, {Map<String, String>? headers}) async {
     try {
-      String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
-      final response = await http.get(Uri.parse(url),headers: headers);
+      String url = text
+          .trim()
+          .isEmpty ? widget.defaultRequestUrl : text;
+      String proxy = Platform.isAndroid
+          ? '192.168.1.107:9090'
+          : 'localhost:9090';
+
+// Create a new Dio instance.
+      Dio dio = Dio();
+
+// Tap into the onHttpClientCreate callback
+// to configure the proxy just as we did earlier.
+      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (client) {
+        // Hook into the findProxy callback to set the client's proxy.
+        client.findProxy = (url) {
+          return 'PROXY $proxy';
+        };
+
+        // This is a workaround to allow Proxyman to receive
+        // SSL payloads when your app is running on Android.
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => Platform.isAndroid;
+      };
+
+      dio.interceptors.add(InstabugDioInterceptor());
+
+      final response = await dio.get(url,options: Options(
+        headers: headers
+      ));
 
       // Handle the response here
       if (response.statusCode == 200) {
-        final jsonData = json.decode(response.body);
+        final jsonData = json.decode(response.data);
         log(jsonEncode(jsonData));
       } else {
         log('Request failed with status: ${response.statusCode}');

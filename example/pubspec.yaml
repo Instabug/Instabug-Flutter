@@ -20,12 +20,21 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.12.0 <4.0.0"
 
+
+dependency_overrides:
+  instabug_flutter:
+    path: ../
 dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.0
+  dio:
   instabug_flutter:
     path: ../
+  instabug_dio_interceptor:
+    git:
+      url: https://github.com/Instabug/Instabug-Dio-Interceptor
+      ref: feat/add_w3_header
 
 dev_dependencies:
   espresso: 0.2.0+5
