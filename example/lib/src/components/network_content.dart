@@ -10,7 +10,21 @@ class NetworkContent extends StatefulWidget {
 }
 
 class _NetworkContentState extends State<NetworkContent> {
+  final http2 = InstabugHttpClient();
+
   final endpointUrlController = TextEditingController();
+  String proxy = Platform.isAndroid ? '192.168.1.107:9090' : 'localhost:9090';
+
+  @override
+  void initState() {
+    HttpProxy.createHttpProxy().then((value) {
+      value.host = proxy.split(":")[0];
+      value.port = proxy.split(":")[1];
+      HttpOverrides.global = value;
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,32 +36,36 @@ class _NetworkContentState extends State<NetworkContent> {
         ),
         InstabugButton(
           text: 'Send Request To Url',
-          onPressed: () => _sendRequestToUrl(endpointUrlController.text),
+          onPressed: () => _sendRequestToUrlDio(endpointUrlController.text),
         ),
         Text("W3C Header Section2"),
         InstabugButton(
-          text: 'Send Request With Custom traceparent header',
-          onPressed: () =>
-              _sendRequestToUrl(endpointUrlController.text, headers: {
-                "traceparent": "Custom traceparent header"
-              }),
+          text: 'Send Request With Custom traceparent header dio',
+          onPressed: () => _sendRequestToUrlDio(endpointUrlController.text,
+              headers: {"traceparent": "Custom traceparent header "}),
         ),
         InstabugButton(
-          text: 'Send Request  Without Custom traceparent header',
-          onPressed: () => _sendRequestToUrl(endpointUrlController.text),
+          text: 'Send Request  Without Custom traceparent header dio ',
+          onPressed: () => _sendRequestToUrlDio(endpointUrlController.text),
+        ),
+        InstabugButton(
+          text: 'Send Request With Custom traceparent header http',
+          onPressed: () => _sendRequestToUrlHttpClient(
+              endpointUrlController.text,
+              headers: {"traceparent": "Custom traceparent header "}),
+        ),
+        InstabugButton(
+          text: 'Send Request  Without Custom traceparent header http ',
+          onPressed: () =>
+              _sendRequestToUrlHttpClient(endpointUrlController.text),
         ),
       ],
     );
   }
 
-  void _sendRequestToUrl(String text, {Map<String, String>? headers}) async {
+  void _sendRequestToUrlDio(String text, {Map<String, String>? headers}) async {
     try {
-      String url = text
-          .trim()
-          .isEmpty ? widget.defaultRequestUrl : text;
-      String proxy = Platform.isAndroid
-          ? '192.168.1.107:9090'
-          : 'localhost:9090';
+      String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
 
 // Create a new Dio instance.
       Dio dio = Dio();
@@ -69,13 +87,29 @@ class _NetworkContentState extends State<NetworkContent> {
 
       dio.interceptors.add(InstabugDioInterceptor());
 
-      final response = await dio.get(url,options: Options(
-        headers: headers
-      ));
+      final response = await dio.get(url, options: Options(headers: headers));
 
       // Handle the response here
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.data);
+        log(jsonEncode(jsonData));
+      } else {
+        log('Request failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      log('Error sending request: $e');
+    }
+  }
+
+  void _sendRequestToUrlHttpClient(String text,
+      {Map<String, String>? headers}) async {
+    try {
+      String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
+      final response = await http.get(Uri.parse(url),headers: headers);
+
+      // Handle the response here
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
         log(jsonEncode(jsonData));
       } else {
         log('Request failed with status: ${response.statusCode}');

@@ -35,6 +35,11 @@ dependencies:
     git:
       url: https://github.com/Instabug/Instabug-Dio-Interceptor
       ref: feat/add_w3_header
+  instabug_http_client:
+    git:
+      url: https://github.com/Instabug/Instabug-Dart-http-Adapter
+      ref: feat/add-w3-header
+  http_proxy: ^1.2.2
 
 dev_dependencies:
   espresso: 0.2.0+5
