@@ -4,7 +4,6 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:http_proxy/http_proxy.dart';

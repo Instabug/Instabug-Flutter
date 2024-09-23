@@ -13,15 +13,10 @@ class _NetworkContentState extends State<NetworkContent> {
   final http2 = InstabugHttpClient();
 
   final endpointUrlController = TextEditingController();
-  String proxy = Platform.isAndroid ? '192.168.1.107:9090' : 'localhost:9090';
+  String proxy = Platform.isAndroid ? '192.168.1.107:8888' : 'localhost:8888';
 
   @override
   void initState() {
-    HttpProxy.createHttpProxy().then((value) {
-      value.host = proxy.split(":")[0];
-      value.port = proxy.split(":")[1];
-      HttpOverrides.global = value;
-    });
 
     super.initState();
   }
@@ -104,8 +99,13 @@ class _NetworkContentState extends State<NetworkContent> {
   void _sendRequestToUrlHttpClient(String text,
       {Map<String, String>? headers}) async {
     try {
+     final httpProxy= await  HttpProxy.createHttpProxy();
+     httpProxy.host = proxy.split(":")[0];
+     httpProxy.port = proxy.split(":")[1];
+     HttpOverrides.global = httpProxy;
+
       String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
-      final response = await http.get(Uri.parse(url),headers: headers);
+      final response = await http2.get(Uri.parse(url),headers: headers);
 
       // Handle the response here
       if (response.statusCode == 200) {
