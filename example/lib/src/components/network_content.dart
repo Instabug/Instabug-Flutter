@@ -1,5 +1,25 @@
 part of '../../main.dart';
 
+class DevHttpOverrides extends HttpOverrides {
+  String proxy;
+
+  DevHttpOverrides(this.proxy);
+
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    final c = super.createHttpClient(context);
+    c.findProxy = (url) {
+      return 'PROXY $proxy';
+    };
+
+    // This is a workaround to allow Proxyman to receive
+    // SSL payloads when your app is running on Android.
+    c.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+    return c;
+  }
+}
+
 class NetworkContent extends StatefulWidget {
   const NetworkContent({Key? key}) : super(key: key);
   final String defaultRequestUrl =
@@ -17,7 +37,6 @@ class _NetworkContentState extends State<NetworkContent> {
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -77,7 +96,7 @@ class _NetworkContentState extends State<NetworkContent> {
         // This is a workaround to allow Proxyman to receive
         // SSL payloads when your app is running on Android.
         client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => Platform.isAndroid;
+            (X509Certificate cert, String host, int port) => true;
       };
 
       dio.interceptors.add(InstabugDioInterceptor());
@@ -99,13 +118,28 @@ class _NetworkContentState extends State<NetworkContent> {
   void _sendRequestToUrlHttpClient(String text,
       {Map<String, String>? headers}) async {
     try {
-     final httpProxy= await  HttpProxy.createHttpProxy();
-     httpProxy.host = proxy.split(":")[0];
-     httpProxy.port = proxy.split(":")[1];
-     HttpOverrides.global = httpProxy;
+      // Create a new HttpClient instance.
+      HttpClient httpClient = HttpClient();
+
+// Hook into the findProxy callback to set
+// the client's proxy.
+      httpClient.findProxy = (uri) {
+        return "PROXY $proxy;";
+      };
+
+// This is a workaround to allow Proxyman to receive
+// SSL payloads when your app is running on Android.
+      httpClient.badCertificateCallback =
+          ((X509Certificate cert, String host, int port) => true);
+
+// Pass your newly instantiated HttpClient to http.IOClient.
+      IOClient myClient = IOClient(httpClient);
+
+      http2.client = myClient;
 
       String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
-      final response = await http2.get(Uri.parse(url),headers: headers);
+
+      final response = await http2.get(Uri.parse(url), headers: headers);
 
       // Handle the response here
       if (response.statusCode == 200) {

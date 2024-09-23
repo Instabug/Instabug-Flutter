@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 
 import 'package:flutter/material.dart';
+import 'package:http/io_client.dart';
 import 'package:http_proxy/http_proxy.dart';
 import 'package:instabug_dio_interceptor/instabug_dio_interceptor.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
