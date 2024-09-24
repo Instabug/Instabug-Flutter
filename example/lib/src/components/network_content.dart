@@ -29,9 +29,8 @@ class _NetworkContentState extends State<NetworkContent> {
         Text("W3C Header Section"),
         InstabugButton(
           text: 'Send Request With Custom traceparent header',
-          onPressed: () => _sendRequestToUrl(endpointUrlController.text,headers: {
-            "traceparent":"Custom traceparent header"
-          }),
+          onPressed: () => _sendRequestToUrl(endpointUrlController.text,
+              headers: {"traceparent": "Custom traceparent header"}),
         ),
         InstabugButton(
           text: 'Send Request  Without Custom traceparent header',
@@ -41,10 +40,10 @@ class _NetworkContentState extends State<NetworkContent> {
     );
   }
 
-  void _sendRequestToUrl(String text,{Map<String,String>? headers}) async {
+  void _sendRequestToUrl(String text, {Map<String, String>? headers}) async {
     try {
       String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
-      final response = await http.get(Uri.parse(url),headers: headers);
+      final response = await http.get(Uri.parse(url), headers: headers);
 
       // Handle the response here
       if (response.statusCode == 200) {

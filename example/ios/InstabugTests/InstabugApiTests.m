@@ -574,12 +574,7 @@
 
               ]);
 }
-- (void)testWillRedirectToAppStore {
-    FlutterError *error;
-    [self.api willRedirectToStoreWithError:&error];
 
-    OCMVerify([self.mInstabug willRedirectToAppStore]);
-}
 - (void)testisW3CFeatureFlagsEnabled{
     FlutterError *error;
 

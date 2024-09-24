@@ -1,13 +1,16 @@
 PODS:
   - Flutter (1.0.0)
-  - Instabug (13.4.0)
-  - instabug_flutter (13.3.0):
+  - http_proxy (0.0.1):
     - Flutter
-    - Instabug (= 13.4.0)
+  - Instabug (13.4.1)
+  - instabug_flutter (13.4.0):
+    - Flutter
+    - Instabug (= 13.4.1)
   - OCMock (3.6)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - http_proxy (from `.symlinks/plugins/http_proxy/ios`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
 
@@ -19,13 +22,16 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  http_proxy:
+    :path: ".symlinks/plugins/http_proxy/ios"
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  Instabug: 183aa1e038d01ddc000f06835f46a9ea1f6c992b
-  instabug_flutter: ea66471d4f6c1a26ca7de18bf7046d271c863d4a
+  http_proxy: 20f129d3e1c70cfdef92530b374c619832027729
+  Instabug: 896a318fb64b282832e0eda6fce489dac74b5d48
+  instabug_flutter: b9f4503c3788c7346649bfe3396d6ca6e9711e96
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
 
 PODFILE CHECKSUM: 8f7552fd115ace1988c3db54a69e4a123c448f84
