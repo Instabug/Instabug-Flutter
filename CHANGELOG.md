@@ -1,11 +1,20 @@
 # Changelog
 
-## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v13.3.0...dev)
+## [13.4.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.3.0...v13.4.0) (September 15, 2024)
 
 ### Added
 
 - Add support for masking screen names captured by Instabug through the `Instabug.setScreenNameMaskingCallback` API ([#500](https://github.com/Instabug/Instabug-Flutter/pull/500)).
 - Add support for tracing network requests from Instabug to services like Datadog and New Relic ([#481](https://github.com/Instabug/Instabug-Flutter/pull/481)).
+
+### Changed
+
+- Bump Instabug Android SDK to v13.4.1 ([#509](https://github.com/Instabug/Instabug-Flutter/pull/509)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v13.4.0).
+- Bump Instabug iOS SDK to v13.4.1 ([#510](https://github.com/Instabug/Instabug-Flutter/pull/510)). See release notes for [13.4.0](https://github.com/Instabug/Instabug-iOS/releases/tag/13.4.0) and [13.4.1](https://github.com/Instabug/Instabug-iOS/releases/tag/13.4.1).
+
+### Fixed
+
+- Fixed an issue with empty screen names captured in `InstabugNavigatorObserver` and fallback to `N/A` when the screen name is empty ([#505](https://github.com/Instabug/Instabug-Flutter/pull/505)), closes [#504](https://github.com/Instabug/Instabug-Flutter/issues/504).
 
 ## [13.3.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.2.0...v13.3.0) (August 5, 2024)
 
