@@ -4,7 +4,7 @@
 #import "InstabugApi.h"
 #import "Instabug/Instabug.h"
 #import "Util/Instabug+Test.h"
-#import "Util/IBGNetworkLogger+Test.h"
+#import "IBGNetworkLogger+CP.h"
 #import "Flutter/Flutter.h"
 
 @interface InstabugTests : XCTestCase
@@ -435,7 +435,11 @@
                                                duration:duration.integerValue
                                            gqlQueryName:nil
                                      serverErrorMessage:nil
-              ]);
+                                          isW3cCaughted:nil
+                                              partialID:nil
+                                              timestamp:nil
+                                generatedW3CTraceparent:nil
+                                 caughtedW3CTraceparent:nil]);
 }
 
 - (void)testWillRedirectToAppStore {
