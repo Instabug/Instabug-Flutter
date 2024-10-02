@@ -1,4 +1,9 @@
 # Changelog
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v13.4.0...dev)
+
+### Added
+
+- Support for masking private views in screenshots captured by wrapping your widget through `InstabugPrivateView`,`InstabugSliverPrivateView`, ([#516](https://github.com/Instabug/Instabug-Flutter/pull/516)).
 
 ## [13.4.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.3.0...v13.4.0) (September 15, 2024)
 
