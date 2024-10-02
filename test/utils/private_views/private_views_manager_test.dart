@@ -40,7 +40,7 @@ void main() {
     });
   });
   testWidgets(
-      '[getPrivateViews] should return rect bounds data when there is a masked sliver widget',
+      '[getPrivateViews] should return rect bounds data when there is a masked widget (Sliver)',
       (tester) async {
     await tester.runAsync(() async {
       RenderVisibilityDetectorBase.updateInterval = Duration.zero;
@@ -116,7 +116,7 @@ void main() {
     });
   });
   testWidgets(
-      "[getPrivateViews] should return empty rect bounds data when there is no sliver masked widget",
+      "[getPrivateViews] should return empty rect bounds data when there is no  masked widget (Sliver)",
       (tester) async {
     await tester.runAsync(() async {
       RenderVisibilityDetectorBase.updateInterval = Duration.zero;
