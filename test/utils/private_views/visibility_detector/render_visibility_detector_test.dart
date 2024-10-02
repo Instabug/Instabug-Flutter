@@ -102,7 +102,9 @@ void main() {
 }
 
 void renderBoxWidget(
-    RenderVisibilityDetector detector, PaintingContext context,) {
+  RenderVisibilityDetector detector,
+  PaintingContext context,
+) {
   detector.layout(BoxConstraints.tight(const Size(200, 200)));
   detector.paint(context, Offset.zero);
 }
