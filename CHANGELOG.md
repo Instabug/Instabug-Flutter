@@ -1,4 +1,5 @@
 # Changelog
+
 ## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v13.4.0...dev)
 
 ### Added
