@@ -170,14 +170,16 @@ mixin RenderVisibilityDetectorBase on RenderObject {
 
     // Check if any ancestors decided to skip painting this RenderObject.
     if (parent != null) {
-      var ancestor = parent!;
+      // ignore: unnecessary_cast
+      var ancestor = parent! as RenderObject;
       RenderObject child = this;
       while (ancestor.parent != null) {
         if (!ancestor.paintsChild(child)) {
           return false;
         }
         child = ancestor;
-        ancestor = ancestor.parent!;
+        // ignore: unnecessary_cast
+        ancestor = ancestor.parent! as RenderObject;
       }
     }
 

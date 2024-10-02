@@ -9,7 +9,7 @@ void main() {
   RenderVisibilityDetectorBase.updateInterval = Duration.zero;
 
   void renderSliverWidget(RenderSliverVisibilityDetector detector,
-      ContainerLayer layer, PaintingContext context) {
+      ContainerLayer layer, PaintingContext context,) {
     expect(layer.subtreeHasCompositionCallbacks, false);
 
     detector.layout(
