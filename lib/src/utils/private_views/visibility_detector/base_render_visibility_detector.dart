@@ -87,18 +87,14 @@ mixin RenderVisibilityDetectorBase on RenderObject {
     _onVisibilityChanged = visibilityChangedCallback;
   }
 
-  /// See [VisibilityDetector.onVisibilityChanged].
   VisibilityChangedCallback? get onVisibilityChanged => _onVisibilityChanged;
 
-  /// Used by [VisibilityDetector.updateRenderObject].
   set onVisibilityChanged(VisibilityChangedCallback? value) {
     _compositionCallbackCanceller?.call();
     _compositionCallbackCanceller = null;
     _onVisibilityChanged = value;
 
     if (value == null) {
-      // Remove all cached data so that we won't fire visibility callbacks when
-      // a timer expires or get stale old information the next time around.
       forget(key);
     } else {
       markNeedsPaint();
@@ -131,20 +127,12 @@ mixin RenderVisibilityDetectorBase on RenderObject {
     final isFirstUpdate = _updates.isEmpty;
     _updates[key] = () {
       if (bounds == null) {
-        // This can happen if set onVisibilityChanged was called with a non-null
-        // value but this render object has not been laid out. In that case,
-        // it has no size or geometry, and we should not worry about firing
-        // an update since it never has been visible.
         return;
       }
       _fireCallback(layer, bounds!);
     };
 
     if (updateInterval == Duration.zero) {
-      // Even with [Duration.zero], we still want to defer callbacks to the end
-      // of the frame so that they're processed from a consistent state.  This
-      // also ensures that they don't mutate the widget tree while we're in the
-      // middle of a frame.
       if (isFirstUpdate) {
         // We're about to render a frame, so a post-frame callback is guaranteed
         // to fire and will give us the better immediacy than `scheduleTask<T>`.

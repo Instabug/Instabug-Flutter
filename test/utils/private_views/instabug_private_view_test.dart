@@ -7,7 +7,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'instabug_private_view_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<PrivateViewsManager>()])
+@GenerateMocks([PrivateViewsManager])
 void main() {
   testWidgets('should mask the view when it is visible', (tester) async {
     await tester.runAsync(() async {
@@ -27,7 +27,7 @@ void main() {
       verify(
         mock.mask(any),
       ).called(
-        2,
+        1,
       ); // one for initState and the other for visibility is shown is true
     });
   });

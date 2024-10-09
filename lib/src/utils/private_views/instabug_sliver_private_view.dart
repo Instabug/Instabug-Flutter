@@ -19,35 +19,28 @@ class _InstabugSliverPrivateViewState extends State<InstabugSliverPrivateView> {
 
   @override
   void initState() {
-    _addPrivateView(true);
     super.initState();
   }
 
   @override
   void dispose() {
-    _removePrivateView(true);
+    _removePrivateView();
     super.dispose();
   }
 
-  void _addPrivateView(bool init) {
+  void _addPrivateView() {
     PrivateViewsManager.I.mask(key);
-    debugPrint(
-      "Sliver Adding private view $key ${init ? "init" : ''}",
-    );
   }
 
-  void _removePrivateView(bool dispose) {
-    debugPrint(
-      "Sliver Removing private view $key ${dispose ? "dispose" : ''}",
-    );
+  void _removePrivateView() {
     PrivateViewsManager.I.unMask(key);
   }
 
   void _onVisibilityChanged(bool isVisible) {
     if (isVisible) {
-      _addPrivateView(false);
+      _addPrivateView();
     } else {
-      _removePrivateView(false);
+      _removePrivateView();
     }
   }
 

@@ -6,7 +6,7 @@ import 'package:instabug_flutter/src/utils/private_views/visibility_detector/bas
 
 class RenderSliverVisibilityDetector extends RenderProxySliver
     with RenderVisibilityDetectorBase {
-  /// Constructor.  See the corresponding properties for parameter details.
+
   RenderSliverVisibilityDetector({
     RenderSliver? sliver,
     required this.key,
@@ -58,23 +58,14 @@ class RenderSliverVisibilityDetector extends RenderProxySliver
 }
 
 class SliverVisibilityDetector extends SingleChildRenderObjectWidget {
-  /// Constructor.
-  ///
-  /// `key` is required to properly identify this widget; it must be unique
-  /// among all [VisibilityDetector] and [SliverVisibilityDetector] widgets.
-  ///
-  /// `onVisibilityChanged` may be `null` to disable this
-  /// [SliverVisibilityDetector].
-  const SliverVisibilityDetector({
+   const SliverVisibilityDetector({
     required Key key,
     required Widget sliver,
     required this.onVisibilityChanged,
   }) : super(key: key, child: sliver);
 
-  /// The callback to invoke when this widget's visibility changes.
   final VisibilityChangedCallback? onVisibilityChanged;
 
-  /// See [RenderObjectWidget.createRenderObject].
   @override
   RenderSliverVisibilityDetector createRenderObject(BuildContext context) {
     return RenderSliverVisibilityDetector(
@@ -83,7 +74,6 @@ class SliverVisibilityDetector extends SingleChildRenderObjectWidget {
     );
   }
 
-  /// See [RenderObjectWidget.updateRenderObject].
   @override
   void updateRenderObject(
     BuildContext context,

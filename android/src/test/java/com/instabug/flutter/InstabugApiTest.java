@@ -26,6 +26,7 @@ import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.modules.InstabugApi;
 import com.instabug.flutter.util.GlobalMocks;
 import com.instabug.flutter.util.MockReflected;
+import com.instabug.flutter.util.privateViews.PrivateViewManager;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
@@ -59,10 +60,10 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import io.flutter.plugin.common.BinaryMessenger;
-import org.mockito.verification.VerificationMode;
 
 public class InstabugApiTest {
     private final Callable<Bitmap> screenshotProvider = () -> mock(Bitmap.class);
+
     private final Application mContext = mock(Application.class);
     private InstabugApi api;
     private MockedStatic<Instabug> mInstabug;
@@ -73,7 +74,7 @@ public class InstabugApiTest {
     @Before
     public void setUp() throws NoSuchMethodException {
         mCustomTextPlaceHolder = mockConstruction(InstabugCustomTextPlaceHolder.class);
-        api = spy(new InstabugApi(mContext, screenshotProvider));
+        api = spy(new InstabugApi(mContext, mock(PrivateViewManager.class)));
         mInstabug = mockStatic(Instabug.class);
         mBugReporting = mockStatic(BugReporting.class);
         mHostApi = mockStatic(InstabugPigeon.InstabugHostApi.class);
@@ -93,7 +94,7 @@ public class InstabugApiTest {
     public void testInit() {
         BinaryMessenger messenger = mock(BinaryMessenger.class);
 
-        InstabugApi.init(messenger, mContext, screenshotProvider);
+        InstabugApi.init(messenger, mContext, mock(PrivateViewManager.class));
 
         mHostApi.verify(() -> InstabugPigeon.InstabugHostApi.setup(eq(messenger), any(InstabugApi.class)));
     }

@@ -10,6 +10,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.instabug.flutter.generated.InstabugPrivateViewPigeon;
 import com.instabug.flutter.modules.ApmApi;
 import com.instabug.flutter.modules.BugReportingApi;
 import com.instabug.flutter.modules.CrashReportingApi;
@@ -19,6 +20,7 @@ import com.instabug.flutter.modules.InstabugLogApi;
 import com.instabug.flutter.modules.RepliesApi;
 import com.instabug.flutter.modules.SessionReplayApi;
 import com.instabug.flutter.modules.SurveysApi;
+import com.instabug.flutter.util.privateViews.PrivateViewManager;
 
 import java.util.concurrent.Callable;
 
@@ -27,7 +29,6 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import io.flutter.plugin.common.BinaryMessenger;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     private static final String TAG = InstabugFlutterPlugin.class.getName();
@@ -35,14 +36,8 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @SuppressLint("StaticFieldLeak")
     private static Activity activity;
 
-    /**
-     * Embedding v1
-     */
-    @SuppressWarnings("deprecation")
-    public static void registerWith(Registrar registrar) {
-        activity = registrar.activity();
-        register(registrar.context().getApplicationContext(), registrar.messenger(), (FlutterRenderer) registrar.textures());
-    }
+    PrivateViewManager privateViewManager;
+
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -57,6 +52,10 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
+        if (privateViewManager != null) {
+            privateViewManager.setActivity(activity);
+        }
+
     }
 
     @Override
@@ -67,6 +66,9 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
+        if (privateViewManager != null) {
+            privateViewManager.setActivity(activity);
+        }
     }
 
     @Override
@@ -74,7 +76,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
         activity = null;
     }
 
-    private static void register(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
+    private void register(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
         final Callable<Bitmap> screenshotProvider = new Callable<Bitmap>() {
             @Override
             public Bitmap call() {
@@ -86,7 +88,8 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
         BugReportingApi.init(messenger);
         CrashReportingApi.init(messenger);
         FeatureRequestsApi.init(messenger);
-        InstabugApi.init(messenger, context, screenshotProvider);
+        privateViewManager = new PrivateViewManager(new InstabugPrivateViewPigeon.InstabugPrivateViewApi(messenger), renderer);
+        InstabugApi.init(messenger, context, privateViewManager);
         InstabugLogApi.init(messenger);
         RepliesApi.init(messenger);
         SessionReplayApi.init(messenger);

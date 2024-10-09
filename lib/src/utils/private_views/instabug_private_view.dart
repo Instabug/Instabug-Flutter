@@ -17,23 +17,20 @@ class _InstabugPrivateViewState extends State<InstabugPrivateView> {
 
   @override
   void initState() {
-    _addPrivateView();
     super.initState();
   }
 
   @override
   void dispose() {
-    _removePrivateView(true);
+    _removePrivateView();
     super.dispose();
   }
 
   void _addPrivateView() {
     PrivateViewsManager.I.mask(_visibilityDetectorKey);
-    debugPrint("Adding private view ${_visibilityDetectorKey.hashCode}");
   }
 
-  void _removePrivateView(bool dispose) {
-    debugPrint("Removing private view $dispose");
+  void _removePrivateView() {
     PrivateViewsManager.I.unMask(_visibilityDetectorKey);
   }
 
@@ -41,7 +38,7 @@ class _InstabugPrivateViewState extends State<InstabugPrivateView> {
     if (isVisible) {
       _addPrivateView();
     } else {
-      _removePrivateView(false);
+      _removePrivateView();
     }
   }
 

@@ -35,7 +35,7 @@ void main() {
       verify(
         mock.mask(any),
       ).called(
-        2,
+        1,
       ); // one for initState and the other for visibility is shown is true
     });
   });

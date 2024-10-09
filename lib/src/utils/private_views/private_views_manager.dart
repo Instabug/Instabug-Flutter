@@ -63,8 +63,6 @@ class PrivateViewsManager implements InstabugPrivateViewApi {
 
   @override
   List<double?> getPrivateViews() {
-    final stopwatch = Stopwatch()..start();
-
     final result = <double>[];
 
     for (final view in _keys) {
@@ -79,10 +77,6 @@ class PrivateViewsManager implements InstabugPrivateViewApi {
         rect.bottom,
       ]);
     }
-
-    debugPrint(
-      "IBG-PV-Perf: Flutter getPrivateViews took: ${stopwatch.elapsedMilliseconds}ms",
-    );
 
     return result;
   }
