@@ -6,11 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
@@ -101,9 +99,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @NotNull
     @Override
-    public Boolean isBuilt() {
-        return Instabug.isBuilt();
-    }
+    public Boolean isBuilt() { return Instabug.isBuilt(); }
 
     @Override
     public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {

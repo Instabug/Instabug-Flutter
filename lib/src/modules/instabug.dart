@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
-
 import 'package:instabug_flutter/src/generated/instabug_private_view.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';

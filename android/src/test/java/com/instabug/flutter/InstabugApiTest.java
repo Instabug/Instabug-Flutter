@@ -65,7 +65,6 @@ import io.flutter.plugin.common.BinaryMessenger;
 
 public class InstabugApiTest {
     private final Callable<Bitmap> screenshotProvider = () -> mock(Bitmap.class);
-
     private final Application mContext = mock(Application.class);
     private InstabugApi api;
     private MockedStatic<Instabug> mInstabug;
