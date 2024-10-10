@@ -16,7 +16,6 @@ import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
 import com.instabug.flutter.util.privateViews.PrivateViewManager;
-import com.instabug.flutter.util.privateViews.ScreenshotManager;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
@@ -55,15 +54,17 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     private final Context context;
     private final InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
     private final PrivateViewManager privateViewManager;
+    private final InternalCore internalCore;
 
-    public static void init(BinaryMessenger messenger, Context context, PrivateViewManager privateViewManager) {
-        final InstabugApi api = new InstabugApi(context, privateViewManager);
+    public static void init(BinaryMessenger messenger, Context context, PrivateViewManager privateViewManager, InternalCore internalCore) {
+        final InstabugApi api = new InstabugApi(context, privateViewManager, internalCore);
         InstabugPigeon.InstabugHostApi.setup(messenger, api);
     }
 
-    public InstabugApi(Context context, PrivateViewManager privateViewManager) {
+    public InstabugApi(Context context, PrivateViewManager privateViewManager, InternalCore internalCore) {
         this.context = context;
         this.privateViewManager = privateViewManager;
+        this.internalCore = internalCore;
     }
 
     @VisibleForTesting
@@ -121,31 +122,14 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 .setInvocationEvents(invocationEventsArray)
                 .setSdkDebugLogsLevel(parsedLogLevel)
                 .build();
-        InternalCore.INSTANCE._setScreenshotCaptor(new ScreenshotCaptor() {
+
+        internalCore._setScreenshotCaptor(new ScreenshotCaptor() {
             @Override
             public void capture(@NonNull ScreenshotRequest screenshotRequest) {
-                privateViewManager.mask(new ScreenshotManager() {
-                    @Override
-                    public void onSuccess(Bitmap bitmap) {
-                        screenshotRequest.getActivity().getValidatedActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                screenshotRequest.getListener().onCapturingSuccess(bitmap);
-
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError() {
-                        screenshotRequest.getListener().onCapturingFailure(new Throwable());
-
-                    }
-                });
+                privateViewManager.mask(screenshotRequest.getListener());
             }
         });
-        // call privateManager mask method
-//        Instabug.setScreenshotProvider(screenshotProvider);
+
     }
 
     @Override

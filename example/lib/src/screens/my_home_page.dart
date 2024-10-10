@@ -197,10 +197,12 @@ class _MyHomePageState extends State<MyHomePage> {
               style: buttonStyle,
               child: const Text('None'),
             ),
-            ElevatedButton(
-              onPressed: () => setInvocationEvent(InvocationEvent.shake),
-              style: buttonStyle,
-              child: const Text('Shake'),
+            InstabugPrivateView(
+              child: ElevatedButton(
+                onPressed: () => setInvocationEvent(InvocationEvent.shake),
+                style: buttonStyle,
+                child: const Text('Shake'),
+              ),
             ),
             ElevatedButton(
               onPressed: () => setInvocationEvent(InvocationEvent.screenshot),
@@ -298,9 +300,11 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: _navigateToCrashes,
           text: 'Crashes',
         ),
-        InstabugButton(
-          onPressed: _navigateToApm,
-          text: 'APM',
+        InstabugPrivateView(
+          child: InstabugButton(
+            onPressed: _navigateToApm,
+            text: 'APM',
+          ),
         ),
         InstabugButton(
           onPressed: _navigateToComplex,
@@ -347,9 +351,11 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () => removeFeatureFlag(),
           text: 'RemoveFeatureFlag',
         ),
-        InstabugButton(
-          onPressed: () => removeAllFeatureFlags(),
-          text: 'RemoveAllFeatureFlags',
+        InstabugPrivateView(
+          child: InstabugButton(
+            onPressed: () => removeAllFeatureFlags(),
+            text: 'RemoveAllFeatureFlags',
+          ),
         ),
       ],
     );

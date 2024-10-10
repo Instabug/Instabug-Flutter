@@ -21,6 +21,7 @@ import com.instabug.flutter.modules.RepliesApi;
 import com.instabug.flutter.modules.SessionReplayApi;
 import com.instabug.flutter.modules.SurveysApi;
 import com.instabug.flutter.util.privateViews.PrivateViewManager;
+import com.instabug.library.internal.crossplatform.InternalCore;
 
 import java.util.concurrent.Callable;
 
@@ -89,7 +90,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
         CrashReportingApi.init(messenger);
         FeatureRequestsApi.init(messenger);
         privateViewManager = new PrivateViewManager(new InstabugPrivateViewPigeon.InstabugPrivateViewApi(messenger), renderer);
-        InstabugApi.init(messenger, context, privateViewManager);
+        InstabugApi.init(messenger, context, privateViewManager, InternalCore.INSTANCE);
         InstabugLogApi.init(messenger);
         RepliesApi.init(messenger);
         SessionReplayApi.init(messenger);

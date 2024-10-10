@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.PixelCopy;
 import android.view.SurfaceView;
 import android.view.View;
@@ -18,6 +17,8 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.VisibleForTesting;
 
 import com.instabug.flutter.generated.InstabugPrivateViewPigeon;
+import com.instabug.flutter.util.ThreadManager;
+import com.instabug.library.screenshot.ScreenshotCaptor;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -30,13 +31,15 @@ import io.flutter.embedding.android.FlutterView;
 import io.flutter.embedding.engine.renderer.FlutterRenderer;
 
 public class PrivateViewManager {
+    private static final String THREAD_NAME = "IBG-Flutter-Screenshot";
+
     private final ExecutorService screenshotExecutor = Executors.newSingleThreadExecutor(runnable -> {
         Thread thread = new Thread(runnable);
-        thread.setName("IBG-Flutter-Screenshot");
+        thread.setName(THREAD_NAME);
         return thread;
     });
 
-    private InstabugPrivateViewPigeon.InstabugPrivateViewApi instabugPrivateViewApi;
+    private final InstabugPrivateViewPigeon.InstabugPrivateViewApi instabugPrivateViewApi;
     private Activity activity;
     private final FlutterRenderer renderer;
 
@@ -51,7 +54,8 @@ public class PrivateViewManager {
 
     @VisibleForTesting
     protected ScreenshotResult takeScreenshot() {
-
+        if (activity == null)
+            return null;
         View rootView = activity.getWindow().getDecorView().getRootView();
         rootView.setDrawingCacheEnabled(true);
         Bitmap bitmap = renderer.getBitmap();
@@ -60,40 +64,36 @@ public class PrivateViewManager {
         return new ScreenshotResult(displayMetrics.density, bitmap);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void takeScreenshotWithPixelCopy(PixelCopyManager pixelCopyManager) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void takeScreenshotWithPixelCopy(PixelCopyManager pixelCopyManager) {
         FlutterView flutterView = activity.findViewById(FlutterActivity.FLUTTER_VIEW_ID);
         if (flutterView == null || flutterView.getChildCount() == 0 || !(flutterView.getChildAt(0) instanceof SurfaceView)) {
             pixelCopyManager.onError();
             return;
         }
 
-        View rootView = activity.getWindow().getDecorView();
-        Bitmap bitmap = Bitmap.createBitmap(rootView.getWidth(), rootView.getHeight(), Bitmap.Config.ARGB_8888);
+        SurfaceView surfaceView = (SurfaceView) flutterView.getChildAt(0);
 
-        PixelCopy.request(
-                (SurfaceView) flutterView.getChildAt(0),
-                bitmap,
-                copyResult -> {
-                    if (copyResult == PixelCopy.SUCCESS) {
-                        DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();
-                        pixelCopyManager.onBitmap(new ScreenshotResult(displayMetrics.density, bitmap));
-                    } else {
-                        pixelCopyManager.onError();
-                    }
-                },
-                new Handler(Looper.getMainLooper())
-        );
+        Bitmap bitmap = Bitmap.createBitmap(surfaceView.getWidth(), surfaceView.getHeight(), Bitmap.Config.ARGB_8888);
+
+        PixelCopy.request(surfaceView, bitmap, copyResult -> {
+            if (copyResult == PixelCopy.SUCCESS) {
+                DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();
+                pixelCopyManager.onBitmap(new ScreenshotResult(displayMetrics.density, bitmap));
+            } else {
+                pixelCopyManager.onError();
+            }
+        }, new Handler(Looper.getMainLooper()));
     }
 
-    public void mask(ScreenshotManager screenshotManager) {
+
+    public void mask(ScreenshotCaptor.CapturingCallback capturingCallback) {
         if (activity != null) {
-            long startTime = System.currentTimeMillis();
             CountDownLatch latch = new CountDownLatch(1);
             AtomicReference<List<Double>> privateViews = new AtomicReference<>();
 
             try {
-                activity.runOnUiThread(new Runnable() {
+                ThreadManager.runOnMainThread(new Runnable() {
                     @Override
                     public void run() {
                         instabugPrivateViewApi.getPrivateViews(result -> {
@@ -108,45 +108,57 @@ public class PrivateViewManager {
                     takeScreenshotWithPixelCopy(new PixelCopyManager() {
                         @Override
                         public void onBitmap(ScreenshotResult result) {
-                            processScreenshot(result, privateViews, latch, screenshotManager, startTime);
+                            processScreenshot(result, privateViews, latch, capturingCallback);
                         }
 
                         @Override
                         public void onError() {
-                            screenshotManager.onError();
+                            captureAndProcessScreenshot(privateViews, latch, capturingCallback);
                         }
                     });
                 } else {
-                    ScreenshotResult result = takeScreenshot();
-                    processScreenshot(result, privateViews, latch, screenshotManager, startTime);
+                    ThreadManager.runOnMainThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                captureAndProcessScreenshot(privateViews, latch, capturingCallback);
+
+                            } catch (Exception e) {
+                                capturingCallback.onCapturingFailure(e);
+                            }
+
+                        }
+                    });
                 }
 
             } catch (Exception e) {
-                Log.e("IBG-PV-Perf", "Screenshot capturing failed, took " + (System.currentTimeMillis() - startTime) + "ms", e);
-                screenshotManager.onError();
+                capturingCallback.onCapturingFailure(e);
             }
         } else {
-            screenshotManager.onError();
+            capturingCallback.onCapturingFailure(new Throwable("IBG-Flutter-private_views"));
         }
 
     }
 
-    private void processScreenshot(ScreenshotResult result, AtomicReference<List<Double>> privateViews, CountDownLatch latch, ScreenshotManager screenshotManager, long startTime) {
+    void captureAndProcessScreenshot(AtomicReference<List<Double>> privateViews, CountDownLatch latch, ScreenshotCaptor.CapturingCallback capturingCallback) {
+        final ScreenshotResult result = takeScreenshot();
+        processScreenshot(result, privateViews, latch, capturingCallback);
+    }
+
+    private void processScreenshot(ScreenshotResult result, AtomicReference<List<Double>> privateViews, CountDownLatch latch, ScreenshotCaptor.CapturingCallback capturingCallback) {
         screenshotExecutor.execute(() -> {
             try {
-                latch.await();  // Wait for private views
+                latch.await();  // Wait
+                Bitmap bitmap = result.getScreenshot();
                 maskPrivateViews(result, privateViews.get());
-                Log.d("IBG-PV-Perf", "Screenshot processed in " + (System.currentTimeMillis() - startTime) + "ms");
-                screenshotManager.onSuccess(result.getScreenshot());
+                capturingCallback.onCapturingSuccess(bitmap);
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                Log.e("IBG-PV-Perf", "Screenshot processing interrupted", e);
-                screenshotManager.onError();
+                capturingCallback.onCapturingFailure(e);
             }
         });
     }
 
-    private void maskPrivateViews(ScreenshotResult result, List<Double> privateViews) {
+    void maskPrivateViews(ScreenshotResult result, List<Double> privateViews) {
         if (privateViews == null || privateViews.isEmpty()) return;
 
         Bitmap bitmap = result.getScreenshot();
@@ -155,10 +167,10 @@ public class PrivateViewManager {
         Paint paint = new Paint();  // Default color is black
 
         for (int i = 0; i < privateViews.size(); i += 4) {
-            float left = (float) (privateViews.get(i) * pixelRatio);
-            float top = (float) (privateViews.get(i + 1) * pixelRatio);
-            float right = (float) (privateViews.get(i + 2) * pixelRatio);
-            float bottom = (float) (privateViews.get(i + 3) * pixelRatio);
+            float left = privateViews.get(i).floatValue() * pixelRatio;
+            float top = privateViews.get(i + 1).floatValue() * pixelRatio;
+            float right = privateViews.get(i + 2).floatValue() * pixelRatio;
+            float bottom = privateViews.get(i + 3).floatValue() * pixelRatio;
             canvas.drawRect(left, top, right, bottom, paint);  // Mask private view
         }
     }

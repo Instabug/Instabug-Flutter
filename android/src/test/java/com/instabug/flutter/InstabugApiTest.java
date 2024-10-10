@@ -37,8 +37,10 @@ import com.instabug.library.Platform;
 import com.instabug.library.ReproConfigurations;
 import com.instabug.library.ReproMode;
 import com.instabug.library.featuresflags.model.IBGFeatureFlag;
+import com.instabug.library.internal.crossplatform.InternalCore;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
+import com.instabug.library.screenshot.ScreenshotCaptor;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 
 import org.json.JSONObject;
@@ -70,11 +72,12 @@ public class InstabugApiTest {
     private MockedStatic<BugReporting> mBugReporting;
     private MockedConstruction<InstabugCustomTextPlaceHolder> mCustomTextPlaceHolder;
     private MockedStatic<InstabugPigeon.InstabugHostApi> mHostApi;
-
+    private InternalCore internalCore;
     @Before
     public void setUp() throws NoSuchMethodException {
         mCustomTextPlaceHolder = mockConstruction(InstabugCustomTextPlaceHolder.class);
-        api = spy(new InstabugApi(mContext, mock(PrivateViewManager.class)));
+        internalCore=spy(InternalCore.INSTANCE);
+        api = spy(new InstabugApi(mContext, mock(PrivateViewManager.class),internalCore));
         mInstabug = mockStatic(Instabug.class);
         mBugReporting = mockStatic(BugReporting.class);
         mHostApi = mockStatic(InstabugPigeon.InstabugHostApi.class);
@@ -94,7 +97,7 @@ public class InstabugApiTest {
     public void testInit() {
         BinaryMessenger messenger = mock(BinaryMessenger.class);
 
-        InstabugApi.init(messenger, mContext, mock(PrivateViewManager.class));
+        InstabugApi.init(messenger, mContext, mock(PrivateViewManager.class),internalCore);
 
         mHostApi.verify(() -> InstabugPigeon.InstabugHostApi.setup(eq(messenger), any(InstabugApi.class)));
     }
@@ -133,10 +136,7 @@ public class InstabugApiTest {
         verify(builder).setInvocationEvents(InstabugInvocationEvent.FLOATING_BUTTON);
         verify(builder).setSdkDebugLogsLevel(LogLevel.ERROR);
         verify(builder).build();
-
-        // Sets screenshot provider
-        mInstabug.verify(() -> Instabug.setScreenshotProvider(screenshotProvider));
-
+        verify(internalCore)._setScreenshotCaptor(any(ScreenshotCaptor.class));
         // Sets current platform
         reflected.verify(() -> MockReflected.setCurrentPlatform(Platform.FLUTTER));
     }

@@ -6,7 +6,6 @@ import 'package:instabug_flutter/src/utils/private_views/visibility_detector/bas
 
 class RenderSliverVisibilityDetector extends RenderProxySliver
     with RenderVisibilityDetectorBase {
-
   RenderSliverVisibilityDetector({
     RenderSliver? sliver,
     required this.key,
@@ -58,7 +57,7 @@ class RenderSliverVisibilityDetector extends RenderProxySliver
 }
 
 class SliverVisibilityDetector extends SingleChildRenderObjectWidget {
-   const SliverVisibilityDetector({
+  const SliverVisibilityDetector({
     required Key key,
     required Widget sliver,
     required this.onVisibilityChanged,
