@@ -292,12 +292,6 @@ workflows:
       - test_flutter:
           name: test_flutter-2.10.5
           version: 2.10.5
-      - test_flutter:
-          name: test_flutter-3.3.0
-          version: 3.3.0
-      - test_flutter:
-          name: test_flutter-3.0.0
-          version: 3.0.0
       - e2e_android_captain
       - test_ios
       - e2e_ios_captain
