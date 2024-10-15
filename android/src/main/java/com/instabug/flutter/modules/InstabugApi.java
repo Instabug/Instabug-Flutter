@@ -142,6 +142,11 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     @Override
+    public void logUserTouch(@NonNull String name, @NonNull String view) {
+
+    }
+
+    @Override
     public void logOut() {
         Instabug.logoutUser();
     }

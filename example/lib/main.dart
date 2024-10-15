@@ -56,10 +56,13 @@ void main() {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
       };
 
-      runApp(const MyApp());
+      runApp(const InstabugUserSteps(child: MyApp()));
     },
     CrashReporting.reportCrash,
+
   );
+
+  Instabug.logUserTouch("ahmed", "ahmed");
 }
 
 class MyApp extends StatelessWidget {

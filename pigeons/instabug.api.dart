@@ -13,6 +13,7 @@ abstract class InstabugHostApi {
   void identifyUser(String email, String? name, String? userId);
   void setUserData(String data);
   void logUserEvent(String name);
+  void logUserTouch(String name,String view);
   void logOut();
 
   void setLocale(String locale);

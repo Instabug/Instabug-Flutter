@@ -336,6 +336,9 @@ class Instabug {
     return _host.logUserEvent(name);
   }
 
+  static Future<void> logUserTouch(String name,String view) async {
+    return _host.logUserTouch(name,view);
+  }
   /// Overrides any of the strings shown in the SDK with custom ones.
   /// Allows you to customize a [value] shown to users in the SDK using a predefined [key].
   static Future<void> setValueForStringWithKey(

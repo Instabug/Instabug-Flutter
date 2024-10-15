@@ -349,4 +349,10 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     }
 }
 
+- (void)logUserTouchName:(nonnull NSString *)name view:(nonnull NSString *)view error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+    [Instabug logTouchEvent:IBGUIEventTypeSwipe viewName:@"ahmed"];
+
+}
+
+
 @end
