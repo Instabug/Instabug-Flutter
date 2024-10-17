@@ -1,0 +1,37 @@
+name: instabug_flutter_mono
+
+packages:
+  - apps/*
+  - packages/*
+
+scripts:
+  dart_bootstrap:
+    run: melos exec "dart pub get"
+  analyze:
+    run: melos exec "dart analyze ."
+  format:
+    run: melos exec "dart format . --set-exit-if-changed"
+  pigeon:
+    run: melos exec "sh scripts/pigeon.sh"
+    packageFilters:
+      fileExists: 'scripts/pigeon.sh'
+  generate:
+    run: melos exec "dart run build_runner build -d"
+    description: Build all generated files for Dart & Flutter packages in this project.t
+    packageFilters:
+      dependsOn: build_runner
+  test:
+    run: melos exec "flutter test"
+    description: Tests all packages.
+    packageFilters:
+      dependsOn: flutter_test
+  dryPublish:
+    run: melos exec "flutter pub publish --dry-run"
+    description: Tests publishing (dry run).
+    packageFilters:
+      flutter: true
+  score:
+    run: melos exec "dart run pana --no-warning --exit-code-threshold 0"
+    packageFilters:
+      flutter: true
+      dependsOn: pana
