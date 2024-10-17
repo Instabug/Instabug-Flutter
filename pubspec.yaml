@@ -5,7 +5,7 @@ environment:
   flutter: ">=2.10.0"
 
 dev_dependencies:
-  lint: ^2.3.0
+  lint: ^2.0.0
   melos: ^6.2.0
 
 
