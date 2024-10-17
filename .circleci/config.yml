@@ -308,7 +308,7 @@ workflows:
       - verify_pub:
           requires:
             - lint_flutter
-      - hold_release:
+      - hold_release_instabug_flutter:
           type: approval
           requires:
             - danger
@@ -325,9 +325,9 @@ workflows:
           filters:
             branches:
               only: master
-      - release:
+      - release_instabug_flutter:
           requires:
-            - hold_release
+            - hold_release_instabug_flutter
           filters:
             branches:
               only: master
