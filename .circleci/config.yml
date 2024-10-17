@@ -91,6 +91,9 @@ commands:
         type: boolean
     steps:
       - run:
+          name: Install melos
+          command: dart pub global activate melos
+      - run:
           name: Install Flutter Packages
           command: melos bootstrap
       - run:
