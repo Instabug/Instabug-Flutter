@@ -92,7 +92,7 @@ commands:
     steps:
       - run:
           name: Install Flutter Packages
-          command: flutter pub get
+          command: melos bootstrap
       - run:
           name: Install Dart Packages
           command: melos dart_bootstrap
