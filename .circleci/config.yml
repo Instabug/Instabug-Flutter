@@ -21,16 +21,16 @@ commands:
       use_melos:
         type: boolean
         default: true
-    working_dir:
-      type: string
-      default: "~"
-    working-directory: <<parameters.working_dir>>
+      working_dir:
+        type: string
+        default: "~/project"
     steps:
       - flutter/install_sdk_and_pub:
           version: <<parameters.version>>
       - install_flutter_and_dart_packages:
           generate_pigeons: true
           use_melos: <<parameters.use_melos>>
+          working_dir: <<parameters.working_dir>>
   setup_ios:
     steps:
       # Flutter doesn't support Apple Silicon yet, so we need to install Rosetta use Flutter on M1 machines.
@@ -97,7 +97,6 @@ commands:
   #   - `melos pigeon`
   #   - `melos generate`
   install_flutter_and_dart_packages:
-
     parameters:
       generate_pigeons:
         type: boolean
@@ -106,8 +105,6 @@ commands:
         default: true
       working_dir:
         type: string
-        default: "~"
-    working-directory: <<parameters.working_dir>>
     steps:
       - when:
           condition:
@@ -142,6 +139,7 @@ commands:
             equal:
               - <<parameters.use_melos>>
               - false
+          working-directory: <<parameters.working_dir>>
           steps:
             - run:
                 name: Install Flutter Packages
@@ -214,7 +212,7 @@ jobs:
       - setup_flutter:
           version: <<parameters.version>>
           use_melos: false
-          working_directory: <<app-dir>>
+          working_dir: <<parameters.app-dir>>
       - run: flutter test --coverage
       - run:
           working_directory: /coverage
@@ -325,7 +323,7 @@ jobs:
     macos:
       xcode: 15.2.0
     resource_class: macos.m1.medium.gen1
-    working_directory: "~"
+    working_directory: "~/project"
     steps:
       - advanced-checkout/shallow-checkout:
           path: ~/project
@@ -371,7 +369,7 @@ workflows:
       - test_flutter_without_melos:
           name: test_flutter-2.10.5
           version: 2.10.5
-          app-dir: /packages/Instabug-Flutter/
+          app-dir: "/packages/Instabug-Flutter/"
       - e2e_android_captain
       - test_ios
       - e2e_ios_captain
