@@ -17,7 +17,7 @@ commands:
     parameters:
       version:
         type: string
-        default: "$LATEST_FLUTTER_VERSION"
+        default: $LATEST_FLUTTER_VERSION
 
     steps:
       - flutter/install_sdk_and_pub:
@@ -136,7 +136,7 @@ jobs:
     parameters:
       version:
         type: string
-        default: "$LATEST_FLUTTER_VERSION"
+        default: $LATEST_FLUTTER_VERSION
     executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
