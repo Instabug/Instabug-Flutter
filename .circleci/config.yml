@@ -5,14 +5,16 @@ orbs:
   flutter: circleci/flutter@2.0.4
   node: circleci/node@5.2.0
   advanced-checkout: vsco/advanced-checkout@1.1.0
+
 environment:
   latest_flutter_version: 3.24.3
+
 commands:
   setup_flutter:
     parameters:
       version:
         type: string
-        default: $latest_flutter_version
+        default: "$latest_flutter_version"
     steps:
       - flutter/install_sdk_and_pub:
           version: <<parameters.version>>
@@ -130,7 +132,7 @@ jobs:
     parameters:
       version:
         type: string
-        default: $latest_flutter_version
+        default: "$latest_flutter_version"
     docker:
       - image: cimg/base:stable  
     steps:
