@@ -186,11 +186,12 @@ jobs:
           command: |
             if [ "$(printf '%s\n3.0.0' "<<parameters.version>>" | sort -V | tail -n 1)" = "<<parameters.version>>" ] && [ "<<parameters.version>>" != "3.0.0" ]; then
               echo "Version <<parameters.version>> is greater than 3.0.0"
-              echo "MELOS=<<parameters.version>>" >> $BASH_ENV  # Save as environment variable
               echo 'export MELOS="true"' >> "$BASH_ENV"
+              echo "$MELOS"
             else
               echo "Version <<parameters.version>> is not greater than 3.0.0"
-              echo 'export MELOS="false"' >> "$BASH_ENV"
+              echo 'export MELOS="true"' >> "$BASH_ENV"
+              echo "$MELOS"
             fi
       - setup_flutter:
           version: <<parameters.version>>
