@@ -6,13 +6,13 @@ packages:
 
 scripts:
   dart_bootstrap:
-    run: dart pub get"
+    run: dart pub get
   analyze:
-    run: dart analyze ."
+    run: dart analyze .
   format:
     run: dart format . --set-exit-if-changed
   pigeon:
-    run: sh scripts/pigeon.sh"
+    run: sh scripts/pigeon.sh
     exec:
       concurrency: 1
       failFast: true
@@ -51,12 +51,12 @@ scripts:
       dependsOn: flutter_test
       dirExists: test
   dryPublish:
-    run: flutter pub publish --dry-run"
+    run: flutter pub publish --dry-run
     description: Tests publishing (dry run).
     packageFilters:
       flutter: true
   score:
-    run: dart run pana --no-warning --exit-code-threshold 0"
+    run: dart run pana --no-warning --exit-code-threshold 0
     packageFilters:
       flutter: true
       dependsOn: pana
