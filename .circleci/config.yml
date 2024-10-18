@@ -181,19 +181,26 @@ jobs:
       version:
         type: string
         default: "3.24.3"
-      use_melos:
-        type: boolean
-        default: true
     executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
       - run : sudo apt-get update&& sudo apt-get -y install lcov
-
+      - run:
+          name: Compare Version and Save Environment Variable
+          command: |
+            if [ "$(printf '%s\n3.0.0' "<<parameters.version>>" | sort -V | tail -n 1)" = "<<parameters.version>>" ] && [ "<<parameters.version>>" != "3.0.0" ]; then
+              echo "Version <<parameters.version>> is greater than 3.0.0"
+              echo "MELOS=<<parameters.version>>" >> $BASH_ENV  # Save as environment variable
+              echo 'export MELOS=true' >> "$BASH_ENV"
+            else
+              echo "Version <<parameters.version>> is not greater than 3.0.0"
+              echo 'export MELOS=false' >> "$BASH_ENV"
+            fi
       - setup_flutter:
           version: <<parameters.version>>
-          use_melos: <<parameters.use_melos>>
+          use_melos: $MELOS
       - when:
-          condition: <parameters.use_melos>>
+          condition: $MELOS
           steps:
             - run: melos test-coverage
       - when:
@@ -208,6 +215,7 @@ jobs:
           root: packages/Instabug-Flutter/coverage
           paths:
             - lcov.info
+
   test_android:
     executor:
       name: android/android-machine
