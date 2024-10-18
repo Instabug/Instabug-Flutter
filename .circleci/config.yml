@@ -21,6 +21,10 @@ commands:
       use_melos:
         type: boolean
         default: true
+    working_dir:
+      type: string
+      default: "~"
+    working-directory: <<parameters.working_dir>>
     steps:
       - flutter/install_sdk_and_pub:
           version: <<parameters.version>>
@@ -93,18 +97,23 @@ commands:
   #   - `melos pigeon`
   #   - `melos generate`
   install_flutter_and_dart_packages:
+
     parameters:
       generate_pigeons:
         type: boolean
       use_melos:
         type: boolean
         default: true
+      working_dir:
+        type: string
+        default: "~"
+    working-directory: <<parameters.working_dir>>
     steps:
       - when:
           condition:
             equal:
               - <<parameters.use_melos>>
-              - "true"
+              - true
           steps:
             - run:
                 name: Install melos
@@ -128,12 +137,11 @@ commands:
                   - run:
                       name: Build Pigeons
                       command: melos generate
-
       - when:
           condition:
             equal:
               - <<parameters.use_melos>>
-              - "false"
+              - false
           steps:
             - run:
                 name: Install Flutter Packages
@@ -200,13 +208,13 @@ jobs:
       app-dir:
         type: string
     executor: flutter-executor
-    working_directory: <<parameters.app-dir>>
     steps:
       - advanced-checkout/shallow-checkout
       - run: sudo apt-get update&& sudo apt-get -y install lcov
       - setup_flutter:
           version: <<parameters.version>>
           use_melos: false
+          working_directory: <<app-dir>>
       - run: flutter test --coverage
       - run:
           working_directory: /coverage
