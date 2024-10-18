@@ -102,33 +102,33 @@ commands:
 
     steps:
       - when:
-        - condition:
-            equal:
-              - <<parameters.use_melos>>
-              - true
-            steps:
-              - run:
-                  name: Install melos
-                  command: dart pub global activate melos &&  echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> $BASH_ENV
-              - run:
-                  name: Install Flutter Packages
-                  command: melos bootstrap
-              - run:
-                  name: Install Dart Packages
-                  command: melos dart_bootstrap
-                  description: Install Dart Packages (for dart explicit packages)
-              - when:
-                  condition:
-                    equal:
-                      - <<parameters.generate_pigeons>>
-                      - true
-                  steps:
-                    - run:
-                        name: Generate Pigeons
-                        command: melos pigeon
-                    - run:
-                        name: Build Pigeons
-                        command: melos generate
+          condition:
+             equal:
+               - <<parameters.use_melos>>
+               - true
+          steps:
+            - run:
+                name: Install melos
+                command: dart pub global activate melos &&  echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> $BASH_ENV
+            - run:
+                name: Install Flutter Packages
+                command: melos bootstrap
+            - run:
+                name: Install Dart Packages
+                command: melos dart_bootstrap
+                description: Install Dart Packages (for dart explicit packages)
+            - when:
+                condition:
+                  equal:
+                    - <<parameters.generate_pigeons>>
+                    - true
+                steps:
+                  - run:
+                      name: Generate Pigeons
+                      command: melos pigeon
+                  - run:
+                      name: Build Pigeons
+                      command: melos generate
 
       - when:
           condition:
