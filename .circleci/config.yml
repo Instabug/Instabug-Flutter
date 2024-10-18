@@ -127,6 +127,7 @@ jobs:
       - image: cirrusci/flutter:<<parameters.version>>
     steps:
       - advanced-checkout/shallow-checkout
+      - run: apt install lcov
       - install_flutter_and_dart_packages:
           generate_pigeons: true
       - run: flutter test --coverage
