@@ -19,8 +19,8 @@ commands:
         type: string
         default: 3.24.3
       use_melos:
-        type: boolean
-        default: true
+        type: string
+        default: "true"
     steps:
       - flutter/install_sdk_and_pub:
           version: <<parameters.version>>
@@ -97,8 +97,8 @@ commands:
       generate_pigeons:
         type: boolean
       use_melos:
-        type: boolean
-        default: true
+        type: string
+        default: "true"
 
     steps:
       - when:
