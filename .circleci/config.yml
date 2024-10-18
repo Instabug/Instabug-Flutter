@@ -192,7 +192,6 @@ jobs:
           root: packages/Instabug-Flutter/coverage
           paths:
             - lcov.info
-            -
   test_flutter_without_melos:
     parameters:
       version:
