@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   android: circleci/android@2.5.0
-  flutter: circleci/flutter@2.0.2
+  flutter: circleci/flutter@2.0.4
   node: circleci/node@5.2.0
   advanced-checkout: vsco/advanced-checkout@1.1.0
 
@@ -215,7 +215,7 @@ jobs:
 
   format_flutter:
     docker:
-      - image: cimg/base:stable  # Specify a base image (alternative to deprecated cirrusci)
+      - image: circleci/flutter:latest
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter
