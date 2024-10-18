@@ -197,7 +197,7 @@ jobs:
             echo "MELOS value: ${MELOS}"
       - setup_flutter:
           version: <<parameters.version>>
-          use_melos: "$MELOS"
+          use_melos: "${MELOS}"
       - when:
           condition:
             equal:
