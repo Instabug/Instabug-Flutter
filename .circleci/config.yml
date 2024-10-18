@@ -17,13 +17,16 @@ commands:
     parameters:
       version:
         type: string
-        default: "3.24.3"
-
+        default: 3.24.3
+      use_melos:
+        type: boolean
+        default: true
     steps:
       - flutter/install_sdk_and_pub:
           version: <<parameters.version>>
       - install_flutter_and_dart_packages:
           generate_pigeons: true
+          use_melos: <<parameters.use_melos>>
   setup_ios:
     steps:
       # Flutter doesn't support Apple Silicon yet, so we need to install Rosetta use Flutter on M1 machines.
@@ -93,29 +96,70 @@ commands:
     parameters:
       generate_pigeons:
         type: boolean
+      use_melos:
+        type: boolean
+        default: true
+
     steps:
-      - run:
-          name: Install melos
-          command: dart pub global activate melos &&  echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> $BASH_ENV
-      - run:
-          name: Install Flutter Packages
-          command: melos bootstrap
-      - run:
-          name: Install Dart Packages
-          command: melos dart_bootstrap
-          description: Install Dart Packages (for dart explicit packages)
+      - when:
+        - condition:
+            equal:
+              - <<parameters.use_melos>>
+              - true
+            steps:
+              - run:
+                  name: Install melos
+                  command: dart pub global activate melos &&  echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> $BASH_ENV
+              - run:
+                  name: Install Flutter Packages
+                  command: melos bootstrap
+              - run:
+                  name: Install Dart Packages
+                  command: melos dart_bootstrap
+                  description: Install Dart Packages (for dart explicit packages)
+              - when:
+                  condition:
+                    equal:
+                      - <<parameters.generate_pigeons>>
+                      - true
+                  steps:
+                    - run:
+                        name: Generate Pigeons
+                        command: melos pigeon
+                    - run:
+                        name: Build Pigeons
+                        command: melos generate
+
       - when:
           condition:
             equal:
-              - <<parameters.generate_pigeons>>
-              - true
+              - <<parameters.use_melos>>
+              - false
           steps:
             - run:
-                name: Generate Pigeons
-                command: melos pigeon
+                name: Install melos
+                command: dart pub global activate melos &&  echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> $BASH_ENV
             - run:
-                name: Build Pigeons
-                command: melos generate
+                name: Install Flutter Packages
+                command: flutter pub get
+            - run:
+                name: Install Dart Packages
+                command: dart pub get
+                description: Install Dart Packages (for dart explicit packages)
+            - when:
+                condition:
+                  equal:
+                    - <<parameters.generate_pigeons>>
+                    - true
+                steps:
+                  - run:
+                      name: Generate Pigeons
+                      command: sh scripts/pigeon
+                  - run:
+                      name: Build Pigeons
+                      command: dart run build_runner build -d
+
+
 
 jobs:
   danger:
@@ -137,20 +181,31 @@ jobs:
       version:
         type: string
         default: "3.24.3"
+      use_melos:
+        type: boolean
+        default: true
     executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter:
           version: <<parameters.version>>
-      - run: melos test-coverage
+          use_melos: <<paramters.use_melos>>
+      - when:
+          condition: <paramters.use_melos>>
+          steps:
+            - run: melos test-coverage
+      - when:
+          condition:
+            not: <paramters.use_melos>>
+          steps:
+            - run: flutter test --coverage
       - run:
-          working_directory: coverage
+          working_directory: packages/Instabug-Flutter/coverage
           command: lcov --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
       - persist_to_workspace:
-          root: coverage
+          root: packages/Instabug-Flutter/coverage
           paths:
             - lcov.info
-
   test_android:
     executor:
       name: android/android-machine
