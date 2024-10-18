@@ -133,7 +133,7 @@ jobs:
       version:
         type: string
     docker:
-      - image: cirrusci/flutter:<<parameters.version>>
+      - image: cirruslabs/flutter:<<parameters.version>>
     steps:
       - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
@@ -218,7 +218,7 @@ jobs:
 
   format_flutter:
     docker:
-      - image: cirrusci/flutter:stable
+      - image: cirruslabs/flutter
     steps:
       - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
@@ -229,7 +229,7 @@ jobs:
 
   lint_flutter:
     docker:
-      - image: cirrusci/flutter:stable
+      - image: cirruslabs/flutter
     steps:
       - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
@@ -240,7 +240,7 @@ jobs:
 
   verify_pub:
     docker:
-      - image: cirrusci/flutter:stable
+      - image: cirruslabs/flutter
     steps:
       - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
