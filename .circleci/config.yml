@@ -13,7 +13,7 @@ commands:
           version: 3.10.5
       - run:
           name: Install melos
-          command: dart pub global activate melos
+          command: dart pub global activate melos &&  echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> $BASH_ENV
       - run:
           name: bootstrap
           command: melos bootstrap
@@ -92,7 +92,7 @@ commands:
     steps:
       - run:
           name: Install melos
-          command: dart pub global activate melos
+          command: dart pub global activate melos &&  echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> $BASH_ENV
       - run:
           name: Install Flutter Packages
           command: melos bootstrap
