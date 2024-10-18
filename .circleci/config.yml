@@ -187,6 +187,7 @@ jobs:
     executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
+      - run : apt install lcov
       - setup_flutter:
           version: <<parameters.version>>
           use_melos: <<parameters.use_melos>>
