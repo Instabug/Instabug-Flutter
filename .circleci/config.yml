@@ -363,7 +363,7 @@ workflows:
       - test_flutter_without_melos:
           name: test_flutter-2.10.5
           version: 2.10.5
-          app-dir: packages/Instabug-Flutter/
+          app-dir: /packages/Instabug-Flutter/
       - e2e_android_captain
       - test_ios
       - e2e_ios_captain
