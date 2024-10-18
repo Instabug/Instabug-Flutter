@@ -105,7 +105,7 @@ commands:
           condition:
              equal:
                - <<parameters.use_melos>>
-               - true
+               - "true"
           steps:
             - run:
                 name: Install melos
@@ -134,11 +134,8 @@ commands:
           condition:
             equal:
               - <<parameters.use_melos>>
-              - false
+              - "false"
           steps:
-            - run:
-                name: Install melos
-                command: dart pub global activate melos &&  echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> $BASH_ENV
             - run:
                 name: Install Flutter Packages
                 command: flutter pub get
