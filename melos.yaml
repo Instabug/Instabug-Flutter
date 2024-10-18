@@ -57,6 +57,10 @@ scripts:
       flutter: true
   score:
     run: dart run pana --no-warning --exit-code-threshold 0
+    exec:
+      concurrency: 1
+      failFast: true
+      orderDependents: true
     packageFilters:
-      flutter: true
       dependsOn: pana
+      published: true

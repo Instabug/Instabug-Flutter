@@ -143,6 +143,9 @@ jobs:
       - setup_flutter:
           version: <<parameters.version>>
       - run: melos test-coverage
+      - run:
+          working_directory: coverage
+          command: lcov --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
       - persist_to_workspace:
           root: coverage
           paths:
