@@ -11,7 +11,7 @@ commands:
     parameters:
       version:
         type: string
-        default: 3.10.5
+        default: 3.24.3
     steps:
       - flutter/install_sdk_and_pub:
           version: <<parameters.version>>
@@ -130,7 +130,7 @@ jobs:
       version:
         type: string
     docker:
-      - image: cimg/base:stable  # Specify a base image (alternative to deprecated cirrusci)
+      - image: cimg/base:stable  
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter:
@@ -215,7 +215,7 @@ jobs:
 
   format_flutter:
     docker:
-      - image: circleci/flutter:latest
+      - image: cimg/base:stable  
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter
@@ -225,7 +225,7 @@ jobs:
 
   lint_flutter:
     docker:
-      - image: cimg/base:stable  # Specify a base image (alternative to deprecated cirrusci)
+      - image: cimg/base:stable  
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter
@@ -235,7 +235,7 @@ jobs:
 
   verify_pub:
     docker:
-      - image: cimg/base:stable  # Specify a base image (alternative to deprecated cirrusci)
+      - image: cimg/base:stable  
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter
