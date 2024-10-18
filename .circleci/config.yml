@@ -19,8 +19,8 @@ commands:
         type: string
         default: 3.24.3
       use_melos:
-        type: string
-        default: "true"
+        type: boolean
+        default: true
     steps:
       - flutter/install_sdk_and_pub:
           version: <<parameters.version>>
@@ -97,14 +97,14 @@ commands:
       generate_pigeons:
         type: boolean
       use_melos:
-        type: string
-        default: "true"
+        type: boolean
+        default: true
     steps:
       - when:
           condition:
-             equal:
-               - <<parameters.use_melos>>
-               - "true"
+            equal:
+              - <<parameters.use_melos>>
+              - "true"
           steps:
             - run:
                 name: Install melos
@@ -180,43 +180,40 @@ jobs:
     executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
-      - run : sudo apt-get update&& sudo apt-get -y install lcov
-      - run:
-          name: Compare Version and Save Environment Variable
-          command: |
-            if [ "$(printf '%s\n3.0.0' "<<parameters.version>>" | sort -V | tail -n 1)" = "<<parameters.version>>" ] && [ "<<parameters.version>>" != "3.0.0" ]; then
-              echo "Version <<parameters.version>> is greater than 3.0.0"
-              echo 'export MELOS="true"' >> "$BASH_ENV"
-            else
-              echo "Version <<parameters.version>> is not greater than 3.0.0"
-              echo 'export MELOS="false"' >> "$BASH_ENV"
-            fi
-      - run:
-          name: Use Environment Variable
-          command: |
-            echo "MELOS value: ${MELOS}"
+      - run: sudo apt-get update&& sudo apt-get -y install lcov
       - setup_flutter:
           version: <<parameters.version>>
-          use_melos: "${MELOS}"
-      - when:
-          condition:
-            equal:
-              - "$MELOS"
-              - "true"
-          steps:
-            - run: melos test-coverage
-      - when:
-          condition:
-            equal:
-              - "$MELOS"
-              - "false"
-          steps:
-            - run: flutter test --coverage
+          use_melos: true
+      - run: melos test-coverage
       - run:
           working_directory: packages/Instabug-Flutter/coverage
           command: lcov --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
       - persist_to_workspace:
           root: packages/Instabug-Flutter/coverage
+          paths:
+            - lcov.info
+            -
+  test_flutter_without_melos:
+    parameters:
+      version:
+        type: string
+        default: "3.24.3"
+      app-dir:
+        type: string
+    executor: flutter-executor
+    working_directory: <<parameters.app-dir>>
+    steps:
+      - advanced-checkout/shallow-checkout
+      - run: sudo apt-get update&& sudo apt-get -y install lcov
+      - setup_flutter:
+          version: <<parameters.version>>
+          use_melos: false
+      - run: flutter test --coverage
+      - run:
+          working_directory: /coverage
+          command: lcov --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
+      - persist_to_workspace:
+          root: /coverage
           paths:
             - lcov.info
 
@@ -260,7 +257,7 @@ jobs:
       - setup_ios
       - run:
           name: Build and run tests
-          working_directory:  ~/project/apps/example/ios
+          working_directory: ~/project/apps/example/ios
           command: |
             xcodebuild -allowProvisioningUpdates \
                 -workspace Runner.xcworkspace \
@@ -364,9 +361,10 @@ workflows:
             - test_flutter-stable
       - test_flutter:
           name: test_flutter-stable
-      - test_flutter:
+      - test_flutter_without_melos:
           name: test_flutter-2.10.5
           version: 2.10.5
+          app-dir: packages/Instabug-Flutter/
       - e2e_android_captain
       - test_ios
       - e2e_ios_captain
