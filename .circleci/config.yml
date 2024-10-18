@@ -99,7 +99,6 @@ commands:
       use_melos:
         type: string
         default: "true"
-
     steps:
       - when:
           condition:
@@ -195,14 +194,19 @@ jobs:
             fi
       - setup_flutter:
           version: <<parameters.version>>
-          use_melos: $MELOS
+          use_melos: "$MELOS"
       - when:
-          condition: $MELOS
+          condition:
+            equal:
+              - "$MELOS"
+              - "true"
           steps:
             - run: melos test-coverage
       - when:
           condition:
-            not: <paramters.use_melos>>
+            equal:
+              - "$MELOS"
+              - "false"
           steps:
             - run: flutter test --coverage
       - run:
