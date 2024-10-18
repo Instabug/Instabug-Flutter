@@ -189,9 +189,9 @@ jobs:
       - advanced-checkout/shallow-checkout
       - setup_flutter:
           version: <<parameters.version>>
-          use_melos: <<paramters.use_melos>>
+          use_melos: <<parameters.use_melos>>
       - when:
-          condition: <paramters.use_melos>>
+          condition: <parameters.use_melos>>
           steps:
             - run: melos test-coverage
       - when:
