@@ -6,15 +6,18 @@ orbs:
   node: circleci/node@5.2.0
   advanced-checkout: vsco/advanced-checkout@1.1.0
 
-environment:
-  latest_flutter_version: 3.24.3
+executors:
+  flutter-executor:
+    docker:
+      image: cimg/base:stable
+    environment:
+      latest_flutter_version: 3.24.3
 
 commands:
   setup_flutter:
     parameters:
       version:
         type: string
-        default: "$latest_flutter_version"
     steps:
       - flutter/install_sdk_and_pub:
           version: <<parameters.version>>
@@ -133,8 +136,7 @@ jobs:
       version:
         type: string
         default: "$latest_flutter_version"
-    docker:
-      - image: cimg/base:stable  
+    executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter:
@@ -218,8 +220,7 @@ jobs:
           command: dotnet test
 
   format_flutter:
-    docker:
-      - image: cimg/base:stable  
+    executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter
@@ -228,8 +229,7 @@ jobs:
           command: melos format
 
   lint_flutter:
-    docker:
-      - image: cimg/base:stable  
+    executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter
@@ -238,8 +238,7 @@ jobs:
           command: melos analyze
 
   verify_pub:
-    docker:
-      - image: cimg/base:stable  
+    executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
       - setup_flutter
