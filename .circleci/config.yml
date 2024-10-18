@@ -9,15 +9,16 @@ orbs:
 executors:
   flutter-executor:
     docker:
-      image: cimg/base:stable
-    environment:
-      latest_flutter_version: 3.24.3
+      - image: cimg/base:stable
+
 
 commands:
   setup_flutter:
     parameters:
       version:
         type: string
+        default: "$LATEST_FLUTTER_VERSION"
+
     steps:
       - flutter/install_sdk_and_pub:
           version: <<parameters.version>>
@@ -135,7 +136,7 @@ jobs:
     parameters:
       version:
         type: string
-        default: "$latest_flutter_version"
+        default: "$LATEST_FLUTTER_VERSION"
     executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
