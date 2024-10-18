@@ -218,8 +218,7 @@ jobs:
       - image: cimg/base:stable  # Specify a base image (alternative to deprecated cirrusci)
     steps:
       - advanced-checkout/shallow-checkout
-      - setup_flutter:
-          version: <<parameters.version>>
+      - setup_flutter
       - run:
           name: Check Format
           command: melos format
@@ -229,8 +228,7 @@ jobs:
       - image: cimg/base:stable  # Specify a base image (alternative to deprecated cirrusci)
     steps:
       - advanced-checkout/shallow-checkout
-      - setup_flutter:
-          version: <<parameters.version>>
+      - setup_flutter
       - run:
           name: Perform Static Analysis
           command: melos analyze
@@ -240,8 +238,7 @@ jobs:
       - image: cimg/base:stable  # Specify a base image (alternative to deprecated cirrusci)
     steps:
       - advanced-checkout/shallow-checkout
-      - setup_flutter:
-          version: <<parameters.version>>
+      - setup_flutter
       - run:
           name: Check Package Score
           command: melos score
