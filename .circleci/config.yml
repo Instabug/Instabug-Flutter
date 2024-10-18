@@ -8,18 +8,15 @@ orbs:
 
 commands:
   setup_flutter:
+    parameters:
+      version:
+        type: string
+        default: 3.10.5
     steps:
       - flutter/install_sdk_and_pub:
-          version: 3.10.5
-      - run:
-          name: Install melos
-          command: dart pub global activate melos &&  echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> $BASH_ENV
-      - run:
-          name: bootstrap
-          command: melos bootstrap
-      - run:
-          name: Generate Pigeons
-          command: melos pigeon
+          version: <<parameters.version>>
+      - install_flutter_and_dart_packages:
+          generate_pigeons: true
   setup_ios:
     steps:
       # Flutter doesn't support Apple Silicon yet, so we need to install Rosetta use Flutter on M1 machines.
@@ -133,11 +130,11 @@ jobs:
       version:
         type: string
     docker:
-      - image: cirruslabs/flutter:<<parameters.version>>
+      - image: cimg/base:stable  # Specify a base image (alternative to deprecated cirrusci)
     steps:
       - advanced-checkout/shallow-checkout
-      - install_flutter_and_dart_packages:
-          generate_pigeons: true
+      - setup_flutter:
+          version: <<parameters.version>>
       - run: flutter test --coverage
       - run:
           working_directory: coverage
@@ -218,33 +215,33 @@ jobs:
 
   format_flutter:
     docker:
-      - image: cirruslabs/flutter
+      - image: cimg/base:stable  # Specify a base image (alternative to deprecated cirrusci)
     steps:
       - advanced-checkout/shallow-checkout
-      - install_flutter_and_dart_packages:
-          generate_pigeons: false
+      - setup_flutter:
+          version: <<parameters.version>>
       - run:
           name: Check Format
           command: melos format
 
   lint_flutter:
     docker:
-      - image: cirruslabs/flutter
+      - image: cimg/base:stable  # Specify a base image (alternative to deprecated cirrusci)
     steps:
       - advanced-checkout/shallow-checkout
-      - install_flutter_and_dart_packages:
-          generate_pigeons: true
+      - setup_flutter:
+          version: <<parameters.version>>
       - run:
           name: Perform Static Analysis
           command: melos analyze
 
   verify_pub:
     docker:
-      - image: cirruslabs/flutter
+      - image: cimg/base:stable  # Specify a base image (alternative to deprecated cirrusci)
     steps:
       - advanced-checkout/shallow-checkout
-      - install_flutter_and_dart_packages:
-          generate_pigeons: true
+      - setup_flutter:
+          version: <<parameters.version>>
       - run:
           name: Check Package Score
           command: melos score
