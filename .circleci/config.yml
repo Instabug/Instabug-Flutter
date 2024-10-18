@@ -142,10 +142,7 @@ jobs:
       - advanced-checkout/shallow-checkout
       - setup_flutter:
           version: <<parameters.version>>
-      - run: flutter test --coverage
-      - run:
-          working_directory: coverage
-          command: lcov --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
+      - run: melos test-coverage
       - persist_to_workspace:
           root: coverage
           paths:
