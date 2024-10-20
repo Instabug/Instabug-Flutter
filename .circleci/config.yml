@@ -298,7 +298,7 @@ jobs:
       - setup_flutter
       - run:
           name: Perform Static Analysis
-          command: melos analyze --no-select
+          command: melos analyze
 
   verify_pub:
     executor: flutter-executor
