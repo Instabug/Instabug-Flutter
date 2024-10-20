@@ -121,7 +121,7 @@ commands:
                 command: melos bootstrap
             - run:
                 name: Install Dart Packages
-                command: melos dart_bootstrap
+                command: melos dart_bootstrap --no-select
                 description: Install Dart Packages (for dart explicit packages)
             - when:
                 condition:
@@ -131,10 +131,10 @@ commands:
                 steps:
                   - run:
                       name: Generate Pigeons
-                      command: melos pigeon
+                      command: melos pigeon --no-select
                   - run:
                       name: Build Pigeons
-                      command: melos generate
+                      command: melos generate --no-select
       - when:
           condition:
             equal:
@@ -188,7 +188,7 @@ jobs:
       - setup_flutter:
           version: <<parameters.version>>
           use_melos: true
-      - run: melos test-coverage
+      - run: melos test-coverage --no-select
       - persist_to_workspace:
           root: ~/project
           paths:
@@ -289,7 +289,7 @@ jobs:
       - setup_flutter
       - run:
           name: Check Format
-          command: melos format
+          command: melos format --no-select
 
   lint_flutter:
     executor: flutter-executor
@@ -298,7 +298,7 @@ jobs:
       - setup_flutter
       - run:
           name: Perform Static Analysis
-          command: melos analyze
+          command: melos analyze --no-select
 
   verify_pub:
     executor: flutter-executor
@@ -308,7 +308,7 @@ jobs:
       - run:
           name: Check Package Score
           command: melos score
-      - run: melos dryPublish
+      - run: melos dryPublish --no-select
 
   release-http-adapter-plugin:
     executor: flutter-executor
@@ -340,7 +340,7 @@ jobs:
       - run:
           name: Generate Pigeons
           working_directory: project
-          command: melos pigeon
+          command: melos pigeon --no-select
       - run:
           name: Clone Escape
           command: git clone git@github.com:Instabug/Escape.git
