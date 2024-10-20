@@ -121,7 +121,7 @@ commands:
                 command: melos bootstrap
             - run:
                 name: Install Dart Packages
-                command: melos dart_bootstrap --no-select
+                command: melos dart_bootstrap
                 description: Install Dart Packages (for dart explicit packages)
             - when:
                 condition:
@@ -289,7 +289,7 @@ jobs:
       - setup_flutter
       - run:
           name: Check Format
-          command: melos format --no-select
+          command: melos format
 
   lint_flutter:
     executor: flutter-executor
