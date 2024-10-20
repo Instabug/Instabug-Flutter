@@ -1,37 +1,64 @@
 name: instabug_flutter_mono
 
 packages:
-  - apps/*
   - packages/*
-
+  - packages/*/**
 scripts:
   dart_bootstrap:
-    run: melos exec "dart pub get"
+    run: dart pub get
   analyze:
-    run: melos exec "dart analyze ."
+    run: dart analyze .
   format:
-    run: melos exec "dart format . --set-exit-if-changed"
+    run: dart format . --set-exit-if-changed
   pigeon:
-    run: melos exec "sh scripts/pigeon.sh"
+    run: sh scripts/pigeon.sh
+    exec:
+      concurrency: 1
+      failFast: true
+      orderDependents: true
     packageFilters:
       fileExists: 'scripts/pigeon.sh'
   generate:
-    run: melos exec "dart run build_runner build -d"
+    run: dart run build_runner build -d
     description: Build all generated files for Dart & Flutter packages in this project.t
+    exec:
+      concurrency: 1
+      failFast: true
+      orderDependents: true
     packageFilters:
       dependsOn: build_runner
   test:
-    run: melos exec "flutter test"
+    run: flutter test
     description: Tests all packages.
+    exec:
+      concurrency: 1
+      failFast: true
+      orderDependents: true
     packageFilters:
       dependsOn: flutter_test
+  test-coverage:
+    run: flutter test --coverage && cd coverage && lcov --ignore-errors unused --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
+    description: Tests all packages.
+    exec:
+      concurrency: 1
+      failFast: true
+      orderDependents: true
+    select-package:
+      dir-exists:
+        - test
+    packageFilters:
+      dependsOn: flutter_test
+      dirExists: test
   dryPublish:
-    run: melos exec "flutter pub publish --dry-run"
+    run: flutter pub publish --dry-run
     description: Tests publishing (dry run).
     packageFilters:
       flutter: true
   score:
-    run: melos exec "dart run pana --no-warning --exit-code-threshold 0"
+    run: dart run pana --no-warning --exit-code-threshold 0
+    exec:
+      concurrency: 1
+      orderDependents: true
     packageFilters:
-      flutter: true
       dependsOn: pana
+      published: true

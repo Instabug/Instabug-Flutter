@@ -41,14 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-  espresso:
-    dependency: "direct dev"
-    description:
-      name: espresso
-      sha256: "641bdfcaec98b2fe2f5c90d61a16cdf6879ddac4d7333a6467ef03d60933596b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0+5"
   fake_async:
     dependency: transitive
     description:
@@ -112,7 +104,7 @@ packages:
   instabug_flutter:
     dependency: "direct main"
     description:
-      path: "../../packages/Instabug-Flutter"
+      path: ".."
       relative: true
     source: path
     version: "13.4.0"
@@ -269,10 +261,10 @@ packages:
     dependency: transitive
     description:
       name: typed_data
-      sha256: facc8d6582f16042dd49f2463ff1bd6e2c9ef9f3d5da3d9b087e244a7b564b3c
+      sha256: f9049c039ebfeb4cf7a7104a675823cd72dba8297f264b6637062516699fa006
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.2"
+    version: "1.4.0"
   vector_math:
     dependency: transitive
     description:
@@ -298,5 +290,5 @@ packages:
     source: hosted
     version: "3.0.3"
 sdks:
-  dart: ">=3.3.0 <4.0.0"
+  dart: ">=3.5.0 <4.0.0"
   flutter: ">=3.18.0-18.0.pre.54"

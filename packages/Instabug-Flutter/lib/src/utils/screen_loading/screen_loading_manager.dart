@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart' show WidgetBuilder, BuildContext;
+import 'package:flutter/widgets.dart' show BuildContext, WidgetBuilder;
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
