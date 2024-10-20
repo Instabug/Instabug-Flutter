@@ -190,7 +190,7 @@ jobs:
           use_melos: true
       - run: melos test-coverage
       - persist_to_workspace:
-          root: ~/project/
+          root: ~/project
           paths:
             - /coverages
 
