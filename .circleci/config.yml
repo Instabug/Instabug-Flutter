@@ -310,13 +310,13 @@ jobs:
           command: melos score
       - run: melos dryPublish
 
-    release-http-adapter-plugin:
-      executor: flutter-executor
-      steps:
-        - advanced-checkout/shallow-checkout
-        - setup_flutter
-        - run: chmod +x packages/Instabug-Dart-http-Adapter/release.sh
-        - run: ./packages/Instabug-Dart-http-Adapter/release.sh
+  release-http-adapter-plugin:
+    executor: flutter-executor
+    steps:
+      - advanced-checkout/shallow-checkout
+      - setup_flutter
+      - run: chmod +x packages/Instabug-Dart-http-Adapter/release.sh
+      - run: ./packages/Instabug-Dart-http-Adapter/release.sh
 
   release_instabug_flutter:
     macos:
