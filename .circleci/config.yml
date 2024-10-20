@@ -171,7 +171,7 @@ jobs:
           pkg-manager: yarn
           override-ci-command: yarn install --frozen-lockfile --network-concurrency 1
       - attach_workspace:
-          at: coverage
+          at: ~/project
       - run:
           name: Run Danger
           command: yarn danger ci
@@ -190,7 +190,9 @@ jobs:
           use_melos: true
       - run: melos test-coverage
       - persist_to_workspace:
-          root: coverage
+          root: ~/project
+          paths:
+            - coverages
 
 
   test_flutter_without_melos:
