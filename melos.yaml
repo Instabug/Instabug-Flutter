@@ -54,6 +54,7 @@ scripts:
     description: Tests publishing (dry run).
     packageFilters:
       flutter: true
+      dependsOn: pana
   score:
     run: dart run pana --no-warning --exit-code-threshold 0
     exec:
