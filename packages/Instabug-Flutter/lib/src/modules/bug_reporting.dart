@@ -252,7 +252,7 @@ class BugReporting implements BugReportingFlutterApi {
   ]) async {
     return _host.setCommentMinimumCharacterCount(
       limit,
-      reportTypes?.mapToString(),
+      reportTypes.mapToString(),
     );
   }
 }

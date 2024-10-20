@@ -2,8 +2,9 @@ include: package:lint/analysis_options_package.yaml
 
 analyzer:
   exclude:
-    - "example/**"
-    - "**/*.g.dart"
+    - "packages/**/*.g.dart"
+    - "packages/**/example/**"
+
 
 linter:
   rules:
