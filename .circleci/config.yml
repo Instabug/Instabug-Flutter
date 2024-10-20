@@ -307,7 +307,7 @@ jobs:
       - setup_flutter
       - run:
           name: Check Package Score
-          command: melos score
+          command: melos score --no-select
       - run: melos dryPublish --no-select
 
   release-http-adapter-plugin:
