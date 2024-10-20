@@ -52,9 +52,13 @@ scripts:
   dryPublish:
     run: flutter pub publish --dry-run
     description: Tests publishing (dry run).
+    exec:
+      concurrency: 1
+      orderDependents: true
     packageFilters:
       flutter: true
       dependsOn: pana
+      private: false
   score:
     run: dart run pana --no-warning --exit-code-threshold 0
     exec:
@@ -62,4 +66,5 @@ scripts:
       orderDependents: true
     packageFilters:
       dependsOn: pana
-      published: true
+      private: false
+

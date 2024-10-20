@@ -161,8 +161,6 @@ commands:
                       name: Build Pigeons
                       command: dart run build_runner build --delete-conflicting-outputs
 
-
-
 jobs:
   danger:
     executor:
@@ -208,18 +206,11 @@ jobs:
     steps:
       - advanced-checkout/shallow-checkout:
           path: ~/project
-      - run: sudo apt-get update&& sudo apt-get -y install lcov
       - setup_flutter:
           version: <<parameters.version>>
           use_melos: false
           working_dir: <<parameters.app-dir>>
-      - run: flutter test --coverage
-      - run:
-          command: lcov --remove coverage/lcov.info '*.g.dart' '*.mocks.dart' -o coverage/lcov.info
-      - persist_to_workspace:
-          root: "<< parameters.app-dir >>/coverage"
-          paths:
-            - lcov.info
+      - run: flutter test
 
   test_android:
     executor:
