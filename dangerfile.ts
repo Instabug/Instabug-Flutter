@@ -36,13 +36,14 @@ const getLabelFromFilename = (filename: string): string | null => {
   return parts[1] ? parts[1].replace(/\.[^/.]+$/, '') : null; // Removes extension
 };
 
+console.log(JSON.stringify(getLabelFromFilename));
 const files = fs.readdirSync('coverage');
 let reportOptions:  ReportOptions[] = [];
 for (let file of files) {
   reportOptions.push({
     label: getLabelFromFilename(file),
     type: ReportType.LCOV,
-    filePath: 'file',
+    filePath: file,
     threshold: 80,
   });
 }
