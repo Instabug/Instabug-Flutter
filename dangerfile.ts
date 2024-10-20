@@ -43,7 +43,7 @@ for (let file of files) {
   reportOptions.push({
     label: getLabelFromFilename(file),
     type: ReportType.LCOV,
-    filePath: file,
+    filePath: "coverage/"+file,
     threshold: 80,
   });
 }
