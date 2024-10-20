@@ -37,7 +37,7 @@ scripts:
     packageFilters:
       dependsOn: flutter_test
   test-coverage:
-    run: flutter test --coverage && cd coverage && lcov --ignore-errors unused --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
+    run: flutter test --coverage && cd coverage && lcov --ignore-errors unused --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info && sh ../../../scripts/move_coverage_files.sh
     description: Tests all packages.
     exec:
       concurrency: 1

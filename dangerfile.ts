@@ -1,5 +1,6 @@
 import { danger, fail, schedule, warn } from 'danger';
-import collectCoverage, { ReportType } from '@instabug/danger-plugin-coverage';
+import collectCoverage, {ReportOptions, ReportType} from '@instabug/danger-plugin-coverage';
+import * as fs from 'fs';
 
 const hasSourceChanges = danger.git.modified_files.some((file) =>
   file.startsWith('lib/')
@@ -29,9 +30,21 @@ async function hasDescription() {
 
 schedule(hasDescription());
 
-collectCoverage({
-  label: 'Dart',
-  type: ReportType.LCOV,
-  filePath: 'coverage/lcov.info',
-  threshold: 80,
-});
+// Function to extract the second part of the filename using '-' as a separator
+const getLabelFromFilename = (filename: string): string | null => {
+  const parts = filename.split('-');
+  return parts[1] ? parts[1].replace(/\.[^/.]+$/, '') : null; // Removes extension
+};
+
+const files = fs.readdirSync('coverage');
+let reportOptions:  ReportOptions[] = [];
+for (let file of files) {
+  reportOptions.push({
+    label: getLabelFromFilename(file),
+    type: ReportType.LCOV,
+    filePath: 'file',
+    threshold: 80,
+  });
+}
+collectCoverage(reportOptions);
+

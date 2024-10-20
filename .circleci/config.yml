@@ -190,9 +190,8 @@ jobs:
           use_melos: true
       - run: melos test-coverage
       - persist_to_workspace:
-          root: packages/Instabug-Flutter/coverage
-          paths:
-            - lcov.info
+          root: coverage
+
 
   test_flutter_without_melos:
     parameters:
