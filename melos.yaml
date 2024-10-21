@@ -10,6 +10,10 @@ scripts:
     run: dart analyze .
   format:
     run: dart format . --set-exit-if-changed
+    exec:
+      concurrency: 1
+      failFast: true
+      orderDependents: true
   pigeon:
     run: sh scripts/pigeon.sh
     exec:
