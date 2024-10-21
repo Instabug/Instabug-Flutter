@@ -131,10 +131,10 @@ commands:
                 steps:
                   - run:
                       name: Generate Pigeons
-                      command: melos pigeon
+                      command: melos pigeon --no-select
                   - run:
                       name: Build Pigeons
-                      command: melos generate
+                      command: melos generate --no-select
       - when:
           condition:
             equal:
@@ -188,7 +188,7 @@ jobs:
       - setup_flutter:
           version: <<parameters.version>>
           use_melos: true
-      - run: melos test-coverage
+      - run: melos test-coverage --no-select
       - persist_to_workspace:
           root: ~/project
           paths:
@@ -307,8 +307,16 @@ jobs:
       - setup_flutter
       - run:
           name: Check Package Score
-          command: melos score
-      - run: melos dryPublish
+          command: melos score --no-select
+      - run: melos dryPublish --no-select
+
+  release-http-adapter-plugin:
+    executor: flutter-executor
+    steps:
+      - advanced-checkout/shallow-checkout
+      - setup_flutter
+      - run: chmod +x packages/Instabug-Dart-http-Adapter/release.sh
+      - run: ./packages/Instabug-Dart-http-Adapter/release.sh
 
   release_instabug_flutter:
     macos:
@@ -332,7 +340,7 @@ jobs:
       - run:
           name: Generate Pigeons
           working_directory: project
-          command: melos pigeon
+          command: melos pigeon --no-select
       - run:
           name: Clone Escape
           command: git clone git@github.com:Instabug/Escape.git
@@ -384,6 +392,20 @@ workflows:
             # - e2e_android_captain
             # - test_ios
             - e2e_ios_captain
+            - verify_pub
+          filters:
+            branches:
+              only: master
+      - hold_release_http_adapter_plugin:
+          type: approval
+          requires:
+            - test_flutter-stable
+          filters:
+            branches:
+              only: master
+      - release-http-adapter-plugin:
+          requires:
+            - hold_release_http_adapter_plugin
             - verify_pub
           filters:
             branches:

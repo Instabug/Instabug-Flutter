@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: instabug_dio_interceptor,instabug_flutter
+dependency_overrides:
+  instabug_dio_interceptor:
+    path: ..
+  instabug_flutter:
+    path: ../../Instabug-Flutter
