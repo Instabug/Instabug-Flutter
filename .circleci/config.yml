@@ -310,7 +310,7 @@ jobs:
           command: melos score --no-select
       - run: melos dryPublish --no-select
 
-  release-dio-plugin:
+  release-modular-plugin:
     executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
