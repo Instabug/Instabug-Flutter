@@ -1,0 +1,44 @@
+#import <Foundation/Foundation.h>
+#import <InstabugPrivateViewPigeon.h>
+#import <Flutter/Flutter.h>
+
+
+// FlutterEngineRegistrar implements FlutterPluginRegistrar protocol
+@interface FlutterEngineRegistrar : NSObject <FlutterPluginRegistrar>
+
+@property (nonatomic, strong) FlutterEngine *flutterEngine;
+
+@end
+
+
+@interface PrivateViewApi : NSObject
+
+@property (nonatomic, strong) InstabugPrivateViewApi *flutterApi;
+@property (nonatomic, strong) FlutterEngineRegistrar *flutterEngineRegistrar;
+
+// Corrected initializer signature
+- (instancetype)initWithFlutterApi:(InstabugPrivateViewApi *)api
+                         registrar:(FlutterEngineRegistrar *)registrar;
+
+// Corrected block syntax for `mask` method
+- (void)mask:(UIImage *)screenshot
+ completion:(void (^)(UIImage *maskedImage))completion;
+- (void)handlePrivateViewsResult:(NSArray<NSNumber *> *)rectangles
+                             error:(FlutterError *)error
+                        screenshot:(UIImage *)screenshot
+                      completion:(void (^)(UIImage *))completion;
+- (NSArray<NSValue *> *)convertToRectangles:(NSArray<NSNumber *> *)rectangles;
+
+- (UIImage *)drawMaskedImage:(UIImage *)screenshot withPrivateViews:(NSArray<NSValue *> *)privateViews;
+- (CGPoint)getFlutterViewOrigin;
+
+- (void)logError:(FlutterError *)error;
+
+@end
+
+// Extern function to initialize PrivateViewApi
+extern PrivateViewApi* InitPrivateViewApi(
+    id<FlutterBinaryMessenger> messenger,
+    FlutterEngineRegistrar *flutterEngineRegistrar
+);
+
