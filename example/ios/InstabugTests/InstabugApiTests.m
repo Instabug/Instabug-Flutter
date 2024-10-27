@@ -462,7 +462,8 @@
     NSString *responseContentType = @"application/json";
     NSNumber *duration = @23000;
     NSNumber *startTime = @1670156107523;
-    NSDictionary *requestHeaders = @{ @"Accepts": @"application/json",@"traceparent":@"1234"};
+    NSString *w3CCaughtHeader = @"1234";
+    NSDictionary *requestHeaders = @{ @"Accepts": @"application/json",@"traceparent":w3CCaughtHeader};
     NSDictionary *responseHeaders = @{ @"Content-Type": @"text/plain" };
     NSDictionary *data = @{
             @"url": url,
@@ -478,7 +479,7 @@
             @"duration": duration,
             @"startTime": startTime,
             @"isW3cHeaderFound":@1,
-            @"w3CCaughtHeader":@"1234"
+            @"w3CCaughtHeader":w3CCaughtHeader
     };
 
     FlutterError* error;
