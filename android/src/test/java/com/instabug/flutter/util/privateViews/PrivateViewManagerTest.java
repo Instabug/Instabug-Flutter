@@ -45,7 +45,7 @@ public class PrivateViewManagerTest {
     private InstabugPrivateViewPigeon.InstabugPrivateViewApi instabugPrivateViewApiMock;
     private Activity activityMock;
     private Bitmap bitmap;
-    private com.instabug.flutter.util.privateViews.ScreenshotCaptor pixelCopyScreenCaptor, boundryScreenCaptor;
+    private CaptureManager pixelCopyScreenCaptor, boundryScreenCaptor;
 
     @Before
     public void setUp() {
@@ -54,8 +54,8 @@ public class PrivateViewManagerTest {
         activityMock = spy(Robolectric.buildActivity(Activity.class).setup().create().start().resume().get());
         bitmap = Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
         when(rendererMock.getBitmap()).thenReturn(bitmap);
-        pixelCopyScreenCaptor = spy(new PixelCopyScreenshotCaptor());
-        boundryScreenCaptor = spy(new BoundryScreenshotCaptor(rendererMock));
+        pixelCopyScreenCaptor = spy(new PixelCopyCaptureManager());
+        boundryScreenCaptor = spy(new BoundryCaptureManager(rendererMock));
         privateViewManager = spy(new PrivateViewManager(instabugPrivateViewApiMock, pixelCopyScreenCaptor, boundryScreenCaptor));
         privateViewManager.setActivity(activityMock);
 
@@ -124,7 +124,7 @@ public class PrivateViewManagerTest {
         privateViewManager.mask(capturingCallbackMock);
         shadowOf(Looper.getMainLooper()).idle();
 
-        verify(boundryScreenCaptor).takeScreenshot(any(), any());
+        verify(boundryScreenCaptor).capture(any(), any());
 
     }
 
@@ -134,8 +134,8 @@ public class PrivateViewManagerTest {
         mockFlutterViewInPixelCopy();
         privateViewManager.mask(capturingCallbackMock);
         shadowOf(Looper.getMainLooper()).idle();
-        verify(boundryScreenCaptor, never()).takeScreenshot(any(), any());
-        verify(pixelCopyScreenCaptor).takeScreenshot(any(), any());
+        verify(boundryScreenCaptor, never()).capture(any(), any());
+        verify(pixelCopyScreenCaptor).capture(any(), any());
 
 
     }

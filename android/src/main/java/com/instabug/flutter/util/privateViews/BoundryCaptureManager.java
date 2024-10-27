@@ -9,15 +9,15 @@ import com.instabug.flutter.util.ThreadManager;
 
 import io.flutter.embedding.engine.renderer.FlutterRenderer;
 
-public class BoundryScreenshotCaptor implements ScreenshotCaptor {
+public class BoundryCaptureManager implements CaptureManager {
     FlutterRenderer renderer;
 
-    public BoundryScreenshotCaptor(FlutterRenderer renderer) {
+    public BoundryCaptureManager(FlutterRenderer renderer) {
         this.renderer = renderer;
     }
 
     @Override
-    public void takeScreenshot(Activity activity, ScreenshotResultCallback screenshotResultCallback) {
+    public void capture(Activity activity, ScreenshotResultCallback screenshotResultCallback) {
         ThreadManager.runOnMainThread(new Runnable() {
             @Override
             public void run() {

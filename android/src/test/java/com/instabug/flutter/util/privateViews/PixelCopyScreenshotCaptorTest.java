@@ -36,7 +36,7 @@ import io.flutter.embedding.engine.renderer.FlutterRenderer;
 public class PixelCopyScreenshotCaptorTest {
     private Activity activityMock;
     private Bitmap bitmap;
-    private ScreenshotCaptor screenshotCaptor;
+    private CaptureManager captureManager;
 
     @Before
     public void setUp() {
@@ -44,21 +44,21 @@ public class PixelCopyScreenshotCaptorTest {
         activityMock = spy(Robolectric.buildActivity(Activity.class).setup().create().start().resume().get());
         bitmap = Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
         when(rendererMock.getBitmap()).thenReturn(bitmap);
-        screenshotCaptor= new PixelCopyScreenshotCaptor();
+        captureManager = new PixelCopyCaptureManager();
     }
 
     @Test
-    public void testTakeScreenshotWithPixelCopyGivenEmptyView() {
+    public void testCaptureWithPixelCopyGivenEmptyView() {
 
         ScreenshotResultCallback mockScreenshotResultCallback = mock(ScreenshotResultCallback.class);
         when(activityMock.findViewById(FlutterActivity.FLUTTER_VIEW_ID)).thenReturn(null);
-        screenshotCaptor.takeScreenshot(activityMock,mockScreenshotResultCallback);
+        captureManager.capture(activityMock,mockScreenshotResultCallback);
 
         verify(mockScreenshotResultCallback).onError();
     }
 
     @Test
-    public void testTakeScreenshotWithPixelCopy() {
+    public void testCaptureWithPixelCopy() {
         try (MockedStatic<MemoryUtils> mockedStatic = mockStatic(MemoryUtils.class)) {
             mockedStatic.when(() -> MemoryUtils.getFreeMemory(any())).thenReturn(Long.MAX_VALUE);
 
@@ -67,7 +67,7 @@ public class PixelCopyScreenshotCaptorTest {
             ScreenshotResultCallback mockScreenshotResultCallback = mock(ScreenshotResultCallback.class);
 
 
-            screenshotCaptor.takeScreenshot(activityMock, mockScreenshotResultCallback);
+            captureManager.capture(activityMock, mockScreenshotResultCallback);
             shadowOf(Looper.getMainLooper()).idle();
 
             verify(mockScreenshotResultCallback, timeout(1000)).onScreenshotResult(any(ScreenshotResult.class));  // PixelCopy success

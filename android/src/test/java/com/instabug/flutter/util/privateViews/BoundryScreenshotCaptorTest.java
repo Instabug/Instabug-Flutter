@@ -31,7 +31,7 @@ import io.flutter.embedding.engine.renderer.FlutterRenderer;
 public class BoundryScreenshotCaptorTest {
     private Activity activityMock;
     private Bitmap bitmap;
-    private ScreenshotCaptor screenshotCaptor;
+    private CaptureManager captureManager;
 
     @Before
     public void setUp() {
@@ -39,14 +39,14 @@ public class BoundryScreenshotCaptorTest {
         activityMock = spy(Robolectric.buildActivity(Activity.class).setup().create().start().resume().get());
         bitmap = Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
         when(rendererMock.getBitmap()).thenReturn(bitmap);
-        screenshotCaptor = new BoundryScreenshotCaptor(rendererMock);
+        captureManager = new BoundryCaptureManager(rendererMock);
     }
 
     @Test
-    public void testTakeScreenshotGivenEmptyActivity() {
+    public void testCaptureGivenEmptyActivity() {
         ScreenshotResultCallback mockCallback = mock(ScreenshotResultCallback.class);
 
-        screenshotCaptor.takeScreenshot(null, mockCallback);
+        captureManager.capture(null, mockCallback);
         shadowOf(Looper.getMainLooper()).idle();
 
         verify(mockCallback).onError();
@@ -55,9 +55,9 @@ public class BoundryScreenshotCaptorTest {
     }
 
     @Test
-    public void testTakeScreenshot() {
+    public void testCapture() {
         ScreenshotResultCallback mockCallback = mock(ScreenshotResultCallback.class);
-        screenshotCaptor.takeScreenshot(activityMock, mockCallback);
+        captureManager.capture(activityMock, mockCallback);
         shadowOf(Looper.getMainLooper()).idle();
 
         verify(mockCallback, never()).onError();
