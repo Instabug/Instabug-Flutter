@@ -1,11 +1,16 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v13.4.0...dev)
+
+### Added
+
+- Add support for tracing network requests from Instabug to services like Datadog and New Relic ([#481](https://github.com/Instabug/Instabug-Flutter/pull/481)).
+
 ## [13.4.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.3.0...v13.4.0) (September 15, 2024)
 
 ### Added
 
 - Add support for masking screen names captured by Instabug through the `Instabug.setScreenNameMaskingCallback` API ([#500](https://github.com/Instabug/Instabug-Flutter/pull/500)).
-- Add support for tracing network requests from Instabug to services like Datadog and New Relic ([#481](https://github.com/Instabug/Instabug-Flutter/pull/481)).
 
 ### Changed
 
@@ -40,7 +45,7 @@
 ### Added
 
 - Add support for capturing screen loading time in APM ([#477](https://github.com/Instabug/Instabug-Flutter/pull/477)).
-- 
+
 ### Changed
 
 - Bump Instabug Android SDK to v13.2.0 ([#482](https://github.com/Instabug/Instabug-Flutter/pull/482)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v13.2.0).

@@ -40,7 +40,7 @@ void main() {
 
   setUpAll(() {
     APM.$setHostApi(mApmHost);
-    FeatureFlagsManager.$setHostApi(mInstabugHost);
+    FeatureFlagsManager().$setHostApi(mInstabugHost);
     NetworkLogger.$setHostApi(mInstabugHost);
     NetworkLogger.$setManager(mManager);
     IBGBuildInfo.setInstance(mBuildInfo);

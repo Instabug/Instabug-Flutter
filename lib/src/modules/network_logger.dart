@@ -94,17 +94,9 @@ class NetworkLogger {
     Map<String, dynamic> header,
     int startTime,
   ) async {
-    final w3cFlags = await Future.wait([
-      FeatureFlagsManager.isW3CExternalTraceID,
-      FeatureFlagsManager.isW3CCaughtHeader,
-      FeatureFlagsManager.isW3CExternalGeneratedHeader,
-    ]);
+    final w3cFlags = await FeatureFlagsManager().getW3CFeatureFlagsHeader();
 
-    final isW3CExternalTraceIDEnabled = w3cFlags[0];
-    final isW3CCaughtHeaderEnabled = w3cFlags[1];
-    final isW3CExternalGeneratedHeaderEnabled = w3cFlags[2];
-
-    if (isW3CExternalTraceIDEnabled == false) {
+    if (w3cFlags.isW3cExternalTraceIDEnabled == false) {
       return null;
     }
 
@@ -115,11 +107,10 @@ class NetworkLogger {
         ?.value as String?;
     final isW3cHeaderFound = w3cHeaderFound != null;
 
-    if (isW3cHeaderFound && isW3CCaughtHeaderEnabled) {
+    if (isW3cHeaderFound && w3cFlags.isW3cCaughtHeaderEnabled) {
       return W3CHeader(isW3cHeaderFound: true, w3CCaughtHeader: w3cHeaderFound);
-    } else if (isW3CExternalGeneratedHeaderEnabled && !isW3cHeaderFound) {
-      // make it structure
-      final w3cHeaderData = W3CHeaderUtils.generateW3CHeader(
+    } else if (w3cFlags.isW3cExternalGeneratedHeaderEnabled && !isW3cHeaderFound) {
+      final w3cHeaderData = W3CHeaderUtils().generateW3CHeader(
         startTime,
       );
 

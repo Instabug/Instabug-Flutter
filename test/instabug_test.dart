@@ -28,7 +28,7 @@ void main() {
 
   setUpAll(() {
     Instabug.$setHostApi(mHost);
-    FeatureFlagsManager.$setHostApi(mHost);
+    FeatureFlagsManager().$setHostApi(mHost);
     IBGBuildInfo.setInstance(mBuildInfo);
     ScreenNameMasker.setInstance(mScreenNameMasker);
   });

@@ -11,13 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import com.instabug.apm.configuration.cp.APMFeature;
 
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
-import com.instabug.library.*;
 import com.instabug.library.internal.crossplatform.CoreFeature;
 import com.instabug.library.internal.crossplatform.CoreFeaturesState;
 import com.instabug.library.internal.crossplatform.FeaturesStateListener;
@@ -454,7 +452,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     @Override
-    public void bindOnW3CFeatureFlagChangeCallback() {
+    public void registerFeatureFlagChangeListener() {
 
         try {
             InternalCore.INSTANCE._setFeaturesStateListener(new FeaturesStateListener() {

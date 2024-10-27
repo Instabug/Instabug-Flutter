@@ -17,6 +17,11 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import static io.mockk.MockKKt.every;
+import static io.mockk.MockKKt.mockkObject;
+
+import io.mockk.*;
+
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -62,6 +67,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.Callable;
 
 import io.flutter.plugin.common.BinaryMessenger;
@@ -80,10 +86,11 @@ public class InstabugApiTest {
     private MockedStatic<BugReporting> mBugReporting;
     private MockedConstruction<InstabugCustomTextPlaceHolder> mCustomTextPlaceHolder;
     private MockedStatic<InstabugPigeon.InstabugHostApi> mHostApi;
-
+    private InternalCore internalCore;
     @Before
     public void setUp() throws NoSuchMethodException {
         mCustomTextPlaceHolder = mockConstruction(InstabugCustomTextPlaceHolder.class);
+        internalCore=spy(InternalCore.INSTANCE);
 
         BinaryMessenger mMessenger = mock(BinaryMessenger.class);
         final InstabugPigeon.FeatureFlagsFlutterApi flutterApi = new InstabugPigeon.FeatureFlagsFlutterApi(mMessenger);
@@ -617,17 +624,21 @@ public class InstabugApiTest {
 
     @Test
     public void isW3CFeatureFlagsEnabled() {
-      MockedStatic<InternalCore> internalCoreMockedStatic=  mockStatic(InternalCore.class);
-        Boolean isW3cExternalGeneratedHeaderEnabled= InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_ATTACHING_GENERATED_HEADER);
-        Boolean isW3cExternalTraceIDEnabled= InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_EXTERNAL_TRACE_ID);
-        Boolean isW3cCaughtHeaderEnabled= InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_ATTACHING_CAPTURED_HEADER);
+        mockkObject(new InternalCore[]{InternalCore.INSTANCE},false);
+        Random random=new Random();
+        Boolean isW3cExternalGeneratedHeaderEnabled = random.nextBoolean();
+        Boolean isW3cExternalTraceIDEnabled = random.nextBoolean();
+        Boolean isW3cCaughtHeaderEnabled = random.nextBoolean();
+
+        every((Function1<MockKMatcherScope, Boolean>) mockKMatcherScope -> InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_ATTACHING_GENERATED_HEADER)).returns(isW3cExternalGeneratedHeaderEnabled);
+        every((Function1<MockKMatcherScope, Boolean>) mockKMatcherScope -> InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_EXTERNAL_TRACE_ID)).returns(isW3cExternalTraceIDEnabled);
+        every((Function1<MockKMatcherScope, Boolean>) mockKMatcherScope -> InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_ATTACHING_CAPTURED_HEADER)).returns(isW3cCaughtHeaderEnabled);
 
 
         Map<String, Boolean> flags = api.isW3CFeatureFlagsEnabled();
         assertEquals(isW3cExternalGeneratedHeaderEnabled, flags.get("isW3cExternalGeneratedHeaderEnabled"));
         assertEquals(isW3cExternalTraceIDEnabled, flags.get("isW3cExternalTraceIDEnabled"));
         assertEquals(isW3cCaughtHeaderEnabled, flags.get("isW3cCaughtHeaderEnabled"));
-        internalCoreMockedStatic.close();
 
     }
 }

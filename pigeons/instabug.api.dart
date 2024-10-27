@@ -69,7 +69,7 @@ abstract class InstabugHostApi {
 
   void networkLog(Map<String, Object> data);
 
-  void bindOnW3CFeatureFlagChangeCallback();
+  void registerFeatureFlagChangeListener();
 
   Map<String, bool> isW3CFeatureFlagsEnabled();
 

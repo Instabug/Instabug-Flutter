@@ -506,9 +506,6 @@
                                               timestamp:nil
                                 generatedW3CTraceparent:nil
                                  caughtedW3CTraceparent:@"1234"
-
-
-
               ]);
 }
 
@@ -525,6 +522,13 @@
     NSNumber *startTime = @1670156107523;
     NSDictionary *requestHeaders = @{ @"Accepts": @"application/json" };
     NSDictionary *responseHeaders = @{ @"Content-Type": @"text/plain" };
+    NSNumber *partialID = @12;
+
+    NSNumber *timestamp = @34;
+
+    NSString *generatedW3CTraceparent = @"12-34";
+
+    NSString *caughtedW3CTraceparent = nil;
     NSDictionary *data = @{
             @"url": url,
             @"requestBody": requestBody,
@@ -539,11 +543,13 @@
             @"duration": duration,
             @"startTime": startTime,
             @"isW3cHeaderFound": @0,
-            @"partialId": @12,
-            @"networkStartTimeInSeconds": @34,
-            @"w3CGeneratedHeader": @"12-34",
+            @"partialId": partialID,
+            @"networkStartTimeInSeconds": timestamp,
+            @"w3CGeneratedHeader": generatedW3CTraceparent,
 
     };
+    NSNumber *isW3cCaughted = @0;
+
     FlutterError* error;
 
     [self.api networkLogData:data error:&error];
@@ -564,18 +570,18 @@
                                                duration:duration.integerValue
                                            gqlQueryName:nil
                                      serverErrorMessage:nil
-                                          isW3cCaughted:@0
-                                              partialID:@12
-                                              timestamp:@34
-                                generatedW3CTraceparent:@"12-34"
-                                 caughtedW3CTraceparent:nil
+                                          isW3cCaughted:isW3cCaughted
+                                              partialID:partialID
+                                              timestamp:timestamp
+                                generatedW3CTraceparent:generatedW3CTraceparent
+                                 caughtedW3CTraceparent:caughtedW3CTraceparent
 
 
 
               ]);
 }
 
-- (void)testisW3CFeatureFlagsEnabled{
+- (void)testisW3CFeatureFlagsEnabled {
     FlutterError *error;
 
     id mock = OCMClassMock([IBGNetworkLogger class]);

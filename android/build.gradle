@@ -42,9 +42,10 @@ android {
 
 dependencies {
     api 'com.instabug.library:instabug:13.4.1'
-
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
+    testImplementation "io.mockk:mockk:1.13.13"
+
 }
 
 // add upload_symbols task
