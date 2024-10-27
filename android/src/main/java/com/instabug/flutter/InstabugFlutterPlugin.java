@@ -20,6 +20,8 @@ import com.instabug.flutter.modules.InstabugLogApi;
 import com.instabug.flutter.modules.RepliesApi;
 import com.instabug.flutter.modules.SessionReplayApi;
 import com.instabug.flutter.modules.SurveysApi;
+import com.instabug.flutter.util.privateViews.BoundryScreenshotCaptor;
+import com.instabug.flutter.util.privateViews.PixelCopyScreenshotCaptor;
 import com.instabug.flutter.util.privateViews.PrivateViewManager;
 import com.instabug.library.internal.crossplatform.InternalCore;
 
@@ -62,34 +64,31 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onDetachedFromActivityForConfigChanges() {
         activity = null;
+        privateViewManager.setActivity(null);
+
     }
 
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
-        if (privateViewManager != null) {
-            privateViewManager.setActivity(activity);
-        }
+
+        privateViewManager.setActivity(activity);
+
     }
 
     @Override
     public void onDetachedFromActivity() {
         activity = null;
+        privateViewManager.setActivity(null);
+
     }
 
     private void register(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
-        final Callable<Bitmap> screenshotProvider = new Callable<Bitmap>() {
-            @Override
-            public Bitmap call() {
-                return takeScreenshot(renderer);
-            }
-        };
-
         ApmApi.init(messenger);
         BugReportingApi.init(messenger);
         CrashReportingApi.init(messenger);
         FeatureRequestsApi.init(messenger);
-        privateViewManager = new PrivateViewManager(new InstabugPrivateViewPigeon.InstabugPrivateViewApi(messenger), renderer);
+        privateViewManager = new PrivateViewManager(new InstabugPrivateViewPigeon.InstabugPrivateViewApi(messenger), new PixelCopyScreenshotCaptor(), new BoundryScreenshotCaptor(renderer));
         InstabugApi.init(messenger, context, privateViewManager, InternalCore.INSTANCE);
         InstabugLogApi.init(messenger);
         RepliesApi.init(messenger);
