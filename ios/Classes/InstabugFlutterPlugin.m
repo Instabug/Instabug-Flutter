@@ -10,7 +10,6 @@
 #import "SessionReplayApi.h"
 #import "SurveysApi.h"
 #import "PrivateViewApi.h"
-#import "Util/FlutterPluginRegistrar+FlutterEngine.h"
 
 @implementation InstabugFlutterPlugin
 
