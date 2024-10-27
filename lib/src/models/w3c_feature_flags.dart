@@ -1,4 +1,4 @@
-class W3cFeatureFlags{
+class W3cFeatureFlags {
   bool isW3cExternalTraceIDEnabled;
   bool isW3cExternalGeneratedHeaderEnabled;
   bool isW3cCaughtHeaderEnabled;

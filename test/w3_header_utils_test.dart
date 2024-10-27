@@ -23,7 +23,7 @@ void main() {
   });
 
   test('generateTracePartialId should generate a non-zero hex string', () {
-    when(mRandom.nextInt(any)).thenReturnInOrder([0,217222]);
+    when(mRandom.nextInt(any)).thenReturnInOrder([0, 217222]);
 
     final hexString = W3CHeaderUtils().generateTracePartialId().hexPartialId;
 
@@ -40,7 +40,7 @@ void main() {
       'generateW3CHeader should return {version}-{trace-id}-{parent-id}-{trace-flag} format header',
       () {
     const date = 1716210104248;
-    const partialId= 217222;
+    const partialId = 217222;
     final hexString0 = partialId.toRadixString(16).padLeft(8, '0');
 
     final expectedHeader = GeneratedW3CHeader(

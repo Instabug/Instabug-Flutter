@@ -109,7 +109,8 @@ class NetworkLogger {
 
     if (isW3cHeaderFound && w3cFlags.isW3cCaughtHeaderEnabled) {
       return W3CHeader(isW3cHeaderFound: true, w3CCaughtHeader: w3cHeaderFound);
-    } else if (w3cFlags.isW3cExternalGeneratedHeaderEnabled && !isW3cHeaderFound) {
+    } else if (w3cFlags.isW3cExternalGeneratedHeaderEnabled &&
+        !isW3cHeaderFound) {
       final w3cHeaderData = W3CHeaderUtils().generateW3CHeader(
         startTime,
       );

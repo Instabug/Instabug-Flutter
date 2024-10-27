@@ -34,7 +34,8 @@ void main() {
         "isW3cCaughtHeaderEnabled": true,
       }),
     );
-    final isW3CExternalTraceID = await FeatureFlagsManager().getW3CFeatureFlagsHeader();
+    final isW3CExternalTraceID =
+        await FeatureFlagsManager().getW3CFeatureFlagsHeader();
     expect(isW3CExternalTraceID.isW3cExternalTraceIDEnabled, true);
     expect(isW3CExternalTraceID.isW3cExternalGeneratedHeaderEnabled, true);
     expect(isW3CExternalTraceID.isW3cCaughtHeaderEnabled, true);
@@ -43,7 +44,6 @@ void main() {
       mInstabugHost.isW3CFeatureFlagsEnabled(),
     ).called(1);
   });
-
 
   test('[isW3CExternalTraceID] should call host method on Android', () async {
     when(mBuildInfo.isAndroid).thenReturn(true);
@@ -56,7 +56,8 @@ void main() {
     );
     await FeatureFlagsManager().registerW3CFlagsListener();
 
-    final isW3CExternalTraceID = await FeatureFlagsManager().getW3CFeatureFlagsHeader();
+    final isW3CExternalTraceID =
+        await FeatureFlagsManager().getW3CFeatureFlagsHeader();
     expect(isW3CExternalTraceID.isW3cExternalTraceIDEnabled, true);
     expect(isW3CExternalTraceID.isW3cExternalGeneratedHeaderEnabled, true);
     expect(isW3CExternalTraceID.isW3cCaughtHeaderEnabled, true);
@@ -64,7 +65,6 @@ void main() {
       mInstabugHost.isW3CFeatureFlagsEnabled(),
     ).called(1);
   });
-
 
   test('[registerW3CFlagsListener] should call host method', () async {
     when(mInstabugHost.isW3CFeatureFlagsEnabled()).thenAnswer(

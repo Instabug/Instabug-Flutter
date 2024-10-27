@@ -10,7 +10,6 @@ typedef OnW3CFeatureFlagChange = void Function(
 );
 
 class FeatureFlagsManager implements FeatureFlagsFlutterApi {
-
   // Access the singleton instance
   factory FeatureFlagsManager() {
     return _instance;
@@ -46,17 +45,22 @@ class FeatureFlagsManager implements FeatureFlagsFlutterApi {
 
   Future<W3cFeatureFlags> getW3CFeatureFlagsHeader() async {
     if (IBGBuildInfo.instance.isAndroid) {
-      return Future.value(W3cFeatureFlags(
-        isW3cCaughtHeaderEnabled: _isAndroidW3CCaughtHeader,
-        isW3cExternalGeneratedHeaderEnabled: _isAndroidW3CExternalGeneratedHeader,
-        isW3cExternalTraceIDEnabled: _isAndroidW3CExternalTraceID,
-      ),);
+      return Future.value(
+        W3cFeatureFlags(
+          isW3cCaughtHeaderEnabled: _isAndroidW3CCaughtHeader,
+          isW3cExternalGeneratedHeaderEnabled:
+              _isAndroidW3CExternalGeneratedHeader,
+          isW3cExternalTraceIDEnabled: _isAndroidW3CExternalTraceID,
+        ),
+      );
     }
     final flags = await _host.isW3CFeatureFlagsEnabled();
     return W3cFeatureFlags(
       isW3cCaughtHeaderEnabled: flags['isW3cCaughtHeaderEnabled'] ?? false,
-      isW3cExternalGeneratedHeaderEnabled: flags['isW3cExternalGeneratedHeaderEnabled'] ?? false,
-      isW3cExternalTraceIDEnabled: flags['isW3cExternalTraceIDEnabled'] ?? false,
+      isW3cExternalGeneratedHeaderEnabled:
+          flags['isW3cExternalGeneratedHeaderEnabled'] ?? false,
+      isW3cExternalTraceIDEnabled:
+          flags['isW3cExternalTraceIDEnabled'] ?? false,
     );
   }
 
@@ -64,9 +68,12 @@ class FeatureFlagsManager implements FeatureFlagsFlutterApi {
     FeatureFlagsFlutterApi.setup(this); // Use 'this' instead of _instance
 
     final featureFlags = await _host.isW3CFeatureFlagsEnabled();
-    _isAndroidW3CCaughtHeader = featureFlags['isW3cCaughtHeaderEnabled'] ?? false;
-    _isAndroidW3CExternalTraceID = featureFlags['isW3cExternalTraceIDEnabled'] ?? false;
-    _isAndroidW3CExternalGeneratedHeader = featureFlags['isW3cExternalGeneratedHeaderEnabled'] ?? false;
+    _isAndroidW3CCaughtHeader =
+        featureFlags['isW3cCaughtHeaderEnabled'] ?? false;
+    _isAndroidW3CExternalTraceID =
+        featureFlags['isW3cExternalTraceIDEnabled'] ?? false;
+    _isAndroidW3CExternalGeneratedHeader =
+        featureFlags['isW3cExternalGeneratedHeaderEnabled'] ?? false;
 
     return _host.registerFeatureFlagChangeListener();
   }
@@ -74,10 +81,10 @@ class FeatureFlagsManager implements FeatureFlagsFlutterApi {
   @override
   @internal
   void onW3CFeatureFlagChange(
-      bool isW3cExternalTraceIDEnabled,
-      bool isW3cExternalGeneratedHeaderEnabled,
-      bool isW3cCaughtHeaderEnabled,
-      ) {
+    bool isW3cExternalTraceIDEnabled,
+    bool isW3cExternalGeneratedHeaderEnabled,
+    bool isW3cCaughtHeaderEnabled,
+  ) {
     _isAndroidW3CCaughtHeader = isW3cCaughtHeaderEnabled;
     _isAndroidW3CExternalTraceID = isW3cExternalTraceIDEnabled;
     _isAndroidW3CExternalGeneratedHeader = isW3cExternalGeneratedHeaderEnabled;

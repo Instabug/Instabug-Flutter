@@ -5,7 +5,6 @@ import 'package:instabug_flutter/src/models/generated_w3c_header.dart';
 import 'package:instabug_flutter/src/models/trace_partial_id.dart';
 
 class W3CHeaderUtils {
-
   // Access the singleton instance
   factory W3CHeaderUtils() {
     return _instance;
@@ -53,7 +52,7 @@ class W3CHeaderUtils {
 
     final timestampInSeconds = (networkStartTime / 1000).floor();
     final hexaDigitsTimestamp =
-    timestampInSeconds.toRadixString(16).toLowerCase();
+        timestampInSeconds.toRadixString(16).toLowerCase();
     final traceId =
         '$hexaDigitsTimestamp$hexStringPartialId$hexaDigitsTimestamp$hexStringPartialId';
     final parentId = '4942472d$hexStringPartialId';
