@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
@@ -46,6 +45,7 @@ public class PrivateViewManagerTest {
     private InstabugPrivateViewPigeon.InstabugPrivateViewApi instabugPrivateViewApiMock;
     private Activity activityMock;
     private Bitmap bitmap;
+    private com.instabug.flutter.util.privateViews.ScreenshotCaptor pixelCopyScreenCaptor, boundryScreenCaptor;
 
     @Before
     public void setUp() {
@@ -54,23 +54,11 @@ public class PrivateViewManagerTest {
         activityMock = spy(Robolectric.buildActivity(Activity.class).setup().create().start().resume().get());
         bitmap = Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
         when(rendererMock.getBitmap()).thenReturn(bitmap);
-        privateViewManager = spy(new PrivateViewManager(instabugPrivateViewApiMock, rendererMock));
+        pixelCopyScreenCaptor = spy(new PixelCopyScreenshotCaptor());
+        boundryScreenCaptor = spy(new BoundryScreenshotCaptor(rendererMock));
+        privateViewManager = spy(new PrivateViewManager(instabugPrivateViewApiMock, pixelCopyScreenCaptor, boundryScreenCaptor));
         privateViewManager.setActivity(activityMock);
-    }
 
-    @Test
-    public void testTakeScreenshotGivenEmptyActivity() {
-        privateViewManager.setActivity(null);
-        ScreenshotResult result = privateViewManager.takeScreenshot();
-        assertNull(result);
-    }
-
-    @Test
-    public void testTakeScreenshot() {
-        ScreenshotResult result = privateViewManager.takeScreenshot();
-        assertNotNull(result);
-        assertEquals(activityMock.getResources().getDisplayMetrics().density, result.getPixelRatio(), 0.01);
-        assertEquals(bitmap, result.getScreenshot());
     }
 
 
@@ -81,7 +69,7 @@ public class PrivateViewManagerTest {
         privateViewManager.mask(capturingCallbackMock);
         ArgumentCaptor<Throwable> argumentCaptor = ArgumentCaptor.forClass(Throwable.class);
         verify(capturingCallbackMock).onCapturingFailure(argumentCaptor.capture());
-        assertEquals("IBG-Flutter-private_views", argumentCaptor.getValue().getMessage());
+        assertEquals( PrivateViewManager.EXCEPTION_MESSAGE, argumentCaptor.getValue().getMessage());
     }
 
     @Test
@@ -103,35 +91,10 @@ public class PrivateViewManagerTest {
         verify(capturingCallbackMock, timeout(1000)).onCapturingSuccess(bitmap);
     }
 
-    @Test
-    public void testTakeScreenshotWithPixelCopyGivenEmptyView() {
-        
-        PixelCopyManager mockPixelCopyManager = mock(PixelCopyManager.class);
-        when(activityMock.findViewById(FlutterActivity.FLUTTER_VIEW_ID)).thenReturn(null);
-
-        
-        privateViewManager.takeScreenshotWithPixelCopy(mockPixelCopyManager);
-
-       
-        verify(mockPixelCopyManager).onError();
-    }
-
-    @Test
-    public void testTakeScreenshotWithPixelCopy() {
-
-        mockFlutterViewInPixelCopy();
-        PixelCopyManager mockPixelCopyManager = mock(PixelCopyManager.class);
-
-        
-        privateViewManager.takeScreenshotWithPixelCopy(mockPixelCopyManager);
-        shadowOf(Looper.getMainLooper()).idle();
-
-        verify(mockPixelCopyManager, timeout(1000)).onBitmap(any(ScreenshotResult.class));  // PixelCopy success
-    }
 
     private void mockFlutterViewInPixelCopy() {
         SurfaceView mockSurfaceView = mock(SurfaceView.class);
-        FlutterView flutterView=mock(FlutterView.class);
+        FlutterView flutterView = mock(FlutterView.class);
         when(flutterView.getChildAt(0)).thenReturn(mockSurfaceView);
         when(flutterView.getChildCount()).thenReturn(1);
 
@@ -160,16 +123,20 @@ public class PrivateViewManagerTest {
         ScreenshotCaptor.CapturingCallback capturingCallbackMock = mock(ScreenshotCaptor.CapturingCallback.class);
         privateViewManager.mask(capturingCallbackMock);
         shadowOf(Looper.getMainLooper()).idle();
-        verify(privateViewManager).takeScreenshot();
+
+        verify(boundryScreenCaptor).takeScreenshot(any(), any());
 
     }
+
     @Test
     public void testMaskShouldCallPixelCopyWhenAPIVersionMoreThan28() {
         ScreenshotCaptor.CapturingCallback capturingCallbackMock = mock(ScreenshotCaptor.CapturingCallback.class);
         mockFlutterViewInPixelCopy();
         privateViewManager.mask(capturingCallbackMock);
         shadowOf(Looper.getMainLooper()).idle();
-        verify(privateViewManager,never()).takeScreenshot();
+        verify(boundryScreenCaptor, never()).takeScreenshot(any(), any());
+        verify(pixelCopyScreenCaptor).takeScreenshot(any(), any());
+
 
     }
 }

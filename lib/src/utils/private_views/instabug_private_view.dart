@@ -14,11 +14,7 @@ class InstabugPrivateView extends StatefulWidget {
 
 class _InstabugPrivateViewState extends State<InstabugPrivateView> {
   final GlobalKey _visibilityDetectorKey = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final GlobalKey _childKey = GlobalKey();
 
   @override
   void dispose() {
@@ -27,11 +23,11 @@ class _InstabugPrivateViewState extends State<InstabugPrivateView> {
   }
 
   void _addPrivateView() {
-    PrivateViewsManager.I.mask(_visibilityDetectorKey);
+    PrivateViewsManager.I.mask(_childKey);
   }
 
   void _removePrivateView() {
-    PrivateViewsManager.I.unMask(_visibilityDetectorKey);
+    PrivateViewsManager.I.unMask(_childKey);
   }
 
   void _onVisibilityChanged(bool isVisible) {
@@ -47,7 +43,7 @@ class _InstabugPrivateViewState extends State<InstabugPrivateView> {
     return VisibilityDetector(
       key: _visibilityDetectorKey,
       onVisibilityChanged: _onVisibilityChanged,
-      child: widget.child,
+      child: KeyedSubtree(key: _childKey, child: widget.child),
     );
   }
 }

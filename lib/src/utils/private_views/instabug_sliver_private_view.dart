@@ -16,11 +16,7 @@ class InstabugSliverPrivateView extends StatefulWidget {
 
 class _InstabugSliverPrivateViewState extends State<InstabugSliverPrivateView> {
   final key = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final GlobalKey _childKey = GlobalKey();
 
   @override
   void dispose() {
@@ -29,11 +25,11 @@ class _InstabugSliverPrivateViewState extends State<InstabugSliverPrivateView> {
   }
 
   void _addPrivateView() {
-    PrivateViewsManager.I.mask(key);
+    PrivateViewsManager.I.mask(_childKey);
   }
 
   void _removePrivateView() {
-    PrivateViewsManager.I.unMask(key);
+    PrivateViewsManager.I.unMask(_childKey);
   }
 
   void _onVisibilityChanged(bool isVisible) {
@@ -49,7 +45,7 @@ class _InstabugSliverPrivateViewState extends State<InstabugSliverPrivateView> {
     return SliverVisibilityDetector(
       key: key,
       onVisibilityChanged: _onVisibilityChanged,
-      sliver: widget.sliver,
+      sliver: KeyedSubtree(key: _childKey,child: widget.sliver),
     );
   }
 }
