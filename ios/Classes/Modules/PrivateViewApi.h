@@ -3,22 +3,14 @@
 #import <Flutter/Flutter.h>
 
 
-// FlutterEngineRegistrar implements FlutterPluginRegistrar protocol
-@interface FlutterEngineRegistrar : NSObject <FlutterPluginRegistrar>
-
-@property (nonatomic, strong) FlutterEngine *flutterEngine;
-
-@end
-
-
 @interface PrivateViewApi : NSObject
 
 @property (nonatomic, strong) InstabugPrivateViewApi *flutterApi;
-@property (nonatomic, strong) FlutterEngineRegistrar *flutterEngineRegistrar;
+@property (nonatomic, strong) NSObject<FlutterPluginRegistrar> * flutterEngineRegistrar;
 
 // Corrected initializer signature
 - (instancetype)initWithFlutterApi:(InstabugPrivateViewApi *)api
-                         registrar:(FlutterEngineRegistrar *)registrar;
+                         registrar:(NSObject<FlutterPluginRegistrar> *)registrar;
 
 // Corrected block syntax for `mask` method
 - (void)mask:(UIImage *)screenshot
@@ -39,6 +31,6 @@
 // Extern function to initialize PrivateViewApi
 extern PrivateViewApi* InitPrivateViewApi(
     id<FlutterBinaryMessenger> messenger,
-    FlutterEngineRegistrar *flutterEngineRegistrar
+    NSObject<FlutterPluginRegistrar> *flutterEngineRegistrar
 );
 

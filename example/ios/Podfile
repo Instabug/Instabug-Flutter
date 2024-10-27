@@ -27,6 +27,8 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 target 'Runner' do
+  pod 'Instabug', :podspec => 'https://ios-releases.instabug.com/custom/feature-flutter-private-views-base/13.4.2/Instabug.podspec'
+
   use_frameworks!
   use_modular_headers!
 

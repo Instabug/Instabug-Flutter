@@ -1,8 +1,9 @@
 #import "PrivateViewApi.h"
+#import "../Util/FlutterPluginRegistrar+FlutterEngine.h"
 
 extern PrivateViewApi* InitPrivateViewApi(
     id<FlutterBinaryMessenger> messenger,
-    FlutterEngineRegistrar *flutterEngineRegistrar
+    NSObject<FlutterPluginRegistrar> *flutterEngineRegistrar
 ) {
     InstabugPrivateViewApi *flutterApi = [[InstabugPrivateViewApi alloc] initWithBinaryMessenger:messenger];
     return [[PrivateViewApi alloc] initWithFlutterApi:flutterApi registrar:flutterEngineRegistrar];
@@ -12,7 +13,7 @@ extern PrivateViewApi* InitPrivateViewApi(
 
 // Initializer with proper memory management
 - (instancetype)initWithFlutterApi:(InstabugPrivateViewApi *)api
-                         registrar:(FlutterEngineRegistrar *)registrar {
+                         registrar:( NSObject<FlutterPluginRegistrar> *) registrar {
     if ((self = [super init])) {
         _flutterApi = api;
         _flutterEngineRegistrar = registrar;
@@ -54,6 +55,7 @@ extern PrivateViewApi* InitPrivateViewApi(
 
 // Convert the raw rectangles array into CGRect values
 - (NSArray<NSValue *> *)convertToRectangles:(NSArray<NSNumber *> *)rectangles {
+    
     NSMutableArray<NSValue *> *privateViews = [NSMutableArray arrayWithCapacity:rectangles.count / 4];
     CGPoint flutterOrigin = [self getFlutterViewOrigin];
 
