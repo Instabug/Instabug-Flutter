@@ -23,7 +23,9 @@ void main() {
   });
 
   test('generateTracePartialId should generate a non-zero hex string', () {
-    when(mRandom.nextInt(any)).thenReturnInOrder([0, 217222]);
+    var callCount = 0;
+
+    when(mRandom.nextInt(any)).thenAnswer((_)=>[0, 217222][callCount++]);
 
     final hexString = W3CHeaderUtils().generateTracePartialId().hexPartialId;
 
