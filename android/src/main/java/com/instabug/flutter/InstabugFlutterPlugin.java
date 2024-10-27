@@ -64,19 +64,23 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onDetachedFromActivityForConfigChanges() {
         activity = null;
+        privateViewManager.setActivity(null);
+
     }
 
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
-        if (privateViewManager != null) {
-            privateViewManager.setActivity(activity);
-        }
+
+        privateViewManager.setActivity(activity);
+
     }
 
     @Override
     public void onDetachedFromActivity() {
         activity = null;
+        privateViewManager.setActivity(null);
+
     }
 
     private void register(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
