@@ -45,7 +45,7 @@ class _InstabugSliverPrivateViewState extends State<InstabugSliverPrivateView> {
     return SliverVisibilityDetector(
       key: key,
       onVisibilityChanged: _onVisibilityChanged,
-      sliver: KeyedSubtree(key: _childKey,child: widget.sliver),
+      sliver: KeyedSubtree(key: _childKey, child: widget.sliver),
     );
   }
 }
