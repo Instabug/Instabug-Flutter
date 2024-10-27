@@ -14,8 +14,8 @@
 
 ### Changed
 
-- Bump Instabug Android SDK to v13.4.1 ([#509](https://github.com/Instabug/Instabug-Flutter/pull/509)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v13.4.0).
-- Bump Instabug iOS SDK to v13.4.1 ([#510](https://github.com/Instabug/Instabug-Flutter/pull/510)). See release notes for [13.4.0](https://github.com/Instabug/Instabug-iOS/releases/tag/13.4.0) and [13.4.1](https://github.com/Instabug/Instabug-iOS/releases/tag/13.4.1).
+- Bump Instabug Android SDK to v13.4.1 ([#509](https://github.com/Instabug/Instabug-Flutter/pull/509)). See release notes for [13.4.0](https://github.com/Instabug/Instabug-Android/releases/tag/v13.4.0) and [13.4.1](https://github.com/Instabug/Instabug-Android/releases/tag/v13.4.1).
+- Bump Instabug iOS SDK to v13.4.2 ([#515](https://github.com/Instabug/Instabug-Flutter/pull/515)). See release notes for [13.4.0](https://github.com/Instabug/Instabug-iOS/releases/tag/13.4.0), [13.4.1](https://github.com/Instabug/Instabug-iOS/releases/tag/13.4.1) and [13.4.2](https://github.com/Instabug/Instabug-iOS/releases/tag/13.4.2).
 
 ### Fixed
 
@@ -51,7 +51,7 @@
 - Bump Instabug Android SDK to v13.2.0 ([#482](https://github.com/Instabug/Instabug-Flutter/pull/482)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v13.2.0).
 - Bump Instabug iOS SDK to v13.2.0 ([#483](https://github.com/Instabug/Instabug-Flutter/pull/483)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/13.2.0).
 
-## [13.1.1](https://github.com/Instabug/Instabug-Flutter/compare/v13.0.0...dev) (Jun,11 2024)
+## [13.1.1](https://github.com/Instabug/Instabug-Flutter/compare/v13.0.0...v13.1.1) (June 11, 2024)
 
 ### Added
 
