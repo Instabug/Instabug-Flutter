@@ -18,8 +18,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
-import io.flutter.embedding.engine.renderer.FlutterRenderer;
-
 public class PrivateViewManager {
     private static final String THREAD_NAME = "IBG-Flutter-Screenshot";
     public static final String EXCEPTION_MESSAGE = "IBG-Flutter-Screenshot: error capturing screenshot";
@@ -32,13 +30,13 @@ public class PrivateViewManager {
 
     private final InstabugPrivateViewPigeon.InstabugPrivateViewApi instabugPrivateViewApi;
     private Activity activity;
-    final com.instabug.flutter.util.privateViews.ScreenshotCaptor pixelCopyScreenshotCaptor;
-    final com.instabug.flutter.util.privateViews.ScreenshotCaptor boundryScreenshotCaptor;
+    final CaptureManager pixelCopyScreenshotCaptor;
+    final CaptureManager boundryScreenshotCaptor;
 
-    public PrivateViewManager(@NonNull InstabugPrivateViewPigeon.InstabugPrivateViewApi instabugPrivateViewApi, com.instabug.flutter.util.privateViews.ScreenshotCaptor pixelCopyScreenshotCaptor, com.instabug.flutter.util.privateViews.ScreenshotCaptor boundryScreenshotCaptor) {
+    public PrivateViewManager(@NonNull InstabugPrivateViewPigeon.InstabugPrivateViewApi instabugPrivateViewApi, CaptureManager pixelCopyCaptureManager, CaptureManager boundryCaptureManager) {
         this.instabugPrivateViewApi = instabugPrivateViewApi;
-        this.pixelCopyScreenshotCaptor = pixelCopyScreenshotCaptor;
-        this.boundryScreenshotCaptor = boundryScreenshotCaptor;
+        this.pixelCopyScreenshotCaptor = pixelCopyCaptureManager;
+        this.boundryScreenshotCaptor = boundryCaptureManager;
 
 
     }
@@ -79,7 +77,7 @@ public class PrivateViewManager {
 
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    pixelCopyScreenshotCaptor.takeScreenshot(activity, new ScreenshotResultCallback() {
+                    pixelCopyScreenshotCaptor.capture(activity, new ScreenshotResultCallback() {
                         @Override
                         public void onScreenshotResult(ScreenshotResult result) {
                             processScreenshot(result, privateViews, latch, capturingCallback);
@@ -87,12 +85,12 @@ public class PrivateViewManager {
 
                         @Override
                         public void onError() {
-                            boundryScreenshotCaptor.takeScreenshot(activity, boundryScreenshotResult);
+                            boundryScreenshotCaptor.capture(activity, boundryScreenshotResult);
 
                         }
                     });
                 } else {
-                    boundryScreenshotCaptor.takeScreenshot(activity, boundryScreenshotResult);
+                    boundryScreenshotCaptor.capture(activity, boundryScreenshotResult);
                 }
 
             } catch (Exception e) {

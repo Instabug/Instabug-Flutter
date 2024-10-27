@@ -17,11 +17,11 @@ import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.android.FlutterFragment;
 import io.flutter.embedding.android.FlutterView;
 
-public class PixelCopyScreenshotCaptor implements ScreenshotCaptor {
+public class PixelCopyCaptureManager implements CaptureManager {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void takeScreenshot(Activity activity, ScreenshotResultCallback screenshotResultCallback) {
+    public void capture(Activity activity, ScreenshotResultCallback screenshotResultCallback) {
         FlutterView flutterView = getFlutterView(activity);
         if (flutterView == null || !isValidFlutterView(flutterView)) {
             screenshotResultCallback.onError();

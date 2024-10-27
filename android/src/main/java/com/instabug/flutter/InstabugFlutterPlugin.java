@@ -20,12 +20,10 @@ import com.instabug.flutter.modules.InstabugLogApi;
 import com.instabug.flutter.modules.RepliesApi;
 import com.instabug.flutter.modules.SessionReplayApi;
 import com.instabug.flutter.modules.SurveysApi;
-import com.instabug.flutter.util.privateViews.BoundryScreenshotCaptor;
-import com.instabug.flutter.util.privateViews.PixelCopyScreenshotCaptor;
+import com.instabug.flutter.util.privateViews.BoundryCaptureManager;
+import com.instabug.flutter.util.privateViews.PixelCopyCaptureManager;
 import com.instabug.flutter.util.privateViews.PrivateViewManager;
 import com.instabug.library.internal.crossplatform.InternalCore;
-
-import java.util.concurrent.Callable;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
@@ -88,7 +86,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
         BugReportingApi.init(messenger);
         CrashReportingApi.init(messenger);
         FeatureRequestsApi.init(messenger);
-        privateViewManager = new PrivateViewManager(new InstabugPrivateViewPigeon.InstabugPrivateViewApi(messenger), new PixelCopyScreenshotCaptor(), new BoundryScreenshotCaptor(renderer));
+        privateViewManager = new PrivateViewManager(new InstabugPrivateViewPigeon.InstabugPrivateViewApi(messenger), new PixelCopyCaptureManager(), new BoundryCaptureManager(renderer));
         InstabugApi.init(messenger, context, privateViewManager, InternalCore.INSTANCE);
         InstabugLogApi.init(messenger);
         RepliesApi.init(messenger);
