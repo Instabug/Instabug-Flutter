@@ -95,8 +95,15 @@ extern PrivateViewApi* InitPrivateViewApi(
 
 // Retrieve the origin point of the Flutter view
 - (CGPoint)getFlutterViewOrigin {
-    UIView *flutterView = self.flutterEngineRegistrar.flutterEngine.viewController.view;
-    return flutterView ? flutterView.frame.origin : CGPointZero;
+    FlutterViewController *flutterVC = (FlutterViewController *)self.flutterEngineRegistrar.flutterEngine.viewController;
+
+    UIView *flutterView = flutterVC.view;
+    if(!flutterView)
+        return  CGPointZero;
+    UIWindow *window = flutterView.window;
+    CGRect globalFrame = [flutterView convertRect:flutterView.bounds toView:window];
+
+    return globalFrame.origin ;
 }
 
 
