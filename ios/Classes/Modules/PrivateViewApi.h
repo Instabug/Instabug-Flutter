@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <InstabugPrivateViewPigeon.h>
+#import "InstabugPrivateViewPigeon.h"
 #import <Flutter/Flutter.h>
 
 
