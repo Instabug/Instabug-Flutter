@@ -113,6 +113,9 @@
     UIView *mockView = [[UIView alloc] initWithFrame:CGRectMake(10, 20, 100, 100)];
    
     OCMStub([self.mockFlutterViewController view]).andReturn(mockView);
+    
+    UIWindow*  testWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [testWindow addSubview:mockView];
 
     CGPoint origin = [self.api getFlutterViewOrigin];
     
