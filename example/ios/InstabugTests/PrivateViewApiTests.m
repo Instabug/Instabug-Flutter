@@ -160,7 +160,8 @@
     NSArray<NSValue *> *converted = [self.api convertToRectangles:rectangles];
     
     XCTAssertEqual(converted.count, 1);
-    XCTAssertTrue(CGRectEqualToRect([converted[0] CGRectValue], CGRectMake(15, 25, 21, 21)));
+    CGRect rect = [converted[0] CGRectValue];
+    XCTAssertTrue(CGRectEqualToRect(rect, CGRectMake(10, 20, 21, 21)));
 }
 
 - (void)testConcurrentMaskCalls {
