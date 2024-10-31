@@ -3,4 +3,4 @@ dependency_overrides:
   instabug_dio_interceptor:
     path: ..
   instabug_flutter:
-    path: ../../Instabug-Flutter
+    path: ../../instabug_flutter

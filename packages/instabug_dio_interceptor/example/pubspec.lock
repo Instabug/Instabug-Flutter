@@ -109,7 +109,7 @@ packages:
   instabug_flutter:
     dependency: "direct overridden"
     description:
-      path: "../../Instabug-Flutter"
+      path: "../../instabug_flutter"
       relative: true
     source: path
     version: "13.4.0"
