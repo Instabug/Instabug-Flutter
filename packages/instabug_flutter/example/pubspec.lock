@@ -111,10 +111,9 @@ packages:
   instabug_http_client:
     dependency: "direct main"
     description:
-      name: instabug_http_client
-      sha256: "7d52803c0dd639f6dddbe07333418eb251ae02f3f9f4d30402517533ca692784"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../../instabug_http_client"
+      relative: true
+    source: path
     version: "2.4.0"
   leak_tracker:
     dependency: transitive
