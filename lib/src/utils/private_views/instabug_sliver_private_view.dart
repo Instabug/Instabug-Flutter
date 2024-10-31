@@ -6,6 +6,7 @@ import 'package:instabug_flutter/src/utils/private_views/visibility_detector/sli
 class InstabugSliverPrivateView extends StatefulWidget {
   final Widget sliver;
 
+  // Making the constructor const prevents the VisibilityDetector from detecting changes in the view,
   // ignore: prefer_const_constructors_in_immutables
   InstabugSliverPrivateView({Key? key, required this.sliver}) : super(key: key);
 

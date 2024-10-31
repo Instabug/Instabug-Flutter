@@ -30,6 +30,7 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import io.flutter.plugin.common.BinaryMessenger;
+import io.flutter.plugin.common.PluginRegistry;
 
 public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     private static final String TAG = InstabugFlutterPlugin.class.getName();
@@ -38,6 +39,15 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     private static Activity activity;
 
     PrivateViewManager privateViewManager;
+
+    /**
+     * Embedding v1
+     */
+    @SuppressWarnings("deprecation")
+    public static void registerWith(PluginRegistry.Registrar registrar) {
+        activity = registrar.activity();
+        register(registrar.context().getApplicationContext(), registrar.messenger(), (FlutterRenderer) registrar.textures());
+    }
 
 
     @Override
@@ -69,7 +79,6 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
-
         privateViewManager.setActivity(activity);
 
     }
@@ -81,7 +90,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
 
     }
 
-    private void register(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
+    private static void register(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
         ApmApi.init(messenger);
         BugReportingApi.init(messenger);
         CrashReportingApi.init(messenger);
@@ -94,19 +103,4 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
         SurveysApi.init(messenger);
     }
 
-    @Nullable
-    private static Bitmap takeScreenshot(FlutterRenderer renderer) {
-        try {
-            final View view = activity.getWindow().getDecorView().getRootView();
-
-            view.setDrawingCacheEnabled(true);
-            final Bitmap bitmap = renderer.getBitmap();
-            view.setDrawingCacheEnabled(false);
-
-            return bitmap;
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to take screenshot using " + renderer.toString() + ". Cause: " + e);
-            return null;
-        }
-    }
 }
