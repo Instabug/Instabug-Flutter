@@ -44,7 +44,7 @@ commands:
           command: sudo gem install cocoapods
       - run:
           name: Install Pods
-          working_directory: packages/Instabug-Flutter/example/ios
+          working_directory: packages/instabug_flutter/example/ios
           command: pod install --repo-update
   setup_captain:
     parameters:
@@ -222,7 +222,7 @@ jobs:
       - advanced-checkout/shallow-checkout
       - setup_flutter
       - android/run-tests:
-          working-directory: packages/Instabug-Flutter/example/android
+          working-directory: packages/instabug_flutter/example/android
           test-command: ./gradlew test
 
   e2e_android_captain:
