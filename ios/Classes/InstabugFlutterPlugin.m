@@ -9,6 +9,7 @@
 #import "RepliesApi.h"
 #import "SessionReplayApi.h"
 #import "SurveysApi.h"
+#import "PrivateViewApi.h"
 
 @implementation InstabugFlutterPlugin
 
@@ -17,11 +18,14 @@
     InitBugReportingApi([registrar messenger]);
     InitCrashReportingApi([registrar messenger]);
     InitFeatureRequestsApi([registrar messenger]);
-    InitInstabugApi([registrar messenger]);
+    PrivateViewApi* privateViewApi = InitPrivateViewApi([registrar messenger],registrar);
+    InitInstabugApi([registrar messenger],privateViewApi);
     InitInstabugLogApi([registrar messenger]);
     InitRepliesApi([registrar messenger]);
     InitSessionReplayApi([registrar messenger]);
     InitSurveysApi([registrar messenger]);
+
+    
 }
 
 @end

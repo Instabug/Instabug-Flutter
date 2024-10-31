@@ -5,6 +5,7 @@ import 'package:instabug_flutter/src/utils/private_views/visibility_detector/vis
 class InstabugPrivateView extends StatefulWidget {
   final Widget child;
 
+  // Making the constructor const prevents the VisibilityDetector from detecting changes in the view,
   // ignore: prefer_const_constructors_in_immutables
   InstabugPrivateView({required this.child}) : super(key: null);
 
