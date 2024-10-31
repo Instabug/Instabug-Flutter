@@ -2,7 +2,7 @@
 *.mocks.dart
 *.g.dart
 packages/**/android/**/generated/
-packages/**ios/**/Generated/
+packages/**/ios/**/Generated/
 
 # Miscellaneous
 *.class
@@ -84,4 +84,4 @@ android/gradlew.bat
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-/packages/Instabug-Flutter/lib/src/generated/
+/packages/**/lib/src/generated/
