@@ -151,6 +151,19 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _navigateToPrivateViews() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const InstabugCaptureScreenLoading(
+          screenName: ApmPage.screenName,
+          child: PrivateViewPage(),
+        ),
+        settings: const RouteSettings(name: ApmPage.screenName),
+      ),
+    );
+  }
+
   void _navigateToComplex() {
     Navigator.push(
       context,
@@ -309,6 +322,12 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: _navigateToComplex,
           text: 'Complex',
+        ),
+        InstabugPrivateView(
+          child: InstabugButton(
+            onPressed: _navigateToPrivateViews,
+            text: 'Private views',
+          ),
         ),
         const SectionTitle('Sessions Replay'),
         InstabugButton(
