@@ -8,11 +8,9 @@
 @property (nonatomic, strong) InstabugPrivateViewApi *flutterApi;
 @property (nonatomic, strong) NSObject<FlutterPluginRegistrar> * flutterEngineRegistrar;
 
-// Corrected initializer signature
 - (instancetype)initWithFlutterApi:(InstabugPrivateViewApi *)api
                          registrar:(NSObject<FlutterPluginRegistrar> *)registrar;
 
-// Corrected block syntax for `mask` method
 - (void)mask:(UIImage *)screenshot
  completion:(void (^)(UIImage *maskedImage))completion;
 - (void)handlePrivateViewsResult:(NSArray<NSNumber *> *)rectangles
