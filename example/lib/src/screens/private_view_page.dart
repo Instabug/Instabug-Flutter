@@ -9,7 +9,7 @@ class PrivateViewPage extends StatefulWidget {
 
 class _PrivateViewPageState extends State<PrivateViewPage> {
   late VideoPlayerController _controller;
-  final _scaffoldKey= GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _PrivateViewPageState extends State<PrivateViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Page(scaffoldKey: _scaffoldKey,title: 'Private views', children: [
+    return Page(scaffoldKey: _scaffoldKey, title: 'Private views', children: [
       SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -52,7 +52,8 @@ class _PrivateViewPageState extends State<PrivateViewPage> {
                     const snackBar = SnackBar(
                       content: Text('Hello, you clicked on a private button'),
                     );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);                  },
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  },
                   child: const Text('I am a private button'),
                 ),
               ),
