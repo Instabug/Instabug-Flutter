@@ -8,6 +8,7 @@ import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_http_client/instabug_http_client.dart';
 import 'package:instabug_flutter_example/src/app_routes.dart';
 import 'package:instabug_flutter_example/src/widget/nested_view.dart';
+import 'package:video_player/video_player.dart';
 
 import 'src/native/instabug_flutter_example_method_channel.dart';
 import 'src/widget/instabug_button.dart';
@@ -40,6 +41,7 @@ part 'src/components/page.dart';
 part 'src/components/traces_content.dart';
 
 part 'src/components/flows_content.dart';
+part 'src/screens/private_view_page.dart';
 
 void main() {
   runZonedGuarded(

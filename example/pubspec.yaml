@@ -27,9 +27,9 @@ dependencies:
   instabug_flutter:
     path: ../
   instabug_http_client: ^2.4.0
+  video_player:
 
 dev_dependencies:
-  espresso: 0.2.0+5
   flutter_driver:
     sdk: flutter
   flutter_test:
@@ -51,9 +51,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+   - assets/img.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

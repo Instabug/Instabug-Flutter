@@ -13,6 +13,7 @@ import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
+import com.instabug.flutter.util.privateViews.PrivateViewManager;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
@@ -21,13 +22,14 @@ import com.instabug.library.IssueType;
 import com.instabug.library.Platform;
 import com.instabug.library.ReproConfigurations;
 import com.instabug.library.featuresflags.model.IBGFeatureFlag;
+import com.instabug.library.internal.crossplatform.InternalCore;
 import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
+import com.instabug.library.screenshot.ScreenshotCaptor;
+import com.instabug.library.screenshot.instacapture.ScreenshotRequest;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
-import io.flutter.FlutterInjector;
-import io.flutter.embedding.engine.loader.FlutterLoader;
-import io.flutter.plugin.common.BinaryMessenger;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
@@ -40,22 +42,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
+
+import io.flutter.FlutterInjector;
+import io.flutter.embedding.engine.loader.FlutterLoader;
+import io.flutter.plugin.common.BinaryMessenger;
 
 public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     private final String TAG = InstabugApi.class.getName();
     private final Context context;
-    private final Callable<Bitmap> screenshotProvider;
     private final InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
+    private final PrivateViewManager privateViewManager;
+    private final InternalCore internalCore;
 
-    public static void init(BinaryMessenger messenger, Context context, Callable<Bitmap> screenshotProvider) {
-        final InstabugApi api = new InstabugApi(context, screenshotProvider);
+    public static void init(BinaryMessenger messenger, Context context, PrivateViewManager privateViewManager, InternalCore internalCore) {
+        final InstabugApi api = new InstabugApi(context, privateViewManager, internalCore);
         InstabugPigeon.InstabugHostApi.setup(messenger, api);
     }
 
-    public InstabugApi(Context context, Callable<Bitmap> screenshotProvider) {
+    public InstabugApi(Context context, PrivateViewManager privateViewManager, InternalCore internalCore) {
         this.context = context;
-        this.screenshotProvider = screenshotProvider;
+        this.privateViewManager = privateViewManager;
+        this.internalCore = internalCore;
     }
 
     @VisibleForTesting
@@ -112,7 +119,13 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 .setSdkDebugLogsLevel(parsedLogLevel)
                 .build();
 
-        Instabug.setScreenshotProvider(screenshotProvider);
+        internalCore._setScreenshotCaptor(new ScreenshotCaptor() {
+            @Override
+            public void capture(@NonNull ScreenshotRequest screenshotRequest) {
+                privateViewManager.mask(screenshotRequest.getListener());
+            }
+        });
+
     }
 
     @Override

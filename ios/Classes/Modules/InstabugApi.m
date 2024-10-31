@@ -5,11 +5,13 @@
 #import "IBGNetworkLogger+CP.h"
 #import "InstabugApi.h"
 #import "ArgsRegistry.h"
+#import "../Util/Instabug+CP.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue:((float)(rgbValue & 0xFF)) / 255.0 alpha:((float)((rgbValue & 0xFF000000) >> 24)) / 255.0];
 
-extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
+extern void InitInstabugApi(id<FlutterBinaryMessenger> _Nonnull messenger, PrivateViewApi * _Nonnull privateViewApi) {
     InstabugApi *api = [[InstabugApi alloc] init];
+    api.privateViewApi = privateViewApi;
     InstabugHostApiSetup(messenger, api);
 }
 
@@ -53,6 +55,14 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
     [Instabug setSdkDebugLogsLevel:resolvedLogLevel];
     [Instabug startWithToken:token invocationEvents:resolvedEvents];
+   
+    [Instabug setScreenshotMaskingHandler:^(UIImage * _Nonnull screenshot, void (^ _Nonnull completion)(UIImage * _Nullable)) {
+        [self.privateViewApi mask:screenshot completion:^(UIImage * _Nonnull maskedImage) {
+          if (maskedImage != nil) {
+              completion(maskedImage);
+             }
+        }];
+    }];
 }
 
 - (void)showWithError:(FlutterError *_Nullable *_Nonnull)error {

@@ -151,6 +151,19 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _navigateToPrivateViews() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const InstabugCaptureScreenLoading(
+          screenName: ApmPage.screenName,
+          child: PrivateViewPage(),
+        ),
+        settings: const RouteSettings(name: ApmPage.screenName),
+      ),
+    );
+  }
+
   void _navigateToComplex() {
     Navigator.push(
       context,
@@ -197,10 +210,12 @@ class _MyHomePageState extends State<MyHomePage> {
               style: buttonStyle,
               child: const Text('None'),
             ),
-            ElevatedButton(
-              onPressed: () => setInvocationEvent(InvocationEvent.shake),
-              style: buttonStyle,
-              child: const Text('Shake'),
+            InstabugPrivateView(
+              child: ElevatedButton(
+                onPressed: () => setInvocationEvent(InvocationEvent.shake),
+                style: buttonStyle,
+                child: const Text('Shake'),
+              ),
             ),
             ElevatedButton(
               onPressed: () => setInvocationEvent(InvocationEvent.screenshot),
@@ -298,13 +313,21 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: _navigateToCrashes,
           text: 'Crashes',
         ),
-        InstabugButton(
-          onPressed: _navigateToApm,
-          text: 'APM',
+        InstabugPrivateView(
+          child: InstabugButton(
+            onPressed: _navigateToApm,
+            text: 'APM',
+          ),
         ),
         InstabugButton(
           onPressed: _navigateToComplex,
           text: 'Complex',
+        ),
+        InstabugPrivateView(
+          child: InstabugButton(
+            onPressed: _navigateToPrivateViews,
+            text: 'Private views',
+          ),
         ),
         const SectionTitle('Sessions Replay'),
         InstabugButton(
@@ -347,9 +370,11 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () => removeFeatureFlag(),
           text: 'RemoveFeatureFlag',
         ),
-        InstabugButton(
-          onPressed: () => removeAllFeatureFlags(),
-          text: 'RemoveAllFeatureFlags',
+        InstabugPrivateView(
+          child: InstabugButton(
+            onPressed: () => removeAllFeatureFlags(),
+            text: 'RemoveAllFeatureFlags',
+          ),
         ),
       ],
     );
