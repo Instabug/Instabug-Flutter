@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v13.4.0...dev)
+
+### Changed
+
+- Update the minimum required Flutter SDK version to v2.10.0. ([#518](https://github.com/Instabug/Instabug-Flutter/pull/518))
+
+
 ## [13.4.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.3.0...v13.4.0) (September 29, 2024)
 
 ### Added
