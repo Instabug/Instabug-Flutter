@@ -307,8 +307,17 @@ jobs:
       - setup_flutter
       - run:
           name: Check Package Score
-          command: melos score
-      - run: melos dryPublish
+          command: melos score --no-select
+      - run: melos dryPublish --no-select
+
+  release_instabug_private_views_plugin:
+    executor: flutter-executor
+    steps:
+      - advanced-checkout/shallow-checkout
+      - setup_flutter
+      - run: chmod +x packages/instabug_private_views/release.sh
+      - run: ./packages/instabug_private_views/release.sh
+
 
   release_instabug_flutter:
     macos:
@@ -384,6 +393,20 @@ workflows:
             # - e2e_android_captain
             # - test_ios
             - e2e_ios_captain
+            - verify_pub
+          filters:
+            branches:
+              only: master
+      - hold_release_instabug_private_views_plugin:
+          type: approval
+          requires:
+            - test_flutter-stable
+          filters:
+            branches:
+              only: master
+      - release_instabug_private_views_plugin:
+          requires:
+            - hold_release_instabug_private_views_plugin
             - verify_pub
           filters:
             branches:
