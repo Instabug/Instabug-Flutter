@@ -131,10 +131,10 @@ commands:
                 steps:
                   - run:
                       name: Generate Pigeons
-                      command: melos pigeon
+                      command: melos pigeon --no-select
                   - run:
                       name: Build Pigeons
-                      command: melos generate
+                      command: melos generate --no-select
       - when:
           condition:
             equal:
@@ -188,7 +188,7 @@ jobs:
       - setup_flutter:
           version: <<parameters.version>>
           use_melos: true
-      - run: melos test-coverage
+      - run: melos test-coverage --no-select
       - persist_to_workspace:
           root: ~/project
           paths:
@@ -332,7 +332,7 @@ jobs:
       - run:
           name: Generate Pigeons
           working_directory: project
-          command: melos pigeon
+          command: melos pigeon --no-select
       - run:
           name: Clone Escape
           command: git clone git@github.com:Instabug/Escape.git
