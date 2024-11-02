@@ -1,0 +1,60 @@
+group 'com.instabug.flutter'
+version '13.4.0'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace = "com.instabug.flutter"
+    }
+
+    compileSdkVersion 28
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion 16
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'proguard-rules.txt'
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+
+dependencies {
+    api 'com.instabug.library:instabug:13.4.1.6295791-SNAPSHOT'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.mockito:mockito-inline:3.12.1"
+}
+
+// add upload_symbols task
+apply from: './upload_symbols.gradle'
+tasks.whenTaskAdded { task ->
+    if (task.name == 'assembleRelease') {
+        task.finalizedBy upload_symbols_task
+    }
+}
