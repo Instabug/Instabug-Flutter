@@ -310,7 +310,7 @@ jobs:
           command: melos score --no-select
       - run: melos dryPublish --no-select
 
-  release-modular-plugin:
+  release_modular_plugin:
     executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
@@ -403,7 +403,7 @@ workflows:
           filters:
             branches:
               only: master
-      - release-modular-plugin:
+      - release_modular_plugin:
           requires:
             - hold_release_modular_plugin
             - verify_pub
