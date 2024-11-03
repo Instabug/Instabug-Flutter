@@ -15,6 +15,7 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		BE133A632CD831A500FEADB5 /* PrivateViewHostApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE133A622CD831A500FEADB5 /* PrivateViewHostApiTests.m */; };
 		BE9F8D392CD5C068003ADA97 /* PrivateViewApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9F8D382CD5C068003ADA97 /* PrivateViewApiTests.m */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99B4BB79D25D93036AAF6480 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		A1871ACDFF6D3EA7210660EF /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
+		BE133A622CD831A500FEADB5 /* PrivateViewHostApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateViewHostApiTests.m; sourceTree = "<group>"; };
 		BE9F8D382CD5C068003ADA97 /* PrivateViewApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateViewApiTests.m; sourceTree = "<group>"; };
 		BE9F8D3A2CD5C06A003ADA97 /* RunnerTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RunnerTests-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 			children = (
 				BE9F8D382CD5C068003ADA97 /* PrivateViewApiTests.m */,
 				BE9F8D3A2CD5C06A003ADA97 /* RunnerTests-Bridging-Header.h */,
+				BE133A622CD831A500FEADB5 /* PrivateViewHostApiTests.m */,
 			);
 			path = RunnerTests;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE9F8D392CD5C068003ADA97 /* PrivateViewApiTests.m in Sources */,
+				BE133A632CD831A500FEADB5 /* PrivateViewHostApiTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

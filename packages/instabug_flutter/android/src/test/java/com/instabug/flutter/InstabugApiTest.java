@@ -36,8 +36,10 @@ import com.instabug.library.Platform;
 import com.instabug.library.ReproConfigurations;
 import com.instabug.library.ReproMode;
 import com.instabug.library.featuresflags.model.IBGFeatureFlag;
+import com.instabug.library.internal.crossplatform.InternalCore;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
+import com.instabug.library.screenshot.ScreenshotCaptor;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 
 import org.json.JSONObject;
@@ -59,6 +61,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import io.flutter.plugin.common.BinaryMessenger;
+
 import org.mockito.verification.VerificationMode;
 
 public class InstabugApiTest {
@@ -349,11 +352,11 @@ public class InstabugApiTest {
 
     @Test
     public void testAddFeatureFlags() {
-       Map<String,String > featureFlags = new HashMap<>();
-        featureFlags.put("key1","variant1");
+        Map<String, String> featureFlags = new HashMap<>();
+        featureFlags.put("key1", "variant1");
         api.addFeatureFlags(featureFlags);
-        List<IBGFeatureFlag> flags=new ArrayList<IBGFeatureFlag>();
-        flags.add(new IBGFeatureFlag("key1","variant1"));
+        List<IBGFeatureFlag> flags = new ArrayList<IBGFeatureFlag>();
+        flags.add(new IBGFeatureFlag("key1", "variant1"));
         mInstabug.verify(() -> Instabug.addFeatureFlags(flags));
     }
 
@@ -597,5 +600,13 @@ public class InstabugApiTest {
     public void testWillRedirectToStore() {
         api.willRedirectToStore();
         mInstabug.verify(Instabug::willRedirectToStore);
+    }
+
+    @Test
+    public void testSetScreenshotCaptor() {
+        InternalCore internalCore = spy(InternalCore.INSTANCE);
+
+        InstabugApi.setScreenshotCaptor(any(), internalCore);
+        verify(internalCore)._setScreenshotCaptor(any(ScreenshotCaptor.class));
     }
 }

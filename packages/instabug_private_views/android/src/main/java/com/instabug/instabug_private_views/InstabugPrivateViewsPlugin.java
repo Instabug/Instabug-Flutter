@@ -82,7 +82,7 @@ public class InstabugPrivateViewsPlugin implements FlutterPlugin, ActivityAware 
 
     private void register(BinaryMessenger messenger, FlutterRenderer renderer) {
         privateViewManager = new PrivateViewManager(new InstabugPrivateViewPigeon.InstabugPrivateViewFlutterApi(messenger), new PixelCopyCaptureManager(), new BoundryCaptureManager(renderer));
-        InstabugPrivateView instabugPrivateView=new InstabugPrivateView(messenger,privateViewManager, InternalCore.INSTANCE);
+        InstabugPrivateView.init(messenger,privateViewManager);
 
     }
 }

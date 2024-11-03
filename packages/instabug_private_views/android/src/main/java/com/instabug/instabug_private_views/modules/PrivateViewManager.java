@@ -10,11 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import com.instabug.flutter.util.ThreadManager;
+import com.instabug.flutter.util.privateViews.ScreenshotCaptor;
 import com.instabug.instabug_private_views.generated.InstabugPrivateViewPigeon;
 import com.instabug.instabug_private_views.model.ScreenshotResult;
 import com.instabug.instabug_private_views.modules.capturing.CaptureManager;
 import com.instabug.instabug_private_views.modules.capturing.ScreenshotResultCallback;
-import com.instabug.library.screenshot.ScreenshotCaptor;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
-public  class PrivateViewManager {
+public class PrivateViewManager {
     private static final String THREAD_NAME = "IBG-Flutter-Screenshot";
     public static final String EXCEPTION_MESSAGE = "IBG-Flutter-Screenshot: error capturing screenshot";
 

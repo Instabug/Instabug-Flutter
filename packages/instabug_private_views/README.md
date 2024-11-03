@@ -35,7 +35,7 @@ void main() {
     invocationEvents: [InvocationEvent.floatingButton],
   );
 
-  ReproSteps.enablePrivateViews();
+  ReproSteps.enableMaskingPrivateViews();
   
   runApp(MyApp());
   
