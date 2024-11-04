@@ -233,6 +233,8 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
                 w3CGeneratedHeader = (String) data.get("w3CGeneratedHeader");
 
+
+            }
                 if (data.containsKey("w3CCaughtHeader")) {
                     w3CCaughtHeader = (String) data.get("w3CCaughtHeader");
 
@@ -250,17 +252,19 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
                     );
                 }
 
-            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class, APMCPNetworkLog.W3CExternalTraceAttributes.class);
-            if (method != null) {
-                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage, w3cExternalTraceAttributes);
-            } else {
-                Log.e(TAG, "APMNetworkLogger.log was not found by reflection");
-            }
+                Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class, APMCPNetworkLog.W3CExternalTraceAttributes.class);
+                if (method != null) {
+                    method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage, w3cExternalTraceAttributes);
+                } else {
+                    Log.e(TAG, "APMNetworkLogger.log was not found by reflection");
+                }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
         }
-    }
+
+
 
 
     @Override
