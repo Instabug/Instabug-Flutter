@@ -20,6 +20,7 @@ class NetworkLogger {
   // ignore: use_setters_to_change_properties
   static void $setHostApi(InstabugHostApi host) {
     _host = host;
+    FeatureFlagsManager().$setHostApi(host);
   }
 
   /// @nodoc
