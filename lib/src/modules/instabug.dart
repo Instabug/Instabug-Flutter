@@ -202,14 +202,6 @@ class Instabug {
     ScreenNameMasker.I.setMaskingCallback(callback);
   }
 
-  /// Sets a [callback] to be called wehenever a screen name is captured to mask
-  /// sensitive information in the screen name.
-  static void setScreenNameMaskingCallback(
-    ScreenNameMaskingCallback? callback,
-  ) {
-    ScreenNameMasker.I.setMaskingCallback(callback);
-  }
-
   /// Shows the welcome message in a specific mode.
   /// [welcomeMessageMode] is an enum to set the welcome message mode to live, or beta.
   static Future<void> showWelcomeMessageWithMode(
