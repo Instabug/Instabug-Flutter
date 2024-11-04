@@ -45,6 +45,7 @@ import com.instabug.library.featuresflags.model.IBGFeatureFlag;
 import com.instabug.library.internal.crossplatform.CoreFeature;
 import com.instabug.library.internal.crossplatform.FeaturesStateListener;
 import com.instabug.library.internal.crossplatform.InternalCore;
+import com.instabug.library.featuresflags.model.IBGFeatureFlag;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
@@ -76,6 +77,7 @@ import kotlin.jvm.functions.Function1;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.mockito.verification.VerificationMode;
 import org.mockito.verification.VerificationMode;
 
 public class InstabugApiTest {

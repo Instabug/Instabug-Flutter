@@ -19,6 +19,7 @@ import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
 
 import io.flutter.plugin.common.BinaryMessenger;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
@@ -234,26 +235,22 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
                 w3CGeneratedHeader = (String) data.get("w3CGeneratedHeader");
 
-            }
+                if (data.containsKey("w3CCaughtHeader")) {
+                    w3CCaughtHeader = (String) data.get("w3CCaughtHeader");
+
+                }
 
 
-            if (data.containsKey("w3CCaughtHeader")) {
-                w3CCaughtHeader = (String) data.get("w3CCaughtHeader");
+                APMCPNetworkLog.W3CExternalTraceAttributes w3cExternalTraceAttributes =
+                        null;
+                if (isW3cHeaderFound != null) {
+                    w3cExternalTraceAttributes = new APMCPNetworkLog.W3CExternalTraceAttributes(
+                            isW3cHeaderFound, partialId == null ? null : partialId.longValue(),
+                            networkStartTimeInSeconds == null ? null : networkStartTimeInSeconds.longValue(),
+                            w3CGeneratedHeader, w3CCaughtHeader
 
-            }
-
-
-            APMCPNetworkLog.W3CExternalTraceAttributes w3cExternalTraceAttributes =
-                    null;
-            if (isW3cHeaderFound != null) {
-                w3cExternalTraceAttributes = new APMCPNetworkLog.W3CExternalTraceAttributes(
-                        isW3cHeaderFound, partialId == null ? null : partialId.longValue(),
-                        networkStartTimeInSeconds == null ? null : networkStartTimeInSeconds.longValue(),
-                        w3CGeneratedHeader, w3CCaughtHeader
-
-                );
-            }
-
+                    );
+                }
 
             Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class, APMCPNetworkLog.W3CExternalTraceAttributes.class);
             if (method != null) {
