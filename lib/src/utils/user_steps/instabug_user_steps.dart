@@ -34,12 +34,24 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
 
   @override
   Widget build(BuildContext context) {
-    return Listener(
-      behavior: HitTestBehavior.translucent,
-      onPointerDown: _onPointerDown,
-      onPointerUp: _onPointerUp,
-      onPointerMove: _onPointerMove,
-      child: widget.child,
+    return NotificationListener<ScrollNotification>(
+      onNotification: (ScrollNotification notification) {
+        if (notification is ScrollStartNotification) {
+          print("Scroll started");
+        } else if (notification is ScrollUpdateNotification) {
+          print("Scrolling... Current Offset: ${notification.metrics.pixels}");
+        } else if (notification is ScrollEndNotification) {
+          print("Scroll ended");
+        }
+        return true;
+      },
+      child: Listener(
+        behavior: HitTestBehavior.translucent,
+        onPointerDown: _onPointerDown,
+        onPointerUp: _onPointerUp,
+        onPointerMove: _onPointerMove,
+        child: widget.child,
+      ),
     );
   }
 
