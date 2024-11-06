@@ -14,7 +14,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
   @override
   void didPop(Route route, Route? previousRoute) {
     if (previousRoute != null) {
-      instabugNavigator.screenChanged(route.settings.name?.trim());
+      instabugNavigator.screenChanged(previousRoute.settings.name?.trim());
     }
   }
 
