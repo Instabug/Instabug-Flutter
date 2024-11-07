@@ -12,10 +12,10 @@ class InstabugNavigatorObserver extends NavigatorObserver {
 
   void screenChanged(Route newRoute) {
     try {
-      final rawScreenName = newRoute.settings.name.toString().trim();
-      final screenName = rawScreenName.isEmpty
-          ? ReproStepsConstants.emptyScreenFallback
-          : rawScreenName;
+      final rawScreenName = newRoute.settings.name?.toString().trim();
+      final screenName = rawScreenName?.isNotEmpty==true
+          ? rawScreenName!
+          : ReproStepsConstants.emptyScreenFallback;
       final maskedScreenName = ScreenNameMasker.I.mask(screenName);
 
       final route = InstabugRoute(
