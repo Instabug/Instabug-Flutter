@@ -4,7 +4,7 @@
 
 ### Fixed
 
-- Fixed an issue with screen name being sent as null. [#529](https://github.com/Instabug/Instabug-Flutter/pull/529)).
+- Fixed an issue where the screen name was being sent as null. [#529](https://github.com/Instabug/Instabug-Flutter/pull/529)).
 
 ## [13.4.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.3.0...v13.4.0) (September 29, 2024)
 
