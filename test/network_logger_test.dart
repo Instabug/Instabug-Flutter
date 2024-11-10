@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,6 +22,7 @@ import 'network_logger_test.mocks.dart';
   NetworkManager,
   W3CHeaderUtils,
   FeatureFlagsManager,
+  Random,
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +32,7 @@ void main() {
   final mInstabugHost = MockInstabugHostApi();
   final mBuildInfo = MockIBGBuildInfo();
   final mManager = MockNetworkManager();
-
+  final mRandom = MockRandom();
   final logger = NetworkLogger();
   final data = NetworkData(
     url: "https://httpbin.org/get",
@@ -154,5 +156,53 @@ void main() {
     verify(
       mManager.setOmitLogCallback(callback),
     ).called(1);
+  });
+
+  test(
+      '[getW3CHeader] should return  null when isW3cExternalTraceIDEnabled disabled',
+      () async {
+    when(mBuildInfo.isAndroid).thenReturn(true);
+
+    when(mInstabugHost.isW3CFeatureFlagsEnabled()).thenAnswer(
+      (_) => Future.value({
+        "isW3cExternalTraceIDEnabled": false,
+        "isW3cExternalGeneratedHeaderEnabled": false,
+        "isW3cCaughtHeaderEnabled": false,
+      }),
+    );
+    final time = DateTime.now().millisecondsSinceEpoch;
+    final w3cHeader = await logger.getW3CHeader({}, time);
+    expect(w3cHeader, null);
+  });
+
+  test(
+      '[getW3CHeader] should return transparent header when isW3cCaughtHeaderEnabled enabled',
+      () async {
+    when(mBuildInfo.isAndroid).thenReturn(false);
+
+    final time = DateTime.now().millisecondsSinceEpoch;
+    final w3cHeader =
+        await logger.getW3CHeader({"traceparent": "Header test"}, time);
+    expect(w3cHeader!.isW3cHeaderFound, true);
+    expect(w3cHeader.w3CCaughtHeader, "Header test");
+  });
+
+  test(
+      '[getW3CHeader] should return generated header when isW3cExternalGeneratedHeaderEnabled  and no traceparent header',
+      () async {
+    W3CHeaderUtils().$setRandom(mRandom);
+    when(mBuildInfo.isAndroid).thenReturn(false);
+
+    when(mRandom.nextInt(any)).thenReturn(217222);
+
+    final time = DateTime.now().millisecondsSinceEpoch;
+    final w3cHeader = await logger.getW3CHeader({}, time);
+    final generatedW3CHeader = W3CHeaderUtils().generateW3CHeader(time);
+
+    expect(w3cHeader!.isW3cHeaderFound, false);
+    expect(w3cHeader.w3CGeneratedHeader, generatedW3CHeader.w3cHeader);
+    expect(w3cHeader.partialId, generatedW3CHeader.partialId);
+    expect(w3cHeader.networkStartTimeInSeconds,
+        generatedW3CHeader.timestampInSeconds);
   });
 }
