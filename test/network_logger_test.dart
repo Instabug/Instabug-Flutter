@@ -207,4 +207,26 @@ void main() {
       generatedW3CHeader.timestampInSeconds,
     );
   });
+
+  test(
+      '[networkLog] should add transparent header when isW3cCaughtHeaderEnabled disabled to every request',
+      () async {
+    final networkData = data.copyWith(requestHeaders: <String,dynamic>{});
+    when(mBuildInfo.isAndroid).thenReturn(false);
+    when(mManager.obfuscateLog(networkData)).thenReturn(networkData);
+    when(mManager.omitLog(networkData)).thenReturn(false);
+    await logger.networkLog(networkData);
+    expect(networkData.requestHeaders.containsKey('traceparent'), isTrue);
+  });
+
+  test(
+      '[networkLog] should not add transparent header when there is traceparent',
+      () async {
+    final networkData = data.copyWith(requestHeaders: {'traceparent': 'test'});
+    when(mBuildInfo.isAndroid).thenReturn(false);
+    when(mManager.obfuscateLog(networkData)).thenReturn(networkData);
+    when(mManager.omitLog(networkData)).thenReturn(false);
+    await logger.networkLog(networkData);
+    expect(networkData.requestHeaders['traceparent'], 'test');
+  });
 }
