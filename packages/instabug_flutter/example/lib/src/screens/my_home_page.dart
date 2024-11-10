@@ -161,6 +161,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _navigateToPrivateViewPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PrivateViewPage(),
+        settings: const RouteSettings(name: ComplexPage.screenName),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Page(
@@ -305,6 +315,10 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: _navigateToComplex,
           text: 'Complex',
+        ),
+        InstabugButton(
+          onPressed: _navigateToPrivateViewPage,
+          text: 'Private views',
         ),
         const SectionTitle('Sessions Replay'),
         InstabugButton(

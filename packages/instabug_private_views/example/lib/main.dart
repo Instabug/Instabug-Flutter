@@ -21,7 +21,7 @@ void main() {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
       };
 
-      ReproSteps.enablePrivateViews();
+      enableInstabugMaskingPrivateViews();
       runApp(const PrivateViewPage());
     },
     CrashReporting.reportCrash,

@@ -4,6 +4,7 @@ analyzer:
   exclude:
     - "packages/**/*.g.dart"
     - "packages/**/example/**"
+    - "packages/instabug_private_views/example-hybrid-ios-app/**/**"
 
 
 linter:

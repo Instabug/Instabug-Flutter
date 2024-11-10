@@ -5,9 +5,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter_example/src/screens/private_view_page.dart';
 import 'package:instabug_http_client/instabug_http_client.dart';
 import 'package:instabug_flutter_example/src/app_routes.dart';
 import 'package:instabug_flutter_example/src/widget/nested_view.dart';
+import 'package:instabug_private_views/instabug_private_view.dart';
 
 import 'src/native/instabug_flutter_example_method_channel.dart';
 import 'src/widget/instabug_button.dart';
@@ -55,6 +57,9 @@ void main() {
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
       };
+
+      enableInstabugMaskingPrivateViews();
+
       runApp(const MyApp());
     },
     CrashReporting.reportCrash,
