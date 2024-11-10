@@ -6,6 +6,10 @@
 
 - Add support for tracing network requests from Instabug to services like Datadog and New Relic ([#481](https://github.com/Instabug/Instabug-Flutter/pull/481)).
 
+### Changed
+
+- Bump Instabug iOS SDK to v14.0.0 ([#531](https://github.com/Instabug/Instabug-Flutter/pull/531)). See release notes for [14.0.0](https://github.com/Instabug/Instabug-iOS/releases/tag/14.0.0),
+
 ## [13.4.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.3.0...v13.4.0) (September 29, 2024)
 
 ### Added
