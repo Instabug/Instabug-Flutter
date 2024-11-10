@@ -211,7 +211,7 @@ void main() {
   test(
       '[networkLog] should add transparent header when isW3cCaughtHeaderEnabled disabled to every request',
       () async {
-    final networkData = data.copyWith(requestHeaders: <String,dynamic>{});
+    final networkData = data.copyWith(requestHeaders: <String, dynamic>{});
     when(mBuildInfo.isAndroid).thenReturn(false);
     when(mManager.obfuscateLog(networkData)).thenReturn(networkData);
     when(mManager.omitLog(networkData)).thenReturn(false);
