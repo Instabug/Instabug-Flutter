@@ -202,7 +202,9 @@ void main() {
     expect(w3cHeader!.isW3cHeaderFound, false);
     expect(w3cHeader.w3CGeneratedHeader, generatedW3CHeader.w3cHeader);
     expect(w3cHeader.partialId, generatedW3CHeader.partialId);
-    expect(w3cHeader.networkStartTimeInSeconds,
-        generatedW3CHeader.timestampInSeconds);
+    expect(
+      w3cHeader.networkStartTimeInSeconds,
+      generatedW3CHeader.timestampInSeconds,
+    );
   });
 }
