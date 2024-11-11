@@ -41,14 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-  espresso:
-    dependency: "direct dev"
-    description:
-      name: espresso
-      sha256: "641bdfcaec98b2fe2f5c90d61a16cdf6879ddac4d7333a6467ef03d60933596b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0+5"
   fake_async:
     dependency: transitive
     description:
@@ -115,7 +107,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "13.4.0"
+    version: "14.0.0"
   instabug_http_client:
     dependency: "direct main"
     description:
