@@ -35,6 +35,10 @@ class _MyHomePageState extends State<MyHomePage> {
     BugReporting.setInvocationEvents([InvocationEvent.floatingButton]);
   }
 
+  void disableInstabug() {
+    Instabug.setEnabled(false);
+  }
+
   void setOnDismissCallback() {
     BugReporting.setOnDismissCallback((dismissType, reportType) {
       showDialog(
@@ -187,6 +191,10 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: restartInstabug,
           text: 'Restart Instabug',
+        ),
+        InstabugButton(
+          onPressed: disableInstabug,
+          text: 'Disable Instabug',
         ),
         const SectionTitle('Primary Color'),
         InstabugTextField(
