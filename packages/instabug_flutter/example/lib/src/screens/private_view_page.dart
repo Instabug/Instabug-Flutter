@@ -89,6 +89,26 @@ class _PrivateViewPageState extends State<PrivateViewPage> {
                     border: OutlineInputBorder(),
                   ),
                 ),
+                const SizedBox(height: 16),
+                Column(
+                  children: <Widget>[
+                    InstabugPrivateView(
+                      child: const Text(
+                        'Private TextView in column',
+                        style: TextStyle(fontSize: 18),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'TextView in column',
+                      style: TextStyle(fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 24),
                 InstabugPrivateView(
                   child: Container(
