@@ -25,16 +25,33 @@ extern PrivateViewApi* InitPrivateViewApi(
   completion:(void (^)(UIImage *))completion {
     
     __weak typeof(self) weakSelf = self;
+// Capture screenshot in parallel
 
     [self.flutterApi getPrivateViewsWithCompletion:^(NSArray<NSNumber *> *rectangles, FlutterError *error) {
+        UIImage *capturedScreenshot = [self captureScreenshot];
         [weakSelf handlePrivateViewsResult:rectangles
                                      error:error
-                                screenshot:screenshot
+                                screenshot:capturedScreenshot
                                 completion:completion];
     }];
 }
 
 #pragma mark - Private Methods
+
+// Method to capture a screenshot of the app's main window
+- (UIImage *)captureScreenshot {
+    CGSize imageSize = UIScreen.mainScreen.bounds.size;
+    UIGraphicsBeginImageContextWithOptions(imageSize, NO, UIScreen.mainScreen.scale);
+
+    // Iterate over all windows, including the keyboard window
+    for (UIWindow *window in UIApplication.sharedApplication.windows) {
+        [window drawViewHierarchyInRect:window.bounds afterScreenUpdates:YES];
+    }
+
+    UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return screenshot;
+}
 
 // Handle the result of fetching private views
 - (void)handlePrivateViewsResult:(NSArray<NSNumber *> *)rectangles
