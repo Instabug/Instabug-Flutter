@@ -121,6 +121,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<bool> isEnabled() => (super.noSuchMethod(
         Invocation.method(
@@ -129,6 +130,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         ),
         returnValue: _i5.Future<bool>.value(false),
       ) as _i5.Future<bool>);
+
   @override
   _i5.Future<void> setScreenLoadingEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
@@ -139,6 +141,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<bool> isScreenLoadingEnabled() => (super.noSuchMethod(
         Invocation.method(
@@ -147,6 +150,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         ),
         returnValue: _i5.Future<bool>.value(false),
       ) as _i5.Future<bool>);
+
   @override
   _i5.Future<void> setColdAppLaunchEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
@@ -157,6 +161,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setAutoUITraceEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
@@ -167,6 +172,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<String?> startExecutionTrace(
     String? arg_id,
@@ -182,6 +188,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         ),
         returnValue: _i5.Future<String?>.value(),
       ) as _i5.Future<String?>);
+
   @override
   _i5.Future<void> startFlow(String? arg_name) => (super.noSuchMethod(
         Invocation.method(
@@ -191,6 +198,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setFlowAttribute(
     String? arg_name,
@@ -209,6 +217,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> endFlow(String? arg_name) => (super.noSuchMethod(
         Invocation.method(
@@ -218,6 +227,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setExecutionTraceAttribute(
     String? arg_id,
@@ -236,6 +246,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> endExecutionTrace(String? arg_id) => (super.noSuchMethod(
         Invocation.method(
@@ -245,6 +256,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> startUITrace(String? arg_name) => (super.noSuchMethod(
         Invocation.method(
@@ -254,6 +266,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> endUITrace() => (super.noSuchMethod(
         Invocation.method(
@@ -263,6 +276,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> endAppLaunch() => (super.noSuchMethod(
         Invocation.method(
@@ -272,6 +286,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> networkLogAndroid(Map<String?, Object?>? arg_data) =>
       (super.noSuchMethod(
@@ -282,6 +297,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> startCpUiTrace(
     String? arg_screenName,
@@ -300,6 +316,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> reportScreenLoadingCP(
     int? arg_startTimeStampMicro,
@@ -318,6 +335,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> endScreenLoadingCP(
     int? arg_timeStampMicro,
@@ -334,6 +352,7 @@ class MockApmHostApi extends _i1.Mock implements _i4.ApmHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<bool> isEndScreenLoadingEnabled() => (super.noSuchMethod(
         Invocation.method(
@@ -361,6 +380,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<bool> isEnabled() => (super.noSuchMethod(
         Invocation.method(
@@ -369,6 +389,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         ),
         returnValue: _i5.Future<bool>.value(false),
       ) as _i5.Future<bool>);
+
   @override
   _i5.Future<bool> isBuilt() => (super.noSuchMethod(
         Invocation.method(
@@ -377,6 +398,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         ),
         returnValue: _i5.Future<bool>.value(false),
       ) as _i5.Future<bool>);
+
   @override
   _i5.Future<void> init(
     String? arg_token,
@@ -395,6 +417,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> show() => (super.noSuchMethod(
         Invocation.method(
@@ -404,6 +427,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> showWelcomeMessageWithMode(String? arg_mode) =>
       (super.noSuchMethod(
@@ -414,6 +438,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> identifyUser(
     String? arg_email,
@@ -432,6 +457,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setUserData(String? arg_data) => (super.noSuchMethod(
         Invocation.method(
@@ -441,6 +467,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> logUserEvent(String? arg_name) => (super.noSuchMethod(
         Invocation.method(
@@ -450,6 +477,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> logOut() => (super.noSuchMethod(
         Invocation.method(
@@ -459,6 +487,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setLocale(String? arg_locale) => (super.noSuchMethod(
         Invocation.method(
@@ -468,6 +497,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setColorTheme(String? arg_theme) => (super.noSuchMethod(
         Invocation.method(
@@ -477,6 +507,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setWelcomeMessageMode(String? arg_mode) =>
       (super.noSuchMethod(
@@ -487,6 +518,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setPrimaryColor(int? arg_color) => (super.noSuchMethod(
         Invocation.method(
@@ -496,6 +528,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setSessionProfilerEnabled(bool? arg_enabled) =>
       (super.noSuchMethod(
@@ -506,6 +539,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setValueForStringWithKey(
     String? arg_value,
@@ -522,6 +556,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> appendTags(List<String?>? arg_tags) => (super.noSuchMethod(
         Invocation.method(
@@ -531,6 +566,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> resetTags() => (super.noSuchMethod(
         Invocation.method(
@@ -540,6 +576,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<List<String?>?> getTags() => (super.noSuchMethod(
         Invocation.method(
@@ -548,6 +585,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         ),
         returnValue: _i5.Future<List<String?>?>.value(),
       ) as _i5.Future<List<String?>?>);
+
   @override
   _i5.Future<void> addExperiments(List<String?>? arg_experiments) =>
       (super.noSuchMethod(
@@ -558,6 +596,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> removeExperiments(List<String?>? arg_experiments) =>
       (super.noSuchMethod(
@@ -568,6 +607,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> clearAllExperiments() => (super.noSuchMethod(
         Invocation.method(
@@ -577,6 +617,40 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> addFeatureFlags(
+          Map<String?, String?>? arg_featureFlagsMap) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addFeatureFlags,
+          [arg_featureFlagsMap],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> removeFeatureFlags(List<String?>? arg_featureFlags) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #removeFeatureFlags,
+          [arg_featureFlags],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> removeAllFeatureFlags() => (super.noSuchMethod(
+        Invocation.method(
+          #removeAllFeatureFlags,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setUserAttribute(
     String? arg_value,
@@ -593,6 +667,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> removeUserAttribute(String? arg_key) => (super.noSuchMethod(
         Invocation.method(
@@ -602,6 +677,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<String?> getUserAttributeForKey(String? arg_key) =>
       (super.noSuchMethod(
@@ -611,6 +687,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         ),
         returnValue: _i5.Future<String?>.value(),
       ) as _i5.Future<String?>);
+
   @override
   _i5.Future<Map<String?, String?>?> getUserAttributes() => (super.noSuchMethod(
         Invocation.method(
@@ -619,6 +696,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         ),
         returnValue: _i5.Future<Map<String?, String?>?>.value(),
       ) as _i5.Future<Map<String?, String?>?>);
+
   @override
   _i5.Future<void> setReproStepsConfig(
     String? arg_bugMode,
@@ -637,6 +715,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> reportScreenChange(String? arg_screenName) =>
       (super.noSuchMethod(
@@ -647,6 +726,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setCustomBrandingImage(
     String? arg_light,
@@ -663,6 +743,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> setFont(String? arg_font) => (super.noSuchMethod(
         Invocation.method(
@@ -672,6 +753,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> addFileAttachmentWithURL(
     String? arg_filePath,
@@ -688,6 +770,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> addFileAttachmentWithData(
     _i7.Uint8List? arg_data,
@@ -704,6 +787,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> clearFileAttachments() => (super.noSuchMethod(
         Invocation.method(
@@ -713,6 +797,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> networkLog(Map<String?, Object?>? arg_data) =>
       (super.noSuchMethod(
@@ -723,6 +808,7 @@ class MockInstabugHostApi extends _i1.Mock implements _i6.InstabugHostApi {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
   @override
   _i5.Future<void> willRedirectToStore() => (super.noSuchMethod(
         Invocation.method(
@@ -750,6 +836,7 @@ class MockInstabugLogger extends _i1.Mock implements _i8.InstabugLogger {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void log(
     String? message, {
@@ -767,6 +854,7 @@ class MockInstabugLogger extends _i1.Mock implements _i8.InstabugLogger {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void e(
     String? message, {
@@ -780,6 +868,7 @@ class MockInstabugLogger extends _i1.Mock implements _i8.InstabugLogger {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void d(
     String? message, {
@@ -793,6 +882,7 @@ class MockInstabugLogger extends _i1.Mock implements _i8.InstabugLogger {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void v(
     String? message, {
@@ -861,11 +951,13 @@ class MockIBGBuildInfo extends _i1.Mock implements _i12.IBGBuildInfo {
         Invocation.getter(#isAndroid),
         returnValue: false,
       ) as bool);
+
   @override
   bool get isIOS => (super.noSuchMethod(
         Invocation.getter(#isIOS),
         returnValue: false,
       ) as bool);
+
   @override
   String get operatingSystem => (super.noSuchMethod(
         Invocation.getter(#operatingSystem),
@@ -874,11 +966,13 @@ class MockIBGBuildInfo extends _i1.Mock implements _i12.IBGBuildInfo {
           Invocation.getter(#operatingSystem),
         ),
       ) as String);
+
   @override
   bool get isReleaseMode => (super.noSuchMethod(
         Invocation.getter(#isReleaseMode),
         returnValue: false,
       ) as bool);
+
   @override
   bool get isDebugMode => (super.noSuchMethod(
         Invocation.getter(#isDebugMode),
@@ -928,16 +1022,19 @@ class MockBuildContext extends _i1.Mock implements _i2.BuildContext {
           Invocation.getter(#widget),
         ),
       ) as _i2.Widget);
+
   @override
   bool get mounted => (super.noSuchMethod(
         Invocation.getter(#mounted),
         returnValue: false,
       ) as bool);
+
   @override
   bool get debugDoingBuild => (super.noSuchMethod(
         Invocation.getter(#debugDoingBuild),
         returnValue: false,
       ) as bool);
+
   @override
   _i2.InheritedWidget dependOnInheritedElement(
     _i2.InheritedElement? ancestor, {
@@ -958,6 +1055,7 @@ class MockBuildContext extends _i1.Mock implements _i2.BuildContext {
           ),
         ),
       ) as _i2.InheritedWidget);
+
   @override
   void visitAncestorElements(_i2.ConditionalElementVisitor? visitor) =>
       super.noSuchMethod(
@@ -967,6 +1065,7 @@ class MockBuildContext extends _i1.Mock implements _i2.BuildContext {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void visitChildElements(_i2.ElementVisitor? visitor) => super.noSuchMethod(
         Invocation.method(
@@ -975,6 +1074,7 @@ class MockBuildContext extends _i1.Mock implements _i2.BuildContext {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void dispatchNotification(_i14.Notification? notification) =>
       super.noSuchMethod(
@@ -984,6 +1084,7 @@ class MockBuildContext extends _i1.Mock implements _i2.BuildContext {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   _i3.DiagnosticsNode describeElement(
     String? name, {
@@ -1004,6 +1105,7 @@ class MockBuildContext extends _i1.Mock implements _i2.BuildContext {
           ),
         ),
       ) as _i3.DiagnosticsNode);
+
   @override
   _i3.DiagnosticsNode describeWidget(
     String? name, {
@@ -1024,6 +1126,7 @@ class MockBuildContext extends _i1.Mock implements _i2.BuildContext {
           ),
         ),
       ) as _i3.DiagnosticsNode);
+
   @override
   List<_i3.DiagnosticsNode> describeMissingAncestor(
           {required Type? expectedAncestorType}) =>
@@ -1035,6 +1138,7 @@ class MockBuildContext extends _i1.Mock implements _i2.BuildContext {
         ),
         returnValue: <_i3.DiagnosticsNode>[],
       ) as List<_i3.DiagnosticsNode>);
+
   @override
   _i3.DiagnosticsNode describeOwnershipChain(String? name) =>
       (super.noSuchMethod(
@@ -1075,6 +1179,7 @@ class MockWidget extends _i1.Mock implements _i2.Widget {
           ),
         ),
       ) as _i2.Element);
+
   @override
   String toStringShort() => (super.noSuchMethod(
         Invocation.method(
@@ -1089,6 +1194,7 @@ class MockWidget extends _i1.Mock implements _i2.Widget {
           ),
         ),
       ) as String);
+
   @override
   void debugFillProperties(_i3.DiagnosticPropertiesBuilder? properties) =>
       super.noSuchMethod(
@@ -1098,6 +1204,7 @@ class MockWidget extends _i1.Mock implements _i2.Widget {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   String toStringShallow({
     String? joiner = r', ',
@@ -1124,6 +1231,7 @@ class MockWidget extends _i1.Mock implements _i2.Widget {
           ),
         ),
       ) as String);
+
   @override
   String toStringDeep({
     String? prefixLineOne = r'',
@@ -1153,6 +1261,7 @@ class MockWidget extends _i1.Mock implements _i2.Widget {
           ),
         ),
       ) as String);
+
   @override
   _i3.DiagnosticsNode toDiagnosticsNode({
     String? name,
@@ -1179,6 +1288,7 @@ class MockWidget extends _i1.Mock implements _i2.Widget {
           ),
         ),
       ) as _i3.DiagnosticsNode);
+
   @override
   List<_i3.DiagnosticsNode> debugDescribeChildren() => (super.noSuchMethod(
         Invocation.method(
@@ -1187,6 +1297,7 @@ class MockWidget extends _i1.Mock implements _i2.Widget {
         ),
         returnValue: <_i3.DiagnosticsNode>[],
       ) as List<_i3.DiagnosticsNode>);
+
   @override
   String toString({_i3.DiagnosticLevel? minLevel = _i3.DiagnosticLevel.info}) =>
       super.toString();

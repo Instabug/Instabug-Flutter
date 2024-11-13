@@ -41,6 +41,7 @@ class MockSessionReplayHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setNetworkLogsEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
@@ -51,6 +52,7 @@ class MockSessionReplayHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setInstabugLogsEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
@@ -61,6 +63,7 @@ class MockSessionReplayHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setUserStepsEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
@@ -71,6 +74,7 @@ class MockSessionReplayHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<String> getSessionReplayLink() => (super.noSuchMethod(
         Invocation.method(

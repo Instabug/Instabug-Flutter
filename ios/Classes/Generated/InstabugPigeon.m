@@ -445,6 +445,61 @@ void InstabugHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<I
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.instabug_flutter.InstabugHostApi.addFeatureFlags"
+        binaryMessenger:binaryMessenger
+        codec:InstabugHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(addFeatureFlagsFeatureFlagsMap:error:)], @"InstabugHostApi api (%@) doesn't respond to @selector(addFeatureFlagsFeatureFlagsMap:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        NSDictionary<NSString *, NSString *> *arg_featureFlagsMap = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        [api addFeatureFlagsFeatureFlagsMap:arg_featureFlagsMap error:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.instabug_flutter.InstabugHostApi.removeFeatureFlags"
+        binaryMessenger:binaryMessenger
+        codec:InstabugHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(removeFeatureFlagsFeatureFlags:error:)], @"InstabugHostApi api (%@) doesn't respond to @selector(removeFeatureFlagsFeatureFlags:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        NSArray<NSString *> *arg_featureFlags = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        [api removeFeatureFlagsFeatureFlags:arg_featureFlags error:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.instabug_flutter.InstabugHostApi.removeAllFeatureFlags"
+        binaryMessenger:binaryMessenger
+        codec:InstabugHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(removeAllFeatureFlagsWithError:)], @"InstabugHostApi api (%@) doesn't respond to @selector(removeAllFeatureFlagsWithError:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        FlutterError *error;
+        [api removeAllFeatureFlagsWithError:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
         initWithName:@"dev.flutter.pigeon.instabug_flutter.InstabugHostApi.setUserAttribute"
         binaryMessenger:binaryMessenger
         codec:InstabugHostApiGetCodec()];

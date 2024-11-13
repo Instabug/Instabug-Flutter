@@ -6,6 +6,7 @@ import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
+import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -14,6 +15,7 @@ import 'instabug_test.mocks.dart';
 @GenerateMocks([
   InstabugHostApi,
   IBGBuildInfo,
+  ScreenNameMasker,
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -21,10 +23,12 @@ void main() {
 
   final mHost = MockInstabugHostApi();
   final mBuildInfo = MockIBGBuildInfo();
+  final mScreenNameMasker = MockScreenNameMasker();
 
   setUpAll(() {
     Instabug.$setHostApi(mHost);
     IBGBuildInfo.setInstance(mBuildInfo);
+    ScreenNameMasker.setInstance(mScreenNameMasker);
   });
 
   test('[setEnabled] should call host method', () async {
@@ -74,6 +78,16 @@ void main() {
     verify(
       mHost.init(token, events.mapToString(), LogLevel.error.toString()),
     ).called(1);
+  });
+
+  test(
+      '[setScreenNameMaskingCallback] should set masking callback on screen name masker',
+      () async {
+    String callback(String screen) => 'REDACTED/$screen';
+
+    Instabug.setScreenNameMaskingCallback(callback);
+
+    verify(mScreenNameMasker.setMaskingCallback(callback)).called(1);
   });
 
   test('[show] should call host method', () async {
@@ -239,6 +253,7 @@ void main() {
   test('[addExperiments] should call host method', () async {
     const experiments = ["exp-1", "exp-2"];
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.addExperiments(experiments);
 
     verify(
@@ -249,6 +264,7 @@ void main() {
   test('[removeExperiments] should call host method', () async {
     const experiments = ["exp-1", "exp-2"];
 
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.removeExperiments(experiments);
 
     verify(
@@ -257,10 +273,43 @@ void main() {
   });
 
   test('[clearAllExperiments] should call host method', () async {
+    // ignore: deprecated_member_use_from_same_package
     await Instabug.clearAllExperiments();
 
     verify(
       mHost.clearAllExperiments(),
+    ).called(1);
+  });
+
+  test('[addFeatureFlags] should call host method', () async {
+    await Instabug.addFeatureFlags([
+      FeatureFlag(name: 'name1', variant: 'variant1'),
+      FeatureFlag(name: 'name2', variant: 'variant2'),
+    ]);
+
+    verify(
+      mHost.addFeatureFlags(<String, String>{
+        "name1": "variant1",
+        "name2": "variant2",
+      }),
+    ).called(1);
+  });
+
+  test('[removeFeatureFlags] should call host method', () async {
+    const featureFlags = ["exp-1", "exp-2"];
+
+    await Instabug.removeFeatureFlags(featureFlags);
+
+    verify(
+      mHost.removeFeatureFlags(featureFlags),
+    ).called(1);
+  });
+
+  test('[clearAllFeatureFlags] should call host method', () async {
+    await Instabug.clearAllFeatureFlags();
+
+    verify(
+      mHost.removeAllFeatureFlags(),
     ).called(1);
   });
 

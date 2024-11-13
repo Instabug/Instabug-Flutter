@@ -112,6 +112,12 @@ public class InstabugPigeon {
 
     void clearAllExperiments();
 
+    void addFeatureFlags(@NonNull Map<String, String> featureFlagsMap);
+
+    void removeFeatureFlags(@NonNull List<String> featureFlags);
+
+    void removeAllFeatureFlags();
+
     void setUserAttribute(@NonNull String value, @NonNull String key);
 
     void removeUserAttribute(@NonNull String key);
@@ -656,6 +662,76 @@ public class InstabugPigeon {
                 ArrayList<Object> wrapped = new ArrayList<Object>();
                 try {
                   api.clearAllExperiments();
+                  wrapped.add(0, null);
+                }
+ catch (Throwable exception) {
+                  ArrayList<Object> wrappedError = wrapError(exception);
+                  wrapped = wrappedError;
+                }
+                reply.reply(wrapped);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.instabug_flutter.InstabugHostApi.addFeatureFlags", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                ArrayList<Object> args = (ArrayList<Object>) message;
+                Map<String, String> featureFlagsMapArg = (Map<String, String>) args.get(0);
+                try {
+                  api.addFeatureFlags(featureFlagsMapArg);
+                  wrapped.add(0, null);
+                }
+ catch (Throwable exception) {
+                  ArrayList<Object> wrappedError = wrapError(exception);
+                  wrapped = wrappedError;
+                }
+                reply.reply(wrapped);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.instabug_flutter.InstabugHostApi.removeFeatureFlags", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                ArrayList<Object> args = (ArrayList<Object>) message;
+                List<String> featureFlagsArg = (List<String>) args.get(0);
+                try {
+                  api.removeFeatureFlags(featureFlagsArg);
+                  wrapped.add(0, null);
+                }
+ catch (Throwable exception) {
+                  ArrayList<Object> wrappedError = wrapError(exception);
+                  wrapped = wrappedError;
+                }
+                reply.reply(wrapped);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.instabug_flutter.InstabugHostApi.removeAllFeatureFlags", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                try {
+                  api.removeAllFeatureFlags();
                   wrapped.add(0, null);
                 }
  catch (Throwable exception) {

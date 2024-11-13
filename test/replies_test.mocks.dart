@@ -40,6 +40,7 @@ class MockRepliesHostApi extends _i1.Mock implements _i2.RepliesHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> show() => (super.noSuchMethod(
         Invocation.method(
@@ -49,6 +50,7 @@ class MockRepliesHostApi extends _i1.Mock implements _i2.RepliesHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setInAppNotificationsEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
@@ -59,6 +61,7 @@ class MockRepliesHostApi extends _i1.Mock implements _i2.RepliesHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setInAppNotificationSound(bool? arg_isEnabled) =>
       (super.noSuchMethod(
@@ -69,6 +72,7 @@ class MockRepliesHostApi extends _i1.Mock implements _i2.RepliesHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<int> getUnreadRepliesCount() => (super.noSuchMethod(
         Invocation.method(
@@ -77,6 +81,7 @@ class MockRepliesHostApi extends _i1.Mock implements _i2.RepliesHostApi {
         ),
         returnValue: _i3.Future<int>.value(0),
       ) as _i3.Future<int>);
+
   @override
   _i3.Future<bool> hasChats() => (super.noSuchMethod(
         Invocation.method(
@@ -85,6 +90,7 @@ class MockRepliesHostApi extends _i1.Mock implements _i2.RepliesHostApi {
         ),
         returnValue: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
+
   @override
   _i3.Future<void> bindOnNewReplyCallback() => (super.noSuchMethod(
         Invocation.method(
@@ -109,11 +115,13 @@ class MockIBGBuildInfo extends _i1.Mock implements _i4.IBGBuildInfo {
         Invocation.getter(#isAndroid),
         returnValue: false,
       ) as bool);
+
   @override
   bool get isIOS => (super.noSuchMethod(
         Invocation.getter(#isIOS),
         returnValue: false,
       ) as bool);
+
   @override
   String get operatingSystem => (super.noSuchMethod(
         Invocation.getter(#operatingSystem),
@@ -122,11 +130,13 @@ class MockIBGBuildInfo extends _i1.Mock implements _i4.IBGBuildInfo {
           Invocation.getter(#operatingSystem),
         ),
       ) as String);
+
   @override
   bool get isReleaseMode => (super.noSuchMethod(
         Invocation.getter(#isReleaseMode),
         returnValue: false,
       ) as bool);
+
   @override
   bool get isDebugMode => (super.noSuchMethod(
         Invocation.getter(#isDebugMode),

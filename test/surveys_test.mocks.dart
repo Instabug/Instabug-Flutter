@@ -40,6 +40,7 @@ class MockSurveysHostApi extends _i1.Mock implements _i2.SurveysHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> showSurveyIfAvailable() => (super.noSuchMethod(
         Invocation.method(
@@ -49,6 +50,7 @@ class MockSurveysHostApi extends _i1.Mock implements _i2.SurveysHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> showSurvey(String? arg_surveyToken) => (super.noSuchMethod(
         Invocation.method(
@@ -58,6 +60,7 @@ class MockSurveysHostApi extends _i1.Mock implements _i2.SurveysHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setAutoShowingEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
@@ -68,6 +71,7 @@ class MockSurveysHostApi extends _i1.Mock implements _i2.SurveysHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setShouldShowWelcomeScreen(
           bool? arg_shouldShowWelcomeScreen) =>
@@ -79,6 +83,7 @@ class MockSurveysHostApi extends _i1.Mock implements _i2.SurveysHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setAppStoreURL(String? arg_appStoreURL) =>
       (super.noSuchMethod(
@@ -89,6 +94,7 @@ class MockSurveysHostApi extends _i1.Mock implements _i2.SurveysHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<bool> hasRespondedToSurvey(String? arg_surveyToken) =>
       (super.noSuchMethod(
@@ -98,6 +104,7 @@ class MockSurveysHostApi extends _i1.Mock implements _i2.SurveysHostApi {
         ),
         returnValue: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
+
   @override
   _i3.Future<List<String?>> getAvailableSurveys() => (super.noSuchMethod(
         Invocation.method(
@@ -106,6 +113,7 @@ class MockSurveysHostApi extends _i1.Mock implements _i2.SurveysHostApi {
         ),
         returnValue: _i3.Future<List<String?>>.value(<String?>[]),
       ) as _i3.Future<List<String?>>);
+
   @override
   _i3.Future<void> bindOnShowSurveyCallback() => (super.noSuchMethod(
         Invocation.method(
@@ -115,6 +123,7 @@ class MockSurveysHostApi extends _i1.Mock implements _i2.SurveysHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> bindOnDismissSurveyCallback() => (super.noSuchMethod(
         Invocation.method(
@@ -139,11 +148,13 @@ class MockIBGBuildInfo extends _i1.Mock implements _i4.IBGBuildInfo {
         Invocation.getter(#isAndroid),
         returnValue: false,
       ) as bool);
+
   @override
   bool get isIOS => (super.noSuchMethod(
         Invocation.getter(#isIOS),
         returnValue: false,
       ) as bool);
+
   @override
   String get operatingSystem => (super.noSuchMethod(
         Invocation.getter(#operatingSystem),
@@ -152,11 +163,13 @@ class MockIBGBuildInfo extends _i1.Mock implements _i4.IBGBuildInfo {
           Invocation.getter(#operatingSystem),
         ),
       ) as String);
+
   @override
   bool get isReleaseMode => (super.noSuchMethod(
         Invocation.getter(#isReleaseMode),
         returnValue: false,
       ) as bool);
+
   @override
   bool get isDebugMode => (super.noSuchMethod(
         Invocation.getter(#isDebugMode),

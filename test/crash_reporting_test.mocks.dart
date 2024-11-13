@@ -42,6 +42,7 @@ class MockCrashReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> send(
     String? arg_jsonCrash,
@@ -58,6 +59,7 @@ class MockCrashReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> sendNonFatalError(
     String? arg_jsonCrash,
@@ -93,11 +95,13 @@ class MockIBGBuildInfo extends _i1.Mock implements _i4.IBGBuildInfo {
         Invocation.getter(#isAndroid),
         returnValue: false,
       ) as bool);
+
   @override
   bool get isIOS => (super.noSuchMethod(
         Invocation.getter(#isIOS),
         returnValue: false,
       ) as bool);
+
   @override
   String get operatingSystem => (super.noSuchMethod(
         Invocation.getter(#operatingSystem),
@@ -106,11 +110,13 @@ class MockIBGBuildInfo extends _i1.Mock implements _i4.IBGBuildInfo {
           Invocation.getter(#operatingSystem),
         ),
       ) as String);
+
   @override
   bool get isReleaseMode => (super.noSuchMethod(
         Invocation.getter(#isReleaseMode),
         returnValue: false,
       ) as bool);
+
   @override
   bool get isDebugMode => (super.noSuchMethod(
         Invocation.getter(#isDebugMode),

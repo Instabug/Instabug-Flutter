@@ -39,6 +39,7 @@ class MockInstabugLogHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> logDebug(String? arg_message) => (super.noSuchMethod(
         Invocation.method(
@@ -48,6 +49,7 @@ class MockInstabugLogHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> logInfo(String? arg_message) => (super.noSuchMethod(
         Invocation.method(
@@ -57,6 +59,7 @@ class MockInstabugLogHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> logWarn(String? arg_message) => (super.noSuchMethod(
         Invocation.method(
@@ -66,6 +69,7 @@ class MockInstabugLogHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> logError(String? arg_message) => (super.noSuchMethod(
         Invocation.method(
@@ -75,6 +79,7 @@ class MockInstabugLogHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> clearAllLogs() => (super.noSuchMethod(
         Invocation.method(

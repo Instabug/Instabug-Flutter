@@ -14,6 +14,7 @@ import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
 import com.instabug.library.*;
+import com.instabug.library.featuresflags.model.IBGFeatureFlag;
 import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
@@ -28,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -223,6 +225,37 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public void clearAllExperiments() {
         Instabug.clearAllExperiments();
+    }
+
+    @Override
+    public void addFeatureFlags(@NonNull Map<String, String> featureFlags) {
+        try {
+            List<IBGFeatureFlag> features = new ArrayList<>();
+            for (Map.Entry<String, String> entry : featureFlags.entrySet()) {
+                features.add(new IBGFeatureFlag(entry.getKey(), entry.getValue().isEmpty() ? null : entry.getValue()));
+            }
+            Instabug.addFeatureFlags(features);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void removeFeatureFlags(@NonNull List<String> featureFlags) {
+        try {
+            Instabug.removeFeatureFlag(featureFlags);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void removeAllFeatureFlags() {
+        try {
+            Instabug.removeAllFeatureFlags();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

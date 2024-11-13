@@ -38,6 +38,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<bool> isEnabled() => (super.noSuchMethod(
         Invocation.method(
@@ -46,6 +47,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         ),
         returnValue: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
+
   @override
   _i3.Future<void> setScreenLoadingEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
@@ -56,6 +58,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<bool> isScreenLoadingEnabled() => (super.noSuchMethod(
         Invocation.method(
@@ -64,6 +67,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         ),
         returnValue: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
+
   @override
   _i3.Future<void> setColdAppLaunchEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
@@ -74,6 +78,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setAutoUITraceEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(
@@ -84,6 +89,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<String?> startExecutionTrace(
     String? arg_id,
@@ -99,6 +105,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         ),
         returnValue: _i3.Future<String?>.value(),
       ) as _i3.Future<String?>);
+
   @override
   _i3.Future<void> startFlow(String? arg_name) => (super.noSuchMethod(
         Invocation.method(
@@ -108,6 +115,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setFlowAttribute(
     String? arg_name,
@@ -126,6 +134,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> endFlow(String? arg_name) => (super.noSuchMethod(
         Invocation.method(
@@ -135,6 +144,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setExecutionTraceAttribute(
     String? arg_id,
@@ -153,6 +163,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> endExecutionTrace(String? arg_id) => (super.noSuchMethod(
         Invocation.method(
@@ -162,6 +173,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> startUITrace(String? arg_name) => (super.noSuchMethod(
         Invocation.method(
@@ -171,6 +183,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> endUITrace() => (super.noSuchMethod(
         Invocation.method(
@@ -180,6 +193,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> endAppLaunch() => (super.noSuchMethod(
         Invocation.method(
@@ -189,6 +203,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> networkLogAndroid(Map<String?, Object?>? arg_data) =>
       (super.noSuchMethod(
@@ -199,6 +214,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> startCpUiTrace(
     String? arg_screenName,
@@ -217,6 +233,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> reportScreenLoadingCP(
     int? arg_startTimeStampMicro,
@@ -235,6 +252,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> endScreenLoadingCP(
     int? arg_timeStampMicro,
@@ -251,6 +269,7 @@ class MockApmHostApi extends _i1.Mock implements _i2.ApmHostApi {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<bool> isEndScreenLoadingEnabled() => (super.noSuchMethod(
         Invocation.method(

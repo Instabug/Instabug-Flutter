@@ -4,7 +4,7 @@
 #import "InstabugApi.h"
 #import "Instabug/Instabug.h"
 #import "Util/Instabug+Test.h"
-#import "Util/IBGNetworkLogger+Test.h"
+#import "IBGNetworkLogger+CP.h"
 #import "Flutter/Flutter.h"
 
 @interface InstabugTests : XCTestCase
@@ -224,6 +224,46 @@
     OCMVerify([self.mInstabug clearAllExperiments]);
 }
 
+- (void)testAddFeatureFlags {
+  NSDictionary *featureFlagsMap = @{ @"key13" : @"value1", @"key2" : @"value2"};
+    FlutterError *error;
+
+  [self.api addFeatureFlagsFeatureFlagsMap:featureFlagsMap error:&error];
+  OCMVerify([self.mInstabug addFeatureFlags: [OCMArg checkWithBlock:^(id value) {
+    NSArray<IBGFeatureFlag *> *featureFlags = value;
+    NSString* firstFeatureFlagName = [featureFlags objectAtIndex:0 ].name;
+    NSString* firstFeatureFlagKey = [[featureFlagsMap allKeys] objectAtIndex:0] ;
+    if([ firstFeatureFlagKey isEqualToString: firstFeatureFlagName]){
+      return YES;
+    }
+    return  NO;
+  }]]);
+}
+
+- (void)testRemoveFeatureFlags {
+  NSArray *featureFlags = @[@"exp1"];
+    FlutterError *error;
+
+  [self.api removeFeatureFlagsFeatureFlags:featureFlags error:&error];
+    OCMVerify([self.mInstabug removeFeatureFlags: [OCMArg checkWithBlock:^(id value) {
+      NSArray<IBGFeatureFlag *> *featureFlagsObJ = value;
+      NSString* firstFeatureFlagName = [featureFlagsObJ objectAtIndex:0 ].name;
+      NSString* firstFeatureFlagKey = [featureFlags firstObject] ;
+      if([ firstFeatureFlagKey isEqualToString: firstFeatureFlagName]){
+        return YES;
+      }
+      return  NO;
+    }]]);}
+
+- (void)testRemoveAllFeatureFlags {
+    FlutterError *error;
+
+  [self.api removeAllFeatureFlagsWithError:&error];
+  OCMVerify([self.mInstabug removeAllFeatureFlags]);
+}
+
+
+
 - (void)testSetUserAttribute {
     NSString *key = @"is_premium";
     NSString *value = @"true";
@@ -395,7 +435,11 @@
                                                duration:duration.integerValue
                                            gqlQueryName:nil
                                      serverErrorMessage:nil
-              ]);
+                                          isW3cCaughted:nil
+                                              partialID:nil
+                                              timestamp:nil
+                                generatedW3CTraceparent:nil
+                                 caughtedW3CTraceparent:nil]);
 }
 
 - (void)testWillRedirectToAppStore {

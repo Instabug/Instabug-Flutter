@@ -17,6 +17,7 @@ import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
+import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:meta/meta.dart';
 
 enum InvocationEvent {
@@ -198,6 +199,14 @@ class Instabug {
     );
   }
 
+  /// Sets a [callback] to be called wehenever a screen name is captured to mask
+  /// sensitive information in the screen name.
+  static void setScreenNameMaskingCallback(
+    ScreenNameMaskingCallback? callback,
+  ) {
+    ScreenNameMasker.I.setMaskingCallback(callback);
+  }
+
   /// Shows the welcome message in a specific mode.
   /// [welcomeMessageMode] is an enum to set the welcome message mode to live, or beta.
   static Future<void> showWelcomeMessageWithMode(
@@ -255,18 +264,48 @@ class Instabug {
   }
 
   /// Adds experiments to the next report.
+  @Deprecated(
+    'Please migrate to the new feature flags APIs: Instabug.addFeatureFlags.',
+  )
   static Future<void> addExperiments(List<String> experiments) async {
     return _host.addExperiments(experiments);
   }
 
   /// Removes certain experiments from the next report.
+  @Deprecated(
+    'Please migrate to the new feature flags APIs: Instabug.removeFeatureFlags.',
+  )
   static Future<void> removeExperiments(List<String> experiments) async {
     return _host.removeExperiments(experiments);
   }
 
   /// Clears all experiments from the next report.
+
+  @Deprecated(
+    'Please migrate to the new feature flags APIs: Instabug.clearAllFeatureFlags.',
+  )
   static Future<void> clearAllExperiments() async {
     return _host.clearAllExperiments();
+  }
+
+  /// Adds feature flags to the next report.
+  static Future<void> addFeatureFlags(List<FeatureFlag> featureFlags) async {
+    final map = <String, String>{};
+    for (final value in featureFlags) {
+      map[value.name] = value.variant ?? '';
+    }
+
+    return _host.addFeatureFlags(map);
+  }
+
+  /// Removes certain feature flags from the next report.
+  static Future<void> removeFeatureFlags(List<String> featureFlags) async {
+    return _host.removeFeatureFlags(featureFlags);
+  }
+
+  /// Clears all feature flags from the next report.
+  static Future<void> clearAllFeatureFlags() async {
+    return _host.removeAllFeatureFlags();
   }
 
   /// Add custom user attribute [value] with a [key] that is going to be sent with each feedback, bug or crash.

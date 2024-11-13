@@ -41,6 +41,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> show(
     String? arg_reportType,
@@ -57,6 +58,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setInvocationEvents(List<String?>? arg_events) =>
       (super.noSuchMethod(
@@ -67,6 +69,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setReportTypes(List<String?>? arg_types) =>
       (super.noSuchMethod(
@@ -77,6 +80,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setExtendedBugReportMode(String? arg_mode) =>
       (super.noSuchMethod(
@@ -87,6 +91,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setInvocationOptions(List<String?>? arg_options) =>
       (super.noSuchMethod(
@@ -97,6 +102,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setFloatingButtonEdge(
     String? arg_edge,
@@ -113,6 +119,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setVideoRecordingFloatingButtonPosition(
           String? arg_position) =>
@@ -124,6 +131,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setShakingThresholdForiPhone(double? arg_threshold) =>
       (super.noSuchMethod(
@@ -134,6 +142,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setShakingThresholdForiPad(double? arg_threshold) =>
       (super.noSuchMethod(
@@ -144,6 +153,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setShakingThresholdForAndroid(int? arg_threshold) =>
       (super.noSuchMethod(
@@ -154,6 +164,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setEnabledAttachmentTypes(
     bool? arg_screenshot,
@@ -174,6 +185,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> bindOnInvokeCallback() => (super.noSuchMethod(
         Invocation.method(
@@ -183,6 +195,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> bindOnDismissCallback() => (super.noSuchMethod(
         Invocation.method(
@@ -192,6 +205,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setDisclaimerText(String? arg_text) => (super.noSuchMethod(
         Invocation.method(
@@ -201,6 +215,7 @@ class MockBugReportingHostApi extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   _i3.Future<void> setCommentMinimumCharacterCount(
     int? arg_limit,
@@ -232,11 +247,13 @@ class MockIBGBuildInfo extends _i1.Mock implements _i4.IBGBuildInfo {
         Invocation.getter(#isAndroid),
         returnValue: false,
       ) as bool);
+
   @override
   bool get isIOS => (super.noSuchMethod(
         Invocation.getter(#isIOS),
         returnValue: false,
       ) as bool);
+
   @override
   String get operatingSystem => (super.noSuchMethod(
         Invocation.getter(#operatingSystem),
@@ -245,11 +262,13 @@ class MockIBGBuildInfo extends _i1.Mock implements _i4.IBGBuildInfo {
           Invocation.getter(#operatingSystem),
         ),
       ) as String);
+
   @override
   bool get isReleaseMode => (super.noSuchMethod(
         Invocation.getter(#isReleaseMode),
         returnValue: false,
       ) as bool);
+
   @override
   bool get isDebugMode => (super.noSuchMethod(
         Invocation.getter(#isDebugMode),
