@@ -341,6 +341,10 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [Instabug willRedirectToAppStore];
 }
 
+- (void)setAutoMaskingEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
+    IBGNetworkLogger.autoMaskingEnabled = [isEnabled boolValue];
+}
+
 - (void)addFeatureFlagsFeatureFlagsMap:(nonnull NSDictionary<NSString *,NSString *> *)featureFlagsMap error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     NSMutableArray<IBGFeatureFlag *> *featureFlags = [NSMutableArray array];
     for(id key in featureFlagsMap){

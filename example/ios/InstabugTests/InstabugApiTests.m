@@ -451,6 +451,14 @@
     OCMVerify([self.mInstabug willRedirectToAppStore]);
 }
 
+- (void)testSetAutoMaskingEnabled {
+    NSNumber *isEnabled = @1;
+    FlutterError *error;
+    [self.api setAutoMaskingEnabledIsEnabled:isEnabled error:&error];
+
+    OCMVerify([self.mNetworkLogger setAutoMaskingEnabled:YES]);
+}
+
 - (void)testNetworkLogWithW3Caught {
     NSString *url = @"https://example.com";
     NSString *requestBody = @"hi";
