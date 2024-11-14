@@ -492,4 +492,16 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     public void willRedirectToStore() {
         Instabug.willRedirectToStore();
     }
+
+    @Override
+    public void setAutoMaskingEnabled(@NonNull Boolean isEnabled) {
+        try {
+            if (isEnabled)
+                Instabug.setNetworkAutoMaskingState(Feature.State.ENABLED);
+            else
+                Instabug.setNetworkAutoMaskingState(Feature.State.DISABLED);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
