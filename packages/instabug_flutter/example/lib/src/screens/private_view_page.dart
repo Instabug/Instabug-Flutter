@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_private_views/instabug_private_view.dart';
 import 'package:video_player/video_player.dart';
 
@@ -9,8 +10,11 @@ class PrivateViewPage extends StatefulWidget {
   _PrivateViewPageState createState() => _PrivateViewPageState();
 }
 
-class _PrivateViewPageState extends State<PrivateViewPage> {
+class _PrivateViewPageState extends State<PrivateViewPage>
+    with SingleTickerProviderStateMixin {
   late VideoPlayerController _controller;
+  late final AnimationController _animationController;
+  late final Animation<double> _animation;
 
   @override
   void initState() {
@@ -18,9 +22,17 @@ class _PrivateViewPageState extends State<PrivateViewPage> {
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(
           'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
-    )..initialize().then((_) {
+    )
+      ..initialize().then((_) {
         setState(() {});
       });
+
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    )
+      ..repeat(); // Continuously rotates the widget
+    _animation = Tween<double>(begin: 0, end: 100).animate(_animationController);
   }
 
   @override
@@ -50,6 +62,20 @@ class _PrivateViewPageState extends State<PrivateViewPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
+                AnimatedBuilder(
+                    animation: _animation,
+                    builder: (context, child) {
+                      return                 InstabugPrivateView(
+                        child: Transform.translate(
+                          offset: Offset(_animation.value, 0), // Move along the x-axis
+                          // 20 pixels right, 10 pixels down
+                          child: const Icon(Icons.star, size: 50),
+                        ),
+                      );
+                    }
+                ),
+                const SizedBox(height: 16),
+
                 InstabugPrivateView(
                   child: ElevatedButton(
                     onPressed: () {
@@ -90,6 +116,20 @@ class _PrivateViewPageState extends State<PrivateViewPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
+                InstabugPrivateView(
+                  child: RotationTransition(
+                    turns: _animationController,
+                    child: RotatedBox(
+                      quarterTurns: 1,
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
                 Column(
                   children: <Widget>[
                     InstabugPrivateView(
@@ -115,9 +155,9 @@ class _PrivateViewPageState extends State<PrivateViewPage> {
                     height: 300,
                     child: _controller.value.isInitialized
                         ? AspectRatio(
-                            aspectRatio: _controller.value.aspectRatio,
-                            child: VideoPlayer(_controller),
-                          )
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller),
+                    )
                         : const Center(child: CircularProgressIndicator()),
                   ),
                 ),
