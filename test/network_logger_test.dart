@@ -229,4 +229,14 @@ void main() {
     await logger.networkLog(networkData);
     expect(networkData.requestHeaders['traceparent'], 'test');
   });
+
+  test('[setAutoMaskingEnabled] should call host method', () async {
+    const enabled = true;
+
+    await NetworkLogger.setAutoMaskingEnabled(enabled);
+
+    verify(
+      mInstabugHost.setAutoMaskingEnabled(enabled),
+    ).called(1);
+  });
 }
