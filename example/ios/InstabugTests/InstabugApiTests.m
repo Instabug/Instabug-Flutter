@@ -6,6 +6,8 @@
 #import "Util/Instabug+Test.h"
 #import "IBGNetworkLogger+CP.h"
 #import "Flutter/Flutter.h"
+#import "instabug_flutter/IBGAPM+PrivateAPIs.h"
+#import "instabug_flutter/IBGNetworkLogger+CP.h"
 
 @interface InstabugTests : XCTestCase
 
@@ -447,6 +449,157 @@
     [self.api willRedirectToStoreWithError:&error];
 
     OCMVerify([self.mInstabug willRedirectToAppStore]);
+}
+
+- (void)testNetworkLogWithW3Caught {
+    NSString *url = @"https://example.com";
+    NSString *requestBody = @"hi";
+    NSNumber *requestBodySize = @17;
+    NSString *responseBody = @"{\"hello\":\"world\"}";
+    NSNumber *responseBodySize = @153;
+    NSString *method = @"POST";
+    NSNumber *responseCode = @201;
+    NSString *responseContentType = @"application/json";
+    NSNumber *duration = @23000;
+    NSNumber *startTime = @1670156107523;
+    NSString *w3CCaughtHeader = @"1234";
+    NSDictionary *requestHeaders = @{ @"Accepts": @"application/json",@"traceparent":w3CCaughtHeader};
+    NSDictionary *responseHeaders = @{ @"Content-Type": @"text/plain" };
+    NSDictionary *data = @{
+            @"url": url,
+            @"requestBody": requestBody,
+            @"requestBodySize": requestBodySize,
+            @"responseBody": responseBody,
+            @"responseBodySize": responseBodySize,
+            @"method": method,
+            @"responseCode": responseCode,
+            @"requestHeaders": requestHeaders,
+            @"responseHeaders": responseHeaders,
+            @"responseContentType": responseContentType,
+            @"duration": duration,
+            @"startTime": startTime,
+            @"isW3cHeaderFound":@1,
+            @"w3CCaughtHeader":w3CCaughtHeader
+    };
+
+    FlutterError* error;
+
+    [self.api networkLogData:data error:&error];
+
+    OCMVerify([self.mNetworkLogger addNetworkLogWithUrl:url
+                                                 method:method
+                                            requestBody:requestBody
+                                        requestBodySize:requestBodySize.integerValue
+                                           responseBody:responseBody
+                                       responseBodySize:responseBodySize.integerValue
+                                           responseCode:(int32_t) responseCode.integerValue
+                                         requestHeaders:requestHeaders
+                                        responseHeaders:responseHeaders
+                                            contentType:responseContentType
+                                            errorDomain:nil
+                                              errorCode:0
+                                              startTime:startTime.integerValue * 1000
+                                               duration:duration.integerValue
+                                           gqlQueryName:nil
+                                     serverErrorMessage:nil
+                                          isW3cCaughted:@1
+                                              partialID:nil
+                                              timestamp:nil
+                                generatedW3CTraceparent:nil
+                                 caughtedW3CTraceparent:@"1234"
+              ]);
+}
+
+- (void)testNetworkLogWithW3GeneratedHeader {
+    NSString *url = @"https://example.com";
+    NSString *requestBody = @"hi";
+    NSNumber *requestBodySize = @17;
+    NSString *responseBody = @"{\"hello\":\"world\"}";
+    NSNumber *responseBodySize = @153;
+    NSString *method = @"POST";
+    NSNumber *responseCode = @201;
+    NSString *responseContentType = @"application/json";
+    NSNumber *duration = @23000;
+    NSNumber *startTime = @1670156107523;
+    NSDictionary *requestHeaders = @{ @"Accepts": @"application/json" };
+    NSDictionary *responseHeaders = @{ @"Content-Type": @"text/plain" };
+    NSNumber *partialID = @12;
+
+    NSNumber *timestamp = @34;
+
+    NSString *generatedW3CTraceparent = @"12-34";
+
+    NSString *caughtedW3CTraceparent = nil;
+    NSDictionary *data = @{
+            @"url": url,
+            @"requestBody": requestBody,
+            @"requestBodySize": requestBodySize,
+            @"responseBody": responseBody,
+            @"responseBodySize": responseBodySize,
+            @"method": method,
+            @"responseCode": responseCode,
+            @"requestHeaders": requestHeaders,
+            @"responseHeaders": responseHeaders,
+            @"responseContentType": responseContentType,
+            @"duration": duration,
+            @"startTime": startTime,
+            @"isW3cHeaderFound": @0,
+            @"partialId": partialID,
+            @"networkStartTimeInSeconds": timestamp,
+            @"w3CGeneratedHeader": generatedW3CTraceparent,
+
+    };
+    NSNumber *isW3cCaughted = @0;
+
+    FlutterError* error;
+
+    [self.api networkLogData:data error:&error];
+
+    OCMVerify([self.mNetworkLogger addNetworkLogWithUrl:url
+                                                 method:method
+                                            requestBody:requestBody
+                                        requestBodySize:requestBodySize.integerValue
+                                           responseBody:responseBody
+                                       responseBodySize:responseBodySize.integerValue
+                                           responseCode:(int32_t) responseCode.integerValue
+                                         requestHeaders:requestHeaders
+                                        responseHeaders:responseHeaders
+                                            contentType:responseContentType
+                                            errorDomain:nil
+                                              errorCode:0
+                                              startTime:startTime.integerValue * 1000
+                                               duration:duration.integerValue
+                                           gqlQueryName:nil
+                                     serverErrorMessage:nil
+                                          isW3cCaughted:isW3cCaughted
+                                              partialID:partialID
+                                              timestamp:timestamp
+                                generatedW3CTraceparent:generatedW3CTraceparent
+                                 caughtedW3CTraceparent:caughtedW3CTraceparent
+
+
+
+              ]);
+}
+
+- (void)testisW3CFeatureFlagsEnabled {
+    FlutterError *error;
+
+    id mock = OCMClassMock([IBGNetworkLogger class]);
+    NSNumber *isW3cExternalTraceIDEnabled = @(YES);
+
+    OCMStub([mock w3ExternalTraceIDEnabled]).andReturn([isW3cExternalTraceIDEnabled boolValue]);
+    OCMStub([mock w3ExternalGeneratedHeaderEnabled]).andReturn([isW3cExternalTraceIDEnabled boolValue]);
+    OCMStub([mock w3CaughtHeaderEnabled]).andReturn([isW3cExternalTraceIDEnabled boolValue]);
+
+
+
+    NSDictionary<NSString* , NSNumber *> * result= [self.api isW3CFeatureFlagsEnabledWithError:&error];
+
+    XCTAssertEqual(result[@"isW3cExternalTraceIDEnabled"],isW3cExternalTraceIDEnabled);
+    XCTAssertEqual(result[@"isW3cExternalGeneratedHeaderEnabled"],isW3cExternalTraceIDEnabled);
+    XCTAssertEqual(result[@"isW3cCaughtHeaderEnabled"],isW3cExternalTraceIDEnabled);
+
 }
 
 @end

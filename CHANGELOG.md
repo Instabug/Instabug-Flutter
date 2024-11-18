@@ -1,5 +1,16 @@
 # Changelog
 
+## [14.0.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.4.0...v14.0.0) (November 18, 2024)
+
+### Added
+
+- Add support for tracing network requests from Instabug to services like Datadog and New Relic ([#481](https://github.com/Instabug/Instabug-Flutter/pull/481)).
+
+### Changed
+
+- Bump Instabug Android SDK to v14.0.0 ([#532](https://github.com/Instabug/Instabug-Flutter/pull/532)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v14.0.0).
+- Bump Instabug iOS SDK to v14.0.0 ([#532](https://github.com/Instabug/Instabug-Flutter/pull/532)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/14.0.0),
+
 ## [13.4.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.3.0...v13.4.0) (September 29, 2024)
 
 ### Added
