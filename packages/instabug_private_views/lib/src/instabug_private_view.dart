@@ -18,6 +18,11 @@ class _InstabugPrivateViewState extends State<InstabugPrivateView> {
   final GlobalKey _childKey = GlobalKey();
 
   @override
+  void initState() {
+    _addPrivateView();
+    super.initState();
+  }
+  @override
   void dispose() {
     _removePrivateView();
     super.dispose();
