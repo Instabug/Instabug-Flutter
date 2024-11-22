@@ -6,21 +6,30 @@ class InstabugDioInterceptor extends Interceptor {
   static final NetworkLogger _networklogger = NetworkLogger();
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  Future<void> onRequest(
+      RequestOptions options, RequestInterceptorHandler handler,) async {
+    final headers = options.headers;
+    final startTime = DateTime.now();
+    // ignore: invalid_use_of_internal_member
+    final w3Header = await _networklogger.getW3CHeader(
+        headers, startTime.millisecondsSinceEpoch,);
+    if (w3Header?.isW3cHeaderFound == false &&
+        w3Header?.w3CGeneratedHeader != null) {
+      headers['traceparent'] = w3Header?.w3CGeneratedHeader;
+    }
+    options.headers = headers;
     final data = NetworkData(
-      startTime: DateTime.now(),
-      url: options.uri.toString(),
-      method: options.method,
-    );
+        startTime: startTime,
+        url: options.uri.toString(),
+        w3cHeader: w3Header,
+        method: options.method,);
     _requests[options.hashCode] = data;
     handler.next(options);
   }
 
   @override
   void onResponse(
-    Response<dynamic> response,
-    ResponseInterceptorHandler handler,
-  ) {
+      Response<dynamic> response, ResponseInterceptorHandler handler,) {
     final data = _map(response);
     _networklogger.networkLog(data);
     handler.next(response);
@@ -67,9 +76,7 @@ class InstabugDioInterceptor extends Interceptor {
 
     var responseBodySize = 0;
     if (responseHeaders.containsKey('content-length')) {
-      try {
-        responseBodySize = int.parse(responseHeaders['content-length'] ?? '0');
-      } catch (_) {}
+      responseBodySize = int.parse(responseHeaders['content-length'][0] ?? '0');
     } else if (response.data != null) {
       responseBodySize = response.data.toString().length;
     }

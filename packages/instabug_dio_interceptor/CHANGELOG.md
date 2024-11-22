@@ -1,6 +1,12 @@
 # Changelog
 
-## [2.3.0] - 7/05/2024
+## [2.4.0] (2024-11-18)
+
+### Added
+
+- Add support for tracing network requests from Instabug to services like Datadog and New Relic ([#30](https://github.com/Instabug/Instabug-Dio-Interceptor/pull/30)).
+
+## [2.3.0] - (2024-05-07)
 
 ### Added
 

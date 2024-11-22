@@ -5,6 +5,7 @@ import 'package:instabug_dio_interceptor/instabug_dio_interceptor.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 
 import 'instabug_dio_interceptor_test.mocks.dart';
 import 'mock_adapter.dart';
@@ -15,16 +16,15 @@ class MyInterceptor extends InstabugDioInterceptor {
   int errorCount = 0;
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  Future<void> onRequest(
+      RequestOptions options, RequestInterceptorHandler handler,) async {
     requestCount++;
     super.onRequest(options, handler);
   }
 
   @override
   void onResponse(
-    Response<dynamic> response,
-    ResponseInterceptorHandler handler,
-  ) {
+      Response<dynamic> response, ResponseInterceptorHandler handler,) {
     resposneCount++;
     super.onResponse(response, handler);
   }
@@ -53,6 +53,11 @@ void main() {
   setUpAll(() {
     Instabug.$setHostApi(mHost);
     NetworkLogger.$setHostApi(mHost);
+    when(mHost.isW3CFeatureFlagsEnabled()).thenAnswer((_)=>Future<Map<String,bool>>.value(<String, bool>{
+      'isW3cCaughtHeaderEnabled': true,
+      'isW3cExternalGeneratedHeaderEnabled': true,
+      'isW3cExternalTraceIDEnabled': true,
+    }),);
   });
 
   setUp(() {
