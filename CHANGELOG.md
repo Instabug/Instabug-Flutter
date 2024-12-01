@@ -6,7 +6,7 @@
 
 - Add support enable/disable the automatic masking of sensitive information in network logs. ([#534](https://github.com/Instabug/Instabug-Flutter/pull/534)).
 
-## [14.0.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.4.0...v14.0.0) (November 11, 2024)
+## [14.0.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.4.0...v14.0.0) (November 18, 2024)
 
 ### Added
 
