@@ -1,33 +1,35 @@
 PODS:
   - Flutter (1.0.0)
   - Instabug (14.0.0)
-  - instabug_flutter (13.4.0):
+  - instabug_flutter (14.0.0):
     - Flutter
     - Instabug (= 14.0.0)
   - OCMock (3.6)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - Instabug (from `https://ios-releases.instabug.com/custom/feature-MOB-16541-NetworkAutoMaskAPI/14.0.0/Instabug.podspec`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
 
 SPEC REPOS:
   trunk:
-    - Instabug
     - OCMock
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  Instabug:
+    :podspec: https://ios-releases.instabug.com/custom/feature-MOB-16541-NetworkAutoMaskAPI/14.0.0/Instabug.podspec
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  Instabug: a0beffc01658773e2fac549845782f8937707dc4
-  instabug_flutter: 71ec9d13d57a4958cabab59fe06792cade3bf754
+  Instabug: 3fa42ac8b4350cb632df724b14a86ebdb875aad9
+  instabug_flutter: ff8ab5ff34a476b1d2d887478ec190cda962b973
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
 
-PODFILE CHECKSUM: 8f7552fd115ace1988c3db54a69e4a123c448f84
+PODFILE CHECKSUM: e7d6c199070a4a2b3664012221f598abd9a35e69
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.15.2
