@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:instabug_flutter/instabug_flutter.dart';
 
 class InstabugHttpLogger {
-  void onLogger(http.Response response, {DateTime? startTime}) {
+  void onLogger(http.Response response, {DateTime? startTime,W3CHeader? w3CHeader}) {
     final NetworkLogger networkLogger = NetworkLogger();
 
     final Map<String, dynamic> requestHeaders = <String, dynamic>{};
@@ -29,6 +29,7 @@ class InstabugHttpLogger {
       url: request.url.toString(),
       requestHeaders: requestHeaders,
       requestBody: requestBody,
+      w3cHeader: w3CHeader
     );
 
     final DateTime endTime = DateTime.now();
