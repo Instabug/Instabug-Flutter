@@ -1,5 +1,18 @@
 package com.instabug.flutter;
 
+import static com.instabug.flutter.util.GlobalMocks.reflected;
+import static com.instabug.flutter.util.MockResult.makeResult;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockConstruction;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.instabug.apm.APM;
 import com.instabug.apm.InternalAPM;
 import com.instabug.apm.configuration.cp.APMFeature;

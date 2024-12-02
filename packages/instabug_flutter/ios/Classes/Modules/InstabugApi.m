@@ -5,6 +5,8 @@
 #import "IBGNetworkLogger+CP.h"
 #import "InstabugApi.h"
 #import "ArgsRegistry.h"
+#import "../Util/IBGAPM+PrivateAPIs.h"
+
 #import "../Util/Instabug+CP.h"
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue:((float)(rgbValue & 0xFF)) / 255.0 alpha:((float)((rgbValue & 0xFF000000) >> 24)) / 255.0];
 
@@ -279,12 +281,39 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
     NSString *gqlQueryName = nil;
     NSString *serverErrorMessage = nil;
+    NSNumber *isW3cHeaderFound = nil;
+    NSNumber *partialId = nil;
+    NSNumber *networkStartTimeInSeconds = nil;
+    NSString *w3CGeneratedHeader = nil;
+    NSString *w3CCaughtHeader = nil;
+
     if (data[@"gqlQueryName"] != [NSNull null]) {
         gqlQueryName = data[@"gqlQueryName"];
     }
     if (data[@"serverErrorMessage"] != [NSNull null]) {
         serverErrorMessage = data[@"serverErrorMessage"];
     }
+    if (data[@"partialId"] != [NSNull null]) {
+        partialId = data[@"partialId"];
+    }
+
+    if (data[@"isW3cHeaderFound"] != [NSNull null]) {
+        isW3cHeaderFound = data[@"isW3cHeaderFound"];
+    }
+
+    if (data[@"networkStartTimeInSeconds"] != [NSNull null]) {
+        networkStartTimeInSeconds = data[@"networkStartTimeInSeconds"];
+    }
+
+    if (data[@"w3CGeneratedHeader"] != [NSNull null]) {
+        w3CGeneratedHeader = data[@"w3CGeneratedHeader"];
+    }
+
+    if (data[@"w3CCaughtHeader"] != [NSNull null]) {
+        w3CCaughtHeader = data[@"w3CCaughtHeader"];
+    }
+
+
 
     [IBGNetworkLogger addNetworkLogWithUrl:url
                                     method:method
@@ -302,11 +331,11 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
                                   duration:duration
                               gqlQueryName:gqlQueryName
                         serverErrorMessage:serverErrorMessage
-                             isW3cCaughted:nil
-                                 partialID:nil
-                                 timestamp:nil
-                   generatedW3CTraceparent:nil
-                    caughtedW3CTraceparent:nil];
+                             isW3cCaughted:isW3cHeaderFound
+                                 partialID:partialId
+                                 timestamp:networkStartTimeInSeconds
+                   generatedW3CTraceparent:w3CGeneratedHeader
+                    caughtedW3CTraceparent:w3CCaughtHeader];
 }
 
 - (void)willRedirectToStoreWithError:(FlutterError * _Nullable __autoreleasing *)error {
@@ -348,6 +377,22 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
     }
 }
+- (void)registerFeatureFlagChangeListenerWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    // Android only. We still need this method to exist to match the Pigeon-generated protocol.
+
+}
+
+
+- (nullable NSDictionary<NSString *,NSNumber *> *)isW3CFeatureFlagsEnabledWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    NSDictionary<NSString * , NSNumber *> *result= @{
+        @"isW3cExternalTraceIDEnabled":[NSNumber numberWithBool:IBGNetworkLogger.w3ExternalTraceIDEnabled] ,
+        @"isW3cExternalGeneratedHeaderEnabled":[NSNumber numberWithBool:IBGNetworkLogger.w3ExternalGeneratedHeaderEnabled] ,
+        @"isW3cCaughtHeaderEnabled":[NSNumber numberWithBool:IBGNetworkLogger.w3CaughtHeaderEnabled] ,
+
+    };
+    return  result;
+}
+
 
 + (void)setScreenshotMaskingHandler:(nullable void (^)(UIImage * _Nonnull __strong, void (^ _Nonnull __strong)(UIImage * _Nonnull __strong)))maskingHandler {
     [Instabug setScreenshotMaskingHandler:maskingHandler];
