@@ -59,6 +59,14 @@ scripts:
       flutter: true
       dependsOn: pana
       private: false
+  pods:
+    run: cd ios && pod install --repo-update
+    description: running pod install
+    exec:
+      concurrency: 1
+      orderDependents: true
+    packageFilters:
+      fileExists: 'ios/PodFile'
   score:
     run: dart run pana --no-warning --exit-code-threshold 0
     exec:
