@@ -44,7 +44,7 @@ commands:
           command: sudo gem install cocoapods
       - run:
           name: Install Pods
-          working_directory: packages/Instabug-Flutter/example/ios
+          working_directory: packages/instabug_flutter/example/ios
           command: pod install --repo-update
   setup_captain:
     parameters:
@@ -222,7 +222,7 @@ jobs:
       - advanced-checkout/shallow-checkout
       - setup_flutter
       - android/run-tests:
-          working-directory: packages/Instabug-Flutter/example/android
+          working-directory: packages/instabug_flutter/example/android
           test-command: ./gradlew test
 
   e2e_android_captain:
@@ -239,7 +239,7 @@ jobs:
           run-tests-working-directory: e2e
           additional-avd-args: --device 3
           system-image: system-images;android-33;default;x86_64
-          post-emulator-launch-assemble-command: cd packages/Instabug-Flutter/example && flutter build apk --debug
+          post-emulator-launch-assemble-command: cd packages/instabug_flutter/example && flutter build apk --debug
           test-command: dotnet test
 
   test_ios:
@@ -253,7 +253,7 @@ jobs:
       - setup_ios
       - run:
           name: Build and run tests
-          working_directory: ~/project/packages/Instabug-Flutter/example/ios
+          working_directory: ~/project/packages/instabug_flutter/example/ios
           command: |
             xcodebuild -allowProvisioningUpdates \
                 -workspace Runner.xcworkspace \
@@ -274,7 +274,7 @@ jobs:
       - setup_ios
       - run:
           name: Build Example App
-          working_directory: packages/Instabug-Flutter/example
+          working_directory: packages/instabug_flutter/example
           command: flutter build ios --simulator
       - run:
           name: Run E2E Tests
@@ -368,7 +368,7 @@ workflows:
       - test_flutter_without_melos:
           name: test_flutter-2.10.5
           version: 2.10.5
-          app-dir: "~/project/packages/Instabug-Flutter/"
+          app-dir: "~/project/packages/instabug_flutter/"
       - e2e_android_captain
       - test_ios
       - e2e_ios_captain
