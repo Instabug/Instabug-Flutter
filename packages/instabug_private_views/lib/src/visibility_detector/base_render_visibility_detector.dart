@@ -57,11 +57,7 @@ mixin RenderVisibilityDetectorBase on RenderObject {
     final oldInfo = _lastVisibility[key];
     final visible = _determineVisibility(layer, bounds);
 
-    if (oldInfo == null) {
-      if (!visible) {
-        return;
-      }
-    } else if (visible == oldInfo) {
+    if (visible == oldInfo) {
       return;
     }
 
@@ -69,7 +65,9 @@ mixin RenderVisibilityDetectorBase on RenderObject {
       _lastVisibility[key] = visible;
     } else {
       // Track only visible items so that the map does not grow unbounded.
+      if (oldInfo != null) {
       _lastVisibility.remove(key);
+    }
     }
 
     onVisibilityChanged?.call(visible);

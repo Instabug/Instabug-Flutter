@@ -1,9 +1,8 @@
 PODS:
   - Flutter (1.0.0)
   - Instabug (13.4.2)
-  - instabug_flutter (13.4.0):
+  - instabug_flutter (14.0.0):
     - Flutter
-    - Instabug (= 13.4.2)
   - instabug_private_views (0.0.1):
     - Flutter
     - instabug_flutter
@@ -39,11 +38,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   Instabug: 7aacd5099c11ce96bc49dda40eba0963c06acccc
-  instabug_flutter: a2df87e3d4d9e410785e0b1ffef4bc64d1f4b787
+  instabug_flutter: 0062e46a7f0d0f52f3aeff5040af89fdc68c6df1
   instabug_private_views: df53ff3f1cc842cb686d43e077099d3b36426a7f
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
   video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
 
 PODFILE CHECKSUM: fc0d57fd62bcc29d3b6bdf9fcba44faaf24d9439
 
-COCOAPODS: 1.16.0
+COCOAPODS: 1.14.3

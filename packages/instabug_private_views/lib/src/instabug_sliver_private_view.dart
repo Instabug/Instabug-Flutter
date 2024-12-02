@@ -25,6 +25,12 @@ class _InstabugSliverPrivateViewState extends State<InstabugSliverPrivateView> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    _addPrivateView();
+    super.initState();
+  }
+
   void _addPrivateView() {
     PrivateViewsManager.I.mask(_childKey);
   }
