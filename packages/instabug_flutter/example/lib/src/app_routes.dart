@@ -7,7 +7,8 @@ final appRoutes = {
   /// will throw a Runtime exception deo to Flutter restrictions
 
   "/": (BuildContext context) =>
-      const MyHomePage(title: 'Flutter Demo Home Pag'),
+      // const MyHomePage(title: 'Flutter Demo Home Pag'),
+      const UserStepsPage(),
   CrashesPage.screenName: (BuildContext context) => const CrashesPage(),
   ComplexPage.screenName: (BuildContext context) => const ComplexPage(),
   ApmPage.screenName: (BuildContext context) => const ApmPage(),
@@ -15,4 +16,5 @@ final appRoutes = {
       const ScreenLoadingPage(),
   ScreenCapturePrematureExtensionPage.screenName: (BuildContext context) =>
       const ScreenCapturePrematureExtensionPage(),
+  UserStepsPage.screenName: (BuildContext context) => const UserStepsPage()
 };

@@ -43,6 +43,8 @@ part 'src/components/traces_content.dart';
 
 part 'src/components/flows_content.dart';
 
+part 'src/screens/user_steps_page.dart';
+
 void main() {
   runZonedGuarded(
     () {
@@ -60,7 +62,7 @@ void main() {
 
       enableInstabugMaskingPrivateViews();
 
-      runApp(const MyApp());
+      runApp(const InstabugUserSteps(child: MyApp())); // runApp(const MyApp());
     },
     CrashReporting.reportCrash,
   );

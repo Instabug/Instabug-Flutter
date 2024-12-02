@@ -175,6 +175,18 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _navigateToUserStepsPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const InstabugUserSteps(
+          child: UserStepsPage(),
+        ),
+        settings: const RouteSettings(name: UserStepsPage.screenName),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Page(
@@ -257,6 +269,10 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugTextField(
           controller: screenNameController,
           label: 'Enter screen name',
+        ),
+        InstabugButton(
+          text: 'User Steps',
+          onPressed: _navigateToUserStepsPage,
         ),
         InstabugButton(
           text: 'Report Screen Change',
