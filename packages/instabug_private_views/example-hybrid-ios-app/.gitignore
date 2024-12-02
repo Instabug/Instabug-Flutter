@@ -1,0 +1,45 @@
+# Xcode
+DerivedData/
+build/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcworkspace
+!default.xcworkspace
+xcuserdata/
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+
+# iOS Specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/xcode/package.xcworkspace/
+.swiftpm/
+
+# CocoaPods (if used)
+Pods/
+Podfile.lock
+
+# Carthage (if used)
+Carthage/Build/
+
+# Fastlane (if used)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Bundle artifact
+*.xcarchive
+
+# Temporary files
+*.tmp
+*.swp
+*.swm

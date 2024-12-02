@@ -46,8 +46,10 @@ import com.instabug.library.internal.crossplatform.CoreFeature;
 import com.instabug.library.internal.crossplatform.FeaturesStateListener;
 import com.instabug.library.internal.crossplatform.InternalCore;
 import com.instabug.library.featuresflags.model.IBGFeatureFlag;
+import com.instabug.library.internal.crossplatform.InternalCore;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
+import com.instabug.library.screenshot.ScreenshotCaptor;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 import com.instabug.survey.Surveys;
 import com.instabug.survey.callbacks.OnShowCallback;
@@ -72,6 +74,7 @@ import java.util.Random;
 import java.util.concurrent.Callable;
 
 import io.flutter.plugin.common.BinaryMessenger;
+
 import kotlin.jvm.functions.Function1;
 
 import org.mockito.Mockito;
@@ -642,5 +645,13 @@ public class InstabugApiTest {
         assertEquals(isW3cExternalTraceIDEnabled, flags.get("isW3cExternalTraceIDEnabled"));
         assertEquals(isW3cCaughtHeaderEnabled, flags.get("isW3cCaughtHeaderEnabled"));
 
+    }
+
+    @Test
+    public void testSetScreenshotCaptor() {
+        InternalCore internalCore = spy(InternalCore.INSTANCE);
+
+        InstabugApi.setScreenshotCaptor(any(), internalCore);
+        verify(internalCore)._setScreenshotCaptor(any(ScreenshotCaptor.class));
     }
 }
