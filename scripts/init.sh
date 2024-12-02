@@ -39,5 +39,5 @@ fi
 melos bootstrap
 melos dart_bootstrap
 melos pigeon --no-select
-melos generate --no-select
-melos pods --no-select
+melos generate
+melos pods

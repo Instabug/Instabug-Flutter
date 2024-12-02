@@ -11,7 +11,6 @@
 
 @interface IBGAPM (PrivateAPIs)
 
-@property (class, atomic, assign) BOOL networkEnabled;
 
 /// `endScreenLoadingEnabled` will be only true if  APM, screenLoadingFeature.enabled and autoUITracesUserPreference are true
 @property (class, atomic, assign) BOOL endScreenLoadingEnabled;

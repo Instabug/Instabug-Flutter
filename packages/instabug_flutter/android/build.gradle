@@ -1,5 +1,5 @@
 group 'com.instabug.flutter'
-version '13.4.0'
+version '14.0.0'
 
 buildscript {
     repositories {
@@ -22,7 +22,10 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    if (project.android.hasProperty("namespace")) {
+        namespace "com.instabug.flutter"
+    }
+    compileSdkVersion 33
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -41,10 +44,11 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:13.4.1'
-
+    api 'com.instabug.library:instabug:14.0.0'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
+    testImplementation "io.mockk:mockk:1.13.13"
+
 }
 
 // add upload_symbols task
