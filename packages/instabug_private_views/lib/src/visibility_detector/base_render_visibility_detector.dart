@@ -66,8 +66,8 @@ mixin RenderVisibilityDetectorBase on RenderObject {
     } else {
       // Track only visible items so that the map does not grow unbounded.
       if (oldInfo != null) {
-      _lastVisibility.remove(key);
-    }
+        _lastVisibility.remove(key);
+      }
     }
 
     onVisibilityChanged?.call(visible);

@@ -19,8 +19,7 @@ class _PrivateViewPageState extends State<PrivateViewPage> {
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(
           'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
-    )
-      ..initialize().then((_) {
+    )..initialize().then((_) {
         setState(() {});
       });
   }
@@ -117,9 +116,9 @@ class _PrivateViewPageState extends State<PrivateViewPage> {
                     height: 300,
                     child: _controller.value.isInitialized
                         ? AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    )
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          )
                         : const Center(child: CircularProgressIndicator()),
                   ),
                 ),
