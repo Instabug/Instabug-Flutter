@@ -27,6 +27,7 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 target 'Runner' do
+  pod 'Instabug', :podspec => 'https://ios-releases.instabug.com/custom/fix-crashes-link_cp_crashes_with_session_v3/14.0.0/Instabug.podspec'
   use_frameworks!
   use_modular_headers!
 
