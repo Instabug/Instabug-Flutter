@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - Instabug (13.4.2)
+  - Instabug (14.0.0)
   - instabug_flutter (14.0.0):
     - Flutter
   - instabug_private_views (0.0.1):
@@ -13,7 +13,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - Instabug (from `https://ios-releases.instabug.com/custom/feature-flutter-private-views-base/13.4.2/Instabug.podspec`)
+  - Instabug (from `https://ios-releases.instabug.com/custom/feature-flutter-private-views-base/14.0.0/Instabug.podspec`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - instabug_private_views (from `.symlinks/plugins/instabug_private_views/ios`)
   - OCMock (= 3.6)
@@ -27,7 +27,7 @@ EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   Instabug:
-    :podspec: https://ios-releases.instabug.com/custom/feature-flutter-private-views-base/13.4.2/Instabug.podspec
+    :podspec: https://ios-releases.instabug.com/custom/feature-flutter-private-views-base/14.0.0/Instabug.podspec
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
   instabug_private_views:
@@ -37,12 +37,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  Instabug: 7aacd5099c11ce96bc49dda40eba0963c06acccc
+  Instabug: 9d2b06afbadfbd4630bc0116dc27d84360ed70b0
   instabug_flutter: 0062e46a7f0d0f52f3aeff5040af89fdc68c6df1
   instabug_private_views: df53ff3f1cc842cb686d43e077099d3b36426a7f
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
   video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
 
-PODFILE CHECKSUM: 02e3295e1482e04d2cbd38390c8ea91a5c0c2ff1
+PODFILE CHECKSUM: 32bd1b5b0a93d31b74cc581a86b5fa93c1cc923f
 
 COCOAPODS: 1.14.3
