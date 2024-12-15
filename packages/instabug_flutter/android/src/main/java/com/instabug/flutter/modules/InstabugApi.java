@@ -17,6 +17,7 @@ import com.instabug.library.internal.crossplatform.CoreFeature;
 import com.instabug.library.internal.crossplatform.CoreFeaturesState;
 import com.instabug.library.internal.crossplatform.FeaturesStateListener;
 import com.instabug.library.internal.crossplatform.InternalCore;
+import com.instabug.flutter.util.privateViews.ScreenshotCaptor;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
@@ -25,9 +26,11 @@ import com.instabug.library.IssueType;
 import com.instabug.library.Platform;
 import com.instabug.library.ReproConfigurations;
 import com.instabug.library.featuresflags.model.IBGFeatureFlag;
+import com.instabug.library.internal.crossplatform.InternalCore;
 import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
+import com.instabug.library.screenshot.instacapture.ScreenshotRequest;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 import io.flutter.FlutterInjector;
 import io.flutter.embedding.engine.loader.FlutterLoader;
@@ -492,4 +495,24 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     public void willRedirectToStore() {
         Instabug.willRedirectToStore();
     }
+
+    public static void setScreenshotCaptor(ScreenshotCaptor screenshotCaptor,InternalCore internalCore) {
+        internalCore._setScreenshotCaptor(new com.instabug.library.screenshot.ScreenshotCaptor() {
+            @Override
+            public void capture(@NonNull ScreenshotRequest screenshotRequest) {
+                screenshotCaptor.capture(new ScreenshotCaptor.CapturingCallback() {
+                    @Override
+                    public void onCapturingFailure(Throwable throwable) {
+                        screenshotRequest.getListener().onCapturingFailure(throwable);
+                    }
+
+                    @Override
+                    public void onCapturingSuccess(Bitmap bitmap) {
+                        screenshotRequest.getListener().onCapturingSuccess(bitmap);
+                    }
+                });
+            }
+        });
+    }
+
 }

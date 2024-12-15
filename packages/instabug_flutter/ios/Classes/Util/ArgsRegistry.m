@@ -1,5 +1,4 @@
 #import "ArgsRegistry.h"
-
 @implementation ArgsRegistry
 
 + (ArgsDictionary *)sdkLogLevels {
