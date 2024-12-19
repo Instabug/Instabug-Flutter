@@ -1,12 +1,14 @@
 import 'dart:async';
-
-// import 'dart:nativewrappers/_internal/vm/lib/internal_patch.dart';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:instabug_flutter/src/utils/user_steps/widget_utils.dart';
 
-const _tapDeltaArea = 20 * 20;
 Element? _clickTrackerElement;
+
+enum GestureType { swipe, scroll, tap, pinch, longPress, doubleTap }
 
 class InstabugUserSteps extends StatefulWidget {
   final Widget child;
@@ -30,90 +32,112 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
   DateTime? _lastTapTime;
   bool? _isLongPressed;
   String? _swipeDirection;
-  List<PointerEvent> _pointers = [];
-  double _initialPinchDistance = 0.0;
+  GestureType? gestureType;
   DateTime? currentTime;
-  String? _gestureEvent;
-
   static const double _doubleTapThreshold = 300;
+  int? _pointerCount;
+  double _endDistance = 0.0;
 
   void _onPointerDown(PointerDownEvent downEvent) {
     _isLongPressed = false;
+    gestureType = null;
     _pointerDownLocation = downEvent.localPosition;
     _lastTapTime = currentTime;
-
-    _pointers.add(downEvent);
-    _checkPinchStart();
-
+    _pointerCount = downEvent.buttons; // Store pointer count (to check pinch)
     _timer = Timer(const Duration(milliseconds: 500), () {
       _isLongPressed = true;
     });
   }
 
-  void _onPointerMove(PointerMoveEvent moveEvent) {
-    if (_pointers.length == 2) {
-      _updatePinchDistance(moveEvent);
-    } else {
-      _getSwipeDirection(moveEvent);
-    }
-  }
-
-  void _onPointerUp(PointerUpEvent upEvent) {
+  void _onPointerUp(PointerUpEvent upEvent, BuildContext context) {
     _timer?.cancel();
     currentTime = DateTime.now();
-
-    final deltaX = upEvent.localPosition.dx - _pointerDownLocation!.dx;
-    final deltaY = upEvent.localPosition.dy - _pointerDownLocation!.dy;
-    const tapSensitivity = 20;
-    if (deltaX.abs() < tapSensitivity && deltaY.abs() < tapSensitivity) {
-      if (_isLongPressed!) {
-        _gestureEvent = 'long press';
-      } else if (_lastTapTime != null &&
-          currentTime!.difference(_lastTapTime!).inMilliseconds <=
-              _doubleTapThreshold) {
-        _gestureEvent = 'Double Tap';
-      } else {
-        _gestureEvent = 'Tap';
-      }
+    if (_pointerDownLocation == null) {
+      return;
     }
-    _pointers.removeWhere((pointer) => pointer.pointer == upEvent.pointer);
-
-    if (_pointers.length == 1) {
-      _initialPinchDistance = 0.0;
-      _gestureEvent = 'Pinched';
-    }
-    final tappedWidget = _getTappedWidget(upEvent.localPosition);
-
-    if (tappedWidget["widget"] == null) {
-      tappedWidget["widget"] = "View";
-    }
-    print(
-        "$_gestureEvent ${tappedWidget["widget"]} ${tappedWidget["description"]}");
-  }
-
-  void _checkPinchStart() {
-    if (_pointers.length == 2) {
-      final firstPointer = _pointers[0].localPosition;
-      final secondPointer = _pointers[1].localPosition;
-      _initialPinchDistance = (firstPointer - secondPointer).distance;
-    }
-  }
-
-  void _updatePinchDistance(PointerMoveEvent moveEvent) {
-    if (_pointers.length == 2) {
-      final firstPointer = _pointers[0].localPosition;
-      final secondPointer = _pointers[1].localPosition;
-      final currentPinchDistance = (firstPointer - secondPointer).distance;
-
-      // If there's a significant change in pinch distance, detect zoom (in/out)
-      if ((currentPinchDistance - _initialPinchDistance).abs() > 10) {
-        if (currentPinchDistance > _initialPinchDistance) {
-          print('pinch zooming in');
+    if (_pointerCount == 1) {
+      final deltaX = upEvent.localPosition.dx - _pointerDownLocation!.dx;
+      final deltaY = upEvent.localPosition.dy - _pointerDownLocation!.dy;
+      const tapSensitivity = 20 * 20;
+      final offset = Offset(deltaX, deltaY);
+      if (offset.distanceSquared < tapSensitivity) {
+        if (_isLongPressed!) {
+          gestureType = GestureType.longPress;
+        } else if (_lastTapTime != null &&
+            currentTime!.difference(_lastTapTime!).inMilliseconds <=
+                _doubleTapThreshold) {
+          gestureType = GestureType.doubleTap;
         } else {
-          print('pinch zooming out');
+          gestureType = GestureType.tap;
+        }
+      } else {
+        if (deltaX.abs() > deltaY.abs()) {
+          gestureType = GestureType.swipe;
+
+          if (deltaX > 0) {
+            print('Swipe Right');
+          } else {
+            print('Swipe Left');
+          }
+        }
+      }
+    } else if (_pointerCount == 2) {
+      // Pinch detection
+      final double pinchDelta = _endDistance - 0.0;
+      if (pinchDelta.abs() > 20) {
+        if (pinchDelta > 0) {
+          print('Pinch Out (Zoom In)');
+        } else {
+          print('Pinch In (Zoom Out)');
         }
       }
     }
+    final tappedWidget = _getTappedWidget(upEvent.localPosition, context);
+    if (tappedWidget == null) {
+      return;
+    }
+
+    if (tappedWidget["widget"] == null) {
+      return;
+    }
+
+    print("Ahmed " +
+        "${gestureType!.name} ${tappedWidget["widget"]} ${tappedWidget["description"]}");
+  }
+
+  double? _previousOffset;
+
+  void _detectScrollDirection(double currentOffset, Axis direction) {
+    if (_previousOffset == null) {
+      return;
+    }
+    final delta = (currentOffset - _previousOffset!).abs();
+    if (delta < 50) {
+      return;
+    }
+    switch (direction) {
+      case Axis.horizontal:
+        if (currentOffset > _previousOffset!) {
+          _swipeDirection = "Scrolling Left";
+        } else {
+          _swipeDirection = "Scrolling Right";
+        }
+        break;
+      case Axis.vertical:
+        if (currentOffset > _previousOffset!) {
+          _swipeDirection = "Scrolling Down";
+        } else {
+          _swipeDirection = "Scrolling Up";
+        }
+        break;
+    }
+
+    print("Ahmed ${_swipeDirection!}");
+  }
+
+  double _calculateDistance(Offset point1, Offset point2) {
+    // Calculate distance between two points for pinch detection
+    return sqrt(pow(point2.dx - point1.dx, 2) + pow(point2.dy - point1.dy, 2));
   }
 
   @override
@@ -121,31 +145,94 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
     return Listener(
       behavior: HitTestBehavior.translucent,
       onPointerDown: _onPointerDown,
-      onPointerUp: _onPointerUp,
-      onPointerMove: _onPointerMove,
-      child: widget.child,
+      onPointerMove: (event) {
+        // Track the movement while the pointer is moving
+        if (_pointerCount == 2) {
+          // Track distance between two fingers for pinch detection
+          _endDistance =
+              _calculateDistance(event.localPosition, _pointerDownLocation!);
+        }
+      },
+      onPointerUp: (event) {
+        _onPointerUp(event, context);
+      },
+      child: NotificationListener<ScrollNotification>(
+          onNotification: (ScrollNotification notification) {
+            if (notification is ScrollStartNotification) {
+              _previousOffset = notification.metrics.pixels;
+            } else if (notification is ScrollEndNotification) {
+              _detectScrollDirection(
+                  notification.metrics.pixels, // Vertical position
+                  notification.metrics.axis);
+            }
+
+            return true;
+          },
+          child: widget.child),
     );
   }
 
-  void _getSwipeDirection(PointerMoveEvent moveEvent) {
-    const swipeSensitivity = 8;
-    if (moveEvent.delta.dx > swipeSensitivity) {
-      _swipeDirection = 'Right';
+  String? _getElementType(Element element) {
+    final widget = element.widget;
+    // Used by ElevatedButton, TextButton, OutlinedButton.
+    if (widget is ButtonStyleButton) {
+      if (widget.enabled) {
+        return 'ButtonStyleButton';
+      }
+    } else if (widget is MaterialButton) {
+      if (widget.enabled) {
+        return 'MaterialButton';
+      }
+    } else if (widget is CupertinoButton) {
+      if (widget.enabled) {
+        return 'CupertinoButton';
+      }
+    } else if (widget is InkWell) {
+      if (widget.onTap != null) {
+        return 'InkWell';
+      }
+    } else if (widget is GestureDetector) {
+      if (widget.onTap != null) {
+        return 'GestureDetector';
+      }
+    } else if (widget is IconButton) {
+      if (widget.onPressed != null) {
+        return 'IconButton';
+      }
+    } else if (widget is PopupMenuButton) {
+      if (widget.enabled) {
+        return 'PopupMenuButton';
+      }
+    } else if (widget is PopupMenuItem) {
+      if (widget.enabled) {
+        return 'PopupMenuItem';
+      }
     }
-    if (moveEvent.delta.dx < -swipeSensitivity) {
-      _swipeDirection = 'Left';
-    }
-    if (moveEvent.delta.dy > swipeSensitivity) {
-      _swipeDirection = 'Up';
-    }
-    if (moveEvent.delta.dy < -swipeSensitivity) {
-      _swipeDirection = 'Down';
-    }
+
+    return null;
   }
 
-  Map<String, dynamic> _getTappedWidget(Offset location) {
+  Map<String, dynamic>? _getTappedWidget(
+      Offset location, BuildContext context) {
     String? tappedWidget;
     String? text;
+    String? key;
+
+    final rootElement = _clickTrackerElement;
+    if (rootElement == null || rootElement.widget != widget) {
+      return null;
+    }
+
+    var isPrivate = false;
+    final hitTestResult = BoxHitTestResult();
+    final renderBox = context.findRenderObject()! as RenderBox;
+
+    renderBox.hitTest(hitTestResult, position: location);
+
+    final targets = hitTestResult.path
+        .where((e) => e.target is RenderBox)
+        .map((e) => e.target)
+        .toList();
 
     void visitor(Element visitedElement) {
       final renderObject = visitedElement.renderObject;
@@ -154,96 +241,92 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
         return;
       }
 
-      final transform =
-          renderObject.getTransformTo(_clickTrackerElement!.renderObject);
+      if (targets.contains(renderObject)) {
+        final transform =
+            renderObject.getTransformTo(_clickTrackerElement!.renderObject);
 
-      if (_isAlertSheet(visitedElement.widget)) {
-        tappedWidget = "AlertSheetWidget";
-        return;
+        final paintBounds =
+            MatrixUtils.transformRect(transform, renderObject.paintBounds);
+
+        if (paintBounds.contains(location)) {
+          if (isPrivate == false) {
+            isPrivate = visitedElement.widget.runtimeType.toString() ==
+                    'InstabugPrivateView' ||
+                visitedElement.widget.runtimeType.toString() ==
+                    'InstabugSliverPrivateView';
+          }
+          if (_isSliderWidget(visitedElement.widget)) {
+            tappedWidget = visitedElement.widget.runtimeType.toString();
+            text =
+                "A slider changed to ${_getSliderValue(visitedElement.widget)}";
+            return;
+          }
+          if (_isButtonWidget(visitedElement.widget)) {
+            if (visitedElement.widget is InkWell) {
+              final widget = visitedElement.widget as InkWell;
+              tappedWidget = "${widget.child.runtimeType} Wrapped with InkWell";
+            } else if (visitedElement.widget is GestureDetector) {
+              final widget = visitedElement.widget as GestureDetector;
+              tappedWidget =
+                  "${widget.child.runtimeType} Wrapped with GestureDetector";
+            } else {
+              tappedWidget = visitedElement.widget.runtimeType.toString();
+            }
+
+            if (isPrivate == false) {
+              text = _getLabelRecursively(visitedElement);
+            }
+            return;
+          } else if (_isTextWidget(visitedElement.widget)) {
+            tappedWidget = visitedElement.widget.runtimeType.toString();
+            if (isPrivate == false) {
+              text = _getLabelRecursively(visitedElement);
+            }
+            return;
+          } else if (_isToggleableWidget(visitedElement.widget)) {
+            tappedWidget = visitedElement.widget.runtimeType.toString();
+            text = _getTaggleValue(visitedElement.widget);
+            return;
+          } else if (_isTextInputWidget(visitedElement.widget)) {
+            tappedWidget = visitedElement.widget.runtimeType.toString();
+            if (isPrivate == false) {
+              text = _getTextInputValue(visitedElement.widget);
+            }
+
+            return;
+          }
+          key = WidgetUtils.toStringValue(visitedElement.widget.key);
+        }
       }
-
-      final paintBounds =
-          MatrixUtils.transformRect(transform, renderObject.paintBounds);
-
-      if (paintBounds.contains(location)) {
-        if (_isSliderWidget(visitedElement.widget)) {
-          _gestureEvent = 'Swipe';
-
-          tappedWidget = "SliderWidget";
-          text =
-              "A slider changed to ${_getSliderValue(visitedElement.widget)}";
-          _swipeDirection = null;
-          return;
-        }
-        if (_isScrollableWidget(visitedElement.widget) == true &&
-            _swipeDirection is String) {
-          tappedWidget = "ListWidget";
-          _gestureEvent = 'Scroll';
-          _swipeDirection = null;
-          return;
-        }
-        if (_isImageWidget(visitedElement.widget)) {
-          tappedWidget = "ImageWidget";
-          text = "Image";
-          return;
-        }
-        if (_isButtonWidget(visitedElement.widget)) {
-          tappedWidget = "ButtonWidget";
-          text = _getLabelRecursively(visitedElement);
-          return;
-        }
-        if (_isTextWidget(visitedElement.widget)) {
-          tappedWidget = "TextWidget";
-          text = _getLabelRecursively(visitedElement);
-          return;
-        }
-        if (_isToggleableWidget(visitedElement.widget)) {
-          tappedWidget = "ToggleableWidget";
-          text = _getTaggleValue(visitedElement.widget);
-          return;
-        }
-        if (_isTextInputWidget(visitedElement.widget)) {
-          tappedWidget = "TextInputWidget";
-          text = _getTextInputValue(visitedElement.widget);
-          return;
-        }
-      }
-
-      if (tappedWidget == null) {
+      if (tappedWidget == null ||
+          (_isElementMounted(visitedElement) == false)) {
         visitedElement.visitChildElements(visitor);
       }
     }
 
     _clickTrackerElement?.visitChildElements(visitor);
 
-    return {'widget': tappedWidget, 'description': text};
+    return {'widget': tappedWidget, 'description': text, "key": key};
   }
 
-  bool _isScrollableWidget(Widget clickedWidget) {
-    if (clickedWidget is ScrollView ||
-        clickedWidget is SingleChildScrollView ||
-        clickedWidget is PageView ||
-        clickedWidget is SliverMultiBoxAdaptorWidget ||
-        clickedWidget is Scrollable ||
-        clickedWidget is NestedScrollView ||
-        clickedWidget is SliverAppBar ||
-        clickedWidget is DraggableScrollableSheet) {
-      return true;
+  bool _isTargetWidget(Widget? parentWidget) {
+    if (parentWidget == null) {
+      return false;
     }
-    return false;
+    return _isButtonWidget(parentWidget) || _isToggleableWidget(parentWidget);
   }
 
   bool _isButtonWidget(Widget clickedWidget) {
     if (clickedWidget is ButtonStyleButton ||
         clickedWidget is MaterialButton ||
         clickedWidget is CupertinoButton ||
-        clickedWidget is InkWell ||
-        clickedWidget is IconButton ||
         clickedWidget is PopupMenuButton ||
         clickedWidget is FloatingActionButton ||
         clickedWidget is BackButton ||
         clickedWidget is DropdownButton ||
-        clickedWidget is IconButton) {
+        clickedWidget is IconButton ||
+        clickedWidget is GestureDetector ||
+        clickedWidget is InkWell) {
       return true;
     }
     return false;
@@ -264,6 +347,7 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
   bool _isSliderWidget(Widget clickedWidget) {
     if (clickedWidget is Slider ||
         clickedWidget is CupertinoSlider ||
+        clickedWidget is Dismissible ||
         clickedWidget is RangeSlider) {
       return true;
     }
@@ -292,20 +376,6 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
         clickedWidget is SwitchListTile ||
         clickedWidget is CupertinoSwitch ||
         clickedWidget is ToggleButtons) {
-      return true;
-    }
-    return false;
-  }
-
-  bool _isAlertSheet(Widget clickedWidget) {
-    if (clickedWidget is AlertDialog ||
-        clickedWidget is SimpleDialog ||
-        clickedWidget is CupertinoAlertDialog ||
-        clickedWidget is CupertinoActionSheet ||
-        clickedWidget is BottomSheet ||
-        clickedWidget is SnackBar ||
-        clickedWidget is Dialog ||
-        clickedWidget is CupertinoActionSheet) {
       return true;
     }
     return false;
@@ -368,27 +438,36 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
 
   String? _getTextInputValue(Widget widget) {
     String? label;
+    String? hint;
     bool isSecret;
 
     if (widget is TextField) {
       isSecret = widget.obscureText;
       if (!isSecret) {
         label = widget.controller?.text;
+        hint = widget.decoration?.hintText ?? widget.decoration?.labelText;
+        if (hint == null) {
+          if (widget.decoration?.label != null &&
+              widget.decoration?.label is Text) {
+            hint = (widget.decoration!.label! as Text).data;
+          }
+        }
       }
     }
     if (widget is CupertinoTextField) {
       isSecret = widget.obscureText;
       if (!isSecret) {
         label = widget.controller?.text;
+        hint = widget.placeholder;
       }
     }
     if (widget is EditableText) {
       isSecret = widget.obscureText;
       if (!isSecret) {
-        label = widget.controller?.text;
+        label = widget.controller.text;
       }
     }
-    return label;
+    return label ?? hint;
   }
 
   String? _getSliderValue(Widget widget) {
@@ -421,5 +500,12 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
     descriptionFinder(element);
 
     return label;
+  }
+
+  bool _isElementMounted(Element? element) {
+    if (element == null) {
+      return false;
+    }
+    return element.mounted && element.owner != null;
   }
 }

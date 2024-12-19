@@ -1,12 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:async';
-import 'dart:io';
-import 'dart:ui' as ui;
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
 part of '../../main.dart';
 
 class UserStepsPage extends StatefulWidget {
@@ -14,13 +5,10 @@ class UserStepsPage extends StatefulWidget {
 
   const UserStepsPage({Key? key}) : super(key: key);
 
-   @override
+  @override
   _UserStepsPageState createState() => _UserStepsPageState();
-
-
-
- 
 }
+
 class _UserStepsPageState extends State<UserStepsPage> {
   double _currentSliderValue = 20.0;
 
@@ -37,6 +25,7 @@ class _UserStepsPageState extends State<UserStepsPage> {
   TextEditingController _controller = TextEditingController();
 
   String _currentValue = '';
+  List<String> _items = List.generate(20, (index) => 'Item ${index + 1}');
 
   @override
   void initState() {
@@ -44,23 +33,44 @@ class _UserStepsPageState extends State<UserStepsPage> {
 
     _controller.addListener(() {
       setState(() {
-        _currentValue = _controller.text; 
+        _currentValue = _controller.text;
       });
     });
   }
-    void _handleRadioValueChanged(int? value) {
+
+  void _handleRadioValueChanged(int? value) {
     setState(() {
       _selectedValue = value;
     });
   }
 
- @override
-    Widget build(BuildContext context) {
-    return Page(
-      title: 'User Steps',
-        children: [
-        SectionTitle('Sliders'),
-         Slider(
+  @override
+  Widget build(BuildContext context) {
+    return Page(title: 'User Steps', children: [
+      BackButton(),
+      NotificationListener<ScrollNotification>(
+        onNotification: (ScrollNotification notification) {
+          return false;
+        },
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(
+                100,
+                (_) => InkWell(
+                      onTap: () {},
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        color: Colors.red,
+                        margin: EdgeInsets.all(8),
+                      ),
+                    )),
+          ),
+        ),
+      ),
+      SectionTitle('Sliders'),
+      Slider(
         value: _currentSliderValue,
         max: 100,
         divisions: 5,
@@ -71,34 +81,35 @@ class _UserStepsPageState extends State<UserStepsPage> {
           });
         },
       ),
-         RangeSlider(
-      values: _currentRangeValues,
-      max: 100,
-      divisions: 5,
-      labels: RangeLabels(
-        _currentRangeValues.start.round().toString(),
-        _currentRangeValues.end.round().toString(),
+      RangeSlider(
+        values: _currentRangeValues,
+        max: 100,
+        divisions: 5,
+        labels: RangeLabels(
+          _currentRangeValues.start.round().toString(),
+          _currentRangeValues.end.round().toString(),
+        ),
+        onChanged: (RangeValues values) {
+          setState(() {
+            _currentRangeValues = values;
+          });
+        },
       ),
-      onChanged: (RangeValues values) {
-        setState(() {
-          _currentRangeValues = values;
-        });
-      },
-    ),
-        SectionTitle('Images'),
-        Row(
-          children: [
-           Image.asset(
-                    'assets/img.png',
-                    height: 100,
-                  ),
-          Image.network("https://t3.ftcdn.net/jpg/00/50/07/64/360_F_50076454_TCvZEw37VyB5ZhcwEjkJHddtuV1cFmKY.jpg",height:100),
-        ]),
-            
-        SectionTitle('Toggles'),
-        Row(
-            children: [
-            Checkbox(
+      SectionTitle('Images'),
+      Row(children: [
+        Image.asset(
+          'assets/img.png',
+          height: 100,
+        ),
+        Image.network(
+            "https://t3.ftcdn.net/jpg/00/50/07/64/360_F_50076454_TCvZEw37VyB5ZhcwEjkJHddtuV1cFmKY.jpg",
+            height: 100),
+      ]),
+      InstabugButton(text: 'Ahmed'),
+      ElevatedButton(onPressed: () {}, child: Text("data")),
+      SectionTitle('Toggles'),
+      Row(children: [
+        Checkbox(
           tristate: true,
           value: isChecked,
           onChanged: (bool? value) {
@@ -107,112 +118,103 @@ class _UserStepsPageState extends State<UserStepsPage> {
             });
           },
         ),
-       Radio<int>(
-            value: 0,
-            groupValue: _selectedValue,
-            onChanged: _handleRadioValueChanged,
-          ),
+        Radio<int>(
+          value: 0,
+          groupValue: _selectedValue,
+          onChanged: _handleRadioValueChanged,
+        ),
         Switch(
-        value: light,
-        activeColor: Colors.red,
-        onChanged: (bool value) {
-          setState(() {
-            light = value;
-          });
-        },
-          ),
-            ]
-           
-          ),
-
-
-          SectionTitle('TextInput'),
-          Column(
-
-            children: [
-              Padding(
-                padding: EdgeInsets.all(16.0), // Set the padding value
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _controller, // Bind the controller to the TextField
-                      decoration: InputDecoration(
-                        labelText: "Type something",
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    TextField(
-                      controller: _controller, // Bind the controller to the TextField
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                      ),
-                    ),
-                    TextFormField(
-                       obscureText: true,
-                      controller: _controller, // Bind the controller to the TextField
-                      decoration: const InputDecoration(
-                        icon: Icon(Icons.person),
-                        hintText: 'What do people call you?',
-                        labelText: 'Name *',
-                      ),
-                      onSaved: (String? value) {
-                        // This optional block of code can be used to run
-                        // code when the user saves the form.
-                      },
-                      validator: (String? value) {
-                        return (value != null && value.contains('@')) ? 'Do not use the @ char.' : null;
-                      },
-                    ),
-
-                  ],
+          value: light,
+          activeColor: Colors.red,
+          onChanged: (bool value) {
+            setState(() {
+              light = value;
+            });
+          },
+        ),
+      ]),
+      SectionTitle('TextInput'),
+      Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(16.0), // Set the padding value
+            child: Column(
+              children: [
+                TextField(
+                  controller: _controller,
+                  // Bind the controller to the TextField
+                  decoration: InputDecoration(
+                    labelText: "Type something",
+                    border: OutlineInputBorder(),
+                  ),
                 ),
-              ),
-            ],
+                TextField(
+                  controller: _controller,
+                  // Bind the controller to the TextField
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
+                  ),
+                ),
+                TextFormField(
+                  obscureText: true,
+                  controller: _controller,
+                  // Bind the controller to the TextField
+                  decoration: const InputDecoration(
+                    icon: Icon(Icons.person),
+                    hintText: 'What do people call you?',
+                    labelText: 'Name *',
+                  ),
+                  onSaved: (String? value) {
+                    // This optional block of code can be used to run
+                    // code when the user saves the form.
+                  },
+                  validator: (String? value) {
+                    return (value != null && value.contains('@'))
+                        ? 'Do not use the @ char.'
+                        : null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          ListView.builder(
+              itemCount: _items.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Dismissible(
+                  key: Key(_items[index]),
+                  // Unique key for each item
+                  onDismissed: (direction) {
+                    // Remove the item from the list
+                    setState(() {
+                      _items.removeAt(index);
+                    });
 
-          ),
-        
-        SectionTitle('Sheets / Alerts'),
-        Column(
-          children: [
-                    SimpleDialog(
-        title: const Text('Select assignment'),
-        children: <Widget>[
-          SimpleDialogOption(
-            onPressed: () { print("aaaaa"); },
-            child: const Text('Treasury department'),
-          ),
-          SimpleDialogOption(
-            onPressed: () { print( "bbbbb"); },
-            child: const Text('State department'),
-          ),
+                    // Show a snackbar or other UI feedback on dismissal
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Item dismissed')),
+                    );
+                  },
+                  background: Container(color: Colors.red),
+                  // Background color when swiped
+                  direction: DismissDirection.endToStart,
+                  // Swipe direction (left to right)
+                  child: ListTile(
+                    title: Text(_items[index]),
+                  ),
+                );
+              })
         ],
       ),
-                      AlertDialog(
-         title: const Text('AlertDialog Title'),
-        content: const SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text('This is a demo alert dialog.'),
-              Text('Would you like to approve of this message?'),
-            ],
-          )
-        ),
-                      ),
-                    ],
-                  ),
-
-      
-      ]
-     
-    );
+    ]);
   }
- @override
+
+  @override
   void dispose() {
-    _controller.dispose(); // Dispose of the controller when the widget is destroyed
+    _controller
+        .dispose(); // Dispose of the controller when the widget is destroyed
     super.dispose();
   }
-
 }
-
