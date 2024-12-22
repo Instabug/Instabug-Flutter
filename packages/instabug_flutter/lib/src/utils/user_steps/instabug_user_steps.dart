@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:instabug_flutter/src/utils/user_steps/widget_utils.dart';
@@ -12,10 +11,11 @@ class WidgetDetails {
   Element element;
   bool isPrivate;
   late Widget widget;
+
   WidgetDetails({
     required this.element,
     required this.isPrivate,
-  }){
+  }) {
     widget = element.widget;
   }
 
@@ -41,13 +41,11 @@ class WidgetDetails {
     }
 
     if (WidgetUtils.isSliderWidget(widget)) {
-      return "A slider changed to ${WidgetDetails.getSliderValue(widget)}";
-    }
-
-    if (WidgetUtils.isButtonWidget(widget)) {
-      return WidgetUtils.getLabelRecursively(widget);
+      return WidgetUtils.getSliderValue(widget);
+    } else if (WidgetUtils.isButtonWidget(widget)) {
+      return WidgetUtils.getLabelRecursively(element);
     } else if (WidgetUtils.isTextWidget(widget)) {
-      return WidgetUtils.getLabelRecursively(visitedElement);
+      return WidgetUtils.getLabelRecursively(element);
     } else if (WidgetUtils.isToggleableWidget(widget)) {
       return WidgetUtils.getToggleValue(widget);
     } else if (WidgetUtils.isTextInputWidget(widget)) {
@@ -225,7 +223,7 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
 
   WidgetDetails? _getWidgetDetails(
       Offset location, BuildContext context, GestureType type) {
-    Widget? tappedWidget;
+    Element? tappedElement;
     // String? text;
     var isPrivate = false;
 
@@ -266,7 +264,7 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
                 widget.runtimeType.toString() == 'InstabugSliverPrivateView';
           }
           if (_isTargetWidget(widget, type)) {
-            tappedWidget = visitedElement.widget;
+            tappedElement = visitedElement;
             return;
           }
 
@@ -314,15 +312,15 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
           // key = WidgetUtils.toStringValue(visitedElement.widget.key);
         }
       }
-      if (tappedWidget == null ||
+      if (tappedElement == null ||
           (_isElementMounted(visitedElement) == false)) {
         visitedElement.visitChildElements(visitor);
       }
     }
 
     _clickTrackerElement?.visitChildElements(visitor);
-    if (tappedWidget == null) return null;
-    return WidgetDetails(widget: tappedWidget!, isPrivate: isPrivate);
+    if (tappedElement == null) return null;
+    return WidgetDetails(element: tappedElement!, isPrivate: isPrivate);
   }
 
   bool _isTargetWidget(Widget? widget, GestureType gestureType) {
