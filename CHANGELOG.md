@@ -1,11 +1,11 @@
 # Changelog
 
-## [14.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.4.0...v14.0.0) (December 22, 2024)
+## [14.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.0.0...v14.1.0) (December 22, 2024)
 
 ### Changed
 
-- Bump Instabug Android SDK to v14.1.0 ([#538](https://github.com/Instabug/Instabug-Flutter/pull/538)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v14.1.0).
-- Bump Instabug iOS SDK to v14.1.0 ([#539](https://github.com/Instabug/Instabug-Flutter/pull/538)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/14.1.0),
+- Bump Instabug Android SDK to v14.1.0 ([#539](https://github.com/Instabug/Instabug-Flutter/pull/539)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v14.1.0).
+- Bump Instabug iOS SDK to v14.1.0 ([#539](https://github.com/Instabug/Instabug-Flutter/pull/539)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/14.1.0),
 
 ## [14.0.0](https://github.com/Instabug/Instabug-Flutter/compare/v13.4.0...v14.0.0) (November 18, 2024)
 
