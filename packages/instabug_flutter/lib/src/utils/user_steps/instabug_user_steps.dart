@@ -8,6 +8,55 @@ import 'package:instabug_flutter/src/utils/user_steps/widget_utils.dart';
 
 Element? _clickTrackerElement;
 
+class WidgetDetails {
+  Element element;
+  bool isPrivate;
+  late Widget widget;
+  WidgetDetails({
+    required this.element,
+    required this.isPrivate,
+  }){
+    widget = element.widget;
+  }
+
+  String? get key {
+    return WidgetUtils.toStringValue(widget.key);
+  }
+
+  String get widgetName {
+    if (widget is InkWell) {
+      final inkWellWidget = widget as InkWell;
+      return "${inkWellWidget.child.runtimeType} Wrapped with InkWell";
+    } else if (widget is GestureDetector) {
+      final gestureDetectorWidget = widget as GestureDetector;
+      return "${gestureDetectorWidget.child.runtimeType} Wrapped with GestureDetector";
+    } else {
+      return widget.runtimeType.toString();
+    }
+  }
+
+  String? get text {
+    if (isPrivate) {
+      return null;
+    }
+
+    if (WidgetUtils.isSliderWidget(widget)) {
+      return "A slider changed to ${WidgetDetails.getSliderValue(widget)}";
+    }
+
+    if (WidgetUtils.isButtonWidget(widget)) {
+      return WidgetUtils.getLabelRecursively(widget);
+    } else if (WidgetUtils.isTextWidget(widget)) {
+      return WidgetUtils.getLabelRecursively(visitedElement);
+    } else if (WidgetUtils.isToggleableWidget(widget)) {
+      return WidgetUtils.getToggleValue(widget);
+    } else if (WidgetUtils.isTextInputWidget(widget)) {
+      return WidgetUtils.getTextInputValue(widget);
+    }
+    return null;
+  }
+}
+
 enum GestureType { swipe, scroll, tap, pinch, longPress, doubleTap }
 
 class InstabugUserSteps extends StatefulWidget {
@@ -85,24 +134,26 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
       // Pinch detection
       final double pinchDelta = _endDistance - 0.0;
       if (pinchDelta.abs() > 20) {
-        if (pinchDelta > 0) {
-          print('Pinch Out (Zoom In)');
-        } else {
-          print('Pinch In (Zoom Out)');
-        }
+        gestureType = GestureType.pinch;
       }
     }
-    final tappedWidget = _getTappedWidget(upEvent.localPosition, context);
+
+    if (gestureType == null) {
+      return;
+    }
+
+    final tappedWidget =
+        _getWidgetDetails(upEvent.localPosition, context, gestureType!);
     if (tappedWidget == null) {
       return;
     }
 
-    if (tappedWidget["widget"] == null) {
-      return;
-    }
-
-    print("Ahmed " +
-        "${gestureType!.name} ${tappedWidget["widget"]} ${tappedWidget["description"]}");
+    // if (tappedWidget["widget"] == null) {
+    //   return;
+    // }
+    //
+    // print("Ahmed " +
+    //     "${gestureType!.name} ${tappedWidget["widget"]} ${tappedWidget["description"]}");
   }
 
   double? _previousOffset;
@@ -172,58 +223,17 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
     );
   }
 
-  String? _getElementType(Element element) {
-    final widget = element.widget;
-    // Used by ElevatedButton, TextButton, OutlinedButton.
-    if (widget is ButtonStyleButton) {
-      if (widget.enabled) {
-        return 'ButtonStyleButton';
-      }
-    } else if (widget is MaterialButton) {
-      if (widget.enabled) {
-        return 'MaterialButton';
-      }
-    } else if (widget is CupertinoButton) {
-      if (widget.enabled) {
-        return 'CupertinoButton';
-      }
-    } else if (widget is InkWell) {
-      if (widget.onTap != null) {
-        return 'InkWell';
-      }
-    } else if (widget is GestureDetector) {
-      if (widget.onTap != null) {
-        return 'GestureDetector';
-      }
-    } else if (widget is IconButton) {
-      if (widget.onPressed != null) {
-        return 'IconButton';
-      }
-    } else if (widget is PopupMenuButton) {
-      if (widget.enabled) {
-        return 'PopupMenuButton';
-      }
-    } else if (widget is PopupMenuItem) {
-      if (widget.enabled) {
-        return 'PopupMenuItem';
-      }
-    }
-
-    return null;
-  }
-
-  Map<String, dynamic>? _getTappedWidget(
-      Offset location, BuildContext context) {
-    String? tappedWidget;
-    String? text;
-    String? key;
+  WidgetDetails? _getWidgetDetails(
+      Offset location, BuildContext context, GestureType type) {
+    Widget? tappedWidget;
+    // String? text;
+    var isPrivate = false;
 
     final rootElement = _clickTrackerElement;
     if (rootElement == null || rootElement.widget != widget) {
       return null;
     }
 
-    var isPrivate = false;
     final hitTestResult = BoxHitTestResult();
     final renderBox = context.findRenderObject()! as RenderBox;
 
@@ -249,53 +259,59 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
             MatrixUtils.transformRect(transform, renderObject.paintBounds);
 
         if (paintBounds.contains(location)) {
+          final widget = visitedElement.widget;
           if (isPrivate == false) {
-            isPrivate = visitedElement.widget.runtimeType.toString() ==
+            isPrivate = widget.runtimeType.toString() ==
                     'InstabugPrivateView' ||
-                visitedElement.widget.runtimeType.toString() ==
-                    'InstabugSliverPrivateView';
+                widget.runtimeType.toString() == 'InstabugSliverPrivateView';
           }
-          if (_isSliderWidget(visitedElement.widget)) {
-            tappedWidget = visitedElement.widget.runtimeType.toString();
-            text =
-                "A slider changed to ${_getSliderValue(visitedElement.widget)}";
+          if (_isTargetWidget(widget, type)) {
+            tappedWidget = visitedElement.widget;
             return;
           }
-          if (_isButtonWidget(visitedElement.widget)) {
-            if (visitedElement.widget is InkWell) {
-              final widget = visitedElement.widget as InkWell;
-              tappedWidget = "${widget.child.runtimeType} Wrapped with InkWell";
-            } else if (visitedElement.widget is GestureDetector) {
-              final widget = visitedElement.widget as GestureDetector;
-              tappedWidget =
-                  "${widget.child.runtimeType} Wrapped with GestureDetector";
-            } else {
-              tappedWidget = visitedElement.widget.runtimeType.toString();
-            }
 
-            if (isPrivate == false) {
-              text = _getLabelRecursively(visitedElement);
-            }
-            return;
-          } else if (_isTextWidget(visitedElement.widget)) {
-            tappedWidget = visitedElement.widget.runtimeType.toString();
-            if (isPrivate == false) {
-              text = _getLabelRecursively(visitedElement);
-            }
-            return;
-          } else if (_isToggleableWidget(visitedElement.widget)) {
-            tappedWidget = visitedElement.widget.runtimeType.toString();
-            text = _getTaggleValue(visitedElement.widget);
-            return;
-          } else if (_isTextInputWidget(visitedElement.widget)) {
-            tappedWidget = visitedElement.widget.runtimeType.toString();
-            if (isPrivate == false) {
-              text = _getTextInputValue(visitedElement.widget);
-            }
-
-            return;
-          }
-          key = WidgetUtils.toStringValue(visitedElement.widget.key);
+          // if (_isSliderWidget(visitedElement.widget)) {
+          //   tappedWidget = visitedElement.widget.runtimeType.toString();
+          //   text =
+          //       "A slider changed to ${_getSliderValue(visitedElement.widget)}";
+          //   return;
+          // }
+          //
+          // if (_isButtonWidget(visitedElement.widget)) {
+          //   if (visitedElement.widget is InkWell) {
+          //     final widget = visitedElement.widget as InkWell;
+          //     tappedWidget = "${widget.child.runtimeType} Wrapped with InkWell";
+          //   } else if (visitedElement.widget is GestureDetector) {
+          //     final widget = visitedElement.widget as GestureDetector;
+          //     tappedWidget =
+          //         "${widget.child.runtimeType} Wrapped with GestureDetector";
+          //   } else {
+          //     tappedWidget = visitedElement.widget.runtimeType.toString();
+          //   }
+          //
+          //   if (isPrivate == false) {
+          //     text = _getLabelRecursively(visitedElement);
+          //   }
+          //   return;
+          // } else if (_isTextWidget(visitedElement.widget)) {
+          //   tappedWidget = visitedElement.widget.runtimeType.toString();
+          //   if (isPrivate == false) {
+          //     text = _getLabelRecursively(visitedElement);
+          //   }
+          //   return;
+          // } else if (_isToggleableWidget(visitedElement.widget)) {
+          //   tappedWidget = visitedElement.widget.runtimeType.toString();
+          //   text = _getToggleValue(visitedElement.widget);
+          //   return;
+          // } else if (_isTextInputWidget(visitedElement.widget)) {
+          //   tappedWidget = visitedElement.widget.runtimeType.toString();
+          //   if (isPrivate == false) {
+          //     text = _getTextInputValue(visitedElement.widget);
+          //   }
+          //
+          //   return;
+          // }
+          // key = WidgetUtils.toStringValue(visitedElement.widget.key);
         }
       }
       if (tappedWidget == null ||
@@ -305,201 +321,26 @@ class _InstabugUserStepsState extends State<InstabugUserSteps> {
     }
 
     _clickTrackerElement?.visitChildElements(visitor);
-
-    return {'widget': tappedWidget, 'description': text, "key": key};
+    if (tappedWidget == null) return null;
+    return WidgetDetails(widget: tappedWidget!, isPrivate: isPrivate);
   }
 
-  bool _isTargetWidget(Widget? parentWidget) {
-    if (parentWidget == null) {
+  bool _isTargetWidget(Widget? widget, GestureType gestureType) {
+    if (widget == null) {
       return false;
     }
-    return _isButtonWidget(parentWidget) || _isToggleableWidget(parentWidget);
-  }
-
-  bool _isButtonWidget(Widget clickedWidget) {
-    if (clickedWidget is ButtonStyleButton ||
-        clickedWidget is MaterialButton ||
-        clickedWidget is CupertinoButton ||
-        clickedWidget is PopupMenuButton ||
-        clickedWidget is FloatingActionButton ||
-        clickedWidget is BackButton ||
-        clickedWidget is DropdownButton ||
-        clickedWidget is IconButton ||
-        clickedWidget is GestureDetector ||
-        clickedWidget is InkWell) {
-      return true;
+    switch (gestureType) {
+      case GestureType.swipe:
+        return WidgetUtils.isSwipedWidget(widget);
+      case GestureType.scroll:
+        return false;
+      case GestureType.tap:
+      case GestureType.longPress:
+      case GestureType.doubleTap:
+        return WidgetUtils.isTappedWidget(widget);
+      case GestureType.pinch:
+        return WidgetUtils.isPinchWidget(widget);
     }
-    return false;
-  }
-
-  bool _isTextWidget(Widget clickedWidget) {
-    if (clickedWidget is Text ||
-        clickedWidget is RichText ||
-        clickedWidget is SelectableText ||
-        clickedWidget is TextSpan ||
-        clickedWidget is Placeholder ||
-        clickedWidget is TextStyle) {
-      return true;
-    }
-    return false;
-  }
-
-  bool _isSliderWidget(Widget clickedWidget) {
-    if (clickedWidget is Slider ||
-        clickedWidget is CupertinoSlider ||
-        clickedWidget is Dismissible ||
-        clickedWidget is RangeSlider) {
-      return true;
-    }
-    return false;
-  }
-
-  bool _isImageWidget(Widget clickedWidget) {
-    if (clickedWidget is Image ||
-        clickedWidget is FadeInImage ||
-        clickedWidget is NetworkImage ||
-        clickedWidget is AssetImage ||
-        clickedWidget is ImageProvider ||
-        clickedWidget is FileImage ||
-        clickedWidget is MemoryImage) {
-      return true;
-    }
-    return false;
-  }
-
-  bool _isToggleableWidget(Widget clickedWidget) {
-    if (clickedWidget is Checkbox ||
-        clickedWidget is CheckboxListTile ||
-        clickedWidget is Radio ||
-        clickedWidget is RadioListTile ||
-        clickedWidget is Switch ||
-        clickedWidget is SwitchListTile ||
-        clickedWidget is CupertinoSwitch ||
-        clickedWidget is ToggleButtons) {
-      return true;
-    }
-    return false;
-  }
-
-  bool _isTextInputWidget(Widget clickedWidget) {
-    if (clickedWidget is TextField ||
-        clickedWidget is CupertinoTextField ||
-        clickedWidget is EditableText) {
-      return true;
-    }
-    return false;
-  }
-
-  String? _getLabel(Widget widget) {
-    String? label;
-
-    if (widget is Text) {
-      label = widget.data;
-    } else if (widget is Semantics) {
-      label = widget.properties.label;
-    } else if (widget is Icon) {
-      label = widget.semanticLabel;
-    } else if (widget is Tooltip) {
-      label = widget.message;
-    }
-    if (label?.isEmpty ?? true) {
-      label = null;
-    }
-    return label;
-  }
-
-  String? _getTaggleValue(Widget widget) {
-    String? value;
-
-    if (widget is Checkbox) {
-      value = widget.value.toString();
-    }
-    if (widget is Radio) {
-      value = widget.groupValue.toString();
-    }
-    if (widget is RadioListTile) {
-      value = widget.groupValue.toString();
-    }
-    if (widget is Switch) {
-      value = widget.value.toString();
-    }
-    if (widget is SwitchListTile) {
-      value = widget.selected.toString();
-    }
-    if (widget is CupertinoSwitch) {
-      value = widget.value.toString();
-    }
-    if (widget is ToggleButtons) {
-      value = widget.isSelected.toString();
-    }
-
-    return value;
-  }
-
-  String? _getTextInputValue(Widget widget) {
-    String? label;
-    String? hint;
-    bool isSecret;
-
-    if (widget is TextField) {
-      isSecret = widget.obscureText;
-      if (!isSecret) {
-        label = widget.controller?.text;
-        hint = widget.decoration?.hintText ?? widget.decoration?.labelText;
-        if (hint == null) {
-          if (widget.decoration?.label != null &&
-              widget.decoration?.label is Text) {
-            hint = (widget.decoration!.label! as Text).data;
-          }
-        }
-      }
-    }
-    if (widget is CupertinoTextField) {
-      isSecret = widget.obscureText;
-      if (!isSecret) {
-        label = widget.controller?.text;
-        hint = widget.placeholder;
-      }
-    }
-    if (widget is EditableText) {
-      isSecret = widget.obscureText;
-      if (!isSecret) {
-        label = widget.controller.text;
-      }
-    }
-    return label ?? hint;
-  }
-
-  String? _getSliderValue(Widget widget) {
-    String? label;
-
-    if (widget is Slider) {
-      label = widget.value.toString();
-    }
-    if (widget is CupertinoSlider) {
-      label = widget.value.toString();
-    }
-    if (widget is RangeSlider) {
-      label = widget.values.toString();
-    }
-
-    return label;
-  }
-
-  String? _getLabelRecursively(Element element) {
-    String? label;
-
-    void descriptionFinder(Element element) {
-      label ??= _getLabel(element.widget);
-
-      if (label == null) {
-        element.visitChildren(descriptionFinder);
-      }
-    }
-
-    descriptionFinder(element);
-
-    return label;
   }
 
   bool _isElementMounted(Element? element) {
