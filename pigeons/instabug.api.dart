@@ -74,4 +74,6 @@ abstract class InstabugHostApi {
   Map<String, bool> isW3CFeatureFlagsEnabled();
 
   void willRedirectToStore();
+
+  void setAutoMaskingEnabled(bool isEnabled);
 }

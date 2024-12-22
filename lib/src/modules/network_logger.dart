@@ -126,4 +126,10 @@ class NetworkLogger {
     }
     return null;
   }
+
+  /// Enables or disables network logs sensitive information auto masking.
+  /// [boolean] isEnabled
+  static Future<void> setAutoMaskingEnabled(bool isEnabled) async {
+    return _host.setAutoMaskingEnabled(isEnabled);
+  }
 }

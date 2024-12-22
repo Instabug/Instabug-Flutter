@@ -622,7 +622,20 @@ public class InstabugApiTest {
         api.willRedirectToStore();
         mInstabug.verify(Instabug::willRedirectToStore);
     }
+    @Test
+    public void testSetAutoMaskingEnabledGivenFalse() {
+        boolean isEnabled = false;
 
+        api.setAutoMaskingEnabled(isEnabled);
+        mInstabug.verify(() -> Instabug.setNetworkAutoMaskingState(Feature.State.DISABLED));
+    }
+    @Test
+    public void testSetAutoMaskingEnabledGivenTrue() {
+        boolean isEnabled = true;
+
+        api.setAutoMaskingEnabled(isEnabled);
+        mInstabug.verify(() -> Instabug.setNetworkAutoMaskingState(Feature.State.ENABLED));
+    }
 
     @Test
     public void isW3CFeatureFlagsEnabled() {
