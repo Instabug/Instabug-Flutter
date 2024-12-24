@@ -64,7 +64,9 @@ bool isSwipedWidget(Widget? widget) {
 
 /// Determines if a widget supports pinch gestures (defaulting to those not tappable or swipeable).
 bool isPinchWidget(Widget? widget) {
-  return (!isSwipedWidget(widget)) && widget is GestureDetector || widget is Transform  || isImageWidget(widget);
+  return (!isSwipedWidget(widget)) && widget is GestureDetector ||
+      widget is Transform ||
+      isImageWidget(widget);
 }
 
 /// Checks if a widget is primarily for displaying text.
@@ -84,7 +86,7 @@ bool isSliderWidget(Widget widget) {
 
 /// Checks if a widget is an image or image-like.
 bool isImageWidget(Widget? widget) {
-  if(widget==null) {
+  if (widget == null) {
     return false;
   }
   return widget is Image ||
@@ -167,7 +169,8 @@ String? getTextHintValue(Widget widget) {
 String? getSliderValue(Widget widget) {
   if (widget is Slider) return widget.value.toString();
   if (widget is CupertinoSlider) return widget.value.toString();
-  if (widget is RangeSlider) return "(${widget.values.start},${widget.values.end})";
+  if (widget is RangeSlider)
+    return "(${widget.values.start},${widget.values.end})";
 
   return null;
 }

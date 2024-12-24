@@ -66,13 +66,13 @@ class InstabugUserStepsState extends State<InstabugUserSteps> {
         _getWidgetDetails(event.localPosition, context, _gestureType!);
     if (tappedWidget != null) {
       final userStepDetails = tappedWidget.copyWith(
-          gestureType: _gestureType, gestureMetaData: _gestureMetaData);
+        gestureType: _gestureType,
+        gestureMetaData: _gestureMetaData,
+      );
       if (userStepDetails.gestureType == null ||
           userStepDetails.message == null) {
         return;
       }
-
-      print(userStepDetails.message);
 
       Instabug.logUserSteps(
         userStepDetails.gestureType!,
@@ -225,7 +225,6 @@ class InstabugUserStepsState extends State<InstabugUserSteps> {
       userStepDetails.gestureType!,
       userStepDetails.message!,
     );
-    print(userStepDetails.message);
   }
 
   @override

@@ -494,7 +494,9 @@ class Instabug {
   /// Enables and disables manual invocation and prompt options for bug and feedback.
   /// [boolean] isEnabled
   static Future<void> logUserSteps(
-      GestureType gestureType, String message) async {
+    GestureType gestureType,
+    String message,
+  ) async {
     return _host.logUserSteps(gestureType.toString(), message);
   }
 }

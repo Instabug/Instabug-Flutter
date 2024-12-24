@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_private_views/instabug_private_view.dart';

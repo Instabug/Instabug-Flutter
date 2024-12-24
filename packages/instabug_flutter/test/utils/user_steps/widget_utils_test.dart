@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/src/utils/user_steps/widget_utils.dart';
 
-
 void main() {
   group('keyToStringValue', () {
     test('returns null for null key', () {
@@ -30,7 +29,8 @@ void main() {
 
   group('isButtonWidget', () {
     test('detects ButtonStyleButton', () {
-      final button = ElevatedButton(onPressed: () {}, child: const Text('Button'));
+      final button =
+          ElevatedButton(onPressed: () {}, child: const Text('Button'));
       expect(isButtonWidget(button), true);
     });
 
@@ -52,7 +52,8 @@ void main() {
 
   group('isTappedWidget', () {
     test('detects button widget', () {
-      final button = ElevatedButton(onPressed: () {}, child: const Text('Button'));
+      final button =
+          ElevatedButton(onPressed: () {}, child: const Text('Button'));
       expect(isTappedWidget(button), true);
     });
 
@@ -97,7 +98,8 @@ void main() {
     });
 
     test('returns value from RangeSlider', () {
-      final widget = RangeSlider(values: const RangeValues(0.2, 0.8), onChanged: (_) {});
+      final widget =
+          RangeSlider(values: const RangeValues(0.2, 0.8), onChanged: (_) {});
       expect(getSliderValue(widget), '(0.2,0.8)');
     });
 

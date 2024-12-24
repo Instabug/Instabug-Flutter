@@ -87,8 +87,8 @@ class UserStepDetails {
         return " and it's label is '$label'";
       }
     } else if (isToggleableWidget(widget!)) {
-      final value=getToggleValue(widget!);
-      if(value?.isNotEmpty==true) {
+      final value = getToggleValue(widget!);
+      if (value?.isNotEmpty == true) {
         return " and it's value is '$value'";
       }
     } else if (isTextInputWidget(widget!)) {

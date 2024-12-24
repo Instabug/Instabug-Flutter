@@ -47,98 +47,107 @@ class _UserStepsPageState extends State<UserStepsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Page(title: 'User Steps', children: [
-      BackButton(),
-      NotificationListener<ScrollNotification>(
-        onNotification: (ScrollNotification notification) {
-          return false;
-        },
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: List.generate(
+    return Page(
+      title: 'User Steps',
+      children: [
+        BackButton(),
+        NotificationListener<ScrollNotification>(
+          onNotification: (ScrollNotification notification) {
+            return false;
+          },
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(
                 100,
                 (_) => InkWell(
-                      onTap: () {},
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.red,
-                        margin: EdgeInsets.all(8),
-                      ),
-                    ),),
+                  onTap: () {},
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    color: Colors.red,
+                    margin: EdgeInsets.all(8),
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
-      ),
-      SectionTitle('Sliders'),
-      Slider(
-        value: _currentSliderValue,
-        max: 100,
-        divisions: 5,
-        label: _currentSliderValue.round().toString(),
-        onChanged: (double value) {
-          setState(() {
-            _currentSliderValue = value;
-          });
-        },
-      ),
-      RangeSlider(
-        values: _currentRangeValues,
-        max: 100,
-        divisions: 5,
-        labels: RangeLabels(
-          _currentRangeValues.start.round().toString(),
-          _currentRangeValues.end.round().toString(),
-        ),
-        onChanged: (RangeValues values) {
-          setState(() {
-            _currentRangeValues = values;
-          });
-        },
-      ),
-      SectionTitle('Images'),
-      Row(children: [
-        Image.asset(
-          'assets/img.png',
-          height: 100,
-        ),
-        Image.network(
-            "https://t3.ftcdn.net/jpg/00/50/07/64/360_F_50076454_TCvZEw37VyB5ZhcwEjkJHddtuV1cFmKY.jpg",
-            height: 100,),
-      ],),
-      InstabugButton(text: 'Ahmed'),
-      ElevatedButton(onPressed: () {}, child: Text("data")),
-      SectionTitle('Toggles'),
-      Row(children: [
-        Checkbox(
-          tristate: true,
-          value: isChecked,
-          onChanged: (bool? value) {
+        SectionTitle('Sliders'),
+        Slider(
+          value: _currentSliderValue,
+          max: 100,
+          divisions: 5,
+          label: _currentSliderValue.round().toString(),
+          onChanged: (double value) {
             setState(() {
-              isChecked = value;
+              _currentSliderValue = value;
             });
           },
         ),
-        Radio<int>(
-          value: 0,
-          groupValue: _selectedValue,
-          onChanged: _handleRadioValueChanged,
-        ),
-        Switch(
-          value: light,
-          activeColor: Colors.red,
-          onChanged: (bool value) {
+        RangeSlider(
+          values: _currentRangeValues,
+          max: 100,
+          divisions: 5,
+          labels: RangeLabels(
+            _currentRangeValues.start.round().toString(),
+            _currentRangeValues.end.round().toString(),
+          ),
+          onChanged: (RangeValues values) {
             setState(() {
-              light = value;
+              _currentRangeValues = values;
             });
           },
         ),
-      ],),
-      GestureDetector(
+        SectionTitle('Images'),
+        Row(
+          children: [
+            Image.asset(
+              'assets/img.png',
+              height: 100,
+            ),
+            Image.network(
+              "https://t3.ftcdn.net/jpg/00/50/07/64/360_F_50076454_TCvZEw37VyB5ZhcwEjkJHddtuV1cFmKY.jpg",
+              height: 100,
+            ),
+          ],
+        ),
+        InstabugButton(text: 'Ahmed'),
+        ElevatedButton(onPressed: () {}, child: Text("data")),
+        SectionTitle('Toggles'),
+        Row(
+          children: [
+            Checkbox(
+              tristate: true,
+              value: isChecked,
+              onChanged: (bool? value) {
+                setState(() {
+                  isChecked = value;
+                });
+              },
+            ),
+            Radio<int>(
+              value: 0,
+              groupValue: _selectedValue,
+              onChanged: _handleRadioValueChanged,
+            ),
+            Switch(
+              value: light,
+              activeColor: Colors.red,
+              onChanged: (bool value) {
+                setState(() {
+                  light = value;
+                });
+              },
+            ),
+          ],
+        ),
+        GestureDetector(
           onScaleUpdate: (details) {
             setState(() {
               _scale = details.scale;
-              _scale = _scale.clamp(1.0, 3.0); // Limit zoom between 1x and 3x// Update scale based on pinch gesture
+              _scale = _scale.clamp(1.0,
+                  3.0); // Limit zoom between 1x and 3x// Update scale based on pinch gesture
             });
           },
           onScaleEnd: (details) {
@@ -150,56 +159,58 @@ class _UserStepsPageState extends State<UserStepsPage> {
           child: Transform.scale(
             scale: _scale, // Apply the scale transformation
             child: Image.asset(
-                "assets/img.png",
-                height: 300,),
-          ),),
-      SectionTitle('TextInput'),
-      Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(16.0), // Set the padding value
-            child: Column(
-              children: [
-                TextField(
-                  controller: _controller,
-                  // Bind the controller to the TextField
-                  decoration: InputDecoration(
-                    labelText: "Type something",
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                TextField(
-                  controller: _controller,
-                  // Bind the controller to the TextField
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                  ),
-                ),
-                TextFormField(
-                  obscureText: true,
-                  controller: _controller,
-                  // Bind the controller to the TextField
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.person),
-                    hintText: 'What do people call you?',
-                    labelText: 'Name *',
-                  ),
-                  onSaved: (String? value) {
-                    // This optional block of code can be used to run
-                    // code when the user saves the form.
-                  },
-                  validator: (String? value) {
-                    return (value != null && value.contains('@'))
-                        ? 'Do not use the @ char.'
-                        : null;
-                  },
-                ),
-              ],
+              "assets/img.png",
+              height: 300,
             ),
           ),
-          ListView.builder(
+        ),
+        SectionTitle('TextInput'),
+        Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(16.0), // Set the padding value
+              child: Column(
+                children: [
+                  TextField(
+                    controller: _controller,
+                    // Bind the controller to the TextField
+                    decoration: InputDecoration(
+                      labelText: "Type something",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  TextField(
+                    controller: _controller,
+                    // Bind the controller to the TextField
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Password',
+                    ),
+                  ),
+                  TextFormField(
+                    obscureText: true,
+                    controller: _controller,
+                    // Bind the controller to the TextField
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.person),
+                      hintText: 'What do people call you?',
+                      labelText: 'Name *',
+                    ),
+                    onSaved: (String? value) {
+                      // This optional block of code can be used to run
+                      // code when the user saves the form.
+                    },
+                    validator: (String? value) {
+                      return (value != null && value.contains('@'))
+                          ? 'Do not use the @ char.'
+                          : null;
+                    },
+                  ),
+                ],
+              ),
+            ),
+            ListView.builder(
               itemCount: _items.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
@@ -225,10 +236,12 @@ class _UserStepsPageState extends State<UserStepsPage> {
                     title: Text(_items[index]),
                   ),
                 );
-              },),
-        ],
-      ),
-    ],);
+              },
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   @override

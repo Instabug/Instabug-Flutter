@@ -43,8 +43,10 @@ void main() {
         element: gestureDetector.createElement(),
         isPrivate: false,
       );
-      expect(detailsGestureDetector.widgetName,
-          "Icon Wrapped with GestureDetector",);
+      expect(
+        detailsGestureDetector.widgetName,
+        "Icon Wrapped with GestureDetector",
+      );
     });
 
     test('message constructs correctly with gestureType', () {
@@ -89,9 +91,7 @@ void main() {
     });
 
     test('widgetName handles null child gracefully in InkWell', () {
-      const inkWell = InkWell(
-        child: null,
-      );
+      const inkWell = InkWell();
       final details = UserStepDetails(
         element: inkWell.createElement(),
         isPrivate: false,

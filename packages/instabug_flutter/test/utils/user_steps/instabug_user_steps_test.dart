@@ -81,7 +81,6 @@ void main() {
     });
 
     testWidgets('detects swipe gestures', (WidgetTester tester) async {
-
       await tester.pumpWidget(
         MaterialApp(
           home: InstabugUserSteps(
@@ -113,20 +112,24 @@ void main() {
                 scale: 1.0,
                 child: const Icon(
                   Icons.add,
-                  size: 300,),
+                  size: 300,
+                ),
               ),
             ),
           ),
         );
 
         // Find the widget to interact with
-        final textFinder = find.byIcon(Icons.add,);
+        final textFinder = find.byIcon(
+          Icons.add,
+        );
         final pinchStart = tester.getCenter(textFinder);
 
         // Start two gestures for the pinch (simulate two fingers)
         final gesture1 = await tester.startGesture(pinchStart);
-        final gesture2 = await tester.startGesture(pinchStart +
-            const Offset(100.0, 0.0)); // Slightly offset for two fingers
+        final gesture2 = await tester.startGesture(
+          pinchStart + const Offset(100.0, 0.0),
+        ); // Slightly offset for two fingers
 
         // Simulate the pinch by moving the gestures closer together
         await tester.pump();
@@ -138,7 +141,7 @@ void main() {
 
         await tester.pump(const Duration(seconds: 1));
 
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         verify(
           mockInstabugHostApi.logUserSteps(GestureType.pinch.toString(), any),
         ).called(1);
