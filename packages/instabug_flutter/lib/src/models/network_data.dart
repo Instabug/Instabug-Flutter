@@ -1,5 +1,7 @@
+import 'package:instabug_flutter/src/models/w3c_header.dart';
+
 class NetworkData {
-  const NetworkData({
+  NetworkData({
     required this.url,
     required this.method,
     this.requestBody = '',
@@ -16,7 +18,10 @@ class NetworkData {
     required this.startTime,
     this.errorCode = 0,
     this.errorDomain = '',
-  });
+    W3CHeader? w3cHeader,
+  }) {
+    _w3cHeader = w3cHeader;
+  }
 
   final String url;
   final String method;
@@ -34,6 +39,50 @@ class NetworkData {
   final DateTime startTime;
   final int errorCode;
   final String errorDomain;
+  W3CHeader? _w3cHeader;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is NetworkData &&
+          runtimeType == other.runtimeType &&
+          url == other.url &&
+          method == other.method &&
+          requestBody == other.requestBody &&
+          responseBody == other.responseBody &&
+          requestBodySize == other.requestBodySize &&
+          responseBodySize == other.responseBodySize &&
+          status == other.status &&
+          requestHeaders == other.requestHeaders &&
+          responseHeaders == other.responseHeaders &&
+          duration == other.duration &&
+          requestContentType == other.requestContentType &&
+          responseContentType == other.responseContentType &&
+          endTime == other.endTime &&
+          startTime == other.startTime &&
+          errorCode == other.errorCode &&
+          errorDomain == other.errorDomain &&
+          _w3cHeader == other._w3cHeader;
+
+  @override
+  int get hashCode =>
+      url.hashCode ^
+      method.hashCode ^
+      requestBody.hashCode ^
+      responseBody.hashCode ^
+      requestBodySize.hashCode ^
+      responseBodySize.hashCode ^
+      status.hashCode ^
+      requestHeaders.hashCode ^
+      responseHeaders.hashCode ^
+      duration.hashCode ^
+      requestContentType.hashCode ^
+      responseContentType.hashCode ^
+      endTime.hashCode ^
+      startTime.hashCode ^
+      errorCode.hashCode ^
+      errorDomain.hashCode ^
+      _w3cHeader.hashCode;
 
   NetworkData copyWith({
     String? url,
@@ -52,6 +101,7 @@ class NetworkData {
     DateTime? startTime,
     int? errorCode,
     String? errorDomain,
+    W3CHeader? w3cHeader,
   }) {
     return NetworkData(
       url: url ?? this.url,
@@ -70,6 +120,7 @@ class NetworkData {
       startTime: startTime ?? this.startTime,
       errorCode: errorCode ?? this.errorCode,
       errorDomain: errorDomain ?? this.errorDomain,
+      w3cHeader: w3cHeader ?? _w3cHeader,
     );
   }
 
@@ -92,6 +143,11 @@ class NetworkData {
       'responseBodySize': responseBodySize,
       'errorDomain': errorDomain,
       'errorCode': errorCode,
+      "isW3cHeaderFound": _w3cHeader?.isW3cHeaderFound,
+      "partialId": _w3cHeader?.partialId,
+      "networkStartTimeInSeconds": _w3cHeader?.networkStartTimeInSeconds,
+      "w3CGeneratedHeader": _w3cHeader?.w3CGeneratedHeader,
+      "w3CCaughtHeader": _w3cHeader?.w3CCaughtHeader,
     };
   }
 }

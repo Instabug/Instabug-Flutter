@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
+import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:instabug_flutter/src/utils/user_steps/user_step_details.dart';
@@ -28,6 +29,7 @@ void main() {
 
   setUpAll(() {
     Instabug.$setHostApi(mHost);
+    FeatureFlagsManager().$setHostApi(mHost);
     IBGBuildInfo.setInstance(mBuildInfo);
     ScreenNameMasker.setInstance(mScreenNameMasker);
   });
@@ -70,7 +72,13 @@ void main() {
   test('[start] should call host method', () async {
     const token = "068ba9a8c3615035e163dc5f829c73be";
     const events = [InvocationEvent.shake, InvocationEvent.screenshot];
-
+    when(mHost.isW3CFeatureFlagsEnabled()).thenAnswer(
+      (_) => Future.value({
+        "isW3cExternalTraceIDEnabled": true,
+        "isW3cExternalGeneratedHeaderEnabled": true,
+        "isW3cCaughtHeaderEnabled": true,
+      }),
+    );
     await Instabug.init(
       token: token,
       invocationEvents: events,

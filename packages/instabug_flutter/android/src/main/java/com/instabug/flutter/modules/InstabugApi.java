@@ -6,15 +6,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
+import com.instabug.library.internal.crossplatform.CoreFeature;
+import com.instabug.library.internal.crossplatform.CoreFeaturesState;
+import com.instabug.library.internal.crossplatform.FeaturesStateListener;
+import com.instabug.library.internal.crossplatform.InternalCore;
 import com.instabug.flutter.util.privateViews.ScreenshotCaptor;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
@@ -30,11 +32,9 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 //import com.instabug.library.screenshot.instacapture.ScreenshotRequest;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
-
 import io.flutter.FlutterInjector;
 import io.flutter.embedding.engine.loader.FlutterLoader;
 import io.flutter.plugin.common.BinaryMessenger;
-
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
@@ -56,14 +56,19 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     private final Callable<Bitmap> screenshotProvider;
     private final InstabugCustomTextPlaceHolder placeHolder = new InstabugCustomTextPlaceHolder();
 
+    private final InstabugPigeon.FeatureFlagsFlutterApi featureFlagsFlutterApi;
+
     public static void init(BinaryMessenger messenger, Context context, Callable<Bitmap> screenshotProvider) {
-        final InstabugApi api = new InstabugApi(context, screenshotProvider);
+        final InstabugPigeon.FeatureFlagsFlutterApi flutterApi = new InstabugPigeon.FeatureFlagsFlutterApi(messenger);
+
+        final InstabugApi api = new InstabugApi(context, screenshotProvider, flutterApi);
         InstabugPigeon.InstabugHostApi.setup(messenger, api);
     }
 
-    public InstabugApi(Context context, Callable<Bitmap> screenshotProvider) {
+    public InstabugApi(Context context, Callable<Bitmap> screenshotProvider, InstabugPigeon.FeatureFlagsFlutterApi featureFlagsFlutterApi) {
         this.context = context;
         this.screenshotProvider = screenshotProvider;
+        this.featureFlagsFlutterApi = featureFlagsFlutterApi;
     }
 
     @VisibleForTesting
@@ -100,9 +105,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @NotNull
     @Override
-    public Boolean isBuilt() {
-        return Instabug.isBuilt();
-    }
+    public Boolean isBuilt() { return Instabug.isBuilt(); }
 
     @Override
     public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {
@@ -465,6 +468,48 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         } catch (Exception e) {
             Log.e(TAG, "Network logging failed");
         }
+    }
+
+    @Override
+    public void registerFeatureFlagChangeListener() {
+
+        try {
+            InternalCore.INSTANCE._setFeaturesStateListener(new FeaturesStateListener() {
+                @Override
+                public void invoke(@NonNull CoreFeaturesState featuresState) {
+                    ThreadManager.runOnMainThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            featureFlagsFlutterApi.onW3CFeatureFlagChange(featuresState.isW3CExternalTraceIdEnabled(),
+                                    featuresState.isAttachingGeneratedHeaderEnabled(),
+                                    featuresState.isAttachingCapturedHeaderEnabled(),
+                                    new InstabugPigeon.FeatureFlagsFlutterApi.Reply<Void>() {
+                                        @Override
+                                        public void reply(Void reply) {
+
+                                        }
+                                    });
+                        }
+                    });
+                }
+
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @NonNull
+    @Override
+    public Map<String, Boolean> isW3CFeatureFlagsEnabled() {
+        Map<String, Boolean> params = new HashMap<String, Boolean>();
+        params.put("isW3cExternalTraceIDEnabled", InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_EXTERNAL_TRACE_ID));
+        params.put("isW3cExternalGeneratedHeaderEnabled", InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_ATTACHING_GENERATED_HEADER));
+        params.put("isW3cCaughtHeaderEnabled", InternalCore.INSTANCE._isFeatureEnabled(CoreFeature.W3C_ATTACHING_CAPTURED_HEADER));
+
+
+        return params;
     }
 
     @Override

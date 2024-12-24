@@ -18,6 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
+import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
@@ -187,11 +188,12 @@ class Instabug {
   }) async {
     $setup();
     InstabugLogger.I.logLevel = debugLogsLevel;
-    return _host.init(
+    await _host.init(
       token,
       invocationEvents.mapToString(),
       debugLogsLevel.toString(),
     );
+    return FeatureFlagsManager().registerW3CFlagsListener();
   }
 
   /// Sets a [callback] to be called wehenever a screen name is captured to mask
