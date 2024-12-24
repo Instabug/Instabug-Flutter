@@ -21,6 +21,7 @@ class _UserStepsPageState extends State<UserStepsPage> {
   int? _selectedValue = 1;
 
   bool light = true;
+  double _scale = 1.0; // Initial scale of the image
 
   TextEditingController _controller = TextEditingController();
 
@@ -65,7 +66,7 @@ class _UserStepsPageState extends State<UserStepsPage> {
                         color: Colors.red,
                         margin: EdgeInsets.all(8),
                       ),
-                    )),
+                    ),),
           ),
         ),
       ),
@@ -103,8 +104,8 @@ class _UserStepsPageState extends State<UserStepsPage> {
         ),
         Image.network(
             "https://t3.ftcdn.net/jpg/00/50/07/64/360_F_50076454_TCvZEw37VyB5ZhcwEjkJHddtuV1cFmKY.jpg",
-            height: 100),
-      ]),
+            height: 100,),
+      ],),
       InstabugButton(text: 'Ahmed'),
       ElevatedButton(onPressed: () {}, child: Text("data")),
       SectionTitle('Toggles'),
@@ -132,7 +133,26 @@ class _UserStepsPageState extends State<UserStepsPage> {
             });
           },
         ),
-      ]),
+      ],),
+      GestureDetector(
+          onScaleUpdate: (details) {
+            setState(() {
+              _scale = details.scale;
+              _scale = _scale.clamp(1.0, 3.0); // Limit zoom between 1x and 3x// Update scale based on pinch gesture
+            });
+          },
+          onScaleEnd: (details) {
+            // You can add logic to reset or clamp the scale if needed
+            if (_scale < 1.0) {
+              _scale = 1.0; // Prevent shrinking below original size
+            }
+          },
+          child: Transform.scale(
+            scale: _scale, // Apply the scale transformation
+            child: Image.asset(
+                "assets/img.png",
+                height: 300,),
+          ),),
       SectionTitle('TextInput'),
       Column(
         children: [
@@ -205,10 +225,10 @@ class _UserStepsPageState extends State<UserStepsPage> {
                     title: Text(_items[index]),
                   ),
                 );
-              })
+              },),
         ],
       ),
-    ]);
+    ],);
   }
 
   @override

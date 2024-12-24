@@ -28,7 +28,7 @@ import com.instabug.library.internal.crossplatform.InternalCore;
 import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
-import com.instabug.library.screenshot.instacapture.ScreenshotRequest;
+//import com.instabug.library.screenshot.instacapture.ScreenshotRequest;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 
 import io.flutter.FlutterInjector;
@@ -43,6 +43,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -153,6 +154,26 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public void logOut() {
         Instabug.logoutUser();
+    }
+
+    @Override
+    public void setEnableUserSteps(@NonNull Boolean isEnabled) {
+        Instabug.setTrackingUserStepsState(isEnabled ? Feature.State.ENABLED : Feature.State.DISABLED);
+    }
+
+    @Override
+    public void logUserSteps(@NonNull String gestureType, @NonNull String message) {
+        try {
+            final String stepType = ArgsRegistry.gestureStepType.get(gestureType);
+            final long timeStamp = (new Date()).getTime();
+            Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "addUserStep",
+                    long.class, String.class, String.class, String.class, String.class);
+            if (method != null) {
+                method.invoke(null, timeStamp, stepType, message, null, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -451,23 +472,23 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         Instabug.willRedirectToStore();
     }
 
-    public static void setScreenshotCaptor(ScreenshotCaptor screenshotCaptor,InternalCore internalCore) {
-        internalCore._setScreenshotCaptor(new com.instabug.library.screenshot.ScreenshotCaptor() {
-            @Override
-            public void capture(@NonNull ScreenshotRequest screenshotRequest) {
-                screenshotCaptor.capture(new ScreenshotCaptor.CapturingCallback() {
-                    @Override
-                    public void onCapturingFailure(Throwable throwable) {
-                        screenshotRequest.getListener().onCapturingFailure(throwable);
-                    }
-
-                    @Override
-                    public void onCapturingSuccess(Bitmap bitmap) {
-                        screenshotRequest.getListener().onCapturingSuccess(bitmap);
-                    }
-                });
-            }
-        });
+    public static void setScreenshotCaptor(ScreenshotCaptor screenshotCaptor, InternalCore internalCore) {
+//        internalCore._setScreenshotCaptor(new com.instabug.library.screenshot.ScreenshotCaptor() {
+//            @Override
+//            public void capture(@NonNull ScreenshotRequest screenshotRequest) {
+//                screenshotCaptor.capture(new ScreenshotCaptor.CapturingCallback() {
+//                    @Override
+//                    public void onCapturingFailure(Throwable throwable) {
+//                        screenshotRequest.getListener().onCapturingFailure(throwable);
+//                    }
+//
+//                    @Override
+//                    public void onCapturingSuccess(Bitmap bitmap) {
+//                        screenshotRequest.getListener().onCapturingSuccess(bitmap);
+//                    }
+//                });
+//            }
+//        });
     }
 
 }

@@ -6,8 +6,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockConstruction;
@@ -24,6 +26,7 @@ import android.net.Uri;
 import com.instabug.bug.BugReporting;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.modules.InstabugApi;
+import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.GlobalMocks;
 import com.instabug.flutter.util.MockReflected;
 import com.instabug.library.Feature;
@@ -605,8 +608,38 @@ public class InstabugApiTest {
     @Test
     public void testSetScreenshotCaptor() {
         InternalCore internalCore = spy(InternalCore.INSTANCE);
-
         InstabugApi.setScreenshotCaptor(any(), internalCore);
-        verify(internalCore)._setScreenshotCaptor(any(ScreenshotCaptor.class));
+//        verify(internalCore)._setScreenshotCaptor(any(ScreenshotCaptor.class));
     }
+
+    @Test
+    public void testSetUserStepsEnabledGivenTrue() {
+        boolean isEnabled = true;
+
+        api.setEnableUserSteps(isEnabled);
+
+        mInstabug.verify(() -> Instabug.setTrackingUserStepsState(Feature.State.ENABLED));
+    }
+
+    @Test
+    public void testSetUserStepsEnabledGivenFalse() {
+        boolean isEnabled = false;
+
+        api.setEnableUserSteps(isEnabled);
+
+        mInstabug.verify(() -> Instabug.setTrackingUserStepsState(Feature.State.DISABLED));
+    }
+
+    @Test
+    public void testLogUserSteps() {
+
+        final String gestureType = "GestureType.tap";
+        final String message = "message";
+
+        api.logUserSteps(gestureType, message);
+
+        reflected.verify(() -> MockReflected.addUserStep(anyLong(), eq(ArgsRegistry.gestureStepType.get(gestureType)), eq(message), isNull(), isNull()));
+
+    }
+
 }

@@ -106,6 +106,14 @@ public class GlobalMocks {
         Method mEndScreenLoadingCP = MockReflected.class.getDeclaredMethod("endScreenLoadingCP", Long.class, Long.class);
         mEndScreenLoadingCP.setAccessible(true);
         reflection.when(() -> Reflection.getMethod(Class.forName("com.instabug.apm.APM"), "endScreenLoadingCP", Long.class, Long.class)).thenReturn(mEndScreenLoadingCP);
+
+
+        Method mAddUserStepCp = MockReflected.class.getDeclaredMethod("addUserStep",
+                long.class, String.class, String.class, String.class, String.class);
+        mAddUserStepCp.setAccessible(true);
+        reflection.when(() -> Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "addUserStep",
+                long.class, String.class, String.class, String.class, String.class)).thenReturn(mAddUserStepCp);;
+
     }
 
     public static void close() {

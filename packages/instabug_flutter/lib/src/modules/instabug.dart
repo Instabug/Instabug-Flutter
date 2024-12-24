@@ -11,6 +11,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unused_import
 import 'package:flutter/services.dart';
@@ -20,6 +21,7 @@ import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
+import 'package:instabug_flutter/src/utils/user_steps/user_step_details.dart';
 import 'package:meta/meta.dart';
 
 enum InvocationEvent {
@@ -479,5 +481,18 @@ class Instabug {
   /// Helps track session data for insights on user interactions during review submission.
   static Future<void> willRedirectToStore() async {
     return _host.willRedirectToStore();
+  }
+
+  /// Enables and disables user interaction steps.
+  /// [boolean] isEnabled
+  static Future<void> enableUserSteps(bool isEnabled) async {
+    return _host.setEnableUserSteps(isEnabled);
+  }
+
+  /// Enables and disables manual invocation and prompt options for bug and feedback.
+  /// [boolean] isEnabled
+  static Future<void> logUserSteps(
+      GestureType gestureType, String message) async {
+    return _host.logUserSteps(gestureType.toString(), message);
   }
 }

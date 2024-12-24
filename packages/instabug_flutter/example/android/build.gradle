@@ -15,19 +15,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven {
 
-            url "https://mvn.instabug.com/nexus/repository/instabug-internal/"
-
-            credentials {
-
-                username "instabug"
-
-                password "yUawaYwPXB7._.mfyTfjhEvyGAC4"
-
-            }
-
-        }
     }
 }
 

@@ -212,4 +212,15 @@
     };
 }
 
++ (ArgsDictionary *) userStepsGesture {
+    return @{
+        @"GestureType.swipe" : @(IBGUIEventTypeSwipe),
+        @"GestureType.scroll" : @(IBGUIEventTypeScroll),
+        @"GestureType.tap" : @(IBGUIEventTypeTap),
+        @"GestureType.pinch" : @(IBGUIEventTypePinch),
+        @"GestureType.longPress" : @(IBGUIEventTypeLongPress),
+        @"GestureType.doubleTap" : @(IBGUIEventTypeTap),
+    };
+}
+
 @end

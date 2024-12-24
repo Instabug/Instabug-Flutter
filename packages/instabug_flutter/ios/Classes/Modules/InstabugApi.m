@@ -349,6 +349,27 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     }
 }
 
+- (void)logUserStepsGestureType:(nonnull NSString *)gestureType message:(nonnull NSString *)message error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    @try {
+
+    IBGUIEventType event = ArgsRegistry.userStepsGesture[gestureType].integerValue;
+    IBGUserStep *userStep = [[IBGUserStep alloc] initWithEvent:event];
+    [userStep setMessage: message];
+
+    [userStep logUserStep];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception);
+
+    }
+}
+
+
+- (void)setEnableUserStepsIsEnabled:(nonnull NSNumber *)isEnabled error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+    Instabug.trackUserSteps = isEnabled.boolValue;
+}
+
+
 + (void)setScreenshotMaskingHandler:(nullable void (^)(UIImage * _Nonnull __strong, void (^ _Nonnull __strong)(UIImage * _Nonnull __strong)))maskingHandler {
     [Instabug setScreenshotMaskingHandler:maskingHandler];
 }

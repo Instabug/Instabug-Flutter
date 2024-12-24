@@ -16,6 +16,7 @@ import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.invocation.util.InstabugFloatingButtonEdge;
 import com.instabug.library.invocation.util.InstabugVideoRecordingButtonPosition;
+import com.instabug.library.model.StepType;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
 
 import java.util.HashMap;
@@ -53,11 +54,12 @@ public final class ArgsRegistry {
         put("InvocationOption.disablePostSendingDialog", Option.DISABLE_POST_SENDING_DIALOG);
     }};
 
+
     public static final ArgsMap<InstabugColorTheme> colorThemes = new ArgsMap<InstabugColorTheme>() {{
         put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
         put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
     }};
-   public static ArgsMap<IBGNonFatalException.Level> nonFatalExceptionLevel = new ArgsMap<IBGNonFatalException.Level>() {{
+    public static ArgsMap<IBGNonFatalException.Level> nonFatalExceptionLevel = new ArgsMap<IBGNonFatalException.Level>() {{
         put("NonFatalExceptionLevel.critical", IBGNonFatalException.Level.CRITICAL);
         put("NonFatalExceptionLevel.error", IBGNonFatalException.Level.ERROR);
         put("NonFatalExceptionLevel.warning", IBGNonFatalException.Level.WARNING);
@@ -205,5 +207,14 @@ public final class ArgsRegistry {
         put("CustomTextPlaceHolderKey.screenRecording", Key.CHATS_TYPE_VIDEO);
         put("CustomTextPlaceHolderKey.messagesNotificationAndOthers", Key.CHATS_MULTIPLE_MESSAGE_NOTIFICATION);
         put("CustomTextPlaceHolderKey.insufficientContentMessage", Key.COMMENT_FIELD_INSUFFICIENT_CONTENT);
+    }};
+
+    public static final ArgsMap<String> gestureStepType = new ArgsMap<String>() {{
+        put("GestureType.swipe", StepType.SWIPE);
+        put("GestureType.scroll", StepType.SCROLL);
+        put("GestureType.tap", StepType.TAP);
+        put("GestureType.pinch", StepType.PINCH);
+        put("GestureType.longPress", StepType.LONG_PRESS);
+        put("GestureType.doubleTap", StepType.DOUBLE_TAP);
     }};
 }
