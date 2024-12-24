@@ -26,7 +26,7 @@ dependencies:
   http: ^0.13.0
   instabug_flutter:
     path: '../../Instabug-Flutter'
-  instabug_http_client: ^2.4.0
+  instabug_http_client: 2.4.0
   video_player:
   instabug_private_views:
     path: '../../instabug_private_views'

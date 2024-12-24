@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: instabug_flutter,instabug_private_views
+dependency_overrides:
+  instabug_flutter:
+    path: ../
+  instabug_private_views:
+    path: ../../instabug_private_views

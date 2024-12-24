@@ -22,6 +22,7 @@ class _InstabugPrivateViewState extends State<InstabugPrivateView> {
     _addPrivateView();
     super.initState();
   }
+
   @override
   void dispose() {
     _removePrivateView();
