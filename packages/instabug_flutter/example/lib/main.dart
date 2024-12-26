@@ -48,7 +48,6 @@ void main() {
 
       enableInstabugMaskingPrivateViews();
 
-      Instabug.enableUserSteps(false);
       runApp(const InstabugUserSteps(child: MyApp())); // runApp(const MyApp());
     },
     CrashReporting.reportCrash,

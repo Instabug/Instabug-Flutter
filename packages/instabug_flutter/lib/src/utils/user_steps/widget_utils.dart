@@ -130,14 +130,20 @@ String? getLabel(Widget widget) {
 
 /// Retrieves the value of a toggleable widget.
 String? getToggleValue(Widget widget) {
-  if (widget is Checkbox) return widget.value.toString();
+  bool? value = null;
+  if (widget is Checkbox) value = widget.value;
   if (widget is Radio) return widget.groupValue.toString();
   if (widget is RadioListTile) return widget.groupValue.toString();
-  if (widget is Switch) return widget.value.toString();
-  if (widget is SwitchListTile) return widget.value.toString();
-  if (widget is CupertinoSwitch) return widget.value.toString();
+  if (widget is Switch) value = widget.value;
+  if (widget is SwitchListTile) value = widget.value;
+  if (widget is CupertinoSwitch) value = widget.value;
   if (widget is ToggleButtons) return widget.isSelected.toString();
 
+  if (value == false || value == null) {
+    return "UnSelected";
+  } else if (value) {
+    return "Selected";
+  }
   return null;
 }
 

@@ -172,7 +172,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "addUserStep",
                     long.class, String.class, String.class, String.class, String.class);
             if (method != null) {
-                method.invoke(null, timeStamp, stepType, message, null, null);
+                method.invoke(null, timeStamp, stepType, message, "", "");
             }
         } catch (Exception e) {
             e.printStackTrace();

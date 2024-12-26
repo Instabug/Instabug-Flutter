@@ -398,7 +398,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     @try {
 
     IBGUIEventType event = ArgsRegistry.userStepsGesture[gestureType].integerValue;
-    IBGUserStep *userStep = [[IBGUserStep alloc] initWithEvent:event];
+        IBGUserStep *userStep = [[IBGUserStep alloc] initWithEvent:event automatic: YES];
     [userStep setMessage: message];
 
     [userStep logUserStep];

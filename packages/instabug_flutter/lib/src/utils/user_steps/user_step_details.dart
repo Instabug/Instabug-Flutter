@@ -64,13 +64,15 @@ class UserStepDetails {
     }
     var baseMessage =
         "${gestureType!.text} ${gestureMetaData?.isNotEmpty == true ? '$gestureMetaData ' : ''}";
-    if (widgetName != null) baseMessage += "on $widgetName";
-    if (key != null) baseMessage += " with key '$key'";
+    if (widgetName != null) baseMessage += " $widgetName";
 
     if (!isPrivate && widget != null) {
       final additionalInfo = _getWidgetSpecificDetails();
       if (additionalInfo != null) baseMessage += additionalInfo;
     }
+
+    if (key != null) baseMessage += " with key '$key'";
+
 
     return baseMessage;
   }
@@ -79,25 +81,24 @@ class UserStepDetails {
     if (isSliderWidget(widget!)) {
       final value = getSliderValue(widget!);
       if (value?.isNotEmpty == true) {
-        return " and it's value is changed to '$value'";
+        return "to '$value'";
       }
     } else if (isTextWidget(widget!) || isButtonWidget(widget!)) {
       final label = getLabelRecursively(element!);
       if (label?.isNotEmpty == true) {
-        return " and it's label is '$label'";
+        return "'$label'";
       }
     } else if (isToggleableWidget(widget!)) {
       final value = getToggleValue(widget!);
       if (value?.isNotEmpty == true) {
-        return " and it's value is '$value'";
+        return " ('$value')";
       }
     } else if (isTextInputWidget(widget!)) {
       final value = getTextInputValue(widget!);
       final hint = getTextHintValue(widget!);
-      return [
-        if (value?.isNotEmpty == true) " and it's value is '$value'",
-        if (hint?.isNotEmpty == true) " and it's placeholder is '$hint'",
-      ].join();
+        if (value?.isNotEmpty == true) return " '$value'";
+        if (hint?.isNotEmpty == true) return "(placeholder:'$hint')";
+
     }
     return null;
   }
