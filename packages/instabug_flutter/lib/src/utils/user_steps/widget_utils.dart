@@ -64,9 +64,7 @@ bool isSwipedWidget(Widget? widget) {
 
 /// Determines if a widget supports pinch gestures (defaulting to those not tappable or swipeable).
 bool isPinchWidget(Widget? widget) {
-  return (!isSwipedWidget(widget)) && widget is GestureDetector ||
-      widget is Transform ||
-      isImageWidget(widget);
+  return !isSwipedWidget(widget);
 }
 
 /// Checks if a widget is primarily for displaying text.
