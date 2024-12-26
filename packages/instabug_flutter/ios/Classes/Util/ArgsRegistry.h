@@ -20,6 +20,8 @@ typedef NSDictionary<NSString *, NSNumber *> ArgsDictionary;
 + (ArgsDictionary *)nonFatalExceptionLevel;
 
 + (ArgsDictionary *)locales;
++ (ArgsDictionary *)userStepsGesture;
+
 + (NSDictionary<NSString *, NSString *> *)placeholders;
 
 @end
