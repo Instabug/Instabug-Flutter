@@ -35,6 +35,10 @@ class _MyHomePageState extends State<MyHomePage> {
     BugReporting.setInvocationEvents([InvocationEvent.floatingButton]);
   }
 
+  void disableInstabug() {
+    Instabug.setEnabled(false);
+  }
+
   void setOnDismissCallback() {
     BugReporting.setOnDismissCallback((dismissType, reportType) {
       showDialog(
@@ -161,6 +165,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _navigateToPrivateViewPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PrivateViewPage(),
+        settings: const RouteSettings(name: ComplexPage.screenName),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Page(
@@ -177,6 +191,10 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: restartInstabug,
           text: 'Restart Instabug',
+        ),
+        InstabugButton(
+          onPressed: disableInstabug,
+          text: 'Disable Instabug',
         ),
         const SectionTitle('Primary Color'),
         InstabugTextField(
@@ -305,6 +323,10 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: _navigateToComplex,
           text: 'Complex',
+        ),
+        InstabugButton(
+          onPressed: _navigateToPrivateViewPage,
+          text: 'Private views',
         ),
         const SectionTitle('Sessions Replay'),
         InstabugButton(

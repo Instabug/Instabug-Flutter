@@ -1,5 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'instabug_modular_manager.dart';
+import 'package:instabug_flutter_modular/src/instabug_modular_manager.dart';
 
 class InstabugModule extends Module {
   final Module module;

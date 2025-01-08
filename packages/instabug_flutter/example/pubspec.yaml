@@ -25,9 +25,11 @@ dependencies:
     sdk: flutter
   http: ^0.13.0
   instabug_flutter:
-    path: '../../packages/Instabug-Flutter'
+    path: '../../Instabug-Flutter'
   instabug_http_client: ^2.4.0
-
+  video_player:
+  instabug_private_views:
+    path: '../../instabug_private_views'
 dev_dependencies:
   flutter_driver:
     sdk: flutter
@@ -50,9 +52,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+   - assets/img.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -334,6 +334,15 @@ jobs:
       - run: chmod +x packages/instabug_flutter_modular/release.sh
       - run: ./packages/instabug_flutter_modular/release.sh
 
+  release_instabug_private_views_plugin:
+    executor: flutter-executor
+    steps:
+      - advanced-checkout/shallow-checkout
+      - setup_flutter
+      - run: chmod +x packages/instabug_private_views/release.sh
+      - run: ./packages/instabug_private_views/release.sh
+
+
   release_instabug_flutter:
     macos:
       xcode: 15.2.0
@@ -450,6 +459,20 @@ workflows:
       - release_modular_plugin:
           requires:
             - hold_release_modular_plugin
+            - verify_pub
+          filters:
+            branches:
+              only: master
+      - hold_release_instabug_private_views_plugin:
+          type: approval
+          requires:
+            - test_flutter-stable
+          filters:
+            branches:
+              only: master
+      - release_instabug_private_views_plugin:
+          requires:
+            - hold_release_instabug_private_views_plugin
             - verify_pub
           filters:
             branches:

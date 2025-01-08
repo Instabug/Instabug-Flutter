@@ -1,8 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter_modular/src/instabug_module.dart';
 import 'package:meta/meta.dart';
-
-import './instabug_module.dart';
 
 class InstabugModularManager {
   InstabugModularManager._();
@@ -44,7 +43,7 @@ class InstabugModularManager {
 
     if (route is ModuleRoute && route.context is Module && wrapModules) {
       final module = InstabugModule(
-        route.context as Module,
+        route.context! as Module,
         path: fullPath,
       );
 

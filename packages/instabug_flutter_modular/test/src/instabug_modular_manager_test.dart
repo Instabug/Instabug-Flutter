@@ -1,13 +1,13 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter_modular/instabug_flutter_modular.dart';
 import 'package:instabug_flutter_modular/src/instabug_modular_manager.dart';
-import 'package:modular_core/modular_core.dart';
-
-import 'package:instabug_flutter/instabug_flutter.dart';
-
 import 'package:mockito/annotations.dart';
+import 'package:modular_core/modular_core.dart';
 
 import 'instabug_modular_manager_test.mocks.dart';
 
@@ -113,7 +113,7 @@ void main() {
     // Arrange
     final customTransition = MockCustomTransition();
     const duration = Duration.zero;
-    final List<RouteGuard> guards = [];
+    final guards = <RouteGuard>[];
     const transition = TransitionType.downToUp;
 
     final homeRoute = ChildRoute(
@@ -139,7 +139,7 @@ void main() {
     final wrappedRoutes =
         InstabugModularManager.instance.wrapRoutes(routes) as List<dynamic>;
 
-    for (var element in wrappedRoutes) {
+    for (final element in wrappedRoutes) {
       final widget = element.child(mockContext, mockArgs);
 
       // Assert

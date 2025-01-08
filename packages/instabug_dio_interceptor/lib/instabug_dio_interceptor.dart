@@ -76,7 +76,8 @@ class InstabugDioInterceptor extends Interceptor {
 
     var responseBodySize = 0;
     if (responseHeaders.containsKey('content-length')) {
-      responseBodySize = int.parse(responseHeaders['content-length'][0] ?? '0');
+      // ignore: avoid_dynamic_calls
+      responseBodySize = int.parse((responseHeaders['content-length'][0]) ?? '0');
     } else if (response.data != null) {
       responseBodySize = response.data.toString().length;
     }

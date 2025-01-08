@@ -19,6 +19,7 @@ import com.instabug.flutter.modules.InstabugLogApi;
 import com.instabug.flutter.modules.RepliesApi;
 import com.instabug.flutter.modules.SessionReplayApi;
 import com.instabug.flutter.modules.SurveysApi;
+import com.instabug.library.internal.crossplatform.InternalCore;
 
 import java.util.concurrent.Callable;
 
@@ -34,6 +35,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
 
     @SuppressLint("StaticFieldLeak")
     private static Activity activity;
+
 
     /**
      * Embedding v1
