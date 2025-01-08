@@ -1,4 +1,4 @@
-name: example
+name: instabug_dio_interceptor_example
 description: Demonstrates how to use the instabug_dio_interceptor package.
 
 publish_to: "none"

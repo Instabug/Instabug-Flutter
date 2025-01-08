@@ -1,4 +1,4 @@
-name: example
+name: http_client_example
 description: Demonstrates how to use the instabug_http_client package.
 
 publish_to: "none"
