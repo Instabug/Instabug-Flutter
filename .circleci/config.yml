@@ -310,6 +310,22 @@ jobs:
           command: melos score --no-select
       - run: melos dryPublish --no-select
 
+  release_dio_plugin:
+    executor: flutter-executor
+    steps:
+      - advanced-checkout/shallow-checkout
+      - setup_flutter
+      - run: chmod +x packages/Instabug-Dio-Interceptor/release.sh
+      - run: ./packages/Instabug-Dio-Interceptor/release.sh
+
+  release_http_adapter_plugin:
+    executor: flutter-executor
+    steps:
+      - advanced-checkout/shallow-checkout
+      - setup_flutter
+      - run: chmod +x packages/Instabug-Dart-http-Adapter/release.sh
+      - run: ./packages/Instabug-Dart-http-Adapter/release.sh
+
   release_modular_plugin:
     executor: flutter-executor
     steps:
@@ -392,6 +408,34 @@ workflows:
             # - e2e_android_captain
             # - test_ios
             - e2e_ios_captain
+            - verify_pub
+          filters:
+            branches:
+              only: master
+      - hold_release_dio_plugin:
+          type: approval
+          requires:
+            - test_flutter-stable
+          filters:
+            branches:
+              only: master
+      - release_dio_plugin:
+          requires:
+            - hold_release_dio_plugin
+            - verify_pub
+          filters:
+            branches:
+              only: master
+      - hold_release_http_adapter_plugin:
+          type: approval
+          requires:
+            - test_flutter-stable
+          filters:
+            branches:
+              only: master
+      - release_http_adapter_plugin:
+          requires:
+            - hold_release_http_adapter_plugin
             - verify_pub
           filters:
             branches:
