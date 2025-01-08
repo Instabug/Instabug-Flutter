@@ -326,6 +326,14 @@ jobs:
       - run: chmod +x packages/Instabug-Dart-http-Adapter/release.sh
       - run: ./packages/Instabug-Dart-http-Adapter/release.sh
 
+  release_modular_plugin:
+    executor: flutter-executor
+    steps:
+      - advanced-checkout/shallow-checkout
+      - setup_flutter
+      - run: chmod +x packages/instabug_flutter_modular/release.sh
+      - run: ./packages/instabug_flutter_modular/release.sh
+
   release_instabug_flutter:
     macos:
       xcode: 15.2.0
@@ -428,6 +436,20 @@ workflows:
       - release_http_adapter_plugin:
           requires:
             - hold_release_http_adapter_plugin
+            - verify_pub
+          filters:
+            branches:
+              only: master
+      - hold_release_modular_plugin:
+          type: approval
+          requires:
+            - test_flutter-stable
+          filters:
+            branches:
+              only: master
+      - release_modular_plugin:
+          requires:
+            - hold_release_modular_plugin
             - verify_pub
           filters:
             branches:
