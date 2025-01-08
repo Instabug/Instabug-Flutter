@@ -1,5 +1,5 @@
-name: http_client_example
-description: Demonstrates how to use the instabug_http_client package.
+name: instabug_dio_interceptor_example
+description: Demonstrates how to use the instabug_dio_interceptor package.
 
 publish_to: "none"
 
@@ -12,7 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  instabug_http_client:
+  dio: ^5.0.0
+  instabug_dio_interceptor:
     path: ../
 
 dev_dependencies:
