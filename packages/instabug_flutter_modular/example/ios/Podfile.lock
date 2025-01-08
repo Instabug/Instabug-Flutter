@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - Instabug (14.0.0)
+  - instabug_flutter (14.0.0):
+    - Flutter
+    - Instabug (= 14.0.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Instabug
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  instabug_flutter:
+    :path: ".symlinks/plugins/instabug_flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Instabug: a0beffc01658773e2fac549845782f8937707dc4
+  instabug_flutter: ff8ab5ff34a476b1d2d887478ec190cda962b973
+
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+
+COCOAPODS: 1.14.3
