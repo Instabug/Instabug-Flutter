@@ -13,6 +13,7 @@ import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
+import com.instabug.library.ReproMode;
 import com.instabug.library.internal.crossplatform.CoreFeature;
 import com.instabug.library.internal.crossplatform.CoreFeaturesState;
 import com.instabug.library.internal.crossplatform.FeaturesStateListener;
@@ -337,7 +338,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
             if (crashMode != null) {
                 final Integer resolvedCrashMode = ArgsRegistry.reproModes.get(crashMode);
-                builder.setIssueMode(IssueType.Crash, resolvedCrashMode);
+                builder.setIssueMode(IssueType.AllCrashes, resolvedCrashMode);
             }
 
             if (sessionReplayMode != null) {

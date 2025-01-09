@@ -164,7 +164,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     
     if (crashMode != nil) {
         IBGUserStepsMode resolvedCrashMode = ArgsRegistry.reproModes[crashMode].integerValue;
-        [Instabug setReproStepsFor:IBGIssueTypeCrash withMode:resolvedCrashMode];
+        [Instabug setReproStepsFor:IBGIssueTypeAllCrashes withMode:resolvedCrashMode];
     }
     
     if (sessionReplayMode != nil) {

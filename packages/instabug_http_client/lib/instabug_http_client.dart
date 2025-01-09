@@ -29,8 +29,12 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   void close() => client.close();
 
   @override
-  Future<http.Response> delete(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding,}) async {
+  Future<http.Response> delete(
+    Uri url, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) async {
     final startTime = DateTime.now();
     final requestHeader = headers ?? <String, String>{};
     final w3cHeader = await getW3cHeader(requestHeader, startTime);
@@ -42,9 +46,12 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
     });
   }
 
-  Future<W3CHeader?> getW3cHeader(Map<String, String> requestHeader, DateTime startTime) async {
-     final w3cHeader = await _networklogger.getW3CHeader(
-        requestHeader, startTime.millisecondsSinceEpoch,);
+  Future<W3CHeader?> getW3cHeader(
+      Map<String, String> requestHeader, DateTime startTime) async {
+    final w3cHeader = await _networklogger.getW3CHeader(
+      requestHeader,
+      startTime.millisecondsSinceEpoch,
+    );
     if (w3cHeader?.isW3cHeaderFound == false &&
         w3cHeader?.w3CGeneratedHeader != null) {
       requestHeader['traceparent'] = w3cHeader!.w3CGeneratedHeader!;
@@ -79,8 +86,12 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   }
 
   @override
-  Future<http.Response> patch(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding,}) async {
+  Future<http.Response> patch(
+    Uri url, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) async {
     final startTime = DateTime.now();
     final requestHeader = headers ?? <String, String>{};
     final w3cHeader = await getW3cHeader(requestHeader, startTime);
@@ -93,8 +104,12 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   }
 
   @override
-  Future<http.Response> post(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding,}) async {
+  Future<http.Response> post(
+    Uri url, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) async {
     final startTime = DateTime.now();
     final requestHeader = headers ?? <String, String>{};
     final w3cHeader = await getW3cHeader(requestHeader, startTime);
@@ -107,8 +122,12 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   }
 
   @override
-  Future<http.Response> put(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding,}) async {
+  Future<http.Response> put(
+    Uri url, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) async {
     final startTime = DateTime.now();
     final requestHeader = headers ?? <String, String>{};
     final w3cHeader = await getW3cHeader(requestHeader, startTime);
@@ -133,21 +152,24 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
     final startTime = DateTime.now();
     final requestHeader = request.headers;
     final w3cHeader = await getW3cHeader(requestHeader, startTime);
-    return client.send(request).then((http.StreamedResponse streamedResponse) =>
-        http.Response.fromStream(streamedResponse)
-            .then((http.Response response) {
-          logger.onLogger(response, startTime: startTime, w3CHeader: w3cHeader);
-          // Need to return new StreamedResponse, as body only can be listened once
-          return http.StreamedResponse(
-            Stream<List<int>>.value(response.bodyBytes),
-            response.statusCode,
-            contentLength: response.contentLength,
-            request: response.request,
-            headers: response.headers,
-            isRedirect: response.isRedirect,
-            persistentConnection: response.persistentConnection,
-            reasonPhrase: response.reasonPhrase,
-          );
-        }),);
+    return client.send(request).then(
+          (http.StreamedResponse streamedResponse) =>
+              http.Response.fromStream(streamedResponse)
+                  .then((http.Response response) {
+            logger.onLogger(response,
+                startTime: startTime, w3CHeader: w3cHeader);
+            // Need to return new StreamedResponse, as body only can be listened once
+            return http.StreamedResponse(
+              Stream<List<int>>.value(response.bodyBytes),
+              response.statusCode,
+              contentLength: response.contentLength,
+              request: response.request,
+              headers: response.headers,
+              isRedirect: response.isRedirect,
+              persistentConnection: response.persistentConnection,
+              reasonPhrase: response.reasonPhrase,
+            );
+          }),
+        );
   }
 }

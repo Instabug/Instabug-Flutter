@@ -5,7 +5,8 @@ import 'package:instabug_flutter/instabug_flutter.dart';
 Future<void> main() async {
   runApp(const MyApp());
   Instabug.init(
-     token:  'ed6f659591566da19b67857e1b9d40ab', invocationEvents: [InvocationEvent.floatingButton]);
+      token: 'ed6f659591566da19b67857e1b9d40ab',
+      invocationEvents: [InvocationEvent.floatingButton]);
   final client = InstabugHttpClient();
   await client.get(Uri.parse('https://google.com'));
 }

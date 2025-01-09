@@ -137,7 +137,7 @@ packages:
     source: path
     version: "2.4.0"
   instabug_private_views:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "../../instabug_private_views"
       relative: true

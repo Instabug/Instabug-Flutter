@@ -40,11 +40,11 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
