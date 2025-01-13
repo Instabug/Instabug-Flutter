@@ -104,10 +104,12 @@ packages:
   instabug_flutter:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
-    version: "14.0.0"
+      path: "packages/instabug_flutter"
+      ref: "snapshot/v14.1.0-private-views"
+      resolved-ref: "8966be717d5c9300b78c7f15eb8ab608f029523d"
+      url: "https://github.com/Instabug/Instabug-Flutter.git"
+    source: git
+    version: "14.1.0"
   instabug_http_client:
     dependency: "direct main"
     description:
@@ -121,10 +123,10 @@ packages:
     description:
       path: "packages/instabug_private_views"
       ref: "snapshot/v14.1.0-private-views"
-      resolved-ref: e969cdfd9a2e81ad344d3c1e91cd49b21417774a
+      resolved-ref: "8966be717d5c9300b78c7f15eb8ab608f029523d"
       url: "https://github.com/Instabug/Instabug-Flutter.git"
     source: git
-    version: "1.0.1"
+    version: "1.0.0"
   leak_tracker:
     dependency: transitive
     description:

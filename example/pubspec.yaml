@@ -36,7 +36,7 @@ dependencies:
       ref: snapshot/v14.1.0-private-views
       path: packages/instabug_private_views
 
-  instabug_http_client: ^2.4.0
+  instabug_http_client: ^2.5.0
 
 dev_dependencies:
   flutter_driver:
@@ -47,7 +47,10 @@ dev_dependencies:
 
 dependency_overrides:
   instabug_flutter:
-    path: ../
+    git:
+      url: https://github.com/Instabug/Instabug-Flutter.git
+      ref: snapshot/v14.1.0-private-views
+      path: packages/instabug_flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

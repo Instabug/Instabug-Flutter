@@ -169,13 +169,19 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         InstabugPrivateView(
           child: Container(
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+            margin:
+                const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
             child: const Text(
               'Hello Instabug\'s awesome user! The purpose of this application is to show you the different options for customizing the SDK and how easy it is to integrate it to your existing app',
               textAlign: TextAlign.center,
             ),
           ),
         ),
+        InstabugPrivateView(
+            child: TextFormField(
+          decoration: const InputDecoration(hintText: "Passaord"),
+          obscureText: true,
+        )),
         InstabugButton(
           onPressed: restartInstabug,
           text: 'Restart Instabug',
@@ -190,7 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: changePrimaryColor,
         ),
         const SectionTitle('Change Invocation Event'),
-    InstabugPrivateView(
+        InstabugPrivateView(
           child: ButtonBar(
             mainAxisSize: MainAxisSize.min,
             alignment: MainAxisAlignment.start,
@@ -338,7 +344,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-        SectionTitle('FeatureFlags'),
+        const SectionTitle('FeatureFlags'),
         InstabugTextField(
           controller: featureFlagsController,
           label: 'Feature Flag name',
