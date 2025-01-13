@@ -1,8 +1,8 @@
 # Generated files
-*.mocks.dart
-*.g.dart
-packages/**/android/**/generated/
-packages/**/ios/**/Generated/
+#*.mocks.dart
+#*.g.dart
+#packages/**/android/**/generated/
+#packages/**/ios/**/Generated/
 
 # Miscellaneous
 *.class
