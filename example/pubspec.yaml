@@ -25,7 +25,17 @@ dependencies:
     sdk: flutter
   http: ^0.13.0
   instabug_flutter:
-    path: ../
+    git:
+      url: https://github.com/Instabug/Instabug-Flutter.git
+      ref: snapshot/v14.1.0-private-views
+      path: packages/instabug_flutter
+
+  instabug_private_views:
+    git:
+      url: https://github.com/Instabug/Instabug-Flutter.git
+      ref: snapshot/v14.1.0-private-views
+      path: packages/instabug_private_views
+
   instabug_http_client: ^2.4.0
 
 dev_dependencies:

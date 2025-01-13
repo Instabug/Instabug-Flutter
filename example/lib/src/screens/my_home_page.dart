@@ -167,11 +167,13 @@ class _MyHomePageState extends State<MyHomePage> {
       scaffoldKey: _scaffoldKey,
       title: widget.title,
       children: [
-        Container(
-          margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-          child: const Text(
-            'Hello Instabug\'s awesome user! The purpose of this application is to show you the different options for customizing the SDK and how easy it is to integrate it to your existing app',
-            textAlign: TextAlign.center,
+        InstabugPrivateView(
+          child: Container(
+            margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+            child: const Text(
+              'Hello Instabug\'s awesome user! The purpose of this application is to show you the different options for customizing the SDK and how easy it is to integrate it to your existing app',
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
         InstabugButton(
@@ -188,26 +190,28 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: changePrimaryColor,
         ),
         const SectionTitle('Change Invocation Event'),
-        ButtonBar(
-          mainAxisSize: MainAxisSize.min,
-          alignment: MainAxisAlignment.start,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () => setInvocationEvent(InvocationEvent.none),
-              style: buttonStyle,
-              child: const Text('None'),
-            ),
-            ElevatedButton(
-              onPressed: () => setInvocationEvent(InvocationEvent.shake),
-              style: buttonStyle,
-              child: const Text('Shake'),
-            ),
-            ElevatedButton(
-              onPressed: () => setInvocationEvent(InvocationEvent.screenshot),
-              style: buttonStyle,
-              child: const Text('Screenshot'),
-            ),
-          ],
+    InstabugPrivateView(
+          child: ButtonBar(
+            mainAxisSize: MainAxisSize.min,
+            alignment: MainAxisAlignment.start,
+            children: <Widget>[
+              ElevatedButton(
+                onPressed: () => setInvocationEvent(InvocationEvent.none),
+                style: buttonStyle,
+                child: const Text('None'),
+              ),
+              ElevatedButton(
+                onPressed: () => setInvocationEvent(InvocationEvent.shake),
+                style: buttonStyle,
+                child: const Text('Shake'),
+              ),
+              ElevatedButton(
+                onPressed: () => setInvocationEvent(InvocationEvent.screenshot),
+                style: buttonStyle,
+                child: const Text('Screenshot'),
+              ),
+            ],
+          ),
         ),
         ButtonBar(
           mainAxisSize: MainAxisSize.min,

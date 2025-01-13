@@ -8,6 +8,7 @@ import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_http_client/instabug_http_client.dart';
 import 'package:instabug_flutter_example/src/app_routes.dart';
 import 'package:instabug_flutter_example/src/widget/nested_view.dart';
+import 'package:instabug_private_views/instabug_private_view.dart';
 
 import 'src/native/instabug_flutter_example_method_channel.dart';
 import 'src/widget/instabug_button.dart';
@@ -55,6 +56,12 @@ void main() {
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
       };
+
+      // enable screenshots for reprosteps for crashes
+      Instabug.setReproStepsConfig(crash: ReproStepsMode.enabled);
+
+      // allow masking private views
+      enableInstabugMaskingPrivateViews();
 
       runApp(const MyApp());
     },
