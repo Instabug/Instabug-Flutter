@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:instabug_flutter/instabug_flutter.dart';
 
 class InstabugHttpLogger {
-  void onLogger(http.Response response, {DateTime? startTime,W3CHeader? w3CHeader}) {
+  void onLogger(http.Response response,
+      {DateTime? startTime, W3CHeader? w3CHeader}) {
     final networkLogger = NetworkLogger();
 
     final requestHeaders = <String, dynamic>{};
@@ -52,19 +53,21 @@ class InstabugHttpLogger {
       responseBodySize = response.body.length;
     }
 
-    networkLogger.networkLog(requestData.copyWith(
-      status: response.statusCode,
-      duration: endTime.difference(requestData.startTime).inMicroseconds,
-      responseContentType: response.headers.containsKey('content-type')
-          ? response.headers['content-type']
-          : '',
-      responseHeaders: responseHeaders,
-      responseBody: response.body,
-      requestBodySize: requestBodySize,
-      responseBodySize: responseBodySize,
-      requestContentType: request.headers.containsKey('content-type')
-          ? request.headers['content-type']
-          : '',
-    ),);
+    networkLogger.networkLog(
+      requestData.copyWith(
+        status: response.statusCode,
+        duration: endTime.difference(requestData.startTime).inMicroseconds,
+        responseContentType: response.headers.containsKey('content-type')
+            ? response.headers['content-type']
+            : '',
+        responseHeaders: responseHeaders,
+        responseBody: response.body,
+        requestBodySize: requestBodySize,
+        responseBodySize: responseBodySize,
+        requestContentType: request.headers.containsKey('content-type')
+            ? request.headers['content-type']
+            : '',
+      ),
+    );
   }
 }
