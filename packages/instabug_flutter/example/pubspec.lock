@@ -128,21 +128,15 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "14.0.0"
+    version: "14.1.0"
   instabug_http_client:
     dependency: "direct main"
     description:
-      path: "../../instabug_http_client"
-      relative: true
-    source: path
-    version: "2.4.0"
-  instabug_private_views:
-    dependency: "direct overridden"
-    description:
-      path: "../../instabug_private_views"
-      relative: true
-    source: path
-    version: "1.0.1"
+      name: instabug_http_client
+      sha256: "60bda45012bb1b858047edaa6ae5d9e58a3e0fec070f3c858a7a0f134d012cb4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.0"
   leak_tracker:
     dependency: transitive
     description:
