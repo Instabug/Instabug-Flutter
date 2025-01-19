@@ -218,7 +218,7 @@
         @"GestureType.tap" : @(IBGUIEventTypeTap),
         @"GestureType.pinch" : @(IBGUIEventTypePinch),
         @"GestureType.longPress" : @(IBGUIEventTypeLongPress),
-        @"GestureType.doubleTap" : @(IBGUIEventTypeTap),
+        @"GestureType.doubleTap" : @(IBGUIEventTypeDoubleTap),
     };
 }
 
