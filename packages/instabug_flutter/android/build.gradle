@@ -1,5 +1,5 @@
 group 'com.instabug.flutter'
-version '14.0.0'
+version '14.1.0'
 
 buildscript {
     repositories {
@@ -16,6 +16,13 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+			url "https://mvn.instabug.com/nexus/repository/instabug-internal/"
+			credentials {
+			  username "instabug"
+			  password System.getenv('INSTABUG_REPOSITORY_PASSWORD')
+			}
+		}
     }
 }
 
@@ -44,7 +51,7 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:14.0.0.6488808-SNAPSHOT'
+    api 'com.instabug.library:instabug:14.1.0.6561840-SNAPSHOT'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
