@@ -55,6 +55,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
     [Instabug setSdkDebugLogsLevel:resolvedLogLevel];
     [Instabug startWithToken:token invocationEvents:resolvedEvents];
+    Instabug.sendEventsSwizzling = false;
 }
 
 - (void)showWithError:(FlutterError *_Nullable *_Nonnull)error {
@@ -394,14 +395,16 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 }
 
 
-- (void)logUserStepsGestureType:(nonnull NSString *)gestureType message:(nonnull NSString *)message error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+- (void)logUserStepsGestureType:(NSString *)gestureType message:(NSString *)message viewName:(NSString *)viewName metadata:(NSString *)metadata error:(FlutterError * _Nullable __autoreleasing *)error
+{
     @try {
 
     IBGUIEventType event = ArgsRegistry.userStepsGesture[gestureType].integerValue;
-        IBGUserStep *userStep = [[IBGUserStep alloc] initWithEvent:event automatic: YES];
-    [userStep setMessage: message];
+    IBGUserStep *userStep = [[IBGUserStep alloc] initWithEvent:event automatic: YES];
 
-    [userStep logUserStep];
+   userStep = [userStep setMessage: message]; 
+   userStep =  [userStep setViewTypeName:viewName];    
+   [userStep logUserStep];   
     }
     @catch (NSException *exception) {
         NSLog(@"%@", exception);
@@ -410,13 +413,13 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 }
 
 
-- (void)setEnableUserStepsIsEnabled:(nonnull NSNumber *)isEnabled error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+- (void)setEnableUserStepsIsEnabled:(nonnull NSNumber *)isEnabled error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     Instabug.trackUserSteps = isEnabled.boolValue;
 }
 
 
 + (void)setScreenshotMaskingHandler:(nullable void (^)(UIImage * _Nonnull __strong, void (^ _Nonnull __strong)(UIImage * _Nonnull __strong)))maskingHandler {
-    [Instabug setScreenshotMaskingHandler:maskingHandler];
+   [Instabug setScreenshotMaskingHandler:maskingHandler];
 }
 
 @end
