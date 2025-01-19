@@ -172,11 +172,23 @@ class _UserStepsPageState extends State<UserStepsPage> {
               child: Column(
                 children: [
                   TextField(
+                    key: Key('text_field'),
                     controller: _controller,
                     // Bind the controller to the TextField
                     decoration: InputDecoration(
-                      labelText: "Type something",
+                      labelText: "Type something in a text field with key",
                       border: OutlineInputBorder(),
+                    ),
+                  ),
+                  InstabugPrivateView(
+                    child: TextField(
+                      key: Key('private_view'),
+                      controller: _controller,
+                      // Bind the controller to the TextField
+                      decoration: InputDecoration(
+                        labelText: "Private view",
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ),
                   TextField(
