@@ -62,17 +62,21 @@ class UserStepDetails {
     if (gestureType == GestureType.pinch) {
       return gestureType?.text;
     }
-    var baseMessage =
-        "${gestureType!.text} ${gestureMetaData?.isNotEmpty == true ? '$gestureMetaData ' : ''}";
-    if (widgetName != null) baseMessage += " $widgetName";
+    var baseMessage = "";
+
+    if (gestureType == GestureType.scroll || gestureType == GestureType.swipe) {
+      baseMessage +=
+          gestureMetaData?.isNotEmpty == true ? '$gestureMetaData ' : '';
+    }
+
+    if (widgetName != null) baseMessage += " $widgetName ";
 
     if (!isPrivate && widget != null) {
       final additionalInfo = _getWidgetSpecificDetails();
       if (additionalInfo != null) baseMessage += additionalInfo;
     }
 
-    if (key != null) baseMessage += " with key '$key'";
-
+    if (key != null) baseMessage += " with key '$key' ";
 
     return baseMessage;
   }
@@ -81,7 +85,7 @@ class UserStepDetails {
     if (isSliderWidget(widget!)) {
       final value = getSliderValue(widget!);
       if (value?.isNotEmpty == true) {
-        return "to '$value'";
+        return " to '$value'";
       }
     } else if (isTextWidget(widget!) || isButtonWidget(widget!)) {
       final label = getLabelRecursively(element!);
@@ -96,9 +100,8 @@ class UserStepDetails {
     } else if (isTextInputWidget(widget!)) {
       final value = getTextInputValue(widget!);
       final hint = getTextHintValue(widget!);
-        if (value?.isNotEmpty == true) return " '$value'";
-        if (hint?.isNotEmpty == true) return "(placeholder:'$hint')";
-
+      if (value?.isNotEmpty == true) return " '$value'";
+      if (hint?.isNotEmpty == true) return "(placeholder:'$hint')";
     }
     return null;
   }

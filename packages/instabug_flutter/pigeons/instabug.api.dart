@@ -36,6 +36,8 @@ abstract class InstabugHostApi {
   void logUserSteps(
     String gestureType,
     String message,
+    String? viewName,
+    String? metadata,
   );
 
   void setLocale(String locale);

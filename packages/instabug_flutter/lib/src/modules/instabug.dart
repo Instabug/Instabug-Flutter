@@ -496,7 +496,14 @@ class Instabug {
   static Future<void> logUserSteps(
     GestureType gestureType,
     String message,
+    String? viewName,
+    String? metadata,
   ) async {
-    return _host.logUserSteps(gestureType.toString(), message);
+    return _host.logUserSteps(
+      gestureType.toString(),
+      message,
+      viewName,
+      metadata,
+    );
   }
 }
