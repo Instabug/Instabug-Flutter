@@ -126,6 +126,15 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 .build();
 
         Instabug.setScreenshotProvider(screenshotProvider);
+
+        try{
+            Class<?> myClass = Class.forName("com.instabug.library.Instabug");
+            Method method = myClass.getDeclaredMethod("shouldDisableNativeUserStepsCapturing", boolean.class);
+            method.setAccessible(true);
+            method.invoke(null,true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -165,14 +174,21 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     @Override
-    public void logUserSteps(@NonNull String gestureType, @NonNull String message) {
+
+    public void logUserSteps(@NonNull String gestureType, @NonNull String message,@Nullable String viewName, @Nullable String metadata) {
         try {
             final String stepType = ArgsRegistry.gestureStepType.get(gestureType);
-            final long timeStamp = (new Date()).getTime();
+            final long timeStamp = System.currentTimeMillis();
+            String view = "";
+
             Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "addUserStep",
                     long.class, String.class, String.class, String.class, String.class);
             if (method != null) {
-                method.invoke(null, timeStamp, stepType, message, "", "");
+                if (viewName != null){
+                    view=  viewName;
+                }
+
+                method.invoke(null, timeStamp, stepType, message, null, view);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -382,6 +398,13 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             if (method != null) {
                 method.invoke(null, null, screenName);
             }
+
+            Method reportViewChange = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "reportCurrentViewChange",
+                    String.class);
+            if (reportViewChange != null) {
+                reportViewChange.invoke(null,screenName);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
