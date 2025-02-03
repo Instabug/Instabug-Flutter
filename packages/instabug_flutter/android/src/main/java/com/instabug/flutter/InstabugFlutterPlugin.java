@@ -30,7 +30,7 @@ import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
-public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
+public class  InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     private static final String TAG = InstabugFlutterPlugin.class.getName();
 
     @SuppressLint("StaticFieldLeak")
@@ -80,6 +80,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
         final Callable<Bitmap> screenshotProvider = new Callable<Bitmap>() {
             @Override
             public Bitmap call() {
+                Log.v("IBG-FLT","capture using  old screenshotProvider");
                 return takeScreenshot(renderer);
             }
         };

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -121,12 +122,17 @@ public class PrivateViewManager {
 
     @VisibleForTesting
     public void maskPrivateViews(ScreenshotResult result, List<Double> privateViews) {
-        if (privateViews == null || privateViews.isEmpty()) return;
+        if (privateViews == null || privateViews.isEmpty()) {
+            Log.v("IBG-FLT","private-Views is empty");
+
+            return;
+        }
 
         Bitmap bitmap = result.getScreenshot();
         float pixelRatio = result.getPixelRatio();
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();  // Default color is black
+        Log.v("IBG-FLT","maskPrivateViews");
 
         for (int i = 0; i < privateViews.size(); i += 4) {
             float left = privateViews.get(i).floatValue() * pixelRatio;

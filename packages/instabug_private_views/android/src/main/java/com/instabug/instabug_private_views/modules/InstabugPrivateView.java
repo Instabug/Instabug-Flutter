@@ -1,5 +1,7 @@
 package com.instabug.instabug_private_views.modules;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.instabug.flutter.generated.InstabugLogPigeon;
@@ -28,9 +30,12 @@ public class InstabugPrivateView implements InstabugPrivateViewPigeon.InstabugPr
 
     @Override
     public void init() {
+        Log.v("IBG-FLT","Init setScreenshotCaptor");
         InstabugApi.setScreenshotCaptor(new ScreenshotCaptor() {
             @Override
             public void capture(CapturingCallback listener) {
+                Log.v("IBG-FLT","capture using setScreenshotCaptor");
+
                 privateViewManager.mask(listener);
 
             }

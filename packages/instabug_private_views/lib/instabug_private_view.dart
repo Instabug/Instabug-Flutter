@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:instabug_private_views/src/generated/instabug_private_view.api.g.dart';
 import 'package:instabug_private_views/src/private_views_manager.dart';
 
@@ -9,6 +10,7 @@ class InstabugPrivateViewManager{
     final api = InstabugPrivateViewHostApi();
     api.init();
     InstabugPrivateViewFlutterApi.setup(PrivateViewsManager.I);
+    debugPrint("IBG-FLT: InstabugPrivateViewManager:Enabled");
   }
 
 
