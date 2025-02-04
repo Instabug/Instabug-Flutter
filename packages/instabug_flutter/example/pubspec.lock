@@ -136,13 +136,6 @@ packages:
       relative: true
     source: path
     version: "2.4.0"
-  instabug_private_views:
-    dependency: "direct overridden"
-    description:
-      path: "../../instabug_private_views"
-      relative: true
-    source: path
-    version: "1.0.1"
   leak_tracker:
     dependency: transitive
     description:
