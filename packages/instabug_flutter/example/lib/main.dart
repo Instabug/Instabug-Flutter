@@ -15,7 +15,6 @@ import 'package:instabug_flutter_example/src/widget/instabug_text_field.dart';
 import 'package:instabug_flutter_example/src/widget/nested_view.dart';
 import 'package:instabug_flutter_example/src/widget/section_title.dart';
 import 'package:instabug_http_client/instabug_http_client.dart';
-import 'package:instabug_private_views/instabug_private_view.dart';
 
 import 'package:instabug_flutter_example/src/native/instabug_flutter_example_method_channel.dart';
 import 'package:instabug_flutter_example/src/widget/instabug_button.dart';
@@ -24,18 +23,6 @@ import 'package:instabug_flutter_example/src/widget/instabug_text_field.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 
 import 'package:instabug_flutter_example/src/widget/section_title.dart';
-
-part 'src/screens/crashes_page.dart';
-
-part 'src/screens/complex_page.dart';
-
-part 'src/screens/apm_page.dart';
-
-part 'src/screens/screen_capture_premature_extension_page.dart';
-
-part 'src/screens/screen_loading_page.dart';
-
-part 'src/screens/my_home_page.dart';
 
 part 'src/components/fatal_crashes_content.dart';
 part 'src/components/flows_content.dart';
@@ -57,7 +44,7 @@ void main() {
       WidgetsFlutterBinding.ensureInitialized();
 
       Instabug.init(
-        token: 'ed6f659591566da19b67857e1b9d40ab',
+        token: '89ba56d7b0d4b53ccc79c9e89f337b63',
         invocationEvents: [InvocationEvent.floatingButton],
         debugLogsLevel: LogLevel.none,
       );

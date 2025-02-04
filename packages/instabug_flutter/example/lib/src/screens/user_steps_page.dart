@@ -180,15 +180,12 @@ class _UserStepsPageState extends State<UserStepsPage> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  InstabugPrivateView(
-                    child: TextField(
-                      key: Key('private_view'),
-                      controller: _controller,
-                      // Bind the controller to the TextField
-                      decoration: InputDecoration(
-                        labelText: "Private view",
-                        border: OutlineInputBorder(),
-                      ),
+                  TextField(
+                    controller: _controller,
+                    // Bind the controller to the TextField
+                    decoration: InputDecoration(
+                      labelText: "Private view",
+                      border: OutlineInputBorder(),
                     ),
                   ),
                   TextField(
