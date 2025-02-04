@@ -614,9 +614,10 @@
 
 - (void)testLogUserStepsGestureType{
     NSString* message = @"message";
+    NSString* view = @"viewName";
     FlutterError *error;
-
-    [self.api logUserStepsGestureType:@"GestureType.tap" message:message error: &error];
+    
+    [self.api logUserStepsGestureType:@"GestureType.tap" message:message viewName:view error: &error];
 
     XCTAssertNil(error, @"Error should be nil");
 
