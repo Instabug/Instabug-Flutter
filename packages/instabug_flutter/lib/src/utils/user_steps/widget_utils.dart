@@ -128,7 +128,7 @@ String? getLabel(Widget widget) {
 
 /// Retrieves the value of a toggleable widget.
 String? getToggleValue(Widget widget) {
-  bool? value = null;
+  bool? value;
   if (widget is Checkbox) value = widget.value;
   if (widget is Radio) return widget.groupValue.toString();
   if (widget is RadioListTile) return widget.groupValue.toString();
@@ -173,8 +173,9 @@ String? getTextHintValue(Widget widget) {
 String? getSliderValue(Widget widget) {
   if (widget is Slider) return widget.value.toString();
   if (widget is CupertinoSlider) return widget.value.toString();
-  if (widget is RangeSlider)
+  if (widget is RangeSlider) {
     return "(${widget.values.start},${widget.values.end})";
+  }
 
   return null;
 }

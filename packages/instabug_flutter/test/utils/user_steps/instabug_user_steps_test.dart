@@ -42,9 +42,13 @@ void main() {
       await tester.tap(gestureDetector);
       await tester.pumpAndSettle();
 
-      verify(mockInstabugHostApi.logUserSteps(
-              GestureType.tap.toString(), any, any))
-          .called(1);
+      verify(
+        mockInstabugHostApi.logUserSteps(
+          GestureType.tap.toString(),
+          any,
+          any,
+        ),
+      ).called(1);
     });
 
     testWidgets('detects long press gestures', (WidgetTester tester) async {
@@ -74,7 +78,10 @@ void main() {
 
         verify(
           mockInstabugHostApi.logUserSteps(
-              GestureType.longPress.toString(), any, any),
+            GestureType.longPress.toString(),
+            any,
+            any,
+          ),
         ).called(1);
       });
     });
@@ -95,7 +102,10 @@ void main() {
 
       verify(
         mockInstabugHostApi.logUserSteps(
-            GestureType.scroll.toString(), any, any),
+          GestureType.scroll.toString(),
+          any,
+          any,
+        ),
       ).called(1);
     });
 
@@ -141,7 +151,10 @@ void main() {
         await Future.delayed(const Duration(seconds: 1));
         verify(
           mockInstabugHostApi.logUserSteps(
-              GestureType.pinch.toString(), any, any),
+            GestureType.pinch.toString(),
+            any,
+            any,
+          ),
         ).called(1);
       });
     });
@@ -166,7 +179,10 @@ void main() {
 
       verify(
         mockInstabugHostApi.logUserSteps(
-            GestureType.doubleTap.toString(), any, any),
+          GestureType.doubleTap.toString(),
+          any,
+          any,
+        ),
       ).called(1);
     });
 
