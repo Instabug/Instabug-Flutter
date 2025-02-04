@@ -78,7 +78,6 @@ class InstabugUserStepsState extends State<InstabugUserSteps> {
         userStepDetails.gestureType!,
         userStepDetails.message!,
         userStepDetails.widgetName,
-        userStepDetails.gestureMetaData,
       );
     }
   }
@@ -227,7 +226,6 @@ class InstabugUserStepsState extends State<InstabugUserSteps> {
       userStepDetails.gestureType!,
       userStepDetails.message!,
       "ListView",
-      null,
     );
   }
 

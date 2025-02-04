@@ -497,13 +497,7 @@ class Instabug {
     GestureType gestureType,
     String message,
     String? viewName,
-    String? metadata,
   ) async {
-    return _host.logUserSteps(
-      gestureType.toString(),
-      message,
-      viewName,
-      metadata,
-    );
+    return _host.logUserSteps(gestureType.toString(), message, viewName);
   }
 }

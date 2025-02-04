@@ -394,8 +394,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     return  result;
 }
 
-
-- (void)logUserStepsGestureType:(NSString *)gestureType message:(NSString *)message viewName:(NSString *)viewName metadata:(NSString *)metadata error:(FlutterError * _Nullable __autoreleasing *)error
+- (void)logUserStepsGestureType:(NSString *)gestureType message:(NSString *)message viewName:(NSString *)viewName error:(FlutterError * _Nullable __autoreleasing *)error
 {
     @try {
 

@@ -37,7 +37,6 @@ abstract class InstabugHostApi {
     String gestureType,
     String message,
     String? viewName,
-    String? metadata,
   );
 
   void setLocale(String locale);

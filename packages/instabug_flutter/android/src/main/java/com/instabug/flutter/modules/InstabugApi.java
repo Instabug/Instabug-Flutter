@@ -175,7 +175,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
 
-    public void logUserSteps(@NonNull String gestureType, @NonNull String message,@Nullable String viewName, @Nullable String metadata) {
+    public void logUserSteps(@NonNull String gestureType, @NonNull String message,@Nullable String viewName) {
         try {
             final String stepType = ArgsRegistry.gestureStepType.get(gestureType);
             final long timeStamp = System.currentTimeMillis();
@@ -185,7 +185,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                     long.class, String.class, String.class, String.class, String.class);
             if (method != null) {
                 if (viewName != null){
-                    view=  viewName;
+                    view = viewName;
                 }
 
                 method.invoke(null, timeStamp, stepType, message, null, view);
