@@ -489,11 +489,12 @@ void main() {
   test('[logUserSteps] should call host method', () async {
     const message = "message";
     const gestureType = GestureType.tap;
+    const viewName = "view";
 
-    await Instabug.logUserSteps(gestureType, message);
+    await Instabug.logUserSteps(gestureType, message, viewName);
 
     verify(
-      mHost.logUserSteps(gestureType.toString(), message),
+      mHost.logUserSteps(gestureType.toString(), message, viewName),
     ).called(1);
   });
 }

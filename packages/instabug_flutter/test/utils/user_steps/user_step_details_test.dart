@@ -61,7 +61,7 @@ void main() {
 
       expect(
         details.message,
-        "Tapped on Container with key 'testKey'",
+        " Container  with key 'testKey' ",
       );
     });
 
@@ -77,7 +77,7 @@ void main() {
 
       expect(
         details.message,
-        contains("and it's value is changed to '0.5'"),
+        contains(" Slider  to '0.5'"),
       );
     });
 
@@ -113,7 +113,7 @@ void main() {
 
       expect(
         details.message,
-        "Tapped on Container with key 'testKey'",
+        " Container  with key 'testKey' ",
       );
     });
 
