@@ -18,6 +18,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
           : rawScreenName;
       final maskedScreenName = ScreenNameMasker.I.mask(screenName);
 
+      print("IBG-FLT: screenChanged: $maskedScreenName");
       final route = InstabugRoute(
         route: newRoute,
         name: maskedScreenName,
