@@ -680,10 +680,11 @@ public class InstabugApiTest {
 
         final String gestureType = "GestureType.tap";
         final String message = "message";
+        final String view = "view";
 
-        api.logUserSteps(gestureType, message);
+        api.logUserSteps(gestureType, message,view);
 
-        reflected.verify(() -> MockReflected.addUserStep(anyLong(), eq(ArgsRegistry.gestureStepType.get(gestureType)), eq(message), isNull(), isNull()));
+        reflected.verify(() -> MockReflected.addUserStep(anyLong(), eq(ArgsRegistry.gestureStepType.get(gestureType)), eq(message), isNull(), eq(view)));
 
     }
 
