@@ -325,7 +325,7 @@
     [self.api setReproStepsConfigBugMode:bugMode crashMode:crashMode sessionReplayMode:sessionReplayMode error:&error];
 
     OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeBug withMode:IBGUserStepsModeEnable]);
-    OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeCrash withMode:IBGUserStepsModeDisable]);
+    OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeAllCrashes withMode:IBGUserStepsModeDisable]);
     OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeSessionReplay withMode:IBGUserStepsModeDisable]);
 }
 

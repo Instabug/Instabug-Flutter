@@ -466,7 +466,7 @@ public class InstabugApiTest {
         ReproConfigurations.Builder builder = mReproConfigurationsBuilder.constructed().get(0);
 
         verify(builder).setIssueMode(IssueType.Bug, ReproMode.EnableWithScreenshots);
-        verify(builder).setIssueMode(IssueType.Crash, ReproMode.Disable);
+        verify(builder).setIssueMode(IssueType.AllCrashes, ReproMode.Disable);
         verify(builder).setIssueMode(IssueType.SessionReplay, ReproMode.Disable);
         verify(builder).build();
 

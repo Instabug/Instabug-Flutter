@@ -22,6 +22,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Instabug
     - OCMock
 
 EXTERNAL SOURCES:

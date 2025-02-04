@@ -25,11 +25,9 @@ dependencies:
     sdk: flutter
   http: ^0.13.0
   instabug_flutter:
-    path: '../../Instabug-Flutter'
-  instabug_http_client: 2.4.0
+    path: "../"
+  instabug_http_client: ^2.4.0
   video_player:
-  instabug_private_views:
-    path: '../../instabug_private_views'
 dev_dependencies:
   flutter_driver:
     sdk: flutter
@@ -39,7 +37,7 @@ dev_dependencies:
 
 dependency_overrides:
   instabug_flutter:
-    path: '../'
+    path: "../"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -53,7 +51,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/img.png
+    - assets/img.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
