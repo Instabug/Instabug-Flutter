@@ -653,8 +653,9 @@ public class InstabugApiTest {
     @Test
     public void testSetScreenshotCaptor() {
         InternalCore internalCore = spy(InternalCore.INSTANCE);
+
         InstabugApi.setScreenshotCaptor(any(), internalCore);
-//        verify(internalCore)._setScreenshotCaptor(any(ScreenshotCaptor.class));
+        verify(internalCore)._setScreenshotCaptor(any(ScreenshotCaptor.class));
     }
 
     @Test
