@@ -268,10 +268,10 @@ class _MyHomePageState extends State<MyHomePage> {
           controller: screenNameController,
           label: 'Enter screen name',
         ),
-        InstabugButton(
-          text: 'User Steps',
-          onPressed: _navigateToUserStepsPage,
-        ),
+        // InstabugButton(
+        //   text: 'User Steps',
+        //   onPressed: _navigateToUserStepsPage,
+        // ),
         InstabugButton(
           text: 'Report Screen Change',
           onPressed: reportScreenChange,
