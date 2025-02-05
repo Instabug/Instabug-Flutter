@@ -195,7 +195,7 @@
         @(IBGUIEventTypeTap),
         @(IBGUIEventTypePinch),
         @(IBGUIEventTypeLongPress),
-        @(IBGUIEventTypeTap),
+        @(IBGUIEventTypeDoubleTap),
     ];
 
     for (NSNumber *value in values) {
