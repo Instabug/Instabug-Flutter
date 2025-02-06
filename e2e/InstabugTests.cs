@@ -11,7 +11,11 @@ public class InstabugTests : CaptainTest
   [Fact]
   public void ChangePrimaryColor()
   {
-     ScrollUp();
+    ScrollUp();
+    ScrollUp();
+ScrollUp();
+    ScrollUp();
+ScrollUp();
     ScrollUp();
 
     var color = "#FF0000";
