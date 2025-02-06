@@ -11,6 +11,9 @@ public class InstabugTests : CaptainTest
   [Fact]
   public void ChangePrimaryColor()
   {
+     ScrollUp();
+    ScrollUp();
+
     var color = "#FF0000";
     var expected = Color.FromArgb(255, 0, 0);
 

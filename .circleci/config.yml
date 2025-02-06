@@ -278,7 +278,7 @@ jobs:
           command: flutter build ios --simulator
       - run:
           name: Run E2E Tests
-          no_output_timeout: 30m
+          no_output_timeout: 20m
           working_directory: e2e
           command: dotnet test
 
