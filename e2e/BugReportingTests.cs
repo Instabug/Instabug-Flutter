@@ -59,6 +59,8 @@ public class BugReportingTests : CaptainTest
   {
     if (!Platform.IsIOS) return;
 
+
+       ScrollUp();
     captain.FindByText("Shake").Tap();
 
     captain.Shake();
@@ -69,7 +71,9 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void TwoFingersSwipeLeftInvocationEvent()
   {
+   if (!Platform.IsIOS){
     ScrollUp();
+    }
     captain.FindByText("Two Fingers Swipe Left").Tap();
 
     Thread.Sleep(500);
