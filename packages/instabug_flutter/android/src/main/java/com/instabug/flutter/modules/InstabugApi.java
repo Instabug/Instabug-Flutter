@@ -130,6 +130,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
         try{
             Class<?> myClass = Class.forName("com.instabug.library.Instabug");
+            // Enable/Disable native user steps capturing
             Method method = myClass.getDeclaredMethod("shouldDisableNativeUserStepsCapturing", boolean.class);
             method.setAccessible(true);
             method.invoke(null,true);
