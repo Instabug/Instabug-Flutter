@@ -73,8 +73,8 @@ public class PrivateViewManager {
 
                 @Override
                 public void onError() {
-                    Log.v("IBG-FLT","Error occured in boundryScreenshotResult " + EXCEPTION_MESSAGE);
                     capturingCallback.onCapturingFailure(new Exception(EXCEPTION_MESSAGE));
+                    Log.v("IBG-FLT","Error occured in boundryScreenshotResult " + EXCEPTION_MESSAGE);
                 }
             };
 
@@ -94,28 +94,27 @@ public class PrivateViewManager {
 
 
                 // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    pixelCopyScreenshotCaptor.capture(activity, new ScreenshotResultCallback() {
-                        Log.v("IBG-FLT","screen capturing using pixelCopyScreenshotCaptor startd");
+                    // pixelCopyScreenshotCaptor.capture(activity, new ScreenshotResultCallback() {
 
-                        @Override
-                        public void onScreenshotResult(ScreenshotResult result) {
-                           Log.v("IBG-FLT","screen capturing using pixelCopyScreenshotCaptor onScreenshotResult is " + result);
+                    //     @Override
+                    //     public void onScreenshotResult(ScreenshotResult result) {
+                    //        Log.v("IBG-FLT","screen capturing using pixelCopyScreenshotCaptor onScreenshotResult is " + result);
 
-                            processScreenshot(result, privateViews, latch, capturingCallback);
-                        }
+                    //         processScreenshot(result, privateViews, latch, capturingCallback);
+                    //     }
 
-                        @Override
-                        public void onError() {
-                            Log.v("IBG-FLT"," error occured while screen capturing using pixelCopyScreenshotCaptor");
+                    //     @Override
+                    //     public void onError() {
+                    //         Log.v("IBG-FLT"," error occured while screen capturing using pixelCopyScreenshotCaptor");
 
-                            boundryScreenshotCaptor.capture(activity, boundryScreenshotResult);
+                    //         boundryScreenshotCaptor.capture(activity, boundryScreenshotResult);
 
-                        }
-                    });
+                    //     }
+                    // });
                 // } else {
-                    // Log.v("IBG-FLT","screen capturing using boundryScreenshotCaptor onScreenshotResult is " + boundryScreenshotResult);
+                    Log.v("IBG-FLT","screen capturing using boundryScreenshotCaptor onScreenshotResult is " + boundryScreenshotResult);
 
-                //     boundryScreenshotCaptor.capture(activity, boundryScreenshotResult);
+                    boundryScreenshotCaptor.capture(activity, boundryScreenshotResult);
                 // }
 
             } catch (Exception e) {
@@ -157,7 +156,7 @@ public class PrivateViewManager {
         float pixelRatio = result.getPixelRatio();
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();  // Default color is black
-        Log.v("IBG-FLT","maskPrivateViews");
+        Log.v("IBG-FLT","maskPrivateViews result is " + result);
 
         for (int i = 0; i < privateViews.size(); i += 4) {
             float left = privateViews.get(i).floatValue() * pixelRatio;
