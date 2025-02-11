@@ -19,6 +19,16 @@ class InstabugNavigatorObserver extends NavigatorObserver {
       final maskedScreenName = ScreenNameMasker.I.mask(screenName);
 
       print("IBG-FLT: screenChanged: $maskedScreenName");
+      if (newRoute is MaterialPageRoute) {
+        print("IBG-FLT: screenChanged2: ${newRoute.builder.runtimeType}");
+      } else if (newRoute is ModalBottomSheetRoute) {
+        print("IBG-FLT: screenChanged2: ${newRoute.builder.runtimeType}");
+      } else if (newRoute is CupertinoModalPopupRoute) {
+        print("IBG-FLT: screenChanged2: ${newRoute.builder.runtimeType}");
+      } else {
+        print("IBG-FLT: screenChanged2:  ${newRoute}");
+      }
+
       final route = InstabugRoute(
         route: newRoute,
         name: maskedScreenName,

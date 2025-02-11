@@ -30,6 +30,8 @@ public class PrivateViewManager {
     private final ExecutorService screenshotExecutor = Executors.newSingleThreadExecutor(runnable -> {
         Thread thread = new Thread(runnable);
         thread.setName(THREAD_NAME);
+        Log.v("IBG-FLT","screenshot executer on thread started");
+
         return thread;
     });
 
@@ -42,17 +44,22 @@ public class PrivateViewManager {
         this.instabugPrivateViewApi = instabugPrivateViewApi;
         this.pixelCopyScreenshotCaptor = pixelCopyCaptureManager;
         this.boundryScreenshotCaptor = boundryCaptureManager;
-
-
+        Log.v("IBG-FLT","instabugPrivateViewApi " + instabugPrivateViewApi);
+        Log.v("IBG-FLT","pixelCopyCaptureManager " + pixelCopyCaptureManager);
+        Log.v("IBG-FLT","boundryCaptureManager " + boundryCaptureManager);
     }
 
     public void setActivity(Activity activity) {
         this.activity = activity;
+        Log.v("IBG-FLT","activity is set " + activity);
+
     }
 
 
     public void mask(ScreenshotCaptor.CapturingCallback capturingCallback) {
         if (activity != null) {
+        Log.v("IBG-FLT","activity is not null while masking ");
+
             CountDownLatch latch = new CountDownLatch(1);
             AtomicReference<List<Double>> privateViews = new AtomicReference<>();
             final ScreenshotResultCallback boundryScreenshotResult = new ScreenshotResultCallback() {
@@ -60,11 +67,13 @@ public class PrivateViewManager {
                 @Override
                 public void onScreenshotResult(ScreenshotResult screenshotResult) {
                     processScreenshot(screenshotResult, privateViews, latch, capturingCallback);
+                    Log.v("IBG-FLT","boundryScreenshotResult is" + screenshotResult);
 
                 }
 
                 @Override
                 public void onError() {
+                    Log.v("IBG-FLT","Error occured in boundryScreenshotResult " + EXCEPTION_MESSAGE);
                     capturingCallback.onCapturingFailure(new Exception(EXCEPTION_MESSAGE));
                 }
             };
@@ -73,35 +82,49 @@ public class PrivateViewManager {
                 ThreadManager.runOnMainThread(new Runnable() {
                     @Override
                     public void run() {
+                        Log.v("IBG-FLT","getting private view");
                         instabugPrivateViewApi.getPrivateViews(result -> {
                             privateViews.set(result);
+                            Log.v("IBG-FLT","private view is set to " + result);
+
                             latch.countDown();
                         });
                     }
                 });
 
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     pixelCopyScreenshotCaptor.capture(activity, new ScreenshotResultCallback() {
+                        Log.v("IBG-FLT","screen capturing using pixelCopyScreenshotCaptor startd");
+
                         @Override
                         public void onScreenshotResult(ScreenshotResult result) {
+                           Log.v("IBG-FLT","screen capturing using pixelCopyScreenshotCaptor onScreenshotResult is " + result);
+
                             processScreenshot(result, privateViews, latch, capturingCallback);
                         }
 
                         @Override
                         public void onError() {
+                            Log.v("IBG-FLT"," error occured while screen capturing using pixelCopyScreenshotCaptor");
+
                             boundryScreenshotCaptor.capture(activity, boundryScreenshotResult);
 
                         }
                     });
-                } else {
-                    boundryScreenshotCaptor.capture(activity, boundryScreenshotResult);
-                }
+                // } else {
+                    // Log.v("IBG-FLT","screen capturing using boundryScreenshotCaptor onScreenshotResult is " + boundryScreenshotResult);
+
+                //     boundryScreenshotCaptor.capture(activity, boundryScreenshotResult);
+                // }
 
             } catch (Exception e) {
+                Log.v("IBG-FLT"," error occured while running private views on the main thread: " + e);
+
                 capturingCallback.onCapturingFailure(e);
             }
         } else {
+            Log.v("IBG-FLT","Error occured activity is null while masking " + EXCEPTION_MESSAGE);
             capturingCallback.onCapturingFailure(new Exception(EXCEPTION_MESSAGE));
         }
     }
@@ -110,11 +133,13 @@ public class PrivateViewManager {
     private void processScreenshot(ScreenshotResult result, AtomicReference<List<Double>> privateViews, CountDownLatch latch, ScreenshotCaptor.CapturingCallback capturingCallback) {
         screenshotExecutor.execute(() -> {
             try {
+                Log.v("IBG-FLT","processScreenshot has started...");
                 latch.await();  // Wait
                 Bitmap bitmap = result.getScreenshot();
                 maskPrivateViews(result, privateViews.get());
                 capturingCallback.onCapturingSuccess(bitmap);
             } catch (InterruptedException e) {
+                Log.v("IBG-FLT","processScreenshot has failed..." + e);
                 capturingCallback.onCapturingFailure(e);
             }
         });
