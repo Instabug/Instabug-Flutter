@@ -94,8 +94,9 @@ public class PrivateViewManager {
 
 
                 // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                     Log.v("IBG-FLT","screen capturing using pixelCopyScreenshotCaptor startd");
+
                     pixelCopyScreenshotCaptor.capture(activity, new ScreenshotResultCallback() {
-                        Log.v("IBG-FLT","screen capturing using pixelCopyScreenshotCaptor startd");
 
                         @Override
                         public void onScreenshotResult(ScreenshotResult result) {
