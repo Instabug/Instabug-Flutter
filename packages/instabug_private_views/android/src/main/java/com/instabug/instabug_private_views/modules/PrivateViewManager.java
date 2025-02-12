@@ -137,7 +137,8 @@ public class PrivateViewManager {
                 Bitmap bitmap = result.getScreenshot();
                 maskPrivateViews(result, privateViews.get());
                 capturingCallback.onCapturingSuccess(bitmap);
-            } catch (InterruptedException e) {
+
+            } catch (Throwable e) {
                 Log.v("IBG-FLT","processScreenshot has failed..." + e);
                 capturingCallback.onCapturingFailure(e);
             }

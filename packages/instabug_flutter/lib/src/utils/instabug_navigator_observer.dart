@@ -70,4 +70,13 @@ class InstabugNavigatorObserver extends NavigatorObserver {
   void didPush(Route route, Route? previousRoute) {
     screenChanged(route);
   }
+
+  @override
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
+    if(newRoute!=null) {
+      screenChanged(newRoute);
+    }
+
+  }
+
 }

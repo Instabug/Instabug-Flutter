@@ -125,7 +125,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 .setSdkDebugLogsLevel(parsedLogLevel)
                 .build();
 
-//        Instabug.setScreenshotProvider(screenshotProvider);
+        Instabug.setScreenshotProvider(screenshotProvider);
     }
 
     @Override
