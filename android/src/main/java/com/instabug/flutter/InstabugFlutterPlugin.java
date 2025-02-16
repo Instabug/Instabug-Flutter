@@ -27,7 +27,6 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import io.flutter.plugin.common.BinaryMessenger;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     private static final String TAG = InstabugFlutterPlugin.class.getName();
