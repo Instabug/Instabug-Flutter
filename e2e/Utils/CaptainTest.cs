@@ -1,5 +1,7 @@
 using System.Drawing;
 using Instabug.Captain;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Appium.MultiTouch;
 
 namespace E2E.Utils;
 

@@ -49,6 +49,9 @@ void main() {
         debugLogsLevel: LogLevel.none,
       );
 
+      Instabug.setWelcomeMessageMode(WelcomeMessageMode.disabled);
+
+
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
       };

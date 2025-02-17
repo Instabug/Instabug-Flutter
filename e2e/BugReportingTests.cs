@@ -1,9 +1,9 @@
-using System.Drawing;
 using E2E.Utils;
 using Xunit;
 using Instabug.Captain;
 
 using NoSuchElementException = OpenQA.Selenium.NoSuchElementException;
+using System.Drawing;
 
 namespace E2E;
 
@@ -18,11 +18,17 @@ public class BugReportingTests : CaptainTest
     );
 
     Assert.True(optionsPrompt.Displayed);
+    captain.ClickButtonIfFoundByText("Cancel");
+
   }
 
   [Fact]
   public void ReportABug()
   {
+
+  Console.WriteLine("ReportABug");
+        captain.FindByTextScroll("Floating Button").Tap();
+
     captain.FindById(
         android: "instabug_floating_button",
         ios: "IBGFloatingButtonAccessibilityIdentifier"
@@ -46,6 +52,12 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void FloatingButtonInvocationEvent()
   {
+
+      Console.WriteLine("FloatingButtonInvocationEvent");
+
+
+    captain.FindByTextScroll("Floating Button").Tap();
+
     captain.FindById(
         android: "instabug_floating_button",
         ios: "IBGFloatingButtonAccessibilityIdentifier"
@@ -57,11 +69,13 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void ShakeInvocationEvent()
   {
+
+          Console.WriteLine("ShakeInvocationEvent");
+
     if (!Platform.IsIOS) return;
 
 
-       ScrollUp();
-    captain.FindByText("Shake").Tap();
+    captain.FindByTextScroll("Shake").Tap();
 
     captain.Shake();
 
@@ -71,10 +85,12 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void TwoFingersSwipeLeftInvocationEvent()
   {
-   if (!Platform.IsIOS){
-    ScrollUp();
-    }
-    captain.FindByText("Two Fingers Swipe Left").Tap();
+
+              Console.WriteLine("TwoFingersSwipeLeftInvocationEvent");
+
+
+
+    captain.FindByTextScroll("Two Fingers Swipe Left").Tap();
 
     Thread.Sleep(500);
 
@@ -93,7 +109,11 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void NoneInvocationEvent()
   {
-    captain.FindByText("None").Tap();
+
+                  Console.WriteLine("NoneInvocationEvent");
+
+
+    captain.FindByTextScroll("None").Tap();
 
     captain.WaitForAssertion(() =>
       Assert.Throws<NoSuchElementException>(() =>
@@ -109,7 +129,13 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void ManualInvocation()
   {
-    captain.FindByText("Invoke").Tap();
+
+
+                  Console.WriteLine("ManualInvocation");
+
+
+
+    captain.FindByTextScroll("Invoke").Tap();
 
     AssertOptionsPromptIsDisplayed();
   }
@@ -117,14 +143,21 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void MultipleScreenshotsInReproSteps()
   {
-    Dispose();
-    ScrollDownLittle();
-    captain.FindByText("Enter screen name").Tap();
-    captain.Type("My Screen");
+
+
+    Console.WriteLine("MultipleScreenshotsInReproSteps");
+
+
+    captain.FindByTextScroll("Enter screen name").Type("My Screen");
+//    captain.Type("My Screen");
+
+
+
     captain.HideKeyboard();
 
-    captain.FindByText("Report Screen Change").Tap();
-    captain.FindByText("Send Bug Report").Tap();
+
+    captain.FindByTextScroll("Report Screen Change").Tap();
+    captain.FindByTextScroll("Send Bug Report").Tap();
     captain.FindById(
         android: "instabug_text_view_repro_steps_disclaimer",
         ios: "IBGBugVCReproStepsDisclaimerAccessibilityIdentifier"
@@ -140,27 +173,30 @@ public class BugReportingTests : CaptainTest
   [Fact(Skip = "The test is flaky on iOS so we're skipping it to unblock the v13.2.0 release")]
   public void ChangeReportTypes()
   {
-    ScrollUp();
-    captain.FindByText("Bug", exact: true).Tap();
+
+    Console.WriteLine("ChangeReportTypes");
+
+
+    captain.FindByTextScroll("Bug", exact: true).Tap();
 
     if (Platform.IsAndroid)
     {
-      captain.FindByText("Invoke").Tap();
+      captain.FindByTextScroll("Invoke").Tap();
 
       // Shows bug reporting screen
       Assert.True(captain.FindById("ib_bug_scroll_view").Displayed);
 
       // Close bug reporting screen
       captain.GoBack();
-      captain.FindByText("DISCARD").Tap();
+      captain.FindByTextScroll("DISCARD").Tap();
 
       Thread.Sleep(500);
 
     }
 
-    captain.FindByText("Feedback").Tap();
+    captain.FindByTextScroll("Feedback").Tap();
 
-    captain.FindByText("Invoke").Tap();
+    captain.FindByTextScroll("Invoke").Tap();
 
     // Shows both bug reporting and feature requests in prompt options
     AssertOptionsPromptIsDisplayed();
@@ -173,8 +209,14 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void ChangeFloatingButtonEdge()
   {
-    ScrollDown();
-    captain.FindByText("Move Floating Button to Left").Tap();
+
+    Console.WriteLine("ChangeFloatingButtonEdge");
+
+
+    captain.FindByTextScroll("Floating Button").Tap();
+     Thread.Sleep(500);
+
+    captain.FindByTextScroll("Move Floating Button to Left").Tap();
 
     Thread.Sleep(500);
 
@@ -193,16 +235,16 @@ public class BugReportingTests : CaptainTest
   [Fact]
   public void OnDismissCallbackIsCalled()
   {
-    ScrollDownLittle();
 
-    captain.FindByText("Set On Dismiss Callback").Tap();
-    captain.FindByText("Invoke").Tap();
+    captain.FindByTextScroll("Set On Dismiss Callback").Tap();
+    captain.FindByTextScroll("Invoke").Tap();
 
     AssertOptionsPromptIsDisplayed();
 
-    captain.FindByText("Cancel").Tap();
+    captain.FindByTextScroll("Cancel").Tap();
 
     var popUpText = captain.FindByText("onDismiss callback called with DismissType.cancel and ReportType.other");
     Assert.True(popUpText.Displayed);
+
   }
 }

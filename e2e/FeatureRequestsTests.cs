@@ -10,10 +10,10 @@ public class FeatureRequestsTests : CaptainTest
   [Fact]
   public void ShowFeatureRequetsScreen()
   {
-    ScrollDown();
-    ScrollDown();
 
-    captain.FindByText("Show Feature Requests").Tap();
+    Console.WriteLine("ShowFeatureRequetsScreen");
+
+    captain.FindByTextScroll("Show Feature Requests").Tap();
 
     var screenTitle = captain.FindById(
         android: "ib_fr_toolbar_main",
