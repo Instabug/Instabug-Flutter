@@ -18,17 +18,11 @@ public class BugReportingTests : CaptainTest
     );
 
     Assert.True(optionsPrompt.Displayed);
-    captain.ClickButtonIfFoundByText("Cancel");
-
   }
 
   [Fact]
   public void ReportABug()
   {
-
-  Console.WriteLine("ReportABug");
-        captain.FindByTextScroll("Floating Button").Tap();
-
     captain.FindById(
         android: "instabug_floating_button",
         ios: "IBGFloatingButtonAccessibilityIdentifier"
@@ -54,9 +48,6 @@ public class BugReportingTests : CaptainTest
   {
 
       Console.WriteLine("FloatingButtonInvocationEvent");
-
-
-    captain.FindByTextScroll("Floating Button").Tap();
 
     captain.FindById(
         android: "instabug_floating_button",
