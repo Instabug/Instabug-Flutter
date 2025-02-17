@@ -112,7 +112,7 @@ class _UserStepsPageState extends State<UserStepsPage> {
             ),
           ],
         ),
-        InstabugButton(text: 'Ahmed'),
+        InstabugButton(text: "I'm a button"),
         ElevatedButton(onPressed: () {}, child: Text("data")),
         SectionTitle('Toggles'),
         Row(
