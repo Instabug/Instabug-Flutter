@@ -90,7 +90,7 @@ commands:
             echo 'export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools' >> $BASH_ENV
       - run:
           name: Clone Captain
-          command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain &&  cd ../Instabug.Captain && git checkout -b scroll
+          command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
       - run:
           name: Configure Captain Platform
           command: echo 'export CAPTAIN_PLATFORM=<<parameters.platform>>' >> $BASH_ENV
