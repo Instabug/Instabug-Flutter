@@ -358,6 +358,12 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             if (method != null) {
                 method.invoke(null, null, screenName);
             }
+            Method reportView = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "reportCurrentViewChange",
+                    String.class);
+
+            if (reportView != null) {
+                reportView.invoke(null, screenName);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
