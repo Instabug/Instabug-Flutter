@@ -474,6 +474,7 @@ public class InstabugApiTest {
         api.reportScreenChange(screenName);
 
         reflected.verify(() -> MockReflected.reportScreenChange(null, screenName));
+        reflected.verify(() -> MockReflected.reportCurrentViewChange(screenName));
     }
 
     @Test
