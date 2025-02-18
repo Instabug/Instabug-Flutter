@@ -237,7 +237,7 @@ jobs:
       - setup_flutter
       - android/start-emulator-and-run-tests:
           run-tests-working-directory: e2e
-          additional-avd-args: --skin pixel_5
+          additional-avd-args: --device 15
           system-image: system-images;android-33;default;x86_64
           post-emulator-launch-assemble-command: cd packages/instabug_flutter/example && flutter build apk --debug
           test-command: dotnet test
