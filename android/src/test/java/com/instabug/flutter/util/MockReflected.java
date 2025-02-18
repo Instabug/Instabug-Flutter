@@ -22,6 +22,11 @@ public class MockReflected {
     public static void reportScreenChange(Bitmap screenshot, String name) {}
 
     /**
+     * Instabug.reportCurrentViewChange
+     */
+    public static void reportCurrentViewChange(String name) {}
+
+    /**
      * Instabug.setCustomBrandingImage
      */
     public static void setCustomBrandingImage(Bitmap light, Bitmap dark) {}
