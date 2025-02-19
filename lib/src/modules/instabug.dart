@@ -449,9 +449,9 @@ class Instabug {
     }
 
     return _host.setReproStepsConfig(
-      bugMode.toString(),
-      crashMode.toString(),
-      sessionReplayMode.toString(),
+      bugMode?.toString(),
+      crashMode?.toString(),
+      sessionReplayMode?.toString(),
     );
   }
 
