@@ -22,7 +22,7 @@ void main() {
       };
 
       enableInstabugMaskingPrivateViews();
-      runApp(const PrivateViewPage());
+      runApp(const InstabugUserSteps(child:PrivateViewPage()));
     },
     CrashReporting.reportCrash,
   );

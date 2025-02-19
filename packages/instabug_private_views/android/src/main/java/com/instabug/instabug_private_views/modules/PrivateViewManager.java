@@ -121,19 +121,23 @@ public class PrivateViewManager {
 
     @VisibleForTesting
     public void maskPrivateViews(ScreenshotResult result, List<Double> privateViews) {
-        if (privateViews == null || privateViews.isEmpty()) return;
+        try {
+            if (privateViews == null || privateViews.isEmpty()) return;
 
-        Bitmap bitmap = result.getScreenshot();
-        float pixelRatio = result.getPixelRatio();
-        Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();  // Default color is black
+            Bitmap bitmap = result.getScreenshot();
+            float pixelRatio = result.getPixelRatio();
+            Canvas canvas = new Canvas(bitmap);
+            Paint paint = new Paint();  // Default color is black
 
-        for (int i = 0; i < privateViews.size(); i += 4) {
-            float left = privateViews.get(i).floatValue() * pixelRatio;
-            float top = privateViews.get(i + 1).floatValue() * pixelRatio;
-            float right = privateViews.get(i + 2).floatValue() * pixelRatio;
-            float bottom = privateViews.get(i + 3).floatValue() * pixelRatio;
-            canvas.drawRect(left, top, right, bottom, paint);  // Mask private view
+            for (int i = 0; i < privateViews.size(); i += 4) {
+                float left = privateViews.get(i).floatValue() * pixelRatio;
+                float top = privateViews.get(i + 1).floatValue() * pixelRatio;
+                float right = privateViews.get(i + 2).floatValue() * pixelRatio;
+                float bottom = privateViews.get(i + 3).floatValue() * pixelRatio;
+                canvas.drawRect(left, top, right, bottom, paint);  // Mask private view
+            }
+        } catch (Exception e){
+e.printStackTrace();
         }
     }
 }
