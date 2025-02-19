@@ -12,7 +12,7 @@ public class SurveysTests : CaptainTest
   {
         Console.WriteLine("ShowManualSurvey");
 
-    captain.FindByTextScroll("Show Manual Survey").Tap();
+    captain.FindByTextScroll("Show Manual Survey",false,false).Tap();
 
     captain.WaitForAssertion(() =>
     {

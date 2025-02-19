@@ -139,16 +139,19 @@ public class BugReportingTests : CaptainTest
     Console.WriteLine("MultipleScreenshotsInReproSteps");
 
 
-    captain.FindByTextScroll("Enter screen name").Type("My Screen");
-//    captain.Type("My Screen");
 
 
-
+captain.FindByTextScroll("Enter screen name").Tap();
+    captain.Type("My Screen");
     captain.HideKeyboard();
 
+    captain.HideKeyboard();
+    Thread.Sleep(500);
 
-    captain.FindByTextScroll("Report Screen Change").Tap();
-    captain.FindByTextScroll("Send Bug Report").Tap();
+    captain.FindByTextScroll("Report Screen Change")?.Tap();
+    Thread.Sleep(500);
+    captain.FindByTextScroll("Send Bug Report")?.Tap();
+
     captain.FindById(
         android: "instabug_text_view_repro_steps_disclaimer",
         ios: "IBGBugVCReproStepsDisclaimerAccessibilityIdentifier"
@@ -204,12 +207,8 @@ public class BugReportingTests : CaptainTest
     Console.WriteLine("ChangeFloatingButtonEdge");
 
 
-    captain.FindByTextScroll("Floating Button").Tap();
-     Thread.Sleep(500);
+    captain.FindByTextScroll("Move Floating Button to Left",false,false)?.Tap();
 
-    captain.FindByTextScroll("Move Floating Button to Left").Tap();
-
-    Thread.Sleep(500);
 
     captain.WaitForAssertion(() =>
     {
@@ -227,8 +226,8 @@ public class BugReportingTests : CaptainTest
   public void OnDismissCallbackIsCalled()
   {
 
-    captain.FindByTextScroll("Set On Dismiss Callback").Tap();
-    captain.FindByTextScroll("Invoke").Tap();
+    captain.FindByTextScroll("Set On Dismiss Callback",false,false).Tap();
+    captain.FindByTextScroll("Invoke",false,false).Tap();
 
     AssertOptionsPromptIsDisplayed();
 

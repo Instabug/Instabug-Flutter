@@ -13,7 +13,7 @@ public class FeatureRequestsTests : CaptainTest
 
     Console.WriteLine("ShowFeatureRequetsScreen");
 
-    captain.FindByTextScroll("Show Feature Requests").Tap();
+    captain.FindByTextScroll("Show Feature Requests",false,false).Tap();
 
     var screenTitle = captain.FindById(
         android: "ib_fr_toolbar_main",
