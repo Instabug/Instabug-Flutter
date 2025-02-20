@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:14.1.0'
+    api 'com.instabug.library:instabug:14.1.0.6537176-SNAPSHOT'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
     testImplementation "io.mockk:mockk:1.13.13"
@@ -56,5 +56,12 @@ apply from: './upload_symbols.gradle'
 tasks.whenTaskAdded { task ->
     if (task.name == 'assembleRelease') {
         task.finalizedBy upload_symbols_task
+    }
+}
+rootProject.allprojects {
+    repositories {
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots'
+        }
     }
 }
