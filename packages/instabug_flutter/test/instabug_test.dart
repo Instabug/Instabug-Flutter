@@ -8,6 +8,7 @@ import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
+import 'package:instabug_flutter/src/utils/user_steps/user_step_details.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -472,6 +473,28 @@ void main() {
     //assert
     verify(
       mHost.willRedirectToStore(),
+    ).called(1);
+  });
+
+  test('[enableUserSteps] should call host method', () async {
+    const enabled = true;
+
+    await Instabug.enableUserSteps(enabled);
+
+    verify(
+      mHost.setEnableUserSteps(enabled),
+    ).called(1);
+  });
+
+  test('[logUserSteps] should call host method', () async {
+    const message = "message";
+    const gestureType = GestureType.tap;
+    const viewName = "view";
+
+    await Instabug.logUserSteps(gestureType, message, viewName);
+
+    verify(
+      mHost.logUserSteps(gestureType.toString(), message, viewName),
     ).called(1);
   });
 }

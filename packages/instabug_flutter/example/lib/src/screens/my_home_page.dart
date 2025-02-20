@@ -175,6 +175,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _navigateToUserStepsPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UserStepsPage(),
+        settings: const RouteSettings(name: UserStepsPage.screenName),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Page(
@@ -355,6 +365,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('Dark'),
             ),
           ],
+        ),
+        InstabugButton(
+          text: 'User Steps',
+          onPressed: _navigateToUserStepsPage,
         ),
         SectionTitle('FeatureFlags'),
         InstabugTextField(

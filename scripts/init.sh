@@ -26,6 +26,10 @@ if [ -d "test" ]; then
     echo "Folder test and its contents removed"
 fi
 
+if [ -d "example" ]; then
+    rm -rf "example"
+    echo "Folder example and its contents removed"
+fi
 
 if command -v melos &> /dev/null
 then

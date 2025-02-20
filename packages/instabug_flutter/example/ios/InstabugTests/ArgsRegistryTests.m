@@ -188,6 +188,21 @@
     }
 }
 
+- (void)testUserStepsGesture {
+    NSArray *values = @[
+        @(IBGUIEventTypeSwipe),
+        @(IBGUIEventTypeScroll),
+        @(IBGUIEventTypeTap),
+        @(IBGUIEventTypePinch),
+        @(IBGUIEventTypeLongPress),
+        @(IBGUIEventTypeDoubleTap),
+    ];
+
+    for (NSNumber *value in values) {
+        XCTAssertTrue([[ArgsRegistry.userStepsGesture allValues] containsObject:value]);
+    }
+}
+
 - (void)testPlaceholders {
     NSArray *values = @[
         kIBGShakeStartAlertTextStringName,

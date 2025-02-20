@@ -44,6 +44,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -126,6 +127,16 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 .build();
 
         Instabug.setScreenshotProvider(screenshotProvider);
+
+        try{
+            Class<?> myClass = Class.forName("com.instabug.library.Instabug");
+            // Enable/Disable native user steps capturing
+            Method method = myClass.getDeclaredMethod("shouldDisableNativeUserStepsCapturing", boolean.class);
+            method.setAccessible(true);
+            method.invoke(null,true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -157,6 +168,33 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public void logOut() {
         Instabug.logoutUser();
+    }
+
+    @Override
+    public void setEnableUserSteps(@NonNull Boolean isEnabled) {
+        Instabug.setTrackingUserStepsState(isEnabled ? Feature.State.ENABLED : Feature.State.DISABLED);
+    }
+
+    @Override
+
+    public void logUserSteps(@NonNull String gestureType, @NonNull String message,@Nullable String viewName) {
+        try {
+            final String stepType = ArgsRegistry.gestureStepType.get(gestureType);
+            final long timeStamp = System.currentTimeMillis();
+            String view = "";
+
+            Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "addUserStep",
+                    long.class, String.class, String.class, String.class, String.class);
+            if (method != null) {
+                if (viewName != null){
+                    view = viewName;
+                }
+
+                method.invoke(null, timeStamp, stepType, message, null, view);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -362,6 +400,13 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             if (method != null) {
                 method.invoke(null, null, screenName);
             }
+
+            Method reportViewChange = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "reportCurrentViewChange",
+                    String.class);
+            if (reportViewChange != null) {
+                reportViewChange.invoke(null,screenName);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -497,7 +542,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         Instabug.willRedirectToStore();
     }
 
-    public static void setScreenshotCaptor(ScreenshotCaptor screenshotCaptor,InternalCore internalCore) {
+    public static void setScreenshotCaptor(ScreenshotCaptor screenshotCaptor, InternalCore internalCore) {
         internalCore._setScreenshotCaptor(new com.instabug.library.screenshot.ScreenshotCaptor() {
             @Override
             public void capture(@NonNull ScreenshotRequest screenshotRequest) {

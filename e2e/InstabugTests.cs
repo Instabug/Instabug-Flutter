@@ -11,14 +11,16 @@ public class InstabugTests : CaptainTest
   [Fact]
   public void ChangePrimaryColor()
   {
+    Console.WriteLine("ChangePrimaryColor");
+
     var color = "#FF0000";
     var expected = Color.FromArgb(255, 0, 0);
 
-    captain.FindByText("Enter primary color").Tap();
+    captain.FindByTextScroll("Enter primary color").Tap();
     captain.Type(color);
     captain.HideKeyboard();
 
-    captain.FindByText("Change Primary Color").Tap();
+    captain.FindByTextScroll("Change Primary Color").Tap();
 
     captain.WaitForAssertion(() =>
     {

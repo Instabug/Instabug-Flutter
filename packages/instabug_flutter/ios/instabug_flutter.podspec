@@ -18,5 +18,7 @@ Pod::Spec.new do |s|
 
   s.dependency 'Flutter'
   s.dependency 'Instabug', '14.1.0'
+
+
 end
 

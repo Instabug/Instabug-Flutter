@@ -602,4 +602,25 @@
 
 }
 
+- (void)testSetEnableUserStepsIsEnabled{
+    NSNumber *isEnabled = @1;
+    FlutterError *error;
+
+    [self.api setEnableUserStepsIsEnabled:isEnabled error:&error];
+
+    OCMVerify([self.mInstabug setTrackUserSteps:YES]);
+
+}
+
+- (void)testLogUserStepsGestureType{
+    NSString* message = @"message";
+    NSString* view = @"viewName";
+    FlutterError *error;
+    
+    [self.api logUserStepsGestureType:@"GestureType.tap" message:message viewName:view error: &error];
+
+    XCTAssertNil(error, @"Error should be nil");
+
+}
+
 @end
