@@ -9,6 +9,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  instabug_flutter:
+    path: '../../instabug_flutter'
   instabug_private_views:
     path: '../'
 

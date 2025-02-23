@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_private_views/instabug_private_view.dart';
 import 'package:instabug_private_views_example/widget/instabug_button.dart';
 import 'package:instabug_private_views_example/widget/section_title.dart';
@@ -63,6 +64,7 @@ class _PrivateViewPageState extends State<PrivateViewPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorObservers: [InstabugNavigatorObserver()],
       home: Scaffold(
         appBar: AppBar(title: const Text("Private Views page")),
         body: SingleChildScrollView(
