@@ -21,7 +21,7 @@ void main() {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
       };
 
-      enableInstabugMaskingPrivateViews();
+      InstabugPrivateViewManager.enable();
       runApp(const PrivateViewPage());
     },
     CrashReporting.reportCrash,
