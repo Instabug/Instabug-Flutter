@@ -27,9 +27,12 @@ void main() {
   test('UiTrace matches method returns correct result', () {
     final mockRouteMatcher = MockRouteMatcher();
     RouteMatcher.setInstance(mockRouteMatcher);
-    when(mockRouteMatcher.match(
-            routePath: 'test/path', actualPath: 'MatchingScreen'))
-        .thenReturn(true);
+    when(
+      mockRouteMatcher.match(
+        routePath: 'test/path',
+        actualPath: 'MatchingScreen',
+      ),
+    ).thenReturn(true);
 
     final trace = UiTrace(
       screenName: 'TestScreen',
@@ -47,7 +50,9 @@ void main() {
       matchingScreenName: 'MatchingScreen',
     );
 
-    expect(trace.toString(),
-        'UiTrace{screenName: TestScreen, traceId: 123, isFirstScreenLoadingReported: false, isFirstScreenLoading: false}');
+    expect(
+      trace.toString(),
+      'UiTrace{screenName: TestScreen, traceId: 123, isFirstScreenLoadingReported: false, isFirstScreenLoading: false}',
+    );
   });
 }

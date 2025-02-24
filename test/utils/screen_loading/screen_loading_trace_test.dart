@@ -54,7 +54,9 @@ void main() {
       duration: 4000,
     );
 
-    expect(trace.toString(),
-        'ScreenLoadingTrace{screenName: TestScreen, startTimeInMicroseconds: 1000, startMonotonicTimeInMicroseconds: 2000, endTimeInMicroseconds: 3000, duration: 4000}');
+    expect(
+      trace.toString(),
+      'ScreenLoadingTrace{screenName: TestScreen, startTimeInMicroseconds: 1000, startMonotonicTimeInMicroseconds: 2000, endTimeInMicroseconds: 3000, duration: 4000}',
+    );
   });
 }
