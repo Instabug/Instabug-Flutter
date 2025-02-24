@@ -27,7 +27,8 @@ void main() {
   test('UiTrace matches method returns correct result', () {
     final mockRouteMatcher = MockRouteMatcher();
     RouteMatcher.setInstance(mockRouteMatcher);
-    when(mockRouteMatcher.match(routePath: 'test/path', actualPath: 'MatchingScreen'))
+    when(mockRouteMatcher.match(
+            routePath: 'test/path', actualPath: 'MatchingScreen'))
         .thenReturn(true);
 
     final trace = UiTrace(

@@ -2,8 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_trace.dart';
 
 void main() {
-
-  test('ScreenLoadingTrace copyWith method should keep original values when no override happens', () {
+  test(
+      'ScreenLoadingTrace copyWith method should keep original values when no override happens',
+      () {
     final trace = ScreenLoadingTrace(
       'TestScreen',
       startTimeInMicroseconds: 1000,
@@ -12,9 +13,7 @@ void main() {
       duration: 4000,
     );
 
-    final updatedTrace = trace.copyWith(
-
-    );
+    final updatedTrace = trace.copyWith();
 
     expect(updatedTrace.screenName, 'TestScreen');
     expect(updatedTrace.startTimeInMicroseconds, 1000);
@@ -37,7 +36,6 @@ void main() {
       startMonotonicTimeInMicroseconds: 2500,
       endTimeInMicroseconds: 3500,
       duration: 4500,
-
     );
 
     expect(updatedTrace.screenName, 'TestScreen');

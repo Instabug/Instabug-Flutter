@@ -5,7 +5,6 @@ import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager
 import 'package:mockito/mockito.dart';
 import '../instabug_navigator_observer_test.mocks.dart';
 
-
 void main() {
   late MockScreenLoadingManager mockScreenLoadingManager;
 
@@ -19,11 +18,12 @@ void main() {
       (WidgetTester tester) async {
     const screenName = "/TestScreen";
 
-
     when(mockScreenLoadingManager.sanitizeScreenName(screenName))
         .thenReturn(screenName);
-    when(mockScreenLoadingManager.startScreenLoadingTrace(any)).thenAnswer((_) async {});
-    when(mockScreenLoadingManager.reportScreenLoading(any)).thenAnswer((_) async {});
+    when(mockScreenLoadingManager.startScreenLoadingTrace(any))
+        .thenAnswer((_) async {});
+    when(mockScreenLoadingManager.reportScreenLoading(any))
+        .thenAnswer((_) async {});
 
     await tester.pumpWidget(
       MaterialApp(
@@ -34,8 +34,7 @@ void main() {
       ),
     );
 
-    verify(mockScreenLoadingManager.startScreenLoadingTrace(any))
-        .called(1);
+    verify(mockScreenLoadingManager.startScreenLoadingTrace(any)).called(1);
     await tester.pumpAndSettle();
     verify(mockScreenLoadingManager.reportScreenLoading(any)).called(1);
   });
