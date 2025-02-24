@@ -61,7 +61,7 @@ void main() {
 
       expect(
         details.message,
-        " Container  with key 'testKey' ",
+        " Container  with key 'testKey'",
       );
     });
 
@@ -113,7 +113,7 @@ void main() {
 
       expect(
         details.message,
-        " Container  with key 'testKey' ",
+        " Container  with key 'testKey'",
       );
     });
 

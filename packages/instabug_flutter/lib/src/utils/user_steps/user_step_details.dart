@@ -78,7 +78,7 @@ class UserStepDetails {
 
     if (key != null) baseMessage += " with key '$key' ";
 
-    return baseMessage.trim();
+    return baseMessage.trimRight();
   }
 
   String? _getWidgetSpecificDetails() {
