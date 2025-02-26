@@ -17,7 +17,6 @@ class _NetworkContentState extends State<NetworkContent> {
   @override
   Widget build(BuildContext context) {
     return Column(
-
       children: [
         InstabugClipboardInput(
           label: 'Endpoint Url',
