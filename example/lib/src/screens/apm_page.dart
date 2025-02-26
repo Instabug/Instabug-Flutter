@@ -22,11 +22,18 @@ class _ApmPageState extends State<ApmPage> {
     );
   }
 
+  _endAppLaunch() => APM.endAppLaunch();
+
   @override
   Widget build(BuildContext context) {
     return Page(
       title: 'APM',
       children: [
+        const APMSwitch(),
+        InstabugButton(
+          text: 'End App Launch',
+          onPressed: _endAppLaunch,
+        ),
         const SectionTitle('Network'),
         const NetworkContent(),
         const SectionTitle('Traces'),
