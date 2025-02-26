@@ -87,7 +87,7 @@ bool isImageWidget(Widget? widget) {
   if (widget == null) {
     return false;
   }
-  return widget is Image ||
+  final isDefaultImage = widget is Image ||
       widget is FadeInImage ||
       widget is NetworkImage ||
       widget is AssetImage ||
@@ -95,8 +95,35 @@ bool isImageWidget(Widget? widget) {
       widget is FileImage ||
       widget is MemoryImage ||
       widget is ImageProvider;
+
+  if (isDefaultImage) {
+    return true;
+  }
+  final imageWidgetTypes = {
+    'CachedNetworkImage', // From cached_network_image package
+    'SvgPicture', // flutter_svg package
+    'OctoImage', // octo_image package
+  };
+
+  return imageWidgetTypes.contains(widget.runtimeType.toString());
 }
 
+bool isVideoPlayerWidget(Widget widget) {
+  final videoPlayerTypes = {
+    'VideoPlayer', // flutter_video_player
+    'Chewie', // chewie video player
+    'BetterPlayer', // better_player package
+    'YoutubePlayer', // youtube_player_flutter
+    'VlcPlayer', // flutter_vlc_player
+    'FlickVideoPlayer', // flick_video_player
+  };
+
+  return videoPlayerTypes.contains(widget.runtimeType.toString());
+}
+
+bool isMedia(Widget widget){
+  return isImageWidget(widget) || isVideoPlayerWidget(widget);
+}
 /// Checks if a widget is toggleable (e.g., switch, checkbox, etc.).
 bool isToggleableWidget(Widget widget) {
   return widget is Checkbox ||

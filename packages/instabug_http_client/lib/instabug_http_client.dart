@@ -47,7 +47,7 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   }
 
   Future<W3CHeader?> getW3cHeader(
-      Map<String, String> requestHeader, DateTime startTime) async {
+      Map<String, String> requestHeader, DateTime startTime,) async {
     final w3cHeader = await _networklogger.getW3CHeader(
       requestHeader,
       startTime.millisecondsSinceEpoch,
@@ -157,7 +157,7 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
               http.Response.fromStream(streamedResponse)
                   .then((http.Response response) {
             logger.onLogger(response,
-                startTime: startTime, w3CHeader: w3cHeader);
+                startTime: startTime, w3CHeader: w3cHeader,);
             // Need to return new StreamedResponse, as body only can be listened once
             return http.StreamedResponse(
               Stream<List<int>>.value(response.bodyBytes),

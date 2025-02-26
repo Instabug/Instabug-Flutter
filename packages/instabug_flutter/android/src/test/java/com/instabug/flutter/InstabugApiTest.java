@@ -41,6 +41,7 @@ import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.IssueType;
 import com.instabug.library.LogLevel;
+import com.instabug.library.MaskingType;
 import com.instabug.library.Platform;
 import com.instabug.library.ReproConfigurations;
 import com.instabug.library.ReproMode;
@@ -477,7 +478,7 @@ public class InstabugApiTest {
     public void testReportScreenChange() {
         String screenName = "HomeScreen";
 
-        api.reportScreenChange(screenName);
+        api.reportScreenChange(null,screenName);
 
         reflected.verify(() -> MockReflected.reportScreenChange(null, screenName));
     }
@@ -689,4 +690,16 @@ public class InstabugApiTest {
 
     }
 
+    @Test
+    public void testAutoMasking() {
+        String maskLabel = "AutoMasking.labels";
+        String maskTextInputs = "AutoMasking.textInputs";
+        String maskMedia = "AutoMasking.media";
+        String maskNone = "AutoMasking.none";
+
+
+        api.enableAutoMasking(List.of(maskLabel, maskMedia, maskTextInputs,maskNone));
+
+        mInstabug.verify(() -> Instabug.setAutoMaskScreenshotsTypes(MaskingType.LABELS,MaskingType.MEDIA,MaskingType.TEXT_INPUTS,MaskingType.MASK_NOTHING));
+    }
 }

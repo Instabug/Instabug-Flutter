@@ -5,7 +5,7 @@ import 'package:instabug_flutter/instabug_flutter.dart';
 
 class InstabugHttpLogger {
   void onLogger(http.Response response,
-      {DateTime? startTime, W3CHeader? w3CHeader}) {
+      {DateTime? startTime, W3CHeader? w3CHeader,}) {
     final networkLogger = NetworkLogger();
 
     final requestHeaders = <String, dynamic>{};

@@ -19,6 +19,8 @@ abstract class InstabugHostApi {
 
   void init(String token, List<String> invocationEvents, String debugLogsLevel);
 
+  void enableAutoMasking(List<String> autoMasking);
+
   void show();
 
   void showWelcomeMessageWithMode(String mode);
@@ -85,8 +87,7 @@ abstract class InstabugHostApi {
     String? crashMode,
     String? sessionReplayMode,
   );
-
-  void reportScreenChange(String screenName);
+  void reportScreenChange(Uint8List? image,String screenName);
 
   void setCustomBrandingImage(String light, String dark);
 

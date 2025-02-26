@@ -6,13 +6,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
+import com.instabug.library.MaskingType;
 import com.instabug.library.ReproMode;
 import com.instabug.library.internal.crossplatform.CoreFeature;
 import com.instabug.library.internal.crossplatform.CoreFeaturesState;
@@ -33,9 +36,11 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.screenshot.instacapture.ScreenshotRequest;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+
 import io.flutter.FlutterInjector;
 import io.flutter.embedding.engine.loader.FlutterLoader;
 import io.flutter.plugin.common.BinaryMessenger;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
@@ -44,6 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -106,7 +112,9 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @NotNull
     @Override
-    public Boolean isBuilt() { return Instabug.isBuilt(); }
+    public Boolean isBuilt() {
+        return Instabug.isBuilt();
+    }
 
     @Override
     public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {
@@ -128,15 +136,26 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
         Instabug.setScreenshotProvider(screenshotProvider);
 
-        try{
+        try {
             Class<?> myClass = Class.forName("com.instabug.library.Instabug");
             // Enable/Disable native user steps capturing
             Method method = myClass.getDeclaredMethod("shouldDisableNativeUserStepsCapturing", boolean.class);
             method.setAccessible(true);
-            method.invoke(null,true);
+            method.invoke(null, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void enableAutoMasking(@NonNull List<String> autoMasking) {
+        int[] autoMaskingArray = new int[autoMasking.size()];
+        for (int i = 0; i < autoMasking.size(); i++) {
+            String key = autoMasking.get(i);
+            autoMaskingArray[i] = ArgsRegistry.autoMasking.get(key);
+        }
+
+        Instabug.setAutoMaskScreenshotsTypes(Arrays.copyOfRange(autoMaskingArray, 0, autoMaskingArray.length));
     }
 
     @Override
@@ -177,7 +196,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
 
-    public void logUserSteps(@NonNull String gestureType, @NonNull String message,@Nullable String viewName) {
+    public void logUserSteps(@NonNull String gestureType, @NonNull String message, @Nullable String viewName) {
         try {
             final String stepType = ArgsRegistry.gestureStepType.get(gestureType);
             final long timeStamp = System.currentTimeMillis();
@@ -186,7 +205,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "addUserStep",
                     long.class, String.class, String.class, String.class, String.class);
             if (method != null) {
-                if (viewName != null){
+                if (viewName != null) {
                     view = viewName;
                 }
 
@@ -393,7 +412,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     @Override
-    public void reportScreenChange(@NonNull String screenName) {
+    public void reportScreenChange(byte[] image, @NonNull String screenName) {
         try {
             Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "reportScreenChange",
                     Bitmap.class, String.class);
@@ -404,7 +423,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             Method reportViewChange = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "reportCurrentViewChange",
                     String.class);
             if (reportViewChange != null) {
-                reportViewChange.invoke(null,screenName);
+                reportViewChange.invoke(null, screenName);
             }
 
         } catch (Exception e) {

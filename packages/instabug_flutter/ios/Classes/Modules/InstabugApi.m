@@ -209,7 +209,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     }
 }
 
-- (void)reportScreenChangeScreenName:(NSString *)screenName error:(FlutterError *_Nullable *_Nonnull)error {
+- (void)reportScreenChangeImage:(nullable FlutterStandardTypedData *)image screenName:(nonnull NSString *)screenName error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
     SEL setPrivateApiSEL = NSSelectorFromString(@"logViewDidAppearEvent:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
         NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[[Instabug class] methodSignatureForSelector:setPrivateApiSEL]];
@@ -415,6 +415,20 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 - (void)setEnableUserStepsIsEnabled:(nonnull NSNumber *)isEnabled error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     Instabug.trackUserSteps = isEnabled.boolValue;
 }
+
+- (void)enableAutoMaskingAutoMasking:(nonnull NSArray<NSString *> *)autoMasking error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+    IBGAutoMaskScreenshotOption resolvedEvents = 0;
+
+    for (NSString *event in autoMasking) {
+        resolvedEvents |= (ArgsRegistry.autoMasking[event]).integerValue;
+    }
+    
+    [Instabug setAutoMaskScreenshots: resolvedEvents];
+
+}
+
+
+
 
 
 + (void)setScreenshotMaskingHandler:(nullable void (^)(UIImage * _Nonnull __strong, void (^ _Nonnull __strong)(UIImage * _Nonnull __strong)))maskingHandler {

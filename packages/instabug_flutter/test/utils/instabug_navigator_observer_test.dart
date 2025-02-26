@@ -51,7 +51,7 @@ void main() {
       ).called(1);
 
       verify(
-        mHost.reportScreenChange(screen),
+        mHost.reportScreenChange(null,screen),
       ).called(1);
     });
   });
@@ -69,7 +69,7 @@ void main() {
       ).called(1);
 
       verify(
-        mHost.reportScreenChange(previousScreen),
+        mHost.reportScreenChange(null,previousScreen),
       ).called(1);
     });
   });
@@ -87,7 +87,7 @@ void main() {
       );
 
       verifyNever(
-        mHost.reportScreenChange(any),
+        mHost.reportScreenChange(null,any),
       );
     });
   });
@@ -106,7 +106,7 @@ void main() {
       ).called(1);
 
       verify(
-        mHost.reportScreenChange(fallback),
+        mHost.reportScreenChange(null,fallback),
       ).called(1);
     });
   });
@@ -126,7 +126,7 @@ void main() {
       ).called(1);
 
       verify(
-        mHost.reportScreenChange(maskedScreen),
+        mHost.reportScreenChange(null,maskedScreen),
       ).called(1);
     });
   });

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/models/instabug_route.dart';
 import 'package:instabug_flutter/src/modules/instabug.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/repro_steps_constants.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
@@ -23,21 +24,29 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         name: maskedScreenName,
       );
 
-      // Starts a the new UI trace which is exclusive to screen loading
-      ScreenLoadingManager.I.startUiTrace(maskedScreenName, screenName);
-      // If there is a step that hasn't been pushed yet
-      if (_steps.isNotEmpty) {
-        // Report the last step and remove it from the list
-        Instabug.reportScreenChange(_steps.last.name);
-        _steps.removeLast();
-      }
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        // Starts a the new UI trace which is exclusive to screen loading
+        ScreenLoadingManager.I.startUiTrace(maskedScreenName, screenName);
+        // If there is a step that hasn't been pushed yet
+        if (_steps.isNotEmpty) {
+          if (IBGBuildInfo.instance.isIOS) {
+            await Future.delayed(const Duration(milliseconds: 100));
+          }
+          Instabug.reportScreenChange(null, _steps.last.name);
 
-      // Add the new step to the list
-      _steps.add(route);
-      Future<dynamic>.delayed(const Duration(milliseconds: 1000), () {
+          // Report the last step and remove it from the list
+          _steps.removeLast();
+        }
+
+        // Add the new step to the list
+        _steps.add(route);
+
         // If this route is in the array, report it and remove it from the list
         if (_steps.contains(route)) {
-          Instabug.reportScreenChange(route.name);
+          if (IBGBuildInfo.instance.isIOS) {
+            await Future.delayed(const Duration(milliseconds: 100));
+          }
+          Instabug.reportScreenChange(null, route.name);
           _steps.remove(route);
         }
       });

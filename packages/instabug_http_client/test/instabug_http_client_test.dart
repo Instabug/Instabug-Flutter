@@ -55,7 +55,7 @@ Future<void> main() async {
 
   test('expect instabug http client GET to return response', () async {
     when<dynamic>(
-            instabugHttpClient.client.get(url, headers: anyNamed('headers')))
+            instabugHttpClient.client.get(url, headers: anyNamed('headers')),)
         .thenAnswer((_) async => mockedResponse);
     final result = await instabugHttpClient.get(url);
     expect(result, isInstanceOf<http.Response>());
@@ -68,7 +68,7 @@ Future<void> main() async {
 
   test('expect instabug http client HEAD to return response', () async {
     when<dynamic>(
-            instabugHttpClient.client.head(url, headers: anyNamed('headers')))
+            instabugHttpClient.client.head(url, headers: anyNamed('headers')),)
         .thenAnswer((_) async => mockedResponse);
     final result = await instabugHttpClient.head(url);
     expect(result, isInstanceOf<http.Response>());
@@ -81,7 +81,7 @@ Future<void> main() async {
 
   test('expect instabug http client DELETE to return response', () async {
     when<dynamic>(
-            instabugHttpClient.client.delete(url, headers: anyNamed('headers')))
+            instabugHttpClient.client.delete(url, headers: anyNamed('headers')),)
         .thenAnswer((_) async => mockedResponse);
     final result = await instabugHttpClient.delete(url);
     expect(result, isInstanceOf<http.Response>());
@@ -94,7 +94,7 @@ Future<void> main() async {
 
   test('expect instabug http client PATCH to return response', () async {
     when<dynamic>(
-            instabugHttpClient.client.patch(url, headers: anyNamed('headers')))
+            instabugHttpClient.client.patch(url, headers: anyNamed('headers')),)
         .thenAnswer((_) async => mockedResponse);
     final result = await instabugHttpClient.patch(url);
     expect(result, isInstanceOf<http.Response>());
@@ -107,7 +107,7 @@ Future<void> main() async {
 
   test('expect instabug http client POST to return response', () async {
     when<dynamic>(
-            instabugHttpClient.client.post(url, headers: anyNamed('headers')))
+            instabugHttpClient.client.post(url, headers: anyNamed('headers')),)
         .thenAnswer((_) async => mockedResponse);
     final result = await instabugHttpClient.post(url);
     expect(result, isInstanceOf<http.Response>());
@@ -120,7 +120,7 @@ Future<void> main() async {
 
   test('expect instabug http client PUT to return response', () async {
     when<dynamic>(
-            instabugHttpClient.client.put(url, headers: anyNamed('headers')))
+            instabugHttpClient.client.put(url, headers: anyNamed('headers')),)
         .thenAnswer((_) async => mockedResponse);
     final result = await instabugHttpClient.put(url);
     expect(result, isInstanceOf<http.Response>());
@@ -134,7 +134,7 @@ Future<void> main() async {
   test('expect instabug http client READ to return response', () async {
     const response = 'Some response string';
     when<dynamic>(
-            instabugHttpClient.client.read(url, headers: anyNamed('headers')))
+            instabugHttpClient.client.read(url, headers: anyNamed('headers')),)
         .thenAnswer((_) async => response);
 
     final result = await instabugHttpClient.read(url);
@@ -194,7 +194,7 @@ Future<void> main() async {
 
   test('stress test for GET method', () async {
     when<dynamic>(
-            instabugHttpClient.client.get(url, headers: anyNamed('headers')))
+            instabugHttpClient.client.get(url, headers: anyNamed('headers')),)
         .thenAnswer((_) async => mockedResponse);
     for (var i = 0; i < 10000; i++) {
       await instabugHttpClient.get(url);
