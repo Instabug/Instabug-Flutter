@@ -27,7 +27,6 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import io.flutter.plugin.common.BinaryMessenger;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     private static final String TAG = InstabugFlutterPlugin.class.getName();
@@ -37,16 +36,33 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
 
     /**
      * Embedding v1
+     * This method is required for compatibility with apps that don't use the v2 embedding.
      */
     @SuppressWarnings("deprecation")
-    public static void registerWith(Registrar registrar) {
-        activity = registrar.activity();
-        register(registrar.context().getApplicationContext(), registrar.messenger(), (FlutterRenderer) registrar.textures());
+    public static void registerWith(Object registrar) {
+        try {
+            // Use reflection to access the Registrar class and its methods
+            Class<?> registrarClass = Class.forName("io.flutter.plugin.common.PluginRegistry.Registrar");
+            Activity activity = (Activity) registrarClass.getMethod("activity").invoke(registrar);
+            Context context = (Context) registrarClass.getMethod("context").invoke(registrar);
+            BinaryMessenger messenger = (BinaryMessenger) registrarClass.getMethod("messenger").invoke(registrar);
+            FlutterRenderer renderer = (FlutterRenderer) registrarClass.getMethod("textures").invoke(registrar);
+
+            // Set the activity and register with the context
+            InstabugFlutterPlugin.activity = activity;
+            registerWithContext(context.getApplicationContext(), messenger, renderer);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to register with v1 embedding. Cause: " + e);
+        }
     }
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-        register(binding.getApplicationContext(), binding.getBinaryMessenger(), (FlutterRenderer) binding.getTextureRegistry());
+        registerWithContext(
+                binding.getApplicationContext(),
+                binding.getBinaryMessenger(),
+                (FlutterRenderer) binding.getTextureRegistry()
+        );
     }
 
     @Override
@@ -74,7 +90,10 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
         activity = null;
     }
 
-    private static void register(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
+    /**
+     * Shared logic for both v1 and v2 embeddings.
+     */
+    private static void registerWithContext(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
         final Callable<Bitmap> screenshotProvider = new Callable<Bitmap>() {
             @Override
             public Bitmap call() {
@@ -82,6 +101,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
             }
         };
 
+        // Initialize all APIs
         ApmApi.init(messenger);
         BugReportingApi.init(messenger);
         CrashReportingApi.init(messenger);
