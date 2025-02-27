@@ -62,16 +62,16 @@ class _PrivateViewPageState extends State<PrivateViewPage> {
   }
 
   int count = 200;
-  final list=List.generate(
+  final list = List.generate(
       20,
-          (_) => InstabugPrivateView(
-        child: Container(
-          margin: const EdgeInsets.all(2),
-          width: 4,
-          height: 4,
-          color: Colors.red,
-        ),
-      ));
+      (_) => InstabugPrivateView(
+            child: Container(
+              margin: const EdgeInsets.all(2),
+              width: 4,
+              height: 4,
+              color: Colors.red,
+            ),
+          ));
   @override
   Widget build(BuildContext context) {
     return Scaffold(

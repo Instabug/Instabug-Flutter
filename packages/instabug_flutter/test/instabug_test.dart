@@ -419,10 +419,10 @@ void main() {
   test('[reportScreenChange] should call host method', () async {
     const screen = "home";
 
-    await Instabug.reportScreenChange(null,screen);
+    await Instabug.reportScreenChange(null, screen);
 
     verify(
-      mHost.reportScreenChange(null,screen),
+      mHost.reportScreenChange(null, screen),
     ).called(1);
   });
 

@@ -68,7 +68,11 @@ void main() {
       };
 
       runApp(
-        const InstabugWidget(automasking: [AutoMasking.labels,AutoMasking.textInputs,AutoMasking.media], child: MyApp()),
+        const InstabugWidget(automasking: [
+          AutoMasking.labels,
+          AutoMasking.textInputs,
+          AutoMasking.media
+        ], child: MyApp()),
       );
     },
     CrashReporting.reportCrash,

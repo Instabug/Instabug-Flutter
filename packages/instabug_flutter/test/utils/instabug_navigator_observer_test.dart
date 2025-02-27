@@ -43,15 +43,16 @@ void main() {
   test('should report screen change when a route is pushed', () {
     fakeAsync((async) {
       observer.didPush(route, previousRoute);
-
-      async.elapse(const Duration(milliseconds: 1000));
+      WidgetsBinding.instance.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance.handleDrawFrame();
+      async.elapse(const Duration(milliseconds: 2000));
 
       verify(
         mScreenLoadingManager.startUiTrace(screen, screen),
       ).called(1);
 
       verify(
-        mHost.reportScreenChange(null,screen),
+        mHost.reportScreenChange(null, screen),
       ).called(1);
     });
   });
@@ -61,7 +62,8 @@ void main() {
       () {
     fakeAsync((async) {
       observer.didPop(route, previousRoute);
-
+      WidgetsBinding.instance.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance.handleDrawFrame();
       async.elapse(const Duration(milliseconds: 1000));
 
       verify(
@@ -69,7 +71,7 @@ void main() {
       ).called(1);
 
       verify(
-        mHost.reportScreenChange(null,previousScreen),
+        mHost.reportScreenChange(null, previousScreen),
       ).called(1);
     });
   });
@@ -79,7 +81,8 @@ void main() {
       () {
     fakeAsync((async) {
       observer.didPop(route, null);
-
+      WidgetsBinding.instance.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance.handleDrawFrame();
       async.elapse(const Duration(milliseconds: 1000));
 
       verifyNever(
@@ -87,7 +90,7 @@ void main() {
       );
 
       verifyNever(
-        mHost.reportScreenChange(null,any),
+        mHost.reportScreenChange(null, any),
       );
     });
   });
@@ -98,7 +101,8 @@ void main() {
       const fallback = 'N/A';
 
       observer.didPush(route, previousRoute);
-
+      WidgetsBinding.instance.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance.handleDrawFrame();
       async.elapse(const Duration(milliseconds: 1000));
 
       verify(
@@ -106,7 +110,7 @@ void main() {
       ).called(1);
 
       verify(
-        mHost.reportScreenChange(null,fallback),
+        mHost.reportScreenChange(null, fallback),
       ).called(1);
     });
   });
@@ -118,15 +122,16 @@ void main() {
 
     fakeAsync((async) {
       observer.didPush(route, previousRoute);
-
-      async.elapse(const Duration(milliseconds: 1000));
+      WidgetsBinding.instance.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance.handleDrawFrame();
+      async.elapse(const Duration(milliseconds: 2000));
 
       verify(
         mScreenLoadingManager.startUiTrace(maskedScreen, screen),
       ).called(1);
 
       verify(
-        mHost.reportScreenChange(null,maskedScreen),
+        mHost.reportScreenChange(any, maskedScreen),
       ).called(1);
     });
   });

@@ -37,7 +37,7 @@ class PrivateViewsManager implements InstabugPrivateViewFlutterApi {
   late List<bool Function(Widget)> _viewChecks;
 
   void addAutoMasking(List<AutoMasking> masking) {
-    _viewChecks= List.of([isPrivateWidget]);
+    _viewChecks = List.of([isPrivateWidget]);
     if (masking.contains(AutoMasking.none) == false) {
       _viewChecks.addAll(masking.map((e) => e.hides()).toList());
     }
@@ -87,7 +87,7 @@ class PrivateViewsManager implements InstabugPrivateViewFlutterApi {
 
     void findPrivateViews(Element element) {
       final widget = element.widget;
-      final isPrivate = _viewChecks.any((e)=>e.call(widget));
+      final isPrivate = _viewChecks.any((e) => e.call(widget));
       if (isPrivate) {
         final renderObject = element.findRenderObject();
         if (renderObject is RenderBox &&

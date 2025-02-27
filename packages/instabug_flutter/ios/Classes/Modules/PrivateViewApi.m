@@ -29,8 +29,6 @@ static long long currentTimeMillis;
     
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        currentTimeMillis = (long long)([[NSDate date] timeIntervalSince1970] * 1000);
     [self.flutterApi getPrivateViewsWithCompletion:^(NSArray<NSNumber *> *rectangles, FlutterError *error) {
         UIImage *capturedScreenshot = [self captureScreenshot];
 
