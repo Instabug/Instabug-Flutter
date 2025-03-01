@@ -406,10 +406,9 @@ class Instabug {
   /// Reports that the screen has been changed (repro steps)
   /// [screenName] String containing the screen name
   static Future<void> reportScreenChange(
-    Uint8List? image,
     String screenName,
   ) async {
-    return _host.reportScreenChange(image, screenName);
+    return _host.reportScreenChange( screenName);
   }
 
   /// Changes the font of Instabug's UI.
