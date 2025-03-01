@@ -32,7 +32,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
           if (IBGBuildInfo.instance.isIOS) {
             await Future.delayed(const Duration(milliseconds: 100));
           }
-          Instabug.reportScreenChange(null, _steps.last.name);
+          Instabug.reportScreenChange(_steps.last.name);
 
           // Report the last step and remove it from the list
           _steps.removeLast();
@@ -46,7 +46,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
           if (IBGBuildInfo.instance.isIOS) {
             await Future.delayed(const Duration(milliseconds: 100));
           }
-          Instabug.reportScreenChange(null, route.name);
+          Instabug.reportScreenChange(route.name);
           _steps.remove(route);
         }
       });
