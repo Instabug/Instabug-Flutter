@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void reportScreenChange() {
-    Instabug.reportScreenChange(null, screenNameController.text);
+    Instabug.reportScreenChange( screenNameController.text);
   }
 
   void sendBugReport() {
