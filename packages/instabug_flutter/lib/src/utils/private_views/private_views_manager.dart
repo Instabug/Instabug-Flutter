@@ -4,7 +4,24 @@ import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/generated/instabug_private_view.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
-import 'package:instabug_flutter/src/utils/screen_loading/screenshot_pipeline.dart';
+import 'package:instabug_flutter/src/utils/user_steps/widget_utils.dart';
+
+enum AutoMasking { labels, textInputs, media, none }
+
+extension ValidationMethod on AutoMasking {
+  bool Function(Widget) hides() {
+    switch (this) {
+      case AutoMasking.labels:
+        return isTextWidget;
+      case AutoMasking.textInputs:
+        return isTextInputWidget;
+      case AutoMasking.media:
+        return isMedia;
+      case AutoMasking.none:
+        return (_) => false;
+    }
+  }
+}
 
 /// responsible for masking views
 /// before they are sent to the native SDKs.
@@ -90,8 +107,7 @@ class PrivateViewsManager implements InstabugPrivateViewFlutterApi {
       final isPrivate = _viewChecks.any((e) => e.call(widget));
       if (isPrivate) {
         final renderObject = element.findRenderObject();
-        if (renderObject is RenderBox &&
-            renderObject.attached) {
+        if (renderObject is RenderBox && renderObject.attached) {
           final isElementInCurrentScreen = isElementInCurrentRoute(element);
           final rect = getLayoutRectInfoFromRenderObject(renderObject);
           if (rect != null &&

@@ -7,14 +7,13 @@ PODS:
   - OCMock (3.6)
   - video_player_avfoundation (0.0.1):
     - Flutter
-    - FlutterMacOS
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - Instabug (from `https://ios-releases.instabug.com/custom/feature-flutter_user_steps-base/14.1.0/Instabug.podspec`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
-  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
+  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
 
 SPEC REPOS:
   trunk:
@@ -28,14 +27,14 @@ EXTERNAL SOURCES:
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
   video_player_avfoundation:
-    :path: ".symlinks/plugins/video_player_avfoundation/darwin"
+    :path: ".symlinks/plugins/video_player_avfoundation/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   Instabug: 8eb6f63f3ac66f062025c15293549ab67150e9f9
   instabug_flutter: a24751dfaedd29475da2af062d3e19d697438f72
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
-  video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
+  video_player_avfoundation: e489aac24ef5cf7af82702979ed16f2a5ef84cff
 
 PODFILE CHECKSUM: 87a326d297554318d9004349a35d82ffe3f0c228
 
