@@ -408,7 +408,7 @@ class Instabug {
   static Future<void> reportScreenChange(
     String screenName,
   ) async {
-    return _host.reportScreenChange( screenName);
+    return _host.reportScreenChange(screenName);
   }
 
   /// Changes the font of Instabug's UI.
