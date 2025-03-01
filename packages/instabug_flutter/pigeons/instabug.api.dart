@@ -87,7 +87,7 @@ abstract class InstabugHostApi {
     String? crashMode,
     String? sessionReplayMode,
   );
-  void reportScreenChange(Uint8List? image, String screenName);
+  void reportScreenChange(String screenName);
 
   void setCustomBrandingImage(String light, String dark);
 

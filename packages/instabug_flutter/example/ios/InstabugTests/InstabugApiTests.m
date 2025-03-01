@@ -333,7 +333,7 @@
     NSString *screenName = @"HomeScreen";
     FlutterError *error;
 
-    [self.api reportScreenChangeImage:nil screenName:screenName error:&error];
+    [self.api reportScreenChangeScreenName:screenName error:&error];
 
     OCMVerify([self.mInstabug logViewDidAppearEvent:screenName]);
 }

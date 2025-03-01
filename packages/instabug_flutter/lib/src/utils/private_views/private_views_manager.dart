@@ -91,8 +91,7 @@ class PrivateViewsManager implements InstabugPrivateViewFlutterApi {
       if (isPrivate) {
         final renderObject = element.findRenderObject();
         if (renderObject is RenderBox &&
-            renderObject.attached &&
-            element.mounted) {
+            renderObject.attached) {
           final isElementInCurrentScreen = isElementInCurrentRoute(element);
           final rect = getLayoutRectInfoFromRenderObject(renderObject);
           if (rect != null &&

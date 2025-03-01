@@ -478,7 +478,7 @@ public class InstabugApiTest {
     public void testReportScreenChange() {
         String screenName = "HomeScreen";
 
-        api.reportScreenChange(null,screenName);
+        api.reportScreenChange(screenName);
 
         reflected.verify(() -> MockReflected.reportScreenChange(null, screenName));
     }

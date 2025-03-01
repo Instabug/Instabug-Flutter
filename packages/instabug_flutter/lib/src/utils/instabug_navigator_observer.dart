@@ -24,7 +24,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         name: maskedScreenName,
       );
 
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
+      WidgetsBinding.instance?.addPostFrameCallback((_) async {
         // Starts a the new UI trace which is exclusive to screen loading
         ScreenLoadingManager.I.startUiTrace(maskedScreenName, screenName);
         // If there is a step that hasn't been pushed yet

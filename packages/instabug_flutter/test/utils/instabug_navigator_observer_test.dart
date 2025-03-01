@@ -43,8 +43,8 @@ void main() {
   test('should report screen change when a route is pushed', () {
     fakeAsync((async) {
       observer.didPush(route, previousRoute);
-      WidgetsBinding.instance.handleBeginFrame(Duration.zero);
-      WidgetsBinding.instance.handleDrawFrame();
+      WidgetsBinding.instance?.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance?.handleDrawFrame();
       async.elapse(const Duration(milliseconds: 2000));
 
       verify(
@@ -62,8 +62,8 @@ void main() {
       () {
     fakeAsync((async) {
       observer.didPop(route, previousRoute);
-      WidgetsBinding.instance.handleBeginFrame(Duration.zero);
-      WidgetsBinding.instance.handleDrawFrame();
+      WidgetsBinding.instance?.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance?.handleDrawFrame();
       async.elapse(const Duration(milliseconds: 1000));
 
       verify(
@@ -81,8 +81,8 @@ void main() {
       () {
     fakeAsync((async) {
       observer.didPop(route, null);
-      WidgetsBinding.instance.handleBeginFrame(Duration.zero);
-      WidgetsBinding.instance.handleDrawFrame();
+      WidgetsBinding.instance?.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance?.handleDrawFrame();
       async.elapse(const Duration(milliseconds: 1000));
 
       verifyNever(
@@ -101,8 +101,8 @@ void main() {
       const fallback = 'N/A';
 
       observer.didPush(route, previousRoute);
-      WidgetsBinding.instance.handleBeginFrame(Duration.zero);
-      WidgetsBinding.instance.handleDrawFrame();
+      WidgetsBinding.instance?.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance?.handleDrawFrame();
       async.elapse(const Duration(milliseconds: 1000));
 
       verify(
@@ -122,8 +122,8 @@ void main() {
 
     fakeAsync((async) {
       observer.didPush(route, previousRoute);
-      WidgetsBinding.instance.handleBeginFrame(Duration.zero);
-      WidgetsBinding.instance.handleDrawFrame();
+      WidgetsBinding.instance?.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance?.handleDrawFrame();
       async.elapse(const Duration(milliseconds: 2000));
 
       verify(

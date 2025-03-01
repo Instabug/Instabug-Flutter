@@ -412,7 +412,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     @Override
-    public void reportScreenChange(byte[] image, @NonNull String screenName) {
+    public void reportScreenChange(@NonNull String screenName) {
         try {
             Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "reportScreenChange",
                     Bitmap.class, String.class);
