@@ -92,7 +92,7 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: const Scaffold(
+          home: Scaffold(
             body: Column(
               children: [
                 InstabugPrivateView(
@@ -143,7 +143,7 @@ void main() {
           automasking: const [AutoMasking.textInputs],
           child: MaterialApp(
             home: Scaffold(
-              body: const Column(
+              body: Column(
                 children: [
                   SizedBox(width: 100, height: 100),
                   TextField(),
