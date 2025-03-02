@@ -1,0 +1,14 @@
+jobsJson=$(curl -s -f -X GET "https://circleci.com/api/v2/workflow/$CIRCLE_WORKFLOW_ID/job" -u "$CIRCLECI_TOKEN":)
+job=$(jq '.items[] | select(.name == "hold")' <<< "$jobsJson")
+
+approver_id=$(jq '.approved_by' <<< "$job")
+approver_id=$(echo "$approver_id" | tr -d '"')
+
+user=$(curl -s -f -X GET "https://circleci.com/api/v2/user/$approver_id" -u "$CIRCLE_TOKEN":)
+
+username=$(jq '.login' <<< "$user")
+username=$(echo "$username" | tr -d '"')
+
+slack_id=$(./scripts/releases/get_slack_id_from_username.sh "$username")
+
+echo "$slack_id"
