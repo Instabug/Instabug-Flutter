@@ -364,3 +364,27 @@ workflows:
           filters:
             branches:
               only: master
+
+  send-release-notes:
+    jobs:
+      - format_flutter
+      - lint_flutter:
+          requires:
+            - format_flutter
+      - verify_pub:
+          requires:
+            - lint_flutter
+      - hold_slack_notification:
+          type: approval
+          requires:
+            - format_flutter
+            - lint_flutter
+            - verify_pub
+      - send_slack_notification:
+          requires:
+            - hold_slack_notification
+          event: pass
+          context: slack-app
+          filters:
+            branches:
+              only: ci/automate-release-notes-for-slack
