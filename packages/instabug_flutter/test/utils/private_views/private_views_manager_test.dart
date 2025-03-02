@@ -11,8 +11,8 @@ Future<Uint8List> createTestImage() async {
   // Create an empty 1x1 image
   final recorder = ui.PictureRecorder();
   final canvas = Canvas(recorder);
-  final paint = Paint()..color = Color(0xFFFF0000); // Red pixel
-  canvas.drawRect(Rect.fromLTWH(0, 0, 1, 1), paint);
+  final paint = Paint()..color = const Color(0xFFFF0000); // Red pixel
+  canvas.drawRect(const Rect.fromLTWH(0, 0, 1, 1), paint);
 
   final img = await recorder.endRecording().toImage(1, 1);
   final byteData = await img.toByteData(format: ui.ImageByteFormat.png);
@@ -42,7 +42,7 @@ void main() {
 
     test('isPrivateWidget returns false for other widgets', () {
       expect(PrivateViewsManager.isPrivateWidget(Container()), isFalse);
-      expect(PrivateViewsManager.isPrivateWidget(Text('Hello')), isFalse);
+      expect(PrivateViewsManager.isPrivateWidget(const Text('Hello')), isFalse);
     });
 
     testWidgets('getRectsOfPrivateViews detects masked views', (tester) async {
@@ -50,7 +50,7 @@ void main() {
         InstabugWidget(
           child: MaterialApp(
             home: Scaffold(
-              body: Column(
+              body: ListView(
                 children: const [
                   SizedBox(width: 100, height: 100),
                   InstabugPrivateView(child: TextField()),
@@ -71,7 +71,7 @@ void main() {
           automasking: const [AutoMasking.labels],
           child: MaterialApp(
             home: Scaffold(
-              body: Column(
+              body: ListView(
                 children: const [
                   SizedBox(width: 100, height: 100),
                   Text("Test 1"),
@@ -93,8 +93,8 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: Column(
-              children: [
+            body: ListView(
+              children: const [
                 InstabugPrivateView(
                   child: SizedBox(width: 50, height: 50),
                 ),
@@ -143,8 +143,8 @@ void main() {
           automasking: const [AutoMasking.textInputs],
           child: MaterialApp(
             home: Scaffold(
-              body: Column(
-                children: [
+              body: ListView(
+                children: const [
                   SizedBox(width: 100, height: 100),
                   TextField(),
                 ],
