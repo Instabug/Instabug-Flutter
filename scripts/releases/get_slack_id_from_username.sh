@@ -1,6 +1,9 @@
 github_username=$1
 
 case $github_username in
+    'mzelzoghbi')
+        sid='U5697F4EL'
+        ;;
     'AndrewAminInstabug')
         sid='U06JVRNMKE1'
         ;;

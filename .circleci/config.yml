@@ -103,7 +103,7 @@ commands:
             - run:
                 name: Build Pigeons
                 command: dart run build_runner build --delete-conflicting-outputs
-  notify-slack-with-release:
+  notify_slack_with_release:
     steps:
       - slack/notify:
           channel: C08F3Q30U7Q
@@ -303,11 +303,10 @@ jobs:
           command: Escape flutter publish
 
   release_slack_notification:
-    macos:
-      xcode: 15.2.0
-    resource_class: macos.m1.medium.gen1
+    docker:
+      - image: cimg/base:current
     steps:
-      - notify-slack-with-release
+      - notify_slack_with_release
 
 workflows:
   version: 2
@@ -357,34 +356,5 @@ workflows:
             branches:
               only: master
       - release_slack_notification:
-          requires:
-            - release
-          event: pass
-          context: slack-app
-          filters:
-            branches:
-              only: master
-
-  send-release-notes:
-    jobs:
-      - format_flutter
-      - lint_flutter:
-          requires:
-            - format_flutter
-      - verify_pub:
-          requires:
-            - lint_flutter
-      - hold_slack_notification:
           type: approval
-          requires:
-            - format_flutter
-            - lint_flutter
-            - verify_pub
-      - send_slack_notification:
-          requires:
-            - hold_slack_notification
-          event: pass
           context: slack-app
-          filters:
-            branches:
-              only: ci/automate-release-notes-for-slack
