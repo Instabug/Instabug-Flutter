@@ -355,6 +355,9 @@ workflows:
           filters:
             branches:
               only: master
-      - release_slack_notification:
+      - hold_release_slack_notification:
           type: approval
+      - release_slack_notification:
+          requires:
+            - hold_release_slack_notification
           context: slack-app
