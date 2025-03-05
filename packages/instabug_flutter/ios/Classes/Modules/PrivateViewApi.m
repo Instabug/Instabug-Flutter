@@ -28,10 +28,10 @@ static long long currentTimeMillis;
   completion:(void (^)(UIImage *))completion {
     
     __weak typeof(self) weakSelf = self;
+    // Wait for the Cupertino animation to complete
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     [self.flutterApi getPrivateViewsWithCompletion:^(NSArray<NSNumber *> *rectangles, FlutterError *error) {
         UIImage *capturedScreenshot = [self captureScreenshot];
-
             [weakSelf handlePrivateViewsResult:rectangles
                                          error:error
                                     screenshot:capturedScreenshot

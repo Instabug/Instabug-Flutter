@@ -29,11 +29,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         ScreenLoadingManager.I.startUiTrace(maskedScreenName, screenName);
         // If there is a step that hasn't been pushed yet
         if (_steps.isNotEmpty) {
-          if (IBGBuildInfo.instance.isIOS) {
-            await Future.delayed(const Duration(milliseconds: 100));
-          }
-          Instabug.reportScreenChange(_steps.last.name);
-
+          await reportScreenChange(_steps.last.name);
           // Report the last step and remove it from the list
           _steps.removeLast();
         }
@@ -43,10 +39,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
 
         // If this route is in the array, report it and remove it from the list
         if (_steps.contains(route)) {
-          if (IBGBuildInfo.instance.isIOS) {
-            await Future.delayed(const Duration(milliseconds: 100));
-          }
-          Instabug.reportScreenChange(route.name);
+          await reportScreenChange(route.name);
           _steps.remove(route);
         }
       });
@@ -54,6 +47,14 @@ class InstabugNavigatorObserver extends NavigatorObserver {
       InstabugLogger.I.e('Reporting screen change failed:', tag: Instabug.tag);
       InstabugLogger.I.e(e.toString(), tag: Instabug.tag);
     }
+  }
+
+  Future<void> reportScreenChange(String name) async {
+    if (IBGBuildInfo.instance.isIOS) {
+      // Wait for the Cupertino animation to complete
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+    Instabug.reportScreenChange(name);
   }
 
   @override
