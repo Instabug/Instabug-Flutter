@@ -1,4 +1,7 @@
-jobsJson=$(curl -X GET "https://circleci.com/api/v2/workflow/$CIRCLE_WORKFLOW_ID/job" --header "Circle-Token: $CIRCLE_TOKEN")
+echo "CIRCLE_WORKFLOW_ID: $CIRCLE_WORKFLOW_ID"
+echo "CIRCLE_TOKEN: ${CIRCLE_TOKEN: -4}"  # (or at least echo if it's empty or not)
+
+jobsJson=$(curl -v -X GET "https://circleci.com/api/v2/workflow/$CIRCLE_WORKFLOW_ID/job" --header "Circle-Token: $CIRCLE_TOKEN")
 
 echo "jobsJson response:"
 echo "$jobsJson"
