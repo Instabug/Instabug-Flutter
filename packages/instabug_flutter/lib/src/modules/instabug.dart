@@ -11,7 +11,6 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unused_import
 import 'package:flutter/services.dart';
@@ -406,7 +405,9 @@ class Instabug {
 
   /// Reports that the screen has been changed (repro steps)
   /// [screenName] String containing the screen name
-  static Future<void> reportScreenChange(String screenName) async {
+  static Future<void> reportScreenChange(
+    String screenName,
+  ) async {
     return _host.reportScreenChange(screenName);
   }
 

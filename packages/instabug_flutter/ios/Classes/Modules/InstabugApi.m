@@ -416,6 +416,20 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     Instabug.trackUserSteps = isEnabled.boolValue;
 }
 
+- (void)enableAutoMaskingAutoMasking:(nonnull NSArray<NSString *> *)autoMasking error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+    IBGAutoMaskScreenshotOption resolvedEvents = 0;
+
+    for (NSString *event in autoMasking) {
+        resolvedEvents |= (ArgsRegistry.autoMasking[event]).integerValue;
+    }
+    
+    [Instabug setAutoMaskScreenshots: resolvedEvents];
+
+}
+
+
+
+
 
 + (void)setScreenshotMaskingHandler:(nullable void (^)(UIImage * _Nonnull __strong, void (^ _Nonnull __strong)(UIImage * _Nonnull __strong)))maskingHandler {
    [Instabug setScreenshotMaskingHandler:maskingHandler];

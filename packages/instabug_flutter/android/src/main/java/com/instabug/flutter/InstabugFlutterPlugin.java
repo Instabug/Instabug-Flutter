@@ -10,16 +10,20 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.instabug.flutter.generated.InstabugPrivateViewPigeon;
 import com.instabug.flutter.modules.ApmApi;
 import com.instabug.flutter.modules.BugReportingApi;
 import com.instabug.flutter.modules.CrashReportingApi;
 import com.instabug.flutter.modules.FeatureRequestsApi;
 import com.instabug.flutter.modules.InstabugApi;
 import com.instabug.flutter.modules.InstabugLogApi;
+import com.instabug.flutter.modules.InstabugPrivateView;
+import com.instabug.flutter.modules.PrivateViewManager;
 import com.instabug.flutter.modules.RepliesApi;
 import com.instabug.flutter.modules.SessionReplayApi;
 import com.instabug.flutter.modules.SurveysApi;
-import com.instabug.library.internal.crossplatform.InternalCore;
+import com.instabug.flutter.modules.capturing.BoundryCaptureManager;
+import com.instabug.flutter.modules.capturing.PixelCopyCaptureManager;
 
 import java.util.concurrent.Callable;
 
@@ -35,6 +39,9 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
 
     @SuppressLint("StaticFieldLeak")
     private static Activity activity;
+
+
+    private static PrivateViewManager privateViewManager;
 
 
     /**
@@ -59,21 +66,31 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
+        if (privateViewManager != null) {
+            privateViewManager.setActivity(activity);
+        }
     }
 
     @Override
     public void onDetachedFromActivityForConfigChanges() {
         activity = null;
+        privateViewManager.setActivity(null);
+
     }
 
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
+        if (privateViewManager != null) {
+            privateViewManager.setActivity(activity);
+        }
     }
 
     @Override
     public void onDetachedFromActivity() {
         activity = null;
+        privateViewManager.setActivity(null);
+
     }
 
     private static void register(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
@@ -84,6 +101,9 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
             }
         };
 
+        privateViewManager = new PrivateViewManager(new InstabugPrivateViewPigeon.InstabugPrivateViewFlutterApi(messenger), new PixelCopyCaptureManager(), new BoundryCaptureManager(renderer));
+        InstabugPrivateView.init(messenger, privateViewManager);
+
         ApmApi.init(messenger);
         BugReportingApi.init(messenger);
         CrashReportingApi.init(messenger);
@@ -93,6 +113,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
         RepliesApi.init(messenger);
         SessionReplayApi.init(messenger);
         SurveysApi.init(messenger);
+
     }
 
     @Nullable

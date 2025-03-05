@@ -18,6 +18,7 @@ typedef NSDictionary<NSString *, NSNumber *> ArgsDictionary;
 + (ArgsDictionary *)extendedBugReportStates;
 + (ArgsDictionary *)reproModes;
 + (ArgsDictionary *)nonFatalExceptionLevel;
++ (ArgsDictionary *)autoMasking;
 
 + (ArgsDictionary *)locales;
 + (ArgsDictionary *)userStepsGesture;

@@ -269,4 +269,17 @@
     }
 }
 
+- (void)testAutoaAsking {
+    NSArray *values = @[
+        @(IBGAutoMaskScreenshotOptionMedia),
+        @(IBGAutoMaskScreenshotOptionLabels),
+        @(IBGAutoMaskScreenshotOptionTextInputs),
+        @(IBGAutoMaskScreenshotOptionMaskNothing)
+    ];
+
+    for (NSNumber *value in values) {
+        XCTAssertTrue([[ArgsRegistry.autoMasking allValues] containsObject:value]);
+    }
+}
+
 @end

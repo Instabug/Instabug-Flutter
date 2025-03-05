@@ -19,6 +19,8 @@ abstract class InstabugHostApi {
 
   void init(String token, List<String> invocationEvents, String debugLogsLevel);
 
+  void enableAutoMasking(List<String> autoMasking);
+
   void show();
 
   void showWelcomeMessageWithMode(String mode);

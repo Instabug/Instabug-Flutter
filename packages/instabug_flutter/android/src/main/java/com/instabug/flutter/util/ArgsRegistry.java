@@ -9,6 +9,7 @@ import com.instabug.bug.invocation.Option;
 import com.instabug.featuresrequest.ActionType;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder.Key;
+import com.instabug.library.MaskingType;
 import com.instabug.library.OnSdkDismissCallback.DismissType;
 import com.instabug.library.ReproMode;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
@@ -59,6 +60,14 @@ public final class ArgsRegistry {
         put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
         put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
     }};
+
+    public static final ArgsMap<Integer> autoMasking = new ArgsMap<Integer>() {{
+        put("AutoMasking.labels", MaskingType.LABELS);
+        put("AutoMasking.textInputs", MaskingType.TEXT_INPUTS);
+        put("AutoMasking.media", MaskingType.MEDIA);
+        put("AutoMasking.none", MaskingType.MASK_NOTHING);
+    }};
+
     public static ArgsMap<IBGNonFatalException.Level> nonFatalExceptionLevel = new ArgsMap<IBGNonFatalException.Level>() {{
         put("NonFatalExceptionLevel.critical", IBGNonFatalException.Level.CRITICAL);
         put("NonFatalExceptionLevel.error", IBGNonFatalException.Level.ERROR);

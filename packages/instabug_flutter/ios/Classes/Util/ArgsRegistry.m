@@ -43,6 +43,18 @@
     };
 }
 
++ (ArgsDictionary *)autoMasking {
+    return @{
+        @"AutoMasking.labels" : @(IBGAutoMaskScreenshotOptionLabels),
+        @"AutoMasking.textInputs" : @(IBGAutoMaskScreenshotOptionTextInputs),
+        @"AutoMasking.media" : @(IBGAutoMaskScreenshotOptionMedia),
+        @"AutoMasking.none" : @(IBGAutoMaskScreenshotOptionMaskNothing
+),
+
+    };
+}
+
+
 + (ArgsDictionary *)recordButtonPositions {
     return @{
         @"Position.topLeft" : @(IBGPositionTopLeft),

@@ -18,10 +18,12 @@ class FatalCrashesContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        InstabugButton(
-          text: 'Throw Exception',
-          onPressed: () => throwUnhandledException(
-              Exception('This is a generic exception.')),
+        InstabugPrivateView(
+          child: InstabugButton(
+            text: 'Throw Exception',
+            onPressed: () => throwUnhandledException(
+                Exception('This is a generic exception.')),
+          ),
         ),
         InstabugButton(
           text: 'Throw StateError',

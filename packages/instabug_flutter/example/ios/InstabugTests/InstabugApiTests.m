@@ -622,5 +622,12 @@
     XCTAssertNil(error, @"Error should be nil");
 
 }
+- (void)testAutoMasking {
+    NSArray<NSString *> *autoMaskingTypes = @[@"AutoMasking.labels", @"AutoMasking.textInputs",@"AutoMasking.media",@"AutoMasking.none"];
+    FlutterError *error;
+    
+    [self.api enableAutoMaskingAutoMasking:autoMaskingTypes error:&error];
 
+    OCMVerify([self.mInstabug setAutoMaskScreenshots: (IBGAutoMaskScreenshotOptionMaskNothing | IBGAutoMaskScreenshotOptionTextInputs | IBGAutoMaskScreenshotOptionLabels | IBGAutoMaskScreenshotOptionMedia)]);
+}
 @end

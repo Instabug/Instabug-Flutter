@@ -18,9 +18,11 @@ class _NetworkContentState extends State<NetworkContent> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        InstabugClipboardInput(
-          label: 'Endpoint Url',
-          controller: endpointUrlController,
+        InstabugPrivateView(
+          child: InstabugClipboardInput(
+            label: 'Endpoint Url',
+            controller: endpointUrlController,
+          ),
         ),
         InstabugButton(
           text: 'Send Request To Url',

@@ -170,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
       context,
       MaterialPageRoute(
         builder: (context) => const PrivateViewPage(),
-        settings: const RouteSettings(name: ComplexPage.screenName),
+        settings: const RouteSettings(name: PrivateViewPage.screenName),
       ),
     );
   }
@@ -318,9 +318,11 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: showManualSurvey,
           text: 'Show Multiple Questions Survey',
         ),
-        InstabugButton(
-          onPressed: showFeatureRequests,
-          text: 'Show Feature Requests',
+        InstabugPrivateView(
+          child: InstabugButton(
+            onPressed: showFeatureRequests,
+            text: 'Show Feature Requests',
+          ),
         ),
         InstabugButton(
           onPressed: _navigateToCrashes,
