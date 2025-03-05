@@ -1,5 +1,5 @@
-jobsJson=$(curl -s -f -X GET "https://circleci.com/api/v2/workflow/$CIRCLE_WORKFLOW_ID/job" -u "$CIRCLECI_TOKEN":)
-job=$(jq '.items[] | select(.name == "hold")' <<< "$jobsJson")
+jobsJson=$(curl -X GET "https://circleci.com/api/v2/workflow/ea620bb8-4219-4815-a5b2-21d11357418c/job" --header "Circle-Token: $CIRCLE_TOKEN")
+job=$(jq '.items[] | select(.name == "hold_release_slack_notification")' <<< "$jobsJson")
 
 approver_id=$(jq '.approved_by' <<< "$job")
 approver_id=$(echo "$approver_id" | tr -d '"')
