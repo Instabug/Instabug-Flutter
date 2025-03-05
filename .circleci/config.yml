@@ -116,7 +116,7 @@ commands:
                         "type": "section",
                         "text": {
                             "type": "mrkdwn",
-                            "text": ":flutter: Flutter `v$(./scripts/releases/get_sdk_version.swift)` is released by <@$(./Scripts/releases/get_job_approver.sh)> 🚀"
+                            "text": ":flutter: Flutter `v$(./scripts/releases/get_sdk_version.sh)` is released by <@$(./Scripts/releases/get_job_approver.sh)> 🚀"
                         }
                     },
             		{
@@ -307,6 +307,7 @@ jobs:
     docker:
       - image: cimg/base:current
     steps:
+      - advanced-checkout/shallow-checkout
       - notify_slack_with_release
 
 workflows:
