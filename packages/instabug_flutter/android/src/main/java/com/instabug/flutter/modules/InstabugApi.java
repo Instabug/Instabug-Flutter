@@ -155,7 +155,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             autoMaskingArray[i] = ArgsRegistry.autoMasking.get(key);
         }
 
-        Instabug.setAutoMaskScreenshotsTypes(Arrays.copyOfRange(autoMaskingArray, 0, autoMaskingArray.length));
+        Instabug.setAutoMaskScreenshotsTypes(Arrays.copyOf(autoMaskingArray, autoMaskingArray.length));
     }
 
     @Override

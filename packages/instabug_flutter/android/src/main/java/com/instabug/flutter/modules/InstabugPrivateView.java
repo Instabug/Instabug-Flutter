@@ -35,8 +35,6 @@ public class InstabugPrivateView implements InstabugPrivateViewPigeon.InstabugPr
                     @Override
                     public void run() {
                         time = System.currentTimeMillis();
-
-//                        time = System.currentTimeMillis();
                         privateViewManager.mask(listener);
 
                     }
