@@ -119,6 +119,13 @@ commands:
                             "text": ":flutter: Flutter `v$(./scripts/releases/get_sdk_version.sh)` is released! 🚀"
                         }
                     },
+            		{
+                        "type": "section",
+                        "text": {
+                          "type": "mrkdwn",
+                          "text": "Release notes should be here.>"
+                        }
+                    }
                 ]
             }
 
