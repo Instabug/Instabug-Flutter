@@ -116,19 +116,18 @@ commands:
                         "type": "section",
                         "text": {
                             "type": "mrkdwn",
-                            "text": ":flutter: New Flutter Version is released by <@$(./scripts/releases/get_job_approver.sh)> 🚀"
+                            "text": ":flutter: Flutter `v$(./scripts/releases/get_sdk_version.sh)` is released by <@$(./scripts/releases/get_job_approver.sh)> 🚀"
                         }
                     },
             		{
                         "type": "section",
                         "text": {
                           "type": "mrkdwn",
-                          "text": "Release notes should be here.>"
+                          "text": "<@$(./scripts/releases/get_release_notes.sh)>"
                         }
                     }
                 ]
             }
-          debug: true
 
 jobs:
   danger:
@@ -305,15 +304,10 @@ jobs:
           command: Escape flutter publish
 
   release_slack_notification:
-    macos:
-      xcode: 15.2.0
-    resource_class: macos.m1.medium.gen1
+    docker:
+      - image: cimg/base:current
     steps:
-      - advanced-checkout/shallow-checkout:
-          path: ~/project
-      - run:
-          name: Install jq
-          command: brew install jq
+      - advanced-checkout/shallow-checkout
       - notify_slack_with_release
 
 workflows:
