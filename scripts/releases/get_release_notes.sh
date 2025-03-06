@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 latest_release=""
 capturing=false
 
