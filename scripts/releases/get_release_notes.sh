@@ -19,6 +19,10 @@ while IFS= read -r line; do
 done < CHANGELOG.md
 
 latest_release=$(tail -n +3 <<< "$latest_release")
-latest_release=$(./scripts/releases/changelog_to_slack_formatter.sh <<< "$latest_release")
+#latest_release=$(./scripts/releases/changelog_to_slack_formatter.sh <<< "$latest_release")
+latest_release=$(sed -E \
+          -e 's/\[([^]]+)\]\(([^)]+)\)/<\2|\1>/g' \
+          -e 's/^#{1,6}[[:space:]]*([^[:space:]].*)$/\*\1\*/' \
+          -e 's/^- /• /' <<< "$latest_release")
 
 echo "$latest_release"
