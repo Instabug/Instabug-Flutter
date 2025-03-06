@@ -17,7 +17,7 @@ while IFS= read -r line; do
   fi
 done < CHANGELOG.md
 
-latest_release=$(echo "$latest_release" | tail -n +3)
+latest_release=$(tail -n +3 <<< "$latest_release")
 latest_release=$(./scripts/releases/changelog_to_slack_formatter.sh <<< "$latest_release")
 
 echo "$latest_release"
