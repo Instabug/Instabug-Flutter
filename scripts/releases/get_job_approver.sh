@@ -6,11 +6,13 @@ jobsJson=$(curl -s -X GET "https://circleci.com/api/v2/workflow/$CIRCLE_WORKFLOW
 echo "jobsJson response:"
 echo "$jobsJson"
 
+jobsJson=$(echo "$jobsJson" | jq -R '.' | jq -s '.' | jq -r 'join("")')
 job=$(jq '.items[] | select(.name == "hold_release_slack_notification")' <<< "$jobsJson")
 
 echo "job:"
 echo "$job"
 
+job=$(echo "$job" | jq -R '.' | jq -s '.' | jq -r 'join("")')
 approver_id=$(jq '.approved_by' <<< "$job")
 
 echo "approver_id:"
@@ -23,6 +25,7 @@ user=$(curl -s -X GET "https://circleci.com/api/v2/user/$approver_id" --header "
 echo "user:"
 echo "$user"
 
+user=$(echo "$user" | jq -R '.' | jq -s '.' | jq -r 'join("")')
 username=$(jq '.login' <<< "$user")
 
 echo "username:"
