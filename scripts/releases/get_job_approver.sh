@@ -18,7 +18,7 @@ echo "$approver_id"
 
 approver_id=$(echo "$approver_id" | tr -d '"')
 
-user=$(curl -s -f -X GET "https://circleci.com/api/v2/user/$approver_id" -u "$CIRCLE_TOKEN":)
+user=$(curl -v -X GET "https://circleci.com/api/v2/user/$approver_id" --header "Circle-Token: $CIRCLE_TOKEN")
 
 echo "user:"
 echo "$user"
