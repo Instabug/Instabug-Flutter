@@ -39,7 +39,8 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
      * Embedding v1
      * This method is required for compatibility with apps that don't use the v2 embedding.
      */
-//    Uncomment this method if for backward compatibility
+//    Uncomment this method for backward compatibility
+
 //    @SuppressWarnings("deprecation")
 //    public static void registerWith(Object registrar) {
 //        try {
