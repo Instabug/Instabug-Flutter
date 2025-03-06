@@ -112,13 +112,13 @@ commands:
           custom: |
             {
             	"blocks": [
-            		{
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": ":flutter: Flutter `v$(./scripts/releases/get_sdk_version.sh)` is released by <@$(./scripts/releases/get_job_approver.sh)> 🚀"
-                        }
-                    },
+#            		{
+#                        "type": "section",
+#                        "text": {
+#                            "type": "mrkdwn",
+#                            "text": ":flutter: Flutter `v$(./scripts/releases/get_sdk_version.sh)` is released by <@$(./scripts/releases/get_job_approver.sh)> 🚀"
+#                        }
+#                    },
             		{
                         "type": "section",
                         "text": {
