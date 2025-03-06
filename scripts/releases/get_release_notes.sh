@@ -4,25 +4,19 @@ capturing=false
 
 while IFS= read -r line; do
   if [[ "$line" == "## ["* ]]; then
-      # If we are already capturing, this means we have reached the next release section.
       if $capturing; then
-        break  # stop reading further
+        break
       fi
-      # Otherwise, this is the start of the latest release section.
-      capturing=true
   fi
 
-  # If capturing is enabled, append the current line to our release notes variable.
+  if [[ "$line" == "### "* ]]; then
+    capturing=true
+  fi
+
   if $capturing; then
-    latest_release+="$line"$'\n'
+    line=$(./scripts/releases/changelog_to_slack_formatter.sh <<< "$line")
+    latest_release+="$line\n"
   fi
 done < CHANGELOG.md
-
-latest_release=$(tail -n +3 <<< "$latest_release")
-#latest_release=$(./scripts/releases/changelog_to_slack_formatter.sh <<< "$latest_release")
-latest_release=$(sed -E \
-          -e 's/\[([^]]+)\]\(([^)]+)\)/<\2|\1>/g' \
-          -e 's/^#{1,6}[[:space:]]*([^[:space:]].*)$/\*\1\*/' \
-          -e 's/^- /• /' <<< "$latest_release")
 
 echo "$latest_release"
