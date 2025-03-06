@@ -304,10 +304,12 @@ jobs:
           command: Escape flutter publish
 
   release_slack_notification:
-    docker:
-      - image: cimg/base:current
+    macos:
+      xcode: 15.2.0
+    resource_class: macos.m1.medium.gen1
     steps:
-      - advanced-checkout/shallow-checkout
+      - advanced-checkout/shallow-checkout:
+          path: ~/project
       - notify_slack_with_release
 
 workflows:
