@@ -310,6 +310,9 @@ jobs:
     steps:
       - advanced-checkout/shallow-checkout:
           path: ~/project
+      - run:
+          name: Install jq
+          command: brew install jq
       - notify_slack_with_release
 
 workflows:
