@@ -116,7 +116,7 @@ commands:
                         "type": "section",
                         "text": {
                             "type": "mrkdwn",
-                            "text": "<@$(./scripts/releases/get_release_notes.sh)>"
+                            "text": ":flutter: Flutter `v$(./scripts/releases/get_sdk_version.sh)` is released! 🚀"
                         }
                     },
                 ]
