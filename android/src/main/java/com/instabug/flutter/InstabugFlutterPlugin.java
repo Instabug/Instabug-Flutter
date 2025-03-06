@@ -39,26 +39,25 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
      * Embedding v1
      * This method is required for compatibility with apps that don't use the v2 embedding.
      */
-//    Uncomment this method for backward compatibility
 
-//    @SuppressWarnings("deprecation")
-//    public static void registerWith(Object registrar) {
-//        try {
-//            // Use reflection to access the Registrar class and its methods
-//            Class<?> registrarClass = Class.forName("io.flutter.plugin.common.PluginRegistry.Registrar");
-//            Activity activity = (Activity) registrarClass.getMethod("activity").invoke(registrar);
-//            Context context = (Context) registrarClass.getMethod("context").invoke(registrar);
-//            BinaryMessenger messenger = (BinaryMessenger) registrarClass.getMethod("messenger").invoke(registrar);
-//            FlutterRenderer renderer = (FlutterRenderer) registrarClass.getMethod("textures").invoke(registrar);
-//
-//            // Set the activity and register with the context
-//            InstabugFlutterPlugin.activity = activity;
-//            registerWithContext(context.getApplicationContext(), messenger, renderer);
-//            System.out.println("old app");
-//        } catch (Exception e) {
-//            Log.e(TAG, "Failed to register with v1 embedding. Cause: " + e);
-//        }
-//    }
+   @SuppressWarnings("deprecation")
+   public static void registerWith(Object registrar) {
+       try {
+           // Use reflection to access the Registrar class and its methods
+           Class<?> registrarClass = Class.forName("io.flutter.plugin.common.PluginRegistry.Registrar");
+           Activity activity = (Activity) registrarClass.getMethod("activity").invoke(registrar);
+           Context context = (Context) registrarClass.getMethod("context").invoke(registrar);
+           BinaryMessenger messenger = (BinaryMessenger) registrarClass.getMethod("messenger").invoke(registrar);
+           FlutterRenderer renderer = (FlutterRenderer) registrarClass.getMethod("textures").invoke(registrar);
+
+           // Set the activity and register with the context
+           InstabugFlutterPlugin.activity = activity;
+           registerWithContext(context.getApplicationContext(), messenger, renderer);
+           System.out.println("old app");
+       } catch (Exception e) {
+           Log.e(TAG, "Failed to register with v1 embedding. Cause: " + e);
+       }
+   }
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
