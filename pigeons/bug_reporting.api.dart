@@ -33,5 +33,8 @@ abstract class BugReportingHostApi {
     List<String>? reportTypes,
   );
   void setProactiveReportingConfigurations(
-      bool enabled, int gapBetweenModals, int modalDelayAfterDetection,);
+    bool enabled,
+    int gapBetweenModals,
+    int modalDelayAfterDetection,
+  );
 }
