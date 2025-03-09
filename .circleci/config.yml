@@ -107,7 +107,7 @@ commands:
   notify_slack_with_release:
     steps:
       - slack/notify:
-          channel: C08F3Q30U7Q
+          channel: C8PDY2Q8H
           event: pass
           custom: |
             {
@@ -364,9 +364,7 @@ workflows:
           filters:
             branches:
               only: master
-      - hold_release_slack_notification:
-          type: approval
       - release_slack_notification:
           requires:
-            - hold_release_slack_notification
+            - release
           context: slack-app
