@@ -260,7 +260,8 @@ class BugReporting implements BugReportingFlutterApi {
   /// prompts end users to submit their feedback after our SDK automatically detects a frustrating experience.
   /// [config] configuration of proActive  bug report.
   static Future<void> setProactiveReportingConfigurations(
-      ProactiveReportingConfigs config,) async {
+    ProactiveReportingConfigs config,
+  ) async {
     _host.setProactiveReportingConfigurations(config.enabled,
         config.gapBetweenModals, config.modalDelayAfterDetection);
   }

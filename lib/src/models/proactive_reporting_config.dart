@@ -29,7 +29,8 @@ class ProactiveReportingConfigsBuilder {
   /// Controls the time gap between showing 2 proactive reporting dialogs in seconds
   ProactiveReportingConfigsBuilder setGapBetweenModals(int gap) {
     if (gap <= 0) {
-      _logWarning('gapBetweenModals must be a positive number. Using default value of 30 seconds.');
+      _logWarning(
+          'gapBetweenModals must be a positive number. Using default value of 30 seconds.');
       return this;
     }
     gapBetweenModals = gap;
@@ -39,7 +40,8 @@ class ProactiveReportingConfigsBuilder {
   /// Controls the time gap between detecting a frustrating experience
   ProactiveReportingConfigsBuilder setModalDelayAfterDetection(int delay) {
     if (delay <= 0) {
-      _logWarning('modalDelayAfterDetection must be a positive number. Using default value of 15 seconds.');
+      _logWarning(
+          'modalDelayAfterDetection must be a positive number. Using default value of 15 seconds.');
       return this;
     }
     modalDelayAfterDetection = delay;

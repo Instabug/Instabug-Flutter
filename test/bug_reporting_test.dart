@@ -100,7 +100,7 @@ void main() {
 
   test(
     '[setVideoRecordingFloatingButtonPosition] should call host method',
-        () async {
+    () async {
       const position = Position.topLeft;
 
       await BugReporting.setVideoRecordingFloatingButtonPosition(position);
@@ -202,17 +202,14 @@ void main() {
   });
 
   test('[setProactiveReportingConfigurations] should call host method',
-          () async {
-        await BugReporting.setProactiveReportingConfigurations(
-            ProactiveReportingConfigsBuilder()
-                .setGapBetweenModals(1)
-                .setModalDelayAfterDetection(1)
-                .isEnabled(true)
-                .build());
+      () async {
+    await BugReporting.setProactiveReportingConfigurations(
+        ProactiveReportingConfigsBuilder()
+            .setGapBetweenModals(1)
+            .setModalDelayAfterDetection(1)
+            .isEnabled(true)
+            .build());
 
-        verify(
-            mHost.setProactiveReportingConfigurations(
-                true, 1, 1
-            )).called(1);
-        });
+    verify(mHost.setProactiveReportingConfigurations(true, 1, 1)).called(1);
+  });
 }
