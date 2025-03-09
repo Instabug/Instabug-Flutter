@@ -263,6 +263,6 @@ class BugReporting implements BugReportingFlutterApi {
     ProactiveReportingConfigs config,
   ) async {
     _host.setProactiveReportingConfigurations(config.enabled,
-        config.gapBetweenModals, config.modalDelayAfterDetection);
+        config.gapBetweenModals, config.modalDelayAfterDetection,);
   }
 }

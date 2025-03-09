@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/bug_reporting.api.g.dart';
-import 'package:instabug_flutter/src/models/proactive_reporting_config.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:mockito/annotations.dart';
@@ -208,7 +207,7 @@ void main() {
             .setGapBetweenModals(1)
             .setModalDelayAfterDetection(1)
             .isEnabled(true)
-            .build());
+            .build(),);
 
     verify(mHost.setProactiveReportingConfigurations(true, 1, 1)).called(1);
   });
