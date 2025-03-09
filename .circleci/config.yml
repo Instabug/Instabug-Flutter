@@ -125,10 +125,16 @@ commands:
                           "type": "mrkdwn",
                           "text": "$(./scripts/releases/get_release_notes.sh)"
                         }
+                    },
+                    {
+                        "type": "section",
+                        "text": {
+                          "type": "mrkdwn",
+                          "text": "cc: <@U5697F4EL> @support_team <@ULDFCC09J>"
+                        }
                     }
                 ]
             }
-          debug: true
 
 jobs:
   danger:
