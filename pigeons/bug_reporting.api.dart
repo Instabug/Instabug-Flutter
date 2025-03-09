@@ -28,8 +28,8 @@ abstract class BugReportingHostApi {
   void bindOnInvokeCallback();
   void bindOnDismissCallback();
   void setDisclaimerText(String text);
-  void setCommentMinimumCharacterCount(
-    int limit,
-    List<String>? reportTypes,
-  );
+  void setCommentMinimumCharacterCount(int limit,
+      List<String>? reportTypes,);
+  void setProactiveReportingConfigurations(bool enabled, int gapBetweenModals,
+      int modalDelayAfterDetection);
 }

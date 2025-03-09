@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v14.1.0...dev)
+
+### Added
+
+- Add support proactive bug-reporting ([#471](https://github.com/Instabug/Instabug-Flutter/pull/471)).
+
+
 ## [14.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.0.0...v14.1.0) (January 2, 2025)
 
 ### Changed

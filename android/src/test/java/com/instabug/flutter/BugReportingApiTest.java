@@ -1,6 +1,7 @@
 package com.instabug.flutter;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
@@ -193,5 +194,25 @@ public class BugReportingApiTest {
         api.setCommentMinimumCharacterCount(limit, reportTypes);
 
         mBugReporting.verify(() -> BugReporting.setCommentMinimumCharacterCount(limit.intValue(), BugReporting.ReportType.BUG, BugReporting.ReportType.QUESTION));
+    }
+
+    @Test
+    public void testSetProactiveReportingConfigurations() {
+        // given
+        boolean enabled = true;
+        long gapBetweekDialogs = 20;
+        long modeDelay = 30;
+
+        // when
+        api.setProactiveReportingConfigurations(enabled, gapBetweekDialogs, modeDelay);
+
+        // then
+        mBugReporting.verify(() -> BugReporting.setProactiveReportingConfigurations(argThat(config ->
+                config.getModalsGap() == gapBetweekDialogs &&
+                        config.getDetectionGap() == modeDelay &&
+                        config.isEnabled() == enabled
+        )));
+
+
     }
 }

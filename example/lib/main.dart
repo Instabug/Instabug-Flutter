@@ -56,6 +56,13 @@ void main() {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
       };
 
+      BugReporting.setProactiveReportingConfigurations(
+          ProactiveReportingConfigsBuilder()
+              .setModalDelayAfterDetection(1)
+              .setGapBetweenModals(1)
+              .isEnabled(true)
+              .build());
+
       runApp(const MyApp());
     },
     CrashReporting.reportCrash,

@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:instabug_flutter/src/generated/bug_reporting.api.g.dart';
+import 'package:instabug_flutter/src/models/proactive_reporting_config.dart';
 import 'package:instabug_flutter/src/modules/instabug.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
@@ -254,5 +255,13 @@ class BugReporting implements BugReportingFlutterApi {
       limit,
       reportTypes?.mapToString(),
     );
+  }
+
+  /// prompts end users to submit their feedback after our SDK automatically detects a frustrating experience.
+  /// [config] configuration of proActive  bug report.
+  static Future<void> setProactiveReportingConfigurations(
+      ProactiveReportingConfigs config,) async {
+    _host.setProactiveReportingConfigurations(config.enabled,
+        config.gapBetweenModals, config.modalDelayAfterDetection);
   }
 }

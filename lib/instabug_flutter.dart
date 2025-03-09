@@ -3,9 +3,9 @@ export 'src/models/crash_data.dart';
 export 'src/models/exception_data.dart';
 export 'src/models/feature_flag.dart';
 export 'src/models/network_data.dart';
+export 'src/models/proactive_reporting_config.dart';
 export 'src/models/trace.dart';
 export 'src/models/w3c_header.dart';
-
 // Modules
 export 'src/modules/apm.dart';
 export 'src/modules/bug_reporting.dart';

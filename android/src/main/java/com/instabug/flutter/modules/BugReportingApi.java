@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.instabug.bug.BugReporting;
+import com.instabug.bug.ProactiveReportingConfigs;
 import com.instabug.flutter.generated.BugReportingPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.ThreadManager;
@@ -185,5 +186,22 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
         }
     }
         BugReporting.setCommentMinimumCharacterCount(limit.intValue(), reportTypesArray);
+    }
+
+    @Override
+    public void setProactiveReportingConfigurations(@NonNull Boolean enabled, @NonNull Long gapBetweenModals, @NonNull Long modalDelayAfterDetection) {
+        ThreadManager.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                ProactiveReportingConfigs configs = new ProactiveReportingConfigs.Builder()
+                        .setGapBetweenModals(gapBetweenModals) // Time in seconds
+                        .setModalDelayAfterDetection(modalDelayAfterDetection) // Time in seconds
+                        .isEnabled(enabled) //Enable/disable
+                        .build();
+                BugReporting.setProactiveReportingConfigurations(configs);
+
+
+            }
+        });
     }
 }
