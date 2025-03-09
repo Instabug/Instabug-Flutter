@@ -26,7 +26,7 @@ class _NetworkContentState extends State<NetworkContent> {
           text: 'Send Request To Url',
           onPressed: () => _sendRequestToUrl(endpointUrlController.text),
         ),
-        Text("W3C Header Section"),
+        const Text("W3C Header Section"),
         InstabugButton(
           text: 'Send Request With Custom traceparent header',
           onPressed: () => _sendRequestToUrl(endpointUrlController.text,
