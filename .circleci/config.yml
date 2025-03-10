@@ -259,8 +259,9 @@ jobs:
             FLUTTER_GIT_URL: ssh://git@github.com/flutter/flutter.git
           command: flutter upgrade && flutter --version
       - run:
-          name: Switch to Example app & Build app
-          command: cd scripts && flutter build apk --debug
+          name: Build app
+          working_directory: example
+          command: flutter build apk --debug
 
   test_build_sample_ios:
     macos:
@@ -275,8 +276,9 @@ jobs:
             FLUTTER_GIT_URL: ssh://git@github.com/flutter/flutter.git
           command: flutter upgrade && flutter --version
       - run:
-          name: Switch to Example app & Build app
-          command: cd scripts && flutter build ios --simulator
+          name: Build app
+          working_directory: example
+          command: flutter build ios --simulator
 
   release:
     macos:
