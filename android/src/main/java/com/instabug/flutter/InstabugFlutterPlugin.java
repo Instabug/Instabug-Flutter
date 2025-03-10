@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
+import android.graphics.Matrix;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +28,6 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import io.flutter.plugin.common.BinaryMessenger;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     private static final String TAG = InstabugFlutterPlugin.class.getName();
@@ -37,16 +37,35 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
 
     /**
      * Embedding v1
+     * This method is required for compatibility with apps that don't use the v2 embedding.
      */
-    @SuppressWarnings("deprecation")
-    public static void registerWith(Registrar registrar) {
-        activity = registrar.activity();
-        register(registrar.context().getApplicationContext(), registrar.messenger(), (FlutterRenderer) registrar.textures());
-    }
+
+   @SuppressWarnings("deprecation")
+   public static void registerWith(Object registrar) {
+       try {
+           // Use reflection to access the Registrar class and its methods
+           Class<?> registrarClass = Class.forName("io.flutter.plugin.common.PluginRegistry.Registrar");
+           Activity activity = (Activity) registrarClass.getMethod("activity").invoke(registrar);
+           Context context = (Context) registrarClass.getMethod("context").invoke(registrar);
+           BinaryMessenger messenger = (BinaryMessenger) registrarClass.getMethod("messenger").invoke(registrar);
+           FlutterRenderer renderer = (FlutterRenderer) registrarClass.getMethod("textures").invoke(registrar);
+
+           // Set the activity and register with the context
+           InstabugFlutterPlugin.activity = activity;
+           registerWithContext(context.getApplicationContext(), messenger, renderer);
+           System.out.println("old app");
+       } catch (Exception e) {
+           Log.e(TAG, "Failed to register with v1 embedding. Cause: " + e);
+       }
+   }
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-        register(binding.getApplicationContext(), binding.getBinaryMessenger(), (FlutterRenderer) binding.getTextureRegistry());
+        registerWithContext(
+                binding.getApplicationContext(),
+                binding.getBinaryMessenger(),
+                (FlutterRenderer) binding.getTextureRegistry()
+        );
     }
 
     @Override
@@ -74,7 +93,10 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
         activity = null;
     }
 
-    private static void register(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
+    /**
+     * Shared logic for both v1 and v2 embeddings.
+     */
+    private static void registerWithContext(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
         final Callable<Bitmap> screenshotProvider = new Callable<Bitmap>() {
             @Override
             public Bitmap call() {
@@ -82,6 +104,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
             }
         };
 
+        // Initialize all APIs
         ApmApi.init(messenger);
         BugReportingApi.init(messenger);
         CrashReportingApi.init(messenger);
@@ -102,10 +125,17 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
             final Bitmap bitmap = renderer.getBitmap();
             view.setDrawingCacheEnabled(false);
 
-            return bitmap;
+            return flipBitmap(bitmap);
         } catch (Exception e) {
             Log.e(TAG, "Failed to take screenshot using " + renderer.toString() + ". Cause: " + e);
             return null;
         }
+    }
+    private static Bitmap flipBitmap(Bitmap bitmap) {
+        // Use Matrix to flip the bitmap vertically (scale Y-axis by -1)
+        Matrix matrix = new Matrix();
+        matrix.preScale(1, -1); // Flip vertically
+        Bitmap flippedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return flippedBitmap;
     }
 }
