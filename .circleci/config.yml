@@ -255,6 +255,8 @@ jobs:
       - setup_flutter
       - run:
           name: Upgrade Flutter
+          environment:
+            FLUTTER_GIT_URL: ssh://git@github.com/flutter/flutter.git
           command: flutter upgrade && flutter --version
       - run:
           name: Switch to Example app & Build app
@@ -266,17 +268,12 @@ jobs:
     resource_class: macos.m1.medium.gen1
     steps:
       - advanced-checkout/shallow-checkout
-      - setup_flutter
+      - setup_ios
       - run:
           name: Upgrade Flutter
+          environment:
+            FLUTTER_GIT_URL: ssh://git@github.com/flutter/flutter.git
           command: flutter upgrade && flutter --version
-      - run:
-          name: Install CocoaPods
-          command: sudo gem install cocoapods
-      - run:
-          name: Install Pods
-          working_directory: example/ios
-          command: pod install --repo-update
       - run:
           name: Switch to Example app & Build app
           command: cd scripts && flutter build ios --simulator
