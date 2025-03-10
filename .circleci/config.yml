@@ -8,9 +8,13 @@ orbs:
 
 commands:
   setup_flutter:
+    parameters:
+      version:
+        type: string
+        default: 3.10.5
     steps:
       - flutter/install_sdk_and_pub:
-          version: 3.10.5
+          version: <<parameters.version>>
       - run:
           name: Generate Pigeons
           command: sh ./scripts/pigeon.sh
@@ -241,6 +245,38 @@ jobs:
           command: dart run pana --no-warning --exit-code-threshold 0
       - run: flutter pub publish --dry-run
 
+  test_build_sample_android:
+    executor:
+      name: android/android-machine
+      resource-class: xlarge
+      tag: 2024.01.1
+    steps:
+      - advanced-checkout/shallow-checkout
+      - setup_flutter:
+          version: $(./scripts/releases/get_latest_stable_flutter_version.sh)
+      - run:
+          name: Switch to Example app & Build app
+          command: cd scripts && flutter build apk --debug
+
+  test_build_sample_ios:
+    macos:
+      xcode: 15.2.0
+    resource_class: macos.m1.medium.gen1
+    steps:
+      - advanced-checkout/shallow-checkout
+      - setup_flutter:
+          version: $(./scripts/releases/get_latest_stable_flutter_version.sh)
+      - run:
+          name: Install CocoaPods
+          command: sudo gem install cocoapods
+      - run:
+          name: Install Pods
+          working_directory: example/ios
+          command: pod install --repo-update
+      - run:
+          name: Switch to Example app & Build app
+          command: cd scripts && flutter build ios --simulator
+
   release:
     macos:
       xcode: 15.2.0
@@ -302,6 +338,8 @@ workflows:
       - verify_pub:
           requires:
             - lint_flutter
+      - test_build_sample_android
+      - test_build_sample_ios
       - hold_release:
           type: approval
           requires:
@@ -316,6 +354,8 @@ workflows:
             # - test_ios
             - e2e_ios_captain
             - verify_pub
+            - test_build_sample_android
+            - test_build_sample_ios
           filters:
             branches:
               only: master
