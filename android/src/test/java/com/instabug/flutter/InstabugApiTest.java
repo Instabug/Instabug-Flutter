@@ -643,4 +643,18 @@ public class InstabugApiTest {
         assertEquals(isW3cCaughtHeaderEnabled, flags.get("isW3cCaughtHeaderEnabled"));
 
     }
+
+    @Test
+    public void testSetNetworkLogBodyEnabled() {
+        api.setNetworkLogBodyEnabled(true);
+
+        mInstabug.verify(() -> Instabug.setNetworkLogBodyEnabled(true));
+    }
+
+    @Test
+    public void testSetNetworkLogBodyDisabled() {
+        api.setNetworkLogBodyEnabled(false);
+
+        mInstabug.verify(() -> Instabug.setNetworkLogBodyEnabled(false));
+    }
 }

@@ -451,6 +451,15 @@
     OCMVerify([self.mInstabug willRedirectToAppStore]);
 }
 
+- (void)testSetNetworkLogBodyEnabled {
+    NSNumber *isEnabled = @1;
+    FlutterError *error;
+
+    [self.api setNetworkLogBodyEnabledIsEnabled:isEnabled error:&error];
+
+    XCTAssertTrue(IBGNetworkLogger.logBodyEnabled);
+}
+
 - (void)testNetworkLogWithW3Caught {
     NSString *url = @"https://example.com";
     NSString *requestBody = @"hi";
