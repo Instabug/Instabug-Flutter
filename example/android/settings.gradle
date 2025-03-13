@@ -1,9 +1,9 @@
 pluginManagement {
     def flutterSdkPath = {
-def properties = new Properties()
+        def properties = new Properties()
         file("local.properties").withInputStream { properties.load(it) }
-def flutterSdkPath = properties.getProperty("flutter.sdk")
-assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
+        def flutterSdkPath = properties.getProperty("flutter.sdk")
+        assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
         return flutterSdkPath
     }()
 
@@ -13,6 +13,8 @@ assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven { url 'https://storage.googleapis.com/flutter-plugins' }
+
     }
 }
 
