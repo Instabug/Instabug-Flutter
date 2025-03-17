@@ -200,15 +200,15 @@ public class BugReportingApiTest {
     public void testSetProactiveReportingConfigurations() {
         // given
         boolean enabled = true;
-        long gapBetweekDialogs = 20;
+        long gapBetweenDialogs = 20;
         long modeDelay = 30;
 
         // when
-        api.setProactiveReportingConfigurations(enabled, gapBetweekDialogs, modeDelay);
+        api.setProactiveReportingConfigurations(enabled, gapBetweenDialogs, modeDelay);
 
         // then
         mBugReporting.verify(() -> BugReporting.setProactiveReportingConfigurations(argThat(config ->
-                config.getModalsGap() == gapBetweekDialogs &&
+                config.getModalsGap() == gapBetweenDialogs &&
                         config.getDetectionGap() == modeDelay &&
                         config.isEnabled() == enabled
         )));

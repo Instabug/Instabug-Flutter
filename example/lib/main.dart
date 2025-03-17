@@ -58,11 +58,7 @@ void main() {
       };
 
       BugReporting.setProactiveReportingConfigurations(
-          ProactiveReportingConfigsBuilder()
-              .setModalDelayAfterDetection(1)
-              .setGapBetweenModals(1)
-              .isEnabled(true)
-              .build());
+          ProactiveReportingConfigs());
 
       runApp(const MyApp());
     },

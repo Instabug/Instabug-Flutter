@@ -203,11 +203,10 @@ void main() {
   test('[setProactiveReportingConfigurations] should call host method',
       () async {
     await BugReporting.setProactiveReportingConfigurations(
-      ProactiveReportingConfigsBuilder()
-          .setGapBetweenModals(1)
-          .setModalDelayAfterDetection(1)
-          .isEnabled(true)
-          .build(),
+      const ProactiveReportingConfigs(
+        gapBetweenModals: 1,
+        modalDelayAfterDetection: 1,
+      ),
     );
 
     verify(mHost.setProactiveReportingConfigurations(true, 1, 1)).called(1);
