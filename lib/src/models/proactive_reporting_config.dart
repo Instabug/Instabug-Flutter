@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 
 class ProactiveReportingConfigs {
   final int gapBetweenModals; // Time in seconds
