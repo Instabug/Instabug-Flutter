@@ -58,7 +58,7 @@ void main() {
       };
 
       BugReporting.setProactiveReportingConfigurations(
-          const  ProactiveReportingConfigs());
+          const ProactiveReportingConfigs());
 
       runApp(const MyApp());
     },

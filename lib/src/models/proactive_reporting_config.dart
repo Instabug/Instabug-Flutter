@@ -1,4 +1,3 @@
-
 class ProactiveReportingConfigs {
   final int gapBetweenModals; // Time in seconds
   final int modalDelayAfterDetection; // Time in seconds
