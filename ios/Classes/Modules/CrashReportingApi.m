@@ -16,7 +16,7 @@ extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger) {
 }
 
 - (void)sendJsonCrash:(NSString *)jsonCrash isHandled:(NSNumber *)isHandled error:(FlutterError *_Nullable *_Nonnull)error {
-    NSLog(@"[Fatal] isHandled: %@", isHandled);
+    NSLog(@"[Instabug][Fatal] isHandled: %@", isHandled);
     
     NSError *jsonError;
     NSData *objectData = [jsonCrash dataUsingEncoding:NSUTF8StringEncoding];
@@ -27,24 +27,24 @@ extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger) {
     BOOL isNonFatal = [isHandled boolValue];
 
     if (isNonFatal) {
-        NSLog(@"[Crash - Non Fatal] jsonCrash: %@", jsonCrash);
-        NSLog(@"[Crash - Non Fatal] stackTrace: %@", stackTrace);
+        NSLog(@"[Instabug][Crash - Non Fatal] jsonCrash: %@", jsonCrash);
+        NSLog(@"[Instabug][Crash - Non Fatal] stackTrace: %@", stackTrace);
         [IBGCrashReporting cp_reportNonFatalCrashWithStackTrace:stackTrace
                                                           level:IBGNonFatalLevelError groupingString:nil userAttributes:nil
         ];
     } else {
-        NSLog(@"[Crash - Fatal] jsonCrash: %@", jsonCrash);
-        NSLog(@"[Crash - Fatal] stackTrace: %@", stackTrace);
+        NSLog(@"[Instabug][Crash - Fatal] jsonCrash: %@", jsonCrash);
+        NSLog(@"[Instabug][Crash - Fatal] stackTrace: %@", stackTrace);
         [IBGCrashReporting cp_reportFatalCrashWithStackTrace:stackTrace  ];
 
     }
 }
 
 - (void)sendNonFatalErrorJsonCrash:(nonnull NSString *)jsonCrash userAttributes:(nullable NSDictionary<NSString *,NSString *> *)userAttributes fingerprint:(nullable NSString *)fingerprint nonFatalExceptionLevel:(nonnull NSString *)nonFatalExceptionLevel error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
-    NSLog(@"[Non Fatal] jsonCrash: %@", jsonCrash);
-    NSLog(@"[Non Fatal] userAttributes: %@", userAttributes);
-    NSLog(@"[Non Fatal] fingerprint: %@", fingerprint);
-    NSLog(@"[Non Fatal] nonFatalExceptionLevel: %@", nonFatalExceptionLevel);
+    NSLog(@"[Instabug][Non Fatal] jsonCrash: %@", jsonCrash);
+    NSLog(@"[Instabug][Non Fatal] userAttributes: %@", userAttributes);
+    NSLog(@"[Instabug][Non Fatal] fingerprint: %@", fingerprint);
+    NSLog(@"[Instabug][Non Fatal] nonFatalExceptionLevel: %@", nonFatalExceptionLevel);
     
     NSError *jsonError;
     NSData *objectData = [jsonCrash dataUsingEncoding:NSUTF8StringEncoding];
@@ -52,11 +52,11 @@ extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger) {
                                                                options:NSJSONReadingMutableContainers
                                                                  error:&jsonError];
     
-    NSLog(@"[Non Fatal] stackTrace: %@", stackTrace);
+    NSLog(@"[Instabug][Non Fatal] stackTrace: %@", stackTrace);
     
     IBGNonFatalLevel level = (ArgsRegistry.nonFatalExceptionLevel[nonFatalExceptionLevel]).integerValue;
     
-    NSLog(@"[Non Fatal] level: %ld", (long)level);
+    NSLog(@"[Instabug][Non Fatal] level: %ld", (long)level);
     
     [IBGCrashReporting cp_reportNonFatalCrashWithStackTrace:stackTrace
                                                       level: level
