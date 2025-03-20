@@ -73,6 +73,8 @@ class CrashReporting {
   ) async {
     final crashData = getCrashDataFromException(stack, exception);
 
+    debugPrint("[Instabug] Fatal - Crash Data");
+    debugPrint(jsonEncode(crashData));
     return _host.send(jsonEncode(crashData), handled);
   }
 
@@ -85,6 +87,14 @@ class CrashReporting {
   ) async {
     final crashData = getCrashDataFromException(stack, exception);
 
+    debugPrint("[Instabug] Non Fatal - Crash Data");
+    debugPrint(jsonEncode(crashData));
+    debugPrint("[Instabug] Non Fatal - User Attributes");
+    debugPrint(userAttributes.toString());
+    debugPrint("[Instabug] Non Fatal - Fingerprint");
+    debugPrint(fingerprint ?? "N/A");
+    debugPrint("[Instabug] Non Fatal - Exception Level");
+    debugPrint(nonFatalExceptionLevel.toString());
     return _host.sendNonFatalError(
       jsonEncode(crashData),
       userAttributes,
