@@ -57,6 +57,13 @@ public class GlobalMocks {
                         Bitmap.class, String.class))
                 .thenReturn(mReportScreenChange);
 
+        Method mReportCurrentViewChange= MockReflected.class.getDeclaredMethod("reportCurrentViewChange", String.class);
+        mReportCurrentViewChange.setAccessible(true);
+        reflection
+                .when(() -> Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "reportCurrentViewChange",
+                       String.class))
+                .thenReturn(mReportCurrentViewChange);
+
         Method mSetCustomBrandingImage = MockReflected.class.getDeclaredMethod("setCustomBrandingImage", Bitmap.class, Bitmap.class);
         mSetCustomBrandingImage.setAccessible(true);
         reflection
