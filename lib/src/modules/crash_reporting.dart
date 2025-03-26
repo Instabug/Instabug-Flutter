@@ -31,13 +31,7 @@ class CrashReporting {
   }
 
   static Future<void> reportCrash(Object exception, StackTrace stack) async {
-    if (IBGBuildInfo.instance.isReleaseMode && enabled) {
       await _reportUnhandledCrash(exception, stack);
-    } else {
-      FlutterError.dumpErrorToConsole(
-        FlutterErrorDetails(stack: stack, exception: exception),
-      );
-    }
   }
 
   /// Reports a handled crash to you dashboard
