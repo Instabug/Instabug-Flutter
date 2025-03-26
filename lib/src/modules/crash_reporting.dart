@@ -31,7 +31,8 @@ class CrashReporting {
   }
 
   static Future<void> reportCrash(Object exception, StackTrace stack) async {
-      await _reportUnhandledCrash(exception, stack);
+    print('Report crash in ${kReleaseMode ? "Release" : "Debug"} mode');
+    await _reportUnhandledCrash(exception, stack);
   }
 
   /// Reports a handled crash to you dashboard
