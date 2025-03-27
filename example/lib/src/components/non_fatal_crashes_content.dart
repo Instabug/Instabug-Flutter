@@ -16,7 +16,8 @@ class _NonFatalCrashesContentState extends State<NonFatalCrashesContent> {
         error = Exception('Handled Error: $errorMessage from $appName');
       }
       throw error;
-    } catch (err) {
+    } catch (err,stack) {
+      CrashReporting.reportHandledCrash(err, stack);
       if (err is Error) {
         log('throwHandledException: Crash report for ${err.runtimeType} is Sent!',
             name: 'NonFatalCrashesWidget');
@@ -68,8 +69,12 @@ class _NonFatalCrashesContentState extends State<NonFatalCrashesContent> {
         InstabugButton(
           text: 'Throw NoSuchMethodError',
           onPressed: () {
-            dynamic obj;
-            throwHandledException(obj.methodThatDoesNotExist());
+            try {
+              dynamic obj;
+              throwHandledException(obj.methodThatDoesNotExist());
+            } catch (exception, stack) {
+              CrashReporting.reportHandledCrash(exception, stack);
+            }
           },
         ),
         const InstabugButton(

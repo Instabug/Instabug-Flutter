@@ -1,4 +1,6 @@
 package com.example.InstabugSample
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.instabug.crash.CrashReporting
 import com.instabug.crash.models.IBGNonFatalException
@@ -17,8 +19,12 @@ class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
             }
             SEND_NATIVE_FATAL_CRASH -> {
                 Log.d(TAG, "Sending native fatal crash from Android")
-                sendNativeFatalCrash()
-                result.success(null)
+//                sendNativeFatalCrash()
+                Handler(Looper.getMainLooper()).post {
+                    throw RuntimeException("Intentional crash triggered from Flutter")
+                }
+//                result.success(null)
+
             }
             SEND_NATIVE_FATAL_HANG -> {
                 Log.d(TAG, "Sending native fatal hang for 3000 ms")
