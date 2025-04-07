@@ -1,5 +1,11 @@
 # Changelog
-## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v14.1.0...dev)
+
+
+## [Unreleased](https://github.com/Instabug/Instabug-React-Native/compare/v14.1.0...dev)
+
+### Changed
+
+- Bump Instabug iOS SDK to v14.3.0 ([#1367](https://github.com/Instabug/Instabug-React-Native/pull/1367)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/14.3.0).
 
 ### Fixed
 
