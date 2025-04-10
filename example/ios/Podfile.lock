@@ -8,17 +8,19 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - Instabug (from `https://ios-releases.instabug.com/custom/feature-stop-network-body-base/14.2.0/Instabug.podspec`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
 
 SPEC REPOS:
   trunk:
-    - Instabug
     - OCMock
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  Instabug:
+    :podspec: https://ios-releases.instabug.com/custom/feature-stop-network-body-base/14.2.0/Instabug.podspec
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
 
@@ -28,6 +30,6 @@ SPEC CHECKSUMS:
   instabug_flutter: a8811895aec338ef338b5c00ce1ee1cfc4afd499
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
 
-PODFILE CHECKSUM: 8f7552fd115ace1988c3db54a69e4a123c448f84
+PODFILE CHECKSUM: 338614a69defdc536fc63f92095b4984aab6080e
 
 COCOAPODS: 1.16.2

@@ -126,4 +126,10 @@ class NetworkLogger {
     }
     return null;
   }
+
+  /// Enables or disables network body logs capturing.
+  /// [boolean] isEnabled
+  static Future<void> setNetworkLogBodyEnabled(bool isEnabled) async {
+    return _host.setNetworkLogBodyEnabled(isEnabled);
+  }
 }

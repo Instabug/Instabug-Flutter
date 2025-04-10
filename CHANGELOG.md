@@ -17,6 +17,12 @@
 - Bump Instabug Android SDK to v14.1.0 ([#539](https://github.com/Instabug/Instabug-Flutter/pull/539)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v14.1.0).
 - Bump Instabug iOS SDK to v14.1.0 ([#539](https://github.com/Instabug/Instabug-Flutter/pull/539)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/14.1.0),
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v14.0.0...dev)
+
+### Added
+
+- Add support enable/disable capturing network body. ([#561](https://github.com/Instabug/Instabug-Flutter/pull/561))
+
 ## [14.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.0.0...v14.1.0) (January 2, 2025)
 
 ### Changed
