@@ -1,13 +1,13 @@
 # Changelog
 ## [14.3.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.1.0...dev)
 
-### Fixed
-
-- Fixed an issue with `SetReproStepsConfig` on Android platform ([#543](https://github.com/Instabug/Instabug-Flutter/pull/543)).
-
 ### Added
 
 - Add support enable/disable capturing network body. ([#561](https://github.com/Instabug/Instabug-Flutter/pull/561))
+
+### Fixed
+
+- Fixed an issue with `SetReproStepsConfig` on Android platform ([#543](https://github.com/Instabug/Instabug-Flutter/pull/543)).
 
 
 ## [14.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.0.0...v14.1.0) (January 2, 2025)
