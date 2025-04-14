@@ -199,4 +199,16 @@ void main() {
       mHost.setCommentMinimumCharacterCount(count, reportTypes.mapToString()),
     ).called(1);
   });
+
+  test('[setProactiveReportingConfigurations] should call host method',
+      () async {
+    await BugReporting.setProactiveReportingConfigurations(
+      const ProactiveReportingConfigs(
+        gapBetweenModals: 1,
+        modalDelayAfterDetection: 1,
+      ),
+    );
+
+    verify(mHost.setProactiveReportingConfigurations(true, 1, 1)).called(1);
+  });
 }
