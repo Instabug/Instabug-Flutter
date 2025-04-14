@@ -51,6 +51,11 @@ public class CrashReportingApi implements CrashReportingPigeon.CrashReportingHos
     }
 
     @Override
+    public void setNDKEnabled(@NonNull Boolean isEnabled) {
+        CrashReporting.setNDKCrashesState(isEnabled ? Feature.State.ENABLED : Feature.State.DISABLED);
+    }
+
+    @Override
     public void sendNonFatalError(@NonNull String jsonCrash, @Nullable Map<String, String> userAttributes, @Nullable String fingerprint, @NonNull String nonFatalExceptionLevel) {
         try {
             Method method = Reflection.getMethod(Class.forName("com.instabug.crash.CrashReporting"), "reportException", JSONObject.class, boolean.class,
