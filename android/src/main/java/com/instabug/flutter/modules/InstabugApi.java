@@ -499,4 +499,14 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     public void willRedirectToStore() {
         Instabug.willRedirectToStore();
     }
+
+    
+    @Override
+    public void setNetworkLogBodyEnabled(@NonNull Boolean isEnabled) {
+                try {
+                    Instabug.setNetworkLogBodyEnabled(isEnabled);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+    }
 }

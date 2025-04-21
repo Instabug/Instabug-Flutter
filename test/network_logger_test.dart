@@ -229,4 +229,14 @@ void main() {
     await logger.networkLog(networkData);
     expect(networkData.requestHeaders['traceparent'], 'test');
   });
+
+  test('[setNetworkLogBodyEnabled] should call host method', () async {
+    const enabled = true;
+
+    await NetworkLogger.setNetworkLogBodyEnabled(enabled);
+
+    verify(
+      mInstabugHost.setNetworkLogBodyEnabled(enabled),
+    ).called(1);
+  });
 }
