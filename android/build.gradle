@@ -1,5 +1,5 @@
 group 'com.instabug.flutter'
-version '14.1.0'
+version '14.3.0'
 
 buildscript {
     repositories {
@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:14.1.0'
+    api 'com.instabug.library:instabug:14.3.0'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
     testImplementation "io.mockk:mockk:1.13.13"

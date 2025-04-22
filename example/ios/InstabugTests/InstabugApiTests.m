@@ -325,7 +325,7 @@
     [self.api setReproStepsConfigBugMode:bugMode crashMode:crashMode sessionReplayMode:sessionReplayMode error:&error];
 
     OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeBug withMode:IBGUserStepsModeEnable]);
-    OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeCrash withMode:IBGUserStepsModeDisable]);
+    OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeAllCrashes withMode:IBGUserStepsModeDisable]);
     OCMVerify([self.mInstabug setReproStepsFor:IBGIssueTypeSessionReplay withMode:IBGUserStepsModeDisable]);
 }
 
@@ -449,6 +449,15 @@
     [self.api willRedirectToStoreWithError:&error];
 
     OCMVerify([self.mInstabug willRedirectToAppStore]);
+}
+
+- (void)testSetNetworkLogBodyEnabled {
+    NSNumber *isEnabled = @1;
+    FlutterError *error;
+
+    [self.api setNetworkLogBodyEnabledIsEnabled:isEnabled error:&error];
+
+    XCTAssertTrue(IBGNetworkLogger.logBodyEnabled);
 }
 
 - (void)testNetworkLogWithW3Caught {

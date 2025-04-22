@@ -13,6 +13,7 @@ import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
+import com.instabug.library.ReproMode;
 import com.instabug.library.internal.crossplatform.CoreFeature;
 import com.instabug.library.internal.crossplatform.CoreFeaturesState;
 import com.instabug.library.internal.crossplatform.FeaturesStateListener;
@@ -334,7 +335,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
             if (crashMode != null) {
                 final Integer resolvedCrashMode = ArgsRegistry.reproModes.get(crashMode);
-                builder.setIssueMode(IssueType.Crash, resolvedCrashMode);
+                builder.setIssueMode(IssueType.AllCrashes, resolvedCrashMode);
             }
 
             if (sessionReplayMode != null) {
@@ -357,6 +358,12 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                     Bitmap.class, String.class);
             if (method != null) {
                 method.invoke(null, null, screenName);
+            }
+            Method reportView = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "reportCurrentViewChange",
+                    String.class);
+
+            if (reportView != null) {
+                reportView.invoke(null, screenName);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -491,5 +498,15 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public void willRedirectToStore() {
         Instabug.willRedirectToStore();
+    }
+
+    
+    @Override
+    public void setNetworkLogBodyEnabled(@NonNull Boolean isEnabled) {
+                try {
+                    Instabug.setNetworkLogBodyEnabled(isEnabled);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
     }
 }

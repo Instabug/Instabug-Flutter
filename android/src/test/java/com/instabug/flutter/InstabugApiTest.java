@@ -460,7 +460,7 @@ public class InstabugApiTest {
         ReproConfigurations.Builder builder = mReproConfigurationsBuilder.constructed().get(0);
 
         verify(builder).setIssueMode(IssueType.Bug, ReproMode.EnableWithScreenshots);
-        verify(builder).setIssueMode(IssueType.Crash, ReproMode.Disable);
+        verify(builder).setIssueMode(IssueType.AllCrashes, ReproMode.Disable);
         verify(builder).setIssueMode(IssueType.SessionReplay, ReproMode.Disable);
         verify(builder).build();
 
@@ -474,6 +474,7 @@ public class InstabugApiTest {
         api.reportScreenChange(screenName);
 
         reflected.verify(() -> MockReflected.reportScreenChange(null, screenName));
+        reflected.verify(() -> MockReflected.reportCurrentViewChange(screenName));
     }
 
     @Test
@@ -642,5 +643,19 @@ public class InstabugApiTest {
         assertEquals(isW3cExternalTraceIDEnabled, flags.get("isW3cExternalTraceIDEnabled"));
         assertEquals(isW3cCaughtHeaderEnabled, flags.get("isW3cCaughtHeaderEnabled"));
 
+    }
+
+    @Test
+    public void testSetNetworkLogBodyEnabled() {
+        api.setNetworkLogBodyEnabled(true);
+
+        mInstabug.verify(() -> Instabug.setNetworkLogBodyEnabled(true));
+    }
+
+    @Test
+    public void testSetNetworkLogBodyDisabled() {
+        api.setNetworkLogBodyEnabled(false);
+
+        mInstabug.verify(() -> Instabug.setNetworkLogBodyEnabled(false));
     }
 }

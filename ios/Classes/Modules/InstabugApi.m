@@ -163,7 +163,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     
     if (crashMode != nil) {
         IBGUserStepsMode resolvedCrashMode = ArgsRegistry.reproModes[crashMode].integerValue;
-        [Instabug setReproStepsFor:IBGIssueTypeCrash withMode:resolvedCrashMode];
+        [Instabug setReproStepsFor:IBGIssueTypeAllCrashes withMode:resolvedCrashMode];
     }
     
     if (sessionReplayMode != nil) {
@@ -391,6 +391,9 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     };
     return  result;
 }
-
+- (void)setNetworkLogBodyEnabledIsEnabled:(NSNumber *)isEnabled 
+                          error:(FlutterError *_Nullable *_Nonnull)error {
+    IBGNetworkLogger.logBodyEnabled = [isEnabled boolValue];
+}
 
 @end

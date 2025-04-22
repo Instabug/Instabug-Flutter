@@ -1,4 +1,6 @@
 package com.example.InstabugSample
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.instabug.crash.CrashReporting
 import com.instabug.crash.models.IBGNonFatalException
@@ -62,7 +64,10 @@ class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
     }
 
     private fun sendNativeFatalCrash() {
-        throw IllegalStateException("Unhandled IllegalStateException from Instabug Test App")
+        Handler(Looper.getMainLooper()).post {
+            throw IllegalStateException("Unhandled IllegalStateException from Instabug Test App")
+
+        }
     }
 
     private fun sendANR() {
