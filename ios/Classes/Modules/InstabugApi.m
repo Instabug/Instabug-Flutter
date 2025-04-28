@@ -396,4 +396,9 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     IBGNetworkLogger.logBodyEnabled = [isEnabled boolValue];
 }
 
+- (void)initHybridModeWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+    
+}
+
+
 @end

@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
@@ -30,9 +32,11 @@ import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+
 import io.flutter.FlutterInjector;
 import io.flutter.embedding.engine.loader.FlutterLoader;
 import io.flutter.plugin.common.BinaryMessenger;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
@@ -55,11 +59,12 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     private final InstabugPigeon.FeatureFlagsFlutterApi featureFlagsFlutterApi;
 
-    public static void init(BinaryMessenger messenger, Context context, Callable<Bitmap> screenshotProvider) {
+    public static InstabugApi init(BinaryMessenger messenger, Context context, Callable<Bitmap> screenshotProvider) {
         final InstabugPigeon.FeatureFlagsFlutterApi flutterApi = new InstabugPigeon.FeatureFlagsFlutterApi(messenger);
 
         final InstabugApi api = new InstabugApi(context, screenshotProvider, flutterApi);
         InstabugPigeon.InstabugHostApi.setup(messenger, api);
+        return api;
     }
 
     public InstabugApi(Context context, Callable<Bitmap> screenshotProvider, InstabugPigeon.FeatureFlagsFlutterApi featureFlagsFlutterApi) {
@@ -102,7 +107,9 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @NotNull
     @Override
-    public Boolean isBuilt() { return Instabug.isBuilt(); }
+    public Boolean isBuilt() {
+        return Instabug.isBuilt();
+    }
 
     @Override
     public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {
@@ -122,7 +129,14 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 .setSdkDebugLogsLevel(parsedLogLevel)
                 .build();
 
+        initHybridMode();
+
+    }
+
+    @Override
+    public void initHybridMode() {
         Instabug.setScreenshotProvider(screenshotProvider);
+
     }
 
     @Override
@@ -500,13 +514,13 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         Instabug.willRedirectToStore();
     }
 
-    
+
     @Override
     public void setNetworkLogBodyEnabled(@NonNull Boolean isEnabled) {
-                try {
-                    Instabug.setNetworkLogBodyEnabled(isEnabled);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Instabug.setNetworkLogBodyEnabled(isEnabled);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
     }
 }

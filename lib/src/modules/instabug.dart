@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
+import 'dart:io';
 
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unnecessary_import
@@ -11,11 +12,13 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unused_import
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
+import 'package:instabug_flutter/src/utils/hybrid_utils.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
@@ -153,6 +156,7 @@ class Instabug {
     BugReporting.$setup();
     Replies.$setup();
     Surveys.$setup();
+    HybridUtils.$setup();
   }
 
   /// @nodoc
@@ -481,5 +485,13 @@ class Instabug {
   /// Helps track session data for insights on user interactions during review submission.
   static Future<void> willRedirectToStore() async {
     return _host.willRedirectToStore();
+  }
+
+  /// Initializes hybrid mode for applications that combine Flutter and native screens.
+  ///
+  /// This method should be called when using the Flutter SDK in a hybrid app to enable
+  /// proper communication and integration between native and Flutter screens.
+  static Future<void> initializeHybridMode() {
+    return _host.initHybridMode();
   }
 }

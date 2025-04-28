@@ -15,6 +15,7 @@ abstract class InstabugHostApi {
   bool isEnabled();
   bool isBuilt();
   void init(String token, List<String> invocationEvents, String debugLogsLevel);
+  void initHybridMode();
 
   void show();
   void showWelcomeMessageWithMode(String mode);
