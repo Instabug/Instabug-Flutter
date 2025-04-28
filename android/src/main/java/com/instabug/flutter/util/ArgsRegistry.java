@@ -75,6 +75,12 @@ public final class ArgsRegistry {
         put("Position.bottomRight", InstabugVideoRecordingButtonPosition.BOTTOM_RIGHT);
     }};
 
+    public static final ArgsMap<String> userConsentActionType = new ArgsMap<String>() {{
+        put("UserConsentActionType.dropAutoCapturedMedia",  com.instabug.bug.userConsent.ActionType.DROP_AUTO_CAPTURED_MEDIA);
+        put("UserConsentActionType.dropLogs",  com.instabug.bug.userConsent.ActionType.DROP_LOGS);
+        put("UserConsentActionType.noChat",  com.instabug.bug.userConsent.ActionType.NO_CHAT);
+    }};
+
     public static ArgsMap<WelcomeMessage.State> welcomeMessageStates = new ArgsMap<WelcomeMessage.State>() {{
         put("WelcomeMessageMode.live", WelcomeMessage.State.LIVE);
         put("WelcomeMessageMode.beta", WelcomeMessage.State.BETA);

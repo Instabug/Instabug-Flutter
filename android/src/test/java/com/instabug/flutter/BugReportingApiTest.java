@@ -194,4 +194,23 @@ public class BugReportingApiTest {
 
         mBugReporting.verify(() -> BugReporting.setCommentMinimumCharacterCount(limit.intValue(), BugReporting.ReportType.BUG, BugReporting.ReportType.QUESTION));
     }
+
+    @Test
+    public void TestAddUserConsent() {
+               final Map<String, String> args = ArgsRegistry.userConsentActionType;
+               final String[] keysArray = args.keySet().toArray(new String[0]);
+
+               final String key = "testKey";
+               final String description = "Consent description";
+               final boolean mandatory = true;
+               final boolean checked = true;
+               final String inputAction = keysArray[0];
+
+               final String expectedMappedAction = args.get(inputAction);
+
+               bugReportingModule.addUserConsent(key, description, mandatory, checked, inputAction);
+
+               verify(BugReporting.class, VerificationModeFactory.times(1));
+               BugReporting.addUserConsent(key, description, mandatory, checked, expectedMappedAction);
+    }
 }
