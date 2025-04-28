@@ -1,4 +1,4 @@
-#import "Instabug.h"
+#import "InstabugSDK.h"
 #import "FeatureRequestsApi.h"
 #import "ArgsRegistry.h"
 
