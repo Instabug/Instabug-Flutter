@@ -1,8 +1,8 @@
 #import <XCTest/XCTest.h>
 #import "OCMock/OCMock.h"
 #import "ApmApi.h"
-#import "Instabug/IBGAPM.h"
-#import "Instabug/Instabug.h"
+#import "InstabugSDK/IBGAPM.h"
+#import "InstabugSDK/InstabugSDK.h"
 #import "IBGAPM+PrivateAPIs.h"
 
 @interface ApmApiTests : XCTestCase

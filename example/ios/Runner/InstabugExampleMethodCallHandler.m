@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "InstabugExampleMethodCallHandler.h"
-#import <Instabug/IBGCrashReporting.h>
-#import <Instabug/Instabug.h>
+#import <InstabugSDK/IBGCrashReporting.h>
+#import <InstabugSDK/InstabugSDK.h>
 #import <Flutter/Flutter.h>
 
 // MARK: - Private Interface

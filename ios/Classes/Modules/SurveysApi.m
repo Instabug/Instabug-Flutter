@@ -1,5 +1,5 @@
 #import <Flutter/Flutter.h>
-#import "Instabug.h"
+#import "InstabugSDK.h"
 #import "SurveysApi.h"
 
 extern void InitSurveysApi(id<FlutterBinaryMessenger> messenger) {

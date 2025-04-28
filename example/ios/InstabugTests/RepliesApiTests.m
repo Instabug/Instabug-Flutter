@@ -1,7 +1,7 @@
 #import <XCTest/XCTest.h>
 #import "OCMock/OCMock.h"
 #import "RepliesApi.h"
-#import "Instabug/IBGReplies.h"
+#import "InstabugSDK/IBGReplies.h"
 
 @interface RepliesApiTests : XCTestCase
 
