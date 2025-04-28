@@ -27,7 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.flutter.plugin.common.BinaryMessenger;
-
+import com.instabug.bug.userConsent.ActionType;
 
 public class BugReportingApiTest {
     private final BinaryMessenger mMessenger = mock(BinaryMessenger.class);
@@ -196,21 +196,17 @@ public class BugReportingApiTest {
     }
 
     @Test
-    public void TestAddUserConsent() {
-               final Map<String, String> args = ArgsRegistry.userConsentActionType;
-               final String[] keysArray = args.keySet().toArray(new String[0]);
+    public void TestAddUserConsents() {
 
                final String key = "testKey";
                final String description = "Consent description";
                final boolean mandatory = true;
                final boolean checked = true;
-               final String inputAction = keysArray[0];
+               final String actionType = "UserConsentActionType.dropAutoCapturedMedia";
 
-               final String expectedMappedAction = args.get(inputAction);
 
-               bugReportingModule.addUserConsent(key, description, mandatory, checked, inputAction);
+               api.addUserConsents(key, description, mandatory, checked, actionType);
 
-               verify(BugReporting.class, VerificationModeFactory.times(1));
-               BugReporting.addUserConsent(key, description, mandatory, checked, expectedMappedAction);
+               mBugReporting.verify(()->BugReporting.addUserConsent(key, description, mandatory, checked,"drop_auto_captured_media"));
     }
 }
