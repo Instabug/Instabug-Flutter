@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Add support for BugReporting user consents. ([#573](https://github.com/Instabug/Instabug-Flutter/pull/573))
+
 ## [14.3.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.1.0...14.3.0) (April 21, 2025)
 
 ### Added
