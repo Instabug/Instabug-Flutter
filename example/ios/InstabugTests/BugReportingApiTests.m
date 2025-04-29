@@ -190,11 +190,10 @@
                                    actionType:actionType
                          error: &error
                                    ];
-
   OCMVerify([self.mBugReporting addUserConsentWithKey:key
                                         description:description
-                                          mandatory:mandatory
-                                            checked:checked
+                                          mandatory:[mandatory boolValue]
+                                            checked:[checked boolValue]
                                          actionType:mappedActionType]);
 }
 @end
