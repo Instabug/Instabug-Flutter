@@ -268,13 +268,13 @@ class BugReporting implements BugReportingFlutterApi {
   /// [mandatory] Whether the user must agree to this item before submitting a report.
   ///  [checked] Whether the consent checkbox is pre-selected.
   ///  [actionType] A string representing the action type to map to SDK behavior.
-  static Future<void> addUserConsents(
-    String key,
-    String description,
-    bool mandatory,
-    bool checked, [
+  static Future<void> addUserConsents({
+    required String key,
+    required String description,
+    required bool mandatory,
+    required bool checked,
     UserConsentActionType? actionType,
-  ]) async {
+  }) async {
     return _host.addUserConsents(
       key,
       description,

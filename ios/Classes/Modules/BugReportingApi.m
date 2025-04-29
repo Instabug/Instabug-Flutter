@@ -176,8 +176,8 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
 
     [IBGBugReporting addUserConsentWithKey:key
                                description:description
-                                 mandatory:mandatory
-                                   checked:checked
+                                 mandatory:[mandatory boolValue]
+                                   checked:[checked boolValue]
                                 actionType:mappedActionType];
 }
 
