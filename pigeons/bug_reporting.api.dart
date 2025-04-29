@@ -32,4 +32,11 @@ abstract class BugReportingHostApi {
     int limit,
     List<String>? reportTypes,
   );
+  void addUserConsents(
+    String key,
+    String description,
+    bool mandatory,
+    bool checked,
+    String? actionType,
+  );
 }

@@ -174,5 +174,26 @@
 
     OCMVerify([self.mBugReporting setCommentMinimumCharacterCountForReportTypes:IBGBugReportingReportTypeBug | IBGBugReportingReportTypeFeedback | IBGBugReportingReportTypeQuestion withLimit:limit.intValue]);
 }
+- (void)testAddUserConsentWithKey {
+  NSString *key = @"testKey";
+  NSString *description = @"Consent description";
+  NSNumber *mandatory = @1;
+  NSNumber *checked = @0;
+  NSString *actionType= @"UserConsentActionType.dropAutoCapturedMedia";
+  FlutterError *error;
+    IBGActionType mappedActionType =  IBGActionTypeDropAutoCapturedMedia;
 
+  [self.api addUserConsentsKey:key
+                                  description:description
+                                    mandatory:mandatory
+                                      checked:checked
+                                   actionType:actionType
+                         error: &error
+                                   ];
+  OCMVerify([self.mBugReporting addUserConsentWithKey:key
+                                        description:description
+                                          mandatory:[mandatory boolValue]
+                                            checked:[checked boolValue]
+                                         actionType:mappedActionType]);
+}
 @end
