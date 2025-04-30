@@ -135,6 +135,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void initHybridMode() {
+        setCurrentPlatform();
         Instabug.setScreenshotProvider(screenshotProvider);
 
     }
@@ -517,10 +518,10 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setNetworkLogBodyEnabled(@NonNull Boolean isEnabled) {
-//                try {
+                try {
 //                    Instabug.setNetworkLogBodyEnabled(isEnabled);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
     }
 }

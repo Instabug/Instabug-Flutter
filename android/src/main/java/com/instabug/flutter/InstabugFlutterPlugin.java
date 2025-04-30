@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
@@ -37,7 +38,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @SuppressLint("StaticFieldLeak")
     private static Activity activity;
 
-    private InstabugFlutterPigeon.InstabugFlutterApi instabugFlutterApi;
+   public static InstabugFlutterPigeon.InstabugFlutterApi instabugFlutterApi;
     PluginRegistry.ActivityResultListener resultListener;
 
     @Override
