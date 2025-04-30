@@ -14,6 +14,8 @@ class InstabugNavigatorObserver extends NavigatorObserver {
 
   static void screenChanged(Route newRoute) {
     try {
+
+      print("screenChanged");
       lastRoute = newRoute;
       final rawScreenName = newRoute.settings.name.toString().trim();
       final screenName = rawScreenName.isEmpty

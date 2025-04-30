@@ -35,8 +35,7 @@ import io.flutter.plugin.common.PluginRegistry;
 public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     private static final String TAG = InstabugFlutterPlugin.class.getName();
 
-    @SuppressLint("StaticFieldLeak")
-    private static Activity activity;
+    private Activity activity;
 
    public static InstabugFlutterPigeon.InstabugFlutterApi instabugFlutterApi;
     PluginRegistry.ActivityResultListener resultListener;
@@ -55,6 +54,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
         initOnActivityResultListener(binding);
+
 
     }
 
@@ -124,7 +124,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     }
 
     @Nullable
-    private static Bitmap takeScreenshot(FlutterRenderer renderer) {
+    private Bitmap takeScreenshot(FlutterRenderer renderer) {
         try {
             final View view = activity.getWindow().getDecorView().getRootView();
 

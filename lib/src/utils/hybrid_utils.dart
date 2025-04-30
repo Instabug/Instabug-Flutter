@@ -1,3 +1,4 @@
+
 import 'package:instabug_flutter/src/generated/instabug_flutter.api.g.dart';
 import 'package:instabug_flutter/src/utils/instabug_navigator_observer.dart';
 
@@ -19,6 +20,7 @@ class HybridUtils implements InstabugFlutterApi {
 
   @override
   void reportLastScreenChange() {
+    print("reportLastScreenChange2");
     InstabugNavigatorObserver.reportLastScreenChange();
   }
 

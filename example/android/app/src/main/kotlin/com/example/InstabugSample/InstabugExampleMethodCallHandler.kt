@@ -7,7 +7,7 @@ import com.instabug.crash.models.IBGNonFatalException
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
-class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
+class InstabugExampleMethodCallHandler(val activity:Activity) : MethodChannel.MethodCallHandler {
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
@@ -20,6 +20,10 @@ class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
             SEND_NATIVE_FATAL_CRASH -> {
                 Log.d(TAG, "Sending native fatal crash from Android")
                 sendNativeFatalCrash()
+                result.success(null)
+            }
+            "ahmed" -> {
+                com.instabug.flutter.util.InstabugHybirdUtils.startFlutterScreen(activity,android.content.Intent(activity,activity))
                 result.success(null)
             }
             SEND_NATIVE_FATAL_HANG -> {
