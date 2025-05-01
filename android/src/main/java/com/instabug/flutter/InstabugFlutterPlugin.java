@@ -54,7 +54,6 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
 
             isLastScreenInstabug = activity.getComponentName().getClassName().contains("com.instabug.");
             if (activity == flutterActivity) {
-                Log.v(TAG, "onActivityStarted");
                 ThreadManager.runOnMainThread(new Runnable() {
                     @Override
                     public void run() {
