@@ -3,9 +3,7 @@ package com.instabug.flutter;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,13 +25,11 @@ import com.instabug.flutter.util.ThreadManager;
 
 import java.util.concurrent.Callable;
 
-import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import io.flutter.plugin.common.BinaryMessenger;
-import io.flutter.plugin.common.PluginRegistry;
 
 public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     private static final String TAG = InstabugFlutterPlugin.class.getName();
@@ -42,17 +38,21 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
 
     public InstabugFlutterPigeon.InstabugFlutterApi instabugFlutterApi;
 
+    private boolean isLastScreenInstabug = false;
     Application.ActivityLifecycleCallbacks callbacks = new Application.ActivityLifecycleCallbacks() {
         @Override
         public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
-            if (activity == flutterActivity) {
-                Log.v(TAG, "onActivityCreated");
-            }
+
         }
 
         @Override
         public void onActivityStarted(@NonNull Activity activity) {
+            if (isLastScreenInstabug) {
+                isLastScreenInstabug = false;
+                return;
+            }
 
+            isLastScreenInstabug = activity.getComponentName().getClassName().contains("com.instabug.");
             if (activity == flutterActivity) {
                 Log.v(TAG, "onActivityStarted");
                 ThreadManager.runOnMainThread(new Runnable() {
@@ -80,16 +80,12 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
 
         @Override
         public void onActivityPaused(@NonNull Activity activity) {
-            if (activity == flutterActivity) {
-                Log.v(TAG, "onActivityPaused");
-            }
+
         }
 
         @Override
         public void onActivityStopped(@NonNull Activity activity) {
-            if (activity == flutterActivity) {
-                Log.v(TAG, "onActivityStopped");
-            }
+
 
         }
 
@@ -104,7 +100,6 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
         }
     };
 
-    PluginRegistry.ActivityResultListener resultListener;
     private InstabugApi instabugApi;
 
     @Override
@@ -120,34 +115,13 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
         flutterActivity = binding.getActivity();
-        initOnActivityResultListener(binding);
+        initOnActivityResultListener();
     }
 
-    private void initOnActivityResultListener(@NonNull ActivityPluginBinding binding) {
-
+    private void initOnActivityResultListener() {
         Application app = flutterActivity.getApplication();
-
         app.unregisterActivityLifecycleCallbacks(callbacks);
         app.registerActivityLifecycleCallbacks(callbacks);
-
-//        if (resultListener != null) {
-//            binding.removeActivityResultListener(resultListener);
-//        }
-
-//        resultListener = new PluginRegistry.ActivityResultListener() {
-//            @Override
-//            public boolean onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//                Log.v(TAG, "onActivityResult");
-//
-//
-//
-//
-//                return false;
-//            }
-//        };
-//
-//
-//        binding.addActivityResultListener(resultListener);
     }
 
 
@@ -160,7 +134,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
         flutterActivity = binding.getActivity();
-        initOnActivityResultListener(binding);
+        initOnActivityResultListener();
     }
 
     @Override
