@@ -8,15 +8,10 @@ import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 
 class InstabugNavigatorObserver extends NavigatorObserver {
-  static final List<InstabugRoute> _steps = [];
+  final List<InstabugRoute> _steps = [];
 
-  static Route? lastRoute;
-
-  static void screenChanged(Route newRoute) {
+  void screenChanged(Route newRoute) {
     try {
-
-      print("screenChanged");
-      lastRoute = newRoute;
       final rawScreenName = newRoute.settings.name.toString().trim();
       final screenName = rawScreenName.isEmpty
           ? ReproStepsConstants.emptyScreenFallback
@@ -62,16 +57,5 @@ class InstabugNavigatorObserver extends NavigatorObserver {
   @override
   void didPush(Route route, Route? previousRoute) {
     screenChanged(route);
-  }
-
-  static void reportLastScreenChange() {
-    print("Called reportLastScreenChange");
-
-    if (lastRoute != null) {
-      print(
-          "Called reportLastScreenChange screenChanged  ${lastRoute!.settings.name}");
-
-      screenChanged(lastRoute!);
-    }
   }
 }

@@ -59,6 +59,8 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     private final InstabugPigeon.FeatureFlagsFlutterApi featureFlagsFlutterApi;
 
+    private String lastScreenChanged = null;
+
     public static InstabugApi init(BinaryMessenger messenger, Context context, Callable<Bitmap> screenshotProvider) {
         final InstabugPigeon.FeatureFlagsFlutterApi flutterApi = new InstabugPigeon.FeatureFlagsFlutterApi(messenger);
 
@@ -107,9 +109,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @NotNull
     @Override
-    public Boolean isBuilt() {
-        return Instabug.isBuilt();
-    }
+    public Boolean isBuilt() { return Instabug.isBuilt(); }
 
     @Override
     public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {
@@ -369,6 +369,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public void reportScreenChange(@NonNull String screenName) {
         try {
+            lastScreenChanged=screenName;
             Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "reportScreenChange",
                     Bitmap.class, String.class);
             if (method != null) {
@@ -382,6 +383,12 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void  reportLastScreenChange(){
+        if(lastScreenChanged!=null){
+            reportScreenChange(lastScreenChanged);
         }
     }
 
@@ -518,10 +525,10 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setNetworkLogBodyEnabled(@NonNull Boolean isEnabled) {
-                try {
+        try {
 //                    Instabug.setNetworkLogBodyEnabled(isEnabled);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

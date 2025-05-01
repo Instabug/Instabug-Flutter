@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
-import 'dart:io';
 
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unnecessary_import
@@ -12,13 +11,11 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unused_import
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
-import 'package:instabug_flutter/src/utils/hybrid_utils.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
@@ -156,7 +153,6 @@ class Instabug {
     BugReporting.$setup();
     Replies.$setup();
     Surveys.$setup();
-    HybridUtils.$setup();
   }
 
   /// @nodoc
