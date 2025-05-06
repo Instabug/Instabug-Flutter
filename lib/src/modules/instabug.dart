@@ -482,4 +482,12 @@ class Instabug {
   static Future<void> willRedirectToStore() async {
     return _host.willRedirectToStore();
   }
+
+  /// Initializes hybrid mode for applications that combine Flutter and native screens.
+  ///
+  /// This method should be called when using the Flutter SDK in a hybrid app to enable
+  /// proper communication and integration between native and Flutter screens.
+  static Future<void> initializeHybridMode() {
+    return _host.initHybridMode();
+  }
 }
