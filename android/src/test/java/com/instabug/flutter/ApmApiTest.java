@@ -1,11 +1,12 @@
 package com.instabug.flutter;
 
+import static com.instabug.apm.networking.ApmNetworkLoggerHelper.log;
+import static com.instabug.flutter.util.GlobalMocks.log;
 import static com.instabug.flutter.util.GlobalMocks.reflected;
 import static com.instabug.flutter.util.MockResult.makeResult;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockConstruction;
@@ -18,7 +19,8 @@ import com.instabug.apm.InternalAPM;
 import com.instabug.apm.configuration.cp.APMFeature;
 import com.instabug.apm.configuration.cp.FeatureAvailabilityCallback;
 import com.instabug.apm.model.ExecutionTrace;
-import com.instabug.apm.networking.APMNetworkLogger;
+import com.instabug.apm.networking.ApmNetworkLoggerHelper;
+import com.instabug.apm.networking.mapping.NetworkRequestAttributes;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.modules.ApmApi;
 import com.instabug.flutter.util.GlobalMocks;
@@ -37,10 +39,6 @@ import org.mockito.MockedStatic;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.instabug.flutter.util.GlobalMocks.reflected;
-import static com.instabug.flutter.util.MockResult.makeResult;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 
@@ -221,6 +219,8 @@ public class ApmApiTest {
 
     @Test
     public void testNetworkLogAndroid() {
+        final MockedStatic<ApmNetworkLoggerHelper> mApmNetworkLoggerHelper = mockStatic((ApmNetworkLoggerHelper.class));
+
         Map<String, Object> data = new HashMap<>();
         String requestUrl = "https://example.com";
         String requestBody = "hi";
@@ -237,6 +237,7 @@ public class ApmApiTest {
         HashMap<String, String> responseHeaders = new HashMap<>();
         String errorDomain = "ERROR_DOMAIN";
         String serverErrorMessage = "SERVER_ERROR_MESSAGE";
+        String gqlQueryName = "GQL_QUERY_NAME";
         data.put("url", requestUrl);
         data.put("requestBody", requestBody);
         data.put("responseBody", responseBody);
@@ -254,33 +255,12 @@ public class ApmApiTest {
         data.put("duration", requestDuration);
         data.put("serverErrorMessage", serverErrorMessage);
 
-        MockedConstruction<APMNetworkLogger> mAPMNetworkLogger = mockConstruction(APMNetworkLogger.class);
-        MockedConstruction<JSONObject> mJSONObject = mockConstruction(JSONObject.class, (mock, context) -> when(mock.toString(anyInt())).thenReturn("{}"));
-
         api.networkLogAndroid(data);
 
-        reflected.verify(() -> MockReflected.apmNetworkLog(
-                requestStartTime * 1000,
-                requestDuration / 1000,
-                "{}",
-                requestBody,
-                requestBodySize,
-                requestMethod,
-                requestUrl,
-                requestContentType,
-                "{}",
-                responseBody,
-                responseBodySize,
-                responseCode,
-                responseContentType,
-                errorDomain,
-                null,
-                serverErrorMessage,
-                null
-        ));
+        mApmNetworkLoggerHelper.verify(() -> log(data));
 
-        mAPMNetworkLogger.close();
-        mJSONObject.close();
+        mApmNetworkLoggerHelper.close();
+
     }
 
     @Test
