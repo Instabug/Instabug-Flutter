@@ -17,6 +17,9 @@ rootProject.allprojects {
         google()
         mavenCentral()
         maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots'
+        }
+        maven {
 			url "https://mvn.instabug.com/nexus/repository/instabug-internal/"
 			credentials {
 			  username "instabug"
@@ -51,7 +54,7 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:14.2.0.6611870-SNAPSHOT'
+    api 'com.instabug.library:instabug:14.3.0.6611829-SNAPSHOT'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"

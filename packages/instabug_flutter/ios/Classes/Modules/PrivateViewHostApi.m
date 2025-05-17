@@ -18,16 +18,16 @@ extern void InitPrivateViewHostApi(id<FlutterBinaryMessenger> _Nonnull messenger
 
 
 - (void)initWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
-    [InstabugApi setScreenshotMaskingHandler:^(UIImage * _Nonnull screenshot, void (^ _Nonnull completion)(UIImage * _Nullable)) {
-        
-        
-
-           [self.privateViewApi mask:screenshot completion:^(UIImage * _Nonnull maskedImage) {
-             if (maskedImage != nil) {
-                 completion(maskedImage);
-                }
-           }];
-       }];
+//    [InstabugApi setScreenshotMaskingHandler:^(UIImage * _Nonnull screenshot, void (^ _Nonnull completion)(UIImage * _Nullable)) {
+//
+//
+//
+//           [self.privateViewApi mask:screenshot completion:^(UIImage * _Nonnull maskedImage) {
+//             if (maskedImage != nil) {
+//                 completion(maskedImage);
+//                }
+//           }];
+//       }];
 }
 
 @end

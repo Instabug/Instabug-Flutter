@@ -37,11 +37,11 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         // Add the new step to the list
         _steps.add(route);
 
-        // If this route is in the array, report it and remove it from the list
-        if (_steps.contains(route)) {
-          await reportScreenChange(route.name);
-          _steps.remove(route);
-        }
+          // If this route is in the array, report it and remove it from the list
+          if (_steps.contains(route)) {
+            Instabug.reportScreenChange(route.name);
+            _steps.remove(route);
+          }
       });
     } catch (e) {
       InstabugLogger.I.e('Reporting screen change failed:', tag: Instabug.tag);
@@ -52,7 +52,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
   Future<void> reportScreenChange(String name) async {
     if (IBGBuildInfo.instance.isIOS) {
       // Wait for the Cupertino animation to complete
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future.delayed(const Duration(milliseconds: 250));
     }
     Instabug.reportScreenChange(name);
   }

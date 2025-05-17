@@ -16,10 +16,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
+import 'package:instabug_flutter/src/generated/instabug_private_view.api.g.dart';
 import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
+import 'package:instabug_flutter/src/utils/private_views/private_views_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:instabug_flutter/src/utils/user_steps/user_step_details.dart';
 import 'package:meta/meta.dart';
@@ -187,6 +189,7 @@ class Instabug {
   }) async {
     $setup();
     InstabugLogger.I.logLevel = debugLogsLevel;
+    _enableInstabugMaskingPrivateViews();
     await _host.init(
       token,
       invocationEvents.mapToString(),
@@ -377,6 +380,12 @@ class Instabug {
     String fileName,
   ) async {
     return _host.addFileAttachmentWithURL(filePath, fileName);
+  }
+
+  static void _enableInstabugMaskingPrivateViews() {
+    final api = InstabugPrivateViewHostApi();
+    api.init();
+    InstabugPrivateViewFlutterApi.setup(PrivateViewsManager.I);
   }
 
   /// Add file to be attached to the bug report.

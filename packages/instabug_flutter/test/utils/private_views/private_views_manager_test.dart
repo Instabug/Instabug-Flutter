@@ -68,7 +68,6 @@ void main() {
     testWidgets('getRectsOfPrivateViews detects masked labels', (tester) async {
       await tester.pumpWidget(
         InstabugWidget(
-          automasking: const [AutoMasking.labels],
           child: MaterialApp(
             home: Scaffold(
               body: ListView(
@@ -116,7 +115,6 @@ void main() {
 
       await tester.pumpWidget(
         InstabugWidget(
-          automasking: const [AutoMasking.media],
           child: MaterialApp(
             home: Scaffold(
               body: Column(
@@ -140,7 +138,6 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         InstabugWidget(
-          automasking: const [AutoMasking.textInputs],
           child: MaterialApp(
             home: Scaffold(
               body: ListView(

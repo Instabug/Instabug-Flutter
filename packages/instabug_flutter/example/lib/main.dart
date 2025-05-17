@@ -14,7 +14,6 @@ import 'package:instabug_flutter_example/src/widget/instabug_clipboard_input.dar
 import 'package:instabug_flutter_example/src/widget/instabug_text_field.dart';
 import 'package:instabug_flutter_example/src/widget/nested_view.dart';
 import 'package:instabug_flutter_example/src/widget/section_title.dart';
-import 'package:instabug_http_client/instabug_http_client.dart';
 
 import 'package:instabug_flutter_example/src/native/instabug_flutter_example_method_channel.dart';
 import 'package:instabug_flutter_example/src/widget/instabug_button.dart';
@@ -68,11 +67,7 @@ void main() {
       };
 
       runApp(
-        const InstabugWidget(automasking: [
-          AutoMasking.labels,
-          AutoMasking.textInputs,
-          AutoMasking.media
-        ], child: MyApp()),
+        const MyApp(),
       );
     },
     CrashReporting.reportCrash,
