@@ -1,4 +1,4 @@
-#import "Instabug.h"
+#import "InstabugSDK.h"
 #import "InstabugLogApi.h"
 
 extern void InitInstabugLogApi(id<FlutterBinaryMessenger> messenger) {

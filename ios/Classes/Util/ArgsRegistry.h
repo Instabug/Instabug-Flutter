@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <Instabug/Instabug.h>
+#import <InstabugSDK/InstabugSDK.h>
 
 typedef NSDictionary<NSString *, NSNumber *> ArgsDictionary;
 

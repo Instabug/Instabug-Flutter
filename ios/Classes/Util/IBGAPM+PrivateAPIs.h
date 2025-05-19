@@ -6,7 +6,7 @@
 //  Copyright © 2020 Moataz. All rights reserved.
 //
 
-#import <Instabug/IBGAPM.h>
+#import <InstabugSDK/IBGAPM.h>
 #import "IBGTimeIntervalUnits.h"
 
 @interface IBGAPM (PrivateAPIs)

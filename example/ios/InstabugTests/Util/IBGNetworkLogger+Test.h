@@ -1,6 +1,6 @@
 // This header file defines IBGNetworkLogger methods that are called using selectors for test verification.
 
-#import <Instabug/Instabug.h>
+#import <InstabugSDK/InstabugSDK.h>
 
 @interface IBGNetworkLogger (Test)
 + (void)addNetworkLogWithUrl:(NSString *)url

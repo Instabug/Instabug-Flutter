@@ -1,7 +1,7 @@
 #import <XCTest/XCTest.h>
 #import "OCMock/OCMock.h"
 #import "InstabugLogApi.h"
-#import "Instabug/IBGLog.h"
+#import "InstabugSDK/IBGLog.h"
 
 @interface InstabugLogApiTests : XCTestCase
 

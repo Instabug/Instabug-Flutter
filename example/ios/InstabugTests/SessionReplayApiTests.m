@@ -3,7 +3,7 @@
 #import <instabug_flutter/SessionReplayApi.h>
 #import "OCMock/OCMock.h"
 #import "SessionReplayApi.h"
-#import "Instabug/IBGSessionReplay.h"
+#import "InstabugSDK/IBGSessionReplay.h"
 
 @interface SessionReplayApiTests : XCTestCase
 

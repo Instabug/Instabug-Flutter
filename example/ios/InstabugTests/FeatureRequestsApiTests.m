@@ -1,7 +1,7 @@
 #import <XCTest/XCTest.h>
 #import "OCMock/OCMock.h"
 #import "FeatureRequestsApi.h"
-#import "Instabug/IBGFeatureRequests.h"
+#import "InstabugSDK/IBGFeatureRequests.h"
 
 @interface FeatureRequestsApiTests : XCTestCase
 
