@@ -186,4 +186,26 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
     }
         BugReporting.setCommentMinimumCharacterCount(limit.intValue(), reportTypesArray);
     }
+
+    @Override
+public void addUserConsents(String key, String description, Boolean mandatory, Boolean checked, String actionType) {
+        ThreadManager.runOnMainThread(new Runnable() {
+        @Override
+        public void run() {
+            String mappedActionType;
+            try {
+                if (actionType==null) {
+                    mappedActionType = null;
+                }
+                else {
+                    mappedActionType = ArgsRegistry.userConsentActionType.get(actionType);
+                }
+
+                BugReporting.addUserConsent(key, description, mandatory, checked, mappedActionType);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    });
+}
 }
