@@ -124,6 +124,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Instabug.setColorTheme(colorTheme);
   }
 
+  void _navigateToBugs() {
+    ///This way of navigation utilize screenLoading automatic approach [Navigator 1]
+    Navigator.pushNamed(context, BugReportingPage.screenName);
+  }
+
   void _navigateToCrashes() {
     ///This way of navigation utilize screenLoading automatic approach [Navigator 1]
     Navigator.pushNamed(context, CrashesPage.screenName);
@@ -174,10 +179,15 @@ class _MyHomePageState extends State<MyHomePage> {
             textAlign: TextAlign.center,
           ),
         ),
+        // InstabugButton(
+        //   onPressed: restartInstabug,
+        //   text: 'Restart Instabug',
+        // ),
         InstabugButton(
-          onPressed: restartInstabug,
-          text: 'Restart Instabug',
+          onPressed: _navigateToBugs,
+          text: 'Bug Reporting',
         ),
+
         const SectionTitle('Primary Color'),
         InstabugTextField(
           controller: primaryColorController,
@@ -187,54 +197,54 @@ class _MyHomePageState extends State<MyHomePage> {
           text: 'Change Primary Color',
           onPressed: changePrimaryColor,
         ),
-        const SectionTitle('Change Invocation Event'),
-        ButtonBar(
-          mainAxisSize: MainAxisSize.min,
-          alignment: MainAxisAlignment.start,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () => setInvocationEvent(InvocationEvent.none),
-              style: buttonStyle,
-              child: const Text('None'),
-            ),
-            ElevatedButton(
-              onPressed: () => setInvocationEvent(InvocationEvent.shake),
-              style: buttonStyle,
-              child: const Text('Shake'),
-            ),
-            ElevatedButton(
-              onPressed: () => setInvocationEvent(InvocationEvent.screenshot),
-              style: buttonStyle,
-              child: const Text('Screenshot'),
-            ),
-          ],
-        ),
-        ButtonBar(
-          mainAxisSize: MainAxisSize.min,
-          alignment: MainAxisAlignment.start,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () =>
-                  setInvocationEvent(InvocationEvent.floatingButton),
-              style: buttonStyle,
-              child: const Text('Floating Button'),
-            ),
-            ElevatedButton(
-              onPressed: () =>
-                  setInvocationEvent(InvocationEvent.twoFingersSwipeLeft),
-              style: buttonStyle,
-              child: const Text('Two Fingers Swipe Left'),
-            ),
-          ],
-        ),
-        InstabugButton(
-          onPressed: show,
-          text: 'Invoke',
-        ),
-        InstabugButton(
-          onPressed: setOnDismissCallback,
-          text: 'Set On Dismiss Callback',
-        ),
+        // const SectionTitle('Change Invocation Event'),
+        // ButtonBar(
+        //   mainAxisSize: MainAxisSize.min,
+        //   alignment: MainAxisAlignment.start,
+        //   children: <Widget>[
+        //     ElevatedButton(
+        //       onPressed: () => setInvocationEvent(InvocationEvent.none),
+        //       style: buttonStyle,
+        //       child: const Text('None'),
+        //     ),
+        //     ElevatedButton(
+        //       onPressed: () => setInvocationEvent(InvocationEvent.shake),
+        //       style: buttonStyle,
+        //       child: const Text('Shake'),
+        //     ),
+        //     ElevatedButton(
+        //       onPressed: () => setInvocationEvent(InvocationEvent.screenshot),
+        //       style: buttonStyle,
+        //       child: const Text('Screenshot'),
+        //     ),
+        //   ],
+        // ),
+        // ButtonBar(
+        //   mainAxisSize: MainAxisSize.min,
+        //   alignment: MainAxisAlignment.start,
+        //   children: <Widget>[
+        //     ElevatedButton(
+        //       onPressed: () =>
+        //           setInvocationEvent(InvocationEvent.floatingButton),
+        //       style: buttonStyle,
+        //       child: const Text('Floating Button'),
+        //     ),
+        //     ElevatedButton(
+        //       onPressed: () =>
+        //           setInvocationEvent(InvocationEvent.twoFingersSwipeLeft),
+        //       style: buttonStyle,
+        //       child: const Text('Two Fingers Swipe Left'),
+        //     ),
+        //   ],
+        // ),
+        // InstabugButton(
+        //   onPressed: show,
+        //   text: 'Invoke',
+        // ),
+        // InstabugButton(
+        //   onPressed: setOnDismissCallback,
+        //   text: 'Set On Dismiss Callback',
+        // ),
         const SectionTitle('Repro Steps'),
         InstabugTextField(
           controller: screenNameController,
@@ -244,36 +254,36 @@ class _MyHomePageState extends State<MyHomePage> {
           text: 'Report Screen Change',
           onPressed: reportScreenChange,
         ),
-        InstabugButton(
-          onPressed: sendBugReport,
-          text: 'Send Bug Report',
-        ),
+        // InstabugButton(
+        //   onPressed: sendBugReport,
+        //   text: 'Send Bug Report',
+        // ),
         InstabugButton(
           onPressed: showManualSurvey,
           text: 'Show Manual Survey',
         ),
-        const SectionTitle('Change Report Types'),
-        ButtonBar(
-          mainAxisSize: MainAxisSize.min,
-          alignment: MainAxisAlignment.start,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () => toggleReportType(ReportType.bug),
-              style: buttonStyle,
-              child: const Text('Bug'),
-            ),
-            ElevatedButton(
-              onPressed: () => toggleReportType(ReportType.feedback),
-              style: buttonStyle,
-              child: const Text('Feedback'),
-            ),
-            ElevatedButton(
-              onPressed: () => toggleReportType(ReportType.question),
-              style: buttonStyle,
-              child: const Text('Question'),
-            ),
-          ],
-        ),
+        // const SectionTitle('Change Report Types'),
+        // ButtonBar(
+        //   mainAxisSize: MainAxisSize.min,
+        //   alignment: MainAxisAlignment.start,
+        //   children: <Widget>[
+        //     ElevatedButton(
+        //       onPressed: () => toggleReportType(ReportType.bug),
+        //       style: buttonStyle,
+        //       child: const Text('Bug'),
+        //     ),
+        //     ElevatedButton(
+        //       onPressed: () => toggleReportType(ReportType.feedback),
+        //       style: buttonStyle,
+        //       child: const Text('Feedback'),
+        //     ),
+        //     ElevatedButton(
+        //       onPressed: () => toggleReportType(ReportType.question),
+        //       style: buttonStyle,
+        //       child: const Text('Question'),
+        //     ),
+        //   ],
+        // ),
         InstabugButton(
           onPressed: changeFloatingButtonEdge,
           text: 'Move Floating Button to Left',
