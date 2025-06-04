@@ -20,6 +20,8 @@ import 'src/widget/section_title.dart';
 
 part 'src/screens/crashes_page.dart';
 
+part 'src/screens/bug_reporting.dart';
+
 part 'src/screens/complex_page.dart';
 
 part 'src/screens/apm_page.dart';

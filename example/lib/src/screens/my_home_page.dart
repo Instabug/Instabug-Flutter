@@ -124,6 +124,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Instabug.setColorTheme(colorTheme);
   }
 
+  void _navigateToBugs() {
+    ///This way of navigation utilize screenLoading automatic approach [Navigator 1]
+    Navigator.pushNamed(context, BugReportingPage.screenName);
+  }
+
   void _navigateToCrashes() {
     ///This way of navigation utilize screenLoading automatic approach [Navigator 1]
     Navigator.pushNamed(context, CrashesPage.screenName);
@@ -177,6 +182,10 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: restartInstabug,
           text: 'Restart Instabug',
+        ),
+        InstabugButton(
+          onPressed: _navigateToBugs,
+          text: 'Bug Reporting',
         ),
         const SectionTitle('Primary Color'),
         InstabugTextField(
