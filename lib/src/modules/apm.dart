@@ -346,4 +346,23 @@ class APM {
   }) {
     return ScreenLoadingManager.wrapRoutes(routes, exclude: exclude);
   }
+
+  /// Returns a Future<bool> indicating whether the screen
+  /// render is enabled.
+  ///
+  /// Returns:
+  ///   A Future<bool> is being returned.
+  @internal
+  static Future<bool> isScreenRenderEnabled() async{
+    return _host.isScreenRenderEnabled();
+  }
+
+  /// Retrieve the device refresh rate from native side .
+  ///
+  /// Returns:
+  ///   A Future<double> that represent the refresh rate.
+  @internal
+  static Future<double> getDeviceRefreshRate(){
+    return _host.deviceRefreshRate();
+  }
 }

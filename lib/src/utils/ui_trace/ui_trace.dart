@@ -1,4 +1,4 @@
-import 'package:instabug_flutter/src/utils/screen_loading/route_matcher.dart';
+import 'package:instabug_flutter/src/utils/ui_trace/route_matcher.dart';
 
 class UiTrace {
   final String screenName;

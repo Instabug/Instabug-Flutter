@@ -6,6 +6,7 @@ import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/repro_steps_constants.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
+import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
 
 class InstabugNavigatorObserver extends NavigatorObserver {
   final List<InstabugRoute> _steps = [];
@@ -24,7 +25,15 @@ class InstabugNavigatorObserver extends NavigatorObserver {
       );
 
       // Starts a the new UI trace which is exclusive to screen loading
-      ScreenLoadingManager.I.startUiTrace(maskedScreenName, screenName);
+      ScreenLoadingManager.I
+          .startUiTrace(maskedScreenName, screenName)
+          .then((uiTraceId) {
+        if (uiTraceId != null) {
+          InstabugScreenRenderManager.I
+              .startScreenRenderCollectorForTraceId(uiTraceId);
+        }
+      });
+
       // If there is a step that hasn't been pushed yet
       if (_steps.isNotEmpty) {
         // Report the last step and remove it from the list

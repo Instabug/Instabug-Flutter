@@ -345,7 +345,6 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         isScreenLoadingEnabled(result);
     }
 
-
     @Override
     public void isEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
         try {
@@ -385,4 +384,20 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
             e.printStackTrace();
         }
     }
+
+
+    @Override
+    public void isScreenRenderEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
+        try {
+            result.success(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deviceRefreshRate(@NonNull ApmPigeon.Result<Double> result) {
+        result.success(60.0);
+    }
+
 }

@@ -30,6 +30,8 @@ part 'src/screens/screen_loading_page.dart';
 
 part 'src/screens/my_home_page.dart';
 
+part 'src/screens/screen_render_page.dart';
+
 part 'src/components/fatal_crashes_content.dart';
 
 part 'src/components/non_fatal_crashes_content.dart';
@@ -41,6 +43,10 @@ part 'src/components/page.dart';
 part 'src/components/traces_content.dart';
 
 part 'src/components/flows_content.dart';
+
+part 'src/components/screen_render.dart';
+
+part 'src/components/animated_box.dart';
 
 void main() {
   runZonedGuarded(

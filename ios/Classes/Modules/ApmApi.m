@@ -197,5 +197,15 @@ NSMutableDictionary *traces;
     completion(isEnabledNumber, nil);
 }
 
+- (void)isScreenRenderEnabledWithCompletion:(void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion{
+    BOOL isScreenRenderEnabled = YES;
+    NSNumber *isEnabledNumber = @(isScreenRenderEnabled);
+    completion(isEnabledNumber, nil);
+}
+
+- (void)deviceRefreshRateWithCompletion:(void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion{
+    completion(@60 , nil);
+}
+
 
 @end

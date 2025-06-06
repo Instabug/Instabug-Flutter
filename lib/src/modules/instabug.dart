@@ -21,6 +21,8 @@ import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
+import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
+import 'package:instabug_flutter/src/utils/screen_rendering/instabug_widget_binding_observer.dart';
 import 'package:meta/meta.dart';
 
 enum InvocationEvent {
@@ -191,6 +193,9 @@ class Instabug {
       invocationEvents.mapToString(),
       debugLogsLevel.toString(),
     );
+
+    await InstabugScreenRenderManager.I.init();
+
     return FeatureFlagsManager().registerW3CFlagsListener();
   }
 

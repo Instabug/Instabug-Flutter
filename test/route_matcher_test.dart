@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:instabug_flutter/src/utils/screen_loading/route_matcher.dart';
+import 'package:instabug_flutter/src/utils/ui_trace/route_matcher.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
