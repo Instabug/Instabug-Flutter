@@ -21,5 +21,6 @@ typedef NSDictionary<NSString *, NSNumber *> ArgsDictionary;
 
 + (ArgsDictionary *)locales;
 + (NSDictionary<NSString *, NSString *> *)placeholders;
++ (ArgsDictionary *) userConsentActionTypes;
 
 @end

@@ -1,10 +1,18 @@
 # Changelog
 
+<<<<<<< feat/xcode-16
 ## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...dev)
 
 ### Added
 
 - Add support for xCode 16. ([#574](https://github.com/Instabug/Instabug-Flutter/pull/574))
+=======
+## [Unreleased]
+
+### Added
+
+- Add support for BugReporting user consents. ([#573](https://github.com/Instabug/Instabug-Flutter/pull/573))
+>>>>>>> dev
 
 ## [14.3.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.1.0...14.3.0) (April 21, 2025)
 
