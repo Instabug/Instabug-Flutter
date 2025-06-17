@@ -30,7 +30,6 @@ target 'Runner' do
 
   use_frameworks!
   use_modular_headers!
-  pod 'Instabug', :podspec => 'https://ios-releases.instabug.com/custom/fix-main-thread-warning/15.0.0/Instabug.podspec'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
