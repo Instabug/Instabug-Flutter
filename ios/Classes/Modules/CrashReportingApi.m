@@ -1,4 +1,4 @@
-#import "Instabug.h"
+#import "InstabugSDK.h"
 #import "CrashReportingApi.h"
 #import "../Util/IBGCrashReporting+CP.h"
 #import "ArgsRegistry.h"

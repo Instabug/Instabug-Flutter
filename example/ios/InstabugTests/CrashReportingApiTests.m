@@ -1,8 +1,8 @@
 #import <XCTest/XCTest.h>
 #import "OCMock/OCMock.h"
 #import "CrashReportingApi.h"
-#import "Instabug/IBGCrashReporting.h"
-#import "Instabug/Instabug.h"
+#import "InstabugSDK/IBGCrashReporting.h"
+#import "InstabugSDK/InstabugSDK.h"
 #import "Util/Instabug+Test.h"
 #import "Util/IBGCrashReporting+CP.h"
 

@@ -1,8 +1,10 @@
 # Changelog
 
-## [Unreleased]
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...dev)
 
 ### Added
+
+- Add support for xCode 16. ([#574](https://github.com/Instabug/Instabug-Flutter/pull/574))
 
 - Add support for BugReporting user consents. ([#573](https://github.com/Instabug/Instabug-Flutter/pull/573))
 
@@ -18,11 +20,9 @@
 
 - Bump Instabug Android SDK to v14.3.0 ([#569](https://github.com/Instabug/Instabug-Flutter/pull/569)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v14.3.0).
 
-
 ### Fixed
 
 - Fixed an issue with `SetReproStepsConfig` on Android platform ([#543](https://github.com/Instabug/Instabug-Flutter/pull/543)).
-
 
 ## [14.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.0.0...v14.1.0) (January 2, 2025)
 
