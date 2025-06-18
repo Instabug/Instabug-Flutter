@@ -13,7 +13,6 @@ import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
-import com.instabug.library.ReproMode;
 import com.instabug.library.internal.crossplatform.CoreFeature;
 import com.instabug.library.internal.crossplatform.CoreFeaturesState;
 import com.instabug.library.internal.crossplatform.FeaturesStateListener;
@@ -23,7 +22,6 @@ import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.IssueType;
-import com.instabug.library.Platform;
 import com.instabug.library.ReproConfigurations;
 import com.instabug.library.featuresflags.model.IBGFeatureFlag;
 import com.instabug.library.internal.module.InstabugLocale;
@@ -68,20 +66,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         this.featureFlagsFlutterApi = featureFlagsFlutterApi;
     }
 
-    @VisibleForTesting
-    public void setCurrentPlatform() {
-        try {
-            Method method = Reflection.getMethod(Class.forName("com.instabug.library.Instabug"), "setCurrentPlatform", int.class);
-            if (method != null) {
-                method.invoke(null, Platform.FLUTTER);
-            } else {
-                Log.e(TAG, "setCurrentPlatform was not found by reflection");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {
         try {
@@ -106,8 +90,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {
-        setCurrentPlatform();
-
         InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
         for (int i = 0; i < invocationEvents.size(); i++) {
             String key = invocationEvents.get(i);
@@ -117,10 +99,8 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         final Application application = (Application) context;
         final int parsedLogLevel = ArgsRegistry.sdkLogLevels.get(debugLogsLevel);
 
-        new Instabug.Builder(application, token)
-                .setInvocationEvents(invocationEventsArray)
-                .setSdkDebugLogsLevel(parsedLogLevel)
-                .build();
+        InstabugInitializer.Builder builder = new InstabugInitializer.Builder(application, token, parsedLogLevel, invocationEventsArray);
+        builder.build();
 
         Instabug.setScreenshotProvider(screenshotProvider);
     }

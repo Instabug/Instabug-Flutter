@@ -123,13 +123,6 @@ public class InstabugApiTest {
     }
 
     @Test
-    public void testSetCurrentPlatform() {
-        api.setCurrentPlatform();
-
-        reflected.verify(() -> MockReflected.setCurrentPlatform(Platform.FLUTTER));
-    }
-
-    @Test
     public void testSdkInit() {
         String token = "app-token";
         List<String> invocationEvents = Collections.singletonList("InvocationEvent.floatingButton");
