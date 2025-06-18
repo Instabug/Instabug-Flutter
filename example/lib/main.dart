@@ -48,6 +48,8 @@ part 'src/components/screen_render.dart';
 
 part 'src/components/animated_box.dart';
 
+part 'src/components/ui_traces_content.dart';
+
 void main() {
   runZonedGuarded(
     () {

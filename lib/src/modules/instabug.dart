@@ -11,6 +11,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unused_import
 import 'package:flutter/services.dart';
@@ -23,6 +24,7 @@ import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_widget_binding_observer.dart';
+import 'package:instabug_flutter/src/utils/ui_trace/flags_config.dart';
 import 'package:meta/meta.dart';
 
 enum InvocationEvent {
@@ -194,7 +196,10 @@ class Instabug {
       debugLogsLevel.toString(),
     );
 
-    await InstabugScreenRenderManager.I.init();
+    if (await FlagsConfig.screenRendering.isEnabled()) {
+      checkForWidgetBinding();
+      await InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
+    }
 
     return FeatureFlagsManager().registerW3CFlagsListener();
   }

@@ -1,27 +1,42 @@
-import 'dart:async';
 import 'dart:developer';
-import 'dart:ui';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:instabug_flutter/src/models/InstabugScreenRenderData.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
+import 'package:meta/meta.dart';
 
 class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
+  InstabugWidgetsBindingObserver._();
+
+  static final InstabugWidgetsBindingObserver _instance =
+  InstabugWidgetsBindingObserver._();
+
+  /// Returns the singleton instance of [InstabugWidgetsBindingObserver].
+  static InstabugWidgetsBindingObserver get instance => _instance;
+
+  /// Shorthand for [instance]
+  static InstabugWidgetsBindingObserver get I => instance;
+
+  /// Logging tag for debugging purposes.
+  static const tag = "InstabugWidgetsBindingObserver";
+
   void _handleResumedState() {
     log('Performing resume actions...');
     final lastUiTrace = ScreenLoadingManager.I.currentUiTrace;
     if (lastUiTrace != null) {
       final maskedScreenName = ScreenNameMasker.I.mask(lastUiTrace.screenName);
       ScreenLoadingManager.I
-          .startUiTrace(maskedScreenName, lastUiTrace.screenName);
+          .startUiTrace(maskedScreenName, lastUiTrace.screenName)
+          .then((uiTraceId) {
+        if (uiTraceId != null) {
+          InstabugScreenRenderManager.I
+              .startScreenRenderCollectorForTraceId(uiTraceId);
+        }
+      });
     }
-    // ... complex logic for resumed state
   }
 
   void _handlePausedState() {
-    // ... complex logic for paused state
     log('Performing pause actions...');
     InstabugScreenRenderManager.I.stopScreenRenderCollector();
   }
@@ -29,7 +44,6 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
   void _handleDetachedState() {
     log('Performing detached actions...');
     InstabugScreenRenderManager.I.stopScreenRenderCollector();
-    // ... complex logic for paused state
   }
 
   @override
@@ -51,5 +65,14 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
         // TODO: Handle this case.
         break;
     }
+  }
+}
+
+@internal
+void checkForWidgetBinding() {
+  try {
+    WidgetsBinding.instance;
+  } catch (_) {
+    WidgetsFlutterBinding.ensureInitialized();
   }
 }

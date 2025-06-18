@@ -1,15 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/src/models/InstabugFrameData.dart';
 
 class InstabugScreenRenderData {
   int traceId;
-  int totalSlowFramesDurations;
-  int totalFrozenFramesDurations;
+  int slowFramesTotalDuration;
+  int frozenFramesTotalDuration;
   List<InstabugFrameData> frameData;
 
   InstabugScreenRenderData({
-    this.totalSlowFramesDurations = 0,
-    this.totalFrozenFramesDurations = 0,
-    required this.frameData ,
+    this.slowFramesTotalDuration = 0,
+    this.frozenFramesTotalDuration = 0,
+    required this.frameData,
     this.traceId = -1,
   });
 
@@ -19,14 +20,25 @@ class InstabugScreenRenderData {
 
   void clear() {
     traceId = -1;
-    totalFrozenFramesDurations = 0;
-    totalSlowFramesDurations = 0;
+    frozenFramesTotalDuration = 0;
+    slowFramesTotalDuration = 0;
     frameData.clear();
   }
 
   @override
-  String toString() => '\nTraceId $traceId\n'
-      'TotalSlowFramesDurations: $totalSlowFramesDurations\n'
-      'TotalFrozenFramesDurations $totalFrozenFramesDurations\n'
-      'FrameData[\n${frameData.map((element) => '\t\n$element')}\n]';
+  String toString() => '\nTrace Id $traceId\n'
+      'Slow Frames Total Duration: $slowFramesTotalDuration\n'
+      'Frozen Frames Total Duration $frozenFramesTotalDuration\n'
+      'Frame Data[\n${frameData.map((element) => '\t\n$element')}\n]';
+
+  @override
+  bool operator ==(covariant InstabugScreenRenderData other) {
+    if (identical(this, other)) return true;
+    return traceId == other.traceId &&
+        slowFramesTotalDuration == other.slowFramesTotalDuration &&
+        frozenFramesTotalDuration == other.frozenFramesTotalDuration &&
+        listEquals(frameData, other.frameData);
+  }
+
+
 }
