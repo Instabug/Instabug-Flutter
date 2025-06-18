@@ -40,7 +40,7 @@ class InstabugScreenRenderManager {
 
   InstabugScreenRenderManager._();
 
-  static final InstabugScreenRenderManager _instance =
+  static  InstabugScreenRenderManager _instance =
       InstabugScreenRenderManager._();
 
   /// Returns the singleton instance of [InstabugScreenRenderManager].
@@ -53,10 +53,16 @@ class InstabugScreenRenderManager {
   static const tag = "ScreenRenderManager";
 
   /// A named constructor used for testing purposes
-
+  @internal
   @visibleForTesting
   InstabugScreenRenderManager.init();
 
+  /// Allows setting a custom instance for testing.
+  @visibleForTesting
+  // ignore: use_setters_to_change_properties
+  static void setInstance(InstabugScreenRenderManager instance) {
+    _instance = instance;
+  }
   /// setup function for [InstabugScreenRenderManager]
   @internal
   Future<void> init(WidgetsBinding widgetBinding) async {
