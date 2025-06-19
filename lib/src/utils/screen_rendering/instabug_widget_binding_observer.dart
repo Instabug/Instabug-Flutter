@@ -5,11 +5,12 @@ import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
 import 'package:meta/meta.dart';
 
+//todo: remove logs
 class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
   InstabugWidgetsBindingObserver._();
 
   static final InstabugWidgetsBindingObserver _instance =
-  InstabugWidgetsBindingObserver._();
+      InstabugWidgetsBindingObserver._();
 
   /// Returns the singleton instance of [InstabugWidgetsBindingObserver].
   static InstabugWidgetsBindingObserver get instance => _instance;
@@ -28,7 +29,8 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
       ScreenLoadingManager.I
           .startUiTrace(maskedScreenName, lastUiTrace.screenName)
           .then((uiTraceId) {
-        if (uiTraceId != null) {
+        if (uiTraceId != null &&
+            InstabugScreenRenderManager.I.screenRenderEnabled) {
           InstabugScreenRenderManager.I
               .startScreenRenderCollectorForTraceId(uiTraceId);
         }

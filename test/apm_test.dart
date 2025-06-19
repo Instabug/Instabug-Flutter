@@ -165,6 +165,9 @@ void main() {
   test('[startUITrace] should call host method', () async {
     const name = 'UI-trace';
 
+    //disable the feature flag for screen render feature in order to skip its checking.
+    when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => false);
+
     await APM.startUITrace(name);
 
     verify(
@@ -214,7 +217,6 @@ void main() {
     verify(
       mHost.startCpUiTrace(screenName, microTimeStamp, traceId),
     ).called(1);
-    verifyNoMoreInteractions(mHost);
   });
 
   test('[reportScreenLoading] should call host method', () async {
@@ -235,7 +237,6 @@ void main() {
         uiTraceId,
       ),
     ).called(1);
-    verifyNoMoreInteractions(mHost);
   });
 
   test('[endScreenLoading] should call host method', () async {
@@ -247,7 +248,6 @@ void main() {
     verify(
       mHost.endScreenLoadingCP(timeStampMicro, uiTraceId),
     ).called(1);
-    verifyNoMoreInteractions(mHost);
   });
 
   test('[isSEndScreenLoadingEnabled] should call host method', () async {

@@ -8,6 +8,7 @@ import 'package:instabug_flutter/src/modules/apm.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_widget_binding_observer.dart';
 import 'package:meta/meta.dart';
 
+//todo: remove logs
 extension on int {
   int get inMicro => this * 1000;
 }
@@ -37,10 +38,10 @@ class InstabugScreenRenderManager {
   int _frozenFramesTotalDuration = 0;
 
   bool _isTimingsListenerAttached = false;
-
+  bool screenRenderEnabled = false;
   InstabugScreenRenderManager._();
 
-  static  InstabugScreenRenderManager _instance =
+  static InstabugScreenRenderManager _instance =
       InstabugScreenRenderManager._();
 
   /// Returns the singleton instance of [InstabugScreenRenderManager].
@@ -52,25 +53,15 @@ class InstabugScreenRenderManager {
   /// Logging tag for debugging purposes.
   static const tag = "ScreenRenderManager";
 
-  /// A named constructor used for testing purposes
-  @internal
-  @visibleForTesting
-  InstabugScreenRenderManager.init();
-
-  /// Allows setting a custom instance for testing.
-  @visibleForTesting
-  // ignore: use_setters_to_change_properties
-  static void setInstance(InstabugScreenRenderManager instance) {
-    _instance = instance;
-  }
   /// setup function for [InstabugScreenRenderManager]
   @internal
-  Future<void> init(WidgetsBinding widgetBinding) async {
+  void init(WidgetsBinding widgetBinding, [double? refreshRate]) {
     if (!_isTimingsListenerAttached) {
       _widgetsBinding = widgetBinding;
       _addWidgetBindingObserver();
-      await _initStaticValues();
+      _initStaticValues(refreshRate);
       _initFrameTimings();
+      screenRenderEnabled = true;
     }
   }
 
@@ -153,22 +144,24 @@ class InstabugScreenRenderManager {
   /// Presently, on Android and Web this collection will only contain the display that the current window is on.
   /// On iOS, it will only contains the main display on the phone or tablet.
   /// On Desktop, it will contain only a main display with a valid refresh rate but invalid size and device pixel ratio values.
-  //todo: will be removed after getting the actual value from native side.
+  //todo: will be compared with value from native side after it's implemented.
   double get _getDeviceRefreshRate =>
-      _widgetsBinding.platformDispatcher.displays.last.refreshRate;
+      _widgetsBinding.platformDispatcher.displays.first.refreshRate;
 
   /// Get device refresh rate from native side.
+  //todo: will be compared with value from native side after it's implemented.
+  // ignore: unused_element
   Future<double> get _getDeviceRefreshRateFromNative =>
       APM.getDeviceRefreshRate();
 
   /// Initialize the static variables
-  Future<void> _initStaticValues() async {
+  void _initStaticValues(double? refreshRate) {
     _timingsCallback = (timings) {
       for (final frameTiming in timings) {
         analyzeFrameTiming(frameTiming);
       }
     };
-    _deviceRefreshRate = await _getDeviceRefreshRateFromNative;
+    _deviceRefreshRate = refreshRate ?? _getDeviceRefreshRate;
     _slowFrameThresholdMs = _targetMsPerFrame(_deviceRefreshRate);
     _screenRenderForAutoUiTrace = InstabugScreenRenderData(frameData: []);
     _screenRenderForCustomUiTrace = InstabugScreenRenderData(frameData: []);
@@ -270,7 +263,7 @@ class InstabugScreenRenderManager {
     _delayedFrames.add(InstabugFrameData(startTime, duration));
   }
 
-  //todo: to be removed
+  //todo: will be removed
   void _displayFrameTimingDetails(FrameTiming frameTiming) {
     if (_isSlow) {
       debugPrint(
@@ -306,15 +299,19 @@ class InstabugScreenRenderManager {
   }
 
   @visibleForTesting
-  Future<void> reportScreenRending(InstabugScreenRenderData screenRenderData,
-      [UiTraceType type = UiTraceType.auto]) async {
+  Future<void> reportScreenRending(
+    InstabugScreenRenderData screenRenderData, [
+    UiTraceType type = UiTraceType.auto,
+  ]) async {
     if (type == UiTraceType.auto) {
       _reportScreenRenderForAutoUiTrace(screenRenderData);
     } else {
       _reportScreenRenderForCustomUiTrace(screenRenderData);
     }
-    log("Reported Data (${type == UiTraceType.auto ? 'auto' : 'custom'}): $screenRenderData",
-        name: tag);
+    log(
+      "Reported Data (${type == UiTraceType.auto ? 'auto' : 'custom'}): $screenRenderData",
+      name: tag,
+    );
   }
 
   Future<void> _reportScreenRenderForCustomUiTrace(
@@ -348,6 +345,16 @@ class InstabugScreenRenderManager {
   }
 
   /// --------------------------- testing helper functions ---------------------
+
+  @visibleForTesting
+  InstabugScreenRenderManager.init();
+
+  @visibleForTesting
+  // ignore: use_setters_to_change_properties
+  static void setInstance(InstabugScreenRenderManager instance) {
+    _instance = instance;
+  }
+
   @visibleForTesting
   InstabugScreenRenderData get screenRenderForAutoUiTrace =>
       _screenRenderForAutoUiTrace;

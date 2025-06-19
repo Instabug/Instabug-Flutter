@@ -48,13 +48,15 @@ void main() {
       when(mockNameMasker.mask("HomeScreen")).thenReturn("MaskedHome");
       when(mockLoadingManager.startUiTrace("MaskedHome", "HomeScreen"))
           .thenAnswer((_) async => 123);
+      when(mockRenderManager.screenRenderEnabled).thenReturn(true);
 
       InstabugWidgetsBindingObserver.I
           .didChangeAppLifecycleState(AppLifecycleState.resumed);
 
       // wait for async call to complete
       await untilCalled(
-          mockRenderManager.startScreenRenderCollectorForTraceId(123));
+        mockRenderManager.startScreenRenderCollectorForTraceId(123),
+      );
 
       verify(mockRenderManager.startScreenRenderCollectorForTraceId(123))
           .called(1);
@@ -74,17 +76,23 @@ void main() {
 
     test('handles AppLifecycleState.inactive with no action', () {
       // Just ensure it doesn't crash
-      expect(() {
-        InstabugWidgetsBindingObserver.I
-            .didChangeAppLifecycleState(AppLifecycleState.inactive);
-      }, returnsNormally);
+      expect(
+        () {
+          InstabugWidgetsBindingObserver.I
+              .didChangeAppLifecycleState(AppLifecycleState.inactive);
+        },
+        returnsNormally,
+      );
     });
 
     test('handles AppLifecycleState.hidden with no action', () {
-      expect(() {
-        InstabugWidgetsBindingObserver.I
-            .didChangeAppLifecycleState(AppLifecycleState.hidden);
-      }, returnsNormally);
+      expect(
+        () {
+          InstabugWidgetsBindingObserver.I
+              .didChangeAppLifecycleState(AppLifecycleState.hidden);
+        },
+        returnsNormally,
+      );
     });
 
     test('_handleResumedState does nothing if no currentUiTrace', () {

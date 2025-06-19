@@ -10,13 +10,10 @@ import 'package:mockito/mockito.dart';
 
 import 'instabug_navigator_observer_test.mocks.dart';
 
-@GenerateMocks([
-  InstabugHostApi,
-  ScreenLoadingManager,
-])
+@GenerateMocks([InstabugHostApi])
+@GenerateNiceMocks([MockSpec<ScreenLoadingManager>()])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  WidgetsFlutterBinding.ensureInitialized();
 
   final mHost = MockInstabugHostApi();
   final mScreenLoadingManager = MockScreenLoadingManager();
@@ -41,7 +38,7 @@ void main() {
   });
 
   test('should report screen change when a route is pushed', () {
-    fakeAsync((async) {
+    fakeAsync((async) async {
       observer.didPush(route, previousRoute);
 
       async.elapse(const Duration(milliseconds: 1000));

@@ -198,7 +198,7 @@ class Instabug {
 
     if (await FlagsConfig.screenRendering.isEnabled()) {
       checkForWidgetBinding();
-      await InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
+      InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
     }
 
     return FeatureFlagsManager().registerW3CFlagsListener();

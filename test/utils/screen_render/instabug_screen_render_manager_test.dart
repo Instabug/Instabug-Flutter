@@ -19,6 +19,7 @@ void main() {
   late InstabugScreenRenderManager manager;
   late MockApmHostApi mApmHost;
   late MockWidgetsBinding mWidgetBinding;
+  const mRefreshRate = 60.0;
 
   setUp(() async {
     mApmHost = MockApmHostApi();
@@ -26,9 +27,7 @@ void main() {
     manager = InstabugScreenRenderManager.init(); // test-only constructor
     APM.$setHostApi(mApmHost);
 
-    when(mApmHost.deviceRefreshRate()).thenAnswer((_) async => 60);
-    await manager.init(mWidgetBinding);
-    await untilCalled(mApmHost.deviceRefreshRate());
+    manager.init(mWidgetBinding, mRefreshRate);
   });
 
   tearDown(() {
@@ -45,9 +44,11 @@ void main() {
     });
 
     test('calling init more that one time should do nothing', () async {
-      await manager.init(mWidgetBinding);
-      await manager.init(mWidgetBinding); // second call should be ignored
-
+      manager.init(mWidgetBinding, mRefreshRate);
+      manager.init(
+        mWidgetBinding,
+        mRefreshRate,
+      ); // second call should be ignored
 
       verify(mWidgetBinding.addObserver(any)).called(1);
 
@@ -65,7 +66,7 @@ void main() {
 
       verify(mWidgetBinding.addTimingsCallback(any)).called(
         1,
-      ); // the one form init()
+      ); // the one form initForTesting()
     });
 
     test(
@@ -81,7 +82,7 @@ void main() {
 
       verify(mWidgetBinding.addTimingsCallback(any)).called(
         2,
-      ); // one form init() and one form startScreenRenderCollectorForTraceId()
+      ); // one form initForTesting() and one form startScreenRenderCollectorForTraceId()
     });
 
     test('should update the data for same trace type', () {
@@ -91,12 +92,14 @@ void main() {
       expect(manager.screenRenderForAutoUiTrace.isNotEmpty, false);
 
       manager.startScreenRenderCollectorForTraceId(
-          firstTraceId, UiTraceType.auto);
+        firstTraceId,
+      );
       expect(manager.screenRenderForAutoUiTrace.isNotEmpty, true);
       expect(manager.screenRenderForAutoUiTrace.traceId, firstTraceId);
 
       manager.startScreenRenderCollectorForTraceId(
-          secondTraceId, UiTraceType.auto);
+        secondTraceId,
+      );
       expect(manager.screenRenderForAutoUiTrace.isNotEmpty, true);
       expect(manager.screenRenderForAutoUiTrace.traceId, secondTraceId);
     });
@@ -109,12 +112,15 @@ void main() {
       expect(manager.screenRenderForCustomUiTrace.isNotEmpty, false);
 
       manager.startScreenRenderCollectorForTraceId(
-          firstTraceId, UiTraceType.auto);
+        firstTraceId,
+      );
       expect(manager.screenRenderForAutoUiTrace.isNotEmpty, true);
       expect(manager.screenRenderForAutoUiTrace.traceId, firstTraceId);
 
       manager.startScreenRenderCollectorForTraceId(
-          secondTraceId, UiTraceType.custom);
+        secondTraceId,
+        UiTraceType.custom,
+      );
       expect(manager.screenRenderForAutoUiTrace.traceId, firstTraceId);
       expect(manager.screenRenderForCustomUiTrace.traceId, secondTraceId);
     });
@@ -158,7 +164,6 @@ void main() {
 
       manager.startScreenRenderCollectorForTraceId(
         frameTestdata.traceId,
-        UiTraceType.auto,
       );
 
       manager.setFrameData(frameTestdata);
@@ -209,9 +214,9 @@ void main() {
 
     test(
         'should report data to native when starting new trace from the same type',
-            () async {
-          ///todo: will be implemented in next sprint
-        });
+        () async {
+      ///todo: will be implemented in next sprint
+    });
   });
 
   group('endScreenRenderCollectorForCustomUiTrace()', () {
@@ -270,9 +275,9 @@ void main() {
 
     test(
         'should report data to native when starting new trace from the same type',
-            () async {
-          ///todo: will be implemented in next sprint
-        });
+        () async {
+      ///todo: will be implemented in next sprint
+    });
   });
 
   group('analyzeFrameTiming()', () {
@@ -299,9 +304,11 @@ void main() {
       manager.stopScreenRenderCollector(); // should save data
 
       expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
-      expect(manager.screenRenderForAutoUiTrace.slowFramesTotalDuration, buildDuration *1000); // * 1000 to convert from milli to micro
+      expect(
+        manager.screenRenderForAutoUiTrace.slowFramesTotalDuration,
+        buildDuration * 1000,
+      ); // * 1000 to convert from milli to micro
       expect(manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration, 0);
-
     });
 
     test('should detect slow frame on raster thread and record duration', () {
@@ -314,12 +321,16 @@ void main() {
       manager.stopScreenRenderCollector(); // should save data
 
       expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
-      expect(manager.screenRenderForAutoUiTrace.slowFramesTotalDuration, rasterDuration *1000); // * 1000 to convert from milli to micro
+      expect(
+        manager.screenRenderForAutoUiTrace.slowFramesTotalDuration,
+        rasterDuration * 1000,
+      ); // * 1000 to convert from milli to micro
       expect(manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration, 0);
-
     });
 
-    test('should detect frozen frame on build thread when durations are greater than or equal 700 ms', () {
+    test(
+        'should detect frozen frame on build thread when durations are greater than or equal 700 ms',
+        () {
       const buildDuration = 700;
       when(mockFrameTiming.buildDuration)
           .thenReturn(const Duration(milliseconds: buildDuration));
@@ -328,12 +339,16 @@ void main() {
       manager.stopScreenRenderCollector(); // should save data
 
       expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
-      expect(manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration, buildDuration *1000); // * 1000 to convert from milli to micro
+      expect(
+        manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration,
+        buildDuration * 1000,
+      ); // * 1000 to convert from milli to micro
       expect(manager.screenRenderForAutoUiTrace.slowFramesTotalDuration, 0);
-
     });
 
-    test('should detect frozen frame on raster thread when durations are greater than or equal 700 ms', () {
+    test(
+        'should detect frozen frame on raster thread when durations are greater than or equal 700 ms',
+        () {
       const rasterBuild = 700;
       when(mockFrameTiming.buildDuration)
           .thenReturn(const Duration(milliseconds: rasterBuild));
@@ -342,9 +357,11 @@ void main() {
       manager.stopScreenRenderCollector(); // should save data
 
       expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
-      expect(manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration, rasterBuild *1000); // * 1000 to convert from milli to micro
+      expect(
+        manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration,
+        rasterBuild * 1000,
+      ); // * 1000 to convert from milli to micro
       expect(manager.screenRenderForAutoUiTrace.slowFramesTotalDuration, 0);
-
     });
 
     test('should detect no slow or frozen frame under thresholds', () {
@@ -356,9 +373,11 @@ void main() {
           .thenReturn(const Duration(milliseconds: 10));
       manager.analyzeFrameTiming(mockFrameTiming);
       expect(manager.screenRenderForAutoUiTrace.frameData.isEmpty, true);
-      expect(manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration, 0); // * 1000 to convert from milli to micro
+      expect(
+        manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration,
+        0,
+      ); // * 1000 to convert from milli to micro
       expect(manager.screenRenderForAutoUiTrace.slowFramesTotalDuration, 0);
-
     });
   });
 }

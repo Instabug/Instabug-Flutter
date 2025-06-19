@@ -1,17 +1,32 @@
 part of '../../main.dart';
 
-class ScreenRenderPage extends StatelessWidget {
+class ScreenRenderPage extends StatefulWidget {
   const ScreenRenderPage({Key? key}) : super(key: key);
   static const String screenName = "/screenRenderPageRoute";
 
   @override
+  State<ScreenRenderPage> createState() => _ScreenRenderPageState();
+}
+
+class _ScreenRenderPageState extends State<ScreenRenderPage> {
+  final durationController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
     return Page(title: 'Screen Render', children: [
-
+      SizedBox.fromSize(size: const Size.fromHeight(16.0)),
       const AnimatedBox(),
-       SizedBox.fromSize(size: const Size.fromHeight(50),),
+      SizedBox.fromSize(
+        size: const Size.fromHeight(50),
+      ),
+      InstabugTextField(
+        label: 'Frame duration in milliseconds',
+        labelStyle: Theme.of(context).textTheme.labelMedium,
+        controller: durationController,
+      ),
+      SizedBox.fromSize(size: const Size.fromHeight(16.0)),
       InstabugButton(
-        text: 'Perform Frozen Frame',
+        text: 'Perform Heavy Computation',
         onPressed: () => _simulateHeavyComputation(),
       ),
       InstabugButton(
@@ -36,9 +51,13 @@ class ScreenRenderPage extends StatelessWidget {
   // Simulates a computationally expensive task
   void _simulateHeavyComputation() {
     final startTime = DateTime.now();
+    final pauseTime = double.tryParse(durationController.text.trim());
     // Block the UI thread for ~500ms
-    while (DateTime.now().difference(startTime).inMilliseconds <= 1000) {
-      // Busy waiting (not recommended in real apps)
+    if (pauseTime == null) {
+      return log("enter a valid number");
+    }
+    while (DateTime.now().difference(startTime).inMilliseconds <= pauseTime) {
+      // Busy waiting
     }
   }
 }

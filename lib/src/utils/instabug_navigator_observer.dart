@@ -28,7 +28,8 @@ class InstabugNavigatorObserver extends NavigatorObserver {
       ScreenLoadingManager.I
           .startUiTrace(maskedScreenName, screenName)
           .then((uiTraceId) {
-        if (uiTraceId != null) {
+        if (uiTraceId != null &&
+            InstabugScreenRenderManager.I.screenRenderEnabled) {
           InstabugScreenRenderManager.I
               .startScreenRenderCollectorForTraceId(uiTraceId);
         }
