@@ -49,7 +49,6 @@ class _UITracesContentState extends State<UITracesContent> {
             ),
           ],
         ),
-
       ],
     );
   }

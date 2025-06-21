@@ -195,7 +195,8 @@ class APM {
       (_) async {
         // Start screen render collector for custom ui trace if enabled.
         if (await FlagsConfig.screenRendering.isEnabled()) {
-          InstabugScreenRenderManager.I.startScreenRenderCollectorForTraceId(0 ,UiTraceType.custom);
+          InstabugScreenRenderManager.I
+              .startScreenRenderCollectorForTraceId(0, UiTraceType.custom);
         }
       },
     );
@@ -377,7 +378,7 @@ class APM {
   /// Returns:
   ///   A Future<double> that represent the refresh rate.
   @internal
-  static Future<double> getDeviceRefreshRate(){
+  static Future<double> getDeviceRefreshRate() {
     return _host.deviceRefreshRate();
   }
 }

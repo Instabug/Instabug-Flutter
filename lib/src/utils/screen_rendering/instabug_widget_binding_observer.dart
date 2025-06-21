@@ -60,13 +60,14 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
       case AppLifecycleState.detached:
         _handleDetachedState();
         break;
-      case AppLifecycleState.inactive:
-        // TODO: Handle this case.
-        break;
-      case AppLifecycleState.hidden:
-        // TODO: Handle this case.
-        break;
+      default:
+        _handleDefaultState();
     }
+  }
+
+  void _handleDefaultState() {
+    //todo: will be removed
+    debugPrint("default");
   }
 }
 

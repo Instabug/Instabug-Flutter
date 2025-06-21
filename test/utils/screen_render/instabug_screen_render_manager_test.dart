@@ -19,15 +19,14 @@ void main() {
   late InstabugScreenRenderManager manager;
   late MockApmHostApi mApmHost;
   late MockWidgetsBinding mWidgetBinding;
-  const mRefreshRate = 60.0;
 
   setUp(() async {
     mApmHost = MockApmHostApi();
     mWidgetBinding = MockWidgetsBinding();
     manager = InstabugScreenRenderManager.init(); // test-only constructor
     APM.$setHostApi(mApmHost);
-
-    manager.init(mWidgetBinding, mRefreshRate);
+    when(mApmHost.deviceRefreshRate()).thenAnswer((_) async => 60);
+    manager.init(mWidgetBinding);
   });
 
   tearDown(() {
@@ -44,10 +43,9 @@ void main() {
     });
 
     test('calling init more that one time should do nothing', () async {
-      manager.init(mWidgetBinding, mRefreshRate);
+      manager.init(mWidgetBinding);
       manager.init(
         mWidgetBinding,
-        mRefreshRate,
       ); // second call should be ignored
 
       verify(mWidgetBinding.addObserver(any)).called(1);

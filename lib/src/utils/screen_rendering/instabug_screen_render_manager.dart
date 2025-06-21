@@ -55,11 +55,11 @@ class InstabugScreenRenderManager {
 
   /// setup function for [InstabugScreenRenderManager]
   @internal
-  void init(WidgetsBinding widgetBinding, [double? refreshRate]) {
+  Future<void> init(WidgetsBinding widgetBinding) async {
     if (!_isTimingsListenerAttached) {
       _widgetsBinding = widgetBinding;
       _addWidgetBindingObserver();
-      _initStaticValues(refreshRate);
+      await _initStaticValues();
       _initFrameTimings();
       screenRenderEnabled = true;
     }
@@ -145,8 +145,8 @@ class InstabugScreenRenderManager {
   /// On iOS, it will only contains the main display on the phone or tablet.
   /// On Desktop, it will contain only a main display with a valid refresh rate but invalid size and device pixel ratio values.
   //todo: will be compared with value from native side after it's implemented.
-  double get _getDeviceRefreshRate =>
-      _widgetsBinding.platformDispatcher.displays.first.refreshRate;
+  // double get _getDeviceRefreshRate =>
+  //     _widgetsBinding.platformDispatcher.displays.first.refreshRate;
 
   /// Get device refresh rate from native side.
   //todo: will be compared with value from native side after it's implemented.
@@ -155,13 +155,13 @@ class InstabugScreenRenderManager {
       APM.getDeviceRefreshRate();
 
   /// Initialize the static variables
-  void _initStaticValues(double? refreshRate) {
+  Future<void> _initStaticValues() async {
     _timingsCallback = (timings) {
       for (final frameTiming in timings) {
         analyzeFrameTiming(frameTiming);
       }
     };
-    _deviceRefreshRate = refreshRate ?? _getDeviceRefreshRate;
+    _deviceRefreshRate = await _getDeviceRefreshRateFromNative;
     _slowFrameThresholdMs = _targetMsPerFrame(_deviceRefreshRate);
     _screenRenderForAutoUiTrace = InstabugScreenRenderData(frameData: []);
     _screenRenderForCustomUiTrace = InstabugScreenRenderData(frameData: []);

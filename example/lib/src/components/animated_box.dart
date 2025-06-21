@@ -16,7 +16,7 @@ class _AnimatedBoxState extends State<AnimatedBox>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(minutes: 1 , seconds: 40),
+      duration: const Duration(minutes: 1, seconds: 40),
       vsync: this,
     );
     _animation = Tween<double>(begin: 0, end: 100).animate(_controller)

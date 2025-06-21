@@ -39,6 +39,4 @@ class InstabugScreenRenderData {
         frozenFramesTotalDuration == other.frozenFramesTotalDuration &&
         listEquals(frameData, other.frameData);
   }
-
-
 }
