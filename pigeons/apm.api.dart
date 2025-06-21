@@ -40,4 +40,10 @@ abstract class ApmHostApi {
 
   @async
   bool isEndScreenLoadingEnabled();
+
+  @async
+  bool isScreenRenderEnabled();
+
+  @async
+  double deviceRefreshRate();
 }

@@ -4,9 +4,9 @@ import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/instabug_montonic_clock.dart';
-import 'package:instabug_flutter/src/utils/screen_loading/flags_config.dart';
+import 'package:instabug_flutter/src/utils/ui_trace/flags_config.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_trace.dart';
-import 'package:instabug_flutter/src/utils/screen_loading/ui_trace.dart';
+import 'package:instabug_flutter/src/utils/ui_trace/ui_trace.dart';
 import 'package:meta/meta.dart';
 
 /// Manages screen loading traces and UI traces for performance monitoring.
@@ -139,7 +139,7 @@ class ScreenLoadingManager {
   /// [matchingScreenName] as the screen name used for matching the UI trace
   /// with a Screen Loading trace.
   @internal
-  Future<void> startUiTrace(
+  Future<int?> startUiTrace(
     String screenName, [
     String? matchingScreenName,
   ]) async {
@@ -150,7 +150,7 @@ class ScreenLoadingManager {
 
       final isSDKBuilt =
           await _checkInstabugSDKBuilt("APM.InstabugCaptureScreenLoading");
-      if (!isSDKBuilt) return;
+      if (!isSDKBuilt) return null;
 
       // TODO: On Android, FlagsConfig.apm.isEnabled isn't implemented correctly
       // so we skip the isApmEnabled check on Android and only check on iOS.
@@ -164,7 +164,7 @@ class ScreenLoadingManager {
           'https://docs.instabug.com/docs/react-native-apm-disabling-enabling',
           tag: APM.tag,
         );
-        return;
+        return null;
       }
 
       final sanitizedScreenName = sanitizeScreenName(screenName);
@@ -181,8 +181,10 @@ class ScreenLoadingManager {
         matchingScreenName: sanitizedMatchingScreenName,
         traceId: uiTraceId,
       );
+      return uiTraceId;
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
+      return null;
     }
   }
 
