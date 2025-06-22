@@ -1,19 +1,14 @@
-import 'dart:ui';
 
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
-import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/instabug_frame_data.dart';
 import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'instabug_screen_render_manager_test.mocks.dart';
+import 'instabug_screen_render_manager_test_manual_mocks.dart';
 
-@GenerateMocks([FrameTiming, ApmHostApi, WidgetsBinding])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
