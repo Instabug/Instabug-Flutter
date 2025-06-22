@@ -10,6 +10,8 @@ import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
+import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
+import 'package:instabug_flutter/src/utils/ui_trace/flags_config.dart';
 import 'package:meta/meta.dart';
 
 class APM {
@@ -189,7 +191,15 @@ class APM {
   /// Returns:
   ///   The method is returning a `Future<void>`.
   static Future<void> startUITrace(String name) async {
-    return _host.startUITrace(name);
+    return _host.startUITrace(name).then(
+      (_) async {
+        // Start screen render collector for custom ui trace if enabled.
+        if (await FlagsConfig.screenRendering.isEnabled()) {
+          InstabugScreenRenderManager.I
+              .startScreenRenderCollectorForTraceId(0, UiTraceType.custom);
+        }
+      },
+    );
   }
 
   /// The [endUITrace] function ends a UI trace.
@@ -197,6 +207,12 @@ class APM {
   /// Returns:
   ///   The method is returning a `Future<void>`.
   static Future<void> endUITrace() async {
+    // End screen render collector for custom ui trace if enabled.
+    if (await FlagsConfig.screenRendering.isEnabled()) {
+      return InstabugScreenRenderManager.I
+          .endScreenRenderCollectorForCustomUiTrace();
+    }
+
     return _host.endUITrace();
   }
 
@@ -345,5 +361,24 @@ class APM {
     List<String> exclude = const [],
   }) {
     return ScreenLoadingManager.wrapRoutes(routes, exclude: exclude);
+  }
+
+  /// Returns a Future<bool> indicating whether the screen
+  /// render is enabled.
+  ///
+  /// Returns:
+  ///   A Future<bool> is being returned.
+  @internal
+  static Future<bool> isScreenRenderEnabled() async {
+    return _host.isScreenRenderEnabled();
+  }
+
+  /// Retrieve the device refresh rate from native side .
+  ///
+  /// Returns:
+  ///   A Future<double> that represent the refresh rate.
+  @internal
+  static Future<double> getDeviceRefreshRate() {
+    return _host.deviceRefreshRate();
   }
 }
