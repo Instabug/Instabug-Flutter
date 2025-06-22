@@ -269,24 +269,28 @@ class InstabugScreenRenderManager {
     }
 
     if (_isFrozen || _isSlow) {
-      debugPrint("{\n\t$frameTiming\n\t"
-          "Timestamps(${frameTiming.timestampInMicroseconds(
-        FramePhase.buildStart,
-      )}, ${frameTiming.timestampInMicroseconds(
-        FramePhase.buildFinish,
-      )}, ${frameTiming.timestampInMicroseconds(
-        FramePhase.rasterStart,
-      )}, ${frameTiming.timestampInMicroseconds(
-        FramePhase.rasterFinish,
-      )}, ${frameTiming.timestampInMicroseconds(
-        FramePhase.vsyncStart,
-      )}, ${frameTiming.timestampInMicroseconds(
-        FramePhase.rasterFinishWallTime,
-      )}"
-          ")\n}\n");
+      debugPrint(
+        "{\n\t$frameTiming\n\t"
+        "Timestamps(${frameTiming.timestampInMicroseconds(
+          FramePhase.buildStart,
+        )}, ${frameTiming.timestampInMicroseconds(
+          FramePhase.buildFinish,
+        )}, ${frameTiming.timestampInMicroseconds(
+          FramePhase.rasterStart,
+        )}, ${frameTiming.timestampInMicroseconds(
+          FramePhase.rasterFinish,
+        )}, ${frameTiming.timestampInMicroseconds(
+          FramePhase.vsyncStart,
+        )}, ${frameTiming.timestampInMicroseconds(
+          FramePhase.rasterFinishWallTime,
+        )}"
+        ")\n}\n",
+      );
       debugPrint("Device refresh rate: $_deviceRefreshRate FPS");
-      debugPrint("Threshold: $_slowFrameThresholdMs ms\n"
-          "===============================================================================");
+      debugPrint(
+        "Threshold: $_slowFrameThresholdMs ms\n"
+        "===============================================================================",
+      );
     }
   }
 
