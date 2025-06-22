@@ -2,8 +2,8 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
-import 'package:instabug_flutter/src/models/InstabugFrameData.dart';
-import 'package:instabug_flutter/src/models/InstabugScreenRenderData.dart';
+import 'package:instabug_flutter/src/models/instabug_frame_data.dart';
+import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 import 'package:instabug_flutter/src/modules/apm.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_widget_binding_observer.dart';
 import 'package:meta/meta.dart';
@@ -39,6 +39,7 @@ class InstabugScreenRenderManager {
 
   bool _isTimingsListenerAttached = false;
   bool screenRenderEnabled = false;
+
   InstabugScreenRenderManager._();
 
   static InstabugScreenRenderManager _instance =
@@ -55,8 +56,9 @@ class InstabugScreenRenderManager {
 
   /// setup function for [InstabugScreenRenderManager]
   @internal
-  Future<void> init(WidgetsBinding widgetBinding) async {
-    if (!_isTimingsListenerAttached) {
+  Future<void> init(WidgetsBinding? widgetBinding) async {
+    // passing WidgetsBinding? (nullable) for flutter versions prior than 3.x
+    if (!_isTimingsListenerAttached && widgetBinding != null) {
       _widgetsBinding = widgetBinding;
       _addWidgetBindingObserver();
       await _initStaticValues();
@@ -139,18 +141,8 @@ class InstabugScreenRenderManager {
   double _targetMsPerFrame(double displayRefreshRate) =>
       1 / displayRefreshRate * 1000;
 
-  /// Check if getting from native would return different value.
-  /// Platforms may limit what information is available to the application with regard to secondary displays and/or displays that do not have an active application window.
-  /// Presently, on Android and Web this collection will only contain the display that the current window is on.
-  /// On iOS, it will only contains the main display on the phone or tablet.
-  /// On Desktop, it will contain only a main display with a valid refresh rate but invalid size and device pixel ratio values.
-  //todo: will be compared with value from native side after it's implemented.
-  // double get _getDeviceRefreshRate =>
-  //     _widgetsBinding.platformDispatcher.displays.first.refreshRate;
-
   /// Get device refresh rate from native side.
   //todo: will be compared with value from native side after it's implemented.
-  // ignore: unused_element
   Future<double> get _getDeviceRefreshRateFromNative =>
       APM.getDeviceRefreshRate();
 
@@ -263,7 +255,7 @@ class InstabugScreenRenderManager {
     _delayedFrames.add(InstabugFrameData(startTime, duration));
   }
 
-  //todo: will be removed
+  //todo: will be removed (is used for debugging)
   void _displayFrameTimingDetails(FrameTiming frameTiming) {
     if (_isSlow) {
       debugPrint(

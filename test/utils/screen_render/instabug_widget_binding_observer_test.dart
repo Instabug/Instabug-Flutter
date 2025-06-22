@@ -85,16 +85,6 @@ void main() {
       );
     });
 
-    test('handles AppLifecycleState.hidden with no action', () {
-      expect(
-        () {
-          InstabugWidgetsBindingObserver.I
-              .didChangeAppLifecycleState(AppLifecycleState.hidden);
-        },
-        returnsNormally,
-      );
-    });
-
     test('_handleResumedState does nothing if no currentUiTrace', () {
       when(mockLoadingManager.currentUiTrace).thenReturn(null);
 

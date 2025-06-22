@@ -66,7 +66,7 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
   }
 
   void _handleDefaultState() {
-    //todo: will be removed
+    //todo: will be implemented in next story
     debugPrint("default");
   }
 }

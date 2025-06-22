@@ -8,6 +8,7 @@ class InstabugFrameData {
   String toString() => "start time: $startTimeTimestamp, duration: $duration";
 
   @override
+  // ignore: hash_and_equals
   bool operator ==(covariant InstabugFrameData other) {
     if (identical(this, other)) return true;
     return startTimeTimestamp == other.startTimeTimestamp &&

@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:instabug_flutter/src/models/InstabugFrameData.dart';
+import 'package:instabug_flutter/src/models/instabug_frame_data.dart';
 
 class InstabugScreenRenderData {
   int traceId;
@@ -32,6 +32,7 @@ class InstabugScreenRenderData {
       'Frame Data[\n${frameData.map((element) => '\t\n$element')}\n]';
 
   @override
+  // ignore: hash_and_equals
   bool operator ==(covariant InstabugScreenRenderData other) {
     if (identical(this, other)) return true;
     return traceId == other.traceId &&
