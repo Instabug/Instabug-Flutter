@@ -393,7 +393,8 @@ class MockWidgetsBinding extends _i1.Mock implements _i10.WidgetsBinding {
       (super.noSuchMethod(Invocation.getter(#restorationManager),
           returnValue: _FakeRestorationManager_8()) as _i5.RestorationManager);
 
-  // Parameters {int? priority, _i11.SchedulerBinding? scheduler} have been changed from {int priority, _i11.SchedulerBinding scheduler}.
+  // Parameters {int? priority, _i11.SchedulerBinding? scheduler} have been
+  // changed from {int priority, _i11.SchedulerBinding scheduler}.
   @override
   _i11.SchedulingStrategy get schedulingStrategy =>
       (super.noSuchMethod(Invocation.getter(#schedulingStrategy),
