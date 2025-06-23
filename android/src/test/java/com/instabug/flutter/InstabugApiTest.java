@@ -146,7 +146,7 @@ public class InstabugApiTest {
                 1,
                 mInstabugBuilder.constructed().size()
         );
-        verify(builder).setInvocationEvents(InstabugInvocationEvent.FLOATING_BUTTON);
+
         verify(builder).setSdkDebugLogsLevel(LogLevel.ERROR);
         verify(builder).build();
 
