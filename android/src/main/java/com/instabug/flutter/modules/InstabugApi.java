@@ -9,6 +9,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+
+import com.instabug.bug.BugReporting;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
@@ -99,8 +101,15 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         final Application application = (Application) context;
         final int parsedLogLevel = ArgsRegistry.sdkLogLevels.get(debugLogsLevel);
 
-        InstabugInitializer.Builder builder = new InstabugInitializer.Builder(application, token, parsedLogLevel, invocationEventsArray);
-        builder.build();
+        Log.i(TAG, "Instabug is built: " + Instabug.isBuilt());
+
+        if (Instabug.isBuilt()) {
+            Instabug.setSdkDebugLogsLevel(parsedLogLevel);
+            BugReporting.setInvocationEvents(invocationEventsArray);
+        } else {
+            InstabugInitializer.Builder builder = new InstabugInitializer.Builder(application, token, parsedLogLevel, invocationEventsArray);
+            builder.build();
+        }
 
         Instabug.setScreenshotProvider(screenshotProvider);
     }
