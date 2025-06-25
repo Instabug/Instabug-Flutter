@@ -10,10 +10,15 @@ class BugReportingPage extends StatefulWidget {
 }
 
 class _BugReportingPageState extends State<BugReportingPage> {
-  List<ReportType> reportTypes = [];
+  List<ReportType> reportTypes = [ReportType.bug,ReportType.feedback,ReportType.question];
   List<InvocationOption> invocationOptions = [];
 
   final disclaimerTextController = TextEditingController();
+
+  bool attachmentsOptionsScreenshot = true;
+  bool attachmentsOptionsExtraScreenshot = true;
+  bool attachmentsOptionsGalleryImage = true;
+  bool attachmentsOptionsScreenRecording = true;
 
   void restartInstabug() {
     Instabug.setEnabled(false);
@@ -25,8 +30,31 @@ class _BugReportingPageState extends State<BugReportingPage> {
     BugReporting.setInvocationEvents([invocationEvent]);
   }
 
+  void setUserConsent(
+    String key,
+    String description,
+    bool mandatory,
+    bool checked,
+    UserConsentActionType? actionType,
+  ) {
+    BugReporting.addUserConsents(
+        key: key,
+        description: description,
+        mandatory: mandatory,
+        checked: true,
+        actionType: actionType);
+  }
+
   void show() {
     Instabug.show();
+  }
+
+  void addAttachmentOptions() {
+    BugReporting.setEnabledAttachmentTypes(
+        attachmentsOptionsScreenshot,
+        attachmentsOptionsExtraScreenshot,
+        attachmentsOptionsGalleryImage,
+        attachmentsOptionsScreenRecording);
   }
 
   void toggleReportType(ReportType reportType) {
@@ -35,6 +63,9 @@ class _BugReportingPageState extends State<BugReportingPage> {
     } else {
       reportTypes.add(reportType);
     }
+    setState(() {
+
+    });
     BugReporting.setReportTypes(reportTypes);
   }
 
@@ -46,6 +77,18 @@ class _BugReportingPageState extends State<BugReportingPage> {
     }
     BugReporting.setInvocationOptions(invocationOptions);
     // BugReporting.setInvocationOptions([invocationOption]);
+  }
+
+  void showDialogOnInvoke(BuildContext context) {
+    BugReporting.setOnDismissCallback((dismissType, reportType) {
+      if (dismissType == DismissType.submit) {
+        showDialog(
+            context: context,
+            builder: (_) => const AlertDialog(
+                  title: Text('Bug Reporting sent'),
+                ));
+      }
+    });
   }
 
   void setOnDismissCallback() {
@@ -96,6 +139,11 @@ class _BugReportingPageState extends State<BugReportingPage> {
           onPressed: () => Instabug.setEnabled(true),
           text: "Enable Instabug",
         ),
+        InstabugButton(
+          key: const Key('instabug_post_sending_dialog'),
+          onPressed: () => {showDialogOnInvoke(context)},
+          text: "Set the post sending dialog",
+        ),
         const SectionTitle('Invocation events'),
         ButtonBar(
           mainAxisSize: MainAxisSize.min,
@@ -133,6 +181,61 @@ class _BugReportingPageState extends State<BugReportingPage> {
               onPressed: () =>
                   setInvocationEvent(InvocationEvent.twoFingersSwipeLeft),
               child: const Text('Two Fingers Swipe Left'),
+            ),
+          ],
+        ),
+        const SectionTitle('User Consent'),
+        ButtonBar(
+          mainAxisSize: MainAxisSize.min,
+          alignment: MainAxisAlignment.start,
+          layoutBehavior: ButtonBarLayoutBehavior.padded,
+          children: <Widget>[
+            ElevatedButton(
+              key: const Key('user_consent_media_manadatory'),
+              onPressed: () => setUserConsent(
+                  'media_mandatory',
+                  "Mandatory for Media",
+                  true,
+                  true,
+                  UserConsentActionType.dropAutoCapturedMedia),
+              child: const Text('Drop Media Mandatory'),
+            ),
+            ElevatedButton(
+              key: const Key('user_consent_no_chat_manadatory'),
+              onPressed: () => setUserConsent(
+                  'noChat_mandatory',
+                  "Mandatory for No Chat",
+                  true,
+                  true,
+                  UserConsentActionType.noChat),
+              child: const Text('No Chat Mandatory'),
+            ),
+          ],
+        ),
+        ButtonBar(
+          mainAxisSize: MainAxisSize.min,
+          alignment: MainAxisAlignment.start,
+          layoutBehavior: ButtonBarLayoutBehavior.padded,
+          children: <Widget>[
+            ElevatedButton(
+              key: const Key('user_consent_drop_logs_manadatory'),
+              onPressed: () => setUserConsent(
+                  'dropLogs_mandatory',
+                  "Mandatory for Drop logs",
+                  true,
+                  true,
+                  UserConsentActionType.dropLogs),
+              child: const Text('Drop logs Mandatory'),
+            ),
+            ElevatedButton(
+              key: const Key('user_consent_no_chat_optional'),
+              onPressed: () => setUserConsent(
+                  'noChat_mandatory',
+                  "Optional for No Chat",
+                  false,
+                  true,
+                  UserConsentActionType.noChat),
+              child: const Text('No Chat optional'),
             ),
           ],
         ),
@@ -177,35 +280,96 @@ class _BugReportingPageState extends State<BugReportingPage> {
           onPressed: show,
           text: 'Invoke',
         ),
-        const SectionTitle('Disclaimer Text'),
-        InstabugTextField(
-          key: const Key('disclaimer_text'),
-          controller: disclaimerTextController,
-          label: 'Enter disclaimer Text',
+        const SectionTitle('Attachment Options'),
+        Wrap(
+          children: [
+            CheckboxListTile(
+              isThreeLine: false,
+              tristate: false,
+              value: attachmentsOptionsScreenshot,
+              onChanged: (value) {
+                setState(() {
+                  attachmentsOptionsScreenshot = value ?? false;
+                });
+                addAttachmentOptions();
+              },
+              title: const Text("Screenshot"),
+              subtitle: const Text('Enable attachment for screenShot'),
+              key: const Key('attachment_option_screenshot'),
+
+            ),
+            CheckboxListTile(
+              value: attachmentsOptionsExtraScreenshot,
+              onChanged: (value) {
+                setState(() {
+                  attachmentsOptionsExtraScreenshot = value ?? false;
+                });
+                addAttachmentOptions();
+
+              },
+              title: const Text("Extra Screenshot"),
+              subtitle: const Text('Enable attachment for extra screenShot'),
+              key: const Key('attachment_option_extra_screenshot'),
+
+            ),
+            CheckboxListTile(
+              value: attachmentsOptionsGalleryImage,
+              onChanged: (value) {
+                setState(() {
+                  attachmentsOptionsGalleryImage = value ?? false;
+                });
+                addAttachmentOptions();
+
+              },
+              title: const Text("Gallery"),
+              subtitle: const Text('Enable attachment for gallery'),
+              key: const Key('attachment_option_gallery'),
+
+            ),
+            CheckboxListTile(
+              value: attachmentsOptionsScreenRecording,
+              onChanged: (value) {
+                setState(() {
+                  attachmentsOptionsScreenRecording = value ?? false;
+                });
+                addAttachmentOptions();
+
+              },
+              title: const Text("Screen Recording"),
+              subtitle: const Text('Enable attachment for screen Recording'),
+              key: const Key('attachment_option_screen_recording'),
+
+            ),
+          ],
         ),
-        ElevatedButton(
-          key: const Key('set_disclaimer_text'),
-          onPressed: () => setDisclaimerText,
-          child: const Text('set disclaimer text'),
-        ),
-        const SectionTitle('Bug Report Types'),
+        const SectionTitle('Bug reporting type'),
+
         ButtonBar(
           mainAxisSize: MainAxisSize.min,
           alignment: MainAxisAlignment.start,
           children: <Widget>[
             ElevatedButton(
               key: const Key('bug_report_type_bug'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: reportTypes.contains(ReportType.bug)?Colors.grey.shade400:null
+              ),
               onPressed: () => toggleReportType(ReportType.bug),
               child: const Text('Bug'),
             ),
             ElevatedButton(
               key: const Key('bug_report_type_feedback'),
               onPressed: () => toggleReportType(ReportType.feedback),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: reportTypes.contains(ReportType.feedback)?Colors.grey.shade400:null
+              ),
               child: const Text('Feedback'),
             ),
             ElevatedButton(
               key: const Key('bug_report_type_question'),
               onPressed: () => toggleReportType(ReportType.question),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: reportTypes.contains(ReportType.question)?Colors.grey.shade400:null
+              ),
               child: const Text('Question'),
             ),
           ],
@@ -217,6 +381,18 @@ class _BugReportingPageState extends State<BugReportingPage> {
           },
           text: 'Send Bug Report',
         ),
+        const SectionTitle('Disclaimer Text'),
+        InstabugTextField(
+          key: const Key('disclaimer_text'),
+          controller: disclaimerTextController,
+          label: 'Enter disclaimer Text',
+        ),
+        ElevatedButton(
+          key: const Key('set_disclaimer_text'),
+          onPressed: () => setDisclaimerText,
+          child: const Text('set disclaimer text'),
+        ),
+
         const SectionTitle('Extended Bug Reporting'),
         ButtonBar(
           mainAxisSize: MainAxisSize.min,

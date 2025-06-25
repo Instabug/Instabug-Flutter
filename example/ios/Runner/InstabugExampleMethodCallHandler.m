@@ -55,19 +55,21 @@ NSString * const kInstabugChannelName = @"instabug_flutter_example";
 }
 
 - (void)oomCrash {
-    dispatch_async(self.serialQueue, ^{
-        self.oomBelly = [NSMutableArray array];
-        [UIApplication.sharedApplication beginBackgroundTaskWithName:@"OOM Crash" expirationHandler:nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSMutableArray *belly = [NSMutableArray array];
         while (true) {
-            unsigned long dinnerLength = 1024 * 1024 * 10;
-            char *dinner = malloc(sizeof(char) * dinnerLength);
-            for (int i=0; i < dinnerLength; i++)
-            {
-                //write to each byte ensure that the memory pages are actually allocated
-                dinner[i] = '0';
+            // 20 MB chunks to speed up OOM
+            void *buffer = malloc(20 * 1024 * 1024);
+            if (buffer == NULL) {
+                NSLog(@"OOM: malloc failed");
+                break;
             }
-            NSData *plate = [NSData dataWithBytesNoCopy:dinner length:dinnerLength freeWhenDone:YES];
-            [self.oomBelly addObject:plate];
+            memset(buffer, 1, 20 * 1024 * 1024);
+            NSData *data = [NSData dataWithBytesNoCopy:buffer length:20 * 1024 * 1024 freeWhenDone:YES];
+            [belly addObject:data];
+
+            // Optional: slight delay to avoid CPU spike
+            [NSThread sleepForTimeInterval:0.01];
         }
     });
 }
@@ -108,7 +110,9 @@ NSString * const kInstabugChannelName = @"instabug_flutter_example";
 }
 
 - (void)sendFatalHang {
-    [NSThread sleepForTimeInterval:3.0f];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        sleep(20); // Block main thread for 20 seconds
+    });
 }
 
 - (void)sendOOM {
