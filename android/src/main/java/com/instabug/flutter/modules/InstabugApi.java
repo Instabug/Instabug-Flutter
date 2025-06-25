@@ -472,6 +472,11 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
                                         }
                                     });
+
+                            featureFlagsFlutterApi.onNetworkLogBodyMaxSizeChange(
+                                    (long) featuresState.getNetworkLogCharLimit(),
+                                    reply -> {}
+                            );
                         }
                     });
                 }
@@ -508,5 +513,22 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+    }
+
+    @Override
+    public void getNetworkBodyMaxSize(@NonNull InstabugPigeon.Result<Long> result) {
+        ThreadManager.runOnMainThread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        long networkCharLimit = InternalCore.INSTANCE.get_networkLogCharLimit();
+                        result.success(networkCharLimit);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        );
     }
 }

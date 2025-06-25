@@ -7,6 +7,8 @@ abstract class FeatureFlagsFlutterApi {
     bool isW3cExternalGeneratedHeaderEnabled,
     bool isW3cCaughtHeaderEnabled,
   );
+
+  void onNetworkLogBodyMaxSizeChange(int networkBodyMaxSize);
 }
 
 @HostApi()
@@ -76,4 +78,7 @@ abstract class InstabugHostApi {
   void willRedirectToStore();
 
   void setNetworkLogBodyEnabled(bool isEnabled);
+
+  @async
+  int? getNetworkBodyMaxSize();
 }
