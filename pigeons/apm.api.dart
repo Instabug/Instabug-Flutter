@@ -46,4 +46,6 @@ abstract class ApmHostApi {
 
   @async
   double deviceRefreshRate();
+
+  void setScreenRenderEnabled(bool isEnabled);
 }

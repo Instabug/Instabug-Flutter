@@ -1,13 +1,19 @@
+import 'dart:ui';
+
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/instabug_frame_data.dart';
 import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'instabug_screen_render_manager_test.mocks.dart';
+// import 'instabug_screen_render_manager_test_manual_mocks.dart';
 
-import 'instabug_screen_render_manager_test_manual_mocks.dart';
-
+@GenerateMocks([FrameTiming, ApmHostApi, WidgetsBinding])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -74,8 +80,8 @@ void main() {
       manager.startScreenRenderCollectorForTraceId(1);
 
       verify(mWidgetBinding.addTimingsCallback(any)).called(
-        2,
-      ); // one form initForTesting() and one form startScreenRenderCollectorForTraceId()
+        1,
+      );
     });
 
     test('should update the data for same trace type', () {
@@ -199,7 +205,24 @@ void main() {
       expect(manager.screenRenderForAutoUiTrace.isEmpty, true);
     });
 
+    test('should do nothing if there is no cached data', () {
+      manager.stopScreenRenderCollector();
+
+      verifyNever(mWidgetBinding.removeTimingsCallback(any));
+    });
+
     test('should remove timing callback listener', () {
+      final frameTestdata = InstabugScreenRenderData(
+        traceId: 123,
+        frameData: [
+          InstabugFrameData(10000, 200),
+          InstabugFrameData(20000, 1000),
+        ],
+        frozenFramesTotalDuration: 1000,
+        slowFramesTotalDuration: 200,
+      );
+
+      manager.setFrameData(frameTestdata);
       manager.stopScreenRenderCollector();
 
       verify(mWidgetBinding.removeTimingsCallback(any)).called(1);

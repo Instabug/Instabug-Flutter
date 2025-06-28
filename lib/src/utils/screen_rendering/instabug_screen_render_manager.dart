@@ -142,9 +142,11 @@ class InstabugScreenRenderManager {
       1 / displayRefreshRate * 1000;
 
   /// Get device refresh rate from native side.
-  //todo: will be compared with value from native side after it's implemented.
-  Future<double> get _getDeviceRefreshRateFromNative =>
-      APM.getDeviceRefreshRate();
+  Future<double> get _getDeviceRefreshRateFromNative {
+    final rr = APM.getDeviceRefreshRate();
+    log("refreshRateFromNative: $rr", name: "Andrew");
+    return rr;
+  }
 
   /// Initialize the static variables
   Future<void> _initStaticValues() async {
@@ -162,12 +164,16 @@ class InstabugScreenRenderManager {
   /// Add a frame observer by calling [WidgetsBinding.instance.addTimingsCallback]
 
   void _initFrameTimings() {
+    if (_isTimingsListenerAttached) {
+      return; // A timings callback is already attached
+    }
     _widgetsBinding.addTimingsCallback(_timingsCallback);
     _isTimingsListenerAttached = true;
   }
 
   /// Remove the running frame observer by calling [_widgetsBinding.removeTimingsCallback]
   void _removeFrameTimings() {
+    if (!_isTimingsListenerAttached) return; // No timings callback attached.
     _widgetsBinding.removeTimingsCallback(_timingsCallback);
     _isTimingsListenerAttached = false;
   }
@@ -212,6 +218,8 @@ class InstabugScreenRenderManager {
   /// Stop screen render collector and sync the captured data.
   @internal
   void stopScreenRenderCollector() {
+    if (_delayedFrames.isEmpty) return; // No delayed framed to be synced.
+
     _saveCollectedData();
 
     if (_screenRenderForCustomUiTrace.isNotEmpty) {
@@ -229,18 +237,18 @@ class InstabugScreenRenderManager {
   /// Sync the capture screen render data of the custom UI trace without stopping the collector.
   @internal
   void endScreenRenderCollectorForCustomUiTrace() {
-    if (_screenRenderForCustomUiTrace.isNotEmpty) {
-      // Save the captured screen rendering data to be synced
-      _screenRenderForCustomUiTrace.slowFramesTotalDuration +=
-          _slowFramesTotalDuration;
-      _screenRenderForCustomUiTrace.frozenFramesTotalDuration +=
-          _frozenFramesTotalDuration;
-      _screenRenderForCustomUiTrace.frameData.addAll(_delayedFrames);
+    if (_screenRenderForCustomUiTrace.isEmpty) return;
 
-      // Sync the saved screen rendering data
-      reportScreenRending(_screenRenderForCustomUiTrace, UiTraceType.custom);
-      _screenRenderForCustomUiTrace.clear();
-    }
+    // Save the captured screen rendering data to be synced
+    _screenRenderForCustomUiTrace.slowFramesTotalDuration +=
+        _slowFramesTotalDuration;
+    _screenRenderForCustomUiTrace.frozenFramesTotalDuration +=
+        _frozenFramesTotalDuration;
+    _screenRenderForCustomUiTrace.frameData.addAll(_delayedFrames);
+
+    // Sync the saved screen rendering data
+    reportScreenRending(_screenRenderForCustomUiTrace, UiTraceType.custom);
+    _screenRenderForCustomUiTrace.clear();
   }
 
   /// Reset the memory cashed data

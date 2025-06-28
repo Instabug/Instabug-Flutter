@@ -381,4 +381,17 @@ class APM {
   static Future<double> getDeviceRefreshRate() {
     return _host.deviceRefreshRate();
   }
+
+  /// Sets the screen Render state based on the provided boolean value.
+  ///
+  /// Args:
+  ///   isEnabled (bool): The [isEnabled] parameter is a boolean value that determines whether screen
+  /// Render is enabled or disabled. If [isEnabled] is `true`, screen render will be enabled; if
+  /// [isEnabled] is `false`, screen render will be disabled.
+  ///
+  /// Returns:
+  ///   A Future<void> is being returned.
+  static Future<void> setScreenRenderEnabled(bool isEnabled) {
+    return _host.setScreenRenderEnabled(isEnabled);
+  }
 }

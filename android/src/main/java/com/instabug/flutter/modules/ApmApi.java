@@ -23,13 +23,20 @@ import org.json.JSONObject;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 public class ApmApi implements ApmPigeon.ApmHostApi {
     private final String TAG = ApmApi.class.getName();
     private final HashMap<String, ExecutionTrace> traces = new HashMap<>();
+    private final Callable<Float> refreshRate;
 
-    public static void init(BinaryMessenger messenger) {
-        final ApmApi api = new ApmApi();
+    public ApmApi(Callable<Float> refreshRate) {
+        this.refreshRate = refreshRate;
+    }
+
+    public static void init(BinaryMessenger messenger, Callable<Float> refreshRateProvider) {
+
+        final ApmApi api = new ApmApi(refreshRateProvider);
         ApmPigeon.ApmHostApi.setup(messenger, api);
     }
 
@@ -475,11 +482,24 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         }
     }
 
+    @Override
+    public void setScreenRenderEnabled(@NonNull Boolean isEnabled) {
+        try {
+            APM.setScreenRenderingEnabled(isEnabled);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void isScreenRenderEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
         try {
-            result.success(true);
+            InternalAPM._isFeatureEnabledCP(APMFeature.SCREEN_RENDERING, "InstabugCaptureScreenRender", new FeatureAvailabilityCallback() {
+                @Override
+                public void invoke(boolean isEnabled) {
+                    result.success(isEnabled);
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -487,7 +507,11 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
     @Override
     public void deviceRefreshRate(@NonNull ApmPigeon.Result<Double> result) {
-        result.success(60.0);
+        try {
+            result.success(refreshRate.call().doubleValue());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

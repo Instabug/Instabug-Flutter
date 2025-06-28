@@ -191,6 +191,7 @@ class Instabug {
   }) async {
     $setup();
     InstabugLogger.I.logLevel = debugLogsLevel;
+    checkForWidgetBinding();
     await _host.init(
       token,
       invocationEvents.mapToString(),
@@ -198,7 +199,6 @@ class Instabug {
     );
 
     if (await FlagsConfig.screenRendering.isEnabled()) {
-      checkForWidgetBinding();
       InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
     }
 
