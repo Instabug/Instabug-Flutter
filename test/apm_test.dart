@@ -266,7 +266,7 @@ void main() {
     setUp(() {
       InstabugScreenRenderManager.setInstance(mScreenRenderManager);
     });
-    tearDown((){
+    tearDown(() {
       reset(mScreenRenderManager);
     });
     test("[isScreenRenderEnabled] should call host method", () async {
@@ -287,21 +287,23 @@ void main() {
       verify(mHost.setScreenRenderEnabled(isEnabled)).called(1);
     });
 
-    test("[setScreenRenderEnabled] should call [init()] screen render collector, is the feature is enabled", () async {
+    test(
+        "[setScreenRenderEnabled] should call [init()] screen render collector, is the feature is enabled",
+        () async {
       const isEnabled = true;
       await APM.setScreenRenderEnabled(isEnabled);
       verify(mScreenRenderManager.init(any)).called(1);
       verifyNoMoreInteractions(mScreenRenderManager);
     });
 
-    test("[setScreenRenderEnabled] should call [remove()] screen render collector, is the feature is enabled", () async {
+    test(
+        "[setScreenRenderEnabled] should call [remove()] screen render collector, is the feature is enabled",
+        () async {
       const isEnabled = false;
       await APM.setScreenRenderEnabled(isEnabled);
       verify(mScreenRenderManager.remove()).called(1);
       verifyNoMoreInteractions(mScreenRenderManager);
     });
-
-
 
     test(
         "[startUITrace] should start screen render collector with right params, if screen render feature is enabled",
