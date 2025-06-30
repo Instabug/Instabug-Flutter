@@ -49,11 +49,10 @@ void main() {
       WidgetsFlutterBinding.ensureInitialized();
 
       Instabug.init(
-        token: 'ed6f659591566da19b67857e1b9d40ab',
-        invocationEvents: [InvocationEvent.floatingButton],
-        debugLogsLevel: LogLevel.verbose,
-        appVariant: 'variant 1'
-      );
+          token: 'ed6f659591566da19b67857e1b9d40ab',
+          invocationEvents: [InvocationEvent.floatingButton],
+          debugLogsLevel: LogLevel.verbose,
+          appVariant: 'variant 1');
 
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
