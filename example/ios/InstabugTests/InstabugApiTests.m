@@ -38,15 +38,22 @@
 
 - (void)testInit {
     NSString *token = @"app-token";
+    NSString *appVariant = @"app-variant";
+
     NSArray<NSString *> *invocationEvents = @[@"InvocationEvent.floatingButton", @"InvocationEvent.screenshot"];
     NSString *logLevel = @"LogLevel.error";
     FlutterError *error;
     
-    [self.api initToken:token invocationEvents:invocationEvents debugLogsLevel:logLevel error:&error];
+    [self.api initToken:token invocationEvents:invocationEvents debugLogsLevel:logLevel appVariant:appVariant error:&error];
 
     OCMVerify([self.mInstabug setCurrentPlatform:IBGPlatformFlutter]);
+
     OCMVerify([self.mInstabug setSdkDebugLogsLevel:IBGSDKDebugLogsLevelError]);
+
     OCMVerify([self.mInstabug startWithToken:token invocationEvents:(IBGInvocationEventFloatingButton | IBGInvocationEventScreenshot)]);
+    
+    XCTAssertEqual(Instabug.appVariant, appVariant);
+
 }
 
 - (void)testShow {

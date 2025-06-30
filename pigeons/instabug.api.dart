@@ -14,13 +14,16 @@ abstract class InstabugHostApi {
   void setEnabled(bool isEnabled);
   bool isEnabled();
   bool isBuilt();
-  void init(String token, List<String> invocationEvents, String debugLogsLevel);
+  void init(String token, List<String> invocationEvents, String debugLogsLevel,
+      String? appVariant);
 
   void show();
   void showWelcomeMessageWithMode(String mode);
 
   void identifyUser(String email, String? name, String? userId);
   void setUserData(String data);
+  void setAppVariant(String appVariant);
+
   void logUserEvent(String name);
   void logOut();
 
