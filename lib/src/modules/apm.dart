@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:flutter/widgets.dart' show WidgetBuilder;
+import 'package:flutter/widgets.dart' show WidgetBuilder, WidgetsBinding;
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/models/trace.dart';
@@ -392,6 +392,12 @@ class APM {
   /// Returns:
   ///   A Future<void> is being returned.
   static Future<void> setScreenRenderEnabled(bool isEnabled) {
-    return _host.setScreenRenderEnabled(isEnabled);
+    return _host.setScreenRenderEnabled(isEnabled).then((_) {
+      if (isEnabled) {
+        InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
+      } else {
+        InstabugScreenRenderManager.I.remove();
+      }
+    });
   }
 }

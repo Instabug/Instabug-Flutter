@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:flutter/widgets.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
@@ -22,30 +23,35 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
   static const tag = "InstabugWidgetsBindingObserver";
 
   void _handleResumedState() {
-    log('Performing resume actions...');
+    log('Performing resume actions...', name: 'andrew');
     final lastUiTrace = ScreenLoadingManager.I.currentUiTrace;
-    if (lastUiTrace != null) {
-      final maskedScreenName = ScreenNameMasker.I.mask(lastUiTrace.screenName);
-      ScreenLoadingManager.I
-          .startUiTrace(maskedScreenName, lastUiTrace.screenName)
-          .then((uiTraceId) {
-        if (uiTraceId != null &&
-            InstabugScreenRenderManager.I.screenRenderEnabled) {
-          InstabugScreenRenderManager.I
-              .startScreenRenderCollectorForTraceId(uiTraceId);
-        }
-      });
+    if (lastUiTrace == null) {
+      return;
     }
+    final maskedScreenName = ScreenNameMasker.I.mask(lastUiTrace.screenName);
+    ScreenLoadingManager.I
+        .startUiTrace(maskedScreenName, lastUiTrace.screenName)
+        .then((uiTraceId) {
+      if (uiTraceId != null &&
+          InstabugScreenRenderManager.I.screenRenderEnabled) {
+        InstabugScreenRenderManager.I
+            .startScreenRenderCollectorForTraceId(uiTraceId);
+      }
+    });
   }
 
   void _handlePausedState() {
-    log('Performing pause actions...');
+    log('Performing pause actions...', name: 'andrew');
     InstabugScreenRenderManager.I.stopScreenRenderCollector();
   }
 
   void _handleDetachedState() {
-    log('Performing detached actions...');
+    log('Performing detached actions...', name: 'andrew');
     InstabugScreenRenderManager.I.stopScreenRenderCollector();
+  }
+
+  void _handleDefaultState() {
+    log("handle default state", name: 'andrew');
   }
 
   @override
@@ -63,11 +69,6 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
       default:
         _handleDefaultState();
     }
-  }
-
-  void _handleDefaultState() {
-    //todo: will be implemented in next story
-    debugPrint("default");
   }
 }
 

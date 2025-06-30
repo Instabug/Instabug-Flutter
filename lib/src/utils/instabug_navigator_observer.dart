@@ -61,6 +61,9 @@ class InstabugNavigatorObserver extends NavigatorObserver {
       InstabugScreenRenderManager.I
           .startScreenRenderCollectorForTraceId(uiTraceId);
     }
+    // if(isScreenRender && InstabugScreenRenderManager.I.screenRenderEnabled){
+    //   InstabugScreenRenderManager.I.remove();
+    // }
   }
 
   @override

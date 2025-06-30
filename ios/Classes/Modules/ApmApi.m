@@ -215,7 +215,7 @@ NSMutableDictionary *traces;
     displayLink.paused = YES;
     [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     
-    NSInteger preferredFPS = displayLink.preferredFramesPerSecond;
+    double preferredFPS = displayLink.preferredFramesPerSecond;
     
     [displayLink invalidate];
     
@@ -237,7 +237,8 @@ NSMutableDictionary *traces;
         }
         
         if (windowScene) {
-            completion(@(windowScene.screen.maximumFramesPerSecond) , nil);
+            double preferredFPS = windowScene.screen.maximumFramesPerSecond;
+            completion(@(preferredFPS) , nil);
             return;
         }
     }

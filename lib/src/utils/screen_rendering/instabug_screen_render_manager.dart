@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:ui';
 
@@ -5,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:instabug_flutter/src/models/instabug_frame_data.dart';
 import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 import 'package:instabug_flutter/src/modules/apm.dart';
+import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_widget_binding_observer.dart';
 import 'package:meta/meta.dart';
 
@@ -57,20 +59,20 @@ class InstabugScreenRenderManager {
   /// setup function for [InstabugScreenRenderManager]
   @internal
   Future<void> init(WidgetsBinding? widgetBinding) async {
-    // passing WidgetsBinding? (nullable) for flutter versions prior than 3.x
-    if (!_isTimingsListenerAttached && widgetBinding != null) {
-      _widgetsBinding = widgetBinding;
-      _addWidgetBindingObserver();
-      await _initStaticValues();
-      _initFrameTimings();
-      screenRenderEnabled = true;
+    try {
+      // passing WidgetsBinding? (nullable) for flutter versions prior than 3.x
+      if (!_isTimingsListenerAttached && widgetBinding != null) {
+        _widgetsBinding = widgetBinding;
+        _addWidgetBindingObserver();
+        await _initStaticValues();
+        _initFrameTimings();
+        screenRenderEnabled = true;
+      }
+      log("$tag: init", name: 'andrew');
+    } catch (error, stackTrace) {
+      _logExceptionErrorAndStackTrace(error, stackTrace);
     }
   }
-
-  /// nodoc
-
-  void _addWidgetBindingObserver() =>
-      _widgetsBinding.addObserver(InstabugWidgetsBindingObserver.instance);
 
   /// analyze frame data in order to detect slow/frozen frame.
   @visibleForTesting
@@ -115,6 +117,128 @@ class InstabugScreenRenderManager {
     }
   }
 
+  /// Start collecting screen render data for the running [UITrace].
+  /// It ends the running collector when starting a new one of the same type [UiTraceType].
+  @internal
+  void startScreenRenderCollectorForTraceId(
+    int traceId, [
+    UiTraceType type = UiTraceType.auto,
+  ]) {
+    try {
+      // Return if frameTimingListener not attached
+      if (!screenRenderEnabled || !_isTimingsListenerAttached) {
+        log("$tag: start returned", name: 'andrew');
+
+        return;
+      }
+
+      //Save the memory cached data to be sent to native side
+      if (_delayedFrames.isNotEmpty) {
+        _saveCollectedData();
+        _resetCachedFrameData();
+      }
+
+      //Sync the captured screen render data of the Custom UI trace when starting new one
+      if (type == UiTraceType.custom) {
+        if (_screenRenderForCustomUiTrace.isNotEmpty) {
+          reportScreenRending(
+            _screenRenderForCustomUiTrace,
+            UiTraceType.custom,
+          );
+          _screenRenderForCustomUiTrace.clear();
+        }
+        _screenRenderForCustomUiTrace.traceId = traceId;
+      }
+
+      //Sync the captured screen render data of the Auto UI trace when starting new one
+      if (type == UiTraceType.auto) {
+        if (_screenRenderForAutoUiTrace.isNotEmpty) {
+          reportScreenRending(_screenRenderForAutoUiTrace);
+          _screenRenderForAutoUiTrace.clear();
+        }
+        _screenRenderForAutoUiTrace.traceId = traceId;
+      }
+      log("$tag: start normally", name: 'andrew');
+    } catch (error, stackTrace) {
+      _logExceptionErrorAndStackTrace(error, stackTrace);
+    }
+  }
+
+  /// Stop screen render collector and sync the captured data.
+  @internal
+  void stopScreenRenderCollector() {
+    try {
+      if (_delayedFrames.isEmpty) {
+        return;
+      } // No delayed framed to be synced.
+
+      _saveCollectedData();
+
+      if (_screenRenderForCustomUiTrace.isNotEmpty) {
+        reportScreenRending(_screenRenderForCustomUiTrace, UiTraceType.custom);
+      }
+      if (_screenRenderForAutoUiTrace.isNotEmpty) {
+        reportScreenRending(_screenRenderForAutoUiTrace);
+      }
+
+      _removeFrameTimings();
+
+      _resetCachedFrameData();
+      log("$tag: stop", name: 'andrew');
+    } catch (error, stackTrace) {
+      _logExceptionErrorAndStackTrace(error, stackTrace);
+    }
+  }
+
+  /// Sync the capture screen render data of the custom UI trace without stopping the collector.
+  @internal
+  void endScreenRenderCollectorForCustomUiTrace() {
+    try {
+      if (_screenRenderForCustomUiTrace.isEmpty) {
+        return;
+      }
+
+      // Save the captured screen rendering data to be synced
+      _screenRenderForCustomUiTrace.slowFramesTotalDuration +=
+          _slowFramesTotalDuration;
+      _screenRenderForCustomUiTrace.frozenFramesTotalDuration +=
+          _frozenFramesTotalDuration;
+      _screenRenderForCustomUiTrace.frameData.addAll(_delayedFrames);
+
+      // Sync the saved screen rendering data
+      reportScreenRending(_screenRenderForCustomUiTrace, UiTraceType.custom);
+      _screenRenderForCustomUiTrace.clear();
+      log("$tag: endCustom", name: 'andrew');
+    } catch (error, stackTrace) {
+      _logExceptionErrorAndStackTrace(error, stackTrace);
+    }
+  }
+
+  @visibleForTesting
+  Future<void> reportScreenRending(
+    InstabugScreenRenderData screenRenderData, [
+    UiTraceType type = UiTraceType.auto,
+  ]) async {
+    if (type == UiTraceType.auto) {
+      _reportScreenRenderForAutoUiTrace(screenRenderData);
+    } else {
+      _reportScreenRenderForCustomUiTrace(screenRenderData);
+    }
+    log(
+      "$tag: Report ${type == UiTraceType.auto ? 'auto' : 'custom'} Data: $screenRenderData",
+      name: 'andrew',
+    );
+  }
+
+  void remove() {
+    _resetCachedFrameData();
+    _removeFrameTimings();
+    screenRenderEnabled = false;
+    log("$tag: remove", name: 'andrew');
+  }
+
+  /// --------------------------- private methods ---------------------
+
   bool get _isSlow => _isUiSlow || _isRasterSlow;
 
   bool get _isUiDelayed => _isUiSlow || _isUiFrozen;
@@ -142,11 +266,12 @@ class InstabugScreenRenderManager {
       1 / displayRefreshRate * 1000;
 
   /// Get device refresh rate from native side.
-  Future<double> get _getDeviceRefreshRateFromNative {
-    final rr = APM.getDeviceRefreshRate();
-    log("refreshRateFromNative: $rr", name: "Andrew");
-    return rr;
-  }
+  Future<double> get _getDeviceRefreshRateFromNative =>
+      APM.getDeviceRefreshRate();
+
+  /// add new [WidgetsBindingObserver] to track app lifecycle.
+  void _addWidgetBindingObserver() =>
+      _widgetsBinding.addObserver(InstabugWidgetsBindingObserver.instance);
 
   /// Initialize the static variables
   Future<void> _initStaticValues() async {
@@ -176,79 +301,6 @@ class InstabugScreenRenderManager {
     if (!_isTimingsListenerAttached) return; // No timings callback attached.
     _widgetsBinding.removeTimingsCallback(_timingsCallback);
     _isTimingsListenerAttached = false;
-  }
-
-  /// Start collecting screen render data for the running [UITrace].
-  /// It ends the running collector when starting a new one of the same type [UiTraceType].
-  @internal
-  void startScreenRenderCollectorForTraceId(
-    int traceId, [
-    UiTraceType type = UiTraceType.auto,
-  ]) {
-    // Attach frameTimingListener if not attached
-    if (!_isTimingsListenerAttached) {
-      _initFrameTimings();
-    }
-
-    //Save the memory cached data to be sent to native side
-    if (_delayedFrames.isNotEmpty) {
-      _saveCollectedData();
-      _resetCachedFrameData();
-    }
-
-    //Sync the captured screen render data of the Custom UI trace when starting new one
-    if (type == UiTraceType.custom) {
-      if (_screenRenderForCustomUiTrace.isNotEmpty) {
-        reportScreenRending(_screenRenderForCustomUiTrace, UiTraceType.custom);
-        _screenRenderForCustomUiTrace.clear();
-      }
-      _screenRenderForCustomUiTrace.traceId = traceId;
-    }
-
-    //Sync the captured screen render data of the Auto UI trace when starting new one
-    if (type == UiTraceType.auto) {
-      if (_screenRenderForAutoUiTrace.isNotEmpty) {
-        reportScreenRending(_screenRenderForAutoUiTrace);
-        _screenRenderForAutoUiTrace.clear();
-      }
-      _screenRenderForAutoUiTrace.traceId = traceId;
-    }
-  }
-
-  /// Stop screen render collector and sync the captured data.
-  @internal
-  void stopScreenRenderCollector() {
-    if (_delayedFrames.isEmpty) return; // No delayed framed to be synced.
-
-    _saveCollectedData();
-
-    if (_screenRenderForCustomUiTrace.isNotEmpty) {
-      reportScreenRending(_screenRenderForCustomUiTrace, UiTraceType.custom);
-    }
-    if (_screenRenderForAutoUiTrace.isNotEmpty) {
-      reportScreenRending(_screenRenderForAutoUiTrace);
-    }
-
-    _removeFrameTimings();
-
-    _resetCachedFrameData();
-  }
-
-  /// Sync the capture screen render data of the custom UI trace without stopping the collector.
-  @internal
-  void endScreenRenderCollectorForCustomUiTrace() {
-    if (_screenRenderForCustomUiTrace.isEmpty) return;
-
-    // Save the captured screen rendering data to be synced
-    _screenRenderForCustomUiTrace.slowFramesTotalDuration +=
-        _slowFramesTotalDuration;
-    _screenRenderForCustomUiTrace.frozenFramesTotalDuration +=
-        _frozenFramesTotalDuration;
-    _screenRenderForCustomUiTrace.frameData.addAll(_delayedFrames);
-
-    // Sync the saved screen rendering data
-    reportScreenRending(_screenRenderForCustomUiTrace, UiTraceType.custom);
-    _screenRenderForCustomUiTrace.clear();
   }
 
   /// Reset the memory cashed data
@@ -302,32 +354,16 @@ class InstabugScreenRenderManager {
     }
   }
 
-  @visibleForTesting
-  Future<void> reportScreenRending(
-    InstabugScreenRenderData screenRenderData, [
-    UiTraceType type = UiTraceType.auto,
-  ]) async {
-    if (type == UiTraceType.auto) {
-      _reportScreenRenderForAutoUiTrace(screenRenderData);
-    } else {
-      _reportScreenRenderForCustomUiTrace(screenRenderData);
-    }
-    log(
-      "Reported Data (${type == UiTraceType.auto ? 'auto' : 'custom'}): $screenRenderData",
-      name: tag,
-    );
-  }
-
   Future<void> _reportScreenRenderForCustomUiTrace(
     InstabugScreenRenderData screenRenderData,
   ) async {
-    //todo: Will be implemented in next sprint
+    //todo: Will be implemented in the next PR
   }
 
   Future<void> _reportScreenRenderForAutoUiTrace(
     InstabugScreenRenderData screenRenderData,
   ) async {
-    //todo: Will be implemented in next sprint
+    //todo: Will be implemented in the next PR
   }
 
   /// Add the memory cashed data to the objects that will be synced asynchronously to the native side.
@@ -348,7 +384,16 @@ class InstabugScreenRenderManager {
     }
   }
 
-  /// --------------------------- testing helper functions ---------------------
+  /// @nodoc
+  void _logExceptionErrorAndStackTrace(Object error, StackTrace stackTrace) {
+    InstabugLogger.I.e(
+      '[Error]:$error \n'
+      '[StackTrace]: $stackTrace',
+      tag: tag,
+    );
+  }
+
+  /// --------------------------- testing helper methods ---------------------
 
   @visibleForTesting
   InstabugScreenRenderManager.init();

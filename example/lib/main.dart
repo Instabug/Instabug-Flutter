@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter_example/src/app_routes.dart';
-import 'package:instabug_flutter_example/src/components/apm_switch.dart';
+import 'package:instabug_flutter_example/src/utils/show_messages.dart';
 import 'package:instabug_flutter_example/src/widget/nested_view.dart';
 import 'package:instabug_http_client/instabug_http_client.dart';
 
@@ -33,6 +33,8 @@ part 'src/screens/my_home_page.dart';
 part 'src/screens/screen_capture_premature_extension_page.dart';
 part 'src/screens/screen_loading_page.dart';
 part 'src/screens/screen_render_page.dart';
+part 'src/components/apm_switch.dart';
+part 'src/components/screen_render_switch.dart';
 
 void main() {
   runZonedGuarded(

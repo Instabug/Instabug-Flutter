@@ -12,8 +12,15 @@ class _ScreenRenderPageState extends State<ScreenRenderPage> {
   final durationController = TextEditingController();
 
   @override
+  void dispose() {
+    durationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Page(title: 'Screen Render', children: [
+      const ScreenRenderSwitch(),
       SizedBox.fromSize(size: const Size.fromHeight(16.0)),
       const AnimatedBox(),
       SizedBox.fromSize(
