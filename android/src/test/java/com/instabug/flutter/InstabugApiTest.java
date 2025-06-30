@@ -132,6 +132,8 @@ public class InstabugApiTest {
     @Test
     public void testSdkInit() {
         String token = "app-token";
+        String appVariant = "app-variant";
+
         List<String> invocationEvents = Collections.singletonList("InvocationEvent.floatingButton");
         String logLevel = "LogLevel.error";
 
@@ -143,7 +145,7 @@ public class InstabugApiTest {
             when(mock.setSdkDebugLogsLevel(anyInt())).thenReturn(mock);
         });
 
-        api.init(token, invocationEvents, logLevel);
+        api.init(token, invocationEvents, logLevel,appVariant);
 
         Instabug.Builder builder = mInstabugBuilder.constructed().get(0);
 
@@ -155,6 +157,8 @@ public class InstabugApiTest {
         );
         verify(builder).setInvocationEvents(InstabugInvocationEvent.FLOATING_BUTTON);
         verify(builder).setSdkDebugLogsLevel(LogLevel.ERROR);
+        verify(builder).setAppVariant(appVariant);
+
         verify(builder).build();
 
         // Sets screenshot provider
@@ -650,6 +654,14 @@ public class InstabugApiTest {
         api.setNetworkLogBodyEnabled(true);
 
         mInstabug.verify(() -> Instabug.setNetworkLogBodyEnabled(true));
+    }
+
+    @Test
+    public void testSetAppVariant() {
+        String appVariant = "app-variant";
+        api.setAppVariant(appVariant);
+
+        mInstabug.verify(() -> Instabug.setAppVariant(appVariant));
     }
 
     @Test

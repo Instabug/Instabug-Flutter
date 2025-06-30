@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
@@ -30,9 +32,11 @@ import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+
 import io.flutter.FlutterInjector;
 import io.flutter.embedding.engine.loader.FlutterLoader;
 import io.flutter.plugin.common.BinaryMessenger;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
@@ -102,10 +106,12 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @NotNull
     @Override
-    public Boolean isBuilt() { return Instabug.isBuilt(); }
+    public Boolean isBuilt() {
+        return Instabug.isBuilt();
+    }
 
     @Override
-    public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {
+    public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel, @Nullable String appVariant) {
         setCurrentPlatform();
 
         InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
@@ -116,11 +122,14 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
         final Application application = (Application) context;
         final int parsedLogLevel = ArgsRegistry.sdkLogLevels.get(debugLogsLevel);
-
-        new Instabug.Builder(application, token)
+        Instabug.Builder builder = new Instabug.Builder(application, token)
                 .setInvocationEvents(invocationEventsArray)
-                .setSdkDebugLogsLevel(parsedLogLevel)
-                .build();
+                .setSdkDebugLogsLevel(parsedLogLevel);
+        if (appVariant != null) {
+            builder.setAppVariant(appVariant);
+        }
+
+        builder.build();
 
         Instabug.setScreenshotProvider(screenshotProvider);
     }
@@ -144,6 +153,17 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public void setUserData(@NonNull String data) {
         Instabug.setUserData(data);
+    }
+
+    @Override
+    public void setAppVariant(@NonNull String appVariant) {
+        try {
+            Instabug.setAppVariant(appVariant);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -500,13 +520,13 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         Instabug.willRedirectToStore();
     }
 
-    
+
     @Override
     public void setNetworkLogBodyEnabled(@NonNull Boolean isEnabled) {
-                try {
-                    Instabug.setNetworkLogBodyEnabled(isEnabled);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        try {
+            Instabug.setNetworkLogBodyEnabled(isEnabled);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

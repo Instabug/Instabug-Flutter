@@ -29,7 +29,13 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     return @(Instabug.enabled);
 }
 
-- (void)initToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents debugLogsLevel:(NSString *)debugLogsLevel error:(FlutterError *_Nullable *_Nonnull)error {
+- (void)initToken:(nonnull NSString *)token invocationEvents:(nonnull NSArray<NSString *> *)invocationEvents debugLogsLevel:(nonnull NSString *)debugLogsLevel appVariant:(nullable NSString *)appVariant error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    
+    if(appVariant != nil){
+        Instabug.appVariant = appVariant;
+    }
+
+    
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
         NSInteger *platformID = IBGPlatformFlutter;
@@ -45,7 +51,8 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [IBGNetworkLogger disableAutomaticCapturingOfNetworkLogs];
 
     IBGInvocationEvent resolvedEvents = 0;
-
+    
+   
     for (NSString *event in invocationEvents) {
         resolvedEvents |= (ArgsRegistry.invocationEvents[event]).integerValue;
     }
@@ -395,5 +402,13 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
                           error:(FlutterError *_Nullable *_Nonnull)error {
     IBGNetworkLogger.logBodyEnabled = [isEnabled boolValue];
 }
+
+
+- (void)setAppVariantAppVariant:(nonnull NSString *)appVariant error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+
+    Instabug.appVariant = appVariant;
+
+}
+
 
 @end
