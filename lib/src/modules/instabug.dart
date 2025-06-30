@@ -11,6 +11,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unused_import
 import 'package:flutter/services.dart';
@@ -180,11 +181,12 @@ class Instabug {
   /// The [invocationEvents] are the events that invoke the SDK's UI.
   /// The [debugLogsLevel] used to debug Instabug's SDK.
   /// The [appVariant] used to set current App variant name.
-  static Future<void> init(
-      {required String token,
-      required List<InvocationEvent> invocationEvents,
-      LogLevel debugLogsLevel = LogLevel.error,
-      String? appVariant}) async {
+  static Future<void> init({
+    required String token,
+    required List<InvocationEvent> invocationEvents,
+    LogLevel debugLogsLevel = LogLevel.error,
+    String? appVariant,
+  }) async {
     $setup();
     InstabugLogger.I.logLevel = debugLogsLevel;
     await _host.init(
