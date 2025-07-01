@@ -42,6 +42,9 @@ class FeatureFlagsManager implements FeatureFlagsFlutterApi {
   bool _isAndroidW3CExternalTraceID = false;
   bool _isAndroidW3CExternalGeneratedHeader = false;
   bool _isAndroidW3CCaughtHeader = false;
+  int _networkBodyMaxSize = 0;
+
+  int get networkBodyMaxSize => _networkBodyMaxSize;
 
   Future<W3cFeatureFlags> getW3CFeatureFlagsHeader() async {
     if (IBGBuildInfo.instance.isAndroid) {
@@ -88,5 +91,10 @@ class FeatureFlagsManager implements FeatureFlagsFlutterApi {
     _isAndroidW3CCaughtHeader = isW3cCaughtHeaderEnabled;
     _isAndroidW3CExternalTraceID = isW3cExternalTraceIDEnabled;
     _isAndroidW3CExternalGeneratedHeader = isW3cExternalGeneratedHeaderEnabled;
+  }
+  
+  @override
+  void onNetworkLogBodyMaxSizeChange(int networkBodyMaxSize) {
+    _networkBodyMaxSize = networkBodyMaxSize;
   }
 }
