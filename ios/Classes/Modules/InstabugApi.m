@@ -396,4 +396,9 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     IBGNetworkLogger.logBodyEnabled = [isEnabled boolValue];
 }
 
+- (void)getNetworkBodyMaxSizeWithCompletion:(nonnull void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion { 
+    completion(@(IBGNetworkLogger.getNetworkBodyMaxSize), nil);
+}
+
+
 @end
