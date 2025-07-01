@@ -39,8 +39,8 @@ class _FakeSingletonFlutterWindow_1 extends _i1.Fake
 class _FakePlatformDispatcher_2 extends _i1.Fake
     implements _i4.PlatformDispatcher {}
 
-class _FakeHardwareKeyboard_3 extends _i1.Fake implements _i5.HardwareKeyboard {
-}
+class _FakeHardwareKeyboard_3 extends _i1.Fake
+    implements _i5.HardwareKeyboard {}
 
 class _FakeKeyEventManager_4 extends _i1.Fake implements _i5.KeyEventManager {}
 
