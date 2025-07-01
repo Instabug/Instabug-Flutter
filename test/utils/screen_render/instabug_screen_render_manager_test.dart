@@ -1,12 +1,19 @@
+import 'dart:ui';
+
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/instabug_frame_data.dart';
 import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+
 import 'instabug_screen_render_manager_test_manual_mocks.dart';
 
+@GenerateMocks([ApmHostApi, WidgetsBinding, FrameTiming])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -21,10 +28,6 @@ void main() {
     APM.$setHostApi(mApmHost);
     when(mApmHost.deviceRefreshRate()).thenAnswer((_) async => 60);
     manager.init(mWidgetBinding);
-  });
-
-  tearDown(() {
-    // Clean up state after each test
   });
 
   group('InstabugScreenRenderManager.init()', () {
@@ -45,8 +48,6 @@ void main() {
       verify(mWidgetBinding.addObserver(any)).called(1);
 
       verify(mWidgetBinding.addTimingsCallback(any)).called(1);
-
-      expect(true, isTrue); // no crash
     });
   });
 
