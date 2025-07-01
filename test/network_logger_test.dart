@@ -60,6 +60,10 @@ void main() {
         "isW3cCaughtHeaderEnabled": true,
       }),
     );
+    when(mManager.didRequestBodyExceedSizeLimit(any))
+        .thenAnswer((_) async => false);
+    when(mManager.didResponseBodyExceedSizeLimit(any))
+        .thenAnswer((_) async => false);
   });
 
   test('[networkLog] should call 1 host method on iOS', () async {
@@ -238,5 +242,153 @@ void main() {
     verify(
       mInstabugHost.setNetworkLogBodyEnabled(enabled),
     ).called(1);
+  });
+
+  group('[networkLogInternal] body size limit tests', () {
+    test('should replace request body when it exceeds size limit', () async {
+      final largeRequestData = data.copyWith(
+        requestBodySize: 15000, // 15KB > 10KB default
+        responseBodySize: 5000, // 5KB < 10KB default
+      );
+
+      when(mBuildInfo.isAndroid).thenReturn(true);
+      when(mManager.obfuscateLog(any)).thenAnswer((invocation) async {
+        final inputData = invocation.positionalArguments[0] as NetworkData;
+        return inputData;
+      });
+      when(mManager.omitLog(largeRequestData)).thenReturn(false);
+      when(mManager.didRequestBodyExceedSizeLimit(largeRequestData))
+          .thenAnswer((_) async => true);
+      when(mManager.didResponseBodyExceedSizeLimit(largeRequestData))
+          .thenAnswer((_) async => false);
+
+      await logger.networkLogInternal(largeRequestData);
+
+      // Verify that obfuscateLog was called with modified data
+      verify(mManager.obfuscateLog(argThat(
+        predicate<NetworkData>((processedData) =>
+            processedData.requestBody ==
+                '[REQUEST_BODY_REPLACED] - Size: 15000 exceeds limit' &&
+            processedData.responseBody == largeRequestData.responseBody),
+      ))).called(1);
+
+      // Verify that networkLog was called
+      verify(mInstabugHost.networkLog(any)).called(1);
+      verify(mApmHost.networkLogAndroid(any)).called(1);
+    });
+
+    test('should replace response body when it exceeds size limit', () async {
+      final largeResponseData = data.copyWith(
+        requestBodySize: 5000, // 5KB < 10KB default
+        responseBodySize: 15000, // 15KB > 10KB default
+      );
+
+      when(mBuildInfo.isAndroid).thenReturn(true);
+      when(mManager.obfuscateLog(any)).thenAnswer((invocation) async {
+        final inputData = invocation.positionalArguments[0] as NetworkData;
+        return inputData;
+      });
+      when(mManager.omitLog(largeResponseData)).thenReturn(false);
+      when(mManager.didRequestBodyExceedSizeLimit(largeResponseData))
+          .thenAnswer((_) async => false);
+      when(mManager.didResponseBodyExceedSizeLimit(largeResponseData))
+          .thenAnswer((_) async => true);
+
+      await logger.networkLogInternal(largeResponseData);
+
+      // Verify that obfuscateLog was called with modified data
+      verify(mManager.obfuscateLog(argThat(
+        predicate<NetworkData>((processedData) =>
+            processedData.requestBody == largeResponseData.requestBody &&
+            processedData.responseBody ==
+                '[RESPONSE_BODY_REPLACED] - Size: 15000 exceeds limit'),
+      ))).called(1);
+
+      // Verify that networkLog was called
+      verify(mInstabugHost.networkLog(any)).called(1);
+      verify(mApmHost.networkLogAndroid(any)).called(1);
+    });
+
+    test('should replace both bodies when both exceed size limit', () async {
+      final largeBothData = data.copyWith(
+        requestBodySize: 15000, // 15KB > 10KB default
+        responseBodySize: 15000, // 15KB > 10KB default
+      );
+
+      when(mBuildInfo.isAndroid).thenReturn(true);
+      when(mManager.obfuscateLog(any)).thenAnswer((invocation) async {
+        final inputData = invocation.positionalArguments[0] as NetworkData;
+        return inputData;
+      });
+      when(mManager.omitLog(largeBothData)).thenReturn(false);
+      when(mManager.didRequestBodyExceedSizeLimit(largeBothData))
+          .thenAnswer((_) async => true);
+      when(mManager.didResponseBodyExceedSizeLimit(largeBothData))
+          .thenAnswer((_) async => true);
+
+      await logger.networkLogInternal(largeBothData);
+
+      // Verify that obfuscateLog was called with modified data
+      verify(mManager.obfuscateLog(argThat(
+        predicate<NetworkData>((processedData) =>
+            processedData.requestBody ==
+                '[REQUEST_BODY_REPLACED] - Size: 15000 exceeds limit' &&
+            processedData.responseBody ==
+                '[RESPONSE_BODY_REPLACED] - Size: 15000 exceeds limit'),
+      ))).called(1);
+
+      // Verify that networkLog was called
+      verify(mInstabugHost.networkLog(any)).called(1);
+      verify(mApmHost.networkLogAndroid(any)).called(1);
+    });
+
+    test('should not replace bodies when both are within size limit', () async {
+      final smallData = data.copyWith(
+        requestBodySize: 5000, // 5KB < 10KB default
+        responseBodySize: 5000, // 5KB < 10KB default
+      );
+
+      when(mBuildInfo.isAndroid).thenReturn(true);
+      when(mManager.obfuscateLog(any)).thenAnswer((invocation) async {
+        final inputData = invocation.positionalArguments[0] as NetworkData;
+        return inputData;
+      });
+      when(mManager.omitLog(smallData)).thenReturn(false);
+      when(mManager.didRequestBodyExceedSizeLimit(smallData))
+          .thenAnswer((_) async => false);
+      when(mManager.didResponseBodyExceedSizeLimit(smallData))
+          .thenAnswer((_) async => false);
+
+      await logger.networkLogInternal(smallData);
+
+      // Verify that obfuscateLog was called with original data
+      verify(mManager.obfuscateLog(smallData)).called(1);
+
+      // Verify that networkLog was called
+      verify(mInstabugHost.networkLog(any)).called(1);
+      verify(mApmHost.networkLogAndroid(any)).called(1);
+    });
+
+    test('should not log when data should be omitted', () async {
+      final largeData = data.copyWith(
+        requestBodySize: 15000, // 15KB > 10KB default
+      );
+
+      when(mBuildInfo.isAndroid).thenReturn(true);
+      when(mManager.omitLog(largeData)).thenReturn(true);
+
+      await logger.networkLogInternal(largeData);
+
+      // Verify that omitLog was called
+      verify(mManager.omitLog(largeData)).called(1);
+
+      // Verify that size limit checks were not called
+      verifyNever(mManager.didRequestBodyExceedSizeLimit(any));
+      verifyNever(mManager.didResponseBodyExceedSizeLimit(any));
+
+      // Verify that networkLog was not called
+      verifyNever(mInstabugHost.networkLog(any));
+      verifyNever(mApmHost.networkLogAndroid(any));
+    });
   });
 }

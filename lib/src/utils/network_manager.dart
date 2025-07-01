@@ -15,6 +15,7 @@ class NetworkManager {
   ObfuscateLogCallback? _obfuscateLogCallback;
   OmitLogCallback? _omitLogCallback;
   int? _cachedNetworkBodyMaxSize;
+  int _defaultNetworkBodyMaxSize = 10240; // in bytes
   final _host = InstabugHostApi();
 
   // ignore: use_setters_to_change_properties
@@ -124,10 +125,13 @@ class NetworkManager {
       return limit;
     } catch (error) {
       InstabugLogger.I.e(
-        'Failed to get network body max size from native API: $error',
+        'Failed to get network body max size from native API: $error'
+        '\n'
+        'Setting it to the default value of $_defaultNetworkBodyMaxSize bytes = ${_defaultNetworkBodyMaxSize / 1024} KB',
         tag: InstabugConstants.networkManagerTag,
       );
-      return null;
+      _cachedNetworkBodyMaxSize = _defaultNetworkBodyMaxSize;
+      return _defaultNetworkBodyMaxSize;
     }
   }
 }
