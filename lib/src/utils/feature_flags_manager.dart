@@ -92,7 +92,7 @@ class FeatureFlagsManager implements FeatureFlagsFlutterApi {
     _isAndroidW3CExternalTraceID = isW3cExternalTraceIDEnabled;
     _isAndroidW3CExternalGeneratedHeader = isW3cExternalGeneratedHeaderEnabled;
   }
-  
+
   @override
   void onNetworkLogBodyMaxSizeChange(int networkBodyMaxSize) {
     _networkBodyMaxSize = networkBodyMaxSize;
