@@ -1,4 +1,4 @@
-#import "Instabug.h"
+#import "InstabugSDK.h"
 #import "ApmApi.h"
 #import "ArgsRegistry.h"
 #import "IBGAPM+PrivateAPIs.h"

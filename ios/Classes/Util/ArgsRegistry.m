@@ -211,5 +211,11 @@
         @"CustomTextPlaceHolderKey.insufficientContentMessage" : kIBGInsufficientContentMessageStringName,
     };
 }
-
++ (ArgsDictionary *) userConsentActionTypes {
+    return @{
+        @"UserConsentActionType.dropAutoCapturedMedia": @(IBGActionTypeDropAutoCapturedMedia),
+        @"UserConsentActionType.dropLogs": @(IBGActionTypeDropLogs),
+        @"UserConsentActionType.noChat": @(IBGActionTypeNoChat)
+    };
+}
 @end

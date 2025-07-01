@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <Instabug/Instabug.h>
+#import <InstabugSDK/InstabugSDK.h>
 
 typedef NSDictionary<NSString *, NSNumber *> ArgsDictionary;
 
@@ -21,5 +21,6 @@ typedef NSDictionary<NSString *, NSNumber *> ArgsDictionary;
 
 + (ArgsDictionary *)locales;
 + (NSDictionary<NSString *, NSString *> *)placeholders;
++ (ArgsDictionary *) userConsentActionTypes;
 
 @end

@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
 #import <Flutter/Flutter.h>
-#import "Instabug.h"
+#import "InstabugSDK.h"
 #import "IBGNetworkLogger+CP.h"
 #import "InstabugApi.h"
 #import "ArgsRegistry.h"

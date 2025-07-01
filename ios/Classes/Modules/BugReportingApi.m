@@ -1,5 +1,5 @@
 #import <Flutter/Flutter.h>
-#import "Instabug.h"
+#import "InstabugSDK.h"
 #import "BugReportingApi.h"
 #import "ArgsRegistry.h"
 
@@ -164,5 +164,22 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
     
     [IBGBugReporting setCommentMinimumCharacterCountForReportTypes:resolvedTypes withLimit:limit.intValue];
 }
+
+- (void)addUserConsentsKey:(NSString *)key
+                 description:(NSString *)description
+                   mandatory:(NSNumber *)mandatory
+                     checked:(NSNumber *)checked
+                  actionType:(nullable NSString *)actionType
+                       error:(FlutterError *_Nullable *_Nonnull)error {
+   
+    IBGActionType mappedActionType =  (ArgsRegistry.userConsentActionTypes[actionType]).integerValue;
+
+    [IBGBugReporting addUserConsentWithKey:key
+                               description:description
+                                 mandatory:[mandatory boolValue]
+                                   checked:[checked boolValue]
+                                actionType:mappedActionType];
+}
+
 
 @end
