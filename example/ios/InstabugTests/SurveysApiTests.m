@@ -1,7 +1,7 @@
 #import <XCTest/XCTest.h>
 #import "OCMock/OCMock.h"
 #import "SurveysApi.h"
-#import "Instabug/IBGSurveys.h"
+#import "InstabugSDK/IBGSurveys.h"
 #import "Util/IBGSurvey+Test.h"
 
 @interface SurveysApiTests : XCTestCase
