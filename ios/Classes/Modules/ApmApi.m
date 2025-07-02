@@ -91,7 +91,7 @@ NSMutableDictionary *traces;
 // Deprecated - see [startFlowName, setFlowAttributeName & endFlowName].
 - (void)setExecutionTraceAttributeId:(NSString *)id key:(NSString *)key value:(NSString *)value error:(FlutterError *_Nullable *_Nonnull)error {
     IBGExecutionTrace *trace = [traces objectForKey:id];
-
+    
     if (trace != nil) {
         [trace setAttributeWithKey:key value:value];
     }
@@ -103,7 +103,7 @@ NSMutableDictionary *traces;
 // Deprecated - see [startFlowName, setFlowAttributeName & endFlowName].
 - (void)endExecutionTraceId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error {
     IBGExecutionTrace *trace = [traces objectForKey:id];
-
+    
     if (trace != nil) {
         [trace end];
     }
@@ -130,13 +130,13 @@ NSMutableDictionary *traces;
     [IBGAPM endFlowWithName:name];
 }
 
-// This method is responsible for starting a UI trace with the given `name`. 
+// This method is responsible for starting a UI trace with the given `name`.
 // Which initiates the tracking of user interface interactions for monitoring the performance of the application.
 - (void)startUITraceName:(NSString *)name error:(FlutterError *_Nullable *_Nonnull)error {
     [IBGAPM startUITraceWithName:name];
 }
 
-// The method is responsible for ending the currently active UI trace. 
+// The method is responsible for ending the currently active UI trace.
 // Which signifies the completion of tracking user interface interactions.
 - (void)endUITraceWithError:(FlutterError *_Nullable *_Nonnull)error {
     [IBGAPM endUITrace];
@@ -195,6 +195,62 @@ NSMutableDictionary *traces;
     BOOL isEndScreenLoadingEnabled = IBGAPM.endScreenLoadingEnabled;
     NSNumber *isEnabledNumber = @(isEndScreenLoadingEnabled);
     completion(isEnabledNumber, nil);
+}
+
+- (void)isScreenRenderEnabledWithCompletion:(void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion{
+    BOOL isScreenRenderEnabled = IBGAPM.isScreenRenderingOperational;
+    NSNumber *isEnabledNumber = @(isScreenRenderEnabled);
+    completion(isEnabledNumber, nil);
+}
+
+- (void)setScreenRenderEnabledIsEnabled:(nonnull NSNumber *)isEnabled error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    [IBGAPM setScreenRenderingEnabled:[isEnabled boolValue]];
+    
+}
+
+- (void)deviceRefreshRateWithCompletion:(void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion{
+    // First, try using CADisplayLink to get the preferred frame rate.
+    // This is a more modern approach, especially for ProMotion displays.
+    CADisplayLink *displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(onDisplayLink:)];
+    displayLink.paused = YES;
+    [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+    
+    double preferredFPS = displayLink.preferredFramesPerSecond;
+    
+    [displayLink invalidate];
+    
+    if (preferredFPS != 0) {
+        completion(@(preferredFPS) , nil);
+        return;
+    }
+    
+    // If CADisplayLink fails, fall back to other methods.
+    // For iOS 13+, use the windowScene for better accuracy in multi-window environments.
+    if (@available(iOS 13.0, *)) {
+        UIWindowScene *windowScene = nil;
+        // Find the first active window scene
+        for (UIScene *scene in [UIApplication sharedApplication].connectedScenes) {
+            if (scene.activationState == UISceneActivationStateForegroundActive && [scene isKindOfClass:[UIWindowScene class]]) {
+                windowScene = (UIWindowScene *)scene;
+                break;
+            }
+        }
+        
+        if (windowScene) {
+            double preferredFPS = windowScene.screen.maximumFramesPerSecond;
+            completion(@(preferredFPS) , nil);
+            return;
+        }
+    }
+    
+    // As a final fallback (and for iOS versions < 13), use the main screen.
+    if (@available(iOS 10.3, *)) {
+        double refreshRate = [UIScreen mainScreen].maximumFramesPerSecond;
+        completion(@(refreshRate) ,nil);
+    } else {
+        // Fallback for very old iOS versions.
+        completion(@(60.0) , nil);
+    }
 }
 
 

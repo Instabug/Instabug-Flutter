@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:instabug_flutter/instabug_flutter.dart';
-import 'package:instabug_flutter_example/src/utils/show_messages.dart';
+part of '../../main.dart';
 
 class APMSwitch extends StatefulWidget {
   const APMSwitch({Key? key}) : super(key: key);
@@ -14,15 +12,19 @@ class _APMSwitchState extends State<APMSwitch> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SwitchListTile.adaptive(
-          title: const Text('APM Enabled'),
-          value: isEnabled,
-          onChanged: (value) => onAPMChanged(context, value),
-        ),
-      ],
-    );
+    return FutureBuilder<bool>(
+        future: APM.isEnabled(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            isEnabled = snapshot.data ?? false;
+            return SwitchListTile.adaptive(
+              title: const Text('APM Enabled'),
+              value: isEnabled,
+              onChanged: (value) => onAPMChanged(context, value),
+            );
+          }
+          return const SizedBox.shrink();
+        });
   }
 
   void onAPMChanged(BuildContext context, bool value) {

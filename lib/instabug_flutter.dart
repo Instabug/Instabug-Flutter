@@ -5,7 +5,6 @@ export 'src/models/feature_flag.dart';
 export 'src/models/network_data.dart';
 export 'src/models/trace.dart';
 export 'src/models/w3c_header.dart';
-
 // Modules
 export 'src/modules/apm.dart';
 export 'src/modules/bug_reporting.dart';
@@ -20,5 +19,5 @@ export 'src/modules/surveys.dart';
 // Utils
 export 'src/utils/instabug_navigator_observer.dart';
 export 'src/utils/screen_loading/instabug_capture_screen_loading.dart';
-export 'src/utils/screen_loading/route_matcher.dart';
 export 'src/utils/screen_name_masker.dart' show ScreenNameMaskingCallback;
+export 'src/utils/ui_trace/route_matcher.dart';

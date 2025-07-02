@@ -8,10 +8,9 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import com.instabug.apm.APM;
 import com.instabug.apm.InternalAPM;
@@ -24,8 +23,6 @@ import com.instabug.flutter.modules.ApmApi;
 import com.instabug.flutter.util.GlobalMocks;
 import com.instabug.flutter.util.MockReflected;
 
-import io.flutter.plugin.common.BinaryMessenger;
-
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
@@ -36,18 +33,21 @@ import org.mockito.MockedStatic;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import static com.instabug.flutter.util.GlobalMocks.reflected;
 import static com.instabug.flutter.util.MockResult.makeResult;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
+import io.flutter.plugin.common.BinaryMessenger;
 
 
 public class ApmApiTest {
 
     private final BinaryMessenger mMessenger = mock(BinaryMessenger.class);
-    private final ApmApi api = new ApmApi();
+    private final Callable<Float> refreshRateProvider = () -> mock(Float.class);
+    private final ApmApi api = new ApmApi(refreshRateProvider);
     private MockedStatic<APM> mAPM;
     private MockedStatic<InternalAPM> mInternalApmStatic;
     private MockedStatic<ApmPigeon.ApmHostApi> mHostApi;
@@ -83,7 +83,7 @@ public class ApmApiTest {
     public void testInit() {
         BinaryMessenger messenger = mock(BinaryMessenger.class);
 
-        ApmApi.init(messenger);
+        ApmApi.init(messenger, refreshRateProvider);
 
         mHostApi.verify(() -> ApmPigeon.ApmHostApi.setup(eq(messenger), any(ApmApi.class)));
     }
@@ -385,5 +385,35 @@ public class ApmApiTest {
         api.setScreenLoadingEnabled(isEnabled);
 
         mAPM.verify(() -> APM.setScreenLoadingEnabled(isEnabled));
+    }
+
+    @Test
+    public void testIsScreenRenderEnabled() {
+
+        boolean expected = true;
+        ApmPigeon.Result<Boolean> result = spy(makeResult((actual) -> assertEquals(expected, actual)));
+
+        mInternalApmStatic.when(() -> InternalAPM._isFeatureEnabledCP(any(), any(), any())).thenAnswer(
+                invocation -> {
+                    FeatureAvailabilityCallback callback = (FeatureAvailabilityCallback) invocation.getArguments()[2];
+                    callback.invoke(expected);
+                    return null;
+                });
+
+
+        api.isScreenRenderEnabled(result);
+
+        mInternalApmStatic.verify(() -> InternalAPM._isFeatureEnabledCP(any(), any(), any()));
+        mInternalApmStatic.verifyNoMoreInteractions();
+
+        verify(result).success(expected);
+    }
+
+    public void testSetScreenRenderEnabled() {
+        boolean isEnabled = false;
+
+        api.setScreenRenderEnabled(isEnabled);
+
+        mAPM.verify(() -> APM.setScreenRenderingEnabled(isEnabled));
     }
 }

@@ -22,4 +22,6 @@
 
 + (void)endScreenLoadingCPWithEndTimestampMUS:(IBGMicroSecondsTimeInterval)endTimestampMUS;
 
++ (BOOL)isScreenRenderingOperational;
+
 @end

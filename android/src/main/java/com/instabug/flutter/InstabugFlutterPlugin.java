@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -73,7 +75,14 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
             }
         };
 
-        ApmApi.init(messenger);
+        Callable<Float> refreshRateProvider = new Callable<Float>() {
+            @Override
+            public Float call(){
+                return getRefreshRate();
+            }
+        };
+
+        ApmApi.init(messenger, refreshRateProvider);
         BugReportingApi.init(messenger);
         CrashReportingApi.init(messenger);
         FeatureRequestsApi.init(messenger);
@@ -99,4 +108,20 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
             return null;
         }
     }
+
+    private static float getRefreshRate() {
+        float refreshRate = 60f;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            final Display display = activity.getDisplay();
+            if (display != null) {
+                refreshRate = display.getRefreshRate();
+            }
+        } else {
+            refreshRate = activity.getWindowManager().getDefaultDisplay().getRefreshRate();
+        }
+
+        return refreshRate;
+    }
+
 }
