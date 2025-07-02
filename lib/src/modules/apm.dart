@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart' show WidgetBuilder, WidgetsBinding;
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
+import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/models/trace.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
@@ -399,5 +400,33 @@ class APM {
         InstabugScreenRenderManager.I.remove();
       }
     });
+  }
+
+  /// The function `endScreenRenderForAutoUiTrace` end screen rendering for
+  /// automatic UI tracing using data provided in `InstabugScreenRenderData` object.
+  ///
+  /// Args:
+  ///   data (InstabugScreenRenderData): The `data` parameter in the `endScreenRenderForAutoUiTrace`
+  /// function is of type `InstabugScreenRenderData`. It contains information related to screen
+  /// rendering.
+  ///
+  /// Returns:
+  ///   A `Future<void>` is being returned.
+  Future<void> endScreenRenderForAutoUiTrace(InstabugScreenRenderData data) {
+    return _host.endScreenRenderForAutoUiTrace(data.toMap());
+  }
+
+  /// The function `endScreenRenderForCustomUiTrace` ends the screen render for a custom
+  /// UI trace using data provided in `InstabugScreenRenderData`.
+  ///
+  /// Args:
+  ///   data (InstabugScreenRenderData): The `data` parameter in the `endScreenRenderForCustomUiTrace`
+  /// function is of type `InstabugScreenRenderData`, which contains information related to the
+  /// rendering of a screen in the Instabug custom UI.
+  ///
+  /// Returns:
+  ///   A `Future<void>` is being returned.
+  Future<void> endScreenRenderForCustomUiTrace(InstabugScreenRenderData data) {
+    return _host.endScreenRenderForCustomUiTrace(data.toMap());
   }
 }

@@ -8,6 +8,7 @@
 
 #import <InstabugSDK/IBGAPM.h>
 #import "IBGTimeIntervalUnits.h"
+#import "IBGFrameInfo.h"
 
 @interface IBGAPM (PrivateAPIs)
 
@@ -23,5 +24,9 @@
 + (void)endScreenLoadingCPWithEndTimestampMUS:(IBGMicroSecondsTimeInterval)endTimestampMUS;
 
 + (BOOL)isScreenRenderingOperational;
+
++ (void)endAutoUITraceCPWithFrames:(nullable NSArray<IBGFrameInfo *> *)frames;
+
++ (void)endCustomUITraceCPWithFrames:(nullable NSArray<IBGFrameInfo *> *)frames;
 
 @end

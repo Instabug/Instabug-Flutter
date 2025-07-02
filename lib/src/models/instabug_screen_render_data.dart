@@ -40,4 +40,15 @@ class InstabugScreenRenderData {
         frozenFramesTotalDuration == other.frozenFramesTotalDuration &&
         listEquals(frameData, other.frameData);
   }
+
+  /// Serializes the object to a Map for efficient channel transfer.
+  Map<String, dynamic> toMap() {
+    return {
+      'traceId': traceId,
+      'slowFramesTotalDuration': slowFramesTotalDuration,
+      'frozenFramesTotalDuration': frozenFramesTotalDuration,
+      // Convert List<InstabugFrameData> to List<List<int>>
+      'frameData': frameData.map((frame) => frame.toList()).toList(),
+    };
+  }
 }

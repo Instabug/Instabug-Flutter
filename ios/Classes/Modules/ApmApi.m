@@ -3,6 +3,7 @@
 #import "ArgsRegistry.h"
 #import "IBGAPM+PrivateAPIs.h"
 #import "IBGTimeIntervalUnits.h"
+#import "IBGFrameInfo.h"
 
 void InitApmApi(id<FlutterBinaryMessenger> messenger) {
     ApmApi *api = [[ApmApi alloc] init];
@@ -209,41 +210,6 @@ NSMutableDictionary *traces;
 }
 
 - (void)deviceRefreshRateWithCompletion:(void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion{
-    // First, try using CADisplayLink to get the preferred frame rate.
-    // This is a more modern approach, especially for ProMotion displays.
-    CADisplayLink *displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(onDisplayLink:)];
-    displayLink.paused = YES;
-    [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
-    
-    double preferredFPS = displayLink.preferredFramesPerSecond;
-    
-    [displayLink invalidate];
-    
-    if (preferredFPS != 0) {
-        completion(@(preferredFPS) , nil);
-        return;
-    }
-    
-    // If CADisplayLink fails, fall back to other methods.
-    // For iOS 13+, use the windowScene for better accuracy in multi-window environments.
-    if (@available(iOS 13.0, *)) {
-        UIWindowScene *windowScene = nil;
-        // Find the first active window scene
-        for (UIScene *scene in [UIApplication sharedApplication].connectedScenes) {
-            if (scene.activationState == UISceneActivationStateForegroundActive && [scene isKindOfClass:[UIWindowScene class]]) {
-                windowScene = (UIWindowScene *)scene;
-                break;
-            }
-        }
-        
-        if (windowScene) {
-            double preferredFPS = windowScene.screen.maximumFramesPerSecond;
-            completion(@(preferredFPS) , nil);
-            return;
-        }
-    }
-    
-    // As a final fallback (and for iOS versions < 13), use the main screen.
     if (@available(iOS 10.3, *)) {
         double refreshRate = [UIScreen mainScreen].maximumFramesPerSecond;
         completion(@(refreshRate) ,nil);
@@ -252,6 +218,25 @@ NSMutableDictionary *traces;
         completion(@(60.0) , nil);
     }
 }
+
+- (void)endScreenRenderForAutoUiTraceData:(nonnull NSDictionary<NSString *,id> *)data error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+    int traceId = [data[@"traceId"] intValue];
+      int slowFrames = [data[@"slowFramesTotalDuration"] intValue];
+      int frozenFrames = [data[@"frozenFramesTotalDuration"] intValue];
+
+      NSArray<NSArray<NSNumber *> *> *rawFrames = data[@"frameData"];
+
+    //complete from here
+    
+    
+//    [IBGAPM endAutoUITraceCPWithFrames:/*<#(nullable NSArray *)#>*/]
+}
+
+
+- (void)endScreenRenderForCustomUiTraceData:(nonnull NSDictionary<NSString *,id> *)data error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+    //code
+}
+
 
 
 @end

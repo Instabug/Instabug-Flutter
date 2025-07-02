@@ -14,4 +14,7 @@ class InstabugFrameData {
     return startTimeTimestamp == other.startTimeTimestamp &&
         duration == other.duration;
   }
+
+  /// Serializes the object to a List<int> for efficient channel transfer.
+  List<int> toList() => [startTimeTimestamp, duration];
 }
