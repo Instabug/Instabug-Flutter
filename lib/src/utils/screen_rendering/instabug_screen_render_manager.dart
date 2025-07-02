@@ -62,13 +62,13 @@ class InstabugScreenRenderManager {
     try {
       // passing WidgetsBinding? (nullable) for flutter versions prior than 3.x
       if (!_isTimingsListenerAttached && widgetBinding != null) {
+        log("$tag: init", name: 'andrew');
         _widgetsBinding = widgetBinding;
         _addWidgetBindingObserver();
         await _initStaticValues();
         _initFrameTimings();
         screenRenderEnabled = true;
       }
-      log("$tag: init", name: 'andrew');
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
     }
@@ -128,9 +128,9 @@ class InstabugScreenRenderManager {
       // Return if frameTimingListener not attached
       if (!screenRenderEnabled || !_isTimingsListenerAttached) {
         log("$tag: start returned", name: 'andrew');
-
         return;
       }
+      log("$tag: start normally", name: 'andrew');
 
       //Save the memory cached data to be sent to native side
       if (_delayedFrames.isNotEmpty) {
@@ -140,7 +140,9 @@ class InstabugScreenRenderManager {
 
       //Sync the captured screen render data of the Custom UI trace when starting new one
       if (type == UiTraceType.custom) {
-        if (_screenRenderForCustomUiTrace.isNotEmpty) {
+        // Report only if the collector was active and has captured data
+        if (_screenRenderForCustomUiTrace.isActive &&
+            _screenRenderForCustomUiTrace.isNotEmpty) {
           reportScreenRending(
             _screenRenderForCustomUiTrace,
             UiTraceType.custom,
@@ -148,17 +150,22 @@ class InstabugScreenRenderManager {
           _screenRenderForCustomUiTrace.clear();
         }
         _screenRenderForCustomUiTrace.traceId = traceId;
+        log("$tag: start collecting for auto custom trace $traceId",
+            name: 'andrew');
       }
 
       //Sync the captured screen render data of the Auto UI trace when starting new one
       if (type == UiTraceType.auto) {
-        if (_screenRenderForAutoUiTrace.isNotEmpty) {
+        // Report only if the collector was active and has captured data
+        if (_screenRenderForAutoUiTrace.isActive &&
+            _screenRenderForAutoUiTrace.isNotEmpty) {
           reportScreenRending(_screenRenderForAutoUiTrace);
           _screenRenderForAutoUiTrace.clear();
         }
         _screenRenderForAutoUiTrace.traceId = traceId;
+        log("$tag: start collecting for auto ui trace $traceId",
+            name: 'andrew');
       }
-      log("$tag: start normally", name: 'andrew');
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
     }
@@ -168,22 +175,20 @@ class InstabugScreenRenderManager {
   @internal
   void stopScreenRenderCollector() {
     try {
-      if (_delayedFrames.isEmpty) {
-        return;
-      } // No delayed framed to be synced.
+      if (_delayedFrames.isNotEmpty) {
+        _saveCollectedData();
+      }
 
-      _saveCollectedData();
-
-      if (_screenRenderForCustomUiTrace.isNotEmpty) {
+      if (_screenRenderForCustomUiTrace.isActive &&
+          _screenRenderForCustomUiTrace.isNotEmpty) {
         reportScreenRending(_screenRenderForCustomUiTrace, UiTraceType.custom);
       }
-      if (_screenRenderForAutoUiTrace.isNotEmpty) {
+      if (_screenRenderForAutoUiTrace.isActive &&
+          _screenRenderForAutoUiTrace.isNotEmpty) {
         reportScreenRending(_screenRenderForAutoUiTrace);
       }
 
-      _removeFrameTimings();
-
-      _resetCachedFrameData();
+      dispose();
       log("$tag: stop", name: 'andrew');
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
@@ -194,7 +199,7 @@ class InstabugScreenRenderManager {
   @internal
   void endScreenRenderCollectorForCustomUiTrace() {
     try {
-      if (_screenRenderForCustomUiTrace.isEmpty) {
+      if (!_screenRenderForCustomUiTrace.isActive) {
         return;
       }
 
@@ -224,13 +229,14 @@ class InstabugScreenRenderManager {
     } else {
       _reportScreenRenderForCustomUiTrace(screenRenderData);
     }
+
     log(
       "$tag: Report ${type == UiTraceType.auto ? 'auto' : 'custom'} Data: $screenRenderData",
       name: 'andrew',
     );
   }
 
-  void remove() {
+  void dispose() {
     _resetCachedFrameData();
     _removeFrameTimings();
     screenRenderEnabled = false;
@@ -287,13 +293,13 @@ class InstabugScreenRenderManager {
   }
 
   /// Add a frame observer by calling [WidgetsBinding.instance.addTimingsCallback]
-
   void _initFrameTimings() {
     if (_isTimingsListenerAttached) {
       return; // A timings callback is already attached
     }
     _widgetsBinding.addTimingsCallback(_timingsCallback);
     _isTimingsListenerAttached = true;
+    log("start frame timing", name: 'andrew');
   }
 
   /// Remove the running frame observer by calling [_widgetsBinding.removeTimingsCallback]
@@ -308,6 +314,10 @@ class InstabugScreenRenderManager {
     _slowFramesTotalDuration = 0;
     _frozenFramesTotalDuration = 0;
     _delayedFrames.clear();
+    log(
+      "$tag: Captured data is cleared ",
+      name: 'andrew',
+    );
   }
 
   /// Save Slow/Frozen Frames data
@@ -354,34 +364,56 @@ class InstabugScreenRenderManager {
     }
   }
 
-  Future<void> _reportScreenRenderForCustomUiTrace(
+  /// Ends custom ui trace with the screen render data that has been collected for it.
+  /// params:
+  ///   [InstabugScreenRenderData] screenRenderData.
+  Future<bool> _reportScreenRenderForCustomUiTrace(
     InstabugScreenRenderData screenRenderData,
   ) async {
-    //todo: Will be implemented in the next PR
+    try {
+      await APM.endScreenRenderForCustomUiTrace(screenRenderData);
+      return true;
+    } catch (error, stackTrace) {
+      _logExceptionErrorAndStackTrace(error, stackTrace);
+      return false;
+    }
   }
 
-  Future<void> _reportScreenRenderForAutoUiTrace(
+  /// Ends auto ui trace with the screen render data that has been collected for it.
+  /// params:
+  ///   [InstabugScreenRenderData] screenRenderData.
+  Future<bool> _reportScreenRenderForAutoUiTrace(
     InstabugScreenRenderData screenRenderData,
   ) async {
-    //todo: Will be implemented in the next PR
+    try {
+      await APM.endScreenRenderForAutoUiTrace(screenRenderData);
+      return true;
+    } catch (error, stackTrace) {
+      _logExceptionErrorAndStackTrace(error, stackTrace);
+      return false;
+    }
   }
 
   /// Add the memory cashed data to the objects that will be synced asynchronously to the native side.
   void _saveCollectedData() {
-    if (_screenRenderForAutoUiTrace.isNotEmpty) {
+    if (_screenRenderForAutoUiTrace.isActive) {
       _screenRenderForAutoUiTrace.slowFramesTotalDuration +=
           _slowFramesTotalDuration;
       _screenRenderForAutoUiTrace.frozenFramesTotalDuration +=
           _frozenFramesTotalDuration;
       _screenRenderForAutoUiTrace.frameData.addAll(_delayedFrames);
     }
-    if (_screenRenderForCustomUiTrace.isNotEmpty) {
+    if (_screenRenderForCustomUiTrace.isActive) {
       _screenRenderForCustomUiTrace.slowFramesTotalDuration +=
           _slowFramesTotalDuration;
       _screenRenderForCustomUiTrace.frozenFramesTotalDuration +=
           _frozenFramesTotalDuration;
       _screenRenderForCustomUiTrace.frameData.addAll(_delayedFrames);
     }
+    log(
+      "$tag: Captured data is saved ",
+      name: 'andrew',
+    );
   }
 
   /// @nodoc

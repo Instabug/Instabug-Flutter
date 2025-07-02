@@ -397,7 +397,7 @@ class APM {
       if (isEnabled) {
         InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
       } else {
-        InstabugScreenRenderManager.I.remove();
+        InstabugScreenRenderManager.I.dispose();
       }
     });
   }
@@ -412,7 +412,7 @@ class APM {
   ///
   /// Returns:
   ///   A `Future<void>` is being returned.
-  Future<void> endScreenRenderForAutoUiTrace(InstabugScreenRenderData data) {
+  static Future<void> endScreenRenderForAutoUiTrace(InstabugScreenRenderData data) {
     return _host.endScreenRenderForAutoUiTrace(data.toMap());
   }
 
@@ -426,7 +426,7 @@ class APM {
   ///
   /// Returns:
   ///   A `Future<void>` is being returned.
-  Future<void> endScreenRenderForCustomUiTrace(InstabugScreenRenderData data) {
+  static Future<void> endScreenRenderForCustomUiTrace(InstabugScreenRenderData data) {
     return _host.endScreenRenderForCustomUiTrace(data.toMap());
   }
 }

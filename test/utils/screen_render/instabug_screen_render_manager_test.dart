@@ -81,18 +81,18 @@ void main() {
       const firstTraceId = 123;
       const secondTraceId = 456;
 
-      expect(manager.screenRenderForAutoUiTrace.isNotEmpty, false);
+      expect(manager.screenRenderForAutoUiTrace.isActive, false);
 
       manager.startScreenRenderCollectorForTraceId(
         firstTraceId,
       );
-      expect(manager.screenRenderForAutoUiTrace.isNotEmpty, true);
+      expect(manager.screenRenderForAutoUiTrace.isActive, true);
       expect(manager.screenRenderForAutoUiTrace.traceId, firstTraceId);
 
       manager.startScreenRenderCollectorForTraceId(
         secondTraceId,
       );
-      expect(manager.screenRenderForAutoUiTrace.isNotEmpty, true);
+      expect(manager.screenRenderForAutoUiTrace.isActive, true);
       expect(manager.screenRenderForAutoUiTrace.traceId, secondTraceId);
     });
 
@@ -100,13 +100,13 @@ void main() {
       const firstTraceId = 123;
       const secondTraceId = 456;
 
-      expect(manager.screenRenderForAutoUiTrace.isNotEmpty, false);
-      expect(manager.screenRenderForCustomUiTrace.isNotEmpty, false);
+      expect(manager.screenRenderForAutoUiTrace.isActive, false);
+      expect(manager.screenRenderForCustomUiTrace.isActive, false);
 
       manager.startScreenRenderCollectorForTraceId(
         firstTraceId,
       );
-      expect(manager.screenRenderForAutoUiTrace.isNotEmpty, true);
+      expect(manager.screenRenderForAutoUiTrace.isActive, true);
       expect(manager.screenRenderForAutoUiTrace.traceId, firstTraceId);
 
       manager.startScreenRenderCollectorForTraceId(
@@ -134,10 +134,10 @@ void main() {
 
       manager.stopScreenRenderCollector();
 
-      expect(manager.screenRenderForAutoUiTrace.isEmpty, true);
+      expect(manager.screenRenderForAutoUiTrace.isActive, false);
       expect(manager.screenRenderForAutoUiTrace == frameTestdata, false);
 
-      expect(manager.screenRenderForCustomUiTrace.isEmpty, true);
+      expect(manager.screenRenderForCustomUiTrace.isActive, false);
       expect(manager.screenRenderForCustomUiTrace == frameTestdata, false);
     });
 
@@ -162,11 +162,11 @@ void main() {
 
       manager.stopScreenRenderCollector();
 
-      expect(manager.screenRenderForAutoUiTrace.isNotEmpty, true);
+      expect(manager.screenRenderForAutoUiTrace.isActive, true);
 
       expect(manager.screenRenderForAutoUiTrace == frameTestdata, true);
 
-      expect(manager.screenRenderForCustomUiTrace.isEmpty, true);
+      expect(manager.screenRenderForCustomUiTrace.isActive, false);
     });
 
     test(
@@ -191,17 +191,11 @@ void main() {
 
       manager.stopScreenRenderCollector();
 
-      expect(manager.screenRenderForCustomUiTrace.isNotEmpty, true);
+      expect(manager.screenRenderForCustomUiTrace.isActive, true);
 
       expect(manager.screenRenderForCustomUiTrace == frameTestdata, true);
 
-      expect(manager.screenRenderForAutoUiTrace.isEmpty, true);
-    });
-
-    test('should do nothing if there is no cached data', () {
-      manager.stopScreenRenderCollector();
-
-      verifyNever(mWidgetBinding.removeTimingsCallback(any));
+      expect(manager.screenRenderForAutoUiTrace.isActive, false);
     });
 
     test('should remove timing callback listener', () {
@@ -249,7 +243,7 @@ void main() {
 
       manager.endScreenRenderCollectorForCustomUiTrace();
 
-      expect(manager.screenRenderForCustomUiTrace.isEmpty, true);
+      expect(manager.screenRenderForCustomUiTrace.isActive, false);
       expect(manager.screenRenderForCustomUiTrace == frameTestdata, false);
     });
 

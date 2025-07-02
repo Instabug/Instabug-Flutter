@@ -14,9 +14,11 @@ class InstabugScreenRenderData {
     this.traceId = -1,
   });
 
-  bool get isEmpty => traceId == -1;
+  bool get isEmpty => frameData.isEmpty;
 
-  bool get isNotEmpty => !isEmpty;
+  bool get isNotEmpty => frameData.isNotEmpty;
+
+  bool get isActive => traceId != -1;
 
   void clear() {
     traceId = -1;
@@ -26,10 +28,10 @@ class InstabugScreenRenderData {
   }
 
   @override
-  String toString() => '\nTrace Id $traceId\n'
-      'Slow Frames Total Duration: $slowFramesTotalDuration\n'
-      'Frozen Frames Total Duration $frozenFramesTotalDuration\n'
-      'Frame Data[\n${frameData.map((element) => '\t\n$element')}\n]';
+  String toString() => '\nTraceId: $traceId\n'
+      'SlowFramesTotalDuration: $slowFramesTotalDuration\n'
+      'FrozenFramesTotalDuration: $frozenFramesTotalDuration\n'
+      'FrameData: [${frameData.map((element) => '$element')}]';
 
   @override
   // ignore: hash_and_equals

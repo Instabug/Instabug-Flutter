@@ -3,7 +3,6 @@
 #import "ArgsRegistry.h"
 #import "IBGAPM+PrivateAPIs.h"
 #import "IBGTimeIntervalUnits.h"
-#import "IBGFrameInfo.h"
 
 void InitApmApi(id<FlutterBinaryMessenger> messenger) {
     ApmApi *api = [[ApmApi alloc] init];
@@ -219,17 +218,23 @@ NSMutableDictionary *traces;
     }
 }
 
-- (void)endScreenRenderForAutoUiTraceData:(nonnull NSDictionary<NSString *,id> *)data error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+- (void)endScreenRenderForAutoUiTraceData:(nonnull NSDictionary<NSString *,id> *)data error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     int traceId = [data[@"traceId"] intValue];
-      int slowFrames = [data[@"slowFramesTotalDuration"] intValue];
-      int frozenFrames = [data[@"frozenFramesTotalDuration"] intValue];
-
-      NSArray<NSArray<NSNumber *> *> *rawFrames = data[@"frameData"];
-
-    //complete from here
+    int slowFrames = [data[@"slowFramesTotalDuration"] intValue];
+    int frozenFrames = [data[@"frozenFramesTotalDuration"] intValue];
     
-    
-//    [IBGAPM endAutoUITraceCPWithFrames:/*<#(nullable NSArray *)#>*/]
+    NSArray<NSArray<NSNumber *> *> *rawFrames = data[@"frameData"];
+    NSLog(@"traceID%d" , traceId);
+    NSLog(@"slowFrames%d" , slowFrames);
+    NSLog(@"frozenFrames%d" , frozenFrames);
+    if (rawFrames && [rawFrames isKindOfClass:[NSArray class]]) {
+        for (NSArray<NSNumber *> *frameValues in rawFrames) {
+            if ([frameValues count] == 2) {
+                NSLog(@"startTime%lld" , [frameValues[0] longLongValue]);
+                NSLog(@"duration%lld" , [frameValues[1] longLongValue]);
+            }
+        }
+    }
 }
 
 

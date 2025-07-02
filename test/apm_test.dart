@@ -301,7 +301,7 @@ void main() {
         () async {
       const isEnabled = false;
       await APM.setScreenRenderEnabled(isEnabled);
-      verify(mScreenRenderManager.remove()).called(1);
+      verify(mScreenRenderManager.dispose()).called(1);
       verifyNoMoreInteractions(mScreenRenderManager);
     });
 
