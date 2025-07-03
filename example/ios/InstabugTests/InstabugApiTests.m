@@ -612,21 +612,19 @@
 }
 
 - (void)testGetNetworkBodyMaxSize {
-    id mock = OCMClassMock([IBGNetworkLogger class]);
     double expectedValue = 10240.0;
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
+    
+    OCMStub([self.mNetworkLogger getNetworkBodyMaxSize]).andReturn(expectedValue);
 
-    OCMStub([mock getNetworkBodyMaxSize]).andReturn(expectedValue);
-
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Call resolve block"];
-    RCTPromiseResolveBlock resolve = ^(NSNumber *result) {
-        XCTAssertEqual(result.doubleValue, expectedValue);
+    [self.api getNetworkBodyMaxSizeWithCompletion:^(NSNumber *actual, FlutterError *error) {
         [expectation fulfill];
-    };
+        XCTAssertEqual(actual.doubleValue, expectedValue);
+        XCTAssertNil(error);
+    }];
 
-    [self.instabugBridge getNetworkBodyMaxSize:resolve :nil];
-    [self waitForExpectationsWithTimeout:1.0 handler:nil];
-
-    OCMVerify(ClassMethod([mock getNetworkBodyMaxSize]));
+    OCMVerify([self.mNetworkLogger getNetworkBodyMaxSize]);
+    [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
 @end
