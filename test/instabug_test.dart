@@ -78,6 +78,9 @@ void main() {
         "isW3cCaughtHeaderEnabled": true,
       }),
     );
+    when(mHost.getNetworkBodyMaxSize()).thenAnswer(
+      (_) => Future.value(10240),
+    );
     await Instabug.init(
       token: token,
       invocationEvents: events,

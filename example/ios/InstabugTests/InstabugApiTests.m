@@ -611,4 +611,20 @@
 
 }
 
+- (void)testGetNetworkBodyMaxSize {
+    double expectedValue = 10240.0;
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
+    
+    OCMStub([self.mNetworkLogger getNetworkBodyMaxSize]).andReturn(expectedValue);
+
+    [self.api getNetworkBodyMaxSizeWithCompletion:^(NSNumber *actual, FlutterError *error) {
+        [expectation fulfill];
+        XCTAssertEqual(actual.doubleValue, expectedValue);
+        XCTAssertNil(error);
+    }];
+
+    OCMVerify([self.mNetworkLogger getNetworkBodyMaxSize]);
+    [self waitForExpectations:@[expectation] timeout:5.0];
+}
+
 @end

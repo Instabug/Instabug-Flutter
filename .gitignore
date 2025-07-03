@@ -78,6 +78,9 @@ android/gradlew.bat
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
+# Project specific
+/PRDs/
+
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
 !**/ios/**/default.mode2v3

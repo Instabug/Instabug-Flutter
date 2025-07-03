@@ -13,6 +13,8 @@ void main() {
     url: "https://httpbin.org/get",
     method: "GET",
     startTime: DateTime.now(),
+    requestBodySize: 1000,
+    responseBodySize: 2000,
   );
   late NetworkManager manager;
 
@@ -75,5 +77,79 @@ void main() {
     expect(await completer.future, data);
 
     expect(result, equals(omit));
+  });
+
+  group('[didRequestBodyExceedSizeLimit]', () {
+    test('should return false when request body size is within default limit',
+        () async {
+      final smallData =
+          data.copyWith(requestBodySize: 5000); // 5KB < 10KB default
+
+      final result = await manager.didRequestBodyExceedSizeLimit(smallData);
+
+      expect(result, isFalse);
+    });
+
+    test('should return true when request body size exceeds default limit',
+        () async {
+      final largeData =
+          data.copyWith(requestBodySize: 15000); // 15KB > 10KB default
+
+      final result = await manager.didRequestBodyExceedSizeLimit(largeData);
+
+      expect(result, isTrue);
+    });
+
+    test('should return false when request body size equals default limit',
+        () async {
+      final exactData = data.copyWith(requestBodySize: 10240); // Exactly 10KB
+
+      final result = await manager.didRequestBodyExceedSizeLimit(exactData);
+
+      expect(result, isFalse);
+    });
+
+    test('should handle errors gracefully and return false', () async {
+      final result = await manager.didRequestBodyExceedSizeLimit(data);
+
+      expect(result, isA<bool>());
+    });
+  });
+
+  group('[didResponseBodyExceedSizeLimit]', () {
+    test('should return false when response body size is within default limit',
+        () async {
+      final smallData =
+          data.copyWith(responseBodySize: 5000); // 5KB < 10KB default
+
+      final result = await manager.didResponseBodyExceedSizeLimit(smallData);
+
+      expect(result, isFalse);
+    });
+
+    test('should return true when response body size exceeds default limit',
+        () async {
+      final largeData =
+          data.copyWith(responseBodySize: 15000); // 15KB > 10KB default
+
+      final result = await manager.didResponseBodyExceedSizeLimit(largeData);
+
+      expect(result, isTrue);
+    });
+
+    test('should return false when response body size equals default limit',
+        () async {
+      final exactData = data.copyWith(responseBodySize: 10240); // Exactly 10KB
+
+      final result = await manager.didResponseBodyExceedSizeLimit(exactData);
+
+      expect(result, isFalse);
+    });
+
+    test('should handle errors gracefully and return false', () async {
+      final result = await manager.didResponseBodyExceedSizeLimit(data);
+
+      expect(result, isA<bool>());
+    });
   });
 }

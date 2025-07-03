@@ -6,6 +6,8 @@ import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/models/w3c_header.dart';
 import 'package:instabug_flutter/src/modules/apm.dart';
 import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
+import 'package:instabug_flutter/src/utils/instabug_constants.dart';
+import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/iterable_ext.dart';
 import 'package:instabug_flutter/src/utils/network_manager.dart';
 import 'package:instabug_flutter/src/utils/w3c_header_utils.dart';
@@ -86,7 +88,36 @@ class NetworkLogger {
   Future<void> networkLogInternal(NetworkData data) async {
     final omit = await _manager.omitLog(data);
     if (omit) return;
-    final obfuscated = await _manager.obfuscateLog(data);
+
+    // Check size limits early to avoid processing large bodies
+    final requestExceeds = await _manager.didRequestBodyExceedSizeLimit(data);
+    final responseExceeds = await _manager.didResponseBodyExceedSizeLimit(data);
+
+    var processedData = data;
+    if (requestExceeds || responseExceeds) {
+      // Replace bodies with warning messages
+      processedData = data.copyWith(
+        requestBody: requestExceeds
+            ? InstabugConstants.getRequestBodyReplacementMessage(
+                data.requestBodySize,
+              )
+            : data.requestBody,
+        responseBody: responseExceeds
+            ? InstabugConstants.getResponseBodyReplacementMessage(
+                data.responseBodySize,
+              )
+            : data.responseBody,
+      );
+
+      // Log the truncation event.
+      final isBothExceeds = requestExceeds && responseExceeds;
+      InstabugLogger.I.e(
+        "Truncated network ${isBothExceeds ? 'request and response' : requestExceeds ? 'request' : 'response'} body",
+        tag: InstabugConstants.networkLoggerTag,
+      );
+    }
+
+    final obfuscated = await _manager.obfuscateLog(processedData);
     await _host.networkLog(obfuscated.toJson());
     await APM.networkLogAndroid(obfuscated);
   }
