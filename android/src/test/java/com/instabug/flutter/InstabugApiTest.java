@@ -661,11 +661,11 @@ public class InstabugApiTest {
 
     @Test
     public void testGetNetworkBodyMaxSize() {
-        int expected = 10240;
-        InstabugPigeon.Result<Long> result = makeResult((actual) -> assertEquals((Long) (long) expected, actual));
+        double expected = 10240;
+        InstabugPigeon.Result<Double> result = makeResult((actual) -> assertEquals((Double) expected, actual));
 
         mockkObject(new InternalCore[]{InternalCore.INSTANCE}, false);
-        every(mockKMatcherScope -> InternalCore.INSTANCE.get_networkLogCharLimit()).returns(expected);
+        every(mockKMatcherScope -> InternalCore.INSTANCE.get_networkLogCharLimit()).returns((int) expected);
 
         api.getNetworkBodyMaxSize(result);
     }
