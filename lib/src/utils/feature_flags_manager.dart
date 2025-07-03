@@ -47,7 +47,8 @@ class FeatureFlagsManager implements FeatureFlagsFlutterApi {
   /// Sets the callback for network body max size changes
   // ignore: avoid_setters_without_getters
   set onNetworkBodyMaxSizeChangeCallback(
-      OnNetworkBodyMaxSizeChangeCallback callback) {
+    OnNetworkBodyMaxSizeChangeCallback callback,
+  ) {
     _onNetworkBodyMaxSizeChangeCallback = callback;
   }
 

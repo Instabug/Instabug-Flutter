@@ -265,12 +265,18 @@ void main() {
       await logger.networkLogInternal(largeRequestData);
 
       // Verify that obfuscateLog was called with modified data
-      verify(mManager.obfuscateLog(argThat(
-        predicate<NetworkData>((processedData) =>
-            processedData.requestBody ==
-                '[REQUEST_BODY_REPLACED] - Size: 15000 exceeds limit' &&
-            processedData.responseBody == largeRequestData.responseBody),
-      ))).called(1);
+      verify(
+        mManager.obfuscateLog(
+          argThat(
+            predicate<NetworkData>(
+              (processedData) =>
+                  processedData.requestBody ==
+                      '[REQUEST_BODY_REPLACED] - Size: 15000 exceeds limit' &&
+                  processedData.responseBody == largeRequestData.responseBody,
+            ),
+          ),
+        ),
+      ).called(1);
 
       // Verify that networkLog was called
       verify(mInstabugHost.networkLog(any)).called(1);
@@ -297,12 +303,18 @@ void main() {
       await logger.networkLogInternal(largeResponseData);
 
       // Verify that obfuscateLog was called with modified data
-      verify(mManager.obfuscateLog(argThat(
-        predicate<NetworkData>((processedData) =>
-            processedData.requestBody == largeResponseData.requestBody &&
-            processedData.responseBody ==
-                '[RESPONSE_BODY_REPLACED] - Size: 15000 exceeds limit'),
-      ))).called(1);
+      verify(
+        mManager.obfuscateLog(
+          argThat(
+            predicate<NetworkData>(
+              (processedData) =>
+                  processedData.requestBody == largeResponseData.requestBody &&
+                  processedData.responseBody ==
+                      '[RESPONSE_BODY_REPLACED] - Size: 15000 exceeds limit',
+            ),
+          ),
+        ),
+      ).called(1);
 
       // Verify that networkLog was called
       verify(mInstabugHost.networkLog(any)).called(1);
@@ -329,13 +341,19 @@ void main() {
       await logger.networkLogInternal(largeBothData);
 
       // Verify that obfuscateLog was called with modified data
-      verify(mManager.obfuscateLog(argThat(
-        predicate<NetworkData>((processedData) =>
-            processedData.requestBody ==
-                '[REQUEST_BODY_REPLACED] - Size: 15000 exceeds limit' &&
-            processedData.responseBody ==
-                '[RESPONSE_BODY_REPLACED] - Size: 15000 exceeds limit'),
-      ))).called(1);
+      verify(
+        mManager.obfuscateLog(
+          argThat(
+            predicate<NetworkData>(
+              (processedData) =>
+                  processedData.requestBody ==
+                      '[REQUEST_BODY_REPLACED] - Size: 15000 exceeds limit' &&
+                  processedData.responseBody ==
+                      '[RESPONSE_BODY_REPLACED] - Size: 15000 exceeds limit',
+            ),
+          ),
+        ),
+      ).called(1);
 
       // Verify that networkLog was called
       verify(mInstabugHost.networkLog(any)).called(1);

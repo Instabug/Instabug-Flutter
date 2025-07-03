@@ -99,11 +99,13 @@ class NetworkLogger {
       processedData = data.copyWith(
         requestBody: requestExceeds
             ? InstabugConstants.getRequestBodyReplacementMessage(
-                data.requestBodySize)
+                data.requestBodySize,
+              )
             : data.requestBody,
         responseBody: responseExceeds
             ? InstabugConstants.getResponseBodyReplacementMessage(
-                data.responseBodySize)
+                data.responseBodySize,
+              )
             : data.responseBody,
       );
 
