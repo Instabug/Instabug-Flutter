@@ -516,13 +516,13 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     @Override
-    public void getNetworkBodyMaxSize(@NonNull InstabugPigeon.Result<Long> result) {
+    public void getNetworkBodyMaxSize(@NonNull InstabugPigeon.Result<Double> result) {
         ThreadManager.runOnMainThread(
             new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        long networkCharLimit = InternalCore.INSTANCE.get_networkLogCharLimit();
+                        double networkCharLimit = InternalCore.INSTANCE.get_networkLogCharLimit();
                         result.success(networkCharLimit);
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -54,7 +54,7 @@ void main() {
         "isW3cCaughtHeaderEnabled": true,
       }),
     );
-    await FeatureFlagsManager().registerW3CFlagsListener();
+    await FeatureFlagsManager().registerFeatureFlagsListener();
 
     final isW3CExternalTraceID =
         await FeatureFlagsManager().getW3CFeatureFlagsHeader();
@@ -75,7 +75,7 @@ void main() {
       }),
     );
 
-    await FeatureFlagsManager().registerW3CFlagsListener();
+    await FeatureFlagsManager().registerFeatureFlagsListener();
 
     verify(
       mInstabugHost.registerFeatureFlagChangeListener(),

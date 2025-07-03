@@ -80,5 +80,5 @@ abstract class InstabugHostApi {
   void setNetworkLogBodyEnabled(bool isEnabled);
 
   @async
-  int? getNetworkBodyMaxSize();
+  double? getNetworkBodyMaxSize();
 }

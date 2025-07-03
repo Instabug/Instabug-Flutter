@@ -18,6 +18,14 @@ class NetworkManager {
   int _defaultNetworkBodyMaxSize = 10240; // in bytes
   final _host = InstabugHostApi();
 
+  NetworkManager() {
+    // Register for network body max size changes
+    FeatureFlagsManager().onNetworkBodyMaxSizeChangeCallback =
+        () {
+      clearNetworkBodyMaxSizeCache();
+    };
+  }
+
   // ignore: use_setters_to_change_properties
   void setObfuscateLogCallback(ObfuscateLogCallback callback) {
     _obfuscateLogCallback = callback;
@@ -109,6 +117,7 @@ class NetworkManager {
   /// Gets the network body max size from native SDK, with caching
   Future<int?> _getNetworkBodyMaxSize() async {
     if (_cachedNetworkBodyMaxSize != null) {
+      print('[Kamal] _cachedNetworkBodyMaxSize: $_cachedNetworkBodyMaxSize');
       return _cachedNetworkBodyMaxSize;
     }
 
@@ -116,13 +125,15 @@ class NetworkManager {
 
     if (ffmNetworkBodyLimit > 0) {
       _cachedNetworkBodyMaxSize = ffmNetworkBodyLimit;
+      print('[Kamal] ffmNetworkBodyLimit: $ffmNetworkBodyLimit');
       return ffmNetworkBodyLimit;
     }
 
     try {
       final limit = await _host.getNetworkBodyMaxSize();
-      _cachedNetworkBodyMaxSize = limit;
-      return limit;
+      _cachedNetworkBodyMaxSize = limit?.toInt();
+      print('[Kamal] limit: $limit');
+      return limit?.toInt();
     } catch (error) {
       InstabugLogger.I.e(
         'Failed to get network body max size from native API: $error'
@@ -131,7 +142,13 @@ class NetworkManager {
         tag: InstabugConstants.networkManagerTag,
       );
       _cachedNetworkBodyMaxSize = _defaultNetworkBodyMaxSize;
+      print('[Kamal] _defaultNetworkBodyMaxSize: $_defaultNetworkBodyMaxSize');
       return _defaultNetworkBodyMaxSize;
     }
+  }
+
+  /// Clears the cached network body max size
+  void clearNetworkBodyMaxSizeCache() {
+    _cachedNetworkBodyMaxSize = null;
   }
 }
