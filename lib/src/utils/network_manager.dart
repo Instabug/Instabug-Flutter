@@ -20,8 +20,7 @@ class NetworkManager {
 
   NetworkManager() {
     // Register for network body max size changes
-    FeatureFlagsManager().onNetworkBodyMaxSizeChangeCallback =
-        () {
+    FeatureFlagsManager().onNetworkBodyMaxSizeChangeCallback = () {
       clearNetworkBodyMaxSizeCache();
     };
   }
