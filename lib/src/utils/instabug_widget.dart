@@ -53,6 +53,13 @@ class InstabugWidget extends StatefulWidget {
   /// If true, the Flutter error will be reported as a non-fatal crash, instead of a fatal crash.
   final bool nonFatalFlutterErrors;
 
+  /// The level of the non-fatal exception.
+  ///
+  /// This is used to determine the level of the non-fatal exception.
+  ///
+  /// Note: This has no effect if [nonFatalFlutterErrors] is false.
+  final NonFatalExceptionLevel nonFatalExceptionLevel;
+
   /// Whether to exit the app on Flutter error.
   ///
   /// If true, the app will exit when a Flutter error occurs.
@@ -77,6 +84,7 @@ class InstabugWidget extends StatefulWidget {
     this.flutterErrorHandler,
     this.platformErrorHandler,
     this.nonFatalFlutterErrors = false,
+    this.nonFatalExceptionLevel = NonFatalExceptionLevel.error,
     this.shouldExitOnFlutterError = false,
   }) : super(key: key);
 
@@ -109,6 +117,7 @@ class _InstabugWidgetState extends State<InstabugWidget> {
         CrashReporting.reportHandledCrash(
           details.exception,
           details.stack ?? StackTrace.current,
+          level: widget.nonFatalExceptionLevel,
         );
       } else {
         CrashReporting.reportCrash(
@@ -123,7 +132,7 @@ class _InstabugWidgetState extends State<InstabugWidget> {
         exit(1);
       }
     };
- 
+
     PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
       // Call user's custom handler if provided
       if (widget.platformErrorHandler != null) {
