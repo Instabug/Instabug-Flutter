@@ -658,4 +658,15 @@ public class InstabugApiTest {
 
         mInstabug.verify(() -> Instabug.setNetworkLogBodyEnabled(false));
     }
+
+    @Test
+    public void testGetNetworkBodyMaxSize() {
+        double expected = 10240;
+        InstabugPigeon.Result<Double> result = makeResult((actual) -> assertEquals((Double) expected, actual));
+
+        mockkObject(new InternalCore[]{InternalCore.INSTANCE}, false);
+        every(mockKMatcherScope -> InternalCore.INSTANCE.get_networkLogCharLimit()).returns((int) expected);
+
+        api.getNetworkBodyMaxSize(result);
+    }
 }

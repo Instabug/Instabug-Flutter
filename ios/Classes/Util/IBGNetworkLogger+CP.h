@@ -49,6 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
                     duration:(int64_t) duration
                 gqlQueryName:(NSString * _Nullable)gqlQueryName;
 
++ (double)getNetworkBodyMaxSize;
+
 @end
 
 NS_ASSUME_NONNULL_END

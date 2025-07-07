@@ -4,6 +4,8 @@
 
 ### Added
 
+- Add support for respecting backend network body size limits. ([#593](https://github.com/Instabug/Instabug-Flutter/pull/593))
+
 - Add support for xCode 16. ([#574](https://github.com/Instabug/Instabug-Flutter/pull/574))
 
 - Add support for BugReporting user consents. ([#573](https://github.com/Instabug/Instabug-Flutter/pull/573))
