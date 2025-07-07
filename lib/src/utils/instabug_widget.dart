@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/src/modules/crash_reporting.dart';
@@ -7,10 +9,10 @@ class InstabugWidget extends StatefulWidget {
   final Widget child;
 
   /// Custom handler for Flutter errors.
-  /// 
+  ///
   /// This callback is called when a Flutter error occurs. It receives a
   /// [FlutterErrorDetails] object containing information about the error.
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// InstabugWidget(
@@ -21,16 +23,16 @@ class InstabugWidget extends StatefulWidget {
   ///   child: MyApp(),
   /// )
   /// ```
-  /// 
+  ///
   /// Note: If this handler throws an error, it will be caught and logged
   /// to prevent it from interfering with Instabug's error reporting.
   final Function(FlutterErrorDetails)? flutterErrorHandler;
-  
+
   /// Custom handler for platform errors.
-  /// 
+  ///
   /// This callback is called when a platform error occurs. It receives the
   /// error object and stack trace.
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// InstabugWidget(
@@ -41,29 +43,41 @@ class InstabugWidget extends StatefulWidget {
   ///   child: MyApp(),
   /// )
   /// ```
-  /// 
+  ///
   /// Note: If this handler throws an error, it will be caught and logged
   /// to prevent it from interfering with Instabug's error reporting.
   final Function(Object, StackTrace)? platformErrorHandler;
 
+  /// Whether to handle Flutter errors.
+  ///
+  /// If true, the Flutter error will be reported as a non-fatal crash, instead of a fatal crash.
+  final bool nonFatalFlutterErrors;
+
+  /// Whether to exit the app on Flutter error.
+  ///
+  /// If true, the app will exit when a Flutter error occurs.
+  final bool shouldExitOnFlutterError;
+
   /// This widget is used to wrap the root of your application. It will automatically
   /// configure both FlutterError.onError and PlatformDispatcher.instance.onError handlers to report errors to Instabug.
-  /// 
+  ///
   /// Example:
-  /// ```dart 
+  /// ```dart
   /// MaterialApp(
   ///   home: InstabugWidget(
   ///     child: MyApp(),
   ///   ),
   /// )
   /// ```
-  /// 
-  /// Note: Custom error handlers should be provided to handle errors before they are reported to Instabug.
+  ///
+  /// Note: Custom error handlers are called before the error is reported to Instabug.
   const InstabugWidget({
     Key? key,
     required this.child,
     this.flutterErrorHandler,
     this.platformErrorHandler,
+    this.nonFatalFlutterErrors = false,
+    this.shouldExitOnFlutterError = false,
   }) : super(key: key);
 
   @override
@@ -91,14 +105,25 @@ class _InstabugWidgetState extends State<InstabugWidget> {
         }
       }
 
-      CrashReporting.reportCrash(
-        details.exception,
-        details.stack ?? StackTrace.current,
-      );
+      if (widget.nonFatalFlutterErrors) {
+        CrashReporting.reportHandledCrash(
+          details.exception,
+          details.stack ?? StackTrace.current,
+        );
+      } else {
+        CrashReporting.reportCrash(
+          details.exception,
+          details.stack ?? StackTrace.current,
+        );
+      }
 
       FlutterError.presentError(details);
-    };
 
+      if (widget.shouldExitOnFlutterError) {
+        exit(1);
+      }
+    };
+ 
     PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
       // Call user's custom handler if provided
       if (widget.platformErrorHandler != null) {
