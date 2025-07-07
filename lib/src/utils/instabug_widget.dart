@@ -60,11 +60,6 @@ class InstabugWidget extends StatefulWidget {
   /// Note: This has no effect if [nonFatalFlutterErrors] is false.
   final NonFatalExceptionLevel nonFatalExceptionLevel;
 
-  /// Whether to exit the app on Flutter error.
-  ///
-  /// If true, the app will exit when a Flutter error occurs.
-  final bool shouldExitOnFlutterError;
-
   /// This widget is used to wrap the root of your application. It will automatically
   /// configure both FlutterError.onError and PlatformDispatcher.instance.onError handlers to report errors to Instabug.
   ///
@@ -85,7 +80,6 @@ class InstabugWidget extends StatefulWidget {
     this.platformErrorHandler,
     this.nonFatalFlutterErrors = false,
     this.nonFatalExceptionLevel = NonFatalExceptionLevel.error,
-    this.shouldExitOnFlutterError = false,
   }) : super(key: key);
 
   @override
@@ -127,10 +121,6 @@ class _InstabugWidgetState extends State<InstabugWidget> {
       }
 
       FlutterError.presentError(details);
-
-      if (widget.shouldExitOnFlutterError) {
-        exit(1);
-      }
     };
 
     PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
