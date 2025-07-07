@@ -46,11 +46,11 @@ part 'src/components/flows_content.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-      Instabug.init(
-        token: 'ed6f659591566da19b67857e1b9d40ab',
-        invocationEvents: [InvocationEvent.floatingButton],
-        debugLogsLevel: LogLevel.verbose,
-      );
+  Instabug.init(
+    token: 'ed6f659591566da19b67857e1b9d40ab',
+    invocationEvents: [InvocationEvent.floatingButton],
+    debugLogsLevel: LogLevel.verbose,
+  );
 
   final app = InstabugWidget(
     child: const MyApp(),
