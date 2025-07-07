@@ -21,6 +21,10 @@ class _NonFatalCrashesContentState extends State<NonFatalCrashesContent> {
         log('throwHandledException: Crash report for ${err.runtimeType} is Sent!',
             name: 'NonFatalCrashesWidget');
       }
+      CrashReporting.reportHandledCrash(
+        err,
+        StackTrace.current,
+      );
     }
   }
 
