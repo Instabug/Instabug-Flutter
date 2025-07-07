@@ -1,6 +1,6 @@
 # Changelog
 
-## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.1)
+## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.1)  (Jul 7, 2025)
 
 ### Added
 
