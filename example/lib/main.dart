@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/utils/instabug_widget.dart';
 import 'package:instabug_flutter_example/src/components/apm_switch.dart';
 import 'package:instabug_http_client/instabug_http_client.dart';
 import 'package:instabug_flutter_example/src/app_routes.dart';
@@ -43,24 +44,19 @@ part 'src/components/traces_content.dart';
 part 'src/components/flows_content.dart';
 
 void main() {
-  runZonedGuarded(
-    () {
-      WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
-      Instabug.init(
-        token: 'ed6f659591566da19b67857e1b9d40ab',
-        invocationEvents: [InvocationEvent.floatingButton],
-        debugLogsLevel: LogLevel.verbose,
-      );
-
-      FlutterError.onError = (FlutterErrorDetails details) {
-        Zone.current.handleUncaughtError(details.exception, details.stack!);
-      };
-
-      runApp(const MyApp());
-    },
-    CrashReporting.reportCrash,
+  Instabug.init(
+    token: 'ed6f659591566da19b67857e1b9d40ab',
+    invocationEvents: [InvocationEvent.floatingButton],
+    debugLogsLevel: LogLevel.verbose,
   );
+
+  final app = InstabugWidget(
+    child: const MyApp(),
+  );
+
+  runApp(app);
 }
 
 class MyApp extends StatelessWidget {
