@@ -1,12 +1,12 @@
 # Changelog
 
-## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...dev)
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v15.0.1...dev)
 
 ### Added
 
 - Added `InstabugWidget`, a wrapper used to wrap the main application to provide out of the box automatic Crash Reporting support. ([#598](https://github.com/Instabug/Instabug-Flutter/pull/598))
 
-## [15.0.1](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.1)
+## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.1)
 
 ### Added
 
