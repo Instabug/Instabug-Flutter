@@ -209,7 +209,7 @@ class APM {
   ///   The method is returning a `Future<void>`.
   static Future<void> endUITrace() async {
     // End screen render collector for custom ui trace if enabled.
-    if (await FlagsConfig.screenRendering.isEnabled()) {
+    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
       return InstabugScreenRenderManager.I
           .endScreenRenderCollectorForCustomUiTrace();
     }
@@ -402,7 +402,7 @@ class APM {
     });
   }
 
-  /// The function `endScreenRenderForAutoUiTrace` end screen rendering for
+  /// Ends screen rendering for
   /// automatic UI tracing using data provided in `InstabugScreenRenderData` object.
   ///
   /// Args:
@@ -412,11 +412,13 @@ class APM {
   ///
   /// Returns:
   ///   A `Future<void>` is being returned.
-  static Future<void> endScreenRenderForAutoUiTrace(InstabugScreenRenderData data) {
+  static Future<void> endScreenRenderForAutoUiTrace(
+    InstabugScreenRenderData data,
+  ) {
     return _host.endScreenRenderForAutoUiTrace(data.toMap());
   }
 
-  /// The function `endScreenRenderForCustomUiTrace` ends the screen render for a custom
+  /// Ends the screen render for a custom
   /// UI trace using data provided in `InstabugScreenRenderData`.
   ///
   /// Args:
@@ -426,7 +428,9 @@ class APM {
   ///
   /// Returns:
   ///   A `Future<void>` is being returned.
-  static Future<void> endScreenRenderForCustomUiTrace(InstabugScreenRenderData data) {
+  static Future<void> endScreenRenderForCustomUiTrace(
+    InstabugScreenRenderData data,
+  ) {
     return _host.endScreenRenderForCustomUiTrace(data.toMap());
   }
 }

@@ -64,7 +64,20 @@ void main() {
     test(
         'should report data to native when starting new trace from the same type',
         () async {
-      ///todo: will be implemented in next sprint
+      final frameTestData = InstabugScreenRenderData(
+        traceId: 123,
+        frameData: [
+          InstabugFrameData(10000, 200),
+          InstabugFrameData(20000, 1000),
+        ],
+        frozenFramesTotalDuration: 1000,
+        slowFramesTotalDuration: 200,
+      );
+
+      manager.startScreenRenderCollectorForTraceId(frameTestData.traceId);
+      manager.setFrameData(frameTestData);
+      manager.startScreenRenderCollectorForTraceId(2);
+      verify(mApmHost.endScreenRenderForAutoUiTrace(any)).called(1);
     });
 
     test('should attach timing listener if it is not attached', () async {
@@ -120,7 +133,7 @@ void main() {
 
   group('stopScreenRenderCollector()', () {
     test('should not save data if no UI trace is started', () {
-      final frameTestdata = InstabugScreenRenderData(
+      final frameTestData = InstabugScreenRenderData(
         traceId: 123,
         frameData: [
           InstabugFrameData(10000, 200),
@@ -130,21 +143,21 @@ void main() {
         slowFramesTotalDuration: 200,
       );
 
-      manager.setFrameData(frameTestdata);
+      manager.setFrameData(frameTestData);
 
       manager.stopScreenRenderCollector();
 
       expect(manager.screenRenderForAutoUiTrace.isActive, false);
-      expect(manager.screenRenderForAutoUiTrace == frameTestdata, false);
+      expect(manager.screenRenderForAutoUiTrace == frameTestData, false);
 
       expect(manager.screenRenderForCustomUiTrace.isActive, false);
-      expect(manager.screenRenderForCustomUiTrace == frameTestdata, false);
+      expect(manager.screenRenderForCustomUiTrace == frameTestData, false);
     });
 
     test(
         'should save and data to screenRenderForAutoUiTrace when for autoUITrace',
         () {
-      final frameTestdata = InstabugScreenRenderData(
+      final frameTestData = InstabugScreenRenderData(
         traceId: 123,
         frameData: [
           InstabugFrameData(10000, 200),
@@ -155,16 +168,16 @@ void main() {
       );
 
       manager.startScreenRenderCollectorForTraceId(
-        frameTestdata.traceId,
+        frameTestData.traceId,
       );
 
-      manager.setFrameData(frameTestdata);
+      manager.setFrameData(frameTestData);
 
       manager.stopScreenRenderCollector();
 
       expect(manager.screenRenderForAutoUiTrace.isActive, true);
 
-      expect(manager.screenRenderForAutoUiTrace == frameTestdata, true);
+      expect(manager.screenRenderForAutoUiTrace == frameTestData, true);
 
       expect(manager.screenRenderForCustomUiTrace.isActive, false);
     });
@@ -172,7 +185,7 @@ void main() {
     test(
         'should save and data to screenRenderForCustomUiTrace when for customUITrace',
         () {
-      final frameTestdata = InstabugScreenRenderData(
+      final frameTestData = InstabugScreenRenderData(
         traceId: 123,
         frameData: [
           InstabugFrameData(10000, 200),
@@ -183,23 +196,23 @@ void main() {
       );
 
       manager.startScreenRenderCollectorForTraceId(
-        frameTestdata.traceId,
+        frameTestData.traceId,
         UiTraceType.custom,
       );
 
-      manager.setFrameData(frameTestdata);
+      manager.setFrameData(frameTestData);
 
       manager.stopScreenRenderCollector();
 
       expect(manager.screenRenderForCustomUiTrace.isActive, true);
 
-      expect(manager.screenRenderForCustomUiTrace == frameTestdata, true);
+      expect(manager.screenRenderForCustomUiTrace == frameTestData, true);
 
       expect(manager.screenRenderForAutoUiTrace.isActive, false);
     });
 
     test('should remove timing callback listener', () {
-      final frameTestdata = InstabugScreenRenderData(
+      final frameTestData = InstabugScreenRenderData(
         traceId: 123,
         frameData: [
           InstabugFrameData(10000, 200),
@@ -209,16 +222,28 @@ void main() {
         slowFramesTotalDuration: 200,
       );
 
-      manager.setFrameData(frameTestdata);
+      manager.setFrameData(frameTestData);
       manager.stopScreenRenderCollector();
 
       verify(mWidgetBinding.removeTimingsCallback(any)).called(1);
     });
 
-    test(
-        'should report data to native when starting new trace from the same type',
-        () async {
-      ///todo: will be implemented in next sprint
+    test('should report data to native side with the correct type', () async {
+      final frameTestData = InstabugScreenRenderData(
+        traceId: 123,
+        frameData: [
+          InstabugFrameData(10000, 200),
+          InstabugFrameData(20000, 1000),
+        ],
+        frozenFramesTotalDuration: 1000,
+        slowFramesTotalDuration: 200,
+      );
+
+      manager.startScreenRenderCollectorForTraceId(0, UiTraceType.custom);
+      manager.setFrameData(frameTestData);
+      manager.stopScreenRenderCollector();
+      verify(mApmHost.endScreenRenderForCustomUiTrace(any)).called(1);
+      verifyNever(mApmHost.endScreenRenderForAutoUiTrace(any));
     });
   });
 
@@ -276,10 +301,21 @@ void main() {
       verifyNever(mWidgetBinding.removeTimingsCallback(any));
     });
 
-    test(
-        'should report data to native when starting new trace from the same type',
-        () async {
-      ///todo: will be implemented in next sprint
+    test('should report data to native side', () async {
+      final frameTestData = InstabugScreenRenderData(
+        traceId: 123,
+        frameData: [
+          InstabugFrameData(10000, 200),
+          InstabugFrameData(20000, 1000),
+        ],
+        frozenFramesTotalDuration: 1000,
+        slowFramesTotalDuration: 200,
+      );
+
+      manager.startScreenRenderCollectorForTraceId(0, UiTraceType.custom);
+      manager.setFrameData(frameTestData);
+      manager.endScreenRenderCollectorForCustomUiTrace();
+      verify(mApmHost.endScreenRenderForCustomUiTrace(any)).called(1);
     });
   });
 

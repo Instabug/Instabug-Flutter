@@ -76,7 +76,7 @@ NSMutableDictionary *traces;
 // Deprecated - see [startFlowName, setFlowAttributeName & endFlowName].
 - (void)startExecutionTraceId:(NSString *)id name:(NSString *)name completion:(void(^)(NSString *_Nullable, FlutterError *_Nullable))completion {
     IBGExecutionTrace *trace = [IBGAPM startExecutionTraceWithName:name];
-
+    
     if (trace != nil) {
         [traces setObject:trace forKey:id];
         return completion(id, nil);
@@ -219,27 +219,39 @@ NSMutableDictionary *traces;
 }
 
 - (void)endScreenRenderForAutoUiTraceData:(nonnull NSDictionary<NSString *,id> *)data error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
-    int traceId = [data[@"traceId"] intValue];
-    int slowFrames = [data[@"slowFramesTotalDuration"] intValue];
-    int frozenFrames = [data[@"frozenFramesTotalDuration"] intValue];
-    
     NSArray<NSArray<NSNumber *> *> *rawFrames = data[@"frameData"];
-    NSLog(@"traceID%d" , traceId);
-    NSLog(@"slowFrames%d" , slowFrames);
-    NSLog(@"frozenFrames%d" , frozenFrames);
+    NSMutableArray<IBGFrameInfo *> *frameInfos = [[NSMutableArray alloc] init];
+    
     if (rawFrames && [rawFrames isKindOfClass:[NSArray class]]) {
         for (NSArray<NSNumber *> *frameValues in rawFrames) {
             if ([frameValues count] == 2) {
-                NSLog(@"startTime%lld" , [frameValues[0] longLongValue]);
-                NSLog(@"duration%lld" , [frameValues[1] longLongValue]);
+                IBGFrameInfo *frameInfo = [[IBGFrameInfo alloc] init];
+                frameInfo.startTimestampInMicroseconds = [frameValues[0] doubleValue];
+                frameInfo.durationInMicroseconds = [frameValues[1] doubleValue];
+                [frameInfos addObject:frameInfo];
             }
         }
     }
+    [IBGAPM endAutoUITraceCPWithFrames:frameInfos];
 }
 
 
-- (void)endScreenRenderForCustomUiTraceData:(nonnull NSDictionary<NSString *,id> *)data error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
-    //code
+- (void)endScreenRenderForCustomUiTraceData:(nonnull NSDictionary<NSString *,id> *)data error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    NSArray<NSArray<NSNumber *> *> *rawFrames = data[@"frameData"];
+    NSMutableArray<IBGFrameInfo *> *frameInfos = [[NSMutableArray alloc] init];
+    
+    if (rawFrames && [rawFrames isKindOfClass:[NSArray class]]) {
+        for (NSArray<NSNumber *> *frameValues in rawFrames) {
+            if ([frameValues count] == 2) {
+                IBGFrameInfo *frameInfo = [[IBGFrameInfo alloc] init];
+                frameInfo.startTimestampInMicroseconds = [frameValues[0] doubleValue];
+                frameInfo.durationInMicroseconds = [frameValues[1] doubleValue];
+                [frameInfos addObject:frameInfo];
+            }
+        }
+    }
+    
+    [IBGAPM endCustomUITraceCPWithFrames:frameInfos];
 }
 
 

@@ -11,9 +11,6 @@ import 'package:instabug_flutter/src/utils/screen_rendering/instabug_widget_bind
 import 'package:meta/meta.dart';
 
 //todo: remove logs
-extension on int {
-  int get inMicro => this * 1000;
-}
 
 @internal
 enum UiTraceType {
@@ -23,7 +20,7 @@ enum UiTraceType {
 
 @internal
 class InstabugScreenRenderManager {
-  late final WidgetsBinding _widgetsBinding;
+  WidgetsBinding? _widgetsBinding;
   late int _buildTime;
   late int _rasterTime;
   late int _totalTime;
@@ -34,10 +31,17 @@ class InstabugScreenRenderManager {
   final List<InstabugFrameData> _delayedFrames = [];
 
   double _deviceRefreshRate = 60;
+
+  /// Default refresh rate for 60 FPS displays
   double _slowFrameThresholdMs = 16.67;
+
+  /// 1/DeviceRefreshRate * 1000
   final _frozenFrameThresholdMs = 700;
+
+  /// Default frozen frame threshold in milliseconds (700ms)
   int _slowFramesTotalDuration = 0;
   int _frozenFramesTotalDuration = 0;
+  final int _microsecondsPerMillisecond = 1000;
 
   bool _isTimingsListenerAttached = false;
   bool screenRenderEnabled = false;
@@ -61,7 +65,7 @@ class InstabugScreenRenderManager {
   Future<void> init(WidgetsBinding? widgetBinding) async {
     try {
       // passing WidgetsBinding? (nullable) for flutter versions prior than 3.x
-      if (!_isTimingsListenerAttached && widgetBinding != null) {
+      if (!screenRenderEnabled && widgetBinding != null) {
         log("$tag: init", name: 'andrew');
         _widgetsBinding = widgetBinding;
         _addWidgetBindingObserver();
@@ -83,19 +87,19 @@ class InstabugScreenRenderManager {
 
     _displayFrameTimingDetails(frameTiming);
     if (_isUiSlow) {
-      _slowFramesTotalDuration +=
-          _buildTime.inMicro; //convert from milliseconds to microseconds
+      _slowFramesTotalDuration += _buildTime *
+          _microsecondsPerMillisecond; //convert from milliseconds to microseconds
     } else if (_isRasterSlow) {
-      _slowFramesTotalDuration +=
-          _rasterTime.inMicro; //convert from milliseconds to microseconds
+      _slowFramesTotalDuration += _rasterTime *
+          _microsecondsPerMillisecond; //convert from milliseconds to microseconds
     }
 
     if (_isUiFrozen) {
-      _frozenFramesTotalDuration += _buildTime.inMicro;
+      _frozenFramesTotalDuration += _buildTime * _microsecondsPerMillisecond;
     } else if (_isRasterFrozen) {
-      _frozenFramesTotalDuration += _rasterTime.inMicro;
+      _frozenFramesTotalDuration += _rasterTime * _microsecondsPerMillisecond;
     } else if (_isFrozen) {
-      _frozenFramesTotalDuration += _totalTime.inMicro;
+      _frozenFramesTotalDuration += _totalTime * _microsecondsPerMillisecond;
     }
 
     if (_isUiDelayed) {
@@ -127,10 +131,16 @@ class InstabugScreenRenderManager {
     try {
       // Return if frameTimingListener not attached
       if (!screenRenderEnabled || !_isTimingsListenerAttached) {
-        log("$tag: start returned", name: 'andrew');
+        log(
+          "$tag: startScreenRenderCollectorForTraceId returned",
+          name: 'andrew',
+        );
         return;
       }
-      log("$tag: start normally", name: 'andrew');
+      log(
+        "$tag: startScreenRenderCollectorForTraceId $traceId (${type.name})",
+        name: 'andrew',
+      );
 
       //Save the memory cached data to be sent to native side
       if (_delayedFrames.isNotEmpty) {
@@ -150,8 +160,6 @@ class InstabugScreenRenderManager {
           _screenRenderForCustomUiTrace.clear();
         }
         _screenRenderForCustomUiTrace.traceId = traceId;
-        log("$tag: start collecting for auto custom trace $traceId",
-            name: 'andrew');
       }
 
       //Sync the captured screen render data of the Auto UI trace when starting new one
@@ -163,8 +171,6 @@ class InstabugScreenRenderManager {
           _screenRenderForAutoUiTrace.clear();
         }
         _screenRenderForAutoUiTrace.traceId = traceId;
-        log("$tag: start collecting for auto ui trace $traceId",
-            name: 'andrew');
       }
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
@@ -179,17 +185,21 @@ class InstabugScreenRenderManager {
         _saveCollectedData();
       }
 
+      // Sync Screen Render data for custom ui trace if exists
       if (_screenRenderForCustomUiTrace.isActive &&
           _screenRenderForCustomUiTrace.isNotEmpty) {
         reportScreenRending(_screenRenderForCustomUiTrace, UiTraceType.custom);
       }
+
+      // Sync Screen Render data for auto ui trace if exists
       if (_screenRenderForAutoUiTrace.isActive &&
           _screenRenderForAutoUiTrace.isNotEmpty) {
         reportScreenRending(_screenRenderForAutoUiTrace);
       }
 
+      // Dispose Screen Render Manager
       dispose();
-      log("$tag: stop", name: 'andrew');
+      log("$tag: stopScreenRenderCollector", name: 'andrew');
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
     }
@@ -219,6 +229,7 @@ class InstabugScreenRenderManager {
     }
   }
 
+  /// Sync captures screen render data based on their type.
   @visibleForTesting
   Future<void> reportScreenRending(
     InstabugScreenRenderData screenRenderData, [
@@ -236,11 +247,13 @@ class InstabugScreenRenderManager {
     );
   }
 
+  /// Dispose InstabugScreenRenderManager by removing timings callback and cashed data.
   void dispose() {
     _resetCachedFrameData();
     _removeFrameTimings();
+    _widgetsBinding = null;
     screenRenderEnabled = false;
-    log("$tag: remove", name: 'andrew');
+    log("$tag: dispose", name: 'andrew');
   }
 
   /// --------------------------- private methods ---------------------
@@ -277,7 +290,7 @@ class InstabugScreenRenderManager {
 
   /// add new [WidgetsBindingObserver] to track app lifecycle.
   void _addWidgetBindingObserver() =>
-      _widgetsBinding.addObserver(InstabugWidgetsBindingObserver.instance);
+      _widgetsBinding?.addObserver(InstabugWidgetsBindingObserver.instance);
 
   /// Initialize the static variables
   Future<void> _initStaticValues() async {
@@ -290,6 +303,7 @@ class InstabugScreenRenderManager {
     _slowFrameThresholdMs = _targetMsPerFrame(_deviceRefreshRate);
     _screenRenderForAutoUiTrace = InstabugScreenRenderData(frameData: []);
     _screenRenderForCustomUiTrace = InstabugScreenRenderData(frameData: []);
+    log("$tag: _initStaticValues ", name: 'andrew');
   }
 
   /// Add a frame observer by calling [WidgetsBinding.instance.addTimingsCallback]
@@ -297,16 +311,20 @@ class InstabugScreenRenderManager {
     if (_isTimingsListenerAttached) {
       return; // A timings callback is already attached
     }
-    _widgetsBinding.addTimingsCallback(_timingsCallback);
+    _widgetsBinding?.addTimingsCallback(_timingsCallback);
     _isTimingsListenerAttached = true;
-    log("start frame timing", name: 'andrew');
+    log("$tag: _initFrameTimings ", name: 'andrew');
   }
 
   /// Remove the running frame observer by calling [_widgetsBinding.removeTimingsCallback]
   void _removeFrameTimings() {
     if (!_isTimingsListenerAttached) return; // No timings callback attached.
-    _widgetsBinding.removeTimingsCallback(_timingsCallback);
+    _widgetsBinding?.removeTimingsCallback(_timingsCallback);
     _isTimingsListenerAttached = false;
+    log(
+      "$tag: _removeFrameTimings ",
+      name: 'andrew',
+    );
   }
 
   /// Reset the memory cashed data
@@ -315,7 +333,7 @@ class InstabugScreenRenderManager {
     _frozenFramesTotalDuration = 0;
     _delayedFrames.clear();
     log(
-      "$tag: Captured data is cleared ",
+      "$tag: _resetCachedFrameData ",
       name: 'andrew',
     );
   }
