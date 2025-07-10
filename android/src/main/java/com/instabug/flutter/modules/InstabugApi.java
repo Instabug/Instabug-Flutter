@@ -578,13 +578,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         }
     }
 
-    public void setFullscreen(@NonNull Boolean isEnabled) {
-        try {
-            Instabug.setFullscreen(isEnabled);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     /**
      * Retrieves a color value from the Map.
