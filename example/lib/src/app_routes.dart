@@ -9,6 +9,8 @@ final appRoutes = {
   "/": (BuildContext context) =>
       const MyHomePage(title: 'Flutter Demo Home Pag'),
   CrashesPage.screenName: (BuildContext context) => const CrashesPage(),
+  BugReportingPage.screenName: (BuildContext context) =>
+      const BugReportingPage(),
   ComplexPage.screenName: (BuildContext context) => const ComplexPage(),
   ApmPage.screenName: (BuildContext context) => const ApmPage(),
   ScreenLoadingPage.screenName: (BuildContext context) =>
