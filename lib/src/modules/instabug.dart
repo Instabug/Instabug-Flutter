@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
-import 'dart:io';
 
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unnecessary_import
