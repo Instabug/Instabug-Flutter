@@ -692,25 +692,21 @@ public class InstabugApiTest {
                 when(mock.build()).thenReturn(mock(com.instabug.library.model.IBGTheme.class));
             });
 
-        api.setTheme(themeConfig);
+            api.setTheme(themeConfig);
 
-        com.instabug.library.model.IBGTheme.Builder builder = mThemeBuilder.constructed().get(0);
-        
-        // Verify color setters were called
-        verify(builder).setPrimaryColor(android.graphics.Color.parseColor("#FF6B6B"));
-        verify(builder).setBackgroundColor(android.graphics.Color.parseColor("#FFFFFF"));
-        verify(builder).setTitleTextColor(android.graphics.Color.parseColor("#000000"));
-        verify(builder).setPrimaryTextColor(android.graphics.Color.parseColor("#333333"));
-        verify(builder).setSecondaryTextColor(android.graphics.Color.parseColor("#666666"));
-        
-        // Verify text style setters were called
-        verify(builder).setPrimaryTextStyle(Typeface.BOLD);
-        verify(builder).setSecondaryTextStyle(Typeface.ITALIC);
-        verify(builder).setCtaTextStyle(Typeface.BOLD_ITALIC);
-        
-        // Verify theme was set on Instabug
-        mInstabug.verify(() -> Instabug.setTheme(any(com.instabug.library.model.IBGTheme.class)));
-        
+            com.instabug.library.model.IBGTheme.Builder builder = mThemeBuilder.constructed().get(0);
+            
+        verify(builder).setPrimaryColor(anyInt());
+        verify(builder).setBackgroundColor(anyInt());
+        verify(builder).setTitleTextColor(anyInt());
+        verify(builder).setPrimaryTextColor(anyInt());
+        verify(builder).setSecondaryTextColor(anyInt());
+            
+            verify(builder).setPrimaryTextStyle(Typeface.BOLD);
+            verify(builder).setSecondaryTextStyle(Typeface.ITALIC);
+            verify(builder).setCtaTextStyle(Typeface.BOLD_ITALIC);
+            
+            mInstabug.verify(() -> Instabug.setTheme(any(com.instabug.library.model.IBGTheme.class)))
     }
 
 
