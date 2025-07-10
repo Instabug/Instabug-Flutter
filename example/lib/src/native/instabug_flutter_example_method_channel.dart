@@ -54,6 +54,22 @@ class InstabugFlutterExampleMethodChannel {
       log("Failed to send out of memory: '${e.message}'.", name: _tag);
     }
   }
+
+  static Future<void> setFullscreen(bool isEnabled) async {
+    if (!Platform.isAndroid) {
+      return;
+    }
+
+    try {
+      await _channel.invokeMethod(Constants.setFullscreenMethodName, {
+        'isEnabled': isEnabled,
+      });
+    } on PlatformException catch (e) {
+      log("Failed to set fullscreen: '${e.message}'.", name: _tag);
+    } catch (e) {
+      log("Unexpected error setting fullscreen: '$e'.", name: _tag);
+    }
+  }
 }
 
 class Constants {
@@ -65,4 +81,5 @@ class Constants {
   static const sendNativeFatalHangMethodName = "sendNativeFatalHang";
   static const sendAnrMethodName = "sendAnr";
   static const sendOomMethodName = "sendOom";
+  static const setFullscreenMethodName = "setFullscreen";
 }
