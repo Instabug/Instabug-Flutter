@@ -713,22 +713,5 @@ public class InstabugApiTest {
         
     }
 
-   
-    @Test
-    public void testSetFullscreenEnabled() {
-        boolean isEnabled = true;
 
-        api.setFullscreen(isEnabled);
-
-        mInstabug.verify(() -> Instabug.setFullscreen(true));
-    }
-
-    @Test
-    public void testSetFullscreenDisabled() {
-        boolean isEnabled = false;
-
-        api.setFullscreen(isEnabled);
-
-        mInstabug.verify(() -> Instabug.setFullscreen(false));
-    }
 }

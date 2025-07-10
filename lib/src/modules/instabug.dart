@@ -511,14 +511,4 @@ class Instabug {
   static Future<void> setTheme(ThemeConfig themeConfig) async {
     return _host.setTheme(themeConfig.toMap());
   }
-
-  /// Enables or disables displaying in full-screen mode, hiding the status and navigation bars.
-  /// This method is only available on Android platform.
-  /// @param isEnabled A boolean to enable/disable setFullscreen.
-  static Future<void> setFullscreen(bool isEnabled) async {
-    if (Platform.isAndroid) {
-      const MethodChannel channel = MethodChannel('instabug_flutter');
-      await channel.invokeMethod('setFullscreen', {'isEnabled': isEnabled});
-    }
-  }
 }
