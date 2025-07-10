@@ -14,7 +14,9 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     InstabugHostApiSetup(messenger, api);
 }
 
-@implementation InstabugApi
+@implementation InstabugApi {
+    NSMutableSet<NSString *> *_registeredFonts;
+}
 
 - (void)setEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
     Instabug.enabled = [isEnabled boolValue];
@@ -410,5 +412,126 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
 }
 
+
+- (void)setThemeThemeConfig:(NSDictionary<NSString *, id> *)themeConfig error:(FlutterError *_Nullable *_Nonnull)error {
+    IBGTheme *theme = [[IBGTheme alloc] init];
+    
+    NSDictionary *colorMapping = @{
+        @"primaryColor": ^(UIColor *color) { theme.primaryColor = color; },
+        @"backgroundColor": ^(UIColor *color) { theme.backgroundColor = color; },
+        @"titleTextColor": ^(UIColor *color) { theme.titleTextColor = color; },
+        @"subtitleTextColor": ^(UIColor *color) { theme.subtitleTextColor = color; },
+        @"primaryTextColor": ^(UIColor *color) { theme.primaryTextColor = color; },
+        @"secondaryTextColor": ^(UIColor *color) { theme.secondaryTextColor = color; },
+        @"callToActionTextColor": ^(UIColor *color) { theme.callToActionTextColor = color; },
+        @"headerBackgroundColor": ^(UIColor *color) { theme.headerBackgroundColor = color; },
+        @"footerBackgroundColor": ^(UIColor *color) { theme.footerBackgroundColor = color; },
+        @"rowBackgroundColor": ^(UIColor *color) { theme.rowBackgroundColor = color; },
+        @"selectedRowBackgroundColor": ^(UIColor *color) { theme.selectedRowBackgroundColor = color; },
+        @"rowSeparatorColor": ^(UIColor *color) { theme.rowSeparatorColor = color; }
+    };
+    
+    for (NSString *key in colorMapping) {
+        if (themeConfig[key]) {
+            NSString *colorString = themeConfig[key];
+            UIColor *color = [self colorFromHexString:colorString];
+            if (color) {
+                void (^setter)(UIColor *) = colorMapping[key];
+                setter(color);
+            }
+        }
+    }
+    
+    [self setFontIfPresent:themeConfig[@"primaryFontPath"] ?: themeConfig[@"primaryFontAsset"] forTheme:theme type:@"primary"];
+    [self setFontIfPresent:themeConfig[@"secondaryFontPath"] ?: themeConfig[@"secondaryFontAsset"] forTheme:theme type:@"secondary"];
+    [self setFontIfPresent:themeConfig[@"ctaFontPath"] ?: themeConfig[@"ctaFontAsset"] forTheme:theme type:@"cta"];
+    
+    Instabug.theme = theme;
+}
+
+- (void)setFontIfPresent:(NSString *)fontPath forTheme:(IBGTheme *)theme type:(NSString *)type {
+    if (!fontPath || fontPath.length == 0 || !theme || !type) return;
+
+    if (!_registeredFonts) {
+        _registeredFonts = [NSMutableSet set];
+    }
+
+    UIFont *font = [UIFont fontWithName:fontPath size:UIFont.systemFontSize];
+
+    if (!font && ![_registeredFonts containsObject:fontPath]) {
+        NSString *fontFileName = [fontPath stringByDeletingPathExtension];
+        NSArray *fontExtensions = @[@"ttf", @"otf", @"woff", @"woff2"];
+        NSString *fontFilePath = nil;
+
+        for (NSString *extension in fontExtensions) {
+            fontFilePath = [[NSBundle mainBundle] pathForResource:fontFileName ofType:extension];
+            if (fontFilePath) break;
+        }
+
+        if (fontFilePath) {
+            NSData *fontData = [NSData dataWithContentsOfFile:fontFilePath];
+            if (fontData) {
+                CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)fontData);
+                if (provider) {
+                    CGFontRef cgFont = CGFontCreateWithDataProvider(provider);
+                    if (cgFont) {
+                        CFErrorRef error = NULL;
+                        if (CTFontManagerRegisterGraphicsFont(cgFont, &error)) {
+                            NSString *postScriptName = (__bridge_transfer NSString *)CGFontCopyPostScriptName(cgFont);
+                            if (postScriptName) {
+                                font = [UIFont fontWithName:postScriptName size:UIFont.systemFontSize];
+                                [_registeredFonts addObject:fontPath];
+                            }
+                        } else if (error) {
+                            CFStringRef desc = CFErrorCopyDescription(error);
+                            CFRelease(desc);
+                            CFRelease(error);
+                        }
+                        CGFontRelease(cgFont);
+                    }
+                    CGDataProviderRelease(provider);
+                }
+            }
+        }
+    } else if (!font && [_registeredFonts containsObject:fontPath]) {
+        font = [UIFont fontWithName:fontPath size:UIFont.systemFontSize];
+    }
+
+    if (font) {
+        if ([type isEqualToString:@"primary"]) {
+            theme.primaryTextFont = font;
+        } else if ([type isEqualToString:@"secondary"]) {
+            theme.secondaryTextFont = font;
+        } else if ([type isEqualToString:@"cta"]) {
+            theme.callToActionTextFont = font;
+        }
+    }
+}
+
+- (UIColor *)colorFromHexString:(NSString *)hexString {
+    NSString *cleanString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
+    
+    if (cleanString.length == 6) {
+        unsigned int rgbValue = 0;
+        NSScanner *scanner = [NSScanner scannerWithString:cleanString];
+        [scanner scanHexInt:&rgbValue];
+        
+        return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16) / 255.0
+                               green:((rgbValue & 0xFF00) >> 8) / 255.0
+                                blue:(rgbValue & 0xFF) / 255.0
+                               alpha:1.0];
+    } else if (cleanString.length == 8) {
+        unsigned int rgbaValue = 0;
+        NSScanner *scanner = [NSScanner scannerWithString:cleanString];
+        [scanner scanHexInt:&rgbaValue];
+        
+        return [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24) / 255.0
+                               green:((rgbaValue & 0xFF0000) >> 16) / 255.0
+                                blue:((rgbaValue & 0xFF00) >> 8) / 255.0
+                               alpha:(rgbaValue & 0xFF) / 255.0];
+    }
+    
+    return [UIColor blackColor];
+}
 
 @end

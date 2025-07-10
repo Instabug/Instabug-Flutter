@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
+import 'dart:io';
 
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unnecessary_import
@@ -492,5 +493,43 @@ class Instabug {
   /// [appVariant] used to set current App variant name
   static Future<void> setAppVariant(String appVariant) async {
     return _host.setAppVariant(appVariant);
+  }
+
+  /// Sets a custom theme for Instabug UI elements.
+  ///
+  /// @param theme - Configuration object containing theme properties
+  ///
+  /// Example:
+  /// ```dart
+  ///
+  /// Instabug.setTheme(ThemeConfig(
+  ///   primaryColor: '#FF6B6B',
+  ///   secondaryTextColor: '#666666',
+  ///   primaryTextColor: '#333333',
+  ///   titleTextColor: '#000000',
+  ///   backgroundColor: '#FFFFFF',
+  ///   primaryTextStyle: 'bold',
+  ///   secondaryTextStyle: 'normal',
+  ///   titleTextStyle: 'bold',
+  ///   ctaTextStyle: 'bold',
+  ///   primaryFontPath: '/data/user/0/com.yourapp/files/fonts/YourFont.ttf',
+  ///   secondaryFontPath: '/data/user/0/com.yourapp/files/fonts/YourFont.ttf',
+  ///   ctaFontPath: '/data/user/0/com.yourapp/files/fonts/YourFont.ttf',
+  ///   primaryFontAsset: 'fonts/YourFont.ttf',
+  ///   secondaryFontAsset: 'fonts/YourFont.ttf'
+  /// ));
+  /// ```
+  static Future<void> setTheme(ThemeConfig themeConfig) async {
+    return _host.setTheme(themeConfig.toMap());
+  }
+
+  /// Enables or disables displaying in full-screen mode, hiding the status and navigation bars.
+  /// This method is only available on Android platform.
+  /// @param isEnabled A boolean to enable/disable setFullscreen.
+  static Future<void> setFullscreen(bool isEnabled) async {
+    if (Platform.isAndroid) {
+      const MethodChannel channel = MethodChannel('instabug_flutter');
+      await channel.invokeMethod('setFullscreen', {'isEnabled': isEnabled});
+    }
   }
 }
