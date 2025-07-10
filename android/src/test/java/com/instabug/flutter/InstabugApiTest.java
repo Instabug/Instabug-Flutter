@@ -718,7 +718,7 @@ public class InstabugApiTest {
             verify(builder).setSecondaryTextStyle(Typeface.ITALIC);
             verify(builder).setCtaTextStyle(Typeface.BOLD_ITALIC);
             
-            mInstabug.verify(() -> Instabug.setTheme(any(com.instabug.library.model.IBGTheme.class)))
+            mInstabug.verify(() -> Instabug.setTheme(any(com.instabug.library.model.IBGTheme.class)));
     }
 
 
