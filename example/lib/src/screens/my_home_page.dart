@@ -20,6 +20,9 @@ class _MyHomePageState extends State<MyHomePage> {
   final primaryColorController = TextEditingController();
   final screenNameController = TextEditingController();
   final featureFlagsController = TextEditingController();
+  final userAttributeKeyController = TextEditingController();
+
+  final userAttributeValueController = TextEditingController();
 
   @override
   void dispose() {
@@ -124,6 +127,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Instabug.setColorTheme(colorTheme);
   }
 
+  void _navigateToBugs() {
+    ///This way of navigation utilize screenLoading automatic approach [Navigator 1]
+    Navigator.pushNamed(context, BugReportingPage.screenName);
+  }
+
   void _navigateToCrashes() {
     ///This way of navigation utilize screenLoading automatic approach [Navigator 1]
     Navigator.pushNamed(context, CrashesPage.screenName);
@@ -161,6 +169,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  final _formUserAttributeKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Page(
@@ -177,6 +187,10 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: restartInstabug,
           text: 'Restart Instabug',
+        ),
+        InstabugButton(
+          onPressed: _navigateToBugs,
+          text: 'Bug Reporting',
         ),
         const SectionTitle('Primary Color'),
         InstabugTextField(
@@ -334,7 +348,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-        SectionTitle('FeatureFlags'),
+        const SectionTitle('FeatureFlags'),
         InstabugTextField(
           controller: featureFlagsController,
           label: 'Feature Flag name',
@@ -350,6 +364,63 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: () => removeAllFeatureFlags(),
           text: 'RemoveAllFeatureFlags',
+        ),
+
+        const SectionTitle('Set User Attribute'),
+
+        Form(
+          key: _formUserAttributeKey,
+          child: Column(
+            children: [
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: InstabugTextField(
+                    label: "User Attribute key",
+                    key: const Key("user_attribute_key_textfield"),
+                    controller: userAttributeKeyController,
+                    validator: (value) {
+                      if (value?.trim().isNotEmpty == true) return null;
+                      return 'this field is required';
+                    },
+                  )),
+                  Expanded(
+                      child: InstabugTextField(
+                    label: "User Attribute  Value",
+                    key: const Key("user_attribute_value_textfield"),
+                    controller: userAttributeValueController,
+                    validator: (value) {
+                      if (value?.trim().isNotEmpty == true) return null;
+
+                      return 'this field is required';
+                    },
+                  )),
+                ],
+              ),
+              SizedBox(height: 8,),
+              InstabugButton(
+                text: 'Set User attribute',
+                key: const Key('set_user_data_btn'),
+                onPressed: () {
+                  if (_formUserAttributeKey.currentState?.validate() == true) {
+                    Instabug.setUserAttribute(userAttributeKeyController.text,
+                        userAttributeValueController.text);
+                  }
+                },
+              ),
+              InstabugButton(
+                text: 'remove User attribute',
+                key: const Key('remove_user_data_btn'),
+                onPressed: () {
+                  if (_formUserAttributeKey.currentState?.validate() == true) {
+                    Instabug.removeUserAttribute(userAttributeKeyController.text);
+                  }
+                },
+              ),
+              SizedBox(height: 10,),
+
+            ],
+          ),
         ),
       ],
     );
