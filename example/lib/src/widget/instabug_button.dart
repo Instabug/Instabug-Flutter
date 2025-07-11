@@ -7,6 +7,7 @@ class InstabugButton extends StatelessWidget {
     this.onPressed,
     this.fontSize,
     this.margin,
+    this.backgroundColor,
   }) : super(key: key);
 
   const InstabugButton.smallFontSize({
@@ -15,12 +16,13 @@ class InstabugButton extends StatelessWidget {
     this.onPressed,
     this.fontSize = 10.0,
     this.margin,
+    this.backgroundColor,
   }) : super(key: key);
 
   final String text;
   final Function()? onPressed;
   final double? fontSize;
-
+  final Color? backgroundColor;
   final EdgeInsetsGeometry? margin;
 
   @override
@@ -34,7 +36,7 @@ class InstabugButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: backgroundColor??Colors.lightBlue,
           foregroundColor: Colors.white,
           textStyle: Theme.of(context)
               .textTheme
