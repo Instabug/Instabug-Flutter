@@ -106,6 +106,33 @@ class _BugReportingPageState extends State<BugReportingPage> {
       );
     });
   }
+  void setOnDismissCallbackWithException() {
+    BugReporting.setOnDismissCallback((dismissType, reportType) {
+      throw Exception("Test crash from dismiss callback");
+    });
+  }
+
+  void setOnInvokeCallbackWithException() {
+    BugReporting.setOnInvokeCallback(() {
+      throw Exception("Test crash from invoke callback");
+    });
+  }
+
+  void setOnInvoiceCallback() {
+    BugReporting.setOnInvokeCallback(() {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            title: Text('On Invoke'),
+            content: Text(
+              'onInvoke callback called',
+            ),
+          );
+        },
+      );
+    });
+  }
 
   void setDisclaimerText() {
     BugReporting.setDisclaimerText(disclaimerTextController.text);
@@ -430,6 +457,19 @@ class _BugReportingPageState extends State<BugReportingPage> {
         InstabugButton(
           onPressed: setOnDismissCallback,
           text: 'Set On Dismiss Callback',
+        ),
+        InstabugButton(
+          onPressed: setOnInvoiceCallback,
+          text: 'Set On Invoice Callback',
+        ),
+
+        InstabugButton(
+          onPressed: setOnDismissCallbackWithException,
+          text: 'Set On Dismiss Callback with Exception',
+        ),
+        InstabugButton(
+          onPressed: setOnInvokeCallbackWithException,
+          text: 'Set On Invoice Callback with Exception' ,
         ),
       ], // This trailing comma makes auto-formatting nicer for build methods.
     );
