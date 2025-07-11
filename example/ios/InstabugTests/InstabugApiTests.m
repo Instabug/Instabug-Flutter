@@ -2,7 +2,7 @@
 #import <XCTest/XCTest.h>
 #import "OCMock/OCMock.h"
 #import "InstabugApi.h"
-#import "Instabug/Instabug.h"
+#import "InstabugSDK/InstabugSDK.h"
 #import "Util/Instabug+Test.h"
 #import "IBGNetworkLogger+CP.h"
 #import "Flutter/Flutter.h"

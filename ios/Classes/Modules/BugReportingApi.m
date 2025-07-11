@@ -1,5 +1,5 @@
 #import <Flutter/Flutter.h>
-#import "Instabug.h"
+#import "InstabugSDK.h"
 #import "BugReportingApi.h"
 #import "ArgsRegistry.h"
 
