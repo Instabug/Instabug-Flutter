@@ -23,6 +23,8 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
     if (InstabugScreenRenderManager.I.screenRenderEnabled) {
       InstabugScreenRenderManager.I.dispose();
     }
+    // For Flutter 2.10.5 version
+    // ignore: invalid_null_aware_operator
     WidgetsBinding.instance?.removeObserver(_instance);
   }
 
