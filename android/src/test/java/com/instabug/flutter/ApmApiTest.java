@@ -409,11 +409,129 @@ public class ApmApiTest {
         verify(result).success(expected);
     }
 
+    @Test
     public void testSetScreenRenderEnabled() {
         boolean isEnabled = false;
 
         api.setScreenRenderEnabled(isEnabled);
 
         mAPM.verify(() -> APM.setScreenRenderingEnabled(isEnabled));
+    }
+
+    @Test
+    public void testDeviceRefreshRate() throws Exception {
+        float expectedRefreshRate = 60.0f;
+        Double expectedResult = 60.0;
+        ApmPigeon.Result<Double> result = spy(makeResult((actual) -> assertEquals(expectedResult, actual)));
+        
+        // Mock the refresh rate provider to return the expected value
+        Callable<Float> mockRefreshRateProvider = () -> expectedRefreshRate;
+        ApmApi testApi = new ApmApi(mockRefreshRateProvider);
+
+        testApi.deviceRefreshRate(result);
+
+        verify(result).success(expectedResult);
+    }
+
+    @Test
+    public void testDeviceRefreshRateWithException() throws Exception {
+        ApmPigeon.Result<Double> result = spy(makeResult((actual) -> {}));
+        
+        // Mock the refresh rate provider to throw an exception
+        Callable<Float> mockRefreshRateProvider = () -> {
+            throw new RuntimeException("Test exception");
+        };
+        ApmApi testApi = new ApmApi(mockRefreshRateProvider);
+
+        testApi.deviceRefreshRate(result);
+
+        // Verify that the method doesn't crash when an exception occurs
+        // The exception is caught and printed, but the result is not called
+        verify(result, never()).success(any());
+    }
+
+    @Test
+    public void testEndScreenRenderForAutoUiTrace() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("traceId", 123L);
+        data.put("slowFramesTotalDuration", 1000L);
+        data.put("frozenFramesTotalDuration", 2000L);
+        data.put("endTime", 1234567890L);
+        data.put("frameData", null);
+
+        api.endScreenRenderForAutoUiTrace(data);
+
+        mInternalApmStatic.verify(() -> InternalAPM._endAutoUiTraceWithScreenRendering(any(), eq(1234567890L)));
+        mInternalApmStatic.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testEndScreenRenderForAutoUiTraceWithFrameData() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("traceId", 123L);
+        data.put("slowFramesTotalDuration", 1000L);
+        data.put("frozenFramesTotalDuration", 2000L);
+        data.put("endTime", 1234567890L);
+        
+        // Create frame data with ArrayList<ArrayList<Long>>
+        java.util.ArrayList<java.util.ArrayList<Long>> frameData = new java.util.ArrayList<>();
+        java.util.ArrayList<Long> frame1 = new java.util.ArrayList<>();
+        frame1.add(100L);
+        frame1.add(200L);
+        frameData.add(frame1);
+        
+        java.util.ArrayList<Long> frame2 = new java.util.ArrayList<>();
+        frame2.add(300L);
+        frame2.add(400L);
+        frameData.add(frame2);
+        
+        data.put("frameData", frameData);
+
+        api.endScreenRenderForAutoUiTrace(data);
+
+        mInternalApmStatic.verify(() -> InternalAPM._endAutoUiTraceWithScreenRendering(any(), eq(1234567890L)));
+        mInternalApmStatic.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testEndScreenRenderForCustomUiTrace() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("traceId", 123L);
+        data.put("slowFramesTotalDuration", 1000L);
+        data.put("frozenFramesTotalDuration", 2000L);
+        data.put("endTime", 1234567890L);
+        data.put("frameData", null);
+
+        api.endScreenRenderForCustomUiTrace(data);
+
+        mInternalApmStatic.verify(() -> InternalAPM._endCustomUiTraceWithScreenRenderingCP(any()));
+        mInternalApmStatic.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testEndScreenRenderForCustomUiTraceWithFrameData() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("traceId", 123L);
+        data.put("slowFramesTotalDuration", 1000L);
+        data.put("frozenFramesTotalDuration", 2000L);
+
+        // Create frame data with ArrayList<ArrayList<Long>>
+        java.util.ArrayList<java.util.ArrayList<Long>> frameData = new java.util.ArrayList<>();
+        java.util.ArrayList<Long> frame1 = new java.util.ArrayList<>();
+        frame1.add(100L);
+        frame1.add(200L);
+        frameData.add(frame1);
+
+        java.util.ArrayList<Long> frame2 = new java.util.ArrayList<>();
+        frame2.add(300L);
+        frame2.add(400L);
+        frameData.add(frame2);
+
+        data.put("frameData", frameData);
+
+        api.endScreenRenderForCustomUiTrace(data);
+
+        mInternalApmStatic.verify(() -> InternalAPM._endCustomUiTraceWithScreenRenderingCP(any()));
+        mInternalApmStatic.verifyNoMoreInteractions();
     }
 }

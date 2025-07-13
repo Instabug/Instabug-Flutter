@@ -12,6 +12,8 @@ import com.instabug.apm.configuration.cp.FeatureAvailabilityCallback;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
+import com.instabug.apm.screenrendering.models.cp.IBGFrameData;
+import com.instabug.apm.screenrendering.models.cp.IBGScreenRenderingData;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
@@ -19,7 +21,9 @@ import com.instabug.flutter.util.ThreadManager;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -516,12 +520,49 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
     @Override
     public void endScreenRenderForAutoUiTrace(@NonNull Map<String, Object> data) {
+        final long traceId = ((Number) data.get("traceId")).longValue();
+        final long slowFramesTotalDuration = ((Number) data.get("slowFramesTotalDuration")).longValue();
+        final long frozenFramesTotalDuration = ((Number) data.get("frozenFramesTotalDuration")).longValue();
+        final long endTime = ((Number) data.get("endTime")).longValue();
 
+        // Don't cast directly to ArrayList<ArrayList<Long>> because the inner lists may actually be ArrayList<Integer>
+        // Instead, cast to List<List<Number>> and convert each value to long explicitly
+        List<List<Number>> rawFrames = (List<List<Number>>) data.get("frameData");
+        ArrayList<IBGFrameData> frames = new ArrayList<>();
+        if (rawFrames != null) {
+            for (List<Number> frameValues : rawFrames) {
+                // Defensive: check size and nulls
+                if (frameValues != null && frameValues.size() >= 2) {
+                    long frameStart = frameValues.get(0).longValue();
+                    long frameDuration = frameValues.get(1).longValue();
+                    frames.add(new IBGFrameData(frameStart, frameDuration));
+                }
+            }
+        }
+        IBGScreenRenderingData screenRenderingData = new IBGScreenRenderingData(traceId, slowFramesTotalDuration, frozenFramesTotalDuration, frames);
+        InternalAPM._endAutoUiTraceWithScreenRendering(screenRenderingData, endTime);
     }
 
     @Override
     public void endScreenRenderForCustomUiTrace(@NonNull Map<String, Object> data) {
+        final long traceId = ((Number) data.get("traceId")).longValue();
+        final long slowFramesTotalDuration = ((Number) data.get("slowFramesTotalDuration")).longValue();
+        final long frozenFramesTotalDuration = ((Number) data.get("frozenFramesTotalDuration")).longValue();
 
+        List<List<Number>> rawFrames = (List<List<Number>>) data.get("frameData");
+        ArrayList<IBGFrameData> frames = new ArrayList<>();
+        if (rawFrames != null) {
+            for (List<Number> frameValues : rawFrames) {
+                // Defensive: check size and nulls
+                if (frameValues != null && frameValues.size() >= 2) {
+                    long frameStart = frameValues.get(0).longValue();
+                    long frameDuration = frameValues.get(1).longValue();
+                    frames.add(new IBGFrameData(frameStart, frameDuration));
+                }
+            }
+        }
+        IBGScreenRenderingData screenRenderingData = new IBGScreenRenderingData(traceId, slowFramesTotalDuration, frozenFramesTotalDuration, frames);
+        InternalAPM._endCustomUiTraceWithScreenRenderingCP(screenRenderingData);
     }
 
 }

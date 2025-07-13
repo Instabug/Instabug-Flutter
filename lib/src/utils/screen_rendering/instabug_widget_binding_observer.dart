@@ -22,7 +22,12 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
   /// Logging tag for debugging purposes.
   static const tag = "InstabugWidgetsBindingObserver";
 
-  static void dispose() => WidgetsBinding.instance.removeObserver(_instance);
+  static void dispose() {
+    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
+      InstabugScreenRenderManager.I.dispose();
+    }
+    WidgetsBinding.instance.removeObserver(_instance);
+  }
 
   void _handleResumedState() {
     log('Performing resume actions...', name: 'andrew');
@@ -44,12 +49,17 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
 
   void _handlePausedState() {
     log('Performing pause actions...', name: 'andrew');
-    InstabugScreenRenderManager.I.stopScreenRenderCollector();
+
+    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
+      InstabugScreenRenderManager.I.stopScreenRenderCollector();
+    }
   }
 
   void _handleDetachedState() {
     log('Performing detached actions...', name: 'andrew');
-    InstabugScreenRenderManager.I.stopScreenRenderCollector();
+    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
+      InstabugScreenRenderManager.I.stopScreenRenderCollector();
+    }
     dispose();
   }
 

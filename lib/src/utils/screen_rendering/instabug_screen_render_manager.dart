@@ -27,24 +27,23 @@ class InstabugScreenRenderManager {
   late TimingsCallback _timingsCallback;
   late InstabugScreenRenderData _screenRenderForAutoUiTrace;
   late InstabugScreenRenderData _screenRenderForCustomUiTrace;
+  int _slowFramesTotalDurationMs = 0;
+  int _frozenFramesTotalDurationMs = 0;
+  bool _isTimingsListenerAttached = false;
+  bool screenRenderEnabled = false;
 
   final List<InstabugFrameData> _delayedFrames = [];
 
+  /// 1 / DeviceRefreshRate * 1000
   double _deviceRefreshRate = 60;
 
-  /// Default refresh rate for 60 FPS displays
+  /// Default refresh rate for 60 FPS displays in milliseconds (16.67ms)
   double _slowFrameThresholdMs = 16.67;
 
-  /// 1/DeviceRefreshRate * 1000
+  /// Default frozen frame threshold in milliseconds (700ms)
   final _frozenFrameThresholdMs = 700;
 
-  /// Default frozen frame threshold in milliseconds (700ms)
-  int _slowFramesTotalDuration = 0;
-  int _frozenFramesTotalDuration = 0;
-  final int _microsecondsPerMillisecond = 1000;
-
-  bool _isTimingsListenerAttached = false;
-  bool screenRenderEnabled = false;
+  final _microsecondsPerMillisecond = 1000;
 
   InstabugScreenRenderManager._();
 
@@ -86,37 +85,33 @@ class InstabugScreenRenderManager {
     _totalTime = frameTiming.totalSpan.inMilliseconds;
 
     _displayFrameTimingDetails(frameTiming);
-    if (_isUiSlow) {
-      _slowFramesTotalDuration += _buildTime *
-          _microsecondsPerMillisecond; //convert from milliseconds to microseconds
-    } else if (_isRasterSlow) {
-      _slowFramesTotalDuration += _rasterTime *
-          _microsecondsPerMillisecond; //convert from milliseconds to microseconds
-    }
-
     if (_isUiFrozen) {
-      _frozenFramesTotalDuration += _buildTime * _microsecondsPerMillisecond;
+      _frozenFramesTotalDurationMs += _buildTime;
     } else if (_isRasterFrozen) {
-      _frozenFramesTotalDuration += _rasterTime * _microsecondsPerMillisecond;
-    } else if (_isFrozen) {
-      _frozenFramesTotalDuration += _totalTime * _microsecondsPerMillisecond;
+      _frozenFramesTotalDurationMs += _rasterTime;
+    } else if (_isTotalTimeLarge) {
+      _frozenFramesTotalDurationMs += _totalTime;
+    }
+    if (_isUiSlow) {
+      _slowFramesTotalDurationMs += _buildTime;
+    } else if (_isRasterSlow) {
+      _slowFramesTotalDurationMs += _rasterTime;
     }
 
     if (_isUiDelayed) {
       _onDelayedFrameDetected(
         frameTiming.timestampInMicroseconds(FramePhase.buildStart),
-        frameTiming.buildDuration.inMicroseconds,
+        _buildTime,
       );
     } else if (_isRasterDelayed) {
       _onDelayedFrameDetected(
         frameTiming.timestampInMicroseconds(FramePhase.rasterStart),
-        frameTiming.rasterDuration.inMicroseconds,
+        _rasterTime,
       );
     } else if (_isTotalTimeLarge) {
-      // todo what to do?
       _onDelayedFrameDetected(
         frameTiming.timestampInMicroseconds(FramePhase.vsyncStart),
-        frameTiming.totalSpan.inMicroseconds,
+        _totalTime,
       );
     }
   }
@@ -153,10 +148,7 @@ class InstabugScreenRenderManager {
         // Report only if the collector was active and has captured data
         if (_screenRenderForCustomUiTrace.isActive &&
             _screenRenderForCustomUiTrace.isNotEmpty) {
-          reportScreenRending(
-            _screenRenderForCustomUiTrace,
-            UiTraceType.custom,
-          );
+          _reportScreenRenderForCustomUiTrace(_screenRenderForCustomUiTrace);
           _screenRenderForCustomUiTrace.clear();
         }
         _screenRenderForCustomUiTrace.traceId = traceId;
@@ -167,7 +159,7 @@ class InstabugScreenRenderManager {
         // Report only if the collector was active and has captured data
         if (_screenRenderForAutoUiTrace.isActive &&
             _screenRenderForAutoUiTrace.isNotEmpty) {
-          reportScreenRending(_screenRenderForAutoUiTrace);
+          _reportScreenRenderForAutoUiTrace(_screenRenderForAutoUiTrace);
           _screenRenderForAutoUiTrace.clear();
         }
         _screenRenderForAutoUiTrace.traceId = traceId;
@@ -188,17 +180,15 @@ class InstabugScreenRenderManager {
       // Sync Screen Render data for custom ui trace if exists
       if (_screenRenderForCustomUiTrace.isActive &&
           _screenRenderForCustomUiTrace.isNotEmpty) {
-        reportScreenRending(_screenRenderForCustomUiTrace, UiTraceType.custom);
+        _reportScreenRenderForCustomUiTrace(_screenRenderForCustomUiTrace);
       }
 
       // Sync Screen Render data for auto ui trace if exists
       if (_screenRenderForAutoUiTrace.isActive &&
           _screenRenderForAutoUiTrace.isNotEmpty) {
-        reportScreenRending(_screenRenderForAutoUiTrace);
+        _reportScreenRenderForAutoUiTrace(_screenRenderForAutoUiTrace);
       }
 
-      // Dispose Screen Render Manager
-      dispose();
       log("$tag: stopScreenRenderCollector", name: 'andrew');
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
@@ -214,37 +204,16 @@ class InstabugScreenRenderManager {
       }
 
       // Save the captured screen rendering data to be synced
-      _screenRenderForCustomUiTrace.slowFramesTotalDuration +=
-          _slowFramesTotalDuration;
-      _screenRenderForCustomUiTrace.frozenFramesTotalDuration +=
-          _frozenFramesTotalDuration;
-      _screenRenderForCustomUiTrace.frameData.addAll(_delayedFrames);
+      _updateCustomUiData();
 
       // Sync the saved screen rendering data
-      reportScreenRending(_screenRenderForCustomUiTrace, UiTraceType.custom);
+      _reportScreenRenderForCustomUiTrace(_screenRenderForCustomUiTrace);
+
       _screenRenderForCustomUiTrace.clear();
       log("$tag: endCustom", name: 'andrew');
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
     }
-  }
-
-  /// Sync captures screen render data based on their type.
-  @visibleForTesting
-  Future<void> reportScreenRending(
-    InstabugScreenRenderData screenRenderData, [
-    UiTraceType type = UiTraceType.auto,
-  ]) async {
-    if (type == UiTraceType.auto) {
-      _reportScreenRenderForAutoUiTrace(screenRenderData);
-    } else {
-      _reportScreenRenderForCustomUiTrace(screenRenderData);
-    }
-
-    log(
-      "$tag: Report ${type == UiTraceType.auto ? 'auto' : 'custom'} Data: $screenRenderData",
-      name: 'andrew',
-    );
   }
 
   /// Dispose InstabugScreenRenderManager by removing timings callback and cashed data.
@@ -329,8 +298,8 @@ class InstabugScreenRenderManager {
 
   /// Reset the memory cashed data
   void _resetCachedFrameData() {
-    _slowFramesTotalDuration = 0;
-    _frozenFramesTotalDuration = 0;
+    _slowFramesTotalDurationMs = 0;
+    _frozenFramesTotalDurationMs = 0;
     _delayedFrames.clear();
     log(
       "$tag: _resetCachedFrameData ",
@@ -339,8 +308,14 @@ class InstabugScreenRenderManager {
   }
 
   /// Save Slow/Frozen Frames data
-  void _onDelayedFrameDetected(int startTime, int duration) {
-    _delayedFrames.add(InstabugFrameData(startTime, duration));
+  void _onDelayedFrameDetected(int startTime, int durationInMilliseconds) {
+    _delayedFrames.add(
+      InstabugFrameData(
+        startTime,
+        durationInMilliseconds *
+            _microsecondsPerMillisecond, // Convert duration from milliseconds to microSeconds
+      ),
+    );
   }
 
   //todo: will be removed (is used for debugging)
@@ -404,6 +379,9 @@ class InstabugScreenRenderManager {
     InstabugScreenRenderData screenRenderData,
   ) async {
     try {
+      // Save the end time for the running ui trace, it's only needed in Android SDK.
+      screenRenderData.saveEndTime();
+
       await APM.endScreenRenderForAutoUiTrace(screenRenderData);
       return true;
     } catch (error, stackTrace) {
@@ -415,23 +393,45 @@ class InstabugScreenRenderManager {
   /// Add the memory cashed data to the objects that will be synced asynchronously to the native side.
   void _saveCollectedData() {
     if (_screenRenderForAutoUiTrace.isActive) {
-      _screenRenderForAutoUiTrace.slowFramesTotalDuration +=
-          _slowFramesTotalDuration;
-      _screenRenderForAutoUiTrace.frozenFramesTotalDuration +=
-          _frozenFramesTotalDuration;
-      _screenRenderForAutoUiTrace.frameData.addAll(_delayedFrames);
+      _updateAutoUiData();
     }
     if (_screenRenderForCustomUiTrace.isActive) {
-      _screenRenderForCustomUiTrace.slowFramesTotalDuration +=
-          _slowFramesTotalDuration;
-      _screenRenderForCustomUiTrace.frozenFramesTotalDuration +=
-          _frozenFramesTotalDuration;
-      _screenRenderForCustomUiTrace.frameData.addAll(_delayedFrames);
+      _updateCustomUiData();
     }
     log(
       "$tag: Captured data is saved ",
       name: 'andrew',
     );
+  }
+
+  /// Updates the custom UI trace screen render data with the currently collected
+  /// frame information and durations.
+  ///
+  /// This method accumulates the total duration of slow and frozen frames (in microseconds)
+  /// for the custom UI trace, and appends the list of delayed frames collected so far
+  /// to the trace's frame data. This prepares the custom UI trace data to be reported
+  /// or synced with the native side.
+  void _updateCustomUiData() {
+    _screenRenderForCustomUiTrace.slowFramesTotalDurationMicro +=
+        _slowFramesTotalDurationMs * _microsecondsPerMillisecond;
+    _screenRenderForCustomUiTrace.frozenFramesTotalDurationMicro +=
+        _frozenFramesTotalDurationMs * _microsecondsPerMillisecond;
+    _screenRenderForCustomUiTrace.frameData.addAll(_delayedFrames);
+  }
+
+  /// Updates the auto UI trace screen render data with the currently collected
+  /// frame information and durations.
+  ///
+  /// This method accumulates the total duration of slow and frozen frames (in microseconds)
+  /// for the auto UI trace, and appends the list of delayed frames collected so far
+  /// to the trace's frame data. This prepares the auto UI trace data to be reported
+  /// or synced with the native side.
+  void _updateAutoUiData() {
+    _screenRenderForAutoUiTrace.slowFramesTotalDurationMicro +=
+        _slowFramesTotalDurationMs * _microsecondsPerMillisecond;
+    _screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro +=
+        _frozenFramesTotalDurationMs * _microsecondsPerMillisecond;
+    _screenRenderForAutoUiTrace.frameData.addAll(_delayedFrames);
   }
 
   /// @nodoc
@@ -465,7 +465,9 @@ class InstabugScreenRenderManager {
   @visibleForTesting
   void setFrameData(InstabugScreenRenderData data) {
     _delayedFrames.addAll(data.frameData);
-    _frozenFramesTotalDuration = data.frozenFramesTotalDuration;
-    _slowFramesTotalDuration = data.slowFramesTotalDuration;
+    _frozenFramesTotalDurationMs =
+        data.frozenFramesTotalDurationMicro ~/ _microsecondsPerMillisecond;
+    _slowFramesTotalDurationMs =
+        data.slowFramesTotalDurationMicro ~/ _microsecondsPerMillisecond;
   }
 }

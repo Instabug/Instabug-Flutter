@@ -22,6 +22,8 @@ void main() {
   late MockScreenNameMasker mockNameMasker;
   late MockUiTrace mockUiTrace;
 
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   setUp(() {
     mockRenderManager = MockInstabugScreenRenderManager();
     mockLoadingManager = MockScreenLoadingManager();
@@ -63,14 +65,20 @@ void main() {
     });
 
     test('handles AppLifecycleState.paused and stops render collector', () {
+      when(mockRenderManager.screenRenderEnabled).thenReturn(true);
+
       InstabugWidgetsBindingObserver.I
           .didChangeAppLifecycleState(AppLifecycleState.paused);
+
       verify(mockRenderManager.stopScreenRenderCollector()).called(1);
     });
 
     test('handles AppLifecycleState.detached and stops render collector', () {
+      when(mockRenderManager.screenRenderEnabled).thenReturn(true);
+
       InstabugWidgetsBindingObserver.I
           .didChangeAppLifecycleState(AppLifecycleState.detached);
+
       verify(mockRenderManager.stopScreenRenderCollector()).called(1);
     });
 

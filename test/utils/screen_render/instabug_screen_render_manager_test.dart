@@ -70,8 +70,8 @@ void main() {
           InstabugFrameData(10000, 200),
           InstabugFrameData(20000, 1000),
         ],
-        frozenFramesTotalDuration: 1000,
-        slowFramesTotalDuration: 200,
+        frozenFramesTotalDurationMicro: 1000,
+        slowFramesTotalDurationMicro: 200,
       );
 
       manager.startScreenRenderCollectorForTraceId(frameTestData.traceId);
@@ -139,8 +139,8 @@ void main() {
           InstabugFrameData(10000, 200),
           InstabugFrameData(20000, 1000),
         ],
-        frozenFramesTotalDuration: 1000,
-        slowFramesTotalDuration: 200,
+        frozenFramesTotalDurationMicro: 1000,
+        slowFramesTotalDurationMicro: 200,
       );
 
       manager.setFrameData(frameTestData);
@@ -160,11 +160,13 @@ void main() {
       final frameTestData = InstabugScreenRenderData(
         traceId: 123,
         frameData: [
-          InstabugFrameData(10000, 200),
+          InstabugFrameData(10000, 400),
+          InstabugFrameData(10000, 600),
           InstabugFrameData(20000, 1000),
         ],
-        frozenFramesTotalDuration: 1000,
-        slowFramesTotalDuration: 200,
+        frozenFramesTotalDurationMicro: 1000,
+        slowFramesTotalDurationMicro: 1000,
+        endTimeMicro: 30000,
       );
 
       manager.startScreenRenderCollectorForTraceId(
@@ -177,9 +179,13 @@ void main() {
 
       expect(manager.screenRenderForAutoUiTrace.isActive, true);
 
+      expect(manager.screenRenderForCustomUiTrace.isActive, false);
+
       expect(manager.screenRenderForAutoUiTrace == frameTestData, true);
 
-      expect(manager.screenRenderForCustomUiTrace.isActive, false);
+      verify(
+        mApmHost.endScreenRenderForAutoUiTrace(any),
+      ); // the content has been verified in the above assertion.
     });
 
     test(
@@ -188,11 +194,13 @@ void main() {
       final frameTestData = InstabugScreenRenderData(
         traceId: 123,
         frameData: [
-          InstabugFrameData(10000, 200),
+          InstabugFrameData(10000, 400),
+          InstabugFrameData(10000, 600),
           InstabugFrameData(20000, 1000),
         ],
-        frozenFramesTotalDuration: 1000,
-        slowFramesTotalDuration: 200,
+        frozenFramesTotalDurationMicro: 1000,
+        slowFramesTotalDurationMicro: 1000,
+        endTimeMicro: 30000,
       );
 
       manager.startScreenRenderCollectorForTraceId(
@@ -206,26 +214,30 @@ void main() {
 
       expect(manager.screenRenderForCustomUiTrace.isActive, true);
 
+      expect(manager.screenRenderForAutoUiTrace.isActive, false);
+
       expect(manager.screenRenderForCustomUiTrace == frameTestData, true);
 
-      expect(manager.screenRenderForAutoUiTrace.isActive, false);
+      verify(
+        mApmHost.endScreenRenderForCustomUiTrace(any),
+      ); // the content has been verified in the above assertion.
     });
 
-    test('should remove timing callback listener', () {
+    test('should not remove timing callback listener', () {
       final frameTestData = InstabugScreenRenderData(
         traceId: 123,
         frameData: [
           InstabugFrameData(10000, 200),
           InstabugFrameData(20000, 1000),
         ],
-        frozenFramesTotalDuration: 1000,
-        slowFramesTotalDuration: 200,
+        frozenFramesTotalDurationMicro: 1000,
+        slowFramesTotalDurationMicro: 200,
       );
 
       manager.setFrameData(frameTestData);
       manager.stopScreenRenderCollector();
 
-      verify(mWidgetBinding.removeTimingsCallback(any)).called(1);
+      verifyNever(mWidgetBinding.removeTimingsCallback(any));
     });
 
     test('should report data to native side with the correct type', () async {
@@ -235,8 +247,8 @@ void main() {
           InstabugFrameData(10000, 200),
           InstabugFrameData(20000, 1000),
         ],
-        frozenFramesTotalDuration: 1000,
-        slowFramesTotalDuration: 200,
+        frozenFramesTotalDurationMicro: 1000,
+        slowFramesTotalDurationMicro: 200,
       );
 
       manager.startScreenRenderCollectorForTraceId(0, UiTraceType.custom);
@@ -260,8 +272,8 @@ void main() {
           InstabugFrameData(10000, 200),
           InstabugFrameData(20000, 1000),
         ],
-        frozenFramesTotalDuration: 1000,
-        slowFramesTotalDuration: 200,
+        frozenFramesTotalDurationMicro: 1000,
+        slowFramesTotalDurationMicro: 200,
       );
 
       manager.setFrameData(frameTestdata);
@@ -281,8 +293,8 @@ void main() {
           InstabugFrameData(10000, 200),
           InstabugFrameData(20000, 1000),
         ],
-        frozenFramesTotalDuration: 1000,
-        slowFramesTotalDuration: 200,
+        frozenFramesTotalDurationMicro: 1000,
+        slowFramesTotalDurationMicro: 200,
       );
 
       manager.startScreenRenderCollectorForTraceId(
@@ -308,8 +320,8 @@ void main() {
           InstabugFrameData(10000, 200),
           InstabugFrameData(20000, 1000),
         ],
-        frozenFramesTotalDuration: 1000,
-        slowFramesTotalDuration: 200,
+        frozenFramesTotalDurationMicro: 1000,
+        slowFramesTotalDurationMicro: 200,
       );
 
       manager.startScreenRenderCollectorForTraceId(0, UiTraceType.custom);
@@ -344,10 +356,13 @@ void main() {
 
       expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
       expect(
-        manager.screenRenderForAutoUiTrace.slowFramesTotalDuration,
+        manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
         buildDuration * 1000,
       ); // * 1000 to convert from milli to micro
-      expect(manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration, 0);
+      expect(
+        manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
+        0,
+      );
     });
 
     test('should detect slow frame on raster thread and record duration', () {
@@ -361,10 +376,13 @@ void main() {
 
       expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
       expect(
-        manager.screenRenderForAutoUiTrace.slowFramesTotalDuration,
+        manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
         rasterDuration * 1000,
       ); // * 1000 to convert from milli to micro
-      expect(manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration, 0);
+      expect(
+        manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
+        0,
+      );
     });
 
     test(
@@ -379,10 +397,13 @@ void main() {
 
       expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
       expect(
-        manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration,
+        manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
         buildDuration * 1000,
       ); // * 1000 to convert from milli to micro
-      expect(manager.screenRenderForAutoUiTrace.slowFramesTotalDuration, 0);
+      expect(
+        manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
+        0,
+      );
     });
 
     test(
@@ -397,10 +418,13 @@ void main() {
 
       expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
       expect(
-        manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration,
+        manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
         rasterBuild * 1000,
       ); // * 1000 to convert from milli to micro
-      expect(manager.screenRenderForAutoUiTrace.slowFramesTotalDuration, 0);
+      expect(
+        manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
+        0,
+      );
     });
 
     test('should detect no slow or frozen frame under thresholds', () {
@@ -413,10 +437,13 @@ void main() {
       manager.analyzeFrameTiming(mockFrameTiming);
       expect(manager.screenRenderForAutoUiTrace.frameData.isEmpty, true);
       expect(
-        manager.screenRenderForAutoUiTrace.frozenFramesTotalDuration,
+        manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
         0,
       ); // * 1000 to convert from milli to micro
-      expect(manager.screenRenderForAutoUiTrace.slowFramesTotalDuration, 0);
+      expect(
+        manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
+        0,
+      );
     });
   });
 }

@@ -1,14 +1,9 @@
 part of '../../main.dart';
 
-class ScreenRenderPage extends StatefulWidget {
+class ScreenRenderPage extends StatelessWidget {
   const ScreenRenderPage({Key? key}) : super(key: key);
   static const String screenName = "/screenRenderPageRoute";
 
-  @override
-  State<ScreenRenderPage> createState() => _ScreenRenderPageState();
-}
-
-class _ScreenRenderPageState extends State<ScreenRenderPage> {
   @override
   Widget build(BuildContext context) {
     return Page(title: 'Screen Render', children: [
