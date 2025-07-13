@@ -23,7 +23,7 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
     if (InstabugScreenRenderManager.I.screenRenderEnabled) {
       InstabugScreenRenderManager.I.dispose();
     }
-    WidgetsBinding.instance.removeObserver(_instance);
+    WidgetsBinding.instance?.removeObserver(_instance);
   }
 
   void _handleResumedState() {
