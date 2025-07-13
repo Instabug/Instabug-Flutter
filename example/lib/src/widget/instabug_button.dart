@@ -36,7 +36,7 @@ class InstabugButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor??Colors.lightBlue,
+          backgroundColor: backgroundColor ?? Colors.lightBlue,
           foregroundColor: Colors.white,
           textStyle: Theme.of(context)
               .textTheme

@@ -10,7 +10,11 @@ class BugReportingPage extends StatefulWidget {
 }
 
 class _BugReportingPageState extends State<BugReportingPage> {
-  List<ReportType> reportTypes = [ReportType.bug,ReportType.feedback,ReportType.question];
+  List<ReportType> reportTypes = [
+    ReportType.bug,
+    ReportType.feedback,
+    ReportType.question
+  ];
   List<InvocationOption> invocationOptions = [];
 
   final disclaimerTextController = TextEditingController();
@@ -63,9 +67,7 @@ class _BugReportingPageState extends State<BugReportingPage> {
     } else {
       reportTypes.add(reportType);
     }
-    setState(() {
-
-    });
+    setState(() {});
     BugReporting.setReportTypes(reportTypes);
   }
 
@@ -106,6 +108,7 @@ class _BugReportingPageState extends State<BugReportingPage> {
       );
     });
   }
+
   void setOnDismissCallbackWithException() {
     BugReporting.setOnDismissCallback((dismissType, reportType) {
       throw Exception("Test crash from dismiss callback");
@@ -323,7 +326,6 @@ class _BugReportingPageState extends State<BugReportingPage> {
               title: const Text("Screenshot"),
               subtitle: const Text('Enable attachment for screenShot'),
               key: const Key('attachment_option_screenshot'),
-
             ),
             CheckboxListTile(
               value: attachmentsOptionsExtraScreenshot,
@@ -332,12 +334,10 @@ class _BugReportingPageState extends State<BugReportingPage> {
                   attachmentsOptionsExtraScreenshot = value ?? false;
                 });
                 addAttachmentOptions();
-
               },
               title: const Text("Extra Screenshot"),
               subtitle: const Text('Enable attachment for extra screenShot'),
               key: const Key('attachment_option_extra_screenshot'),
-
             ),
             CheckboxListTile(
               value: attachmentsOptionsGalleryImage,
@@ -346,12 +346,10 @@ class _BugReportingPageState extends State<BugReportingPage> {
                   attachmentsOptionsGalleryImage = value ?? false;
                 });
                 addAttachmentOptions();
-
               },
               title: const Text("Gallery"),
               subtitle: const Text('Enable attachment for gallery'),
               key: const Key('attachment_option_gallery'),
-
             ),
             CheckboxListTile(
               value: attachmentsOptionsScreenRecording,
@@ -360,17 +358,14 @@ class _BugReportingPageState extends State<BugReportingPage> {
                   attachmentsOptionsScreenRecording = value ?? false;
                 });
                 addAttachmentOptions();
-
               },
               title: const Text("Screen Recording"),
               subtitle: const Text('Enable attachment for screen Recording'),
               key: const Key('attachment_option_screen_recording'),
-
             ),
           ],
         ),
         const SectionTitle('Bug reporting type'),
-
         ButtonBar(
           mainAxisSize: MainAxisSize.min,
           alignment: MainAxisAlignment.start,
@@ -378,8 +373,9 @@ class _BugReportingPageState extends State<BugReportingPage> {
             ElevatedButton(
               key: const Key('bug_report_type_bug'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: reportTypes.contains(ReportType.bug)?Colors.grey.shade400:null
-              ),
+                  backgroundColor: reportTypes.contains(ReportType.bug)
+                      ? Colors.grey.shade400
+                      : null),
               onPressed: () => toggleReportType(ReportType.bug),
               child: const Text('Bug'),
             ),
@@ -387,16 +383,18 @@ class _BugReportingPageState extends State<BugReportingPage> {
               key: const Key('bug_report_type_feedback'),
               onPressed: () => toggleReportType(ReportType.feedback),
               style: ElevatedButton.styleFrom(
-                  backgroundColor: reportTypes.contains(ReportType.feedback)?Colors.grey.shade400:null
-              ),
+                  backgroundColor: reportTypes.contains(ReportType.feedback)
+                      ? Colors.grey.shade400
+                      : null),
               child: const Text('Feedback'),
             ),
             ElevatedButton(
               key: const Key('bug_report_type_question'),
               onPressed: () => toggleReportType(ReportType.question),
               style: ElevatedButton.styleFrom(
-                  backgroundColor: reportTypes.contains(ReportType.question)?Colors.grey.shade400:null
-              ),
+                  backgroundColor: reportTypes.contains(ReportType.question)
+                      ? Colors.grey.shade400
+                      : null),
               child: const Text('Question'),
             ),
           ],
@@ -419,7 +417,6 @@ class _BugReportingPageState extends State<BugReportingPage> {
           onPressed: () => setDisclaimerText,
           child: const Text('set disclaimer text'),
         ),
-
         const SectionTitle('Extended Bug Reporting'),
         ButtonBar(
           mainAxisSize: MainAxisSize.min,
@@ -462,14 +459,13 @@ class _BugReportingPageState extends State<BugReportingPage> {
           onPressed: setOnInvoiceCallback,
           text: 'Set On Invoice Callback',
         ),
-
         InstabugButton(
           onPressed: setOnDismissCallbackWithException,
           text: 'Set On Dismiss Callback with Exception',
         ),
         InstabugButton(
           onPressed: setOnInvokeCallbackWithException,
-          text: 'Set On Invoice Callback with Exception' ,
+          text: 'Set On Invoice Callback with Exception',
         ),
       ], // This trailing comma makes auto-formatting nicer for build methods.
     );

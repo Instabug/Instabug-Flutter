@@ -13,7 +13,8 @@ final appRoutes = {
   BugReportingPage.screenName: (BuildContext context) =>
       const BugReportingPage(),
   ComplexPage.screenName: (BuildContext context) => const ComplexPage(),
-  SessionReplayPage.screenName: (BuildContext context) => const SessionReplayPage(),
+  SessionReplayPage.screenName: (BuildContext context) =>
+      const SessionReplayPage(),
   TopTabBarScreen.route: (BuildContext context) => const TopTabBarScreen(),
 
   ApmPage.screenName: (BuildContext context) => const ApmPage(),

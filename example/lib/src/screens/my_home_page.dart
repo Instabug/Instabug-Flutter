@@ -333,7 +333,6 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: _navigateToSessionReplay,
           text: 'Session Replay',
-
         ),
         const SectionTitle('Sessions Replay'),
         InstabugButton(
@@ -380,9 +379,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () => removeAllFeatureFlags(),
           text: 'RemoveAllFeatureFlags',
         ),
-
         const SectionTitle('Set User Attribute'),
-
         Form(
           key: _formUserAttributeKey,
           child: Column(
@@ -412,7 +409,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   )),
                 ],
               ),
-              const SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
               InstabugButton(
                 text: 'Set User attribute',
                 key: const Key('set_user_data_btn'),
@@ -428,11 +427,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 key: const Key('remove_user_data_btn'),
                 onPressed: () {
                   if (_formUserAttributeKey.currentState?.validate() == true) {
-                    Instabug.removeUserAttribute(userAttributeKeyController.text);
+                    Instabug.removeUserAttribute(
+                        userAttributeKeyController.text);
                   }
                 },
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               const SectionTitle('Log'),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -451,7 +453,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: InstabugButton(
                         margin: const EdgeInsets.symmetric(horizontal: 2),
-
                         key: const ValueKey('log_hello_error_btn'),
                         onPressed: () {
                           InstabugLog.logError("hello Error");
@@ -462,7 +463,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: InstabugButton(
                         margin: const EdgeInsets.symmetric(horizontal: 2),
-
                         key: const ValueKey('hello_warning_btn'),
                         onPressed: () {
                           InstabugLog.logWarn("hello Warning");
@@ -480,7 +480,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: InstabugButton(
                         margin: const EdgeInsets.symmetric(horizontal: 2),
-
                         key: const ValueKey('log_hello_info_btn'),
                         onPressed: () {
                           InstabugLog.logInfo("hello Info");
@@ -491,7 +490,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: InstabugButton(
                         margin: const EdgeInsets.symmetric(horizontal: 2),
-
                         key: const ValueKey('log_hello_verbose_btn'),
                         onPressed: () {
                           InstabugLog.logVerbose("hello Verbose");
@@ -499,11 +497,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         text: 'Log Hello Verbose',
                       ),
                     ),
-
                     Expanded(
                       child: InstabugButton(
                         margin: const EdgeInsets.symmetric(horizontal: 2),
-
                         key: const ValueKey('clear_logs_btn'),
                         onPressed: () {
                           InstabugLog.clearAllLogs();
@@ -514,7 +510,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-
             ],
           ),
         ),

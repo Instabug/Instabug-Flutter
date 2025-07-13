@@ -60,9 +60,8 @@ class _SessionReplayPageState extends State<SessionReplayPage> {
       const SectionTitle('Enabling Session Replay Repro steps'),
       InstabugButton(
         key: const Key('instabug_sesssion_replay_repro_steps_disable'),
-        onPressed: () =>
-            Instabug.setReproStepsConfig(
-                sessionReplay: ReproStepsMode.disabled),
+        onPressed: () => Instabug.setReproStepsConfig(
+            sessionReplay: ReproStepsMode.disabled),
         text: "Disable Session Replay Repro steps",
       ),
       InstabugButton(
@@ -73,8 +72,7 @@ class _SessionReplayPageState extends State<SessionReplayPage> {
       ),
       InstabugButton(
         key: const Key('instabug_sesssion_replay_tab_screen'),
-        onPressed: () =>
-            Navigator.of(context).pushNamed(TopTabBarScreen.route),
+        onPressed: () => Navigator.of(context).pushNamed(TopTabBarScreen.route),
         text: 'Open Tab Screen',
       ),
     ]);

@@ -29,9 +29,8 @@ class _NetworkContentState extends State<NetworkContent> {
         const Text("W3C Header Section"),
         InstabugButton(
           text: 'Send Request With Custom traceparent header',
-          onPressed: () =>
-              _sendRequestToUrl(endpointUrlController.text,
-                  headers: {"traceparent": "Custom traceparent header"}),
+          onPressed: () => _sendRequestToUrl(endpointUrlController.text,
+              headers: {"traceparent": "Custom traceparent header"}),
         ),
         InstabugButton(
           text: 'Send Request  Without Custom traceparent header',
@@ -45,7 +44,6 @@ class _NetworkContentState extends State<NetworkContent> {
             });
           },
         ),
-
         InstabugButton(
           text: 'omitLog',
           onPressed: () {
@@ -54,7 +52,6 @@ class _NetworkContentState extends State<NetworkContent> {
             });
           },
         ),
-
         InstabugButton(
           text: 'obfuscateLogWithException',
           onPressed: () {
@@ -65,7 +62,6 @@ class _NetworkContentState extends State<NetworkContent> {
             });
           },
         ),
-
         InstabugButton(
           text: 'omitLogWithException',
           onPressed: () {
@@ -82,9 +78,7 @@ class _NetworkContentState extends State<NetworkContent> {
 
   void _sendRequestToUrl(String text, {Map<String, String>? headers}) async {
     try {
-      String url = text
-          .trim()
-          .isEmpty ? widget.defaultRequestUrl : text;
+      String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
       final response = await http.get(Uri.parse(url), headers: headers);
 
       // Handle the response here
