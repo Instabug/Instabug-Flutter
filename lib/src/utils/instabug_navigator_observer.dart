@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
@@ -68,7 +67,6 @@ class InstabugNavigatorObserver extends NavigatorObserver {
 
   FutureOr<void> _startScreenRenderCollector(int? uiTraceId) async {
     final isScreenRender = await FlagsConfig.screenRendering.isEnabled();
-    log("isScreenRender: $isScreenRender", name: 'Andrew');
     _checkForScreenRenderInitialization(isScreenRender);
     if (uiTraceId != null && isScreenRender) {
       InstabugScreenRenderManager.I
