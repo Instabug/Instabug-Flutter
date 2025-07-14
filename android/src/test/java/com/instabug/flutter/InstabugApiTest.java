@@ -692,21 +692,20 @@ public class InstabugApiTest {
                 when(mock.build()).thenReturn(mock(com.instabug.library.model.IBGTheme.class));
             });
 
-            api.setTheme(themeConfig);
+        api.setTheme(themeConfig);
 
-            com.instabug.library.model.IBGTheme.Builder builder = mThemeBuilder.constructed().get(0);
-            
+        com.instabug.library.model.IBGTheme.Builder builder = mThemeBuilder.constructed().get(0);
+        
         verify(builder).setPrimaryColor(anyInt());
         verify(builder).setBackgroundColor(anyInt());
         verify(builder).setTitleTextColor(anyInt());
         verify(builder).setPrimaryTextColor(anyInt());
         verify(builder).setSecondaryTextColor(anyInt());
-            
-            verify(builder).setPrimaryTextStyle(Typeface.BOLD);
-            verify(builder).setSecondaryTextStyle(Typeface.ITALIC);
-            verify(builder).setCtaTextStyle(Typeface.BOLD_ITALIC);
-            
-            mInstabug.verify(() -> Instabug.setTheme(any(com.instabug.library.model.IBGTheme.class)));
+        verify(builder).setPrimaryTextStyle(Typeface.BOLD);
+        verify(builder).setSecondaryTextStyle(Typeface.ITALIC);
+        verify(builder).setCtaTextStyle(Typeface.BOLD_ITALIC);
+        
+        mInstabug.verify(() -> Instabug.setTheme(any(com.instabug.library.model.IBGTheme.class)));
     }
 
 

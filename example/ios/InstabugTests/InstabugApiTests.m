@@ -636,7 +636,7 @@
     
     [self.api setThemeThemeConfig:themeConfig error:&error];
     
-    OCMVerify([self.mInstabug setTheme:OCMArg.any]);
+    OCMVerify([self.mInstabug setTheme:[OCMArg isNotNil]]);
 }
 
 @end
