@@ -110,7 +110,7 @@ class PrivateViewsManager implements InstabugPrivateViewFlutterApi {
 
     if (current is RenderBox) {
       // Get transform from this object to screen root
-      final Matrix4 transform = renderObject.getTransformTo(null);
+      final transform = renderObject.getTransformTo(null);
       return MatrixUtils.transformPoint(transform, Offset.zero);
     }
 
