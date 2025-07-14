@@ -100,7 +100,12 @@ class PrivateViewsManager implements InstabugPrivateViewFlutterApi {
     // Find the nearest RenderBox ancestor to calculate global position
     RenderObject? current = renderObject;
     while (current != null && current is! RenderBox) {
-      current = current.parent;
+      final parentNode = current.parent;
+      if (parentNode is RenderObject) {
+        current = parentNode;
+      } else {
+        current = null;
+      }
     }
 
     if (current is RenderBox) {
