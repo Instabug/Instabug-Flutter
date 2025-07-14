@@ -456,55 +456,100 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
         _registeredFonts = [NSMutableSet set];
     }
 
-    UIFont *font = [UIFont fontWithName:fontPath size:UIFont.systemFontSize];
-
-    if (!font && ![_registeredFonts containsObject:fontPath]) {
-        NSString *fontFileName = [fontPath stringByDeletingPathExtension];
-        NSArray *fontExtensions = @[@"ttf", @"otf", @"woff", @"woff2"];
-        NSString *fontFilePath = nil;
-
-        for (NSString *extension in fontExtensions) {
-            fontFilePath = [[NSBundle mainBundle] pathForResource:fontFileName ofType:extension];
-            if (fontFilePath) break;
+    // Check if font is already registered
+    if ([_registeredFonts containsObject:fontPath]) {
+        UIFont *font = [UIFont fontWithName:fontPath size:UIFont.systemFontSize];
+        if (font) {
+            [self setFont:font forTheme:theme type:type];
         }
-
-        if (fontFilePath) {
-            NSData *fontData = [NSData dataWithContentsOfFile:fontFilePath];
-            if (fontData) {
-                CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)fontData);
-                if (provider) {
-                    CGFontRef cgFont = CGFontCreateWithDataProvider(provider);
-                    if (cgFont) {
-                        CFErrorRef error = NULL;
-                        if (CTFontManagerRegisterGraphicsFont(cgFont, &error)) {
-                            NSString *postScriptName = (__bridge_transfer NSString *)CGFontCopyPostScriptName(cgFont);
-                            if (postScriptName) {
-                                font = [UIFont fontWithName:postScriptName size:UIFont.systemFontSize];
-                                [_registeredFonts addObject:fontPath];
-                            }
-                        } else if (error) {
-                            CFStringRef desc = CFErrorCopyDescription(error);
-                            CFRelease(desc);
-                            CFRelease(error);
-                        }
-                        CGFontRelease(cgFont);
-                    }
-                    CGDataProviderRelease(provider);
-                }
-            }
-        }
-    } else if (!font && [_registeredFonts containsObject:fontPath]) {
-        font = [UIFont fontWithName:fontPath size:UIFont.systemFontSize];
+        return;
     }
 
+    // Try to load font from system fonts first
+    UIFont *font = [UIFont fontWithName:fontPath size:UIFont.systemFontSize];
     if (font) {
-        if ([type isEqualToString:@"primary"]) {
-            theme.primaryTextFont = font;
-        } else if ([type isEqualToString:@"secondary"]) {
-            theme.secondaryTextFont = font;
-        } else if ([type isEqualToString:@"cta"]) {
-            theme.callToActionTextFont = font;
+        [_registeredFonts addObject:fontPath];
+        [self setFont:font forTheme:theme type:type];
+        return;
+    }
+
+    // Try to load font from bundle
+    font = [self loadFontFromPath:fontPath];
+    if (font) {
+        [_registeredFonts addObject:fontPath];
+        [self setFont:font forTheme:theme type:type];
+    }
+}
+
+- (UIFont *)loadFontFromPath:(NSString *)fontPath {
+    NSString *fontFileName = [fontPath stringByDeletingPathExtension];
+    NSArray *fontExtensions = @[@"ttf", @"otf", @"woff", @"woff2"];
+    
+    // Find font file in bundle
+    NSString *fontFilePath = nil;
+    for (NSString *extension in fontExtensions) {
+        fontFilePath = [[NSBundle mainBundle] pathForResource:fontFileName ofType:extension];
+        if (fontFilePath) break;
+    }
+    
+    if (!fontFilePath) {
+        return nil;
+    }
+    
+    // Load font data
+    NSData *fontData = [NSData dataWithContentsOfFile:fontFilePath];
+    if (!fontData) {
+        return nil;
+    }
+    
+    // Create data provider
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)fontData);
+    if (!provider) {
+        return nil;
+    }
+    
+    // Create CG font
+    CGFontRef cgFont = CGFontCreateWithDataProvider(provider);
+    CGDataProviderRelease(provider);
+    
+    if (!cgFont) {
+        return nil;
+    }
+    
+    // Register font
+    CFErrorRef error = NULL;
+    BOOL registered = CTFontManagerRegisterGraphicsFont(cgFont, &error);
+    
+    if (!registered) {
+        if (error) {
+            CFStringRef description = CFErrorCopyDescription(error);
+            CFRelease(description);
+            CFRelease(error);
         }
+        CGFontRelease(cgFont);
+        return nil;
+    }
+    
+    // Get PostScript name and create UIFont
+    NSString *postScriptName = (__bridge_transfer NSString *)CGFontCopyPostScriptName(cgFont);
+    CGFontRelease(cgFont);
+    
+    if (!postScriptName) {
+        return nil;
+    }
+    
+    return [UIFont fontWithName:postScriptName size:UIFont.systemFontSize];
+}
+
+- (void)setFont:(UIFont *)font forTheme:(IBGTheme *)theme type:(NSString *)type {
+    if (!font || !theme || !type) return;
+    
+    if ([type isEqualToString:@"primary"]) {
+        theme.primaryTextFont = font;
+    } else if ([type isEqualToString:@"secondary"]) {
+        theme.secondaryTextFont = font;
+    } else if ([type isEqualToString:@"cta"]) {
+        theme.callToActionTextFont = font;
     }
 }
 

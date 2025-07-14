@@ -658,29 +658,27 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     }
 
     private Typeface getTypeface(Map<String, Object> map, String fileKey, String assetKey) {
+        String fontName = null;
+        
+        if (assetKey != null && map.containsKey(assetKey) && map.get(assetKey) != null) {
+            fontName = (String) map.get(assetKey);
+        } else if (fileKey != null && map.containsKey(fileKey) && map.get(fileKey) != null) {
+            fontName = (String) map.get(fileKey);
+        }
+        
+        if (fontName == null) {
+            return Typeface.DEFAULT;
+        }
+        
         try {
-            String fontName = null;
-            
-            if (assetKey != null && map.containsKey(assetKey) && map.get(assetKey) != null) {
-                fontName = (String) map.get(assetKey);
-            } else if (fileKey != null && map.containsKey(fileKey) && map.get(fileKey) != null) {
-                fontName = (String) map.get(fileKey);
-            }
-            
-            if (fontName == null) {
+            String assetPath = "fonts/" + fontName;
+            return Typeface.createFromAsset(context.getAssets(), assetPath);
+        } catch (Exception e) {
+            try {
+                return Typeface.create(fontName, Typeface.NORMAL);
+            } catch (Exception e2) {
                 return Typeface.DEFAULT;
             }
-            
-            
-            try {
-                String assetPath = "fonts/" + fontName;
-                return Typeface.createFromAsset(context.getAssets(), assetPath);
-            } catch (Exception e) {
-                return Typeface.create(fontName, Typeface.NORMAL);
-            }
-            
-        } catch (Exception e) {
-            return Typeface.DEFAULT;
         }
     }
 
