@@ -32,7 +32,6 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import io.flutter.plugin.common.BinaryMessenger;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     private static final String TAG = InstabugFlutterPlugin.class.getName();
@@ -44,14 +43,6 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     private static PrivateViewManager privateViewManager;
 
 
-    /**
-     * Embedding v1
-     */
-    @SuppressWarnings("deprecation")
-    public static void registerWith(Registrar registrar) {
-        activity = registrar.activity();
-        register(registrar.context().getApplicationContext(), registrar.messenger(), (FlutterRenderer) registrar.textures());
-    }
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
