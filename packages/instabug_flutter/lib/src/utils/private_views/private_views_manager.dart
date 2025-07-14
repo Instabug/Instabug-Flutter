@@ -55,39 +55,62 @@ class PrivateViewsManager implements InstabugPrivateViewFlutterApi {
 
   void addAutoMasking(List<AutoMasking> masking) {
     _viewChecks = List.of([isPrivateWidget]);
-    if (masking.contains(AutoMasking.none) == false) {
+    if (!(masking.contains(AutoMasking.none) && masking.length == 1)) {
       _viewChecks.addAll(masking.map((e) => e.hides()).toList());
     }
     _host.enableAutoMasking(masking.mapToString());
   }
 
   Rect? getLayoutRectInfoFromRenderObject(RenderObject? renderObject) {
-    if (renderObject == null) {
+    if (renderObject == null || !renderObject.attached) {
       return null;
     }
 
     final globalOffset = _getRenderGlobalOffset(renderObject);
 
-    if (renderObject is RenderProxyBox) {
-      if (renderObject.child == null) {
+    // Case 1: RenderBox (e.g. Container, Text, etc.)
+    if (renderObject is RenderBox) {
+      return renderObject.paintBounds.shift(globalOffset);
+    }
+
+    // Case 2: RenderSliver (e.g. SliverList, SliverToBoxAdapter, etc.)
+    if (renderObject is RenderSliver) {
+      final geometry = renderObject.geometry;
+      if (geometry == null) {
         return null;
       }
 
-      return MatrixUtils.transformRect(
-        renderObject.child!.getTransformTo(renderObject),
-        Offset.zero & renderObject.child!.size,
-      ).shift(globalOffset);
+      final crossAxisExtent = renderObject.constraints.crossAxisExtent;
+      final paintExtent = geometry.paintExtent;
+
+      return Rect.fromLTWH(
+        globalOffset.dx,
+        globalOffset.dy,
+        // assume vertical scroll by default
+        crossAxisExtent,
+        paintExtent,
+      );
     }
 
-    return renderObject.paintBounds.shift(globalOffset);
+    return null;
   }
 
   // The is the same implementation used in RenderBox.localToGlobal (a subclass of RenderObject)
   Offset _getRenderGlobalOffset(RenderObject renderObject) {
-    return MatrixUtils.transformPoint(
-      renderObject.getTransformTo(null),
-      Offset.zero,
-    );
+    // Find the nearest RenderBox ancestor to calculate global position
+    RenderObject? current = renderObject;
+    while (current != null && current is! RenderBox) {
+      current = current.parent;
+    }
+
+    if (current is RenderBox) {
+      // Get transform from this object to screen root
+      final Matrix4 transform = renderObject.getTransformTo(null);
+      return MatrixUtils.transformPoint(transform, Offset.zero);
+    }
+
+    // fallback: treat as zero offset (shouldn't happen if widget is mounted in tree)
+    return Offset.zero;
   }
 
   List<Rect> getRectsOfPrivateViews() {
@@ -107,7 +130,8 @@ class PrivateViewsManager implements InstabugPrivateViewFlutterApi {
       final isPrivate = _viewChecks.any((e) => e.call(widget));
       if (isPrivate) {
         final renderObject = element.findRenderObject();
-        if (renderObject is RenderBox && renderObject.attached) {
+        if ((renderObject is RenderBox || renderObject is RenderSliver) &&
+            renderObject?.attached == true) {
           final isElementInCurrentScreen = isElementInCurrentRoute(element);
           final rect = getLayoutRectInfoFromRenderObject(renderObject);
           if (rect != null &&
