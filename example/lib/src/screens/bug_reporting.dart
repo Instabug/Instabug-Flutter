@@ -60,6 +60,9 @@ class _BugReportingPageState extends State<BugReportingPage> {
       Instabug.addFileAttachmentWithURL(fileAttachment!.path, fileAttachment!.path
           .split('/')
           .last.substring(0));
+      setState(() {
+
+      });
     }
   }
 
@@ -464,6 +467,10 @@ class _BugReportingPageState extends State<BugReportingPage> {
           text: 'Set On Dismiss Callback',
         ),
         const SectionTitle('Attachments'),
+        if(fileAttachment!=null)
+          Text(fileAttachment!.path
+              .split('/')
+              .last.substring(0) +" Attached"),
         InstabugButton(
           onPressed: addFileAttachment,
           text: 'Add file attachment',
