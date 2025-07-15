@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart' show WidgetBuilder, WidgetsBinding;
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
+import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/models/trace.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
@@ -208,7 +209,7 @@ class APM {
   ///   The method is returning a `Future<void>`.
   static Future<void> endUITrace() async {
     // End screen render collector for custom ui trace if enabled.
-    if (await FlagsConfig.screenRendering.isEnabled()) {
+    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
       return InstabugScreenRenderManager.I
           .endScreenRenderCollectorForCustomUiTrace();
     }
@@ -396,8 +397,40 @@ class APM {
       if (isEnabled) {
         InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
       } else {
-        InstabugScreenRenderManager.I.remove();
+        InstabugScreenRenderManager.I.dispose();
       }
     });
+  }
+
+  /// Ends screen rendering for
+  /// automatic UI tracing using data provided in `InstabugScreenRenderData` object.
+  ///
+  /// Args:
+  ///   data (InstabugScreenRenderData): The `data` parameter in the `endScreenRenderForAutoUiTrace`
+  /// function is of type `InstabugScreenRenderData`. It contains information related to screen
+  /// rendering.
+  ///
+  /// Returns:
+  ///   A `Future<void>` is being returned.
+  static Future<void> endScreenRenderForAutoUiTrace(
+    InstabugScreenRenderData data,
+  ) {
+    return _host.endScreenRenderForAutoUiTrace(data.toMap());
+  }
+
+  /// Ends the screen render for a custom
+  /// UI trace using data provided in `InstabugScreenRenderData`.
+  ///
+  /// Args:
+  ///   data (InstabugScreenRenderData): The `data` parameter in the `endScreenRenderForCustomUiTrace`
+  /// function is of type `InstabugScreenRenderData`, which contains information related to the
+  /// rendering of a screen in the Instabug custom UI.
+  ///
+  /// Returns:
+  ///   A `Future<void>` is being returned.
+  static Future<void> endScreenRenderForCustomUiTrace(
+    InstabugScreenRenderData data,
+  ) {
+    return _host.endScreenRenderForCustomUiTrace(data.toMap());
   }
 }

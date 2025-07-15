@@ -12,18 +12,22 @@ import com.instabug.apm.configuration.cp.FeatureAvailabilityCallback;
 import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
+import com.instabug.apm.screenrendering.models.cp.IBGFrameData;
+import com.instabug.apm.screenrendering.models.cp.IBGScreenRenderingData;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.util.Reflection;
 import com.instabug.flutter.util.ThreadManager;
 
-import io.flutter.plugin.common.BinaryMessenger;
-
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+
+import io.flutter.plugin.common.BinaryMessenger;
 
 public class ApmApi implements ApmPigeon.ApmHostApi {
     private final String TAG = ApmApi.class.getName();
@@ -40,14 +44,14 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         ApmPigeon.ApmHostApi.setup(messenger, api);
     }
 
-  /**
-   * The function sets the enabled status of APM.
-   * 
-   * @param isEnabled The `setEnabled` method in the code snippet is used to enable or disable a
-   * feature, and it takes a `Boolean` parameter named `isEnabled`. When this method is called with
-   * `true`, it enables the feature, and when called with `false`, it disables the feature. The method
-   * internally calls
-   */
+    /**
+     * The function sets the enabled status of APM.
+     *
+     * @param isEnabled The `setEnabled` method in the code snippet is used to enable or disable a
+     *                  feature, and it takes a `Boolean` parameter named `isEnabled`. When this method is called with
+     *                  `true`, it enables the feature, and when called with `false`, it disables the feature. The method
+     *                  internally calls
+     */
     @Override
     public void setEnabled(@NonNull Boolean isEnabled) {
         try {
@@ -58,12 +62,12 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     }
 
     /**
-    * Sets the cold app launch enabled status using the APM library.
-    * 
-    * @param isEnabled The `isEnabled` parameter is a Boolean value that indicates whether cold app launch
-    * is enabled or not. When `isEnabled` is set to `true`, cold app launch is enabled, and when it is set
-    * to `false`, cold app launch is disabled.
-    */
+     * Sets the cold app launch enabled status using the APM library.
+     *
+     * @param isEnabled The `isEnabled` parameter is a Boolean value that indicates whether cold app launch
+     *                  is enabled or not. When `isEnabled` is set to `true`, cold app launch is enabled, and when it is set
+     *                  to `false`, cold app launch is disabled.
+     */
     @Override
     public void setColdAppLaunchEnabled(@NonNull Boolean isEnabled) {
         try {
@@ -73,14 +77,14 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         }
     }
 
-   /**
-    * The function sets the auto UI trace enabled status in an APM system, handling any exceptions that
-    * may occur.
-    * 
-    * @param isEnabled The `isEnabled` parameter is a Boolean value that indicates whether the Auto UI
-    * trace feature should be enabled or disabled. When `isEnabled` is set to `true`, the Auto UI trace
-    * feature is enabled, and when it is set to `false`, the feature is disabled.
-    */
+    /**
+     * The function sets the auto UI trace enabled status in an APM system, handling any exceptions that
+     * may occur.
+     *
+     * @param isEnabled The `isEnabled` parameter is a Boolean value that indicates whether the Auto UI
+     *                  trace feature should be enabled or disabled. When `isEnabled` is set to `true`, the Auto UI trace
+     *                  feature is enabled, and when it is set to `false`, the feature is disabled.
+     */
     @Override
     public void setAutoUITraceEnabled(@NonNull Boolean isEnabled) {
         try {
@@ -90,21 +94,20 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         }
     }
 
-  /**
-   * Starts an execution trace and handles the result
-   * using callbacks.
-   * 
-   * @param id The `id` parameter is a non-null String that represents the identifier of the execution
-   * trace.
-   * @param name The `name` parameter in the `startExecutionTrace` method represents the name of the
-   * execution trace that will be started. It is used as a reference to identify the trace during
-   * execution monitoring.
-   * @param result The `result` parameter in the `startExecutionTrace` method is an instance of
-   * `ApmPigeon.Result<String>`. This parameter is used to provide the result of the execution trace
-   * operation back to the caller. The `success` method of the `result` object is called with the
-   * 
-   * @deprecated see {@link #startFlow}
-   */
+    /**
+     * Starts an execution trace and handles the result
+     * using callbacks.
+     *
+     * @param id     The `id` parameter is a non-null String that represents the identifier of the execution
+     *               trace.
+     * @param name   The `name` parameter in the `startExecutionTrace` method represents the name of the
+     *               execution trace that will be started. It is used as a reference to identify the trace during
+     *               execution monitoring.
+     * @param result The `result` parameter in the `startExecutionTrace` method is an instance of
+     *               `ApmPigeon.Result<String>`. This parameter is used to provide the result of the execution trace
+     *               operation back to the caller. The `success` method of the `result` object is called with the
+     * @deprecated see {@link #startFlow}
+     */
     @Override
     public void startExecutionTrace(@NonNull String id, @NonNull String name, ApmPigeon.Result<String> result) {
         ThreadManager.runOnBackground(
@@ -165,7 +168,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         }
     }
 
-   /**
+    /**
      * Sets custom attributes for AppFlow with a given name.
      * <br/>
      * Setting an attribute value to null will remove its corresponding key if it already exists.
@@ -194,7 +197,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         }
     }
 
-   /**
+    /**
      * Ends AppFlow with a given name.
      *
      * @param name AppFlow name to be ended. It can not be empty string or null
@@ -208,13 +211,12 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         }
     }
 
-     /**
+    /**
      * Adds a new attribute to trace
      *
      * @param id    String id of the trace.
      * @param key   attribute key
      * @param value attribute value. Null to remove attribute
-     *
      * @deprecated see {@link #setFlowAttribute}
      */
     @Override
@@ -230,7 +232,6 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
      * Ends a trace
      *
      * @param id string id of the trace.
-     *
      * @deprecated see {@link #endFlow}
      */
     @Override
@@ -283,7 +284,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
     /**
      * logs network-related information
-     * 
+     *
      * @param data Map of network data object.
      */
     @Override
@@ -349,43 +350,44 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
 
             }
-                if (data.containsKey("w3CCaughtHeader")) {
-                    w3CCaughtHeader = (String) data.get("w3CCaughtHeader");
+            if (data.containsKey("w3CCaughtHeader")) {
+                w3CCaughtHeader = (String) data.get("w3CCaughtHeader");
 
-                }
-
-
-                APMCPNetworkLog.W3CExternalTraceAttributes w3cExternalTraceAttributes =
-                        null;
-                if (isW3cHeaderFound != null) {
-                    w3cExternalTraceAttributes = new APMCPNetworkLog.W3CExternalTraceAttributes(
-                            isW3cHeaderFound, partialId == null ? null : partialId.longValue(),
-                            networkStartTimeInSeconds == null ? null : networkStartTimeInSeconds.longValue(),
-                            w3CGeneratedHeader, w3CCaughtHeader
-
-                    );
-                }
-
-                Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class, APMCPNetworkLog.W3CExternalTraceAttributes.class);
-                if (method != null) {
-                    method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage, w3cExternalTraceAttributes);
-                } else {
-                    Log.e(TAG, "APMNetworkLogger.log was not found by reflection");
-                }
-
-            } catch(Exception e){
-                e.printStackTrace();
             }
+
+
+            APMCPNetworkLog.W3CExternalTraceAttributes w3cExternalTraceAttributes =
+                    null;
+            if (isW3cHeaderFound != null) {
+                w3cExternalTraceAttributes = new APMCPNetworkLog.W3CExternalTraceAttributes(
+                        isW3cHeaderFound, partialId == null ? null : partialId.longValue(),
+                        networkStartTimeInSeconds == null ? null : networkStartTimeInSeconds.longValue(),
+                        w3CGeneratedHeader, w3CCaughtHeader
+
+                );
+            }
+
+            Method method = Reflection.getMethod(Class.forName("com.instabug.apm.networking.APMNetworkLogger"), "log", long.class, long.class, String.class, String.class, long.class, String.class, String.class, String.class, String.class, String.class, long.class, int.class, String.class, String.class, String.class, String.class, APMCPNetworkLog.W3CExternalTraceAttributes.class);
+            if (method != null) {
+                method.invoke(apmNetworkLogger, requestStartTime, requestDuration, requestHeaders, requestBody, requestBodySize, requestMethod, requestUrl, requestContentType, responseHeaders, responseBody, responseBodySize, statusCode, responseContentType, errorMessage, gqlQueryName, serverErrorMessage, w3cExternalTraceAttributes);
+            } else {
+                Log.e(TAG, "APMNetworkLogger.log was not found by reflection");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
 
-    /** 
-    * This method is responsible for initiating a custom performance UI trace
-    * in the APM module. It takes three parameters:
-    * @param screenName: A string representing the name of the screen or UI element being traced.
-    * @param microTimeStamp: A number representing the timestamp in microseconds when the trace is started.
-    * @param traceId: A number representing the unique identifier for the trace.
-    */
+    /**
+     * This method is responsible for initiating a custom performance UI trace
+     * in the APM module. It takes three parameters:
+     *
+     * @param screenName:     A string representing the name of the screen or UI element being traced.
+     * @param microTimeStamp: A number representing the timestamp in microseconds when the trace is started.
+     * @param traceId:        A number representing the unique identifier for the trace.
+     */
     @Override
     public void startCpUiTrace(@NonNull String screenName, @NonNull Long microTimeStamp, @NonNull Long traceId) {
         try {
@@ -396,16 +398,17 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     }
 
 
-    /** 
-    * This method is responsible for reporting the screen
-    * loading data from Dart side to Android side. It takes three parameters:
-    * @param startTimeStampMicro: A number representing the start timestamp in microseconds of the screen
-    * loading custom performance data.
-    * @param durationMicro: A number representing the duration in microseconds of the screen loading custom
-    * performance data.
-    * @param uiTraceId: A number representing the unique identifier for the UI trace associated with the
-    * screen loading.
-    */
+    /**
+     * This method is responsible for reporting the screen
+     * loading data from Dart side to Android side. It takes three parameters:
+     *
+     * @param startTimeStampMicro: A number representing the start timestamp in microseconds of the screen
+     *                             loading custom performance data.
+     * @param durationMicro:       A number representing the duration in microseconds of the screen loading custom
+     *                             performance data.
+     * @param uiTraceId:           A number representing the unique identifier for the UI trace associated with the
+     *                             screen loading.
+     */
     @Override
     public void reportScreenLoadingCP(@NonNull Long startTimeStampMicro, @NonNull Long durationMicro, @NonNull Long uiTraceId) {
         try {
@@ -417,13 +420,14 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
 
     /**
-    *  This method is responsible for extend the end time if the screen loading custom
-    * trace. It takes two parameters:
-    * @param timeStampMicro: A number representing the timestamp in microseconds when the screen loading
-    * custom trace is ending.
-    * @param uiTraceId: A number representing the unique identifier for the UI trace associated with the
-    * screen loading.
-    */
+     * This method is responsible for extend the end time if the screen loading custom
+     * trace. It takes two parameters:
+     *
+     * @param timeStampMicro: A number representing the timestamp in microseconds when the screen loading
+     *                        custom trace is ending.
+     * @param uiTraceId:      A number representing the unique identifier for the UI trace associated with the
+     *                        screen loading.
+     */
     @Override
     public void endScreenLoadingCP(@NonNull Long timeStampMicro, @NonNull Long uiTraceId) {
         try {
@@ -435,7 +439,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
 
     /**
-     *  This method is used to check whether the end screen loading feature is enabled or not.
+     * This method is used to check whether the end screen loading feature is enabled or not.
      */
     @Override
     public void isEndScreenLoadingEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
@@ -453,9 +457,9 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         }
     }
 
-    /** 
-     * checks whether the screen loading feature is enabled. 
-     * */    
+    /**
+     * checks whether the screen loading feature is enabled.
+     */
     @Override
     public void isScreenLoadingEnabled(@NonNull ApmPigeon.Result<Boolean> result) {
         try {
@@ -512,6 +516,53 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void endScreenRenderForAutoUiTrace(@NonNull Map<String, Object> data) {
+        final long traceId = ((Number) data.get("traceId")).longValue();
+        final long slowFramesTotalDuration = ((Number) data.get("slowFramesTotalDuration")).longValue();
+        final long frozenFramesTotalDuration = ((Number) data.get("frozenFramesTotalDuration")).longValue();
+        final long endTime = ((Number) data.get("endTime")).longValue();
+
+        // Don't cast directly to ArrayList<ArrayList<Long>> because the inner lists may actually be ArrayList<Integer>
+        // Instead, cast to List<List<Number>> and convert each value to long explicitly
+        List<List<Number>> rawFrames = (List<List<Number>>) data.get("frameData");
+        ArrayList<IBGFrameData> frames = new ArrayList<>();
+        if (rawFrames != null) {
+            for (List<Number> frameValues : rawFrames) {
+                // Defensive: check size and nulls
+                if (frameValues != null && frameValues.size() >= 2) {
+                    long frameStart = frameValues.get(0).longValue();
+                    long frameDuration = frameValues.get(1).longValue();
+                    frames.add(new IBGFrameData(frameStart, frameDuration));
+                }
+            }
+        }
+        IBGScreenRenderingData screenRenderingData = new IBGScreenRenderingData(traceId, slowFramesTotalDuration, frozenFramesTotalDuration, frames);
+        InternalAPM._endAutoUiTraceWithScreenRendering(screenRenderingData, endTime);
+    }
+
+    @Override
+    public void endScreenRenderForCustomUiTrace(@NonNull Map<String, Object> data) {
+        final long traceId = ((Number) data.get("traceId")).longValue();
+        final long slowFramesTotalDuration = ((Number) data.get("slowFramesTotalDuration")).longValue();
+        final long frozenFramesTotalDuration = ((Number) data.get("frozenFramesTotalDuration")).longValue();
+
+        List<List<Number>> rawFrames = (List<List<Number>>) data.get("frameData");
+        ArrayList<IBGFrameData> frames = new ArrayList<>();
+        if (rawFrames != null) {
+            for (List<Number> frameValues : rawFrames) {
+                // Defensive: check size and nulls
+                if (frameValues != null && frameValues.size() >= 2) {
+                    long frameStart = frameValues.get(0).longValue();
+                    long frameDuration = frameValues.get(1).longValue();
+                    frames.add(new IBGFrameData(frameStart, frameDuration));
+                }
+            }
+        }
+        IBGScreenRenderingData screenRenderingData = new IBGScreenRenderingData(traceId, slowFramesTotalDuration, frozenFramesTotalDuration, frames);
+        InternalAPM._endCustomUiTraceWithScreenRenderingCP(screenRenderingData);
     }
 
 }

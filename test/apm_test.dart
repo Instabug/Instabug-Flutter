@@ -301,7 +301,7 @@ void main() {
         () async {
       const isEnabled = false;
       await APM.setScreenRenderEnabled(isEnabled);
-      verify(mScreenRenderManager.remove()).called(1);
+      verify(mScreenRenderManager.dispose()).called(1);
       verifyNoMoreInteractions(mScreenRenderManager);
     });
 
@@ -345,7 +345,7 @@ void main() {
         "[endUITrace] should stop screen render collector with, if screen render feature is enabled",
         () async {
       when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => true);
-
+      when(mScreenRenderManager.screenRenderEnabled).thenReturn(true);
       const traceName = "traceNameTest";
       await APM.startUITrace(traceName);
       await APM.endUITrace();
@@ -361,7 +361,7 @@ void main() {
         "[endUITrace] should acts as normal and do nothing related to screen render, if screen render feature is disabled",
         () async {
       when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => false);
-
+      when(mScreenRenderManager.screenRenderEnabled).thenReturn(false);
       const traceName = "traceNameTest";
       await APM.startUITrace(traceName);
       await APM.endUITrace();

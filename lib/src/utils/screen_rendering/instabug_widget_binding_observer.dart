@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/widgets.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
 import 'package:meta/meta.dart';
 
-//todo: remove logs
 class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
   InstabugWidgetsBindingObserver._();
 
@@ -22,8 +19,16 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
   /// Logging tag for debugging purposes.
   static const tag = "InstabugWidgetsBindingObserver";
 
+  static void dispose() {
+    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
+      InstabugScreenRenderManager.I.dispose();
+    }
+    // For Flutter 2.10.5 version
+    // ignore: invalid_null_aware_operator
+    WidgetsBinding.instance?.removeObserver(_instance);
+  }
+
   void _handleResumedState() {
-    log('Performing resume actions...', name: 'andrew');
     final lastUiTrace = ScreenLoadingManager.I.currentUiTrace;
     if (lastUiTrace == null) {
       return;
@@ -41,17 +46,20 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
   }
 
   void _handlePausedState() {
-    log('Performing pause actions...', name: 'andrew');
-    InstabugScreenRenderManager.I.stopScreenRenderCollector();
+    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
+      InstabugScreenRenderManager.I.stopScreenRenderCollector();
+    }
   }
 
   void _handleDetachedState() {
-    log('Performing detached actions...', name: 'andrew');
-    InstabugScreenRenderManager.I.stopScreenRenderCollector();
+    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
+      InstabugScreenRenderManager.I.stopScreenRenderCollector();
+    }
+    dispose();
   }
 
   void _handleDefaultState() {
-    log("handle default state", name: 'andrew');
+    // Added for lint warnings
   }
 
   @override

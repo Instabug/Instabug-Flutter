@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:math' show Random;
 
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
@@ -18,12 +19,14 @@ import 'src/widget/instabug_text_field.dart';
 import 'src/widget/section_title.dart';
 
 part 'src/components/animated_box.dart';
+part 'src/components/apm_switch.dart';
 part 'src/components/fatal_crashes_content.dart';
 part 'src/components/flows_content.dart';
 part 'src/components/network_content.dart';
 part 'src/components/non_fatal_crashes_content.dart';
 part 'src/components/page.dart';
 part 'src/components/screen_render.dart';
+part 'src/components/screen_render_switch.dart';
 part 'src/components/traces_content.dart';
 part 'src/components/ui_traces_content.dart';
 part 'src/screens/apm_page.dart';
@@ -33,8 +36,6 @@ part 'src/screens/my_home_page.dart';
 part 'src/screens/screen_capture_premature_extension_page.dart';
 part 'src/screens/screen_loading_page.dart';
 part 'src/screens/screen_render_page.dart';
-part 'src/components/apm_switch.dart';
-part 'src/components/screen_render_switch.dart';
 
 void main() {
   runZonedGuarded(
@@ -45,7 +46,9 @@ void main() {
         token: 'ed6f659591566da19b67857e1b9d40ab',
         invocationEvents: [InvocationEvent.floatingButton],
         debugLogsLevel: LogLevel.verbose,
-      );
+      ).then((_) {
+        // APM.setScreenRenderEnabled(false);
+      });
 
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
@@ -54,18 +53,6 @@ class InstabugNavigatorObserver extends NavigatorObserver {
     }
   }
 
-  FutureOr<void> _startScreenRenderCollector(int? uiTraceId) async {
-    final isScreenRender = await FlagsConfig.screenRendering.isEnabled();
-    log("isScreenRender: $isScreenRender", name: 'Andrew');
-    if (uiTraceId != null && isScreenRender) {
-      InstabugScreenRenderManager.I
-          .startScreenRenderCollectorForTraceId(uiTraceId);
-    }
-    // if(isScreenRender && InstabugScreenRenderManager.I.screenRenderEnabled){
-    //   InstabugScreenRenderManager.I.remove();
-    // }
-  }
-
   @override
   void didPop(Route route, Route? previousRoute) {
     if (previousRoute != null) {
@@ -76,5 +63,26 @@ class InstabugNavigatorObserver extends NavigatorObserver {
   @override
   void didPush(Route route, Route? previousRoute) {
     screenChanged(route);
+  }
+
+  FutureOr<void> _startScreenRenderCollector(int? uiTraceId) async {
+    final isScreenRender = await FlagsConfig.screenRendering.isEnabled();
+    _checkForScreenRenderInitialization(isScreenRender);
+    if (uiTraceId != null && isScreenRender) {
+      InstabugScreenRenderManager.I
+          .startScreenRenderCollectorForTraceId(uiTraceId);
+    }
+  }
+
+  void _checkForScreenRenderInitialization(bool isScreenRender) {
+    if (isScreenRender) {
+      if (!InstabugScreenRenderManager.I.screenRenderEnabled) {
+        InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
+      }
+    } else {
+      if (InstabugScreenRenderManager.I.screenRenderEnabled) {
+        InstabugScreenRenderManager.I.dispose();
+      }
+    }
   }
 }
