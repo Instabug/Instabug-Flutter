@@ -10,7 +10,11 @@ class BugReportingPage extends StatefulWidget {
 }
 
 class _BugReportingPageState extends State<BugReportingPage> {
-  List<ReportType> reportTypes = [ReportType.bug,ReportType.feedback,ReportType.question];
+  List<ReportType> reportTypes = [
+    ReportType.bug,
+    ReportType.feedback,
+    ReportType.question
+  ];
   List<InvocationOption> invocationOptions = [];
 
   final disclaimerTextController = TextEditingController();
@@ -19,6 +23,7 @@ class _BugReportingPageState extends State<BugReportingPage> {
   bool attachmentsOptionsExtraScreenshot = true;
   bool attachmentsOptionsGalleryImage = true;
   bool attachmentsOptionsScreenRecording = true;
+  File? fileAttachment;
 
   void restartInstabug() {
     Instabug.setEnabled(false);
@@ -30,13 +35,11 @@ class _BugReportingPageState extends State<BugReportingPage> {
     BugReporting.setInvocationEvents([invocationEvent]);
   }
 
-  void setUserConsent(
-    String key,
-    String description,
-    bool mandatory,
-    bool checked,
-    UserConsentActionType? actionType,
-  ) {
+  void setUserConsent(String key,
+      String description,
+      bool mandatory,
+      bool checked,
+      UserConsentActionType? actionType,) {
     BugReporting.addUserConsents(
         key: key,
         description: description,
@@ -47,6 +50,21 @@ class _BugReportingPageState extends State<BugReportingPage> {
 
   void show() {
     Instabug.show();
+  }
+
+  Future<void> addFileAttachment() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      fileAttachment = File(result.files.single.path!);
+      Instabug.addFileAttachmentWithURL(fileAttachment!.path, fileAttachment!.path
+          .split('/')
+          .last.substring(0));
+    }
+  }
+
+  void removeFileAttachment() {
+   Instabug.clearFileAttachments();
   }
 
   void addAttachmentOptions() {
@@ -84,9 +102,10 @@ class _BugReportingPageState extends State<BugReportingPage> {
       if (dismissType == DismissType.submit) {
         showDialog(
             context: context,
-            builder: (_) => const AlertDialog(
-                  title: Text('Bug Reporting sent'),
-                ));
+            builder: (_) =>
+            const AlertDialog(
+              title: Text('Bug Reporting sent'),
+            ));
       }
     });
   }
@@ -192,22 +211,24 @@ class _BugReportingPageState extends State<BugReportingPage> {
           children: <Widget>[
             ElevatedButton(
               key: const Key('user_consent_media_manadatory'),
-              onPressed: () => setUserConsent(
-                  'media_mandatory',
-                  "Mandatory for Media",
-                  true,
-                  true,
-                  UserConsentActionType.dropAutoCapturedMedia),
+              onPressed: () =>
+                  setUserConsent(
+                      'media_mandatory',
+                      "Mandatory for Media",
+                      true,
+                      true,
+                      UserConsentActionType.dropAutoCapturedMedia),
               child: const Text('Drop Media Mandatory'),
             ),
             ElevatedButton(
               key: const Key('user_consent_no_chat_manadatory'),
-              onPressed: () => setUserConsent(
-                  'noChat_mandatory',
-                  "Mandatory for No Chat",
-                  true,
-                  true,
-                  UserConsentActionType.noChat),
+              onPressed: () =>
+                  setUserConsent(
+                      'noChat_mandatory',
+                      "Mandatory for No Chat",
+                      true,
+                      true,
+                      UserConsentActionType.noChat),
               child: const Text('No Chat Mandatory'),
             ),
           ],
@@ -219,22 +240,24 @@ class _BugReportingPageState extends State<BugReportingPage> {
           children: <Widget>[
             ElevatedButton(
               key: const Key('user_consent_drop_logs_manadatory'),
-              onPressed: () => setUserConsent(
-                  'dropLogs_mandatory',
-                  "Mandatory for Drop logs",
-                  true,
-                  true,
-                  UserConsentActionType.dropLogs),
+              onPressed: () =>
+                  setUserConsent(
+                      'dropLogs_mandatory',
+                      "Mandatory for Drop logs",
+                      true,
+                      true,
+                      UserConsentActionType.dropLogs),
               child: const Text('Drop logs Mandatory'),
             ),
             ElevatedButton(
               key: const Key('user_consent_no_chat_optional'),
-              onPressed: () => setUserConsent(
-                  'noChat_mandatory',
-                  "Optional for No Chat",
-                  false,
-                  true,
-                  UserConsentActionType.noChat),
+              onPressed: () =>
+                  setUserConsent(
+                      'noChat_mandatory',
+                      "Optional for No Chat",
+                      false,
+                      true,
+                      UserConsentActionType.noChat),
               child: const Text('No Chat optional'),
             ),
           ],
@@ -246,8 +269,9 @@ class _BugReportingPageState extends State<BugReportingPage> {
           children: <Widget>[
             ElevatedButton(
               key: const Key('invocation_option_disable_post_sending_dialog'),
-              onPressed: () => addInvocationOption(
-                  InvocationOption.disablePostSendingDialog),
+              onPressed: () =>
+                  addInvocationOption(
+                      InvocationOption.disablePostSendingDialog),
               child: const Text('disablePostSendingDialog'),
             ),
             ElevatedButton(
@@ -305,7 +329,6 @@ class _BugReportingPageState extends State<BugReportingPage> {
                   attachmentsOptionsExtraScreenshot = value ?? false;
                 });
                 addAttachmentOptions();
-
               },
               title: const Text("Extra Screenshot"),
               subtitle: const Text('Enable attachment for extra screenShot'),
@@ -319,7 +342,6 @@ class _BugReportingPageState extends State<BugReportingPage> {
                   attachmentsOptionsGalleryImage = value ?? false;
                 });
                 addAttachmentOptions();
-
               },
               title: const Text("Gallery"),
               subtitle: const Text('Enable attachment for gallery'),
@@ -333,7 +355,6 @@ class _BugReportingPageState extends State<BugReportingPage> {
                   attachmentsOptionsScreenRecording = value ?? false;
                 });
                 addAttachmentOptions();
-
               },
               title: const Text("Screen Recording"),
               subtitle: const Text('Enable attachment for screen Recording'),
@@ -344,38 +365,46 @@ class _BugReportingPageState extends State<BugReportingPage> {
         ),
         const SectionTitle('Bug reporting type'),
 
-        ButtonBar(
-          mainAxisSize: MainAxisSize.min,
-          alignment: MainAxisAlignment.start,
-          children: <Widget>[
-            ElevatedButton(
-              key: const Key('bug_report_type_bug'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: reportTypes.contains(ReportType.bug)?Colors.grey.shade400:null
-              ),
-              onPressed: () => toggleReportType(ReportType.bug),
-              child: const Text('Bug'),
-            ),
-            ElevatedButton(
-              key: const Key('bug_report_type_feedback'),
-              onPressed: () => toggleReportType(ReportType.feedback),
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: reportTypes.contains(ReportType.feedback)?Colors.grey.shade400:null
-              ),
-              child: const Text('Feedback'),
-            ),
-            ElevatedButton(
-              key: const Key('bug_report_type_question'),
-              onPressed: () => toggleReportType(ReportType.question),
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: reportTypes.contains(ReportType.question)?Colors.grey.shade400:null
-              ),
-              child: const Text('Question'),
-            ),
-          ],
+        CheckboxListTile(
+          value: reportTypes.contains(ReportType.bug),
+          onChanged: (value) {
+            toggleReportType(ReportType.bug);
+            setState(() {
+            });
+          },
+          title: const Text("Bug"),
+          subtitle: const Text('Enable Bug reporting type'),
+          key: const Key('bug_report_type_bug'),
+
+        ),
+        CheckboxListTile(
+          value: reportTypes.contains(ReportType.feedback),
+          onChanged: (value) {
+            toggleReportType(ReportType.feedback);
+            setState(() {
+            });
+          },
+          title: const Text("Feedback"),
+          subtitle: const Text('Enable Feedback reporting type'),
+          key: const Key('bug_report_type_feedback'),
+
+        ),
+
+        CheckboxListTile(
+          value: reportTypes.contains(ReportType.question),
+          onChanged: (value) {
+            toggleReportType(ReportType.question);
+            setState(() {
+            });
+          },
+          title: const Text("Question"),
+          subtitle: const Text('Enable Question reporting type'),
+          key: const Key('bug_report_type_question'),
+
         ),
         InstabugButton(
-          onPressed: () => {
+          onPressed: () =>
+          {
             BugReporting.show(
                 ReportType.bug, [InvocationOption.emailFieldOptional])
           },
@@ -400,15 +429,17 @@ class _BugReportingPageState extends State<BugReportingPage> {
           children: <Widget>[
             ElevatedButton(
               key: const Key('extended_bug_report_mode_disabled'),
-              onPressed: () => BugReporting.setExtendedBugReportMode(
-                  ExtendedBugReportMode.disabled),
+              onPressed: () =>
+                  BugReporting.setExtendedBugReportMode(
+                      ExtendedBugReportMode.disabled),
               child: const Text('disabled'),
             ),
             ElevatedButton(
               key:
-                  const Key('extended_bug_report_mode_required_fields_enabled'),
-              onPressed: () => BugReporting.setExtendedBugReportMode(
-                  ExtendedBugReportMode.enabledWithRequiredFields),
+              const Key('extended_bug_report_mode_required_fields_enabled'),
+              onPressed: () =>
+                  BugReporting.setExtendedBugReportMode(
+                      ExtendedBugReportMode.enabledWithRequiredFields),
               child: const Text('enabledWithRequiredFields'),
             ),
           ],
@@ -419,9 +450,10 @@ class _BugReportingPageState extends State<BugReportingPage> {
           children: <Widget>[
             ElevatedButton(
               key:
-                  const Key('extended_bug_report_mode_optional_fields_enabled'),
-              onPressed: () => BugReporting.setExtendedBugReportMode(
-                  ExtendedBugReportMode.enabledWithOptionalFields),
+              const Key('extended_bug_report_mode_optional_fields_enabled'),
+              onPressed: () =>
+                  BugReporting.setExtendedBugReportMode(
+                      ExtendedBugReportMode.enabledWithOptionalFields),
               child: const Text('enabledWithOptionalFields'),
             ),
           ],
@@ -430,6 +462,15 @@ class _BugReportingPageState extends State<BugReportingPage> {
         InstabugButton(
           onPressed: setOnDismissCallback,
           text: 'Set On Dismiss Callback',
+        ),
+        const SectionTitle('Attachments'),
+        InstabugButton(
+          onPressed: addFileAttachment,
+          text: 'Add file attachment',
+        ),
+        InstabugButton(
+          onPressed: removeFileAttachment,
+          text: 'Clear All attachment',
         ),
       ], // This trailing comma makes auto-formatting nicer for build methods.
     );
