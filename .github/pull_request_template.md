@@ -6,6 +6,8 @@
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 ## Related issues
 > Issue links go here
+## Usage Example
+> Example of how to call it
 ## Checklists
 ### Development
 - [ ] Lint rules pass locally
