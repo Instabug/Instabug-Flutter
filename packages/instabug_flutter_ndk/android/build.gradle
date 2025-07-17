@@ -21,6 +21,8 @@ rootProject.allprojects {
 
 apply plugin: "com.android.library"
 
+apply from: './native.gradle'
+
 android {
     namespace = "com.instabug.instabug_flutter_ndk"
 

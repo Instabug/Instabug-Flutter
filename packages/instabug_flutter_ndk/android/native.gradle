@@ -1,0 +1,7 @@
+project.ext.instabug = [
+    version: '15.0.2'
+]
+
+dependencies {
+    api "com.instabug.library:instabug-ndk-crash:${instabug.version}"
+}
