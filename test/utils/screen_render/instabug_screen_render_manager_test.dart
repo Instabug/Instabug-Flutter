@@ -260,7 +260,7 @@ void main() {
     });
 
     test('should not save data if no custom UI trace is started', () {
-      final frameTestdata = InstabugScreenRenderData(
+      final frameTestData = InstabugScreenRenderData(
         traceId: 123,
         frameData: [
           InstabugFrameData(10000, 200),
@@ -270,18 +270,18 @@ void main() {
         slowFramesTotalDurationMicro: 200,
       );
 
-      manager.setFrameData(frameTestdata);
+      manager.setFrameData(frameTestData);
 
       manager.endScreenRenderCollectorForCustomUiTrace();
 
       expect(manager.screenRenderForCustomUiTrace.isActive, false);
-      expect(manager.screenRenderForCustomUiTrace == frameTestdata, false);
+      expect(manager.screenRenderForCustomUiTrace == frameTestData, false);
     });
 
     test(
         'should save data to  screenRenderForCustomUiTrace if custom UI trace is started',
         () {
-      final frameTestdata = InstabugScreenRenderData(
+      final frameTestData = InstabugScreenRenderData(
         traceId: 123,
         frameData: [
           InstabugFrameData(10000, 200),
@@ -292,11 +292,11 @@ void main() {
       );
 
       manager.startScreenRenderCollectorForTraceId(
-        frameTestdata.traceId,
+        frameTestData.traceId,
         UiTraceType.custom,
       );
 
-      manager.setFrameData(frameTestdata);
+      manager.setFrameData(frameTestData);
 
       manager.endScreenRenderCollectorForCustomUiTrace();
     });
@@ -352,7 +352,7 @@ void main() {
       expect(
         manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
         buildDuration * 1000,
-      ); // * 1000 to convert from milli to micro
+      ); // * 1000 to convert from milliseconds to microseconds
       expect(
         manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
         0,
@@ -372,7 +372,7 @@ void main() {
       expect(
         manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
         rasterDuration * 1000,
-      ); // * 1000 to convert from milli to micro
+      ); // * 1000 to convert from milliseconds to microseconds
       expect(
         manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
         0,
@@ -393,7 +393,7 @@ void main() {
       expect(
         manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
         buildDuration * 1000,
-      ); // * 1000 to convert from milli to micro
+      ); // * 1000 to convert from milliseconds to microseconds
       expect(
         manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
         0,
@@ -414,7 +414,7 @@ void main() {
       expect(
         manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
         rasterBuild * 1000,
-      ); // * 1000 to convert from milli to micro
+      ); // * 1000 to convert from milliseconds to microseconds
       expect(
         manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
         0,
@@ -433,7 +433,7 @@ void main() {
       expect(
         manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
         0,
-      ); // * 1000 to convert from milli to micro
+      ); // * 1000 to convert from milliseconds to microseconds
       expect(
         manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
         0,
