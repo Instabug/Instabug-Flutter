@@ -250,7 +250,7 @@ class InstabugScreenRenderManager {
   /// Initialize the static variables
   Future<void> _initStaticValues() async {
     _timingsCallback = (timings) {
-      // 1. Establish the offset on the first available timing.
+      // Establish the offset on the first available timing.
       _epochOffset ??= _getEpochOffset(timings.first);
 
       for (final frameTiming in timings) {
@@ -384,6 +384,7 @@ class InstabugScreenRenderManager {
     );
   }
 
+  /// @nodoc
   int _getMicrosecondsSinceEpoch(int timeInMicroseconds) =>
       timeInMicroseconds + (_epochOffset ?? 0);
 
