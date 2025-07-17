@@ -110,42 +110,40 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
      */
     @Override
     public void startExecutionTrace(@NonNull String id, @NonNull String name, ApmPigeon.Result<String> result) {
-        ThreadManager.runOnBackground(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            ExecutionTrace trace = APM.startExecutionTrace(name);
-                            if (trace != null) {
-                                traces.put(id, trace);
+        ThreadManager.runOnBackground(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ExecutionTrace trace = APM.startExecutionTrace(name);
+                    if (trace != null) {
+                        traces.put(id, trace);
 
-                                ThreadManager.runOnMainThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        result.success(id);
-                                    }
-                                });
-                            } else {
-                                ThreadManager.runOnMainThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        result.success(null);
-                                    }
-                                });
+                        ThreadManager.runOnMainThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                result.success(id);
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-
-                            ThreadManager.runOnMainThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    result.success(null);
-                                }
-                            });
-                        }
+                        });
+                    } else {
+                        ThreadManager.runOnMainThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                result.success(null);
+                            }
+                        });
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                    ThreadManager.runOnMainThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.success(null);
+                        }
+                    });
                 }
-        );
+            }
+        });
     }
 
     /**
@@ -356,13 +354,9 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
             }
 
 
-            APMCPNetworkLog.W3CExternalTraceAttributes w3cExternalTraceAttributes =
-                    null;
+            APMCPNetworkLog.W3CExternalTraceAttributes w3cExternalTraceAttributes = null;
             if (isW3cHeaderFound != null) {
-                w3cExternalTraceAttributes = new APMCPNetworkLog.W3CExternalTraceAttributes(
-                        isW3cHeaderFound, partialId == null ? null : partialId.longValue(),
-                        networkStartTimeInSeconds == null ? null : networkStartTimeInSeconds.longValue(),
-                        w3CGeneratedHeader, w3CCaughtHeader
+                w3cExternalTraceAttributes = new APMCPNetworkLog.W3CExternalTraceAttributes(isW3cHeaderFound, partialId == null ? null : partialId.longValue(), networkStartTimeInSeconds == null ? null : networkStartTimeInSeconds.longValue(), w3CGeneratedHeader, w3CCaughtHeader
 
                 );
             }
@@ -520,49 +514,57 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
 
     @Override
     public void endScreenRenderForAutoUiTrace(@NonNull Map<String, Object> data) {
-        final long traceId = ((Number) data.get("traceId")).longValue();
-        final long slowFramesTotalDuration = ((Number) data.get("slowFramesTotalDuration")).longValue();
-        final long frozenFramesTotalDuration = ((Number) data.get("frozenFramesTotalDuration")).longValue();
-        final long endTime = ((Number) data.get("endTime")).longValue();
+        try {
+            final long traceId = ((Number) data.get("traceId")).longValue();
+            final long slowFramesTotalDuration = ((Number) data.get("slowFramesTotalDuration")).longValue();
+            final long frozenFramesTotalDuration = ((Number) data.get("frozenFramesTotalDuration")).longValue();
+            final long endTime = ((Number) data.get("endTime")).longValue();
 
-        // Don't cast directly to ArrayList<ArrayList<Long>> because the inner lists may actually be ArrayList<Integer>
-        // Instead, cast to List<List<Number>> and convert each value to long explicitly
-        List<List<Number>> rawFrames = (List<List<Number>>) data.get("frameData");
-        ArrayList<IBGFrameData> frames = new ArrayList<>();
-        if (rawFrames != null) {
-            for (List<Number> frameValues : rawFrames) {
-                // Defensive: check size and nulls
-                if (frameValues != null && frameValues.size() >= 2) {
-                    long frameStart = frameValues.get(0).longValue();
-                    long frameDuration = frameValues.get(1).longValue();
-                    frames.add(new IBGFrameData(frameStart, frameDuration));
+            // Don't cast directly to ArrayList<ArrayList<Long>> because the inner lists may actually be ArrayList<Integer>
+            // Instead, cast to List<List<Number>> and convert each value to long explicitly
+            List<List<Number>> rawFrames = (List<List<Number>>) data.get("frameData");
+            ArrayList<IBGFrameData> frames = new ArrayList<>();
+            if (rawFrames != null) {
+                for (List<Number> frameValues : rawFrames) {
+                    // Defensive: check size and nulls
+                    if (frameValues != null && frameValues.size() >= 2) {
+                        long frameStart = frameValues.get(0).longValue();
+                        long frameDuration = frameValues.get(1).longValue();
+                        frames.add(new IBGFrameData(frameStart, frameDuration));
+                    }
                 }
             }
+            IBGScreenRenderingData screenRenderingData = new IBGScreenRenderingData(traceId, slowFramesTotalDuration, frozenFramesTotalDuration, frames);
+            InternalAPM._endAutoUiTraceWithScreenRendering(screenRenderingData, endTime);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        IBGScreenRenderingData screenRenderingData = new IBGScreenRenderingData(traceId, slowFramesTotalDuration, frozenFramesTotalDuration, frames);
-        InternalAPM._endAutoUiTraceWithScreenRendering(screenRenderingData, endTime);
     }
 
     @Override
     public void endScreenRenderForCustomUiTrace(@NonNull Map<String, Object> data) {
-        final long traceId = ((Number) data.get("traceId")).longValue();
-        final long slowFramesTotalDuration = ((Number) data.get("slowFramesTotalDuration")).longValue();
-        final long frozenFramesTotalDuration = ((Number) data.get("frozenFramesTotalDuration")).longValue();
+        try {
+            final long traceId = ((Number) data.get("traceId")).longValue();
+            final long slowFramesTotalDuration = ((Number) data.get("slowFramesTotalDuration")).longValue();
+            final long frozenFramesTotalDuration = ((Number) data.get("frozenFramesTotalDuration")).longValue();
 
-        List<List<Number>> rawFrames = (List<List<Number>>) data.get("frameData");
-        ArrayList<IBGFrameData> frames = new ArrayList<>();
-        if (rawFrames != null) {
-            for (List<Number> frameValues : rawFrames) {
-                // Defensive: check size and nulls
-                if (frameValues != null && frameValues.size() >= 2) {
-                    long frameStart = frameValues.get(0).longValue();
-                    long frameDuration = frameValues.get(1).longValue();
-                    frames.add(new IBGFrameData(frameStart, frameDuration));
+            List<List<Number>> rawFrames = (List<List<Number>>) data.get("frameData");
+            ArrayList<IBGFrameData> frames = new ArrayList<>();
+            if (rawFrames != null) {
+                for (List<Number> frameValues : rawFrames) {
+                    // Defensive: check size and nulls
+                    if (frameValues != null && frameValues.size() >= 2) {
+                        long frameStart = frameValues.get(0).longValue();
+                        long frameDuration = frameValues.get(1).longValue();
+                        frames.add(new IBGFrameData(frameStart, frameDuration));
+                    }
                 }
             }
+            IBGScreenRenderingData screenRenderingData = new IBGScreenRenderingData(traceId, slowFramesTotalDuration, frozenFramesTotalDuration, frames);
+            InternalAPM._endCustomUiTraceWithScreenRenderingCP(screenRenderingData);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        IBGScreenRenderingData screenRenderingData = new IBGScreenRenderingData(traceId, slowFramesTotalDuration, frozenFramesTotalDuration, frames);
-        InternalAPM._endCustomUiTraceWithScreenRenderingCP(screenRenderingData);
     }
 
 }

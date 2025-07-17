@@ -28,6 +28,7 @@ class InstabugScreenRenderManager {
   int _frozenFramesTotalDurationMs = 0;
   bool _isTimingsListenerAttached = false;
   bool screenRenderEnabled = false;
+  int? _epochOffset;
 
   final List<InstabugFrameData> _delayedFrames = [];
 
@@ -95,17 +96,23 @@ class InstabugScreenRenderManager {
 
     if (_isUiDelayed) {
       _onDelayedFrameDetected(
-        frameTiming.timestampInMicroseconds(FramePhase.buildStart),
+        _getMicrosecondsSinceEpoch(
+          frameTiming.timestampInMicroseconds(FramePhase.buildStart),
+        ),
         _buildTime,
       );
     } else if (_isRasterDelayed) {
       _onDelayedFrameDetected(
-        frameTiming.timestampInMicroseconds(FramePhase.rasterStart),
+        _getMicrosecondsSinceEpoch(
+          frameTiming.timestampInMicroseconds(FramePhase.rasterStart),
+        ),
         _rasterTime,
       );
     } else if (_isTotalTimeLarge) {
       _onDelayedFrameDetected(
-        frameTiming.timestampInMicroseconds(FramePhase.vsyncStart),
+        _getMicrosecondsSinceEpoch(
+          frameTiming.timestampInMicroseconds(FramePhase.vsyncStart),
+        ),
         _totalTime,
       );
     }
@@ -243,6 +250,9 @@ class InstabugScreenRenderManager {
   /// Initialize the static variables
   Future<void> _initStaticValues() async {
     _timingsCallback = (timings) {
+      // 1. Establish the offset on the first available timing.
+      _epochOffset ??= _getEpochOffset(timings.first);
+
       for (final frameTiming in timings) {
         analyzeFrameTiming(frameTiming);
       }
@@ -251,6 +261,11 @@ class InstabugScreenRenderManager {
     _slowFrameThresholdMs = _targetMsPerFrame(_deviceRefreshRate);
     _screenRenderForAutoUiTrace = InstabugScreenRenderData(frameData: []);
     _screenRenderForCustomUiTrace = InstabugScreenRenderData(frameData: []);
+  }
+
+  int _getEpochOffset(FrameTiming firstPatchedFrameTiming) {
+    return DateTime.now().microsecondsSinceEpoch -
+        firstPatchedFrameTiming.timestampInMicroseconds(FramePhase.vsyncStart);
   }
 
   /// Add a frame observer by calling [WidgetsBinding.instance.addTimingsCallback]
@@ -368,6 +383,9 @@ class InstabugScreenRenderManager {
       tag: tag,
     );
   }
+
+  int _getMicrosecondsSinceEpoch(int timeInMicroseconds) =>
+      timeInMicroseconds + (_epochOffset ?? 0);
 
   /// --------------------------- testing helper methods ---------------------
 
