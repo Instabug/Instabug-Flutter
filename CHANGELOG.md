@@ -1,12 +1,25 @@
 # Changelog
 
-## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...dev)
+## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.2)  (Jul 7, 2025)
 
 ### Added
 
 - Add support for xCode 16. ([#574](https://github.com/Instabug/Instabug-Flutter/pull/574))
 
 - Add support for BugReporting user consents. ([#573](https://github.com/Instabug/Instabug-Flutter/pull/573))
+
+### Changed
+
+- Bump Instabug iOS SDK to v15.1.1 ([#581](https://github.com/Instabug/Instabug-Flutter/pull/581)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/15.1.1).
+
+- Bump Instabug Android SDK to v15.0.2 ([#581](https://github.com/Instabug/Instabug-Flutter/pull/581)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v15.0.2).
+
+## [14.3.1](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...14.3.1) (May 20, 2025)
+
+### Changed
+
+- Bump Instabug Android SDK to v14.3.1 ([#577](https://github.com/Instabug/Instabug-Flutter/pull/577)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v14.3.1).
+
 
 ## [14.3.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.1.0...14.3.0) (April 21, 2025)
 
