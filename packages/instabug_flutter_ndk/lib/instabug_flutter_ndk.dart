@@ -1,8 +1,5 @@
+// This package provides Instabug NDK crash monitoring for Flutter.
+// It automatically includes the Android NDK dependency when added to a project.
+// No public API is exposed - this is a pure dependency package.
 
-import 'instabug_flutter_ndk_platform_interface.dart';
-
-class InstabugFlutterNdk {
-  Future<String?> getPlatformVersion() {
-    return InstabugFlutterNdkPlatform.instance.getPlatformVersion();
-  }
-}
+library instabug_flutter_ndk;
