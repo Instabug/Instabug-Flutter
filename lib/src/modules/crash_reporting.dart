@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/src/generated/crash_reporting.api.g.dart';
@@ -115,5 +116,15 @@ class CrashReporting {
       exception: frames,
     );
     return crashData;
+  }
+
+  /// Enables and disables NDK crash reporting.
+  /// [boolean] isEnabled
+  ///
+  /// Requires the [Instabug NDK package](https://pub.dev/packages/instabug_flutter_ndk) to be added to the project for this to work.
+  static Future<void> setNDKEnabled(bool isEnabled) async {
+    if (Platform.isAndroid) {
+      return _host.setNDKEnabled(isEnabled);
+    }
   }
 }

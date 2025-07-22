@@ -70,4 +70,12 @@ public class CrashReportingApi implements CrashReportingPigeon.CrashReportingHos
         }
     }
 
+    @Override
+    public void setNDKEnabled(@NonNull Boolean isEnabled) {
+        if (isEnabled) {
+            CrashReporting.setNDKCrashesState(Feature.State.ENABLED);
+        } else {
+            CrashReporting.setNDKCrashesState(Feature.State.DISABLED);
+        }
+    }
 }
