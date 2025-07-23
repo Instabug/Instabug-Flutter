@@ -37,3 +37,6 @@ flutter:
 environment:
   sdk: ">=2.14.0 <4.0.0"
   flutter: ">=1.17.0"
+
+executables:
+  instabug: instabug
