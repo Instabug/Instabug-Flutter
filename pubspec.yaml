@@ -8,8 +8,10 @@ repository: https://github.com/Instabug/Instabug-Flutter
 documentation: https://docs.instabug.com/docs/flutter-overview
 
 dependencies:
+  args: ^2.4.0
   flutter:
     sdk: flutter
+  http: ^0.13.6
   meta: ^1.3.0
   stack_trace: ^1.10.0
 
