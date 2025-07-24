@@ -1,11 +1,8 @@
-import 'dart:developer';
-import 'dart:io';
-import 'package:args/args.dart';
-import 'package:http/http.dart' as http;
+part of '../instabug.dart';
 
 /**
  * This script uploads .so files to the specified endpoint used in NDK crash reporting.
- * Usage: dart instabug.dart upload-so-files --arch <arch> --file <path> --api_key <key> --token <token> --name <name>
+ * Usage: dart run instabug_flutter:instabug upload-so-files --arch <arch> --file <path> --api_key <key> --token <token> --name <name>
  */
 
 class UploadSoFilesOptions {
@@ -126,8 +123,8 @@ class UploadSoFilesCommand {
 
       const endPoint = 'https://api.instabug.com/api/web/public/so_files';
 
-      final response = await http.post(
-        Uri.parse(endPoint),
+      final response = await makeHttpPostRequest(
+        url: endPoint,
         body: body,
       );
 

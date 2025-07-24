@@ -1,11 +1,11 @@
 #!/usr/bin/env dart
 
-import 'dart:developer';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:args/args.dart';
 
-import 'commands/upload_so_files.dart';
+part 'commands/upload_so_files.dart';
 
 // Command registry for easy management
 class CommandRegistry {
@@ -25,6 +25,36 @@ class CommandHandler {
   final Function(ArgResults) execute;
 
   CommandHandler({required this.parser, required this.execute});
+}
+
+Future<bool> makeHttpPostRequest({
+  required String url,
+  required Map<String, String> body,
+  Map<String, String>? headers,
+}) async {
+  try {
+  final client = HttpClient();
+
+  final request = await client.postUrl(Uri.parse(url));
+
+  request.headers.contentType = ContentType.json;
+
+  request.write(jsonEncode(body));
+
+    final response = await request.close();
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      final responseBody = await response.transform(utf8.decoder).join();
+      return true;
+    } else {
+      print('Error: ${response.statusCode}');
+      return false;
+    }
+
+  } catch (e) {
+    print('[Instabug-CLI] Error while making HTTP POST request: $e');
+    exit(1);
+  }
 }
 
 void main(List<String> args) async {
