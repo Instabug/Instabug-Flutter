@@ -1,13 +1,14 @@
 #!/usr/bin/env dart
 
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:args/args.dart';
+import 'package:http/http.dart' as http;
 
 part 'commands/upload_so_files.dart';
 
 // Command registry for easy management
+// ignore: avoid_classes_with_only_static_members
 class CommandRegistry {
   static final Map<String, CommandHandler> _commands = {
     'upload-so-files': CommandHandler(
@@ -27,35 +28,30 @@ class CommandHandler {
   CommandHandler({required this.parser, required this.execute});
 }
 
-Future<bool> makeHttpPostRequest({
-  required String url,
-  required Map<String, String> body,
-  Map<String, String>? headers,
-}) async {
-  try {
-  final client = HttpClient();
-
-  final request = await client.postUrl(Uri.parse(url));
-
-  request.headers.contentType = ContentType.json;
-
-  request.write(jsonEncode(body));
-
-    final response = await request.close();
-
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      final responseBody = await response.transform(utf8.decoder).join();
-      return true;
-    } else {
-      print('Error: ${response.statusCode}');
-      return false;
-    }
-
-  } catch (e) {
-    print('[Instabug-CLI] Error while making HTTP POST request: $e');
-    exit(1);
-  }
-}
+// Future<bool> makeHttpPostRequest({
+//   required String url,
+//   required Map<String, String> body,
+//   Map<String, String>? headers,
+// }) async {
+//   try {
+//     final client = HttpClient();
+//     final request = await client.postUrl(Uri.parse(url));
+//     request.headers.contentType = ContentType.json;
+//     request.write(jsonEncode(body));
+//     final response = await request.close();
+//     if (response.statusCode >= 200 && response.statusCode < 300) {
+//       final responseBody = await response.transform(utf8.decoder).join();
+//       return true;
+//     } else {
+//       print('Error Code: ${response.statusCode}');
+//       print('Error Body: ${await response.transform(utf8.decoder).join()}');
+//       return false;
+//     }
+//   } catch (e) {
+//     print('[Instabug-CLI] Error while making HTTP POST request: $e');
+//     exit(1);
+//   }
+// }
 
 void main(List<String> args) async {
   final parser = ArgParser()..addFlag('help', abbr: 'h');

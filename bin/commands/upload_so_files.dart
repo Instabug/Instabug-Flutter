@@ -96,7 +96,8 @@ class UploadSoFilesCommand {
 
       // Validate architecture
       if (!validArchs.contains(options.arch)) {
-        print('[Instabug-CLI] Error: Invalid architecture: ${options.arch}. Valid options: ${validArchs.join(', ')}');
+        print(
+            '[Instabug-CLI] Error: Invalid architecture: ${options.arch}. Valid options: ${validArchs.join(', ')}');
         throw Exception(
             'Invalid architecture: ${options.arch}. Valid options: ${validArchs.join(', ')}');
       }
@@ -106,31 +107,44 @@ class UploadSoFilesCommand {
       print('File: ${options.file}');
       print('App Version: ${options.name}');
 
-      // TODO: Implement the actual upload logic here
-      // This would typically involve:
-      // 1. Reading the zip file
-      // 2. Making an HTTP request to the upload endpoint
-      // 3. Handling the response
-
-      // Make an HTTP request to the upload endpoint
-      final body = {
-        'arch': options.arch,
-        'api_key': options.apiKey,
-        'application_token': options.token,
-        'so_file': options.file,
-        'app_version': options.name,
-      };
-
       const endPoint = 'https://api.instabug.com/api/web/public/so_files';
 
-      final response = await makeHttpPostRequest(
-        url: endPoint,
-        body: body,
-      );
+      // Create multipart request
+      final request = http.MultipartRequest('POST', Uri.parse(endPoint));
 
-      print('Successfully uploaded .so files for version: ${options.name} with arch ${options.arch}');
+      // Add form fields
+      request.fields['arch'] = options.arch;
+      request.fields['api_key'] = options.apiKey;
+      request.fields['application_token'] = options.token;
+      request.fields['app_version'] = options.name;
+
+      // Add the zip file
+      final fileStream = http.ByteStream(file.openRead());
+      final fileLength = await file.length();
+      final multipartFile = http.MultipartFile(
+        'so_file',
+        fileStream,
+        fileLength,
+        filename: file.path.split('/').last,
+      );
+      request.files.add(multipartFile);
+
+      final response = await request.send();
+
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        final responseBody = await response.stream.bytesToString();
+        print('[Instabug-CLI] Error: Failed to upload .so files');
+        print('Status Code: ${response.statusCode}');
+        print('Response: $responseBody');
+        exit(1);
+      }
+
+      print(
+          'Successfully uploaded .so files for version: ${options.name} with arch ${options.arch}');
+      exit(0);
     } catch (e) {
-      print('[Instabug-CLI] Error: Error uploading .so files: $e');
+      print('[Instabug-CLI] Error uploading .so files, $e');
+      print('[Instabug-CLI] Error Stack Trace: ${StackTrace.current}');
       exit(1);
     }
   }
