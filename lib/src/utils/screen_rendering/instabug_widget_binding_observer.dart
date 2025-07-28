@@ -20,12 +20,9 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
   static const tag = "InstabugWidgetsBindingObserver";
 
   static void dispose() {
-    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
-      InstabugScreenRenderManager.I.dispose();
-    }
-    // For Flutter 2.10.5 version
-    // ignore: invalid_null_aware_operator
-    WidgetsBinding.instance?.removeObserver(_instance);
+    // Always call dispose to ensure proper cleanup with tracking flags
+    // The dispose method is safe to call multiple times due to state tracking
+    InstabugScreenRenderManager.I.dispose();
   }
 
   void _handleResumedState() {

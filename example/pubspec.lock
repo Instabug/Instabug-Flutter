@@ -107,7 +107,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "14.3.0"
+    version: "15.0.2"
   instabug_http_client:
     dependency: "direct main"
     description:

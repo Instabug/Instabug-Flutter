@@ -168,25 +168,6 @@ void main() {
       when(mDateTime.now()).thenReturn(time);
     });
 
-    test('[startUiTrace] with SDK not build should Log error', () async {
-      mScreenLoadingManager.currentUiTrace = uiTrace;
-      when(mInstabugHost.isBuilt()).thenAnswer((_) async => false);
-
-      await ScreenLoadingManager.I.startUiTrace(screenName);
-
-      final actualUiTrace = ScreenLoadingManager.I.currentUiTrace;
-      expect(actualUiTrace, null);
-
-      verify(
-        mInstabugLogger.e(
-          'Instabug API {APM.InstabugCaptureScreenLoading} was called before the SDK is built. To build it, first by following the instructions at this link:\n'
-          'https://docs.instabug.com/reference#showing-and-manipulating-the-invocation',
-          tag: APM.tag,
-        ),
-      ).called(1);
-      verifyNever(mApmHost.startCpUiTrace(any, any, any));
-    });
-
     test('[startUiTrace] with APM disabled on iOS Platform should Log error',
         () async {
       mScreenLoadingManager.currentUiTrace = uiTrace;

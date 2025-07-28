@@ -26,9 +26,10 @@ class InstabugScreenRenderManager {
   late InstabugScreenRenderData _screenRenderForCustomUiTrace;
   int _slowFramesTotalDurationMs = 0;
   int _frozenFramesTotalDurationMs = 0;
+  int? _epochOffset;
   bool _isTimingsListenerAttached = false;
   bool screenRenderEnabled = false;
-  int? _epochOffset;
+  bool _isWidgetBindingObserverAdded = false;
 
   final List<InstabugFrameData> _delayedFrames = [];
 
@@ -139,9 +140,8 @@ class InstabugScreenRenderManager {
 
       //Sync the captured screen render data of the Custom UI trace when starting new one
       if (type == UiTraceType.custom) {
-        // Report only if the collector was active and has captured data
-        if (_screenRenderForCustomUiTrace.isActive &&
-            _screenRenderForCustomUiTrace.isNotEmpty) {
+        // Report only if the collector was active
+        if (_screenRenderForCustomUiTrace.isActive) {
           _reportScreenRenderForCustomUiTrace(_screenRenderForCustomUiTrace);
           _screenRenderForCustomUiTrace.clear();
         }
@@ -150,9 +150,8 @@ class InstabugScreenRenderManager {
 
       //Sync the captured screen render data of the Auto UI trace when starting new one
       if (type == UiTraceType.auto) {
-        // Report only if the collector was active and has captured data
-        if (_screenRenderForAutoUiTrace.isActive &&
-            _screenRenderForAutoUiTrace.isNotEmpty) {
+        // Report only if the collector was active
+        if (_screenRenderForAutoUiTrace.isActive) {
           _reportScreenRenderForAutoUiTrace(_screenRenderForAutoUiTrace);
           _screenRenderForAutoUiTrace.clear();
         }
@@ -172,14 +171,12 @@ class InstabugScreenRenderManager {
       }
 
       // Sync Screen Render data for custom ui trace if exists
-      if (_screenRenderForCustomUiTrace.isActive &&
-          _screenRenderForCustomUiTrace.isNotEmpty) {
+      if (_screenRenderForCustomUiTrace.isActive) {
         _reportScreenRenderForCustomUiTrace(_screenRenderForCustomUiTrace);
       }
 
       // Sync Screen Render data for auto ui trace if exists
-      if (_screenRenderForAutoUiTrace.isActive &&
-          _screenRenderForAutoUiTrace.isNotEmpty) {
+      if (_screenRenderForAutoUiTrace.isActive) {
         _reportScreenRenderForAutoUiTrace(_screenRenderForAutoUiTrace);
       }
     } catch (error, stackTrace) {
@@ -211,6 +208,7 @@ class InstabugScreenRenderManager {
   void dispose() {
     _resetCachedFrameData();
     _removeFrameTimings();
+    _removeWidgetBindingObserver();
     _widgetsBinding = null;
     screenRenderEnabled = false;
   }
@@ -244,8 +242,26 @@ class InstabugScreenRenderManager {
       APM.getDeviceRefreshRate();
 
   /// add new [WidgetsBindingObserver] to track app lifecycle.
-  void _addWidgetBindingObserver() =>
-      _widgetsBinding?.addObserver(InstabugWidgetsBindingObserver.instance);
+  void _addWidgetBindingObserver() {
+    if (_widgetsBinding == null) {
+      return;
+    }
+    if (!_isWidgetBindingObserverAdded) {
+      _widgetsBinding!.addObserver(InstabugWidgetsBindingObserver.instance);
+      _isWidgetBindingObserverAdded = true;
+    }
+  }
+
+  /// remove [WidgetsBindingObserver] from [WidgetsBinding]
+  void _removeWidgetBindingObserver() {
+    if (_widgetsBinding == null) {
+      return;
+    }
+    if (_isWidgetBindingObserverAdded) {
+      _widgetsBinding!.removeObserver(InstabugWidgetsBindingObserver.instance);
+      _isWidgetBindingObserverAdded = false;
+    }
+  }
 
   /// Initialize the static variables
   Future<void> _initStaticValues() async {
