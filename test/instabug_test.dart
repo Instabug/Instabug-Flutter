@@ -203,7 +203,7 @@ void main() {
     await Instabug.setPrimaryColor(color);
 
     verify(
-      mHost.setPrimaryColor(color.value),
+      mHost.setPrimaryColor(color.toARGB32()),
     ).called(1);
   });
 

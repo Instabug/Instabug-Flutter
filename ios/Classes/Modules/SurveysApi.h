@@ -1,4 +1,4 @@
-#import "SurveysPigeon.h"
+#import "Generated/SurveysPigeon.h"
 
 extern void InitSurveysApi(id<FlutterBinaryMessenger> messenger);
 

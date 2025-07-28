@@ -1,4 +1,4 @@
-#import "CrashReportingPigeon.h"
+#import "Generated/CrashReportingPigeon.h"
 
 extern void InitCrashReportingApi(id<FlutterBinaryMessenger> messenger);
 

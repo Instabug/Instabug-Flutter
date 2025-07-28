@@ -1,4 +1,4 @@
-#import "SessionReplayPigeon.h"
+#import "Generated/SessionReplayPigeon.h"
 
 extern void InitSessionReplayApi(id<FlutterBinaryMessenger> messenger);
 

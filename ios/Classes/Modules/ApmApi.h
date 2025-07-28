@@ -1,4 +1,4 @@
-#import "ApmPigeon.h"
+#import "Generated/ApmPigeon.h"
 
 extern void InitApmApi(id<FlutterBinaryMessenger> messenger);
 

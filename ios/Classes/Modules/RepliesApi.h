@@ -1,4 +1,4 @@
-#import "RepliesPigeon.h"
+#import "Generated/RepliesPigeon.h"
 
 extern void InitRepliesApi(id<FlutterBinaryMessenger> messenger);
 

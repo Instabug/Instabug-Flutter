@@ -1,4 +1,4 @@
-#import "BugReportingPigeon.h"
+#import "Generated/BugReportingPigeon.h"
 
 extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger);
 
