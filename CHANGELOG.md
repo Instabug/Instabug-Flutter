@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v15.0.2...dev)
+
+### Added
+
+- Add new APIs to support NDK Crashes.
+
 ## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.2)  (Jul 7, 2025)
 
 ### Added
