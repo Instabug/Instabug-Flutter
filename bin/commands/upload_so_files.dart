@@ -84,28 +84,29 @@ class UploadSoFilesCommand {
       // Validate file exists
       final file = File(options.file);
       if (!await file.exists()) {
-        print('[Instabug-CLI] Error: File not found: ${options.file}');
+        stderr.writeln('[Instabug-CLI] Error: File not found: ${options.file}');
         throw Exception('File not found: ${options.file}');
       }
 
       // validate file is a zip file
       if (!file.path.endsWith('.zip')) {
-        print('[Instabug-CLI] Error: File is not a zip file: ${options.file}');
+        stderr.writeln(
+            '[Instabug-CLI] Error: File is not a zip file: ${options.file}');
         throw Exception('File is not a zip file: ${options.file}');
       }
 
       // Validate architecture
       if (!validArchs.contains(options.arch)) {
-        print(
+        stderr.writeln(
             '[Instabug-CLI] Error: Invalid architecture: ${options.arch}. Valid options: ${validArchs.join(', ')}');
         throw Exception(
             'Invalid architecture: ${options.arch}. Valid options: ${validArchs.join(', ')}');
       }
 
-      print('Uploading .so files...');
-      print('Architecture: ${options.arch}');
-      print('File: ${options.file}');
-      print('App Version: ${options.name}');
+      stdout.writeln('Uploading .so files...');
+      stdout.writeln('Architecture: ${options.arch}');
+      stdout.writeln('File: ${options.file}');
+      stdout.writeln('App Version: ${options.name}');
 
       const endPoint = 'https://api.instabug.com/api/web/public/so_files';
 
@@ -133,18 +134,18 @@ class UploadSoFilesCommand {
 
       if (response.statusCode < 200 || response.statusCode >= 300) {
         final responseBody = await response.stream.bytesToString();
-        print('[Instabug-CLI] Error: Failed to upload .so files');
-        print('Status Code: ${response.statusCode}');
-        print('Response: $responseBody');
+        stderr.writeln('[Instabug-CLI] Error: Failed to upload .so files');
+        stderr.writeln('Status Code: ${response.statusCode}');
+        stderr.writeln('Response: $responseBody');
         exit(1);
       }
 
-      print(
+      stdout.writeln(
           'Successfully uploaded .so files for version: ${options.name} with arch ${options.arch}');
       exit(0);
     } catch (e) {
-      print('[Instabug-CLI] Error uploading .so files, $e');
-      print('[Instabug-CLI] Error Stack Trace: ${StackTrace.current}');
+      stderr.writeln('[Instabug-CLI] Error uploading .so files, $e');
+      stderr.writeln('[Instabug-CLI] Error Stack Trace: ${StackTrace.current}');
       exit(1);
     }
   }

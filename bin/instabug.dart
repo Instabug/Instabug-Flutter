@@ -28,31 +28,6 @@ class CommandHandler {
   CommandHandler({required this.parser, required this.execute});
 }
 
-// Future<bool> makeHttpPostRequest({
-//   required String url,
-//   required Map<String, String> body,
-//   Map<String, String>? headers,
-// }) async {
-//   try {
-//     final client = HttpClient();
-//     final request = await client.postUrl(Uri.parse(url));
-//     request.headers.contentType = ContentType.json;
-//     request.write(jsonEncode(body));
-//     final response = await request.close();
-//     if (response.statusCode >= 200 && response.statusCode < 300) {
-//       final responseBody = await response.transform(utf8.decoder).join();
-//       return true;
-//     } else {
-//       print('Error Code: ${response.statusCode}');
-//       print('Error Body: ${await response.transform(utf8.decoder).join()}');
-//       return false;
-//     }
-//   } catch (e) {
-//     print('[Instabug-CLI] Error while making HTTP POST request: $e');
-//     exit(1);
-//   }
-// }
-
 void main(List<String> args) async {
   final parser = ArgParser()..addFlag('help', abbr: 'h');
 
@@ -61,7 +36,7 @@ void main(List<String> args) async {
     parser.addCommand(entry.key, entry.value.parser);
   }
 
-  print('--------------------------------');
+  stdout.writeln('--------------------------------');
 
   try {
     final result = parser.parse(args);
@@ -72,8 +47,8 @@ void main(List<String> args) async {
       if (command['help'] == true) {
         final commandHandler = CommandRegistry.commands[command.name];
         if (commandHandler != null) {
-          print('Usage: instabug ${command.name} [options]');
-          print(commandHandler.parser.usage);
+          stdout.writeln('Usage: instabug ${command.name} [options]');
+          stdout.writeln(commandHandler.parser.usage);
         }
         return;
       }
@@ -83,21 +58,21 @@ void main(List<String> args) async {
       if (commandHandler != null) {
         commandHandler.execute(command);
       } else {
-        print('Unknown command: ${command.name}');
-        print('Available commands: ${CommandRegistry.commandNames.join(', ')}');
+        stderr.writeln('Unknown command: ${command.name}');
+        stdout.writeln('Available commands: ${CommandRegistry.commandNames.join(', ')}');
         exit(1);
       }
     } else {
-      print('No applicable command found');
-      print('Usage: instabug [options] <command>');
-      print('Available commands: ${CommandRegistry.commandNames.join(', ')}');
-      print('\nFor help on a specific command:');
-      print('  instabug <command> --help\n');
-      print(parser.usage);
+      stderr.writeln('No applicable command found');
+      stdout.writeln('Usage: instabug [options] <command>');
+      stdout.writeln('Available commands: ${CommandRegistry.commandNames.join(', ')}');
+      stdout.writeln('For help on a specific command:');
+      stdout.writeln('  instabug <command> --help');
+      stdout.writeln(parser.usage);
     }
   } catch (e) {
-    print('[Instabug-CLI] Error: $e');
-    print(parser.usage);
+    stderr.writeln('[Instabug-CLI] Error: $e');
+    stdout.writeln(parser.usage);
     exit(1);
   }
 }
