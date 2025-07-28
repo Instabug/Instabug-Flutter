@@ -59,13 +59,15 @@ void main(List<String> args) async {
         commandHandler.execute(command);
       } else {
         stderr.writeln('Unknown command: ${command.name}');
-        stdout.writeln('Available commands: ${CommandRegistry.commandNames.join(', ')}');
+        stdout.writeln(
+            'Available commands: ${CommandRegistry.commandNames.join(', ')}');
         exit(1);
       }
     } else {
       stderr.writeln('No applicable command found');
       stdout.writeln('Usage: instabug [options] <command>');
-      stdout.writeln('Available commands: ${CommandRegistry.commandNames.join(', ')}');
+      stdout.writeln(
+          'Available commands: ${CommandRegistry.commandNames.join(', ')}');
       stdout.writeln('For help on a specific command:');
       stdout.writeln('  instabug <command> --help');
       stdout.writeln(parser.usage);
