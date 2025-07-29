@@ -10,8 +10,8 @@ Pod::Spec.new do |s|
   s.license           = { :file => '../LICENSE' }
 
   s.source              = { :path => '.' }
-  s.source_files        = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.source_files        = 'Classes/Generated/**/*', 'Classes/Modules/ApmApi.*', 'Classes/Modules/BugReportingApi.*', 'Classes/Modules/CrashReportingApi.*', 'Classes/Modules/FeatureRequestsApi.*', 'Classes/Modules/InstabugApi.*', 'Classes/Modules/InstabugLogApi.*', 'Classes/Modules/RepliesApi.*', 'Classes/Modules/SessionReplayApi.*', 'Classes/Modules/SurveysApi.*', 'Classes/Util/**/*', 'Classes/InstabugFlutterPlugin.*'
+  s.public_header_files = 'Classes/Generated/**/*.h', 'Classes/InstabugFlutterPlugin.h'
 
   s.ios.deployment_target = '12.0'
   s.pod_target_xcconfig   = { 
