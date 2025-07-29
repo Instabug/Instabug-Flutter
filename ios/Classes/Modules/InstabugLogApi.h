@@ -1,4 +1,4 @@
-#import "Generated/InstabugLogPigeon.h"
+#import "InstabugLogPigeon.h"
 
 extern void InitInstabugLogApi(id<FlutterBinaryMessenger> messenger);
 

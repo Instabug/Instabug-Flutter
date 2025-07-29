@@ -1,4 +1,4 @@
-#import "Generated/FeatureRequestsPigeon.h"
+#import "FeatureRequestsPigeon.h"
 
 extern void InitFeatureRequestsApi(id<FlutterBinaryMessenger> messenger);
 
