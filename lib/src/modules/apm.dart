@@ -392,10 +392,10 @@ class APM {
   ///
   /// Returns:
   ///   A Future<void> is being returned.
-  static Future<void> setScreenRenderEnabled(bool isEnabled) {
-    return _host.setScreenRenderEnabled(isEnabled).then((_) {
+  static Future<void> setScreenRenderEnabled(bool isEnabled) async {
+    return _host.setScreenRenderEnabled(isEnabled).then((_) async {
       if (isEnabled) {
-        InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
+        await InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
       } else {
         InstabugScreenRenderManager.I.dispose();
       }

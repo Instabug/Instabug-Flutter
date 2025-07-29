@@ -5,7 +5,7 @@ import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
 import 'package:mockito/mockito.dart';
 
-import 'instabug_screen_render_manager_test_manual_mocks.dart';
+import 'instabug_screen_render_manager_test.mocks.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -380,11 +380,11 @@ void main() {
     });
 
     test(
-        'should detect frozen frame on build thread when durations are greater than or equal 700 ms',
+        'should detect frozen frame when durations are greater than or equal 700 ms',
         () {
-      const buildDuration = 700;
-      when(mockFrameTiming.buildDuration)
-          .thenReturn(const Duration(milliseconds: buildDuration));
+      const totalTime = 700;
+      when(mockFrameTiming.totalSpan)
+          .thenReturn(const Duration(milliseconds: totalTime));
       manager.startScreenRenderCollectorForTraceId(1); // start new collector
       manager.analyzeFrameTiming(mockFrameTiming); // mock frame timing
       manager.stopScreenRenderCollector(); // should save data
@@ -392,28 +392,7 @@ void main() {
       expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
       expect(
         manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
-        buildDuration * 1000,
-      ); // * 1000 to convert from milliseconds to microseconds
-      expect(
-        manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
-        0,
-      );
-    });
-
-    test(
-        'should detect frozen frame on raster thread when durations are greater than or equal 700 ms',
-        () {
-      const rasterBuild = 700;
-      when(mockFrameTiming.buildDuration)
-          .thenReturn(const Duration(milliseconds: rasterBuild));
-      manager.startScreenRenderCollectorForTraceId(1); // start new collector
-      manager.analyzeFrameTiming(mockFrameTiming); // mock frame timing
-      manager.stopScreenRenderCollector(); // should save data
-
-      expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
-      expect(
-        manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
-        rasterBuild * 1000,
+        totalTime * 1000,
       ); // * 1000 to convert from milliseconds to microseconds
       expect(
         manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
