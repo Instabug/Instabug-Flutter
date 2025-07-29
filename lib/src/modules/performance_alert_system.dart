@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:battery_plus/battery_plus.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -15,18 +16,29 @@ class PerformanceAlertSystem {
   static void monitorMemory(
       {double warningThreshold = 80, double criticalThreshold = 90}) {
     _memoryTimer?.cancel();
+    
+    // Skip memory monitoring on iOS as SysInfo methods are not supported
+    if (Platform.isIOS) {
+      return;
+    }
+    
     _memoryTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
-      final totalMemory = SysInfo.getTotalPhysicalMemory();
-      final freeMemory = SysInfo.getFreePhysicalMemory();
-      final usedMemory = totalMemory - freeMemory;
-      final usagePercent = (usedMemory / totalMemory) * 100;
+      try {
+        final totalMemory = SysInfo.getTotalPhysicalMemory();
+        final freeMemory = SysInfo.getFreePhysicalMemory();
+        final usedMemory = totalMemory - freeMemory;
+        final usagePercent = (usedMemory / totalMemory) * 100;
 
-      if (usagePercent > criticalThreshold) {
-        _onAlert?.call('critical',
-            '⛔️ Memory usage is very high (${usagePercent.toStringAsFixed(1)}%). This may cause app freezing or closing.');
-      } else if (usagePercent > warningThreshold) {
-        _onAlert?.call('warning',
-            '⚠️ Memory usage is elevated (${usagePercent.toStringAsFixed(1)}%). The app may become slower.');
+        if (usagePercent > criticalThreshold) {
+          _onAlert?.call('critical',
+              '⛔️ Memory usage is very high (${usagePercent.toStringAsFixed(1)}%). This may cause app freezing or closing.');
+        } else if (usagePercent > warningThreshold) {
+          _onAlert?.call('warning',
+              '⚠️ Memory usage is elevated (${usagePercent.toStringAsFixed(1)}%). The app may become slower.');
+        }
+      } catch (e) {
+        // Handle any platform-specific errors gracefully
+        timer.cancel();
       }
     });
   }
