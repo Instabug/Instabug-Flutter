@@ -54,6 +54,63 @@ class InstabugFlutterExampleMethodChannel {
       log("Failed to send out of memory: '${e.message}'.", name: _tag);
     }
   }
+
+  static Future<void> causeNdkCrash() async {
+    try {
+      await _channel.invokeMethod(Constants.causeNdkCrashMethodName);
+    } on PlatformException catch (e) {
+      log("Failed to cause NDK crash: '${e.message}'.", name: _tag);
+    }
+  }
+
+  // NDK Crash Methods
+  static Future<void> causeNdkSigsegv() async {
+    try {
+      await _channel.invokeMethod(Constants.causeNdkSigsegvMethodName);
+    } on PlatformException catch (e) {
+      log("Failed to trigger NDK SIGSEGV: '${e.message}'.", name: _tag);
+    }
+  }
+
+  static Future<void> causeNdkSigabrt() async {
+    try {
+      await _channel.invokeMethod(Constants.causeNdkSigabrtMethodName);
+    } on PlatformException catch (e) {
+      log("Failed to trigger NDK SIGABRT: '${e.message}'.", name: _tag);
+    }
+  }
+
+  static Future<void> causeNdkSigfpe() async {
+    try {
+      await _channel.invokeMethod(Constants.causeNdkSigfpeMethodName);
+    } on PlatformException catch (e) {
+      log("Failed to trigger NDK SIGFPE: '${e.message}'.", name: _tag);
+    }
+  }
+
+  static Future<void> causeNdkSigill() async {
+    try {
+      await _channel.invokeMethod(Constants.causeNdkSigillMethodName);
+    } on PlatformException catch (e) {
+      log("Failed to trigger NDK SIGILL: '${e.message}'.", name: _tag);
+    }
+  }
+
+  static Future<void> causeNdkSigbus() async {
+    try {
+      await _channel.invokeMethod(Constants.causeNdkSigbusMethodName);
+    } on PlatformException catch (e) {
+      log("Failed to trigger NDK SIGBUS: '${e.message}'.", name: _tag);
+    }
+  }
+
+  static Future<void> causeNdkSigtrap() async {
+    try {
+      await _channel.invokeMethod(Constants.causeNdkSigtrapMethodName);
+    } on PlatformException catch (e) {
+      log("Failed to trigger NDK SIGTRAP: '${e.message}'.", name: _tag);
+    }
+  }
 }
 
 class Constants {
@@ -65,4 +122,13 @@ class Constants {
   static const sendNativeFatalHangMethodName = "sendNativeFatalHang";
   static const sendAnrMethodName = "sendAnr";
   static const sendOomMethodName = "sendOom";
+
+  // NDK Crash Method Names
+  static const causeNdkCrashMethodName = "causeNdkCrash";
+  static const causeNdkSigsegvMethodName = "causeSIGSEGVCrash";
+  static const causeNdkSigabrtMethodName = "causeSIGABRTCrash";
+  static const causeNdkSigfpeMethodName = "causeSIGFPECrash";
+  static const causeNdkSigillMethodName = "causeSIGILLCrash";
+  static const causeNdkSigbusMethodName = "causeSIGBUSCrash";
+  static const causeNdkSigtrapMethodName = "causeSIGTRAPCrash";
 }
