@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 
 part 'commands/upload_so_files.dart';
 
-// Command registry for easy management
 // ignore: avoid_classes_with_only_static_members
+/// Command registry for easy management
 class CommandRegistry {
   static final Map<String, CommandHandler> _commands = {
     'upload-so-files': CommandHandler(
@@ -60,14 +60,16 @@ void main(List<String> args) async {
       } else {
         stderr.writeln('Unknown command: ${command.name}');
         stdout.writeln(
-            'Available commands: ${CommandRegistry.commandNames.join(', ')}');
+          'Available commands: ${CommandRegistry.commandNames.join(', ')}',
+        );
         exit(1);
       }
     } else {
       stderr.writeln('No applicable command found');
       stdout.writeln('Usage: instabug [options] <command>');
       stdout.writeln(
-          'Available commands: ${CommandRegistry.commandNames.join(', ')}');
+        'Available commands: ${CommandRegistry.commandNames.join(', ')}',
+      );
       stdout.writeln('For help on a specific command:');
       stdout.writeln('  instabug <command> --help');
       stdout.writeln(parser.usage);

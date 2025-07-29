@@ -1,10 +1,5 @@
 part of '../instabug.dart';
 
-/**
- * This script uploads .so files to the specified endpoint used in NDK crash reporting.
- * Usage: dart run instabug_flutter:instabug upload-so-files --arch <arch> --file <path> --api_key <key> --token <token> --name <name>
- */
-
 class UploadSoFilesOptions {
   final String arch;
   final String file;
@@ -22,6 +17,8 @@ class UploadSoFilesOptions {
 }
 
 // ignore: avoid_classes_with_only_static_members
+/// This script uploads .so files to the specified endpoint used in NDK crash reporting.
+/// Usage: dart run instabug_flutter:instabug upload-so-files --arch \<arch\> --file \<path\> --api_key \<key\> --token \<token\> --name \<name\>
 class UploadSoFilesCommand {
   static const List<String> validArchs = [
     'x86',
@@ -91,16 +88,19 @@ class UploadSoFilesCommand {
       // validate file is a zip file
       if (!file.path.endsWith('.zip')) {
         stderr.writeln(
-            '[Instabug-CLI] Error: File is not a zip file: ${options.file}');
+          '[Instabug-CLI] Error: File is not a zip file: ${options.file}',
+        );
         throw Exception('File is not a zip file: ${options.file}');
       }
 
       // Validate architecture
       if (!validArchs.contains(options.arch)) {
         stderr.writeln(
-            '[Instabug-CLI] Error: Invalid architecture: ${options.arch}. Valid options: ${validArchs.join(', ')}');
+          '[Instabug-CLI] Error: Invalid architecture: ${options.arch}. Valid options: ${validArchs.join(', ')}',
+        );
         throw Exception(
-            'Invalid architecture: ${options.arch}. Valid options: ${validArchs.join(', ')}');
+          'Invalid architecture: ${options.arch}. Valid options: ${validArchs.join(', ')}',
+        );
       }
 
       stdout.writeln('Uploading .so files...');
@@ -141,7 +141,8 @@ class UploadSoFilesCommand {
       }
 
       stdout.writeln(
-          'Successfully uploaded .so files for version: ${options.name} with arch ${options.arch}');
+        'Successfully uploaded .so files for version: ${options.name} with arch ${options.arch}',
+      );
       exit(0);
     } catch (e) {
       stderr.writeln('[Instabug-CLI] Error uploading .so files, $e');
