@@ -10,6 +10,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _alertShown = false;
   final buttonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(Colors.lightBlue),
     foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -311,6 +312,26 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: _testSmartErrorAnalyzer,
           text: 'Test Smart Error Analyzer',
         ),
+        InstabugButton(
+          onPressed: () {
+            PerformanceAlertSystem.startAllMonitoring(
+              onAlert: (type, message) {
+                if (!_alertShown) {
+                  _alertShown = true;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(message),
+                      backgroundColor:
+                          type == 'critical' ? Colors.red : Colors.orange,
+                      duration: const Duration(seconds: 4),
+                    ),
+                  );
+                }
+              },
+            );
+          },
+          text: 'Start Performance Monitoring',
+        ),
         const SectionTitle('Sessions Replay'),
         InstabugButton(
           onPressed: getCurrentSessionReplaylink,
@@ -387,10 +408,10 @@ class _MyHomePageState extends State<MyHomePage> {
       for (final error in errors) {
         // Analyze the error
         final analysis = await SmartErrorAnalyzer.analyzeError(error);
-        
+
         // Show analysis results
         _showAnalysisResults(error.toString(), analysis);
-        
+
         // Wait a bit before next error
         await Future.delayed(const Duration(seconds: 2));
       }
@@ -417,15 +438,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 const SizedBox(height: 16),
                 _buildAnalysisRow('Category', analysis.category.name),
                 _buildAnalysisRow('Severity', analysis.severity.name),
-                _buildAnalysisRow('Fix Time', '${analysis.estimatedFixTime} minutes'),
+                _buildAnalysisRow(
+                    'Fix Time', '${analysis.estimatedFixTime} minutes'),
                 const SizedBox(height: 8),
                 const Text(
                   'Suggested Solutions:',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
-                ...analysis.suggestedSolutions.map((solution) => 
-                  Padding(
+                ...analysis.suggestedSolutions.map(
+                  (solution) => Padding(
                     padding: const EdgeInsets.only(left: 8, top: 2),
                     child: Text('• $solution'),
                   ),
@@ -485,8 +507,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void _showSuccess(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-      content: Text(message),
-      backgroundColor: Colors.green,
+        content: Text(message),
+        backgroundColor: Colors.green,
       ),
     );
   }

@@ -19,6 +19,7 @@ import 'src/widget/instabug_text_field.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 
 import 'src/widget/section_title.dart';
+import 'package:instabug_flutter/src/modules/performance_alert_system.dart';
 
 part 'src/screens/crashes_page.dart';
 

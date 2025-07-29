@@ -130,7 +130,50 @@ class SmartErrorAnalyzer {
 
 ```dart
 // في lib/src/modules/performance_alert_system.dart
+import 'package:system_info2/system_info2.dart';
+import 'dart:async';
+
 class PerformanceAlertSystem {
+  static Timer? _memoryTimer;
+  static Timer? _networkTimer;
+  static Timer? _batteryTimer;
+
+  static void monitorMemory({double warningThreshold = 80, double criticalThreshold = 90}) {
+    _memoryTimer?.cancel();
+    _memoryTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      final totalMemory = SysInfo.getTotalPhysicalMemory();
+      final freeMemory = SysInfo.getFreePhysicalMemory();
+      final usedMemory = totalMemory - freeMemory;
+      final usagePercent = (usedMemory / totalMemory) * 100;
+
+      if (usagePercent > criticalThreshold) {
+        print('⛔️ Critical Memory usage! (${usagePercent.toStringAsFixed(1)}%)');
+      } else if (usagePercent > warningThreshold) {
+        print('⚠️ High Memory usage detected! (${usagePercent.toStringAsFixed(1)}%)');
+      }
+    });
+  }
+
+  static void monitorNetwork({Duration checkInterval = const Duration(seconds: 10)}) {
+    _networkTimer?.cancel();
+    _networkTimer = Timer.periodic(checkInterval, (timer) async {
+      // import 'package:connectivity_plus/connectivity_plus.dart';
+      // final connectivityResult = await Connectivity().checkConnectivity();
+      // if (connectivityResult == ConnectivityResult.none) {
+      //   print('⛔️ No network connection!');
+      // } else {
+        // هنا ممكن تضيف اختبار سرعة أو ping لو عاوز
+        print('✅ Network is available: (placeholder)');
+      // }
+    });
+  }
+
+  static void monitorBattery({double warningThreshold = 20, double criticalThreshold = 10}) {
+    _batteryTimer?.cancel();
+    // import 'package:battery_plus/battery_plus.dart';
+    // final battery = Battery();
+    _batteryTimer = Timer.periodic(const Duration(seconds: 30), (timer) async {
+      // final level = await battery.batteryLevel;
   static Future<void> initializeAlerts() async {
     // مراقبة CPU usage
     _monitorCPU();
