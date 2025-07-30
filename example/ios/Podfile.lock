@@ -1,14 +1,14 @@
 PODS:
   - Flutter (1.0.0)
-  - Instabug (15.1.17)
+  - Instabug (15.1.19)
   - instabug_flutter (14.3.0):
     - Flutter
-    - Instabug (= 15.1.17)
+    - Instabug (= 15.1.19)
   - OCMock (3.6)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - Instabug (from `https://ios-releases.instabug.com/custom/faeture-screen_rendering-release/15.1.17/Instabug.podspec`)
+  - Instabug (from `https://ios-releases.instabug.com/custom/faeture-screen_rendering-release/15.1.19/Instabug.podspec`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
 
@@ -20,16 +20,16 @@ EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   Instabug:
-    :podspec: https://ios-releases.instabug.com/custom/faeture-screen_rendering-release/15.1.17/Instabug.podspec
+    :podspec: https://ios-releases.instabug.com/custom/faeture-screen_rendering-release/15.1.19/Instabug.podspec
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  Instabug: 316559a02c9b752a3854a6453c2fa414d36252f3
-  instabug_flutter: 7ae7f3d1c47b9a699e76a7358b6a3e818a253ac3
+  Instabug: 74377abfdaa9f9f3dff7793353e150e91d2186f7
+  instabug_flutter: aa9b2365fe41d8a49f9258ab350864bfb5bdce9e
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
 
-PODFILE CHECKSUM: 8f3e14dab36cc02b0a8767c3086e109fadaa55f3
+PODFILE CHECKSUM: d61a5c8efcff86500b76349ccad5201d7756fdea
 
 COCOAPODS: 1.15.2

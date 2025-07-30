@@ -5,7 +5,7 @@ import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
 import 'package:mockito/mockito.dart';
 
-import 'instabug_screen_render_manager_test_manual_mocks.dart';
+import 'instabug_screen_render_manager_test.mocks.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
