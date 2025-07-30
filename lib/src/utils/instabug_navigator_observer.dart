@@ -66,18 +66,18 @@ class InstabugNavigatorObserver extends NavigatorObserver {
   }
 
   FutureOr<void> _startScreenRenderCollector(int? uiTraceId) async {
-    final isScreenRender = await FlagsConfig.screenRendering.isEnabled();
-    _checkForScreenRenderInitialization(isScreenRender);
-    if (uiTraceId != null && isScreenRender) {
+    final isScreenRenderEnabled = await FlagsConfig.screenRendering.isEnabled();
+    await _checkForScreenRenderInitialization(isScreenRenderEnabled);
+    if (uiTraceId != null && isScreenRenderEnabled) {
       InstabugScreenRenderManager.I
           .startScreenRenderCollectorForTraceId(uiTraceId);
     }
   }
 
-  void _checkForScreenRenderInitialization(bool isScreenRender) {
+  Future<void> _checkForScreenRenderInitialization(bool isScreenRender) async {
     if (isScreenRender) {
       if (!InstabugScreenRenderManager.I.screenRenderEnabled) {
-        InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
+        await InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
       }
     } else {
       if (InstabugScreenRenderManager.I.screenRenderEnabled) {

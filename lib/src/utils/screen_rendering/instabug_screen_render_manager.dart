@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:ui';
+import 'dart:ui' show TimingsCallback, FrameTiming, FramePhase;
 
 import 'package:flutter/widgets.dart';
 import 'package:instabug_flutter/src/models/instabug_frame_data.dart';
@@ -18,14 +18,14 @@ enum UiTraceType {
 @internal
 class InstabugScreenRenderManager {
   WidgetsBinding? _widgetsBinding;
-  late int _buildTime;
-  late int _rasterTime;
-  late int _totalTime;
+  late int _buildTimeMs;
+  late int _rasterTimeMs;
+  late int _totalTimeMs;
   late TimingsCallback _timingsCallback;
   late InstabugScreenRenderData _screenRenderForAutoUiTrace;
   late InstabugScreenRenderData _screenRenderForCustomUiTrace;
-  int _slowFramesTotalDurationMs = 0;
-  int _frozenFramesTotalDurationMs = 0;
+  int _slowFramesTotalDurationMicro = 0;
+  int _frozenFramesTotalDurationMicro = 0;
   int? _epochOffset;
   bool _isTimingsListenerAttached = false;
   bool screenRenderEnabled = false;
@@ -42,7 +42,7 @@ class InstabugScreenRenderManager {
   /// Default frozen frame threshold in milliseconds (700ms)
   final _frozenFrameThresholdMs = 700;
 
-  final _microsecondsPerMillisecond = 1000;
+  // final _microsecondsPerMillisecond = 1000;
 
   InstabugScreenRenderManager._();
 
@@ -75,46 +75,45 @@ class InstabugScreenRenderManager {
     }
   }
 
-  /// analyze frame data in order to detect slow/frozen frame.
+  /// Analyze frame data to detect slow or frozen frames efficiently.
   @visibleForTesting
   void analyzeFrameTiming(FrameTiming frameTiming) {
-    _buildTime = frameTiming.buildDuration.inMilliseconds;
-    _rasterTime = frameTiming.rasterDuration.inMilliseconds;
-    _totalTime = frameTiming.totalSpan.inMilliseconds;
+    _buildTimeMs = frameTiming.buildDuration.inMilliseconds;
+    _rasterTimeMs = frameTiming.rasterDuration.inMilliseconds;
+    _totalTimeMs = frameTiming.totalSpan.inMilliseconds;
 
-    if (_isUiFrozen) {
-      _frozenFramesTotalDurationMs += _buildTime;
-    } else if (_isRasterFrozen) {
-      _frozenFramesTotalDurationMs += _rasterTime;
-    } else if (_isTotalTimeLarge) {
-      _frozenFramesTotalDurationMs += _totalTime;
-    }
-    if (_isUiSlow) {
-      _slowFramesTotalDurationMs += _buildTime;
-    } else if (_isRasterSlow) {
-      _slowFramesTotalDurationMs += _rasterTime;
-    }
-
-    if (_isUiDelayed) {
-      _onDelayedFrameDetected(
-        _getMicrosecondsSinceEpoch(
-          frameTiming.timestampInMicroseconds(FramePhase.buildStart),
-        ),
-        _buildTime,
-      );
-    } else if (_isRasterDelayed) {
-      _onDelayedFrameDetected(
-        _getMicrosecondsSinceEpoch(
-          frameTiming.timestampInMicroseconds(FramePhase.rasterStart),
-        ),
-        _rasterTime,
-      );
-    } else if (_isTotalTimeLarge) {
+    if (_isTotalTimeLarge) {
+      final micros = frameTiming.totalSpan.inMicroseconds;
+      _frozenFramesTotalDurationMicro += micros;
       _onDelayedFrameDetected(
         _getMicrosecondsSinceEpoch(
           frameTiming.timestampInMicroseconds(FramePhase.vsyncStart),
         ),
-        _totalTime,
+        micros,
+      );
+      return;
+    }
+
+    if (_isUiSlow) {
+      final micros = frameTiming.buildDuration.inMicroseconds;
+      _slowFramesTotalDurationMicro += micros;
+      _onDelayedFrameDetected(
+        _getMicrosecondsSinceEpoch(
+          frameTiming.timestampInMicroseconds(FramePhase.buildStart),
+        ),
+        micros,
+      );
+      return;
+    }
+
+    if (_isRasterSlow) {
+      final micros = frameTiming.rasterDuration.inMicroseconds;
+      _slowFramesTotalDurationMicro += micros;
+      _onDelayedFrameDetected(
+        _getMicrosecondsSinceEpoch(
+          frameTiming.timestampInMicroseconds(FramePhase.rasterStart),
+        ),
+        micros,
       );
     }
   }
@@ -215,23 +214,15 @@ class InstabugScreenRenderManager {
 
   /// --------------------------- private methods ---------------------
 
-  bool get _isUiDelayed => _isUiSlow || _isUiFrozen;
-
-  bool get _isRasterDelayed => _isRasterSlow || _isRasterFrozen;
-
   bool get _isUiSlow =>
-      _buildTime > _slowFrameThresholdMs &&
-      _buildTime < _frozenFrameThresholdMs;
+      _buildTimeMs > _slowFrameThresholdMs &&
+      _buildTimeMs < _frozenFrameThresholdMs;
 
   bool get _isRasterSlow =>
-      _rasterTime > _slowFrameThresholdMs &&
-      _rasterTime < _frozenFrameThresholdMs;
+      _rasterTimeMs > _slowFrameThresholdMs &&
+      _rasterTimeMs < _frozenFrameThresholdMs;
 
-  bool get _isTotalTimeLarge => _totalTime >= _frozenFrameThresholdMs;
-
-  bool get _isUiFrozen => _buildTime >= _frozenFrameThresholdMs;
-
-  bool get _isRasterFrozen => _rasterTime >= _frozenFrameThresholdMs;
+  bool get _isTotalTimeLarge => _totalTimeMs >= _frozenFrameThresholdMs;
 
   /// Calculate the target time for the frame to be drawn in milliseconds based on the device refresh rate.
   double _targetMsPerFrame(double displayRefreshRate) =>
@@ -302,18 +293,17 @@ class InstabugScreenRenderManager {
 
   /// Reset the memory cashed data
   void _resetCachedFrameData() {
-    _slowFramesTotalDurationMs = 0;
-    _frozenFramesTotalDurationMs = 0;
+    _slowFramesTotalDurationMicro = 0;
+    _frozenFramesTotalDurationMicro = 0;
     _delayedFrames.clear();
   }
 
   /// Save Slow/Frozen Frames data
-  void _onDelayedFrameDetected(int startTime, int durationInMilliseconds) {
+  void _onDelayedFrameDetected(int startTime, int durationInMicroseconds) {
     _delayedFrames.add(
       InstabugFrameData(
         startTime,
-        durationInMilliseconds *
-            _microsecondsPerMillisecond, // Convert duration from milliseconds to microSeconds
+        durationInMicroseconds,
       ),
     );
   }
@@ -342,8 +332,8 @@ class InstabugScreenRenderManager {
     try {
       // Save the end time for the running ui trace, it's only needed in Android SDK.
       screenRenderData.saveEndTime();
-
       await APM.endScreenRenderForAutoUiTrace(screenRenderData);
+
       return true;
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
@@ -370,9 +360,9 @@ class InstabugScreenRenderManager {
   /// or synced with the native side.
   void _updateCustomUiData() {
     _screenRenderForCustomUiTrace.slowFramesTotalDurationMicro +=
-        _slowFramesTotalDurationMs * _microsecondsPerMillisecond;
+        _slowFramesTotalDurationMicro;
     _screenRenderForCustomUiTrace.frozenFramesTotalDurationMicro +=
-        _frozenFramesTotalDurationMs * _microsecondsPerMillisecond;
+        _frozenFramesTotalDurationMicro;
     _screenRenderForCustomUiTrace.frameData.addAll(_delayedFrames);
   }
 
@@ -385,9 +375,9 @@ class InstabugScreenRenderManager {
   /// or synced with the native side.
   void _updateAutoUiData() {
     _screenRenderForAutoUiTrace.slowFramesTotalDurationMicro +=
-        _slowFramesTotalDurationMs * _microsecondsPerMillisecond;
+        _slowFramesTotalDurationMicro;
     _screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro +=
-        _frozenFramesTotalDurationMs * _microsecondsPerMillisecond;
+        _frozenFramesTotalDurationMicro;
     _screenRenderForAutoUiTrace.frameData.addAll(_delayedFrames);
   }
 
@@ -426,9 +416,7 @@ class InstabugScreenRenderManager {
   @visibleForTesting
   void setFrameData(InstabugScreenRenderData data) {
     _delayedFrames.addAll(data.frameData);
-    _frozenFramesTotalDurationMs =
-        data.frozenFramesTotalDurationMicro ~/ _microsecondsPerMillisecond;
-    _slowFramesTotalDurationMs =
-        data.slowFramesTotalDurationMicro ~/ _microsecondsPerMillisecond;
+    _frozenFramesTotalDurationMicro = data.frozenFramesTotalDurationMicro;
+    _slowFramesTotalDurationMicro = data.slowFramesTotalDurationMicro;
   }
 }
