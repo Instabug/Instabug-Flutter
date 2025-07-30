@@ -13,8 +13,11 @@ Pod::Spec.new do |s|
   s.source_files        = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
 
-  s.ios.deployment_target = '10.0'
-  s.pod_target_xcconfig   = { 'OTHER_LDFLAGS' => '-framework "Flutter" -framework "InstabugSDK"'}
+  s.ios.deployment_target = '12.0'
+  s.pod_target_xcconfig   = { 
+    'OTHER_LDFLAGS' => '-framework "Flutter" -framework "InstabugSDK"',
+    'HEADER_SEARCH_PATHS' => '$(PODS_TARGET_SRCROOT)/Classes/Generated'
+  }
 
   s.dependency 'Flutter'
   s.dependency 'Instabug', '15.1.1'

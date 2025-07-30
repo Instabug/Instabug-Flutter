@@ -306,6 +306,11 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: _navigateToComplex,
           text: 'Complex',
         ),
+        const SectionTitle('Smart Error Analyzer'),
+        InstabugButton(
+          onPressed: _testSmartErrorAnalyzer,
+          text: 'Test Smart Error Analyzer',
+        ),
         const SectionTitle('Sessions Replay'),
         InstabugButton(
           onPressed: getCurrentSessionReplaylink,
@@ -365,5 +370,133 @@ class _MyHomePageState extends State<MyHomePage> {
 
   removeAllFeatureFlags() {
     Instabug.clearAllFeatureFlags();
+  }
+
+  void _testSmartErrorAnalyzer() async {
+    try {
+      // Simulate different types of errors
+      final errors = [
+        Exception('Network connection timeout'),
+        Exception('Database query failed: table not found'),
+        Exception('Widget build failed: overflow error'),
+        Exception('Memory allocation failed: out of memory'),
+        Exception('Authentication failed: invalid token'),
+        Exception('Unknown error occurred'),
+      ];
+
+      for (final error in errors) {
+        // Analyze the error
+        final analysis = await SmartErrorAnalyzer.analyzeError(error);
+        
+        // Show analysis results
+        _showAnalysisResults(error.toString(), analysis);
+        
+        // Wait a bit before next error
+        await Future.delayed(const Duration(seconds: 2));
+      }
+    } catch (e) {
+      _showError('Error testing Smart Error Analyzer: $e');
+    }
+  }
+
+  void _showAnalysisResults(String errorMessage, ErrorAnalysis analysis) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('🔍 Smart Error Analysis'),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Error: $errorMessage',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 16),
+                _buildAnalysisRow('Category', analysis.category.name),
+                _buildAnalysisRow('Severity', analysis.severity.name),
+                _buildAnalysisRow('Fix Time', '${analysis.estimatedFixTime} minutes'),
+                const SizedBox(height: 8),
+                const Text(
+                  'Suggested Solutions:',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 4),
+                ...analysis.suggestedSolutions.map((solution) => 
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8, top: 2),
+                    child: Text('• $solution'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Close'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _reportErrorWithAnalysis(errorMessage);
+              },
+              child: const Text('Report to Instabug'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildAnalysisRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 80,
+            child: Text(
+              '$label:',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: Text(value),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _reportErrorWithAnalysis(String errorMessage) async {
+    try {
+      final error = Exception(errorMessage);
+      await CrashReporting.reportErrorWithAnalysis(error);
+      _showSuccess('Error reported to Instabug with analysis!');
+    } catch (e) {
+      _showError('Failed to report error: $e');
+    }
+  }
+
+  void _showSuccess(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.green,
+      ),
+    );
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 }

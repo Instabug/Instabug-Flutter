@@ -359,7 +359,7 @@ class Instabug {
   /// Sets the color of UI elements indicating interactivity or call to action.
   /// [color] primaryColor A color to set the UI elements of the SDK to.
   static Future<void> setPrimaryColor(Color color) async {
-    return _host.setPrimaryColor(color.value);
+    return _host.setPrimaryColor(color.toARGB32());
   }
 
   /// Adds specific user data that you need to be added to the reports
