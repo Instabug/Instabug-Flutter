@@ -5,6 +5,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/modules/smart_error_analyzer.dart';
+import 'package:instabug_flutter/src/models/error_analysis.dart';
 import 'package:instabug_flutter_example/src/components/apm_switch.dart';
 import 'package:instabug_http_client/instabug_http_client.dart';
 import 'package:instabug_flutter_example/src/app_routes.dart';
@@ -17,6 +19,7 @@ import 'src/widget/instabug_text_field.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 
 import 'src/widget/section_title.dart';
+import 'package:instabug_flutter/src/modules/performance_alert_system.dart';
 
 part 'src/screens/crashes_page.dart';
 

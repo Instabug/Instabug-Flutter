@@ -10,6 +10,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _alertShown = false;
   final buttonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(Colors.lightBlue),
     foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -306,6 +307,103 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: _navigateToComplex,
           text: 'Complex',
         ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF667EEA).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(
+                      Icons.psychology,
+                      color: Color(0xFF667EEA),
+                      size: 20,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  const Text(
+                    'Suggested new features',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF2D3748),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: _testSmartErrorAnalyzer,
+                  icon: const Icon(Icons.analytics, size: 18),
+                  label: const Text('Smart Error Analyzer'),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color(0xFF667EEA),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    elevation: 0,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        ElevatedButton.icon(
+          onPressed: () {
+            PerformanceAlertSystem.startAllMonitoring(
+              onAlert: (type, message) {
+                if (!_alertShown) {
+                  _alertShown = true;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          Icon(
+                            type == 'critical' ? Icons.warning : Icons.info_outline,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(child: Text(message)),
+                        ],
+                      ),
+                      backgroundColor: type == 'critical'
+                          ? const Color(0xFFE53E3E)
+                          : const Color(0xFFED8936),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      duration: const Duration(seconds: 4),
+                    ),
+                  );
+                }
+              },
+            );
+          },
+          icon: const Icon(Icons.speed),
+          label: const Text('Monitor Performance'),
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: const Color(0xFF3182CE),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            elevation: 2,
+          ),
+        ),
         const SectionTitle('Sessions Replay'),
         InstabugButton(
           onPressed: getCurrentSessionReplaylink,
@@ -365,5 +463,309 @@ class _MyHomePageState extends State<MyHomePage> {
 
   removeAllFeatureFlags() {
     Instabug.clearAllFeatureFlags();
+  }
+
+  void _testSmartErrorAnalyzer() async {
+    try {
+      // Simulate different types of errors
+      final errors = [
+        Exception('Network connection timeout'),
+        Exception('Database query failed: table not found'),
+        Exception('Widget build failed: overflow error'),
+        Exception('Memory allocation failed: out of memory'),
+        Exception('Authentication failed: invalid token'),
+        Exception('Unknown error occurred'),
+      ];
+
+      for (final error in errors) {
+        // Analyze the error
+        final analysis = await SmartErrorAnalyzer.analyzeError(error);
+
+        // Show analysis results
+        _showAnalysisResults(error.toString(), analysis);
+
+        // Wait a bit before next error
+        await Future.delayed(const Duration(seconds: 2));
+      }
+    } catch (e) {
+      _showError('Error testing Smart Error Analyzer: $e');
+    }
+  }
+
+  void _showAnalysisResults(String errorMessage, ErrorAnalysis analysis) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 400),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Header
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF667EEA),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.psychology, color: Colors.white, size: 24),
+                      const SizedBox(width: 12),
+                      const Expanded(
+                        child: Text(
+                          'Smart Analysis',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: const Icon(Icons.close, color: Colors.white),
+                        iconSize: 20,
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Content
+                Flexible(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Error message
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFED7D7),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: const Color(0xFFFEB2B2)),
+                          ),
+                          child: Text(
+                            errorMessage,
+                            style: const TextStyle(
+                              color: Color(0xFF742A2A),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        // Analysis details
+                        _buildModernAnalysisCard('Category', analysis.category.name,
+                            Icons.category, const Color(0xFF38B2AC)),
+                        const SizedBox(height: 12),
+                        _buildModernAnalysisCard('Severity', analysis.severity.name,
+                            Icons.priority_high, const Color(0xFFED8936)),
+                        const SizedBox(height: 12),
+                        _buildModernAnalysisCard('Est. Fix Time', '${analysis.estimatedFixTime} min',
+                            Icons.schedule, const Color(0xFF805AD5)),
+
+                        const SizedBox(height: 20),
+
+                        // Solutions
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF7FAFC),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: const Color(0xFFE2E8F0)),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Row(
+                                children: [
+                                  Icon(Icons.lightbulb,
+                                      color: Color(0xFFD69E2E), size: 20),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Suggested Solutions',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF2D3748),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 12),
+                              ...analysis.suggestedSolutions.map(
+                                    (solution) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin: const EdgeInsets.only(top: 6),
+                                        width: 6,
+                                        height: 6,
+                                        decoration: const BoxDecoration(
+                                          color: Color(0xFF667EEA),
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          solution,
+                                          style: const TextStyle(
+                                            color: Color(0xFF4A5568),
+                                            height: 1.4,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                // Actions
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            side: const BorderSide(color: Color(0xFFE2E8F0)),
+                          ),
+                          child: const Text('Close'),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            _reportErrorWithAnalysis(errorMessage);
+                          },
+                          icon: const Icon(Icons.bug_report, size: 18),
+                          label: const Text('Report'),
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: const Color(0xFF667EEA),
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            elevation: 0,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildModernAnalysisCard(String label, String value, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.2)),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: 18),
+          const SizedBox(width: 12),
+          Text(
+            label,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF4A5568),
+            ),
+          ),
+          const Spacer(),
+          Text(
+            value,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget _buildAnalysisRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 80,
+            child: Text(
+              '$label:',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: Text(value),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _reportErrorWithAnalysis(String errorMessage) async {
+    try {
+      final error = Exception(errorMessage);
+      await CrashReporting.reportErrorWithAnalysis(error);
+      _showSuccess('Error reported to Instabug with analysis!');
+    } catch (e) {
+      _showError('Failed to report error: $e');
+    }
+  }
+
+  void _showSuccess(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 }
