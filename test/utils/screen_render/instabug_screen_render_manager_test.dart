@@ -1,12 +1,17 @@
+import 'package:flutter/scheduler.dart' show FrameTiming;
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/instabug_frame_data.dart';
 import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'instabug_screen_render_manager_test.mocks.dart';
 
+@GenerateMocks([ApmHostApi, FrameTiming, WidgetsBinding])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -19,7 +24,8 @@ void main() {
     mWidgetBinding = MockWidgetsBinding();
     manager = InstabugScreenRenderManager.init(); // test-only constructor
     APM.$setHostApi(mApmHost);
-    when(mApmHost.deviceRefreshRate()).thenAnswer((_) async => 60);
+    when(mApmHost.getDeviceRefreshRateAndTolerance())
+        .thenAnswer((_) async => [60, 0]);
     manager.init(mWidgetBinding);
   });
 
@@ -43,6 +49,38 @@ void main() {
       verify(mWidgetBinding.addTimingsCallback(any)).called(1);
     });
   });
+
+  // group('_initStaticValues', () {
+  //
+  //   test('should initialize _timingsCallback', () async {
+  //     await manager.callInitStaticValues();
+  //     expect(manager.timingsCallback, isNotNull);
+  //   });
+  //
+  //   test('should initialize _slowFrameThresholdMs with value from _getSlowFrameThresholdMs', () async {
+  //     // Patch the getter to return a known value
+  //     manager.slowFrameThresholdMs = 0.0;
+  //     manager.getSlowFrameThresholdMsFuture = () async => 42.0;
+  //     await manager.callInitStaticValues();
+  //     expect(manager.slowFrameThresholdMs, 42.0);
+  //   });
+  //
+  //   test('should initialize _screenRenderForAutoUiTrace and _screenRenderForCustomUiTrace as empty InstabugScreenRenderData', () async {
+  //     await manager.callInitStaticValues();
+  //     expect(manager.screenRenderForAutoUiTrace, isA<InstabugScreenRenderData>());
+  //     expect(manager.screenRenderForAutoUiTrace.frameData, isEmpty);
+  //     expect(manager.screenRenderForCustomUiTrace, isA<InstabugScreenRenderData>());
+  //     expect(manager.screenRenderForCustomUiTrace.frameData, isEmpty);
+  //   });
+  //
+  //   test('should set _epochOffset on first timing in _timingsCallback', () async {
+  //     await manager.callInitStaticValues();
+  //     final mockFrameTiming = MockFrameTiming();
+  //     manager.epochOffset = null;
+  //     manager.timingsCallback([mockFrameTiming]);
+  //     expect(manager.epochOffset, isNotNull);
+  //   });
+  // });
 
   group('startScreenRenderCollectorForTraceId()', () {
     test('should not attach timing listener if it is attached', () async {

@@ -275,10 +275,13 @@ void main() {
       verify(mHost.isScreenRenderEnabled());
     });
 
-    test("[getDeviceRefreshRate] should call host method", () async {
-      when(mHost.deviceRefreshRate()).thenAnswer((_) async => 60.0);
-      await APM.getDeviceRefreshRate();
-      verify(mHost.deviceRefreshRate()).called(1);
+    test("[getDeviceRefreshRateAndTolerance] should call host method",
+        () async {
+      when(mHost.getDeviceRefreshRateAndTolerance()).thenAnswer(
+        (_) async => [60.0, 10.0],
+      );
+      await APM.getDeviceRefreshRateAndTolerance();
+      verify(mHost.getDeviceRefreshRateAndTolerance()).called(1);
     });
 
     test("[setScreenRenderEnabled] should call host method", () async {

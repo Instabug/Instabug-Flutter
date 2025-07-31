@@ -176,7 +176,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setPrimaryColor(@NonNull Long color) {
-        Instabug.setPrimaryColor(color.intValue());
+
     }
 
     @Override

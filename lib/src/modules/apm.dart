@@ -378,9 +378,13 @@ class APM {
   ///
   /// Returns:
   ///   A Future<double> that represent the refresh rate.
+  /// Retrieve the device refresh rate and tolerance value from native side.
+  ///
+  /// Returns:
+  ///   A Future<List<double>> where the first element is the refresh rate and the second is the tolerance value.
   @internal
-  static Future<double> getDeviceRefreshRate() {
-    return _host.deviceRefreshRate();
+  static Future<List<double?>> getDeviceRefreshRateAndTolerance() {
+    return _host.getDeviceRefreshRateAndTolerance();
   }
 
   /// Sets the screen Render state based on the provided boolean value.

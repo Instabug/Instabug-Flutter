@@ -58,7 +58,7 @@ abstract class ApmHostApi {
   bool isScreenRenderEnabled();
 
   @async
-  double deviceRefreshRate();
+  List<double> getDeviceRefreshRateAndTolerance();
 
   void setScreenRenderEnabled(bool isEnabled);
 

@@ -34,9 +34,6 @@ class InstabugScreenRenderManager {
 
   final List<InstabugFrameData> _delayedFrames = [];
 
-  /// 1 / DeviceRefreshRate * 1000
-  double _deviceRefreshRate = 60;
-
   /// Default refresh rate for 60 FPS displays in milliseconds (16.67ms)
   double _slowFrameThresholdMs = 16.67;
 
@@ -230,8 +227,8 @@ class InstabugScreenRenderManager {
       1 / displayRefreshRate * 1000;
 
   /// Get device refresh rate from native side.
-  Future<double> get _getDeviceRefreshRateFromNative =>
-      APM.getDeviceRefreshRate();
+  Future<List<double?>> get _getDeviceRefreshRateAndToleranceFromNative =>
+      APM.getDeviceRefreshRateAndTolerance();
 
   /// add new [WidgetsBindingObserver] to track app lifecycle.
   void _addWidgetBindingObserver() {
@@ -265,10 +262,24 @@ class InstabugScreenRenderManager {
         analyzeFrameTiming(frameTiming);
       }
     };
-    _deviceRefreshRate = await _getDeviceRefreshRateFromNative;
-    _slowFrameThresholdMs = _targetMsPerFrame(_deviceRefreshRate);
+    _slowFrameThresholdMs = await _getSlowFrameThresholdMs;
     _screenRenderForAutoUiTrace = InstabugScreenRenderData(frameData: []);
     _screenRenderForCustomUiTrace = InstabugScreenRenderData(frameData: []);
+  }
+
+  Future<double> get _getSlowFrameThresholdMs async {
+    final deviceRefreshRateAndTolerance =
+        await _getDeviceRefreshRateAndToleranceFromNative;
+    final deviceRefreshRate = deviceRefreshRateAndTolerance[0] ??
+        60; // default to 60 FPS if not available
+    final toleranceMs = (deviceRefreshRateAndTolerance[1] ?? 10) /
+        1000; // convert the tolerance from microseconds to milliseconds
+    final targetMsPerFrame = _targetMsPerFrame(deviceRefreshRate);
+    return double.parse(
+      (targetMsPerFrame + toleranceMs).toStringAsFixed(
+        2,
+      ),
+    ); // round the result to the nearest 2 precision digits
   }
 
   int _getEpochOffset(FrameTiming firstPatchedFrameTiming) {

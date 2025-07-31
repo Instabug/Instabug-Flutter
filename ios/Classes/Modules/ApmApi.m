@@ -208,15 +208,6 @@ NSMutableDictionary *traces;
     
 }
 
-- (void)deviceRefreshRateWithCompletion:(void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion{
-    if (@available(iOS 10.3, *)) {
-        double refreshRate = [UIScreen mainScreen].maximumFramesPerSecond;
-        completion(@(refreshRate) ,nil);
-    } else {
-        // Fallback for very old iOS versions.
-        completion(@(60.0) , nil);
-    }
-}
 
 - (void)endScreenRenderForAutoUiTraceData:(nonnull NSDictionary<NSString *,id> *)data error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     NSArray<NSArray<NSNumber *> *> *rawFrames = data[@"frameData"];
@@ -253,6 +244,18 @@ NSMutableDictionary *traces;
     
     [IBGAPM endCustomUITraceCPWithFrames:frameInfos];
 }
+
+- (void)getDeviceRefreshRateAndToleranceWithCompletion:(nonnull void (^)(NSArray<NSNumber *> * _Nullable, FlutterError * _Nullable))completion { 
+    if (@available(iOS 10.3, *)) {
+        double refreshRate = [UIScreen mainScreen].maximumFramesPerSecond;
+        double tolerance = 10;
+        completion(@[@(refreshRate), @(tolerance)] ,nil);
+    } else {
+        // Fallback for very old iOS versions.
+        completion(@[@(60.0), @(10.0)] , nil);
+    }
+}
+
 
 
 

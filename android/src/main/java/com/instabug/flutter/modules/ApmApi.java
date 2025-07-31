@@ -9,7 +9,8 @@ import com.instabug.apm.APM;
 import com.instabug.apm.InternalAPM;
 import com.instabug.apm.configuration.cp.APMFeature;
 import com.instabug.apm.configuration.cp.FeatureAvailabilityCallback;
-import com.instabug.apm.model.ExecutionTrace;
+import com.instabug.apm.configuration.cp.ToleranceValueCallback;
+//import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
 import com.instabug.apm.screenrendering.models.cp.IBGFrameData;
@@ -31,11 +32,11 @@ import io.flutter.plugin.common.BinaryMessenger;
 
 public class ApmApi implements ApmPigeon.ApmHostApi {
     private final String TAG = ApmApi.class.getName();
-    private final HashMap<String, ExecutionTrace> traces = new HashMap<>();
-    private final Callable<Float> refreshRate;
+//    private final HashMap<String, ExecutionTrace> traces = new HashMap<>();
+    private final Callable<Float> refreshRateCallback;
 
     public ApmApi(Callable<Float> refreshRate) {
-        this.refreshRate = refreshRate;
+        this.refreshRateCallback = refreshRate;
     }
 
     public static void init(BinaryMessenger messenger, Callable<Float> refreshRateProvider) {
@@ -114,24 +115,24 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
             @Override
             public void run() {
                 try {
-                    ExecutionTrace trace = APM.startExecutionTrace(name);
-                    if (trace != null) {
-                        traces.put(id, trace);
-
-                        ThreadManager.runOnMainThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                result.success(id);
-                            }
-                        });
-                    } else {
-                        ThreadManager.runOnMainThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                result.success(null);
-                            }
-                        });
-                    }
+//                    ExecutionTrace trace = APM.startExecutionTrace(name);
+//                    if (trace != null) {
+//                        traces.put(id, trace);
+//
+//                        ThreadManager.runOnMainThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                result.success(id);
+//                            }
+//                        });
+//                    } else {
+//                        ThreadManager.runOnMainThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                result.success(null);
+//                            }
+//                        });
+//                    }
                 } catch (Exception e) {
                     e.printStackTrace();
 
@@ -220,7 +221,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     @Override
     public void setExecutionTraceAttribute(@NonNull String id, @NonNull String key, @NonNull String value) {
         try {
-            traces.get(id).setAttribute(key, value);
+//            traces.get(id).setAttribute(key, value);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -235,7 +236,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     @Override
     public void endExecutionTrace(@NonNull String id) {
         try {
-            traces.get(id).end();
+//            traces.get(id).end();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -504,9 +505,16 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
     }
 
     @Override
-    public void deviceRefreshRate(@NonNull ApmPigeon.Result<Double> result) {
+    public void getDeviceRefreshRateAndTolerance(@NonNull ApmPigeon.Result<List<Double>> result) {
         try {
-            result.success(refreshRate.call().doubleValue());
+            final double refreshRate = refreshRateCallback.call().doubleValue();
+            InternalAPM._getToleranceValueForScreenRenderingCP(new ToleranceValueCallback() {
+                @Override
+                public void invoke(long tolerance) {
+                    result.success(java.util.Arrays.asList(refreshRate, (double) tolerance));
+                }
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }

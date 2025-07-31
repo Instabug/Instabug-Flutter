@@ -184,7 +184,7 @@ public class BugReportingApi implements BugReportingPigeon.BugReportingHostApi {
             reportTypesArray[i] = ArgsRegistry.reportTypes.get(key);
         }
     }
-        BugReporting.setCommentMinimumCharacterCount(limit.intValue(), reportTypesArray);
+//        BugReporting.setCommentMinimumCharacterCount(limit.intValue(), reportTypesArray);
     }
 
     @Override
