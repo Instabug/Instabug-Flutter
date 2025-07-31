@@ -339,7 +339,7 @@ class Instabug {
     'This API is deprecated. Please use Instabug.setTheme instead.',
   )
   static Future<void> setPrimaryColor(Color color) async {
-    await setTheme(ThemeConfig(primaryColor: color));
+    await setTheme(ThemeConfig(primaryColor: color.toString()));
   }
 
   /// Adds specific user data that you need to be added to the reports
