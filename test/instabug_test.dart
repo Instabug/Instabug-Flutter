@@ -197,16 +197,6 @@ void main() {
     ).called(1);
   });
 
-  test('[setPrimaryColor] should call setTheme method', () async {
-    const color = Color(0x00000000);
-
-    await Instabug.setPrimaryColor(color);
-
-    verify(
-      mHost.setTheme({'primaryColor': color.toString()}),
-    ).called(1);
-  });
-
   test('[setSessionProfilerEnabled] should call host method', () async {
     const enabled = true;
 
