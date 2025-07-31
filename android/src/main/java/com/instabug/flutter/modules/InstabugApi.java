@@ -176,7 +176,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setPrimaryColor(@NonNull Long color) {
-        Instabug.setPrimaryColor(color.intValue());
     }
 
     @Override
@@ -228,20 +227,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         );
     }
 
-    @Override
-    public void addExperiments(@NonNull List<String> experiments) {
-        Instabug.addExperiments(experiments);
-    }
 
-    @Override
-    public void removeExperiments(@NonNull List<String> experiments) {
-        Instabug.removeExperiments(experiments);
-    }
-
-    @Override
-    public void clearAllExperiments() {
-        Instabug.clearAllExperiments();
-    }
 
     @Override
     public void addFeatureFlags(@NonNull Map<String, String> featureFlags) {

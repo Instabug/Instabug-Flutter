@@ -200,31 +200,6 @@
     [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
-- (void)testAddExperiments {
-    NSArray<NSString *> *experiments = @[@"premium", @"star"];
-    FlutterError *error;
-
-    [self.api addExperimentsExperiments:experiments error:&error];
-
-    OCMVerify([self.mInstabug addExperiments:experiments]);
-}
-
-- (void)testRemoveExperiments {
-    NSArray<NSString *> *experiments = @[@"premium", @"star"];
-    FlutterError *error;
-
-    [self.api removeExperimentsExperiments:experiments error:&error];
-
-    OCMVerify([self.mInstabug removeExperiments:experiments]);
-}
-
-- (void)testClearAllExperiments {
-    FlutterError *error;
-
-    [self.api clearAllExperimentsWithError:&error];
-
-    OCMVerify([self.mInstabug clearAllExperiments]);
-}
 
 - (void)testAddFeatureFlags {
   NSDictionary *featureFlagsMap = @{ @"key13" : @"value1", @"key2" : @"value2"};

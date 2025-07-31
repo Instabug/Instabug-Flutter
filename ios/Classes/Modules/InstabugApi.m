@@ -127,17 +127,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     completion([Instabug getTags], nil);
 }
 
-- (void)addExperimentsExperiments:(NSArray<NSString *> *)experiments error:(FlutterError *_Nullable *_Nonnull)error {
-    [Instabug addExperiments:experiments];
-}
 
-- (void)removeExperimentsExperiments:(NSArray<NSString *> *)experiments error:(FlutterError *_Nullable *_Nonnull)error {
-    [Instabug removeExperiments:experiments];
-}
-
-- (void)clearAllExperimentsWithError:(FlutterError *_Nullable *_Nonnull)error {
-    [Instabug clearAllExperiments];
-}
 
 - (void)setUserAttributeValue:(NSString *)value key:(NSString *)key error:(FlutterError *_Nullable *_Nonnull)error {
     [Instabug setUserAttribute:value withKey:key];

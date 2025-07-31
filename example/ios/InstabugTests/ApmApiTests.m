@@ -116,40 +116,7 @@
     OCMVerify([self.mAPM setAutoUITraceEnabled:YES]);
 }
 
-- (void)testStartExecutionTraceWhenTraceNotNil {
-    NSString *expectedId = @"trace-id";
-    NSString *name = @"trace-name";
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
 
-    IBGExecutionTrace *mTrace = OCMClassMock([IBGExecutionTrace class]);
-    OCMStub([self.mAPM startExecutionTraceWithName:name]).andReturn(mTrace);
-
-    [self.api startExecutionTraceId:expectedId name:name completion:^(NSString *actualId, FlutterError *error) {
-        [expectation fulfill];
-        XCTAssertEqual(actualId, expectedId);
-        XCTAssertNil(error);
-    }];
-
-    OCMVerify([self.mAPM startExecutionTraceWithName:name]);
-    [self waitForExpectations:@[expectation] timeout:5.0];
-}
-
-- (void)testStartExecutionTraceWhenTraceIsNil {
-    NSString *traceId = @"trace-id";
-    NSString *name = @"trace-name";
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
-
-    OCMStub([self.mAPM startExecutionTraceWithName:name]).andReturn(nil);
-
-    [self.api startExecutionTraceId:traceId name:name completion:^(NSString *actualId, FlutterError *error) {
-        [expectation fulfill];
-        XCTAssertNil(actualId);
-        XCTAssertNil(error);
-    }];
-
-    OCMVerify([self.mAPM startExecutionTraceWithName:name]);
-    [self waitForExpectations:@[expectation] timeout:5.0];
-}
 
 
 - (void)testSetExecutionTraceAttribute {

@@ -258,37 +258,6 @@ void main() {
     ).called(1);
   });
 
-  test('[addExperiments] should call host method', () async {
-    const experiments = ["exp-1", "exp-2"];
-
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.addExperiments(experiments);
-
-    verify(
-      mHost.addExperiments(experiments),
-    ).called(1);
-  });
-
-  test('[removeExperiments] should call host method', () async {
-    const experiments = ["exp-1", "exp-2"];
-
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.removeExperiments(experiments);
-
-    verify(
-      mHost.removeExperiments(experiments),
-    ).called(1);
-  });
-
-  test('[clearAllExperiments] should call host method', () async {
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.clearAllExperiments();
-
-    verify(
-      mHost.clearAllExperiments(),
-    ).called(1);
-  });
-
   test('[addFeatureFlags] should call host method', () async {
     await Instabug.addFeatureFlags([
       FeatureFlag(name: 'name1', variant: 'variant1'),

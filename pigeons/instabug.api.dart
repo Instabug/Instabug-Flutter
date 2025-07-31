@@ -37,9 +37,6 @@ abstract class InstabugHostApi {
   @async
   List<String>? getTags();
 
-  void addExperiments(List<String> experiments);
-  void removeExperiments(List<String> experiments);
-  void clearAllExperiments();
   void addFeatureFlags(Map<String, String> featureFlagsMap);
   void removeFeatureFlags(List<String> featureFlags);
   void removeAllFeatureFlags();
