@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v15.0.2...dev)
+
+### Changed
+
+- **BREAKING** Remove deprecated APIs ([#614](https://github.com/Instabug/Instabug-Flutter/pull/614)). See migration guide for more details.
+
 ## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.2)  (Jul 7, 2025)
 
 ### Added
