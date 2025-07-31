@@ -196,7 +196,9 @@ jobs:
       - run:
           name: sleep 10 seconds
           command: sleep 10
-
+      - run:
+          name: sleep 10 seconds
+          command: sleep 10
       - run:
           name: Run E2E Tests
           no_output_timeout: 30m
