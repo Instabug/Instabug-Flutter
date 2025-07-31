@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:flutter/widgets.dart' show WidgetBuilder;
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
-import 'package:instabug_flutter/src/models/trace.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
