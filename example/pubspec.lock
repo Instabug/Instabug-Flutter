@@ -41,6 +41,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.19.0"
+  dispose_scope:
+    dependency: transitive
+    description:
+      name: dispose_scope
+      sha256: "48ec38ca2631c53c4f8fa96b294c801e55c335db5e3fb9f82cede150cfe5a2af"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: "567c64b3cb4cf82397aac55f4f0cbd3ca20d77c6c03bedbc4ceaddc08904aef7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.7"
   fake_async:
     dependency: transitive
     description:
@@ -86,21 +102,21 @@ packages:
     source: sdk
     version: "0.0.0"
   http:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       name: http
-      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
+      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.6"
+    version: "1.1.0"
   http_parser:
     dependency: transitive
     description:
       name: http_parser
-      sha256: "2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b"
+      sha256: "178d74305e7866013777bab2c3d8726205dc5a4dd935297175b19a23a2e66571"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.2"
+    version: "4.1.2"
   instabug_flutter:
     dependency: "direct main"
     description:
@@ -112,10 +128,18 @@ packages:
     dependency: "direct main"
     description:
       name: instabug_http_client
-      sha256: "7d52803c0dd639f6dddbe07333418eb251ae02f3f9f4d30402517533ca692784"
+      sha256: a38bed979f549ffe85efa46c46ca743cbfab95a51295b60f143f249b71655231
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "2.6.0"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.9.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -180,6 +204,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  patrol:
+    dependency: "direct dev"
+    description:
+      name: patrol
+      sha256: "254493e63a7307ee6080c2f6ab649f4dca404a9871d9b98d473563127c18823b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.15.2"
+  patrol_finders:
+    dependency: transitive
+    description:
+      name: patrol_finders
+      sha256: "8787f9d5c3417b72e8959a55ad51c024cc0594d15e5db85bc179c4d8faa0c493"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.2"
+  patrol_log:
+    dependency: transitive
+    description:
+      name: patrol_log
+      sha256: "98b2701400c7a00b11533ab942bdeb44c3c714746e7cdb12e6cb93b6d06361da"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   platform:
     dependency: transitive
     description:
@@ -196,6 +244,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.2"
+  shelf:
+    dependency: transitive
+    description:
+      name: shelf
+      sha256: e7dd780a7ffb623c57850b33f43309312fc863fb6aa3d276a754bb299839ef12
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -291,4 +347,4 @@ packages:
     version: "3.0.4"
 sdks:
   dart: ">=3.5.0 <4.0.0"
-  flutter: ">=3.18.0-18.0.pre.54"
+  flutter: ">=3.24.0"

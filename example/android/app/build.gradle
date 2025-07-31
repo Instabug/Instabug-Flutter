@@ -19,14 +19,19 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
+    testOptions {
+        execution "ANDROIDX_TEST_ORCHESTRATOR"
+    }
+
     defaultConfig {
         applicationId "com.instabug.flutter.example"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode flutter.versionCode
         versionName flutter.versionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        testInstrumentationRunner "pl.leancode.patrol.PatrolJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: "true"
     }
 
     buildTypes {
@@ -51,6 +56,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.20"
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'org.mockito:mockito-core:1.10.19'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:1.10.19'
+    androidTestUtil "androidx.test:orchestrator:1.5.1"
+
 }

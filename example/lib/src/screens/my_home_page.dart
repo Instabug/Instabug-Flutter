@@ -43,8 +43,8 @@ class _MyHomePageState extends State<MyHomePage> {
           return AlertDialog(
             title: const Text('On Dismiss'),
             content: Text(
-              'onDismiss callback called with $dismissType and $reportType',
-            ),
+                'onDismiss callback called with $dismissType and $reportType',
+                key: const ValueKey('dismiss_callback_dialog_test')),
           );
         },
       );
@@ -182,6 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugTextField(
           controller: primaryColorController,
           label: 'Enter primary color',
+          textFieldKey: const ValueKey('enter_primary_color_input'),
         ),
         InstabugButton(
           text: 'Change Primary Color',
@@ -238,6 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
         const SectionTitle('Repro Steps'),
         InstabugTextField(
           controller: screenNameController,
+          textFieldKey: const ValueKey('screen_name_input'),
           label: 'Enter screen name',
         ),
         InstabugButton(
@@ -334,7 +336,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-        SectionTitle('FeatureFlags'),
+        const SectionTitle('FeatureFlags'),
         InstabugTextField(
           controller: featureFlagsController,
           label: 'Feature Flag name',
