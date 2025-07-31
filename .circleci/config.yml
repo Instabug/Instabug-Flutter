@@ -201,7 +201,7 @@ jobs:
           name: Run E2E Tests
           no_output_timeout: 30m
           working_directory: example
-          command: patrol test -t integration_test/ --verbose
+          command: patrol test -t integration_test/ --verbose --device "iPhone 16 Pro"
   format_flutter:
     executor:
       name: android/android-machine
