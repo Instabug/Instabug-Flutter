@@ -73,4 +73,6 @@ abstract class InstabugHostApi {
   void willRedirectToStore();
 
   void setNetworkLogBodyEnabled(bool isEnabled);
+
+  void setTheme(Map<String, Object> themeConfig);
 }

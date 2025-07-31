@@ -3,6 +3,7 @@ export 'src/models/crash_data.dart';
 export 'src/models/exception_data.dart';
 export 'src/models/feature_flag.dart';
 export 'src/models/network_data.dart';
+export 'src/models/theme_config.dart';
 export 'src/models/w3c_header.dart';
 
 // Modules

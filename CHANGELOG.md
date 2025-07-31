@@ -5,6 +5,10 @@
 ### Changed
 
 - **BREAKING** Remove deprecated APIs ([#614](https://github.com/Instabug/Instabug-Flutter/pull/614)). See migration guide for more details.
+### Added
+
+- Add support for Advanced UI customization with comprehensive theming capabilities ([#599](https://github.com/Instabug/Instabug-Flutter/pull/599))
+
 
 ## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.2)  (Jul 7, 2025)
 

@@ -462,4 +462,32 @@ class Instabug {
   static Future<void> willRedirectToStore() async {
     return _host.willRedirectToStore();
   }
+
+  /// Sets a custom theme for Instabug UI elements.
+  ///
+  /// @param theme - Configuration object containing theme properties
+  ///
+  /// Example:
+  /// ```dart
+  ///
+  /// Instabug.setTheme(ThemeConfig(
+  ///   primaryColor: '#FF6B6B',
+  ///   secondaryTextColor: '#666666',
+  ///   primaryTextColor: '#333333',
+  ///   titleTextColor: '#000000',
+  ///   backgroundColor: '#FFFFFF',
+  ///   primaryTextStyle: 'bold',
+  ///   secondaryTextStyle: 'normal',
+  ///   titleTextStyle: 'bold',
+  ///   ctaTextStyle: 'bold',
+  ///   primaryFontPath: '/data/user/0/com.yourapp/files/fonts/YourFont.ttf',
+  ///   secondaryFontPath: '/data/user/0/com.yourapp/files/fonts/YourFont.ttf',
+  ///   ctaFontPath: '/data/user/0/com.yourapp/files/fonts/YourFont.ttf',
+  ///   primaryFontAsset: 'fonts/YourFont.ttf',
+  ///   secondaryFontAsset: 'fonts/YourFont.ttf'
+  /// ));
+  /// ```
+  static Future<void> setTheme(ThemeConfig themeConfig) async {
+    return _host.setTheme(themeConfig.toMap());
+  }
 }
