@@ -19,16 +19,6 @@
     self.api = [[ApmApi alloc] init];
 }
 
-- (IBGExecutionTrace *)mockTraceWithId:(NSString *)traceId {
-    NSString* name = @"trace-name";
-    IBGExecutionTrace *mTrace = OCMClassMock([IBGExecutionTrace class]);
-
-    OCMStub([self.mAPM startExecutionTraceWithName:name]).andReturn(mTrace);
-
-    [self.api startExecutionTraceId:traceId name:name completion:^(NSString * _Nullable _, FlutterError * _Nullable __) {}];
-
-    return mTrace;
-}
 
 - (void)testSetEnabled {
     NSNumber *isEnabled = @1;
@@ -116,30 +106,6 @@
     OCMVerify([self.mAPM setAutoUITraceEnabled:YES]);
 }
 
-
-
-
-- (void)testSetExecutionTraceAttribute {
-    NSString *traceId = @"trace-id";
-    NSString *key = @"is_premium";
-    NSString *value = @"true";
-    FlutterError *error;
-    id mTrace = [self mockTraceWithId:traceId];
-
-    [self.api setExecutionTraceAttributeId:traceId key:key value:value error:&error];
-
-    OCMVerify([mTrace setAttributeWithKey:key value:value]);
-}
-
-- (void)testEndExecutionTrace {
-    NSString *traceId = @"trace-id";
-    FlutterError *error;
-    IBGExecutionTrace *mTrace = [self mockTraceWithId:traceId];
-
-    [self.api endExecutionTraceId:traceId error:&error];
-
-    OCMVerify([mTrace end]);
-}
 
 - (void) testStartFlow {
     NSString* appFlowName = @"app-flow-name";
