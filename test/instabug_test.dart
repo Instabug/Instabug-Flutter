@@ -197,13 +197,13 @@ void main() {
     ).called(1);
   });
 
-  test('[setPrimaryColor] should call host method', () async {
+  test('[setPrimaryColor] should call setTheme method', () async {
     const color = Color(0x00000000);
 
     await Instabug.setPrimaryColor(color);
 
     verify(
-      mHost.setPrimaryColor(color.value),
+      mHost.setTheme({'primaryColor': color.toString()}),
     ).called(1);
   });
 

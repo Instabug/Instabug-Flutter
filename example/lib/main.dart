@@ -38,8 +38,6 @@ part 'src/components/network_content.dart';
 
 part 'src/components/page.dart';
 
-part 'src/components/traces_content.dart';
-
 part 'src/components/flows_content.dart';
 
 void main() {
