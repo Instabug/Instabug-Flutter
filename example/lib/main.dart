@@ -44,6 +44,7 @@ void main() {
 
       Instabug.init(
         token: 'ed6f659591566da19b67857e1b9d40ab',
+        // token: '4d75635ae06e5afb4360c04cfcf1987c',
         invocationEvents: [InvocationEvent.floatingButton],
         debugLogsLevel: LogLevel.verbose,
       ).then((_) {
