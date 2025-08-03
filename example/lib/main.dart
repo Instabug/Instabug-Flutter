@@ -20,6 +20,7 @@ import 'src/widget/section_title.dart';
 
 part 'src/components/animated_box.dart';
 part 'src/components/apm_switch.dart';
+
 part 'src/components/fatal_crashes_content.dart';
 part 'src/components/flows_content.dart';
 part 'src/components/network_content.dart';

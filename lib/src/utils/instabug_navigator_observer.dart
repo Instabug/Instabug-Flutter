@@ -69,7 +69,7 @@ class InstabugNavigatorObserver extends NavigatorObserver {
 
   FutureOr<void> _startScreenRenderCollector(int? uiTraceId) async {
     final isScreenRenderEnabled = await FlagsConfig.screenRendering.isEnabled();
-    log("isScreenRenderEnabled $isScreenRenderEnabled" , name: "Andrew");
+    log("isScreenRenderEnabled $isScreenRenderEnabled", name: "Andrew");
     await _checkForScreenRenderInitialization(isScreenRenderEnabled);
     if (uiTraceId != null && isScreenRenderEnabled) {
       InstabugScreenRenderManager.I

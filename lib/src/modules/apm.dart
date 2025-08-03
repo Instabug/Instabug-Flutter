@@ -213,8 +213,7 @@ class APM {
   static Future<void> endUITrace() async {
     // End screen render collector for custom ui trace if enabled.
     if (InstabugScreenRenderManager.I.screenRenderEnabled) {
-      return InstabugScreenRenderManager.I
-          .endScreenRenderCollector();
+      return InstabugScreenRenderManager.I.endScreenRenderCollector();
     }
 
     return _host.endUITrace();
