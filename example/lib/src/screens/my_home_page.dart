@@ -115,9 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void changePrimaryColor() {
-    String text = 'FF' + primaryColorController.text.replaceAll('#', '');
-    Color color = Color(int.parse(text, radix: 16));
-    Instabug.setPrimaryColor(color);
+    String text = primaryColorController.text.replaceAll('#', '');
+    Instabug.setTheme(ThemeConfig(primaryColor: '#$text'));
   }
 
   void setColorTheme(ColorTheme colorTheme) {

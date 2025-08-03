@@ -433,4 +433,24 @@ void main() {
       mHost.willRedirectToStore(),
     ).called(1);
   });
+
+  test('[setTheme] should call host method with theme config', () async {
+    const themeConfig = ThemeConfig(primaryColor: '#FF0000');
+
+    await Instabug.setTheme(themeConfig);
+
+    verify(
+      mHost.setTheme(themeConfig.toMap()),
+    ).called(1);
+  });
+
+  test('[setPrimaryColor] should call setTheme with primary color', () async {
+    const color = Color(0xFFFF0000);
+
+    await Instabug.setPrimaryColor(color);
+
+    verify(
+      mHost.setTheme(any),
+    ).called(1);
+  });
 }
