@@ -443,15 +443,4 @@ void main() {
       mHost.setTheme(themeConfig.toMap()),
     ).called(1);
   });
-
-  test('[setPrimaryColor] should call setTheme with primary color', () async {
-    const color = Color(0xFFFF0000);
-
-    // ignore: deprecated_member_use
-    await Instabug.setPrimaryColor(color);
-
-    verify(
-      mHost.setTheme(any),
-    ).called(1);
-  });
 }
