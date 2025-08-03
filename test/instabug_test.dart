@@ -447,6 +447,7 @@ void main() {
   test('[setPrimaryColor] should call setTheme with primary color', () async {
     const color = Color(0xFFFF0000);
 
+    // ignore: deprecated_member_use
     await Instabug.setPrimaryColor(color);
 
     verify(
