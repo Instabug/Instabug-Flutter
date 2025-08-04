@@ -1,16 +1,22 @@
 #!/usr/bin/env dart
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:args/args.dart';
 import 'package:http/http.dart' as http;
 
 part 'commands/upload_so_files.dart';
+part 'commands/init.dart';
 
 // ignore: avoid_classes_with_only_static_members
 /// Command registry for easy management
 class CommandRegistry {
   static final Map<String, CommandHandler> _commands = {
+    'init': CommandHandler(
+      parser: InitCommand.createParser(),
+      execute: InitCommand.execute,
+    ),
     'upload-so-files': CommandHandler(
       parser: UploadSoFilesCommand.createParser(),
       execute: UploadSoFilesCommand.execute,
