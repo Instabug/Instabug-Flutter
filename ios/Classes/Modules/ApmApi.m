@@ -245,14 +245,14 @@ NSMutableDictionary *traces;
     [IBGAPM endCustomUITraceCPWithFrames:frameInfos];
 }
 
-- (void)getDeviceRefreshRateAndToleranceWithCompletion:(nonnull void (^)(NSArray<NSNumber *> * _Nullable, FlutterError * _Nullable))completion { 
+- (void)getDeviceRefreshRateAndToleranceWithCompletion:(nonnull void (^)(NSArray<NSNumber *> * _Nullable, FlutterError * _Nullable))completion {
+    double tolerance = IBGAPM.screenRenderingThreshold;
     if (@available(iOS 10.3, *)) {
         double refreshRate = [UIScreen mainScreen].maximumFramesPerSecond;
-        double tolerance = 10;
         completion(@[@(refreshRate), @(tolerance)] ,nil);
     } else {
         // Fallback for very old iOS versions.
-        completion(@[@(60.0), @(10.0)] , nil);
+        completion(@[@(60.0), @(tolerance)] , nil);
     }
 }
 
