@@ -122,9 +122,9 @@ class CrashReporting {
   /// [boolean] isEnabled
   ///
   /// Requires the [Instabug NDK package](https://pub.dev/packages/instabug_flutter_ndk) to be added to the project for this to work.
+  ///
+  /// This method is Android-only and has no effect on iOS.
   static Future<void> setNDKEnabled(bool isEnabled) async {
-    if (Platform.isAndroid) {
-      return _host.setNDKEnabled(isEnabled);
-    }
+    return _host.setNDKEnabled(isEnabled);
   }
 }
