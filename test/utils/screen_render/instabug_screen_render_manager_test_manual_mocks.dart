@@ -39,8 +39,8 @@ class _FakeSingletonFlutterWindow_1 extends _i1.Fake
 class _FakePlatformDispatcher_2 extends _i1.Fake
     implements _i4.PlatformDispatcher {}
 
-class _FakeHardwareKeyboard_3 extends _i1.Fake
-    implements _i5.HardwareKeyboard {}
+class _FakeHardwareKeyboard_3 extends _i1.Fake implements
+    _i5.HardwareKeyboard {}
 
 class _FakeKeyEventManager_4 extends _i1.Fake implements _i5.KeyEventManager {}
 
@@ -645,21 +645,21 @@ class MockWidgetsBinding extends _i1.Mock implements _i10.WidgetsBinding {
       super.noSuchMethod(Invocation.method(#cancelPointer, [pointer]),
           returnValueForMissingStub: null);
   @override
-  void handlePointerEvent(_i7.PointerEvent? event) =>
+  void handlePointerEvent(_i6.PointerEvent? event) =>
       super.noSuchMethod(Invocation.method(#handlePointerEvent, [event]),
           returnValueForMissingStub: null);
   @override
-  void hitTest(_i7.HitTestResult? result, _i4.Offset? position) =>
+  void hitTest(_i6.HitTestResult? result, _i4.Offset? position) =>
       super.noSuchMethod(Invocation.method(#hitTest, [result, position]),
           returnValueForMissingStub: null);
   @override
   void dispatchEvent(
-          _i7.PointerEvent? event, _i7.HitTestResult? hitTestResult) =>
+          _i6.PointerEvent? event, _i6.HitTestResult? hitTestResult) =>
       super.noSuchMethod(
           Invocation.method(#dispatchEvent, [event, hitTestResult]),
           returnValueForMissingStub: null);
   @override
-  void handleEvent(_i7.PointerEvent? event, _i7.HitTestEntry? entry) =>
+  void handleEvent(_i6.PointerEvent? event, _i6.HitTestEntry? entry) =>
       super.noSuchMethod(Invocation.method(#handleEvent, [event, entry]),
           returnValueForMissingStub: null);
   @override

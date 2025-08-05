@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' show log;
 import 'dart:ui' show TimingsCallback, FrameTiming, FramePhase;
 
 import 'package:flutter/widgets.dart';
@@ -131,30 +132,45 @@ class InstabugScreenRenderManager {
         return;
       }
 
+      if (type == UiTraceType.custom) {
+        _screenRenderForCustomUiTrace.traceId = traceId;
+      }
+
+      if (type == UiTraceType.auto) {
+        _screenRenderForAutoUiTrace.traceId = traceId;
+      }
+    } catch (error, stackTrace) {
+      _logExceptionErrorAndStackTrace(error, stackTrace);
+    }
+  }
+
+  @internal
+  void endScreenRenderCollector([
+    UiTraceType type = UiTraceType.auto,
+  ]) {
+    try {
+      // Return if frameTimingListener not attached
+      if (!screenRenderEnabled || !_isTimingsListenerAttached) {
+        return;
+      }
+
       //Save the memory cached data to be sent to native side
       if (_delayedFrames.isNotEmpty) {
         _saveCollectedData();
         _resetCachedFrameData();
       }
 
-      //Sync the captured screen render data of the Custom UI trace when starting new one
-      if (type == UiTraceType.custom) {
-        // Report only if the collector was active
-        if (_screenRenderForCustomUiTrace.isActive) {
-          _reportScreenRenderForCustomUiTrace(_screenRenderForCustomUiTrace);
-          _screenRenderForCustomUiTrace.clear();
-        }
-        _screenRenderForCustomUiTrace.traceId = traceId;
+      //Sync the captured screen render data of the Custom UI trace if the collector was active
+      if (type == UiTraceType.custom &&
+          _screenRenderForCustomUiTrace.isActive) {
+        _reportScreenRenderForCustomUiTrace(_screenRenderForCustomUiTrace);
+        _screenRenderForCustomUiTrace.clear();
       }
 
-      //Sync the captured screen render data of the Auto UI trace when starting new one
-      if (type == UiTraceType.auto) {
-        // Report only if the collector was active
-        if (_screenRenderForAutoUiTrace.isActive) {
-          _reportScreenRenderForAutoUiTrace(_screenRenderForAutoUiTrace);
-          _screenRenderForAutoUiTrace.clear();
-        }
-        _screenRenderForAutoUiTrace.traceId = traceId;
+      //Sync the captured screen render data of the Auto UI trace if the collector was active
+      if (type == UiTraceType.auto && _screenRenderForAutoUiTrace.isActive) {
+        _reportScreenRenderForAutoUiTrace(_screenRenderForAutoUiTrace);
+        _screenRenderForAutoUiTrace.clear();
       }
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
@@ -178,26 +194,6 @@ class InstabugScreenRenderManager {
       if (_screenRenderForAutoUiTrace.isActive) {
         _reportScreenRenderForAutoUiTrace(_screenRenderForAutoUiTrace);
       }
-    } catch (error, stackTrace) {
-      _logExceptionErrorAndStackTrace(error, stackTrace);
-    }
-  }
-
-  /// Sync the capture screen render data of the custom UI trace without stopping the collector.
-  @internal
-  void endScreenRenderCollectorForCustomUiTrace() {
-    try {
-      if (!_screenRenderForCustomUiTrace.isActive) {
-        return;
-      }
-
-      // Save the captured screen rendering data to be synced
-      _updateCustomUiData();
-
-      // Sync the saved screen rendering data
-      _reportScreenRenderForCustomUiTrace(_screenRenderForCustomUiTrace);
-
-      _screenRenderForCustomUiTrace.clear();
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
     }
@@ -300,6 +296,10 @@ class InstabugScreenRenderManager {
 
   /// Save Slow/Frozen Frames data
   void _onDelayedFrameDetected(int startTime, int durationInMicroseconds) {
+    log(
+      "${durationInMicroseconds >= 700000 ? "🚨Frozen" : "⚠️Slow"} Frame Detected (startTime: $startTime, duration: $durationInMicroseconds  µs)",
+      name: tag,
+    );
     _delayedFrames.add(
       InstabugFrameData(
         startTime,
@@ -315,6 +315,10 @@ class InstabugScreenRenderManager {
     InstabugScreenRenderData screenRenderData,
   ) async {
     try {
+      log(
+        "reportScreenRenderForCustomUiTrace $screenRenderData",
+        name: tag,
+      );
       await APM.endScreenRenderForCustomUiTrace(screenRenderData);
       return true;
     } catch (error, stackTrace) {
@@ -332,6 +336,10 @@ class InstabugScreenRenderManager {
     try {
       // Save the end time for the running ui trace, it's only needed in Android SDK.
       screenRenderData.saveEndTime();
+      log(
+        "reportScreenRenderForAutoUiTrace $screenRenderData",
+        name: tag,
+      );
       await APM.endScreenRenderForAutoUiTrace(screenRenderData);
 
       return true;
