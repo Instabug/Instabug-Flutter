@@ -150,7 +150,7 @@ class InstabugScreenRenderManager {
 
       //Save the memory cached data to be sent to native side
       if (_delayedFrames.isNotEmpty) {
-        saveCollectedData();
+        _saveCollectedData();
         _resetCachedFrameData();
       }
 
@@ -179,7 +179,7 @@ class InstabugScreenRenderManager {
       if (frameCollectorIsNotActive) return;
 
       if (_delayedFrames.isNotEmpty) {
-        saveCollectedData();
+        _saveCollectedData();
         _resetCachedFrameData();
       }
 
@@ -368,8 +368,7 @@ class InstabugScreenRenderManager {
   }
 
   /// Add the memory cashed data to the objects that will be synced asynchronously to the native side.
-  @visibleForTesting
-  void saveCollectedData() {
+  void _saveCollectedData() {
     if (_screenRenderForAutoUiTrace.isActive) {
       _updateAutoUiData();
     }
