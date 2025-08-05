@@ -9,7 +9,7 @@ import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_rend
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'instabug_screen_render_manager_test_manual_mocks.dart';
+import 'instabug_screen_render_manager_test.mocks.dart';
 
 @GenerateMocks([ApmHostApi, FrameTiming, WidgetsBinding])
 void main() {
@@ -168,15 +168,11 @@ void main() {
     });
 
     test(
-        'should save and data to screenRenderForAutoUiTrace when for autoUITrace',
+        'for auto UITrace should report data to native using endScreenRenderForAutoUiTrace',
         () {
       final frameTestData = InstabugScreenRenderData(
         traceId: 123,
-        frameData: [
-          InstabugFrameData(10000, 400),
-          InstabugFrameData(10000, 600),
-          InstabugFrameData(20000, 1000),
-        ],
+        frameData: [],
         frozenFramesTotalDurationMicro: 1000,
         slowFramesTotalDurationMicro: 1000,
         endTimeMicro: 30000,
@@ -186,23 +182,28 @@ void main() {
         frameTestData.traceId,
       );
 
+      manager.startScreenRenderCollectorForTraceId(
+        frameTestData.traceId + 1,
+        UiTraceType.custom,
+      );
+
       manager.setFrameData(frameTestData);
 
       manager.stopScreenRenderCollector();
 
-      expect(manager.screenRenderForAutoUiTrace.isActive, true);
-
-      expect(manager.screenRenderForCustomUiTrace.isActive, false);
-
-      expect(manager.screenRenderForAutoUiTrace == frameTestData, true);
-
       verify(
         mApmHost.endScreenRenderForAutoUiTrace(any),
       ); // the content has been verified in the above assertion.
+
+      expect(manager.screenRenderForAutoUiTrace.isActive, false);
+
+      expect(manager.screenRenderForCustomUiTrace.isActive, false);
+
+      expect(manager.screenRenderForAutoUiTrace.isEmpty, true);
     });
 
     test(
-        'should save and data to screenRenderForCustomUiTrace when for customUITrace',
+        'for custom UITrace should report data to native using endScreenRenderForCustomUiTrace',
         () {
       final frameTestData = InstabugScreenRenderData(
         traceId: 123,
@@ -225,11 +226,11 @@ void main() {
 
       manager.stopScreenRenderCollector();
 
-      expect(manager.screenRenderForCustomUiTrace.isActive, true);
+      expect(manager.screenRenderForCustomUiTrace.isActive, false);
 
       expect(manager.screenRenderForAutoUiTrace.isActive, false);
 
-      expect(manager.screenRenderForCustomUiTrace == frameTestData, true);
+      expect(manager.screenRenderForCustomUiTrace.isEmpty, true);
 
       verify(
         mApmHost.endScreenRenderForCustomUiTrace(any),
@@ -367,15 +368,10 @@ void main() {
       manager.analyzeFrameTiming(mockFrameTiming); // mock frame timing
       manager.stopScreenRenderCollector(); // should save data
 
-      expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
       expect(
-        manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
-        buildDuration * 1000,
-      ); // * 1000 to convert from milliseconds to microseconds
-      expect(
-        manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
-        0,
-      );
+        manager.screenRenderForAutoUiTrace.frameData.isEmpty,
+        true,
+      ); // reset cached data after sync
     });
 
     test('should detect slow frame on raster thread and record duration', () {
@@ -387,15 +383,10 @@ void main() {
       manager.analyzeFrameTiming(mockFrameTiming); // mock frame timing
       manager.stopScreenRenderCollector(); // should save data
 
-      expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
       expect(
-        manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
-        rasterDuration * 1000,
-      ); // * 1000 to convert from milliseconds to microseconds
-      expect(
-        manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
-        0,
-      );
+        manager.screenRenderForAutoUiTrace.frameData.isEmpty,
+        true,
+      ); // reset cached data after sync
     });
 
     test(
@@ -408,15 +399,10 @@ void main() {
       manager.analyzeFrameTiming(mockFrameTiming); // mock frame timing
       manager.stopScreenRenderCollector(); // should save data
 
-      expect(manager.screenRenderForAutoUiTrace.frameData.length, 1);
       expect(
-        manager.screenRenderForAutoUiTrace.frozenFramesTotalDurationMicro,
-        totalTime * 1000,
-      ); // * 1000 to convert from milliseconds to microseconds
-      expect(
-        manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
-        0,
-      );
+        manager.screenRenderForAutoUiTrace.frameData.isEmpty,
+        true,
+      ); // reset cached data after sync
     });
 
     test('should detect no slow or frozen frame under thresholds', () {

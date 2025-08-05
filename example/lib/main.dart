@@ -28,7 +28,6 @@ part 'src/components/non_fatal_crashes_content.dart';
 part 'src/components/page.dart';
 part 'src/components/screen_render.dart';
 part 'src/components/screen_render_switch.dart';
-part 'src/components/traces_content.dart';
 part 'src/components/ui_traces_content.dart';
 part 'src/screens/apm_page.dart';
 part 'src/screens/complex_page.dart';
@@ -37,8 +36,6 @@ part 'src/screens/my_home_page.dart';
 part 'src/screens/screen_capture_premature_extension_page.dart';
 part 'src/screens/screen_loading_page.dart';
 part 'src/screens/screen_render_page.dart';
-
-part 'src/components/flows_content.dart';
 
 void main() {
   runZonedGuarded(

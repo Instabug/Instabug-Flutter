@@ -310,7 +310,7 @@ void main() {
       await APM.endUITrace();
 
       verify(
-        mScreenRenderManager.endScreenRenderCollector(),
+        mScreenRenderManager.endScreenRenderCollector(UiTraceType.custom),
       ).called(1);
       verifyNever(mHost.endUITrace());
     });

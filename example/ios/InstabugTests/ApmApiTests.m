@@ -249,49 +249,40 @@
     OCMVerify([self.mAPM setScreenRenderingEnabled:NO]);
 }
 
-- (void)testDeviceRefreshRate {
+- (void)testGetDeviceRefreshRateAndTolerance {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
     
-    // Mock UIScreen for iOS 10.3+
-    id mockScreen = OCMClassMock([UIScreen class]);
-    OCMStub([mockScreen mainScreen]).andReturn(mockScreen);
-    OCMStub([mockScreen maximumFramesPerSecond]).andReturn(120.0);
+    // Mock values
+    double expectedTolerance = 5.0;
+    double expectedRefreshRate = 60.0;
     
-    [self.api deviceRefreshRateWithCompletion:^(NSNumber *refreshRate, FlutterError *error) {
+    // Mock the tolerance value
+    OCMStub([self.mAPM screenRenderingThreshold]).andReturn(expectedTolerance);
+    
+    // Mock UIScreen class methods
+    id mockUIScreen = OCMClassMock([UIScreen class]);
+    id mockMainScreen = OCMClassMock([UIScreen class]);
+    
+    // Stub the class method and instance property
+    OCMStub([mockUIScreen mainScreen]).andReturn(mockMainScreen);
+    OCMStub([mockMainScreen maximumFramesPerSecond]).andReturn(expectedRefreshRate);
+    
+    [self.api getDeviceRefreshRateAndToleranceWithCompletion:^(NSArray<NSNumber *> *result, FlutterError *error) {
         [expectation fulfill];
         
-        XCTAssertEqualObjects(refreshRate, @(120.0));
+        XCTAssertNotNil(result);
+        XCTAssertEqual(result.count, 2);
+        XCTAssertEqualObjects(result[0], @(expectedRefreshRate));
+        XCTAssertEqualObjects(result[1], @(expectedTolerance));
         XCTAssertNil(error);
     }];
-
+    
     [self waitForExpectations:@[expectation] timeout:5.0];
     
-    [mockScreen stopMocking];
+    [mockUIScreen stopMocking];
+    [mockMainScreen stopMocking];
 }
 
-- (void)testDeviceRefreshRateFallback {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
-    
-    // Note: Testing the fallback behavior for iOS < 10.3 is challenging in unit tests
-    // since we can't easily mock the iOS version check. In a real scenario, this would
-    // return 60.0 for older iOS versions. For now, we'll test the normal case.
-    
-    // Mock UIScreen to return 60.0 (typical fallback value)
-    id mockScreen = OCMClassMock([UIScreen class]);
-    OCMStub([mockScreen mainScreen]).andReturn(mockScreen);
-    OCMStub([mockScreen maximumFramesPerSecond]).andReturn(60.0);
-    
-    [self.api deviceRefreshRateWithCompletion:^(NSNumber *refreshRate, FlutterError *error) {
-        [expectation fulfill];
-        
-        XCTAssertEqualObjects(refreshRate, @(60.0));
-        XCTAssertNil(error);
-    }];
-
-    [self waitForExpectations:@[expectation] timeout:5.0];
-    
-    [mockScreen stopMocking];
-}
 
 - (void)testEndScreenRenderForAutoUiTrace {
     FlutterError *error;

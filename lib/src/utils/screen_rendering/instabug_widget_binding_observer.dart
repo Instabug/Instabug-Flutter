@@ -36,6 +36,7 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
         .then((uiTraceId) {
       if (uiTraceId != null &&
           InstabugScreenRenderManager.I.screenRenderEnabled) {
+        InstabugScreenRenderManager.I.endScreenRenderCollector();
         InstabugScreenRenderManager.I
             .startScreenRenderCollectorForTraceId(uiTraceId);
       }

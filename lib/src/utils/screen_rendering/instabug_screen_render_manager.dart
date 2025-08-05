@@ -125,9 +125,7 @@ class InstabugScreenRenderManager {
   ]) {
     try {
       // Return if frameTimingListener not attached
-      if (!screenRenderEnabled || !_isTimingsListenerAttached) {
-        return;
-      }
+      if (frameCollectorIsNotActive) return;
 
       if (type == UiTraceType.custom) {
         _screenRenderForCustomUiTrace.traceId = traceId;
@@ -147,13 +145,12 @@ class InstabugScreenRenderManager {
   ]) {
     try {
       // Return if frameTimingListener not attached
-      if (!screenRenderEnabled || !_isTimingsListenerAttached) {
-        return;
-      }
+      // log("frameCollectorIsNotActive $frameCollectorIsNotActive");
+      if (frameCollectorIsNotActive) return;
 
       //Save the memory cached data to be sent to native side
       if (_delayedFrames.isNotEmpty) {
-        _saveCollectedData();
+        saveCollectedData();
         _resetCachedFrameData();
       }
 
@@ -178,23 +175,32 @@ class InstabugScreenRenderManager {
   @internal
   void stopScreenRenderCollector() {
     try {
+      // Return if frameTimingListener not attached
+      if (frameCollectorIsNotActive) return;
+
       if (_delayedFrames.isNotEmpty) {
-        _saveCollectedData();
+        saveCollectedData();
+        _resetCachedFrameData();
       }
 
       // Sync Screen Render data for custom ui trace if exists
       if (_screenRenderForCustomUiTrace.isActive) {
         _reportScreenRenderForCustomUiTrace(_screenRenderForCustomUiTrace);
+        _screenRenderForCustomUiTrace.clear();
       }
 
       // Sync Screen Render data for auto ui trace if exists
       if (_screenRenderForAutoUiTrace.isActive) {
         _reportScreenRenderForAutoUiTrace(_screenRenderForAutoUiTrace);
+        _screenRenderForAutoUiTrace.clear();
       }
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
     }
   }
+
+  bool get frameCollectorIsNotActive =>
+      !screenRenderEnabled || !_isTimingsListenerAttached;
 
   /// Dispose InstabugScreenRenderManager by removing timings callback and cashed data.
   void dispose() {
@@ -326,6 +332,7 @@ class InstabugScreenRenderManager {
     InstabugScreenRenderData screenRenderData,
   ) async {
     try {
+      screenRenderData.saveEndTime();
       log(
         "reportScreenRenderForCustomUiTrace $screenRenderData",
         name: tag,
@@ -361,7 +368,8 @@ class InstabugScreenRenderManager {
   }
 
   /// Add the memory cashed data to the objects that will be synced asynchronously to the native side.
-  void _saveCollectedData() {
+  @visibleForTesting
+  void saveCollectedData() {
     if (_screenRenderForAutoUiTrace.isActive) {
       _updateAutoUiData();
     }
