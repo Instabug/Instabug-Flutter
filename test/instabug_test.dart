@@ -206,16 +206,6 @@ void main() {
     ).called(1);
   });
 
-  test('[setPrimaryColor] should call host method', () async {
-    const color = Color(0x00000000);
-
-    await Instabug.setPrimaryColor(color);
-
-    verify(
-      mHost.setPrimaryColor(color.value),
-    ).called(1);
-  });
-
   test('[setSessionProfilerEnabled] should call host method', () async {
     const enabled = true;
 
@@ -264,37 +254,6 @@ void main() {
     expect(result, tags);
     verify(
       mHost.getTags(),
-    ).called(1);
-  });
-
-  test('[addExperiments] should call host method', () async {
-    const experiments = ["exp-1", "exp-2"];
-
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.addExperiments(experiments);
-
-    verify(
-      mHost.addExperiments(experiments),
-    ).called(1);
-  });
-
-  test('[removeExperiments] should call host method', () async {
-    const experiments = ["exp-1", "exp-2"];
-
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.removeExperiments(experiments);
-
-    verify(
-      mHost.removeExperiments(experiments),
-    ).called(1);
-  });
-
-  test('[clearAllExperiments] should call host method', () async {
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.clearAllExperiments();
-
-    verify(
-      mHost.clearAllExperiments(),
     ).called(1);
   });
 
@@ -481,6 +440,16 @@ void main() {
     //assert
     verify(
       mHost.willRedirectToStore(),
+    ).called(1);
+  });
+
+  test('[setTheme] should call host method with theme config', () async {
+    const themeConfig = ThemeConfig(primaryColor: '#FF0000');
+
+    await Instabug.setTheme(themeConfig);
+
+    verify(
+      mHost.setTheme(themeConfig.toMap()),
     ).called(1);
   });
 }

@@ -200,31 +200,6 @@
     [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
-- (void)testAddExperiments {
-    NSArray<NSString *> *experiments = @[@"premium", @"star"];
-    FlutterError *error;
-
-    [self.api addExperimentsExperiments:experiments error:&error];
-
-    OCMVerify([self.mInstabug addExperiments:experiments]);
-}
-
-- (void)testRemoveExperiments {
-    NSArray<NSString *> *experiments = @[@"premium", @"star"];
-    FlutterError *error;
-
-    [self.api removeExperimentsExperiments:experiments error:&error];
-
-    OCMVerify([self.mInstabug removeExperiments:experiments]);
-}
-
-- (void)testClearAllExperiments {
-    FlutterError *error;
-
-    [self.api clearAllExperimentsWithError:&error];
-
-    OCMVerify([self.mInstabug clearAllExperiments]);
-}
 
 - (void)testAddFeatureFlags {
   NSDictionary *featureFlagsMap = @{ @"key13" : @"value1", @"key2" : @"value2"};
@@ -609,6 +584,34 @@
     XCTAssertEqual(result[@"isW3cExternalGeneratedHeaderEnabled"],isW3cExternalTraceIDEnabled);
     XCTAssertEqual(result[@"isW3cCaughtHeaderEnabled"],isW3cExternalTraceIDEnabled);
 
+}
+
+- (void)testSetThemeWithAllProperties {
+    NSDictionary *themeConfig = @{
+        @"primaryColor": @"#FF6B6B",
+        @"backgroundColor": @"#FFFFFF",
+        @"titleTextColor": @"#000000",
+        @"primaryTextColor": @"#333333",
+        @"secondaryTextColor": @"#666666",
+        @"callToActionTextColor": @"#FF6B6B",
+        @"primaryFontPath": @"assets/fonts/CustomFont-Regular.ttf",
+        @"secondaryFontPath": @"assets/fonts/CustomFont-Bold.ttf",
+        @"ctaFontPath": @"assets/fonts/CustomFont-Italic.ttf"
+    };
+    
+    id mockTheme = OCMClassMock([IBGTheme class]);
+    OCMStub([mockTheme primaryColor]).andReturn([UIColor redColor]);
+    OCMStub([mockTheme backgroundColor]).andReturn([UIColor whiteColor]);
+    OCMStub([mockTheme titleTextColor]).andReturn([UIColor blackColor]);
+    OCMStub([mockTheme primaryTextColor]).andReturn([UIColor darkGrayColor]);
+    OCMStub([mockTheme secondaryTextColor]).andReturn([UIColor grayColor]);
+    OCMStub([mockTheme callToActionTextColor]).andReturn([UIColor redColor]);
+    
+    FlutterError *error;
+    
+    [self.api setThemeThemeConfig:themeConfig error:&error];
+    
+    OCMVerify([self.mInstabug setTheme:[OCMArg isNotNil]]);
 }
 
 @end

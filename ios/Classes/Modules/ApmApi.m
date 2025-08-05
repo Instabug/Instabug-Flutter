@@ -70,44 +70,6 @@ NSMutableDictionary *traces;
     IBGAPM.autoUITraceEnabled = [isEnabled boolValue];
 }
 
-// This method is responsible for starting an execution trace
-// with a given `id` and `name`.
-//
-// Deprecated - see [startFlowName, setFlowAttributeName & endFlowName].
-- (void)startExecutionTraceId:(NSString *)id name:(NSString *)name completion:(void(^)(NSString *_Nullable, FlutterError *_Nullable))completion {
-    IBGExecutionTrace *trace = [IBGAPM startExecutionTraceWithName:name];
-    
-    if (trace != nil) {
-        [traces setObject:trace forKey:id];
-        return completion(id, nil);
-    } else {
-        return completion(nil, nil);
-    }
-}
-
-// This method is responsible for setting an attribute for a specific
-// execution trace identified by the provided `id`.
-//
-// Deprecated - see [startFlowName, setFlowAttributeName & endFlowName].
-- (void)setExecutionTraceAttributeId:(NSString *)id key:(NSString *)key value:(NSString *)value error:(FlutterError *_Nullable *_Nonnull)error {
-    IBGExecutionTrace *trace = [traces objectForKey:id];
-    
-    if (trace != nil) {
-        [trace setAttributeWithKey:key value:value];
-    }
-}
-
-// This method `endExecutionTraceId` is responsible for ending an execution trace identified by the
-// provided `id`.
-//
-// Deprecated - see [startFlowName, setFlowAttributeName & endFlowName].
-- (void)endExecutionTraceId:(NSString *)id error:(FlutterError *_Nullable *_Nonnull)error {
-    IBGExecutionTrace *trace = [traces objectForKey:id];
-    
-    if (trace != nil) {
-        [trace end];
-    }
-}
 
 // This method is responsible for starting a flow with the given `name`. This functionality is used to
 // track and monitor the performance of specific flows within the application.
@@ -205,14 +167,14 @@ NSMutableDictionary *traces;
 
 - (void)setScreenRenderEnabledIsEnabled:(nonnull NSNumber *)isEnabled error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     [IBGAPM setScreenRenderingEnabled:[isEnabled boolValue]];
-    
+
 }
 
 
 - (void)endScreenRenderForAutoUiTraceData:(nonnull NSDictionary<NSString *,id> *)data error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     NSArray<NSArray<NSNumber *> *> *rawFrames = data[@"frameData"];
     NSMutableArray<IBGFrameInfo *> *frameInfos = [[NSMutableArray alloc] init];
-    
+
     if (rawFrames && [rawFrames isKindOfClass:[NSArray class]]) {
         for (NSArray<NSNumber *> *frameValues in rawFrames) {
             if ([frameValues count] == 2) {
@@ -230,7 +192,7 @@ NSMutableDictionary *traces;
 - (void)endScreenRenderForCustomUiTraceData:(nonnull NSDictionary<NSString *,id> *)data error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     NSArray<NSArray<NSNumber *> *> *rawFrames = data[@"frameData"];
     NSMutableArray<IBGFrameInfo *> *frameInfos = [[NSMutableArray alloc] init];
-    
+
     if (rawFrames && [rawFrames isKindOfClass:[NSArray class]]) {
         for (NSArray<NSNumber *> *frameValues in rawFrames) {
             if ([frameValues count] == 2) {
@@ -241,7 +203,7 @@ NSMutableDictionary *traces;
             }
         }
     }
-    
+
     [IBGAPM endCustomUITraceCPWithFrames:frameInfos];
 }
 

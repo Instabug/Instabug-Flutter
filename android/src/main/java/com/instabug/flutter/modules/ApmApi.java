@@ -10,7 +10,6 @@ import com.instabug.apm.InternalAPM;
 import com.instabug.apm.configuration.cp.APMFeature;
 import com.instabug.apm.configuration.cp.FeatureAvailabilityCallback;
 import com.instabug.apm.configuration.cp.ToleranceValueCallback;
-//import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
 import com.instabug.apm.screenrendering.models.cp.IBGFrameData;
@@ -32,7 +31,6 @@ import io.flutter.plugin.common.BinaryMessenger;
 
 public class ApmApi implements ApmPigeon.ApmHostApi {
     private final String TAG = ApmApi.class.getName();
-//    private final HashMap<String, ExecutionTrace> traces = new HashMap<>();
     private final Callable<Float> refreshRateCallback;
 
     public ApmApi(Callable<Float> refreshRate) {
@@ -95,57 +93,22 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         }
     }
 
-    /**
-     * Starts an execution trace and handles the result
-     * using callbacks.
-     *
-     * @param id     The `id` parameter is a non-null String that represents the identifier of the execution
-     *               trace.
-     * @param name   The `name` parameter in the `startExecutionTrace` method represents the name of the
-     *               execution trace that will be started. It is used as a reference to identify the trace during
-     *               execution monitoring.
-     * @param result The `result` parameter in the `startExecutionTrace` method is an instance of
-     *               `ApmPigeon.Result<String>`. This parameter is used to provide the result of the execution trace
-     *               operation back to the caller. The `success` method of the `result` object is called with the
-     * @deprecated see {@link #startFlow}
-     */
-    @Override
-    public void startExecutionTrace(@NonNull String id, @NonNull String name, ApmPigeon.Result<String> result) {
-        ThreadManager.runOnBackground(new Runnable() {
-            @Override
-            public void run() {
-                try {
-//                    ExecutionTrace trace = APM.startExecutionTrace(name);
-//                    if (trace != null) {
-//                        traces.put(id, trace);
-//
-//                        ThreadManager.runOnMainThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                result.success(id);
-//                            }
-//                        });
-//                    } else {
-//                        ThreadManager.runOnMainThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                result.success(null);
-//                            }
-//                        });
-//                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+  /**
+   * Starts an execution trace and handles the result
+   * using callbacks.
+   * 
+   * @param id The `id` parameter is a non-null String that represents the identifier of the execution
+   * trace.
+   * @param name The `name` parameter in the `startExecutionTrace` method represents the name of the
+   * execution trace that will be started. It is used as a reference to identify the trace during
+   * execution monitoring.
+   * @param result The `result` parameter in the `startExecutionTrace` method is an instance of
+   * `ApmPigeon.Result<String>`. This parameter is used to provide the result of the execution trace
+   * operation back to the caller. The `success` method of the `result` object is called with the
+   * 
+   * @deprecated see {@link #startFlow}
+   */
 
-                    ThreadManager.runOnMainThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            result.success(null);
-                        }
-                    });
-                }
-            }
-        });
-    }
 
     /**
      * Starts an AppFlow with the specified name.
@@ -210,37 +173,7 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         }
     }
 
-    /**
-     * Adds a new attribute to trace
-     *
-     * @param id    String id of the trace.
-     * @param key   attribute key
-     * @param value attribute value. Null to remove attribute
-     * @deprecated see {@link #setFlowAttribute}
-     */
-    @Override
-    public void setExecutionTraceAttribute(@NonNull String id, @NonNull String key, @NonNull String value) {
-        try {
-//            traces.get(id).setAttribute(key, value);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    /**
-     * Ends a trace
-     *
-     * @param id string id of the trace.
-     * @deprecated see {@link #endFlow}
-     */
-    @Override
-    public void endExecutionTrace(@NonNull String id) {
-        try {
-//            traces.get(id).end();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Starts a UI trace.
