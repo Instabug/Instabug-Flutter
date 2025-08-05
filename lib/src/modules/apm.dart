@@ -196,6 +196,9 @@ class APM {
       (_) async {
         // Start screen render collector for custom ui trace if enabled.
         if (await FlagsConfig.screenRendering.isEnabled()) {
+          InstabugScreenRenderManager.I.endScreenRenderCollector();
+
+          // final uiTraceId = IBGDateTime.I.now().millisecondsSinceEpoch;
           InstabugScreenRenderManager.I
               .startScreenRenderCollectorForTraceId(0, UiTraceType.custom);
         }
@@ -210,8 +213,7 @@ class APM {
   static Future<void> endUITrace() async {
     // End screen render collector for custom ui trace if enabled.
     if (InstabugScreenRenderManager.I.screenRenderEnabled) {
-      return InstabugScreenRenderManager.I
-          .endScreenRenderCollectorForCustomUiTrace();
+      return InstabugScreenRenderManager.I.endScreenRenderCollector();
     }
 
     return _host.endUITrace();

@@ -349,13 +349,10 @@ void main() {
         () async {
       when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => true);
       when(mScreenRenderManager.screenRenderEnabled).thenReturn(true);
-      const traceName = "traceNameTest";
-      await APM.startUITrace(traceName);
       await APM.endUITrace();
 
-      verify(mHost.startUITrace(traceName)).called(1);
       verify(
-        mScreenRenderManager.endScreenRenderCollectorForCustomUiTrace(),
+        mScreenRenderManager.endScreenRenderCollector(),
       ).called(1);
       verifyNever(mHost.endUITrace());
     });
@@ -374,7 +371,7 @@ void main() {
         mHost.endUITrace(),
       ).called(1);
       verifyNever(
-        mScreenRenderManager.endScreenRenderCollectorForCustomUiTrace(),
+        mScreenRenderManager.endScreenRenderCollector(),
       );
     });
   });

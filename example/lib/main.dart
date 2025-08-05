@@ -20,6 +20,7 @@ import 'src/widget/section_title.dart';
 
 part 'src/components/animated_box.dart';
 part 'src/components/apm_switch.dart';
+
 part 'src/components/fatal_crashes_content.dart';
 part 'src/components/flows_content.dart';
 part 'src/components/network_content.dart';
@@ -44,6 +45,7 @@ void main() {
 
       Instabug.init(
         token: 'ed6f659591566da19b67857e1b9d40ab',
+        // token: '4d75635ae06e5afb4360c04cfcf1987c',
         invocationEvents: [InvocationEvent.floatingButton],
         debugLogsLevel: LogLevel.verbose,
       ).then((_) {

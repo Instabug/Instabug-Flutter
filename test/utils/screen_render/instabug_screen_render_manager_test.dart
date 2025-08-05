@@ -9,7 +9,7 @@ import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_rend
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'instabug_screen_render_manager_test.mocks.dart';
+import 'instabug_screen_render_manager_test_manual_mocks.dart';
 
 @GenerateMocks([ApmHostApi, FrameTiming, WidgetsBinding])
 void main() {
@@ -91,25 +91,6 @@ void main() {
       verify(mWidgetBinding.addTimingsCallback(any)).called(
         1,
       ); // the one form initForTesting()
-    });
-
-    test(
-        'should report data to native when starting new trace from the same type',
-        () async {
-      final frameTestData = InstabugScreenRenderData(
-        traceId: 123,
-        frameData: [
-          InstabugFrameData(10000, 200),
-          InstabugFrameData(20000, 1000),
-        ],
-        frozenFramesTotalDurationMicro: 1000,
-        slowFramesTotalDurationMicro: 200,
-      );
-
-      manager.startScreenRenderCollectorForTraceId(frameTestData.traceId);
-      manager.setFrameData(frameTestData);
-      manager.startScreenRenderCollectorForTraceId(2);
-      verify(mApmHost.endScreenRenderForAutoUiTrace(any)).called(1);
     });
 
     test('should attach timing listener if it is not attached', () async {
@@ -310,7 +291,7 @@ void main() {
 
       manager.setFrameData(frameTestData);
 
-      manager.endScreenRenderCollectorForCustomUiTrace();
+      manager.endScreenRenderCollector();
 
       expect(manager.screenRenderForCustomUiTrace.isActive, false);
       expect(manager.screenRenderForCustomUiTrace == frameTestData, false);
@@ -336,11 +317,11 @@ void main() {
 
       manager.setFrameData(frameTestData);
 
-      manager.endScreenRenderCollectorForCustomUiTrace();
+      manager.endScreenRenderCollector();
     });
 
     test('should not remove timing callback listener', () {
-      manager.endScreenRenderCollectorForCustomUiTrace();
+      manager.endScreenRenderCollector();
 
       verifyNever(mWidgetBinding.removeTimingsCallback(any));
     });
@@ -358,7 +339,7 @@ void main() {
 
       manager.startScreenRenderCollectorForTraceId(0, UiTraceType.custom);
       manager.setFrameData(frameTestData);
-      manager.endScreenRenderCollectorForCustomUiTrace();
+      manager.endScreenRenderCollector(UiTraceType.custom);
       verify(mApmHost.endScreenRenderForCustomUiTrace(any)).called(1);
     });
   });
@@ -455,6 +436,52 @@ void main() {
         manager.screenRenderForAutoUiTrace.slowFramesTotalDurationMicro,
         0,
       );
+    });
+  });
+
+  group('InstabugScreenRenderManager.endScreenRenderCollector', () {
+    test('should save and reset cached data if delayed frames exist', () {
+      final frameTestData = InstabugScreenRenderData(
+        traceId: 123,
+        frameData: [
+          InstabugFrameData(10000, 200),
+          InstabugFrameData(20000, 1000),
+        ],
+        frozenFramesTotalDurationMicro: 1000,
+        slowFramesTotalDurationMicro: 200,
+      );
+      manager.startScreenRenderCollectorForTraceId(1);
+      manager.setFrameData(frameTestData);
+      manager.endScreenRenderCollector();
+      verify(mApmHost.endScreenRenderForAutoUiTrace(any)).called(1);
+      expect(manager.screenRenderForAutoUiTrace.isEmpty, true);
+      expect(manager.screenRenderForAutoUiTrace.isActive, false);
+    });
+
+    test('should report and clear custom trace if type is custom and active',
+        () {
+      final frameTestData = InstabugScreenRenderData(
+        traceId: 123,
+        frameData: [
+          InstabugFrameData(10000, 200),
+          InstabugFrameData(20000, 1000),
+        ],
+        frozenFramesTotalDurationMicro: 1000,
+        slowFramesTotalDurationMicro: 200,
+      );
+      manager.startScreenRenderCollectorForTraceId(1, UiTraceType.custom);
+      manager.setFrameData(frameTestData);
+      manager.endScreenRenderCollector(UiTraceType.custom);
+      verify(mApmHost.endScreenRenderForCustomUiTrace(any)).called(1);
+      expect(manager.screenRenderForCustomUiTrace.isEmpty, true);
+      expect(manager.screenRenderForCustomUiTrace.isActive, false);
+    });
+
+    test('should return early if not enabled or timings not attached', () {
+      manager.screenRenderEnabled = false;
+      manager.endScreenRenderCollector();
+      verifyNever(mApmHost.endScreenRenderForAutoUiTrace(any));
+      verifyNever(mApmHost.endScreenRenderForCustomUiTrace(any));
     });
   });
 }
