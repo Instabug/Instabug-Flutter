@@ -7,44 +7,44 @@
 
 /************* SIGSEGV *******************************/
 JNIEXPORT void JNICALL
-Java_com_example_InstabugSample_nativeLibs_CppNativeLib_causeSIGSEGVCrash(JNIEnv *env, jobject thiz) {
+Java_com_example_InstabugSample_ndk_CppNativeLib_causeSIGSEGVCrash(JNIEnv *env, jobject thiz) {
     causeSIGSEGVCrashF1();
 }
 
 /*****************************************************/
 
 /************* SIGABRT *******************************/
-void JNICALL
-Java_com_example_InstabugSample_nativeLibs_CppNativeLib_causeSIGABRTCrash(JNIEnv *env, jobject thiz) {
+JNIEXPORT void JNICALL
+Java_com_example_InstabugSample_ndk_CppNativeLib_causeSIGABRTCrash(JNIEnv *env, jobject thiz) {
     causeSIGABRTCrashF1();
 }
 /****************************************************/
 
 /************* SIGFPE *******************************/
-void JNICALL
-Java_com_example_InstabugSample_nativeLibs_CppNativeLib_causeSIGFPECrash(JNIEnv *env, jobject thiz) {
+JNIEXPORT void JNICALL
+Java_com_example_InstabugSample_ndk_CppNativeLib_causeSIGFPECrash(JNIEnv *env, jobject thiz) {
     causeSIGFPECrashF1();
 }
 /***************************************************/
 
 /************* SIGILL *******************************/
 
-void JNICALL
-Java_com_example_InstabugSample_nativeLibs_CppNativeLib_causeSIGILLCrash(JNIEnv *env, jobject thiz) {
+JNIEXPORT void JNICALL
+Java_com_example_InstabugSample_ndk_CppNativeLib_causeSIGILLCrash(JNIEnv *env, jobject thiz) {
     causeSIGILLCrashF1();
 }
 /***************************************************/
 
 /************* SIGBUS *******************************/
-void JNICALL
-Java_com_example_InstabugSample_nativeLibs_CppNativeLib_causeSIGBUSCrash(JNIEnv *env, jobject thiz) {
+JNIEXPORT void JNICALL
+Java_com_example_InstabugSample_ndk_CppNativeLib_causeSIGBUSCrash(JNIEnv *env, jobject thiz) {
     causeSIGBUSCrashF1();
 }
 /***************************************************/
 
 /************* SIGTRAP *******************************/
-void JNICALL
-Java_com_example_InstabugSample_nativeLibs_CppNativeLib_causeSIGTRAPCrash(JNIEnv *env, jobject thiz) {
+JNIEXPORT void JNICALL
+Java_com_example_InstabugSample_ndk_CppNativeLib_causeSIGTRAPCrash(JNIEnv *env, jobject thiz) {
     causeSIGTRAPCrashF1();
 }
 /***************************************************/

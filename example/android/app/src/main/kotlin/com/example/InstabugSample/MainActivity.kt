@@ -1,4 +1,4 @@
-package com.instabug.flutter.example
+package com.example.InstabugSample
 
 import com.example.InstabugSample.InstabugExampleMethodCallHandler
 import com.example.InstabugSample.InstabugExampleMethodCallHandler.Companion.METHOD_CHANNEL_NAME
@@ -10,6 +10,8 @@ class
 MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, METHOD_CHANNEL_NAME).setMethodCallHandler(InstabugExampleMethodCallHandler())
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, METHOD_CHANNEL_NAME).setMethodCallHandler(
+            InstabugExampleMethodCallHandler()
+        )
     }
 }

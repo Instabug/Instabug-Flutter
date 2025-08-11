@@ -1,8 +1,9 @@
 package com.example.InstabugSample
+
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.example.InstabugSample.nativeLibs.CppNativeLib
+import com.example.InstabugSample.ndk.CppNativeLib
 import com.instabug.crash.CrashReporting
 import com.instabug.crash.models.IBGNonFatalException
 import io.flutter.plugin.common.MethodCall
@@ -172,31 +173,31 @@ class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
 
     // NDK Crash Methods
     private fun causeNdkCrash() {
-        CppNativeLib.crashNDK();
+        CppNativeLib.crashNDK()
     }
 
     private fun causeSIGSEGVCrash() {
-        CppNativeLib.causeSIGSEGVCrash();
+        CppNativeLib.causeSIGSEGVCrash()
     }
 
     private fun causeSIGABRTCrash() {
-        CppNativeLib.causeSIGABRTCrash();
+        CppNativeLib.causeSIGABRTCrash()
     }
 
     private fun causeSIGFPECrash() {
-        CppNativeLib.causeSIGFPECrash();
+        CppNativeLib.causeSIGFPECrash()
     }
 
     private fun causeSIGILLCrash() {
-        CppNativeLib.causeSIGILLCrash();
+        CppNativeLib.causeSIGILLCrash()
     }
 
     private fun causeSIGBUSCrash() {
-        CppNativeLib.causeSIGBUSCrash();
+        CppNativeLib.causeSIGBUSCrash()
     }
 
     private fun causeSIGTRAPCrash() {
-        CppNativeLib.causeSIGTRAPCrash();
+        CppNativeLib.causeSIGTRAPCrash()
     }
 
 }

@@ -1,4 +1,6 @@
-package com.example.InstabugSample.nativeLibs;
+package com.example.InstabugSample.ndk;
+
+import android.util.Log;
 
 /**
  * C++ Native library bridge.
@@ -10,7 +12,7 @@ public class CppNativeLib {
     }
 
     /**
-     * Crashes the app with an invalid argument exception in the C++ native library.
+     * Crashes the app with various signals from the C/C++ layer.
      */
     public static native void crashNDK();
     public static native void causeSIGSEGVCrash();
@@ -19,6 +21,4 @@ public class CppNativeLib {
     public static native void causeSIGILLCrash();
     public static native void causeSIGBUSCrash();
     public static native void causeSIGTRAPCrash();
-
-
 }

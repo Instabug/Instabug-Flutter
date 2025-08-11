@@ -26,6 +26,11 @@ dependencies:
   http: ^0.13.0
   instabug_flutter:
     path: ../
+  instabug_flutter_ndk:
+    git:
+      url: https://github.com/Instabug/Instabug-Flutter/
+      path: packages/instabug_flutter_ndk
+      ref: feat/support-ndk-crashes
   instabug_http_client: ^2.4.0
 
 dev_dependencies:
