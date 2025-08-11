@@ -14,7 +14,8 @@ class NdkCrashesContent extends StatelessWidget {
                 children: [
                   InstabugButton(
                     text: 'Trigger NDK Crash',
-                    onPressed: InstabugFlutterExampleMethodChannel.causeNdkCrash,
+                    onPressed:
+                        InstabugFlutterExampleMethodChannel.causeNdkCrash,
                   ),
                   InstabugButton(
                     text: 'Trigger NDK SIGSEGV Crash',
