@@ -6,8 +6,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockConstruction;
@@ -30,6 +32,7 @@ import com.instabug.apm.InternalAPM;
 import com.instabug.bug.BugReporting;
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.modules.InstabugApi;
+import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.GlobalMocks;
 import com.instabug.flutter.util.MockReflected;
 import com.instabug.library.Feature;
@@ -38,6 +41,7 @@ import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder;
 import com.instabug.library.IssueType;
 import com.instabug.library.LogLevel;
+import com.instabug.library.MaskingType;
 import com.instabug.library.Platform;
 import com.instabug.library.ReproConfigurations;
 import com.instabug.library.ReproMode;
@@ -653,5 +657,49 @@ public class InstabugApiTest {
 
         InstabugApi.setScreenshotCaptor(any(), internalCore);
         verify(internalCore)._setScreenshotCaptor(any(ScreenshotCaptor.class));
+    }
+
+    @Test
+    public void testSetUserStepsEnabledGivenTrue() {
+        boolean isEnabled = true;
+
+        api.setEnableUserSteps(isEnabled);
+
+        mInstabug.verify(() -> Instabug.setTrackingUserStepsState(Feature.State.ENABLED));
+    }
+
+    @Test
+    public void testSetUserStepsEnabledGivenFalse() {
+        boolean isEnabled = false;
+
+        api.setEnableUserSteps(isEnabled);
+
+        mInstabug.verify(() -> Instabug.setTrackingUserStepsState(Feature.State.DISABLED));
+    }
+
+    @Test
+    public void testLogUserSteps() {
+
+        final String gestureType = "GestureType.tap";
+        final String message = "message";
+        final String view = "view";
+
+        api.logUserSteps(gestureType, message,view);
+
+        reflected.verify(() -> MockReflected.addUserStep(anyLong(), eq(ArgsRegistry.gestureStepType.get(gestureType)), eq(message), isNull(), eq(view)));
+
+    }
+
+    @Test
+    public void testAutoMasking() {
+        String maskLabel = "AutoMasking.labels";
+        String maskTextInputs = "AutoMasking.textInputs";
+        String maskMedia = "AutoMasking.media";
+        String maskNone = "AutoMasking.none";
+
+
+        api.enableAutoMasking(List.of(maskLabel, maskMedia, maskTextInputs,maskNone));
+
+        mInstabug.verify(() -> Instabug.setAutoMaskScreenshotsTypes(MaskingType.LABELS,MaskingType.MEDIA,MaskingType.TEXT_INPUTS,MaskingType.MASK_NOTHING));
     }
 }

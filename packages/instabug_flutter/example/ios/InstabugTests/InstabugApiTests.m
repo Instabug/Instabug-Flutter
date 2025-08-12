@@ -602,4 +602,32 @@
 
 }
 
+- (void)testSetEnableUserStepsIsEnabled{
+    NSNumber *isEnabled = @1;
+    FlutterError *error;
+
+    [self.api setEnableUserStepsIsEnabled:isEnabled error:&error];
+
+    OCMVerify([self.mInstabug setTrackUserSteps:YES]);
+
+}
+
+- (void)testLogUserStepsGestureType{
+    NSString* message = @"message";
+    NSString* view = @"viewName";
+    FlutterError *error;
+    
+    [self.api logUserStepsGestureType:@"GestureType.tap" message:message viewName:view error: &error];
+
+    XCTAssertNil(error, @"Error should be nil");
+
+}
+- (void)testAutoMasking {
+    NSArray<NSString *> *autoMaskingTypes = @[@"AutoMasking.labels", @"AutoMasking.textInputs",@"AutoMasking.media",@"AutoMasking.none"];
+    FlutterError *error;
+    
+    [self.api enableAutoMaskingAutoMasking:autoMaskingTypes error:&error];
+
+    OCMVerify([self.mInstabug setAutoMaskScreenshots: (IBGAutoMaskScreenshotOptionMaskNothing | IBGAutoMaskScreenshotOptionTextInputs | IBGAutoMaskScreenshotOptionLabels | IBGAutoMaskScreenshotOptionMedia)]);
+}
 @end

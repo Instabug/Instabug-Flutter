@@ -55,6 +55,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
     [Instabug setSdkDebugLogsLevel:resolvedLogLevel];
     [Instabug startWithToken:token invocationEvents:resolvedEvents];
+    Instabug.sendEventsSwizzling = false;
 }
 
 - (void)showWithError:(FlutterError *_Nullable *_Nonnull)error {
@@ -393,9 +394,45 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     return  result;
 }
 
+- (void)logUserStepsGestureType:(NSString *)gestureType message:(NSString *)message viewName:(NSString *)viewName error:(FlutterError * _Nullable __autoreleasing *)error
+{
+    @try {
+
+    IBGUIEventType event = ArgsRegistry.userStepsGesture[gestureType].integerValue;
+    IBGUserStep *userStep = [[IBGUserStep alloc] initWithEvent:event automatic: YES];
+
+   userStep = [userStep setMessage: message]; 
+   userStep =  [userStep setViewTypeName:viewName];    
+   [userStep logUserStep];   
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception);
+
+    }
+}
+
+
+- (void)setEnableUserStepsIsEnabled:(nonnull NSNumber *)isEnabled error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    Instabug.trackUserSteps = isEnabled.boolValue;
+}
+
+- (void)enableAutoMaskingAutoMasking:(nonnull NSArray<NSString *> *)autoMasking error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+    IBGAutoMaskScreenshotOption resolvedEvents = 0;
+
+    for (NSString *event in autoMasking) {
+        resolvedEvents |= (ArgsRegistry.autoMasking[event]).integerValue;
+    }
+    
+    [Instabug setAutoMaskScreenshots: resolvedEvents];
+
+}
+
+
+
+
 
 + (void)setScreenshotMaskingHandler:(nullable void (^)(UIImage * _Nonnull __strong, void (^ _Nonnull __strong)(UIImage * _Nonnull __strong)))maskingHandler {
-    [Instabug setScreenshotMaskingHandler:maskingHandler];
+   [Instabug setScreenshotMaskingHandler:maskingHandler];
 }
 
 @end

@@ -1,5 +1,7 @@
 using System.Drawing;
 using Instabug.Captain;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Appium.MultiTouch;
 
 namespace E2E.Utils;
 
@@ -10,6 +12,7 @@ public class CaptainTest : IDisposable
     AndroidApp = Path.GetFullPath("../../../../packages/instabug_flutter/example/build/app/outputs/flutter-apk/app-debug.apk"),
     AndroidAppId = "com.instabug.flutter.example",
     AndroidVersion = "13",
+
     IosApp = Path.GetFullPath("../../../../packages/instabug_flutter/example/build/ios/iphonesimulator/Runner.app"),
     IosAppId = "com.instabug.InstabugSample",
     IosVersion = "17.2",
@@ -28,28 +31,5 @@ public class CaptainTest : IDisposable
     captain.RestartApp();
   }
 
-  protected void ScrollDown()
-  {
-    captain.Swipe(
-        start: new Point(captain.Window.Size.Width / 2, captain.Window.Size.Height - 200),
-        end: new Point(captain.Window.Size.Width / 2, 250)
-    );
-  }
 
-
- protected void ScrollDownLittle()
-  {
-    captain.Swipe(
-        start: new Point(captain.Window.Size.Width / 2, captain.Window.Size.Height - 200),
-        end: new Point(captain.Window.Size.Width / 2, captain.Window.Size.Height - 220)
-    );
-  }
-
-  protected void ScrollUp()
-  {
-    captain.Swipe(
-        start: new Point(captain.Window.Size.Width / 2, 250),
-        end: new Point(captain.Window.Size.Width / 2, captain.Window.Size.Height - 200)
-    );
-  }
 }

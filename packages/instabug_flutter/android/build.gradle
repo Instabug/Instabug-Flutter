@@ -1,5 +1,5 @@
 group 'com.instabug.flutter'
-version '14.1.0'
+version '15.0.1'
 
 buildscript {
     repositories {
@@ -16,6 +16,13 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+			url "https://mvn.instabug.com/nexus/repository/instabug-internal/"
+			credentials {
+			  username "instabug"
+			  password System.getenv('INSTABUG_REPOSITORY_PASSWORD')
+			}
+		}
     }
 }
 
@@ -44,11 +51,12 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:14.1.0'
+    api 'com.instabug.library:instabug:14.2.0.6611870-SNAPSHOT'
+
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
     testImplementation "io.mockk:mockk:1.13.13"
-
+    testImplementation "org.robolectric:robolectric:4.12.2"
 }
 
 // add upload_symbols task

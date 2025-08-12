@@ -170,7 +170,17 @@ class _MyHomePageState extends State<MyHomePage> {
       context,
       MaterialPageRoute(
         builder: (context) => const PrivateViewPage(),
-        settings: const RouteSettings(name: ComplexPage.screenName),
+        settings: const RouteSettings(name: PrivateViewPage.screenName),
+      ),
+    );
+  }
+
+  void _navigateToUserStepsPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UserStepsPage(),
+        settings: const RouteSettings(name: UserStepsPage.screenName),
       ),
     );
   }
@@ -308,9 +318,11 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: showManualSurvey,
           text: 'Show Multiple Questions Survey',
         ),
-        InstabugButton(
-          onPressed: showFeatureRequests,
-          text: 'Show Feature Requests',
+        InstabugPrivateView(
+          child: InstabugButton(
+            onPressed: showFeatureRequests,
+            text: 'Show Feature Requests',
+          ),
         ),
         InstabugButton(
           onPressed: _navigateToCrashes,
@@ -355,6 +367,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('Dark'),
             ),
           ],
+        ),
+        InstabugButton(
+          text: 'User Steps',
+          onPressed: _navigateToUserStepsPage,
         ),
         SectionTitle('FeatureFlags'),
         InstabugTextField(

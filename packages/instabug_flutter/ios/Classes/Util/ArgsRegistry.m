@@ -43,6 +43,18 @@
     };
 }
 
++ (ArgsDictionary *)autoMasking {
+    return @{
+        @"AutoMasking.labels" : @(IBGAutoMaskScreenshotOptionLabels),
+        @"AutoMasking.textInputs" : @(IBGAutoMaskScreenshotOptionTextInputs),
+        @"AutoMasking.media" : @(IBGAutoMaskScreenshotOptionMedia),
+        @"AutoMasking.none" : @(IBGAutoMaskScreenshotOptionMaskNothing
+),
+
+    };
+}
+
+
 + (ArgsDictionary *)recordButtonPositions {
     return @{
         @"Position.topLeft" : @(IBGPositionTopLeft),
@@ -208,6 +220,17 @@
         @"CustomTextPlaceHolderKey.messagesNotificationAndOthers" : kIBGMessagesNotificationTitleMultipleMessagesStringName,
         @"CustomTextPlaceHolderKey.insufficientContentTitle" : kIBGInsufficientContentTitleStringName,
         @"CustomTextPlaceHolderKey.insufficientContentMessage" : kIBGInsufficientContentMessageStringName,
+    };
+}
+
++ (ArgsDictionary *) userStepsGesture {
+    return @{
+        @"GestureType.swipe" : @(IBGUIEventTypeSwipe),
+        @"GestureType.scroll" : @(IBGUIEventTypeScroll),
+        @"GestureType.tap" : @(IBGUIEventTypeTap),
+        @"GestureType.pinch" : @(IBGUIEventTypePinch),
+        @"GestureType.longPress" : @(IBGUIEventTypeLongPress),
+        @"GestureType.doubleTap" : @(IBGUIEventTypeDoubleTap),
     };
 }
 

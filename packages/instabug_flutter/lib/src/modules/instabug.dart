@@ -21,6 +21,7 @@ import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
+import 'package:instabug_flutter/src/utils/user_steps/user_step_details.dart';
 import 'package:meta/meta.dart';
 
 enum InvocationEvent {
@@ -404,7 +405,9 @@ class Instabug {
 
   /// Reports that the screen has been changed (repro steps)
   /// [screenName] String containing the screen name
-  static Future<void> reportScreenChange(String screenName) async {
+  static Future<void> reportScreenChange(
+    String screenName,
+  ) async {
     return _host.reportScreenChange(screenName);
   }
 
@@ -481,5 +484,21 @@ class Instabug {
   /// Helps track session data for insights on user interactions during review submission.
   static Future<void> willRedirectToStore() async {
     return _host.willRedirectToStore();
+  }
+
+  /// Enables and disables user interaction steps.
+  /// [boolean] isEnabled
+  static Future<void> enableUserSteps(bool isEnabled) async {
+    return _host.setEnableUserSteps(isEnabled);
+  }
+
+  /// Enables and disables manual invocation and prompt options for bug and feedback.
+  /// [boolean] isEnabled
+  static Future<void> logUserSteps(
+    GestureType gestureType,
+    String message,
+    String? viewName,
+  ) async {
+    return _host.logUserSteps(gestureType.toString(), message, viewName);
   }
 }

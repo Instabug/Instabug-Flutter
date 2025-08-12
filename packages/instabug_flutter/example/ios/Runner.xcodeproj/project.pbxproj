@@ -17,6 +17,8 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		9D381ECFBB01BD0E978EBDF2 /* Pods_InstabugTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71679BEC094CFF3474195C2E /* Pods_InstabugTests.framework */; };
+		BE2C04382D70E1BE00C40E47 /* PrivateViewHostApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C04372D70E1BE00C40E47 /* PrivateViewHostApiTests.m */; };
+		BE2C04392D70E1BE00C40E47 /* PrivateViewApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C04362D70E1BE00C40E47 /* PrivateViewApiTests.m */; };
 		CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC080E102937B7DB0041170A /* InstabugApiTests.m */; };
 		CC198C61293E1A21007077C8 /* SurveysApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC198C60293E1A21007077C8 /* SurveysApiTests.m */; };
 		CC359DB92937720C0067A924 /* ApmApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC359DB82937720C0067A924 /* ApmApiTests.m */; };
@@ -78,6 +80,8 @@
 		B03C8370EEFE061BDDDA1DA1 /* Pods-InstabugUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugUITests.debug.xcconfig"; path = "Target Support Files/Pods-InstabugUITests/Pods-InstabugUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BA5633844585BB93FE7BCCE7 /* Pods-InstabugTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugTests.profile.xcconfig"; path = "Target Support Files/Pods-InstabugTests/Pods-InstabugTests.profile.xcconfig"; sourceTree = "<group>"; };
 		BE26C80C2BD55575009FECCF /* IBGCrashReporting+CP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IBGCrashReporting+CP.h"; sourceTree = "<group>"; };
+		BE2C04362D70E1BE00C40E47 /* PrivateViewApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateViewApiTests.m; sourceTree = "<group>"; };
+		BE2C04372D70E1BE00C40E47 /* PrivateViewHostApiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateViewHostApiTests.m; sourceTree = "<group>"; };
 		BF9025BBD0A6FD7B193E903A /* Pods-InstabugTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstabugTests.debug.xcconfig"; path = "Target Support Files/Pods-InstabugTests/Pods-InstabugTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C090017925D9A030006F3DAE /* InstabugTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstabugTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C090017D25D9A031006F3DAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -194,6 +198,8 @@
 		C090017A25D9A031006F3DAE /* InstabugTests */ = {
 			isa = PBXGroup;
 			children = (
+				BE2C04362D70E1BE00C40E47 /* PrivateViewApiTests.m */,
+				BE2C04372D70E1BE00C40E47 /* PrivateViewHostApiTests.m */,
 				CC198C60293E1A21007077C8 /* SurveysApiTests.m */,
 				CC78720A2938D1C5008CB2A5 /* Util */,
 				CC080E102937B7DB0041170A /* InstabugApiTests.m */,
@@ -457,6 +463,8 @@
 				CC080E112937B7DB0041170A /* InstabugApiTests.m in Sources */,
 				CC198C61293E1A21007077C8 /* SurveysApiTests.m in Sources */,
 				CCADBDD8293CFED300AE5EB8 /* BugReportingApiTests.m in Sources */,
+				BE2C04382D70E1BE00C40E47 /* PrivateViewHostApiTests.m in Sources */,
+				BE2C04392D70E1BE00C40E47 /* PrivateViewApiTests.m in Sources */,
 				CC9925D9293DFD7F001FD3EE /* RepliesApiTests.m in Sources */,
 				206286ED2ABD0A1F00925509 /* SessionReplayApiTests.m in Sources */,
 				CC9925D2293DEB0B001FD3EE /* CrashReportingApiTests.m in Sources */,
@@ -552,7 +560,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 56S6Q9SA8U;
+				DEVELOPMENT_TEAM = VF78H8LBT4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -688,8 +696,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 56S6Q9SA8U;
+				DEVELOPMENT_TEAM = VF78H8LBT4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -706,6 +716,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.InstabugSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -720,7 +731,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 56S6Q9SA8U;
+				DEVELOPMENT_TEAM = VF78H8LBT4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

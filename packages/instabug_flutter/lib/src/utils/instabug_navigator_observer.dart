@@ -22,22 +22,23 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         route: newRoute,
         name: maskedScreenName,
       );
+      //ignore: invalid_null_aware_operator
+      WidgetsBinding.instance?.addPostFrameCallback((_) async {
+        // Starts a the new UI trace which is exclusive to screen loading
+        ScreenLoadingManager.I.startUiTrace(maskedScreenName, screenName);
+        // If there is a step that hasn't been pushed yet
+        if (_steps.isNotEmpty) {
+          await reportScreenChange(_steps.last.name);
+          // Report the last step and remove it from the list
+          _steps.removeLast();
+        }
 
-      // Starts a the new UI trace which is exclusive to screen loading
-      ScreenLoadingManager.I.startUiTrace(maskedScreenName, screenName);
-      // If there is a step that hasn't been pushed yet
-      if (_steps.isNotEmpty) {
-        // Report the last step and remove it from the list
-        Instabug.reportScreenChange(_steps.last.name);
-        _steps.removeLast();
-      }
+        // Add the new step to the list
+        _steps.add(route);
 
-      // Add the new step to the list
-      _steps.add(route);
-      Future<dynamic>.delayed(const Duration(milliseconds: 1000), () {
         // If this route is in the array, report it and remove it from the list
         if (_steps.contains(route)) {
-          Instabug.reportScreenChange(route.name);
+          await reportScreenChange(route.name);
           _steps.remove(route);
         }
       });
@@ -45,6 +46,13 @@ class InstabugNavigatorObserver extends NavigatorObserver {
       InstabugLogger.I.e('Reporting screen change failed:', tag: Instabug.tag);
       InstabugLogger.I.e(e.toString(), tag: Instabug.tag);
     }
+  }
+
+  Future<void> reportScreenChange(String name) async {
+      // Wait for the animation to complete
+      await Future.delayed(const Duration(milliseconds: 100));
+
+    Instabug.reportScreenChange(name);
   }
 
   @override

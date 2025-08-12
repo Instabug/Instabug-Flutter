@@ -188,6 +188,21 @@
     }
 }
 
+- (void)testUserStepsGesture {
+    NSArray *values = @[
+        @(IBGUIEventTypeSwipe),
+        @(IBGUIEventTypeScroll),
+        @(IBGUIEventTypeTap),
+        @(IBGUIEventTypePinch),
+        @(IBGUIEventTypeLongPress),
+        @(IBGUIEventTypeDoubleTap),
+    ];
+
+    for (NSNumber *value in values) {
+        XCTAssertTrue([[ArgsRegistry.userStepsGesture allValues] containsObject:value]);
+    }
+}
+
 - (void)testPlaceholders {
     NSArray *values = @[
         kIBGShakeStartAlertTextStringName,
@@ -251,6 +266,19 @@
 
     for (NSString *value in values) {
         XCTAssertTrue([[ArgsRegistry.placeholders allValues] containsObject:value]);
+    }
+}
+
+- (void)testAutoaAsking {
+    NSArray *values = @[
+        @(IBGAutoMaskScreenshotOptionMedia),
+        @(IBGAutoMaskScreenshotOptionLabels),
+        @(IBGAutoMaskScreenshotOptionTextInputs),
+        @(IBGAutoMaskScreenshotOptionMaskNothing)
+    ];
+
+    for (NSNumber *value in values) {
+        XCTAssertTrue([[ArgsRegistry.autoMasking allValues] containsObject:value]);
     }
 }
 
