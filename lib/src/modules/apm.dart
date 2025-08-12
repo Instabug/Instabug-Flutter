@@ -365,6 +365,7 @@ class APM {
   ///
   /// Returns:
   ///   A `Future<void>` is being returned.
+  @internal
   static Future<void> endScreenRenderForAutoUiTrace(
     InstabugScreenRenderData data,
   ) {
@@ -381,6 +382,7 @@ class APM {
   ///
   /// Returns:
   ///   A `Future<void>` is being returned.
+  @internal
   static Future<void> endScreenRenderForCustomUiTrace(
     InstabugScreenRenderData data,
   ) {

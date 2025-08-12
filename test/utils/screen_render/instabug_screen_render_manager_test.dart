@@ -1,12 +1,26 @@
+import 'dart:ui' show FrameTiming;
+
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/generated/apm.api.g.dart';
+import 'package:instabug_flutter/src/generated/crash_reporting.api.g.dart';
 import 'package:instabug_flutter/src/models/instabug_frame_data.dart';
 import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
+import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'instabug_screen_render_manager_test_mocks.dart';
+import 'instabug_screen_render_manager_test.mocks.dart';
 
+@GenerateMocks([
+  WidgetsBinding,
+  FrameTiming,
+  ApmHostApi,
+  CrashReportingHostApi,
+  InstabugLogger,
+])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -44,38 +58,6 @@ void main() {
       verify(mWidgetBinding.addTimingsCallback(any)).called(1);
     });
   });
-
-  // group('_initStaticValues', () {
-  //
-  //   test('should initialize _timingsCallback', () async {
-  //     await manager.callInitStaticValues();
-  //     expect(manager.timingsCallback, isNotNull);
-  //   });
-  //
-  //   test('should initialize _slowFrameThresholdMs with value from _getSlowFrameThresholdMs', () async {
-  //     // Patch the getter to return a known value
-  //     manager.slowFrameThresholdMs = 0.0;
-  //     manager.getSlowFrameThresholdMsFuture = () async => 42.0;
-  //     await manager.callInitStaticValues();
-  //     expect(manager.slowFrameThresholdMs, 42.0);
-  //   });
-  //
-  //   test('should initialize _screenRenderForAutoUiTrace and _screenRenderForCustomUiTrace as empty InstabugScreenRenderData', () async {
-  //     await manager.callInitStaticValues();
-  //     expect(manager.screenRenderForAutoUiTrace, isA<InstabugScreenRenderData>());
-  //     expect(manager.screenRenderForAutoUiTrace.frameData, isEmpty);
-  //     expect(manager.screenRenderForCustomUiTrace, isA<InstabugScreenRenderData>());
-  //     expect(manager.screenRenderForCustomUiTrace.frameData, isEmpty);
-  //   });
-  //
-  //   test('should set _epochOffset on first timing in _timingsCallback', () async {
-  //     await manager.callInitStaticValues();
-  //     final mockFrameTiming = MockFrameTiming();
-  //     manager.epochOffset = null;
-  //     manager.timingsCallback([mockFrameTiming]);
-  //     expect(manager.epochOffset, isNotNull);
-  //   });
-  // });
 
   group('startScreenRenderCollectorForTraceId()', () {
     test('should not attach timing listener if it is attached', () async {
@@ -268,7 +250,7 @@ void main() {
     });
   });
 
-  group('endScreenRenderCollectorForCustomUiTrace()', () {
+  group('endScreenRenderCollector()', () {
     setUp(() {
       manager.screenRenderForAutoUiTrace.clear();
       manager.screenRenderForCustomUiTrace.clear();
@@ -463,6 +445,164 @@ void main() {
       manager.endScreenRenderCollector();
       verifyNever(mApmHost.endScreenRenderForAutoUiTrace(any));
       verifyNever(mApmHost.endScreenRenderForCustomUiTrace(any));
+    });
+  });
+
+  group('InstabugScreenRenderManager() error handling', () {
+    late InstabugScreenRenderManager realManager;
+    late MockInstabugLogger mInstabugLogger;
+    late MockApmHostApi mApmHostForErrorTest;
+    late MockWidgetsBinding mWidgetBindingForErrorTest;
+    late MockCrashReportingHostApi mCrashReportingHost;
+
+    setUp(() {
+      realManager = InstabugScreenRenderManager.init(); // Use real instance
+      mInstabugLogger = MockInstabugLogger();
+      mApmHostForErrorTest = MockApmHostApi();
+      mWidgetBindingForErrorTest = MockWidgetsBinding();
+      mCrashReportingHost = MockCrashReportingHostApi();
+
+      InstabugScreenRenderManager.setInstance(realManager);
+      InstabugLogger.setInstance(mInstabugLogger);
+      APM.$setHostApi(mApmHostForErrorTest);
+
+      // Mock CrashReporting host to prevent platform channel calls
+      CrashReporting.$setHostApi(mCrashReportingHost);
+    });
+
+    test('should log error and stack trace when init() encounters an exception',
+        () async {
+      const error = 'Test error in getDeviceRefreshRateAndTolerance';
+      final exception = Exception(error);
+
+      when(mApmHostForErrorTest.getDeviceRefreshRateAndTolerance())
+          .thenThrow(exception);
+
+      await realManager.init(mWidgetBindingForErrorTest);
+
+      final capturedLog = verify(
+        mInstabugLogger.e(
+          captureAny,
+          tag: InstabugScreenRenderManager.tag,
+        ),
+      ).captured.single as String;
+
+      expect(capturedLog, contains('[Error]:$exception'));
+      expect(capturedLog, contains('[StackTrace]:'));
+
+      // Verify that non-fatal crash reporting was called
+      verify(
+        mCrashReportingHost.sendNonFatalError(
+          any, // jsonCrash
+          any, // userAttributes
+          any, // fingerprint
+          any, // nonFatalExceptionLevel
+        ),
+      ).called(1);
+    });
+
+    test(
+        'should log error and stack trace when _reportScreenRenderForAutoUiTrace() encounters an exception',
+        () async {
+      const error = 'Test error in endScreenRenderForAutoUiTrace';
+      final exception = Exception(error);
+
+      // First initialize the manager properly
+      when(mApmHostForErrorTest.getDeviceRefreshRateAndTolerance())
+          .thenAnswer((_) async => [60.0, 10000.0]);
+
+      await realManager.init(mWidgetBindingForErrorTest);
+
+      final frameTestData = InstabugScreenRenderData(
+        traceId: 123,
+        frameData: [
+          InstabugFrameData(10000, 200),
+          InstabugFrameData(20000, 1000),
+        ],
+        frozenFramesTotalDurationMicro: 1000,
+        slowFramesTotalDurationMicro: 200,
+      );
+
+      when(mApmHostForErrorTest.endScreenRenderForAutoUiTrace(any))
+          .thenThrow(exception);
+
+      // Start the collector and add frame data
+      realManager.startScreenRenderCollectorForTraceId(123);
+      realManager.setFrameData(frameTestData);
+      // End the collector which should trigger the error
+      realManager.endScreenRenderCollector();
+
+      final capturedLog = verify(
+        mInstabugLogger.e(
+          captureAny,
+          tag: InstabugScreenRenderManager.tag,
+        ),
+      ).captured.single as String;
+
+      expect(capturedLog, contains('[Error]:$exception'));
+      expect(capturedLog, contains('[StackTrace]:'));
+
+      // Verify that non-fatal crash reporting was called
+      verify(
+        mCrashReportingHost.sendNonFatalError(
+          any, // jsonCrash
+          any, // userAttributes
+          any, // fingerprint
+          any, // nonFatalExceptionLevel
+        ),
+      ).called(1);
+    });
+
+    test(
+        'should log error and stack trace when _reportScreenRenderForCustomUiTrace() encounters an exception',
+        () async {
+      const error = 'Test error in endScreenRenderForCustomUiTrace';
+      final exception = Exception(error);
+
+      // First initialize the manager properly
+      when(mApmHostForErrorTest.getDeviceRefreshRateAndTolerance())
+          .thenAnswer((_) async => [60.0, 10000.0]);
+
+      await realManager.init(mWidgetBindingForErrorTest);
+
+      final frameTestData = InstabugScreenRenderData(
+        traceId: 456,
+        frameData: [
+          InstabugFrameData(15000, 300),
+          InstabugFrameData(25000, 1200),
+        ],
+        frozenFramesTotalDurationMicro: 1200,
+        slowFramesTotalDurationMicro: 300,
+      );
+
+      when(mApmHostForErrorTest.endScreenRenderForCustomUiTrace(any))
+          .thenThrow(exception);
+
+      // Start the collector and add frame data
+      realManager.startScreenRenderCollectorForTraceId(456, UiTraceType.custom);
+      realManager.setFrameData(frameTestData);
+      // End the collector which should trigger the error
+      realManager.endScreenRenderCollector(UiTraceType.custom);
+
+      final capturedLog = verify(
+        mInstabugLogger.e(
+          captureAny,
+          tag: InstabugScreenRenderManager.tag,
+        ),
+      ).captured.single as String;
+
+      expect(capturedLog, contains('[Error]:$exception'));
+      expect(capturedLog, contains('[StackTrace]:'));
+
+      // Verify that non-fatal crash reporting was called
+      verify(
+        mCrashReportingHost.sendNonFatalError(
+          any, // jsonCrash
+          any, // userAttributes
+          any, // fingerprint
+          any, // nonFatalExceptionLevel
+        ),
+      ).called(1);
     });
   });
 }
