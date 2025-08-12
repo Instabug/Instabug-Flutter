@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/models/instabug_route.dart';
 import 'package:instabug_flutter/src/modules/instabug.dart';
-import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/repro_steps_constants.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
