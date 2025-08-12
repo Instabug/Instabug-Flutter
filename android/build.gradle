@@ -1,5 +1,5 @@
 group 'com.instabug.flutter'
-version '14.3.0'
+version '15.0.2'
 
 buildscript {
     repositories {
@@ -16,6 +16,9 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots'
+        }
     }
 }
 
@@ -44,7 +47,7 @@ android {
 }
 
 dependencies {
-    api 'com.instabug.library:instabug:15.0.1'
+    api 'com.instabug.library:instabug:15.0.2'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:3.12.1"
     testImplementation "io.mockk:mockk:1.13.13"
