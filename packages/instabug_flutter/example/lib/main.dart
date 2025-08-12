@@ -25,17 +25,29 @@ import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager
 import 'package:instabug_flutter_example/src/widget/section_title.dart';
 
 part 'src/components/fatal_crashes_content.dart';
+
 part 'src/components/flows_content.dart';
+
 part 'src/components/network_content.dart';
+
 part 'src/components/non_fatal_crashes_content.dart';
+
 part 'src/components/page.dart';
+
 part 'src/components/traces_content.dart';
+
 part 'src/screens/apm_page.dart';
+
 part 'src/screens/complex_page.dart';
+
 part 'src/screens/crashes_page.dart';
+
 part 'src/screens/my_home_page.dart';
+
 part 'src/screens/screen_capture_premature_extension_page.dart';
+
 part 'src/screens/screen_loading_page.dart';
+
 part 'src/screens/user_steps_page.dart';
 
 void main() {
@@ -51,12 +63,17 @@ void main() {
 
       Instabug.setWelcomeMessageMode(WelcomeMessageMode.disabled);
 
-
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
       };
 
-      runApp(const InstabugUserSteps(child: MyApp())); // runApp(const MyApp());
+      runApp(
+        const InstabugWidget(automasking: [
+          AutoMasking.labels,
+          AutoMasking.textInputs,
+          AutoMasking.media
+        ], child: MyApp()),
+      );
     },
     CrashReporting.reportCrash,
   );
