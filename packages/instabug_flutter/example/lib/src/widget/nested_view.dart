@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter_example/main.dart';
 
 class NestedView extends StatelessWidget {
@@ -31,10 +32,12 @@ class NestedView extends StatelessWidget {
           Row(
             children: List.generate(
               breadth,
-              (index) => NestedView(
-                depth: depth - 1,
-                breadth: breadth,
-                child: child,
+              (index) => InstabugPrivateView(
+                child: NestedView(
+                  depth: depth - 1,
+                  breadth: breadth,
+                  child: child,
+                ),
               ),
             ),
           ),

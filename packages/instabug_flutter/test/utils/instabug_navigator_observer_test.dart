@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_null_aware_operator
+
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -43,8 +45,9 @@ void main() {
   test('should report screen change when a route is pushed', () {
     fakeAsync((async) {
       observer.didPush(route, previousRoute);
-
-      async.elapse(const Duration(milliseconds: 1000));
+      WidgetsBinding.instance?.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance?.handleDrawFrame();
+      async.elapse(const Duration(milliseconds: 2000));
 
       verify(
         mScreenLoadingManager.startUiTrace(screen, screen),
@@ -61,7 +64,8 @@ void main() {
       () {
     fakeAsync((async) {
       observer.didPop(route, previousRoute);
-
+      WidgetsBinding.instance?.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance?.handleDrawFrame();
       async.elapse(const Duration(milliseconds: 1000));
 
       verify(
@@ -79,7 +83,8 @@ void main() {
       () {
     fakeAsync((async) {
       observer.didPop(route, null);
-
+      WidgetsBinding.instance?.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance?.handleDrawFrame();
       async.elapse(const Duration(milliseconds: 1000));
 
       verifyNever(
@@ -98,7 +103,8 @@ void main() {
       const fallback = 'N/A';
 
       observer.didPush(route, previousRoute);
-
+      WidgetsBinding.instance?.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance?.handleDrawFrame();
       async.elapse(const Duration(milliseconds: 1000));
 
       verify(
@@ -118,8 +124,9 @@ void main() {
 
     fakeAsync((async) {
       observer.didPush(route, previousRoute);
-
-      async.elapse(const Duration(milliseconds: 1000));
+      WidgetsBinding.instance?.handleBeginFrame(Duration.zero);
+      WidgetsBinding.instance?.handleDrawFrame();
+      async.elapse(const Duration(milliseconds: 2000));
 
       verify(
         mScreenLoadingManager.startUiTrace(maskedScreen, screen),
