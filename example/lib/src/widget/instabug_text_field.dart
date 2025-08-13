@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class InstabugTextField extends StatelessWidget {
   const InstabugTextField({
     Key? key,
+    this.textFieldKey,
     required this.label,
     required this.controller,
     this.labelStyle,
@@ -18,6 +19,7 @@ class InstabugTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final FormFieldValidator<String>? validator;
 
+  final Key? textFieldKey;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,6 +28,7 @@ class InstabugTextField extends StatelessWidget {
             horizontal: 20.0,
           ),
       child: TextFormField(
+        key: textFieldKey,
         controller: controller,
         keyboardType: keyboardType,
         validator: validator,

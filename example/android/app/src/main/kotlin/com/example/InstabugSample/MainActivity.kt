@@ -1,4 +1,4 @@
-package com.instabug.flutter.example
+package com.example.InstabugSample
 
 import com.example.InstabugSample.InstabugExampleMethodCallHandler
 import com.example.InstabugSample.InstabugExampleMethodCallHandler.Companion.METHOD_CHANNEL_NAME

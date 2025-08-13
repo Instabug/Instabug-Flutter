@@ -2,9 +2,10 @@ version: 2.1
 
 orbs:
   android: circleci/android@2.5.0
-  flutter: circleci/flutter@2.0.2
+  flutter: circleci/flutter@2.1.0
   node: circleci/node@5.2.0
   advanced-checkout: vsco/advanced-checkout@1.1.0
+  ios: circleci/macos@2.5.4
 
 commands:
   setup_flutter:
@@ -17,65 +18,24 @@ commands:
   setup_ios:
     steps:
       # Flutter doesn't support Apple Silicon yet, so we need to install Rosetta use Flutter on M1 machines.
-      - run:
-          name: Install Rosetta
-          command: softwareupdate --install-rosetta --agree-to-license
+      - ios/install-rosetta
       - setup_flutter
       - run:
           name: Install CocoaPods
           command: sudo gem install cocoapods
-      - run:
-          name: Install Pods
-          working_directory: example/ios
-          command: pod install --repo-update
-  setup_captain:
-    parameters:
-      platform:
-        type: enum
-        enum:
-          - ios
-          - android
+      - flutter/install_ios_pod:
+          app-dir: example
+          repo-update: true
+  setup_patrol:
     steps:
       - run:
-          name: Install Appium
-          command: npm install -g appium
-      - when:
-          condition:
-            equal:
-              - <<parameters.platform>>
-              - ios
-          steps:
-            - run:
-                name: Install XCUITest Driver
-                command: appium driver install xcuitest@4.35.0
-      - when:
-          condition:
-            equal:
-              - <<parameters.platform>>
-              - android
-          steps:
-            - run:
-                name: Install UIAutomator2 Driver
-                command: appium driver install uiautomator2@3.1.0
-      - run:
-          name: Launch Appium
-          # Enable --relaxed-security for `mobile: shell` command that Captain uses internally.
-          command: appium --relaxed-security
-          background: true
-      - run:
-          name: Install .NET 6
-          command: curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 6.0.1xx
-      - run:
-          name: Add .NET to PATH
+          name: Add pub-cache bin to PATH
           command: |
-            echo 'export DOTNET_ROOT=$HOME/.dotnet' >> $BASH_ENV
-            echo 'export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools' >> $BASH_ENV
+            echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> $BASH_ENV
+            source $BASH_ENV
       - run:
-          name: Clone Captain
-          command: git clone git@github.com:Instabug/Captain.git ../Instabug.Captain
-      - run:
-          name: Configure Captain Platform
-          command: echo 'export CAPTAIN_PLATFORM=<<parameters.platform>>' >> $BASH_ENV
+          name: Install patrol
+          command: dart pub global activate patrol_cli 3.5.0
   # This runs `flutter pub get` and `dart pub get` if we pass parameter `generate_pigeons` to the job it also runs the following:
   #   - `sh ./scripts/pigeon.sh`
   #   - `dart run build_runner build --delete-conflicting-outputs`
@@ -83,13 +43,30 @@ commands:
     parameters:
       generate_pigeons:
         type: boolean
+      remove_patrol:
+        type: boolean
+        default: false
+      version:
+        type: string
+        default: "3.24.0"
     steps:
+      - flutter/install_sdk:
+          version: <<parameters.version>>
+      - when:
+          condition:
+            equal:
+              - <<parameters.remove_patrol>>
+              - true
+          steps:
+            - run:
+                name: remove Patrol
+                command: cd example && dart pub remove patrol
       - run:
           name: Install Flutter Packages
-          command: flutter pub get
+          command: flutter pub get --verbose
       - run:
           name: Install Dart Packages
-          command: dart pub get
+          command: dart pub get --verbose
           description: Install Dart Packages (for dart explicit packages)
       - when:
           condition:
@@ -123,12 +100,21 @@ jobs:
     parameters:
       version:
         type: string
-    docker:
-      - image: cirrusci/flutter:<<parameters.version>>
+    executor:
+      name: android/android-machine
+      resource-class: xlarge
+      tag: 2024.01.1
     steps:
       - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
           generate_pigeons: true
+          remove_patrol: true
+          version:  <<parameters.version>>
+      - run:
+          name: Install lcov
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y lcov
       - run: flutter test --coverage
       - run:
           working_directory: coverage
@@ -150,26 +136,31 @@ jobs:
           working-directory: example/android
           test-command: ./gradlew test
 
-  e2e_android_captain:
+  e2e_android_patrol:
     executor:
       name: android/android-machine
       resource-class: xlarge
       tag: 2024.01.1
     steps:
       - advanced-checkout/shallow-checkout
-      - setup_captain:
-          platform: android
       - setup_flutter
-      - android/start-emulator-and-run-tests:
-          run-tests-working-directory: e2e
-          additional-avd-args: --device 3
+      - setup_patrol
+      - android/create-avd:
+          avd-name: 'test'
+          install: true
           system-image: system-images;android-33;default;x86_64
-          post-emulator-launch-assemble-command: cd example && flutter build apk --debug
-          test-command: dotnet test
+      - android/start-emulator:
+          avd-name: 'test'
+          post-emulator-launch-assemble-command: ""
+      - run:
+          name: Run E2E Tests
+          no_output_timeout: 30m
+          working_directory: example
+          command: patrol test -t integration_test/
 
   test_ios:
     macos:
-      xcode: 15.2.0
+      xcode: 16.0.0
     resource_class: macos.m1.medium.gen1
     environment:
       INSTABUG_SOURCEMAPS_UPLOAD_DISABLE: true
@@ -185,31 +176,39 @@ jobs:
                 -scheme Runner \
                 -resultBundlePath coverage/result.xcresult \
                 -sdk iphonesimulator \
-                -destination 'platform=iOS Simulator,name=iPhone 15 Pro Max,OS=17.2' \
+                -destination 'platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.0' \
+                -skip-testing:RunnerUITests \
                 test | xcpretty
 
-  e2e_ios_captain:
+  e2e_ios_patrol:
     macos:
-      xcode: 15.2.0
+      xcode: 16.0.0
     resource_class: macos.m1.medium.gen1
     steps:
       - advanced-checkout/shallow-checkout
-      - setup_captain:
-          platform: ios
       - setup_ios
+      - setup_patrol
+      - ios/preboot-simulator:
+          version: "18.0"
+          device: "iPhone 16 Pro"
+      - ios/wait-until-simulator-booted
+      - ios/wait-until-simulator-booted
       - run:
-          name: Build Example App
-          working_directory: example
-          command: flutter build ios --simulator
+          name: sleep 10 seconds
+          command: sleep 10
+      - run:
+          name: sleep 10 seconds
+          command: sleep 10
       - run:
           name: Run E2E Tests
           no_output_timeout: 30m
-          working_directory: e2e
-          command: dotnet test
-
+          working_directory: example
+          command: patrol test -t integration_test/ --verbose --device "iPhone 16 Pro"
   format_flutter:
-    docker:
-      - image: cirrusci/flutter
+    executor:
+      name: android/android-machine
+      resource-class: xlarge
+      tag: 2024.01.1
     steps:
       - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
@@ -219,8 +218,10 @@ jobs:
           command: dart format . --set-exit-if-changed
 
   lint_flutter:
-    docker:
-      - image: cirrusci/flutter
+    executor:
+      name: android/android-machine
+      resource-class: xlarge
+      tag: 2024.01.1
     steps:
       - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
@@ -230,8 +231,10 @@ jobs:
           command: flutter analyze
 
   verify_pub:
-    docker:
-      - image: cirrusci/flutter
+    executor:
+      name: android/android-machine
+      resource-class: xlarge
+      tag: 2024.01.1
     steps:
       - advanced-checkout/shallow-checkout
       - install_flutter_and_dart_packages:
@@ -243,7 +246,7 @@ jobs:
 
   release:
     macos:
-      xcode: 15.2.0
+      xcode: 16.0.0
     resource_class: macos.m1.medium.gen1
     working_directory: "~"
     steps:
@@ -288,13 +291,13 @@ workflows:
             - test_flutter-stable
       - test_flutter:
           name: test_flutter-stable
-          version: stable
+          version: 3.24.0
       - test_flutter:
           name: test_flutter-2.10.5
           version: 2.10.5
-      - e2e_android_captain
+      - e2e_android_patrol
       - test_ios
-      - e2e_ios_captain
+      - e2e_ios_patrol
       - format_flutter
       - lint_flutter:
           requires:
@@ -312,9 +315,9 @@ workflows:
             # TODO: Fix the flaky tests and add the following jobs to the dependencies for the release
             # The following jobs have been removed while releasing v13.2.0 to avoid delaying the release
             # as they were just flaky and the tests pass locally without issues.
-            # - e2e_android_captain
+            # - e2e_android_patrol
             # - test_ios
-            - e2e_ios_captain
+            - e2e_ios_patrol
             - verify_pub
           filters:
             branches:

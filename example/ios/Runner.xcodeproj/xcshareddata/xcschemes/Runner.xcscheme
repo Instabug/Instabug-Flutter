@@ -51,9 +51,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C09001B025D9A3C5006F3DAE"
-               BuildableName = "InstabugUITests.xctest"
-               BlueprintName = "InstabugUITests"
+               BlueprintIdentifier = "BE0EAED82E32DC4A006C9C24"
+               BuildableName = "RunnerUITests.xctest"
+               BlueprintName = "RunnerUITests"
                ReferencedContainer = "container:Runner.xcodeproj">
             </BuildableReference>
          </TestableReference>
