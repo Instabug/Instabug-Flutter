@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v15.0.2...dev)
+
+## Added
+
+- Add new Instabug Flutter CLI tool. ([#608](https://github.com/Instabug/Instabug-Flutter/pull/608))
+
 ## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.2)  (Jul 7, 2025)
 
 ### Added
