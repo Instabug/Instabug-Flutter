@@ -647,6 +647,13 @@
 }
 
 - (void)testSetFullscreen {
+    NSNumber *isEnabled = @1;
+    FlutterError *error;
+
+    [self.api setFullscreenIsEnabled:isEnabled error:&error];
+
+    // Since this is an empty implementation, we just verify the method can be called without error
+    XCTAssertNil(error);
 }
 
 @end

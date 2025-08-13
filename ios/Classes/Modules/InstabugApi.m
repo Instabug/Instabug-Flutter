@@ -579,7 +579,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     return [UIColor blackColor];
 }
 
-- (void)setFullscreenIsFullscreen:(NSNumber *)isFullscreen error:(FlutterError *_Nullable *_Nonnull)error {
+- (void)setFullscreenIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
     // Empty implementation as requested
 }
 
