@@ -5,8 +5,11 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+def enableProguardInReleaseBuilds = false
+def enableShrinkResources = false
+
 android {
-    namespace = "com.instabug.flutter.example"
+    namespace = "com.example.InstabugSample"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -20,7 +23,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.instabug.flutter.example"
+        applicationId "com.example.InstabugSample"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode flutter.versionCode
@@ -33,10 +36,18 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            signingConfig signingConfigs.debug
+            minifyEnabled enableProguardInReleaseBuilds
+            shrinkResources enableShrinkResources
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'com.instabug.flutter.example'
+
+    externalNativeBuild {
+        cmake {
+            path 'src/main/cpp/CMakeLists.txt'
+        }
+    }
 
     configurations.all {
         resolutionStrategy.force 'org.hamcrest:hamcrest-core:1.3'

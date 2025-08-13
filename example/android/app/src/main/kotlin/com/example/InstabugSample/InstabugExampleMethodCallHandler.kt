@@ -1,7 +1,9 @@
 package com.example.InstabugSample
+
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import com.example.InstabugSample.ndk.CppNativeLib
 import com.instabug.crash.CrashReporting
 import com.instabug.crash.models.IBGNonFatalException
 import io.flutter.plugin.common.MethodCall
@@ -37,6 +39,41 @@ class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
                 sendOOM()
                 result.success(null)
             }
+            CAUSE_NDK_CRASH -> {
+                Log.d(TAG, "Causing NDK crash")
+                causeNdkCrash()
+                result.success(null)
+            }
+            CAUSE_SIGSEGV_CRASH -> {
+                Log.d(TAG, "Causing SIGSEGV crash")
+                causeSIGSEGVCrash()
+                result.success(null)
+            }
+            CAUSE_SIGABRT_CRASH -> {
+                Log.d(TAG, "Causing SIGABRT crash")
+                causeSIGABRTCrash()
+                result.success(null)
+            }
+            CAUSE_SIGFPE_CRASH -> {
+                Log.d(TAG, "Causing SIGFPE crash")
+                causeSIGFPECrash()
+                result.success(null)
+            }
+            CAUSE_SIGILL_CRASH -> {
+                Log.d(TAG, "Causing SIGILL crash")
+                causeSIGILLCrash()
+                result.success(null)
+            }
+            CAUSE_SIGBUS_CRASH -> {
+                Log.d(TAG, "Causing SIGBUS crash")
+                causeSIGBUSCrash()
+                result.success(null)
+            }
+            CAUSE_SIGTRAP_CRASH -> {
+                Log.d(TAG, "Causing SIGTRAP crash")
+                causeSIGTRAPCrash()
+                result.success(null)
+            }
             else -> {
                 Log.e(TAG, "onMethodCall for ${call.method} is not implemented")
                 result.notImplemented()
@@ -55,6 +92,15 @@ class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
         const val SEND_NATIVE_FATAL_HANG = "sendNativeFatalHang"
         const val SEND_ANR = "sendAnr"
         const val SEND_OOM = "sendOom"
+
+        // NDK Crash Method Names
+        const val CAUSE_NDK_CRASH = "causeNdkCrash"
+        const val CAUSE_SIGSEGV_CRASH = "causeSIGSEGVCrash"
+        const val CAUSE_SIGABRT_CRASH = "causeSIGABRTCrash"
+        const val CAUSE_SIGFPE_CRASH = "causeSIGFPECrash"
+        const val CAUSE_SIGILL_CRASH = "causeSIGILLCrash"
+        const val CAUSE_SIGBUS_CRASH = "causeSIGBUSCrash"
+        const val CAUSE_SIGTRAP_CRASH = "causeSIGTRAPCrash"
     }
 
     private fun sendNativeNonFatal(exceptionObject: String?) {
@@ -123,6 +169,35 @@ class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
             randomString.append(randomChar)
         }
         return randomString.toString()
+    }
+
+    // NDK Crash Methods
+    private fun causeNdkCrash() {
+        CppNativeLib.crashNDK()
+    }
+
+    private fun causeSIGSEGVCrash() {
+        CppNativeLib.causeSIGSEGVCrash()
+    }
+
+    private fun causeSIGABRTCrash() {
+        CppNativeLib.causeSIGABRTCrash()
+    }
+
+    private fun causeSIGFPECrash() {
+        CppNativeLib.causeSIGFPECrash()
+    }
+
+    private fun causeSIGILLCrash() {
+        CppNativeLib.causeSIGILLCrash()
+    }
+
+    private fun causeSIGBUSCrash() {
+        CppNativeLib.causeSIGBUSCrash()
+    }
+
+    private fun causeSIGTRAPCrash() {
+        CppNativeLib.causeSIGTRAPCrash()
     }
 
 }

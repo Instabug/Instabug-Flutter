@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter_ndk/instabug_flutter_ndk.dart';
 import 'package:instabug_flutter_example/src/components/apm_switch.dart';
 import 'package:instabug_http_client/instabug_http_client.dart';
 import 'package:instabug_flutter_example/src/app_routes.dart';
@@ -42,6 +43,8 @@ part 'src/components/traces_content.dart';
 
 part 'src/components/flows_content.dart';
 
+part 'src/components/ndk_crashes_content.dart';
+
 void main() {
   runZonedGuarded(
     () {
@@ -56,6 +59,8 @@ void main() {
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
       };
+
+      CrashReporting.setNDKEnabled(true);
 
       runApp(const MyApp());
     },
