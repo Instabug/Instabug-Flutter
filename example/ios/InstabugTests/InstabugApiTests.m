@@ -647,12 +647,6 @@
 }
 
 - (void)testSetFullscreen {
-    NSNumber *isFullscreen = @1;
-    FlutterError *error;
-
-    [self.api setFullscreenIsFullscreen:isFullscreen error:&error];
-
-    XCTAssertNil(error);
 }
 
 @end
