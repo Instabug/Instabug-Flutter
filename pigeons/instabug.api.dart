@@ -103,5 +103,4 @@ abstract class InstabugHostApi {
 
   void setTheme(Map<String, Object> themeConfig);
   void setFullscreen(bool isEnabled);
-
 }
