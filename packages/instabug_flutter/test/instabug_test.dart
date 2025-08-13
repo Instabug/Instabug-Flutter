@@ -8,7 +8,6 @@ import 'package:instabug_flutter/src/utils/enum_converter.dart';
 import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
-import 'package:instabug_flutter/src/utils/user_steps/user_step_details.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -85,7 +84,7 @@ void main() {
     );
 
     verify(
-      mHost.init(token, events.mapToString(), LogLevel.error.toString()),
+      mHost.init(token, events.mapToString(), LogLevel.error.toString(), null),
     ).called(1);
   });
 
@@ -198,16 +197,6 @@ void main() {
     ).called(1);
   });
 
-  test('[setPrimaryColor] should call host method', () async {
-    const color = Color(0x00000000);
-
-    await Instabug.setPrimaryColor(color);
-
-    verify(
-      mHost.setPrimaryColor(color.value),
-    ).called(1);
-  });
-
   test('[setSessionProfilerEnabled] should call host method', () async {
     const enabled = true;
 
@@ -256,37 +245,6 @@ void main() {
     expect(result, tags);
     verify(
       mHost.getTags(),
-    ).called(1);
-  });
-
-  test('[addExperiments] should call host method', () async {
-    const experiments = ["exp-1", "exp-2"];
-
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.addExperiments(experiments);
-
-    verify(
-      mHost.addExperiments(experiments),
-    ).called(1);
-  });
-
-  test('[removeExperiments] should call host method', () async {
-    const experiments = ["exp-1", "exp-2"];
-
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.removeExperiments(experiments);
-
-    verify(
-      mHost.removeExperiments(experiments),
-    ).called(1);
-  });
-
-  test('[clearAllExperiments] should call host method', () async {
-    // ignore: deprecated_member_use_from_same_package
-    await Instabug.clearAllExperiments();
-
-    verify(
-      mHost.clearAllExperiments(),
     ).called(1);
   });
 
@@ -476,25 +434,33 @@ void main() {
     ).called(1);
   });
 
-  test('[enableUserSteps] should call host method', () async {
-    const enabled = true;
+  test('[setFullscreen] should call host method', () async {
+    const isEnabled = true;
 
-    await Instabug.enableUserSteps(enabled);
+    await Instabug.setFullscreen(isEnabled);
 
     verify(
-      mHost.setEnableUserSteps(enabled),
+      mHost.setFullscreen(isEnabled),
     ).called(1);
   });
 
-  test('[logUserSteps] should call host method', () async {
-    const message = "message";
-    const gestureType = GestureType.tap;
-    const viewName = "view";
+  test('[setFullscreen] should call host method with false', () async {
+    const isEnabled = false;
 
-    await Instabug.logUserSteps(gestureType, message, viewName);
+    await Instabug.setFullscreen(isEnabled);
 
     verify(
-      mHost.logUserSteps(gestureType.toString(), message, viewName),
+      mHost.setFullscreen(isEnabled),
+    ).called(1);
+  });
+
+  test('[setTheme] should call host method with theme config', () async {
+    const themeConfig = ThemeConfig(primaryColor: '#FF0000');
+
+    await Instabug.setTheme(themeConfig);
+
+    verify(
+      mHost.setTheme(themeConfig.toMap()),
     ).called(1);
   });
 }

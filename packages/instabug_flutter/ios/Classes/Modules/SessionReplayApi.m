@@ -1,4 +1,4 @@
-#import "Instabug.h"
+#import "InstabugSDK.h"
 #import "IBGSessionReplay.h"
 #import "SessionReplayApi.h"
 #import "ArgsRegistry.h"

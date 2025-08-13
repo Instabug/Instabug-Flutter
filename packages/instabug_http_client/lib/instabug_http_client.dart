@@ -42,8 +42,9 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
     });
   }
 
-  Future<W3CHeader?> getW3cHeader(Map<String, String> requestHeader, DateTime startTime) async {
-     final W3CHeader? w3cHeader = await _networklogger.getW3CHeader(
+  Future<W3CHeader?> getW3cHeader(
+      Map<String, String> requestHeader, DateTime startTime) async {
+    final W3CHeader? w3cHeader = await _networklogger.getW3CHeader(
         requestHeader, startTime.millisecondsSinceEpoch);
     if (w3cHeader?.isW3cHeaderFound == false &&
         w3cHeader?.w3CGeneratedHeader != null) {

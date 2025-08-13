@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart' show BuildContext, WidgetBuilder;
+import 'package:flutter/widgets.dart' show WidgetBuilder, BuildContext;
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
@@ -9,7 +9,10 @@ import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_trace.d
 import 'package:instabug_flutter/src/utils/screen_loading/ui_trace.dart';
 import 'package:meta/meta.dart';
 
-/// @nodoc
+/// Manages screen loading traces and UI traces for performance monitoring.
+///
+/// This class handles the tracking of screen loading times and UI transitions,
+/// providing an interface for Instabug APM to capture and report performance metrics.
 @internal
 class ScreenLoadingManager {
   ScreenLoadingManager._();
@@ -21,25 +24,33 @@ class ScreenLoadingManager {
 
   static ScreenLoadingManager _instance = ScreenLoadingManager._();
 
+  /// Returns the singleton instance of [ScreenLoadingManager].
   static ScreenLoadingManager get instance => _instance;
 
   /// Shorthand for [instance]
   static ScreenLoadingManager get I => instance;
+
+  /// Logging tag for debugging purposes.
   static const tag = "ScreenLoadingManager";
+
+  /// Stores the current UI trace.
   UiTrace? currentUiTrace;
+
+  /// Stores the current screen loading trace.
   ScreenLoadingTrace? currentScreenLoadingTrace;
 
-  /// @nodoc
+  /// Stores prematurely ended traces for debugging purposes.
   @internal
   final List<ScreenLoadingTrace> prematurelyEndedTraces = [];
 
+  /// Allows setting a custom instance for testing.
   @visibleForTesting
   // ignore: use_setters_to_change_properties
   static void setInstance(ScreenLoadingManager instance) {
     _instance = instance;
   }
 
-  /// @nodoc
+  /// Resets the flag indicating a screen loading trace has started.
   @internal
   void resetDidStartScreenLoading() {
     // Allows starting a new screen loading capture trace in the same ui trace (without navigating out and in to the same screen)
@@ -59,9 +70,8 @@ class ScreenLoadingManager {
     );
   }
 
-  /// @nodoc
+  /// Checks if the Instabug SDK is built before calling API methods.
   Future<bool> _checkInstabugSDKBuilt(String apiName) async {
-    // Check if Instabug SDK is Built
     final isInstabugSDKBuilt = await Instabug.isBuilt();
     if (!isInstabugSDKBuilt) {
       InstabugLogger.I.e(
@@ -73,7 +83,7 @@ class ScreenLoadingManager {
     return isInstabugSDKBuilt;
   }
 
-  /// @nodoc
+  /// Resets the flag indicating a screen loading trace has been reported.
   @internal
   void resetDidReportScreenLoading() {
     // Allows reporting a new screen loading capture trace in the same ui trace even if one was reported before by resetting the flag which is used for checking.
@@ -84,7 +94,7 @@ class ScreenLoadingManager {
     );
   }
 
-  /// @nodoc
+  /// Starts a new UI trace with a given screen name.
   @internal
   void resetDidExtendScreenLoading() {
     // Allows reporting a new screen loading capture trace in the same ui trace even if one was reported before by resetting the flag which is used for checking.
@@ -176,7 +186,7 @@ class ScreenLoadingManager {
     }
   }
 
-  /// @nodoc
+  /// Starts a screen loading trace.
   @internal
   Future<void> startScreenLoadingTrace(ScreenLoadingTrace trace) async {
     try {
@@ -225,7 +235,7 @@ class ScreenLoadingManager {
     }
   }
 
-  /// @nodoc
+  /// Reports the input [ScreenLoadingTrace] to the native side.
   @internal
   Future<void> reportScreenLoading(ScreenLoadingTrace? trace) async {
     try {

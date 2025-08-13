@@ -1,11 +1,64 @@
 # Changelog
-## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v14.1.0...dev)
+
+## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v15.0.2...dev)
+
+### Added
+
+- Add support for Advanced UI customization with comprehensive theming capabilities ([#599](https://github.com/Instabug/Instabug-Flutter/pull/599))
+- 
+- Add support for App variant. ([#585](https://github.com/Instabug/Instabug-Flutter/pull/585))
+
+### Changed
+
+- **BREAKING** Remove deprecated APIs ([#614](https://github.com/Instabug/Instabug-Flutter/pull/614)). See migration guide for more details.
+
+
+## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.2)  (Jul 7, 2025)
+
+### Added
+
+
+- Add support for xCode 16. ([#574](https://github.com/Instabug/Instabug-Flutter/pull/574))
+
+- Add support for BugReporting user consents. ([#573](https://github.com/Instabug/Instabug-Flutter/pull/573))
+
+### Changed
+
+- Bump Instabug iOS SDK to v15.1.1 ([#581](https://github.com/Instabug/Instabug-Flutter/pull/581)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/15.1.1).
+
+- Bump Instabug Android SDK to v15.0.2 ([#581](https://github.com/Instabug/Instabug-Flutter/pull/581)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v15.0.2).
+
+## [14.3.1](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...14.3.1) (May 20, 2025)
+
+### Changed
+
+- Bump Instabug Android SDK to v14.3.1 ([#577](https://github.com/Instabug/Instabug-Flutter/pull/577)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v14.3.1).
+
+
+## [14.3.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.1.0...14.3.0) (April 21, 2025)
+
+### Added
+
+- Add support enable/disable capturing network body. ([#561](https://github.com/Instabug/Instabug-Flutter/pull/561))
+
+### Changed
+
+- Bump Instabug iOS SDK to v14.3.0 ([#569](https://github.com/Instabug/Instabug-Flutter/pull/569)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/14.3.0).
+
+- Bump Instabug Android SDK to v14.3.0 ([#569](https://github.com/Instabug/Instabug-Flutter/pull/569)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v14.3.0).
 
 ### Fixed
 
 - Fixed an issue with `SetReproStepsConfig` on Android platform ([#543](https://github.com/Instabug/Instabug-Flutter/pull/543)).
 
-## [14.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.0.0...v14.1.0) (December 22, 2024)
+## [14.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.0.0...v14.1.0) (January 2, 2025)
+
+### Changed
+
+- Bump Instabug Android SDK to v14.1.0 ([#539](https://github.com/Instabug/Instabug-Flutter/pull/539)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v14.1.0).
+- Bump Instabug iOS SDK to v14.1.0 ([#539](https://github.com/Instabug/Instabug-Flutter/pull/539)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/14.1.0),
+
+## [14.1.0](https://github.com/Instabug/Instabug-Flutter/compare/v14.0.0...v14.1.0) (January 2, 2025)
 
 ### Changed
 

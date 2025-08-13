@@ -2,7 +2,7 @@
 #import <XCTest/XCTest.h>
 #import "OCMock/OCMock.h"
 #import "InstabugApi.h"
-#import "Instabug/Instabug.h"
+#import "InstabugSDK/InstabugSDK.h"
 #import "Util/Instabug+Test.h"
 #import "IBGNetworkLogger+CP.h"
 #import "Flutter/Flutter.h"
@@ -38,15 +38,22 @@
 
 - (void)testInit {
     NSString *token = @"app-token";
+    NSString *appVariant = @"app-variant";
+
     NSArray<NSString *> *invocationEvents = @[@"InvocationEvent.floatingButton", @"InvocationEvent.screenshot"];
     NSString *logLevel = @"LogLevel.error";
     FlutterError *error;
     
-    [self.api initToken:token invocationEvents:invocationEvents debugLogsLevel:logLevel error:&error];
+    [self.api initToken:token invocationEvents:invocationEvents debugLogsLevel:logLevel appVariant:appVariant error:&error];
 
     OCMVerify([self.mInstabug setCurrentPlatform:IBGPlatformFlutter]);
+
     OCMVerify([self.mInstabug setSdkDebugLogsLevel:IBGSDKDebugLogsLevelError]);
+
     OCMVerify([self.mInstabug startWithToken:token invocationEvents:(IBGInvocationEventFloatingButton | IBGInvocationEventScreenshot)]);
+
+    XCTAssertEqual(Instabug.appVariant, appVariant);
+
 }
 
 - (void)testShow {
@@ -200,31 +207,6 @@
     [self waitForExpectations:@[expectation] timeout:5.0];
 }
 
-- (void)testAddExperiments {
-    NSArray<NSString *> *experiments = @[@"premium", @"star"];
-    FlutterError *error;
-
-    [self.api addExperimentsExperiments:experiments error:&error];
-
-    OCMVerify([self.mInstabug addExperiments:experiments]);
-}
-
-- (void)testRemoveExperiments {
-    NSArray<NSString *> *experiments = @[@"premium", @"star"];
-    FlutterError *error;
-
-    [self.api removeExperimentsExperiments:experiments error:&error];
-
-    OCMVerify([self.mInstabug removeExperiments:experiments]);
-}
-
-- (void)testClearAllExperiments {
-    FlutterError *error;
-
-    [self.api clearAllExperimentsWithError:&error];
-
-    OCMVerify([self.mInstabug clearAllExperiments]);
-}
 
 - (void)testAddFeatureFlags {
   NSDictionary *featureFlagsMap = @{ @"key13" : @"value1", @"key2" : @"value2"};
@@ -451,6 +433,15 @@
     OCMVerify([self.mInstabug willRedirectToAppStore]);
 }
 
+- (void)testSetNetworkLogBodyEnabled {
+    NSNumber *isEnabled = @1;
+    FlutterError *error;
+
+    [self.api setNetworkLogBodyEnabledIsEnabled:isEnabled error:&error];
+
+    XCTAssertTrue(IBGNetworkLogger.logBodyEnabled);
+}
+
 - (void)testNetworkLogWithW3Caught {
     NSString *url = @"https://example.com";
     NSString *requestBody = @"hi";
@@ -602,6 +593,43 @@
 
 }
 
+- (void)testSetThemeWithAllProperties {
+    NSDictionary *themeConfig = @{
+        @"primaryColor": @"#FF6B6B",
+        @"backgroundColor": @"#FFFFFF",
+        @"titleTextColor": @"#000000",
+        @"primaryTextColor": @"#333333",
+        @"secondaryTextColor": @"#666666",
+        @"callToActionTextColor": @"#FF6B6B",
+        @"primaryFontPath": @"assets/fonts/CustomFont-Regular.ttf",
+        @"secondaryFontPath": @"assets/fonts/CustomFont-Bold.ttf",
+        @"ctaFontPath": @"assets/fonts/CustomFont-Italic.ttf"
+    };
+
+    id mockTheme = OCMClassMock([IBGTheme class]);
+    OCMStub([mockTheme primaryColor]).andReturn([UIColor redColor]);
+    OCMStub([mockTheme backgroundColor]).andReturn([UIColor whiteColor]);
+    OCMStub([mockTheme titleTextColor]).andReturn([UIColor blackColor]);
+    OCMStub([mockTheme primaryTextColor]).andReturn([UIColor darkGrayColor]);
+    OCMStub([mockTheme secondaryTextColor]).andReturn([UIColor grayColor]);
+    OCMStub([mockTheme callToActionTextColor]).andReturn([UIColor redColor]);
+
+    FlutterError *error;
+
+    [self.api setThemeThemeConfig:themeConfig error:&error];
+
+    OCMVerify([self.mInstabug setTheme:[OCMArg isNotNil]]);
+}
+
+- (void)testSetFullscreen {
+    NSNumber *isEnabled = @1;
+    FlutterError *error;
+
+    [self.api setFullscreenIsEnabled:isEnabled error:&error];
+
+    // Since this is an empty implementation, we just verify the method can be called without error
+    XCTAssertNil(error);
+}
 - (void)testSetEnableUserStepsIsEnabled{
     NSNumber *isEnabled = @1;
     FlutterError *error;
@@ -616,7 +644,7 @@
     NSString* message = @"message";
     NSString* view = @"viewName";
     FlutterError *error;
-    
+
     [self.api logUserStepsGestureType:@"GestureType.tap" message:message viewName:view error: &error];
 
     XCTAssertNil(error, @"Error should be nil");
@@ -625,7 +653,7 @@
 - (void)testAutoMasking {
     NSArray<NSString *> *autoMaskingTypes = @[@"AutoMasking.labels", @"AutoMasking.textInputs",@"AutoMasking.media",@"AutoMasking.none"];
     FlutterError *error;
-    
+
     [self.api enableAutoMaskingAutoMasking:autoMaskingTypes error:&error];
 
     OCMVerify([self.mInstabug setAutoMaskScreenshots: (IBGAutoMaskScreenshotOptionMaskNothing | IBGAutoMaskScreenshotOptionTextInputs | IBGAutoMaskScreenshotOptionLabels | IBGAutoMaskScreenshotOptionMedia)]);

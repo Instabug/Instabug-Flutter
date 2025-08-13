@@ -17,7 +17,12 @@ abstract class InstabugHostApi {
 
   bool isBuilt();
 
-  void init(String token, List<String> invocationEvents, String debugLogsLevel);
+  void init(
+    String token,
+    List<String> invocationEvents,
+    String debugLogsLevel,
+    String? appVariant,
+  );
 
   void enableAutoMasking(List<String> autoMasking);
 
@@ -28,6 +33,8 @@ abstract class InstabugHostApi {
   void identifyUser(String email, String? name, String? userId);
 
   void setUserData(String data);
+
+  void setAppVariant(String appVariant);
 
   void logUserEvent(String name);
 
@@ -59,12 +66,6 @@ abstract class InstabugHostApi {
 
   @async
   List<String>? getTags();
-
-  void addExperiments(List<String> experiments);
-
-  void removeExperiments(List<String> experiments);
-
-  void clearAllExperiments();
 
   void addFeatureFlags(Map<String, String> featureFlagsMap);
 
@@ -107,4 +108,9 @@ abstract class InstabugHostApi {
   Map<String, bool> isW3CFeatureFlagsEnabled();
 
   void willRedirectToStore();
+
+  void setNetworkLogBodyEnabled(bool isEnabled);
+
+  void setTheme(Map<String, Object> themeConfig);
+  void setFullscreen(bool isEnabled);
 }

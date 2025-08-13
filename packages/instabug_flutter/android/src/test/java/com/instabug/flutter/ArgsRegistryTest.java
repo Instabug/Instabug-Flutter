@@ -9,7 +9,6 @@ import com.instabug.featuresrequest.ActionType;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.InstabugCustomTextPlaceHolder.Key;
-import com.instabug.library.MaskingType;
 import com.instabug.library.OnSdkDismissCallback.DismissType;
 import com.instabug.library.ReproMode;
 import com.instabug.library.extendedbugreport.ExtendedBugReport;
@@ -164,21 +163,6 @@ public class ArgsRegistryTest {
 
         for (ExtendedBugReport.State value : values) {
             assertTrue(ArgsRegistry.extendedBugReportStates.containsValue(value));
-        }
-    }
-
-    @Test
-    public void testAutoMasking() {
-        Integer[] values = {
-                MaskingType.MASK_NOTHING,
-                MaskingType.MEDIA,
-                MaskingType.LABELS,
-                MaskingType.TEXT_INPUTS,
-
-        };
-
-        for (Integer value : values) {
-            assertTrue(ArgsRegistry.autoMasking.containsValue(value));
         }
     }
 

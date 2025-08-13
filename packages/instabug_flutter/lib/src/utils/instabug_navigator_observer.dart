@@ -49,8 +49,8 @@ class InstabugNavigatorObserver extends NavigatorObserver {
   }
 
   Future<void> reportScreenChange(String name) async {
-      // Wait for the animation to complete
-      await Future.delayed(const Duration(milliseconds: 100));
+    // Wait for the animation to complete
+    await Future.delayed(const Duration(milliseconds: 100));
 
     Instabug.reportScreenChange(name);
   }

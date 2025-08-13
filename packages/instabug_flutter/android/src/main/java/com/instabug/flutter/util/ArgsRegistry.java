@@ -55,7 +55,6 @@ public final class ArgsRegistry {
         put("InvocationOption.disablePostSendingDialog", Option.DISABLE_POST_SENDING_DIALOG);
     }};
 
-
     public static final ArgsMap<InstabugColorTheme> colorThemes = new ArgsMap<InstabugColorTheme>() {{
         put("ColorTheme.light", InstabugColorTheme.InstabugColorThemeLight);
         put("ColorTheme.dark", InstabugColorTheme.InstabugColorThemeDark);
@@ -68,7 +67,7 @@ public final class ArgsRegistry {
         put("AutoMasking.none", MaskingType.MASK_NOTHING);
     }};
 
-    public static ArgsMap<IBGNonFatalException.Level> nonFatalExceptionLevel = new ArgsMap<IBGNonFatalException.Level>() {{
+   public static ArgsMap<IBGNonFatalException.Level> nonFatalExceptionLevel = new ArgsMap<IBGNonFatalException.Level>() {{
         put("NonFatalExceptionLevel.critical", IBGNonFatalException.Level.CRITICAL);
         put("NonFatalExceptionLevel.error", IBGNonFatalException.Level.ERROR);
         put("NonFatalExceptionLevel.warning", IBGNonFatalException.Level.WARNING);
@@ -84,6 +83,12 @@ public final class ArgsRegistry {
         put("Position.topRight", InstabugVideoRecordingButtonPosition.TOP_RIGHT);
         put("Position.bottomLeft", InstabugVideoRecordingButtonPosition.BOTTOM_LEFT);
         put("Position.bottomRight", InstabugVideoRecordingButtonPosition.BOTTOM_RIGHT);
+    }};
+
+    public static final ArgsMap<String> userConsentActionType = new ArgsMap<String>() {{
+        put("UserConsentActionType.dropAutoCapturedMedia",  com.instabug.bug.userConsent.ActionType.DROP_AUTO_CAPTURED_MEDIA);
+        put("UserConsentActionType.dropLogs",  com.instabug.bug.userConsent.ActionType.DROP_LOGS);
+        put("UserConsentActionType.noChat",  com.instabug.bug.userConsent.ActionType.NO_CHAT);
     }};
 
     public static ArgsMap<WelcomeMessage.State> welcomeMessageStates = new ArgsMap<WelcomeMessage.State>() {{

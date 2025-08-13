@@ -20,9 +20,7 @@ class Page extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-        title: Text(title),
-      ),
+      appBar: AppBar(title: Text(title)),
       body: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           padding: const EdgeInsets.only(top: 20.0),

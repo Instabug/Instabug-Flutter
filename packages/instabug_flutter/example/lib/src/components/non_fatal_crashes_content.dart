@@ -161,7 +161,7 @@ class _NonFatalCrashesContentState extends State<NonFatalCrashesContent> {
                   ],
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 8,
               ),
               InstabugButton(
@@ -190,7 +190,7 @@ class _NonFatalCrashesContentState extends State<NonFatalCrashesContent> {
           fingerprint: crashfingerPrintController.text,
           level: crashType);
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Crash sent")));
+          .showSnackBar(SnackBar(content: Text("Crash sent")));
       crashNameController.text = '';
       crashfingerPrintController.text = '';
       crashUserAttributeValueController.text = '';

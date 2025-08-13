@@ -15,6 +15,12 @@ enum InvocationOption {
   emailFieldOptional
 }
 
+enum UserConsentActionType {
+  dropAutoCapturedMedia,
+  dropLogs,
+  noChat,
+}
+
 enum DismissType { cancel, submit, addAttachment }
 
 enum ReportType { bug, feedback, question, other }
@@ -252,7 +258,29 @@ class BugReporting implements BugReportingFlutterApi {
   ]) async {
     return _host.setCommentMinimumCharacterCount(
       limit,
-      reportTypes.mapToString(),
+      reportTypes?.mapToString(),
+    );
+  }
+
+  /// Adds a user consent item to the bug reporting form.
+  /// [key] A unique identifier string for the consent item.
+  /// [description] The text shown to the user describing the consent item.
+  /// [mandatory] Whether the user must agree to this item before submitting a report.
+  ///  [checked] Whether the consent checkbox is pre-selected.
+  ///  [actionType] A string representing the action type to map to SDK behavior.
+  static Future<void> addUserConsents({
+    required String key,
+    required String description,
+    required bool mandatory,
+    required bool checked,
+    UserConsentActionType? actionType,
+  }) async {
+    return _host.addUserConsents(
+      key,
+      description,
+      mandatory,
+      checked,
+      actionType?.toString(),
     );
   }
 }

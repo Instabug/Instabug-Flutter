@@ -281,7 +281,7 @@ packages:
       path: "../instabug_flutter"
       relative: true
     source: path
-    version: "14.0.0"
+    version: "15.0.2"
   io:
     dependency: transitive
     description:

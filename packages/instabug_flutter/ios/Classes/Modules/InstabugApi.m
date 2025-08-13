@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
 #import <Flutter/Flutter.h>
-#import "Instabug.h"
+#import "InstabugSDK.h"
 #import "IBGNetworkLogger+CP.h"
 #import "InstabugApi.h"
 #import "ArgsRegistry.h"
@@ -15,7 +15,9 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     InstabugHostApiSetup(messenger, api);
 }
 
-@implementation InstabugApi
+@implementation InstabugApi {
+    NSMutableSet<NSString *> *_registeredFonts;
+}
 
 - (void)setEnabledIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
     Instabug.enabled = [isEnabled boolValue];
@@ -30,7 +32,13 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     return @(Instabug.enabled);
 }
 
-- (void)initToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents debugLogsLevel:(NSString *)debugLogsLevel error:(FlutterError *_Nullable *_Nonnull)error {
+- (void)initToken:(nonnull NSString *)token invocationEvents:(nonnull NSArray<NSString *> *)invocationEvents debugLogsLevel:(nonnull NSString *)debugLogsLevel appVariant:(nullable NSString *)appVariant error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+
+    if(appVariant != nil){
+        Instabug.appVariant = appVariant;
+    }
+
+
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
         NSInteger *platformID = IBGPlatformFlutter;
@@ -46,6 +54,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [IBGNetworkLogger disableAutomaticCapturingOfNetworkLogs];
 
     IBGInvocationEvent resolvedEvents = 0;
+
 
     for (NSString *event in invocationEvents) {
         resolvedEvents |= (ArgsRegistry.invocationEvents[event]).integerValue;
@@ -129,17 +138,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     completion([Instabug getTags], nil);
 }
 
-- (void)addExperimentsExperiments:(NSArray<NSString *> *)experiments error:(FlutterError *_Nullable *_Nonnull)error {
-    [Instabug addExperiments:experiments];
-}
 
-- (void)removeExperimentsExperiments:(NSArray<NSString *> *)experiments error:(FlutterError *_Nullable *_Nonnull)error {
-    [Instabug removeExperiments:experiments];
-}
-
-- (void)clearAllExperimentsWithError:(FlutterError *_Nullable *_Nonnull)error {
-    [Instabug clearAllExperiments];
-}
 
 - (void)setUserAttributeValue:(NSString *)value key:(NSString *)key error:(FlutterError *_Nullable *_Nonnull)error {
     [Instabug setUserAttribute:value withKey:key];
@@ -398,12 +397,12 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 {
     @try {
 
-    IBGUIEventType event = ArgsRegistry.userStepsGesture[gestureType].integerValue;
-    IBGUserStep *userStep = [[IBGUserStep alloc] initWithEvent:event automatic: YES];
+        IBGUIEventType event = ArgsRegistry.userStepsGesture[gestureType].integerValue;
+        IBGUserStep *userStep = [[IBGUserStep alloc] initWithEvent:event automatic: YES];
 
-   userStep = [userStep setMessage: message]; 
-   userStep =  [userStep setViewTypeName:viewName];    
-   [userStep logUserStep];   
+        userStep = [userStep setMessage: message];
+        userStep =  [userStep setViewTypeName:viewName];
+        [userStep logUserStep];
     }
     @catch (NSException *exception) {
         NSLog(@"%@", exception);
@@ -416,23 +415,201 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     Instabug.trackUserSteps = isEnabled.boolValue;
 }
 
-- (void)enableAutoMaskingAutoMasking:(nonnull NSArray<NSString *> *)autoMasking error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error { 
+- (void)enableAutoMaskingAutoMasking:(nonnull NSArray<NSString *> *)autoMasking error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
     IBGAutoMaskScreenshotOption resolvedEvents = 0;
 
     for (NSString *event in autoMasking) {
         resolvedEvents |= (ArgsRegistry.autoMasking[event]).integerValue;
     }
-    
+
     [Instabug setAutoMaskScreenshots: resolvedEvents];
+
+}
++ (void)setScreenshotMaskingHandler:(nullable void (^)(UIImage * _Nonnull __strong, void (^ _Nonnull __strong)(UIImage * _Nonnull __strong)))maskingHandler {
+    [Instabug setScreenshotMaskingHandler:maskingHandler];
+}
+
+- (void)setNetworkLogBodyEnabledIsEnabled:(NSNumber *)isEnabled 
+                          error:(FlutterError *_Nullable *_Nonnull)error {
+    IBGNetworkLogger.logBodyEnabled = [isEnabled boolValue];
+}
+
+
+- (void)setAppVariantAppVariant:(nonnull NSString *)appVariant error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+
+    Instabug.appVariant = appVariant;
 
 }
 
 
+- (void)setThemeThemeConfig:(NSDictionary<NSString *, id> *)themeConfig error:(FlutterError *_Nullable *_Nonnull)error {
+    IBGTheme *theme = [[IBGTheme alloc] init];
 
+    NSDictionary *colorMapping = @{
+        @"primaryColor": ^(UIColor *color) { theme.primaryColor = color; },
+        @"backgroundColor": ^(UIColor *color) { theme.backgroundColor = color; },
+        @"titleTextColor": ^(UIColor *color) { theme.titleTextColor = color; },
+        @"subtitleTextColor": ^(UIColor *color) { theme.subtitleTextColor = color; },
+        @"primaryTextColor": ^(UIColor *color) { theme.primaryTextColor = color; },
+        @"secondaryTextColor": ^(UIColor *color) { theme.secondaryTextColor = color; },
+        @"callToActionTextColor": ^(UIColor *color) { theme.callToActionTextColor = color; },
+        @"headerBackgroundColor": ^(UIColor *color) { theme.headerBackgroundColor = color; },
+        @"footerBackgroundColor": ^(UIColor *color) { theme.footerBackgroundColor = color; },
+        @"rowBackgroundColor": ^(UIColor *color) { theme.rowBackgroundColor = color; },
+        @"selectedRowBackgroundColor": ^(UIColor *color) { theme.selectedRowBackgroundColor = color; },
+        @"rowSeparatorColor": ^(UIColor *color) { theme.rowSeparatorColor = color; }
+    };
 
+    for (NSString *key in colorMapping) {
+        if (themeConfig[key]) {
+            NSString *colorString = themeConfig[key];
+            UIColor *color = [self colorFromHexString:colorString];
+            if (color) {
+                void (^setter)(UIColor *) = colorMapping[key];
+                setter(color);
+            }
+        }
+    }
 
-+ (void)setScreenshotMaskingHandler:(nullable void (^)(UIImage * _Nonnull __strong, void (^ _Nonnull __strong)(UIImage * _Nonnull __strong)))maskingHandler {
-   [Instabug setScreenshotMaskingHandler:maskingHandler];
+    [self setFontIfPresent:themeConfig[@"primaryFontPath"] ?: themeConfig[@"primaryFontAsset"] forTheme:theme type:@"primary"];
+    [self setFontIfPresent:themeConfig[@"secondaryFontPath"] ?: themeConfig[@"secondaryFontAsset"] forTheme:theme type:@"secondary"];
+    [self setFontIfPresent:themeConfig[@"ctaFontPath"] ?: themeConfig[@"ctaFontAsset"] forTheme:theme type:@"cta"];
+
+    Instabug.theme = theme;
+}
+
+- (void)setFontIfPresent:(NSString *)fontPath forTheme:(IBGTheme *)theme type:(NSString *)type {
+    if (!fontPath || fontPath.length == 0 || !theme || !type) return;
+
+    if (!_registeredFonts) {
+        _registeredFonts = [NSMutableSet set];
+    }
+
+    // Check if font is already registered
+    if ([_registeredFonts containsObject:fontPath]) {
+        UIFont *font = [UIFont fontWithName:fontPath size:UIFont.systemFontSize];
+        if (font) {
+            [self setFont:font forTheme:theme type:type];
+        }
+        return;
+    }
+
+    // Try to load font from system fonts first
+    UIFont *font = [UIFont fontWithName:fontPath size:UIFont.systemFontSize];
+    if (font) {
+        [_registeredFonts addObject:fontPath];
+        [self setFont:font forTheme:theme type:type];
+        return;
+    }
+
+    // Try to load font from bundle
+    font = [self loadFontFromPath:fontPath];
+    if (font) {
+        [_registeredFonts addObject:fontPath];
+        [self setFont:font forTheme:theme type:type];
+    }
+}
+
+- (UIFont *)loadFontFromPath:(NSString *)fontPath {
+    NSString *fontFileName = [fontPath stringByDeletingPathExtension];
+    NSArray *fontExtensions = @[@"ttf", @"otf", @"woff", @"woff2"];
+
+    // Find font file in bundle
+    NSString *fontFilePath = nil;
+    for (NSString *extension in fontExtensions) {
+        fontFilePath = [[NSBundle mainBundle] pathForResource:fontFileName ofType:extension];
+        if (fontFilePath) break;
+    }
+
+    if (!fontFilePath) {
+        return nil;
+    }
+
+    // Load font data
+    NSData *fontData = [NSData dataWithContentsOfFile:fontFilePath];
+    if (!fontData) {
+        return nil;
+    }
+
+    // Create data provider
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)fontData);
+    if (!provider) {
+        return nil;
+    }
+
+    // Create CG font
+    CGFontRef cgFont = CGFontCreateWithDataProvider(provider);
+    CGDataProviderRelease(provider);
+
+    if (!cgFont) {
+        return nil;
+    }
+
+    // Register font
+    CFErrorRef error = NULL;
+    BOOL registered = CTFontManagerRegisterGraphicsFont(cgFont, &error);
+
+    if (!registered) {
+        if (error) {
+            CFStringRef description = CFErrorCopyDescription(error);
+            CFRelease(description);
+            CFRelease(error);
+        }
+        CGFontRelease(cgFont);
+        return nil;
+    }
+
+    // Get PostScript name and create UIFont
+    NSString *postScriptName = (__bridge_transfer NSString *)CGFontCopyPostScriptName(cgFont);
+    CGFontRelease(cgFont);
+
+    if (!postScriptName) {
+        return nil;
+    }
+
+    return [UIFont fontWithName:postScriptName size:UIFont.systemFontSize];
+}
+
+- (void)setFont:(UIFont *)font forTheme:(IBGTheme *)theme type:(NSString *)type {
+    if (!font || !theme || !type) return;
+
+    if ([type isEqualToString:@"primary"]) {
+        theme.primaryTextFont = font;
+    } else if ([type isEqualToString:@"secondary"]) {
+        theme.secondaryTextFont = font;
+    } else if ([type isEqualToString:@"cta"]) {
+        theme.callToActionTextFont = font;
+    }
+}
+
+- (UIColor *)colorFromHexString:(NSString *)hexString {
+    NSString *cleanString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
+
+    if (cleanString.length == 6) {
+        unsigned int rgbValue = 0;
+        NSScanner *scanner = [NSScanner scannerWithString:cleanString];
+        [scanner scanHexInt:&rgbValue];
+
+        return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16) / 255.0
+                               green:((rgbValue & 0xFF00) >> 8) / 255.0
+                                blue:(rgbValue & 0xFF) / 255.0
+                               alpha:1.0];
+    } else if (cleanString.length == 8) {
+        unsigned int rgbaValue = 0;
+        NSScanner *scanner = [NSScanner scannerWithString:cleanString];
+        [scanner scanHexInt:&rgbaValue];
+
+        return [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24) / 255.0
+                               green:((rgbaValue & 0xFF0000) >> 16) / 255.0
+                                blue:((rgbaValue & 0xFF00) >> 8) / 255.0
+                               alpha:(rgbaValue & 0xFF) / 255.0];
+    }
+
+    return [UIColor blackColor];
+}
+
+- (void)setFullscreenIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
+    // Empty implementation as requested
 }
 
 @end

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
-import 'package:instabug_flutter_example/src/widget/instabug_button.dart';
 import 'package:instabug_flutter_example/src/widget/section_title.dart';
 import 'package:video_player/video_player.dart';
 

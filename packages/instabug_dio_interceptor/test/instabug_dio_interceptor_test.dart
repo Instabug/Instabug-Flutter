@@ -53,11 +53,12 @@ void main() {
   setUpAll(() {
     Instabug.$setHostApi(mHost);
     NetworkLogger.$setHostApi(mHost);
-    when(mHost.isW3CFeatureFlagsEnabled()).thenAnswer((_)=>Future<Map<String,bool>>.value(<String, bool>{
-      'isW3cCaughtHeaderEnabled': true,
-      'isW3cExternalGeneratedHeaderEnabled': true,
-      'isW3cExternalTraceIDEnabled': true,
-    }));
+    when(mHost.isW3CFeatureFlagsEnabled())
+        .thenAnswer((_) => Future<Map<String, bool>>.value(<String, bool>{
+              'isW3cCaughtHeaderEnabled': true,
+              'isW3cExternalGeneratedHeaderEnabled': true,
+              'isW3cExternalTraceIDEnabled': true,
+            }));
   });
 
   setUp(() {

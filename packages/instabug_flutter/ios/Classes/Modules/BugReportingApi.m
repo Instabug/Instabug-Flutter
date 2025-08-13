@@ -1,5 +1,5 @@
 #import <Flutter/Flutter.h>
-#import "Instabug.h"
+#import "InstabugSDK.h"
 #import "BugReportingApi.h"
 #import "ArgsRegistry.h"
 
@@ -151,8 +151,7 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
 }
 
 - (void)setCommentMinimumCharacterCountLimit:(NSNumber *)limit reportTypes:(nullable NSArray<NSString *> *)reportTypes error:(FlutterError *_Nullable *_Nonnull)error {
-    IBGBugReportingReportType resolvedTypes = 0;
-
+    IBGBugReportingType resolvedTypes = 0;
     if (![reportTypes count]) {
         resolvedTypes = (ArgsRegistry.reportTypes[@"ReportType.bug"]).integerValue | (ArgsRegistry.reportTypes[@"ReportType.feedback"]).integerValue | (ArgsRegistry.reportTypes[@"ReportType.question"]).integerValue;
     }
@@ -162,7 +161,24 @@ extern void InitBugReportingApi(id<FlutterBinaryMessenger> messenger) {
         }
     }
     
-    [IBGBugReporting setCommentMinimumCharacterCountForReportTypes:resolvedTypes withLimit:limit.intValue];
+    [IBGBugReporting setCommentMinimumCharacterCount:[limit integerValue] forBugReportType:resolvedTypes];
 }
+
+- (void)addUserConsentsKey:(NSString *)key
+                 description:(NSString *)description
+                   mandatory:(NSNumber *)mandatory
+                     checked:(NSNumber *)checked
+                  actionType:(nullable NSString *)actionType
+                       error:(FlutterError *_Nullable *_Nonnull)error {
+   
+    IBGActionType mappedActionType =  (ArgsRegistry.userConsentActionTypes[actionType]).integerValue;
+
+    [IBGBugReporting addUserConsentWithKey:key
+                               description:description
+                                 mandatory:[mandatory boolValue]
+                                   checked:[checked boolValue]
+                                actionType:mappedActionType];
+}
+
 
 @end
