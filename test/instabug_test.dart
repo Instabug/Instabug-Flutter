@@ -474,4 +474,24 @@ void main() {
       mHost.willRedirectToStore(),
     ).called(1);
   });
+
+  test('[setFullscreen] should call host method', () async {
+    const isEnabled = true;
+
+    await Instabug.setFullscreen(isEnabled);
+
+    verify(
+      mHost.setFullscreen(isEnabled),
+    ).called(1);
+  });
+
+  test('[setFullscreen] should call host method with false', () async {
+    const isEnabled = false;
+
+    await Instabug.setFullscreen(isEnabled);
+
+    verify(
+      mHost.setFullscreen(isEnabled),
+    ).called(1);
+  });
 }

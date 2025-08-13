@@ -681,6 +681,17 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
             }
         }
     }
-
+    /**
+     * Enables or disables displaying in full-screen mode, hiding the status and navigation bars.
+     * @param isEnabled A boolean to enable/disable setFullscreen.
+     */
+    @Override
+    public void setFullscreen(@NonNull final Boolean isEnabled) {
+        try {
+            Instabug.setFullscreen(isEnabled);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

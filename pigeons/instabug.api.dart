@@ -108,4 +108,5 @@ abstract class InstabugHostApi {
   void setNetworkLogBodyEnabled(bool isEnabled);
 
   void setTheme(Map<String, Object> themeConfig);
+  void setFullscreen(bool isEnabled);
 }

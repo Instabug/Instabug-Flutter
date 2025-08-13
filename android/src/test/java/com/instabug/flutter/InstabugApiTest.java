@@ -720,5 +720,23 @@ public class InstabugApiTest {
         mInstabug.verify(() -> Instabug.setTheme(any(com.instabug.library.model.IBGTheme.class)));
     }
 
+    @Test
+    public void testSetFullscreen() {
+        boolean isEnabled = true;
+
+        api.setFullscreen(isEnabled);
+
+        mInstabug.verify(() -> Instabug.setFullscreen(isEnabled));
+    }
+
+    @Test
+    public void testSetFullscreenDisabled() {
+        boolean isEnabled = false;
+
+        api.setFullscreen(isEnabled);
+
+        mInstabug.verify(() -> Instabug.setFullscreen(isEnabled));
+    }
+
 
 }
