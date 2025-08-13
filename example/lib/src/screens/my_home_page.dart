@@ -114,10 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
     BugReporting.setInvocationEvents([invocationEvent]);
   }
 
-  void changePrimaryColor() {
-    String text = 'FF' + primaryColorController.text.replaceAll('#', '');
-    Color color = Color(int.parse(text, radix: 16));
-    Instabug.setPrimaryColor(color);
+  void changePrimaryColor() async {
+    String text = primaryColorController.text.replaceAll('#', '');
+    await Instabug.setTheme(ThemeConfig(primaryColor: '#$text'));
+    await Future.delayed(const Duration(milliseconds: 500));
   }
 
   void setColorTheme(ColorTheme colorTheme) {

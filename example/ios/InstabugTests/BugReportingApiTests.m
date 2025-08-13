@@ -162,7 +162,7 @@
 
     [self.api setCommentMinimumCharacterCountLimit:limit reportTypes:reportTypes error:&error];
 
-    OCMVerify([self.mBugReporting setCommentMinimumCharacterCountForReportTypes:IBGBugReportingReportTypeBug | IBGBugReportingReportTypeQuestion withLimit:limit.intValue]);
+    OCMVerify([self.mBugReporting setCommentMinimumCharacterCount:limit.intValue forBugReportType:IBGBugReportingReportTypeBug | IBGBugReportingReportTypeQuestion]);
 }
 
 - (void)testSetCommentMinimumCharacterCountGivenNoReportTypes {
@@ -172,7 +172,7 @@
 
     [self.api setCommentMinimumCharacterCountLimit:limit reportTypes:reportTypes error:&error];
 
-    OCMVerify([self.mBugReporting setCommentMinimumCharacterCountForReportTypes:IBGBugReportingReportTypeBug | IBGBugReportingReportTypeFeedback | IBGBugReportingReportTypeQuestion withLimit:limit.intValue]);
+    OCMVerify([self.mBugReporting setCommentMinimumCharacterCount:limit.intValue forBugReportType:IBGBugReportingReportTypeBug | IBGBugReportingReportTypeFeedback | IBGBugReportingReportTypeQuestion]);
 }
 - (void)testAddUserConsentWithKey {
   NSString *key = @"testKey";

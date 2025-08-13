@@ -36,8 +36,6 @@ class _ApmPageState extends State<ApmPage> {
         ),
         const SectionTitle('Network'),
         const NetworkContent(),
-        const SectionTitle('Traces'),
-        const TracesContent(),
         const SectionTitle('Flows'),
         const FlowsContent(),
         const SectionTitle('Screen Loading'),

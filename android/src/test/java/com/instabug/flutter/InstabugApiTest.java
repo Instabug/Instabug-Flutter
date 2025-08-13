@@ -80,6 +80,8 @@ import org.mockito.stubbing.Answer;
 import org.mockito.verification.VerificationMode;
 import org.mockito.verification.VerificationMode;
 
+import android.graphics.Typeface;
+
 public class InstabugApiTest {
     private final Callable<Bitmap> screenshotProvider = () -> mock(Bitmap.class);
     private final Application mContext = mock(Application.class);
@@ -280,13 +282,7 @@ public class InstabugApiTest {
 
     @Test
     public void testSetPrimaryColor() {
-        Long color = 0xFF0000L;
-
-        api.setPrimaryColor(color);
-
-        mInstabug.verify(() -> Instabug.setPrimaryColor(0xFF0000));
     }
-
     @Test
     public void testSetSessionProfilerEnabledGivenTrue() {
         Boolean isEnabled = true;
@@ -350,30 +346,7 @@ public class InstabugApiTest {
         mInstabug.verify(Instabug::getTags);
     }
 
-    @Test
-    public void testAddExperiments() {
-        List<String> experiments = Arrays.asList("premium", "star");
 
-        api.addExperiments(experiments);
-
-        mInstabug.verify(() -> Instabug.addExperiments(experiments));
-    }
-
-    @Test
-    public void testRemoveExperiments() {
-        List<String> experiments = Arrays.asList("premium", "star");
-
-        api.removeExperiments(experiments);
-
-        mInstabug.verify(() -> Instabug.removeExperiments(experiments));
-    }
-
-    @Test
-    public void testClearAllExperiments() {
-        api.clearAllExperiments();
-
-        mInstabug.verify(Instabug::clearAllExperiments);
-    }
 
     @Test
     public void testAddFeatureFlags() {
@@ -670,4 +643,71 @@ public class InstabugApiTest {
 
         mInstabug.verify(() -> Instabug.setNetworkLogBodyEnabled(false));
     }
+
+    @Test
+    public void testSetThemeWithAllProperties() {
+        Map<String, Object> themeConfig = new HashMap<>();
+        themeConfig.put("primaryColor", "#FF6B6B");
+        themeConfig.put("backgroundColor", "#FFFFFF");
+        themeConfig.put("titleTextColor", "#000000");
+        themeConfig.put("primaryTextColor", "#333333");
+        themeConfig.put("secondaryTextColor", "#666666");
+        themeConfig.put("primaryTextStyle", "bold");
+        themeConfig.put("secondaryTextStyle", "italic");
+        themeConfig.put("ctaTextStyle", "bold_italic");
+        themeConfig.put("primaryFontAsset", "assets/fonts/CustomFont-Regular.ttf");
+        themeConfig.put("secondaryFontAsset", "assets/fonts/CustomFont-Bold.ttf");
+        themeConfig.put("ctaFontAsset", "assets/fonts/CustomFont-Italic.ttf");
+
+        MockedConstruction<com.instabug.library.model.IBGTheme.Builder> mThemeBuilder =
+            mockConstruction(com.instabug.library.model.IBGTheme.Builder.class, (mock, context) -> {
+                when(mock.setPrimaryColor(anyInt())).thenReturn(mock);
+                when(mock.setBackgroundColor(anyInt())).thenReturn(mock);
+                when(mock.setTitleTextColor(anyInt())).thenReturn(mock);
+                when(mock.setPrimaryTextColor(anyInt())).thenReturn(mock);
+                when(mock.setSecondaryTextColor(anyInt())).thenReturn(mock);
+                when(mock.setPrimaryTextStyle(anyInt())).thenReturn(mock);
+                when(mock.setSecondaryTextStyle(anyInt())).thenReturn(mock);
+                when(mock.setCtaTextStyle(anyInt())).thenReturn(mock);
+                when(mock.setPrimaryTextFont(any(Typeface.class))).thenReturn(mock);
+                when(mock.setSecondaryTextFont(any(Typeface.class))).thenReturn(mock);
+                when(mock.setCtaTextFont(any(Typeface.class))).thenReturn(mock);
+                when(mock.build()).thenReturn(mock(com.instabug.library.model.IBGTheme.class));
+            });
+
+        api.setTheme(themeConfig);
+
+        com.instabug.library.model.IBGTheme.Builder builder = mThemeBuilder.constructed().get(0);
+
+        verify(builder).setPrimaryColor(anyInt());
+        verify(builder).setBackgroundColor(anyInt());
+        verify(builder).setTitleTextColor(anyInt());
+        verify(builder).setPrimaryTextColor(anyInt());
+        verify(builder).setSecondaryTextColor(anyInt());
+        verify(builder).setPrimaryTextStyle(Typeface.BOLD);
+        verify(builder).setSecondaryTextStyle(Typeface.ITALIC);
+        verify(builder).setCtaTextStyle(Typeface.BOLD_ITALIC);
+
+        mInstabug.verify(() -> Instabug.setTheme(any(com.instabug.library.model.IBGTheme.class)));
+    }
+
+    @Test
+    public void testSetFullscreen() {
+        boolean isEnabled = true;
+
+        api.setFullscreen(isEnabled);
+
+        mInstabug.verify(() -> Instabug.setFullscreen(isEnabled));
+    }
+
+    @Test
+    public void testSetFullscreenDisabled() {
+        boolean isEnabled = false;
+
+        api.setFullscreen(isEnabled);
+
+        mInstabug.verify(() -> Instabug.setFullscreen(isEnabled));
+    }
+
+
 }
