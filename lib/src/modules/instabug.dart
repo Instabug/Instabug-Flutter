@@ -262,31 +262,6 @@ class Instabug {
     return tags?.cast<String>();
   }
 
-  /// Adds experiments to the next report.
-  @Deprecated(
-    'Please migrate to the new feature flags APIs: Instabug.addFeatureFlags.',
-  )
-  static Future<void> addExperiments(List<String> experiments) async {
-    return _host.addExperiments(experiments);
-  }
-
-  /// Removes certain experiments from the next report.
-  @Deprecated(
-    'Please migrate to the new feature flags APIs: Instabug.removeFeatureFlags.',
-  )
-  static Future<void> removeExperiments(List<String> experiments) async {
-    return _host.removeExperiments(experiments);
-  }
-
-  /// Clears all experiments from the next report.
-
-  @Deprecated(
-    'Please migrate to the new feature flags APIs: Instabug.clearAllFeatureFlags.',
-  )
-  static Future<void> clearAllExperiments() async {
-    return _host.clearAllExperiments();
-  }
-
   /// Adds feature flags to the next report.
   static Future<void> addFeatureFlags(List<FeatureFlag> featureFlags) async {
     final map = <String, String>{};
@@ -362,8 +337,13 @@ class Instabug {
   /// Sets the primary color of the SDK's UI.
   /// Sets the color of UI elements indicating interactivity or call to action.
   /// [color] primaryColor A color to set the UI elements of the SDK to.
+  ///
+  /// Note: This API is deprecated. Please use `Instabug.setTheme` instead.
+  @Deprecated(
+    'This API is deprecated. Please use Instabug.setTheme instead.',
+  )
   static Future<void> setPrimaryColor(Color color) async {
-    return _host.setPrimaryColor(color.value);
+    await setTheme(ThemeConfig(primaryColor: color.toString()));
   }
 
   /// Adds specific user data that you need to be added to the reports

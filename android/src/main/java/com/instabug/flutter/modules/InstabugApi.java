@@ -197,7 +197,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setPrimaryColor(@NonNull Long color) {
-        Instabug.setPrimaryColor(color.intValue());
     }
 
     @Override
@@ -249,20 +248,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         );
     }
 
-    @Override
-    public void addExperiments(@NonNull List<String> experiments) {
-        Instabug.addExperiments(experiments);
-    }
 
-    @Override
-    public void removeExperiments(@NonNull List<String> experiments) {
-        Instabug.removeExperiments(experiments);
-    }
-
-    @Override
-    public void clearAllExperiments() {
-        Instabug.clearAllExperiments();
-    }
 
     @Override
     public void addFeatureFlags(@NonNull Map<String, String> featureFlags) {
@@ -535,7 +521,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     public void setTheme(@NonNull Map<String, Object> themeConfig) {
         try {
             Log.d(TAG, "setTheme called with config: " + themeConfig.toString());
-            
+
             com.instabug.library.model.IBGTheme.Builder builder = new com.instabug.library.model.IBGTheme.Builder();
 
             if (themeConfig.containsKey("primaryColor")) {
@@ -582,7 +568,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     /**
      * Retrieves a color value from the Map.
-     * 
+     *
      * @param map The Map object.
      * @param key The key to look for.
      * @return The parsed color as an integer, or black if missing or invalid.
@@ -601,7 +587,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     /**
      * Retrieves a text style from the Map.
-     * 
+     *
      * @param map The Map object.
      * @param key The key to look for.
      * @return The corresponding Typeface style, or Typeface.NORMAL if missing or invalid.
@@ -630,7 +616,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     /**
      * Sets a font on the theme builder if the font configuration is present in the theme config.
-     * 
+     *
      * @param themeConfig The theme configuration map
      * @param builder The theme builder
      * @param fileKey The key for font file path
@@ -659,17 +645,17 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     private Typeface getTypeface(Map<String, Object> map, String fileKey, String assetKey) {
         String fontName = null;
-        
+
         if (assetKey != null && map.containsKey(assetKey) && map.get(assetKey) != null) {
             fontName = (String) map.get(assetKey);
         } else if (fileKey != null && map.containsKey(fileKey) && map.get(fileKey) != null) {
             fontName = (String) map.get(fileKey);
         }
-        
+
         if (fontName == null) {
             return Typeface.DEFAULT;
         }
-        
+
         try {
             String assetPath = "fonts/" + fontName;
             return Typeface.createFromAsset(context.getAssets(), assetPath);

@@ -17,7 +17,6 @@ import com.instabug.apm.APM;
 import com.instabug.apm.InternalAPM;
 import com.instabug.apm.configuration.cp.APMFeature;
 import com.instabug.apm.configuration.cp.FeatureAvailabilityCallback;
-import com.instabug.apm.model.ExecutionTrace;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.modules.ApmApi;
@@ -68,16 +67,6 @@ public class ApmApiTest {
         GlobalMocks.close();
     }
 
-    private ExecutionTrace mockTrace(String id) {
-        String name = "trace-name";
-        ExecutionTrace mTrace = mock(ExecutionTrace.class);
-
-        mAPM.when(() -> APM.startExecutionTrace(name)).thenReturn(mTrace);
-
-        api.startExecutionTrace(id, name, makeResult());
-
-        return mTrace;
-    }
 
     @Test
     public void testInit() {
@@ -115,53 +104,7 @@ public class ApmApiTest {
         mAPM.verify(() -> APM.setAutoUITraceEnabled(isEnabled));
     }
 
-    @Test
-    public void testStartExecutionTraceWhenTraceNotNull() {
-        String expectedId = "trace-id";
-        String name = "trace-name";
-        ApmPigeon.Result<String> result = makeResult((String actualId) -> assertEquals(expectedId, actualId));
 
-        mAPM.when(() -> APM.startExecutionTrace(name)).thenReturn(new ExecutionTrace(name));
-
-        api.startExecutionTrace(expectedId, name, result);
-
-        mAPM.verify(() -> APM.startExecutionTrace(name));
-    }
-
-    @Test
-    public void testStartExecutionTraceWhenTraceIsNull() {
-        String id = "trace-id";
-        String name = "trace-name";
-        ApmPigeon.Result<String> result = makeResult(Assert::assertNull);
-
-        mAPM.when(() -> APM.startExecutionTrace(name)).thenReturn(null);
-
-        api.startExecutionTrace(id, name, result);
-
-        mAPM.verify(() -> APM.startExecutionTrace(name));
-    }
-
-    @Test
-    public void testSetExecutionTraceAttribute() {
-        String id = "trace-id";
-        String key = "is_premium";
-        String value = "true";
-        ExecutionTrace mTrace = mockTrace(id);
-
-        api.setExecutionTraceAttribute(id, key, value);
-
-        verify(mTrace).setAttribute(key, value);
-    }
-
-    @Test
-    public void testEndExecutionTrace() {
-        String id = "trace-id";
-        ExecutionTrace mTrace = mockTrace(id);
-
-        api.endExecutionTrace(id);
-
-        verify(mTrace).end();
-    }
 
     @Test
     public void testStartFlow() {

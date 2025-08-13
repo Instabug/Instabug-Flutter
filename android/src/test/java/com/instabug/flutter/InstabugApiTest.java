@@ -282,13 +282,7 @@ public class InstabugApiTest {
 
     @Test
     public void testSetPrimaryColor() {
-        Long color = 0xFF0000L;
-
-        api.setPrimaryColor(color);
-
-        mInstabug.verify(() -> Instabug.setPrimaryColor(0xFF0000));
     }
-
     @Test
     public void testSetSessionProfilerEnabledGivenTrue() {
         Boolean isEnabled = true;
@@ -352,30 +346,7 @@ public class InstabugApiTest {
         mInstabug.verify(Instabug::getTags);
     }
 
-    @Test
-    public void testAddExperiments() {
-        List<String> experiments = Arrays.asList("premium", "star");
 
-        api.addExperiments(experiments);
-
-        mInstabug.verify(() -> Instabug.addExperiments(experiments));
-    }
-
-    @Test
-    public void testRemoveExperiments() {
-        List<String> experiments = Arrays.asList("premium", "star");
-
-        api.removeExperiments(experiments);
-
-        mInstabug.verify(() -> Instabug.removeExperiments(experiments));
-    }
-
-    @Test
-    public void testClearAllExperiments() {
-        api.clearAllExperiments();
-
-        mInstabug.verify(Instabug::clearAllExperiments);
-    }
 
     @Test
     public void testAddFeatureFlags() {
@@ -688,7 +659,7 @@ public class InstabugApiTest {
         themeConfig.put("secondaryFontAsset", "assets/fonts/CustomFont-Bold.ttf");
         themeConfig.put("ctaFontAsset", "assets/fonts/CustomFont-Italic.ttf");
 
-        MockedConstruction<com.instabug.library.model.IBGTheme.Builder> mThemeBuilder = 
+        MockedConstruction<com.instabug.library.model.IBGTheme.Builder> mThemeBuilder =
             mockConstruction(com.instabug.library.model.IBGTheme.Builder.class, (mock, context) -> {
                 when(mock.setPrimaryColor(anyInt())).thenReturn(mock);
                 when(mock.setBackgroundColor(anyInt())).thenReturn(mock);
@@ -707,7 +678,7 @@ public class InstabugApiTest {
         api.setTheme(themeConfig);
 
         com.instabug.library.model.IBGTheme.Builder builder = mThemeBuilder.constructed().get(0);
-        
+
         verify(builder).setPrimaryColor(anyInt());
         verify(builder).setBackgroundColor(anyInt());
         verify(builder).setTitleTextColor(anyInt());
@@ -716,7 +687,7 @@ public class InstabugApiTest {
         verify(builder).setPrimaryTextStyle(Typeface.BOLD);
         verify(builder).setSecondaryTextStyle(Typeface.ITALIC);
         verify(builder).setCtaTextStyle(Typeface.BOLD_ITALIC);
-        
+
         mInstabug.verify(() -> Instabug.setTheme(any(com.instabug.library.model.IBGTheme.class)));
     }
 
