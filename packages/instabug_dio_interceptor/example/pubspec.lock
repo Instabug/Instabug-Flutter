@@ -105,7 +105,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.3.0"
+    version: "2.5.0"
   instabug_flutter:
     dependency: "direct overridden"
     description:

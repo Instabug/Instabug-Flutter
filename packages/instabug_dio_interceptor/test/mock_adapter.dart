@@ -11,12 +11,9 @@ class MockAdapter implements HttpClientAdapter {
   final IOHttpClientAdapter _adapter = IOHttpClientAdapter();
 
   @override
-  Future<ResponseBody> fetch(
-    RequestOptions options,
-    Stream<Uint8List>? requestStream,
-    Future<dynamic>? cancelFuture,
-  ) async {
-    final uri = options.uri;
+  Future<ResponseBody> fetch(RequestOptions options,
+      Stream<Uint8List>? requestStream, Future<dynamic>? cancelFuture) async {
+    final Uri uri = options.uri;
 
     if (uri.host == mockHost) {
       switch (uri.path) {
@@ -24,7 +21,7 @@ class MockAdapter implements HttpClientAdapter {
           return ResponseBody.fromString(
             jsonEncode(<String, dynamic>{
               'errCode': 0,
-              'data': <String, dynamic>{'path': uri.path},
+              'data': <String, dynamic>{'path': uri.path}
             }),
             200,
           );

@@ -2,18 +2,19 @@ name: instabug_dio_interceptor
 description:
   This package is an add on to instabug_flutter. It intercepts any requests performed
   with Dio Package and sends them to the report that will be sent to the dashboard.
-version: 2.3.0
+version: 2.5.0
 homepage: https://github.com/Instabug/Instabug-Flutter#readme
 repository: https://github.com/Instabug/Instabug-Flutter/tree/refactor/monorepo/packages/instabug_dio_interceptor
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.12.0 <4.0.0'
 
 dependencies:
   dio: '>=4.0.0 <6.0.0'
   flutter:
     sdk: flutter
-  instabug_flutter: '>=14.0.0 <15.0.0'
+  instabug_flutter: '>=14.0.0 <17.0.0'
+
 
 dev_dependencies:
   build_runner: ^2.0.3

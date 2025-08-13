@@ -29,15 +29,11 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   void close() => client.close();
 
   @override
-  Future<http.Response> delete(
-    Uri url, {
-    Map<String, String>? headers,
-    Object? body,
-    Encoding? encoding,
-  }) async {
-    final startTime = DateTime.now();
-    final requestHeader = headers ?? <String, String>{};
-    final w3cHeader = await getW3cHeader(requestHeader, startTime);
+  Future<http.Response> delete(Uri url,
+      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
+    final DateTime startTime = DateTime.now();
+    final Map<String, String> requestHeader = headers ?? <String, String>{};
+    final W3CHeader? w3cHeader = await getW3cHeader(requestHeader, startTime);
     return client
         .delete(url, body: body, headers: requestHeader, encoding: encoding)
         .then((http.Response response) {
@@ -46,14 +42,9 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
     });
   }
 
-  Future<W3CHeader?> getW3cHeader(
-    Map<String, String> requestHeader,
-    DateTime startTime,
-  ) async {
-    final w3cHeader = await _networklogger.getW3CHeader(
-      requestHeader,
-      startTime.millisecondsSinceEpoch,
-    );
+  Future<W3CHeader?> getW3cHeader(Map<String, String> requestHeader, DateTime startTime) async {
+     final W3CHeader? w3cHeader = await _networklogger.getW3CHeader(
+        requestHeader, startTime.millisecondsSinceEpoch);
     if (w3cHeader?.isW3cHeaderFound == false &&
         w3cHeader?.w3CGeneratedHeader != null) {
       requestHeader['traceparent'] = w3cHeader!.w3CGeneratedHeader!;
@@ -63,9 +54,9 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
 
   @override
   Future<http.Response> get(Uri url, {Map<String, String>? headers}) async {
-    final startTime = DateTime.now();
-    final requestHeader = headers ?? <String, String>{};
-    final w3cHeader = await getW3cHeader(requestHeader, startTime);
+    final DateTime startTime = DateTime.now();
+    final Map<String, String> requestHeader = headers ?? <String, String>{};
+    final W3CHeader? w3cHeader = await getW3cHeader(requestHeader, startTime);
     return client
         .get(url, headers: requestHeader)
         .then((http.Response response) {
@@ -76,9 +67,9 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
 
   @override
   Future<http.Response> head(Uri url, {Map<String, String>? headers}) async {
-    final startTime = DateTime.now();
-    final requestHeader = headers ?? <String, String>{};
-    final w3cHeader = await getW3cHeader(requestHeader, startTime);
+    final DateTime startTime = DateTime.now();
+    final Map<String, String> requestHeader = headers ?? <String, String>{};
+    final W3CHeader? w3cHeader = await getW3cHeader(requestHeader, startTime);
     return client
         .head(url, headers: requestHeader)
         .then((http.Response response) {
@@ -88,15 +79,11 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   }
 
   @override
-  Future<http.Response> patch(
-    Uri url, {
-    Map<String, String>? headers,
-    Object? body,
-    Encoding? encoding,
-  }) async {
-    final startTime = DateTime.now();
-    final requestHeader = headers ?? <String, String>{};
-    final w3cHeader = await getW3cHeader(requestHeader, startTime);
+  Future<http.Response> patch(Uri url,
+      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
+    final DateTime startTime = DateTime.now();
+    final Map<String, String> requestHeader = headers ?? <String, String>{};
+    final W3CHeader? w3cHeader = await getW3cHeader(requestHeader, startTime);
     return client
         .patch(url, headers: requestHeader, body: body, encoding: encoding)
         .then((http.Response response) {
@@ -106,15 +93,11 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   }
 
   @override
-  Future<http.Response> post(
-    Uri url, {
-    Map<String, String>? headers,
-    Object? body,
-    Encoding? encoding,
-  }) async {
-    final startTime = DateTime.now();
-    final requestHeader = headers ?? <String, String>{};
-    final w3cHeader = await getW3cHeader(requestHeader, startTime);
+  Future<http.Response> post(Uri url,
+      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
+    final DateTime startTime = DateTime.now();
+    final Map<String, String> requestHeader = headers ?? <String, String>{};
+    final W3CHeader? w3cHeader = await getW3cHeader(requestHeader, startTime);
     return client
         .post(url, headers: requestHeader, body: body, encoding: encoding)
         .then((http.Response response) {
@@ -124,15 +107,11 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   }
 
   @override
-  Future<http.Response> put(
-    Uri url, {
-    Map<String, String>? headers,
-    Object? body,
-    Encoding? encoding,
-  }) async {
-    final startTime = DateTime.now();
-    final requestHeader = headers ?? <String, String>{};
-    final w3cHeader = await getW3cHeader(requestHeader, startTime);
+  Future<http.Response> put(Uri url,
+      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
+    final DateTime startTime = DateTime.now();
+    final Map<String, String> requestHeader = headers ?? <String, String>{};
+    final W3CHeader? w3cHeader = await getW3cHeader(requestHeader, startTime);
     return client
         .put(url, headers: requestHeader, body: body, encoding: encoding)
         .then((http.Response response) {
@@ -151,30 +130,24 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    final startTime = DateTime.now();
-    final requestHeader = request.headers;
-    final w3cHeader = await getW3cHeader(requestHeader, startTime);
-    return client.send(request).then(
-          (http.StreamedResponse streamedResponse) =>
-              http.Response.fromStream(streamedResponse)
-                  .then((http.Response response) {
-            logger.onLogger(
-              response,
-              startTime: startTime,
-              w3CHeader: w3cHeader,
-            );
-            // Need to return new StreamedResponse, as body only can be listened once
-            return http.StreamedResponse(
-              Stream<List<int>>.value(response.bodyBytes),
-              response.statusCode,
-              contentLength: response.contentLength,
-              request: response.request,
-              headers: response.headers,
-              isRedirect: response.isRedirect,
-              persistentConnection: response.persistentConnection,
-              reasonPhrase: response.reasonPhrase,
-            );
-          }),
-        );
+    final DateTime startTime = DateTime.now();
+    final Map<String, String> requestHeader = request.headers;
+    final W3CHeader? w3cHeader = await getW3cHeader(requestHeader, startTime);
+    return client.send(request).then((http.StreamedResponse streamedResponse) =>
+        http.Response.fromStream(streamedResponse)
+            .then((http.Response response) {
+          logger.onLogger(response, startTime: startTime, w3CHeader: w3cHeader);
+          // Need to return new StreamedResponse, as body only can be listened once
+          return http.StreamedResponse(
+            Stream<List<int>>.value(response.bodyBytes),
+            response.statusCode,
+            contentLength: response.contentLength,
+            request: response.request,
+            headers: response.headers,
+            isRedirect: response.isRedirect,
+            persistentConnection: response.persistentConnection,
+            reasonPhrase: response.reasonPhrase,
+          );
+        }));
   }
 }
