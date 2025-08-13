@@ -5,7 +5,11 @@
 ### Added
 
 - Add support for Advanced UI customization with comprehensive theming capabilities ([#599](https://github.com/Instabug/Instabug-Flutter/pull/599))
-- 
+
+- Add support for private views and automasking ([#519](https://github.com/Instabug/Instabug-Flutter/pull/519))
+
+- Add support for user steps  ([#519](https://github.com/Instabug/Instabug-Flutter/pull/519))
+
 - Add support for App variant. ([#585](https://github.com/Instabug/Instabug-Flutter/pull/585))
 
 ### Changed
