@@ -263,31 +263,6 @@ class Instabug {
     return tags?.cast<String>();
   }
 
-  /// Adds experiments to the next report.
-  @Deprecated(
-    'Please migrate to the new feature flags APIs: Instabug.addFeatureFlags.',
-  )
-  static Future<void> addExperiments(List<String> experiments) async {
-    return _host.addExperiments(experiments);
-  }
-
-  /// Removes certain experiments from the next report.
-  @Deprecated(
-    'Please migrate to the new feature flags APIs: Instabug.removeFeatureFlags.',
-  )
-  static Future<void> removeExperiments(List<String> experiments) async {
-    return _host.removeExperiments(experiments);
-  }
-
-  /// Clears all experiments from the next report.
-
-  @Deprecated(
-    'Please migrate to the new feature flags APIs: Instabug.clearAllFeatureFlags.',
-  )
-  static Future<void> clearAllExperiments() async {
-    return _host.clearAllExperiments();
-  }
-
   /// Adds feature flags to the next report.
   static Future<void> addFeatureFlags(List<FeatureFlag> featureFlags) async {
     final map = <String, String>{};
@@ -363,8 +338,13 @@ class Instabug {
   /// Sets the primary color of the SDK's UI.
   /// Sets the color of UI elements indicating interactivity or call to action.
   /// [color] primaryColor A color to set the UI elements of the SDK to.
+  ///
+  /// Note: This API is deprecated. Please use `Instabug.setTheme` instead.
+  @Deprecated(
+    'This API is deprecated. Please use Instabug.setTheme instead.',
+  )
   static Future<void> setPrimaryColor(Color color) async {
-    return _host.setPrimaryColor(color.value);
+    await setTheme(ThemeConfig(primaryColor: color.toString()));
   }
 
   /// Adds specific user data that you need to be added to the reports
@@ -486,5 +466,33 @@ class Instabug {
   /// Helps track session data for insights on user interactions during review submission.
   static Future<void> willRedirectToStore() async {
     return _host.willRedirectToStore();
+  }
+
+  /// Sets a custom theme for Instabug UI elements.
+  ///
+  /// @param theme - Configuration object containing theme properties
+  ///
+  /// Example:
+  /// ```dart
+  ///
+  /// Instabug.setTheme(ThemeConfig(
+  ///   primaryColor: '#FF6B6B',
+  ///   secondaryTextColor: '#666666',
+  ///   primaryTextColor: '#333333',
+  ///   titleTextColor: '#000000',
+  ///   backgroundColor: '#FFFFFF',
+  ///   primaryTextStyle: 'bold',
+  ///   secondaryTextStyle: 'normal',
+  ///   titleTextStyle: 'bold',
+  ///   ctaTextStyle: 'bold',
+  ///   primaryFontPath: '/data/user/0/com.yourapp/files/fonts/YourFont.ttf',
+  ///   secondaryFontPath: '/data/user/0/com.yourapp/files/fonts/YourFont.ttf',
+  ///   ctaFontPath: '/data/user/0/com.yourapp/files/fonts/YourFont.ttf',
+  ///   primaryFontAsset: 'fonts/YourFont.ttf',
+  ///   secondaryFontAsset: 'fonts/YourFont.ttf'
+  /// ));
+  /// ```
+  static Future<void> setTheme(ThemeConfig themeConfig) async {
+    return _host.setTheme(themeConfig.toMap());
   }
 }

@@ -31,4 +31,6 @@
 
 + (void)endCustomUITraceCPWithFrames:(nullable NSArray<IBGFrameInfo *> *)frames;
 
++ (double)screenRenderingThreshold;
+
 @end

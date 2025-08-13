@@ -6,9 +6,7 @@ import 'package:flutter/widgets.dart' show WidgetBuilder, WidgetsBinding;
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
-import 'package:instabug_flutter/src/models/trace.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
-import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
@@ -73,58 +71,6 @@ class APM {
   ///   The method is returning a `Future<void>`.
   static Future<void> setColdAppLaunchEnabled(bool isEnabled) async {
     return _host.setColdAppLaunchEnabled(isEnabled);
-  }
-
-  /// Starts an execution trace.
-  /// [String] name of the trace.
-  ///
-  /// Please migrate to the App Flows APIs: [startFlow], [setFlowAttribute], and [endFlow].
-  @Deprecated(
-    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated in v13.0.0',
-  )
-  static Future<Trace> startExecutionTrace(String name) async {
-    final id = IBGDateTime.instance.now();
-    final traceId = await _host.startExecutionTrace(id.toString(), name);
-
-    if (traceId == null) {
-      return Future.error(
-        "Execution trace $name wasn't created. Please make sure to enable APM first by following "
-        'the instructions at this link: https://docs.instabug.com/reference#enable-or-disable-apm',
-      );
-    }
-
-    return Trace(
-      id: traceId,
-      name: name,
-    );
-  }
-
-  /// Sets attribute of an execution trace.
-  /// [String] id of the trace.
-  /// [String] key of attribute.
-  /// [String] value of attribute.
-  ///
-  /// Please migrate to the App Flows APIs: [startFlow], [setFlowAttribute], and [endFlow].
-  @Deprecated(
-    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated in v13.0.0',
-  )
-  static Future<void> setExecutionTraceAttribute(
-    String id,
-    String key,
-    String value,
-  ) async {
-    return _host.setExecutionTraceAttribute(id, key, value);
-  }
-
-  /// Ends an execution trace.
-  /// [String] id of the trace.
-  ///
-  /// Please migrate to the App Flows APIs: [startFlow], [setFlowAttribute], and [endFlow].
-  @Deprecated(
-    'Please migrate to the App Flows APIs: APM.startAppFlow, APM.endFlow, and APM.setFlowAttribute. This feature was deprecated in v13.0.0',
-  )
-  static Future<void> endExecutionTrace(String id) async {
-    return _host.endExecutionTrace(id);
   }
 
   /// Starts an AppFlow with the given [name].
@@ -196,9 +142,9 @@ class APM {
       (_) async {
         // Start screen render collector for custom ui trace if enabled.
         if (await FlagsConfig.screenRendering.isEnabled()) {
-          InstabugScreenRenderManager.I.endScreenRenderCollector();
+          InstabugScreenRenderManager.I
+              .endScreenRenderCollector(UiTraceType.custom);
 
-          // final uiTraceId = IBGDateTime.I.now().millisecondsSinceEpoch;
           InstabugScreenRenderManager.I
               .startScreenRenderCollectorForTraceId(0, UiTraceType.custom);
         }
@@ -213,7 +159,8 @@ class APM {
   static Future<void> endUITrace() async {
     // End screen render collector for custom ui trace if enabled.
     if (InstabugScreenRenderManager.I.screenRenderEnabled) {
-      return InstabugScreenRenderManager.I.endScreenRenderCollector();
+      return InstabugScreenRenderManager.I
+          .endScreenRenderCollector(UiTraceType.custom);
     }
 
     return _host.endUITrace();
@@ -380,9 +327,13 @@ class APM {
   ///
   /// Returns:
   ///   A Future<double> that represent the refresh rate.
+  /// Retrieve the device refresh rate and tolerance value from native side.
+  ///
+  /// Returns:
+  ///   A Future<List<double>> where the first element is the refresh rate and the second is the tolerance value.
   @internal
-  static Future<double> getDeviceRefreshRate() {
-    return _host.deviceRefreshRate();
+  static Future<List<double?>> getDeviceRefreshRateAndTolerance() {
+    return _host.getDeviceRefreshRateAndTolerance();
   }
 
   /// Sets the screen Render state based on the provided boolean value.
@@ -414,6 +365,7 @@ class APM {
   ///
   /// Returns:
   ///   A `Future<void>` is being returned.
+  @internal
   static Future<void> endScreenRenderForAutoUiTrace(
     InstabugScreenRenderData data,
   ) {
@@ -430,6 +382,7 @@ class APM {
   ///
   /// Returns:
   ///   A `Future<void>` is being returned.
+  @internal
   static Future<void> endScreenRenderForCustomUiTrace(
     InstabugScreenRenderData data,
   ) {

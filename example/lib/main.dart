@@ -28,7 +28,6 @@ part 'src/components/non_fatal_crashes_content.dart';
 part 'src/components/page.dart';
 part 'src/components/screen_render.dart';
 part 'src/components/screen_render_switch.dart';
-part 'src/components/traces_content.dart';
 part 'src/components/ui_traces_content.dart';
 part 'src/screens/apm_page.dart';
 part 'src/screens/complex_page.dart';

@@ -89,48 +89,6 @@ void main() {
     ).called(1);
   });
 
-  test('[startExecutionTrace] should call host method', () async {
-    final id = DateTime.now();
-    const name = "trace";
-
-    when(mDateTime.now()).thenAnswer((_) => id);
-    when(mHost.startExecutionTrace(id.toString(), name))
-        .thenAnswer((_) async => id.toString());
-
-    // ignore: deprecated_member_use_from_same_package
-    final trace = await APM.startExecutionTrace(name);
-
-    expect(trace.id, id.toString());
-
-    verify(
-      mHost.startExecutionTrace(id.toString(), name),
-    ).called(1);
-  });
-
-  test('[setExecutionTraceAttribute] should call host method', () async {
-    final id = DateTime.now().toString();
-    const key = "attr-key";
-    const attribute = "Trace Attribute";
-
-    // ignore: deprecated_member_use_from_same_package
-    await APM.setExecutionTraceAttribute(id, key, attribute);
-
-    verify(
-      mHost.setExecutionTraceAttribute(id, key, attribute),
-    ).called(1);
-  });
-
-  test('[endExecutionTrace] should call host method', () async {
-    final id = DateTime.now().toString();
-
-    // ignore: deprecated_member_use_from_same_package
-    await APM.endExecutionTrace(id);
-
-    verify(
-      mHost.endExecutionTrace(id),
-    ).called(1);
-  });
-
   test('[startFlow] should call host method', () async {
     const flowName = "flow-name";
     await APM.startFlow(flowName);
@@ -275,10 +233,13 @@ void main() {
       verify(mHost.isScreenRenderEnabled());
     });
 
-    test("[getDeviceRefreshRate] should call host method", () async {
-      when(mHost.deviceRefreshRate()).thenAnswer((_) async => 60.0);
-      await APM.getDeviceRefreshRate();
-      verify(mHost.deviceRefreshRate()).called(1);
+    test("[getDeviceRefreshRateAndTolerance] should call host method",
+        () async {
+      when(mHost.getDeviceRefreshRateAndTolerance()).thenAnswer(
+        (_) async => [60.0, 10.0],
+      );
+      await APM.getDeviceRefreshRateAndTolerance();
+      verify(mHost.getDeviceRefreshRateAndTolerance()).called(1);
     });
 
     test("[setScreenRenderEnabled] should call host method", () async {
@@ -349,7 +310,7 @@ void main() {
       await APM.endUITrace();
 
       verify(
-        mScreenRenderManager.endScreenRenderCollector(),
+        mScreenRenderManager.endScreenRenderCollector(UiTraceType.custom),
       ).called(1);
       verifyNever(mHost.endUITrace());
     });

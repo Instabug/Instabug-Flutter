@@ -19,16 +19,6 @@
     self.api = [[ApmApi alloc] init];
 }
 
-- (IBGExecutionTrace *)mockTraceWithId:(NSString *)traceId {
-    NSString* name = @"trace-name";
-    IBGExecutionTrace *mTrace = OCMClassMock([IBGExecutionTrace class]);
-
-    OCMStub([self.mAPM startExecutionTraceWithName:name]).andReturn(mTrace);
-
-    [self.api startExecutionTraceId:traceId name:name completion:^(NSString * _Nullable _, FlutterError * _Nullable __) {}];
-
-    return mTrace;
-}
 
 - (void)testSetEnabled {
     NSNumber *isEnabled = @1;
@@ -116,63 +106,6 @@
     OCMVerify([self.mAPM setAutoUITraceEnabled:YES]);
 }
 
-- (void)testStartExecutionTraceWhenTraceNotNil {
-    NSString *expectedId = @"trace-id";
-    NSString *name = @"trace-name";
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
-
-    IBGExecutionTrace *mTrace = OCMClassMock([IBGExecutionTrace class]);
-    OCMStub([self.mAPM startExecutionTraceWithName:name]).andReturn(mTrace);
-
-    [self.api startExecutionTraceId:expectedId name:name completion:^(NSString *actualId, FlutterError *error) {
-        [expectation fulfill];
-        XCTAssertEqual(actualId, expectedId);
-        XCTAssertNil(error);
-    }];
-
-    OCMVerify([self.mAPM startExecutionTraceWithName:name]);
-    [self waitForExpectations:@[expectation] timeout:5.0];
-}
-
-- (void)testStartExecutionTraceWhenTraceIsNil {
-    NSString *traceId = @"trace-id";
-    NSString *name = @"trace-name";
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
-
-    OCMStub([self.mAPM startExecutionTraceWithName:name]).andReturn(nil);
-
-    [self.api startExecutionTraceId:traceId name:name completion:^(NSString *actualId, FlutterError *error) {
-        [expectation fulfill];
-        XCTAssertNil(actualId);
-        XCTAssertNil(error);
-    }];
-
-    OCMVerify([self.mAPM startExecutionTraceWithName:name]);
-    [self waitForExpectations:@[expectation] timeout:5.0];
-}
-
-
-- (void)testSetExecutionTraceAttribute {
-    NSString *traceId = @"trace-id";
-    NSString *key = @"is_premium";
-    NSString *value = @"true";
-    FlutterError *error;
-    id mTrace = [self mockTraceWithId:traceId];
-
-    [self.api setExecutionTraceAttributeId:traceId key:key value:value error:&error];
-
-    OCMVerify([mTrace setAttributeWithKey:key value:value]);
-}
-
-- (void)testEndExecutionTrace {
-    NSString *traceId = @"trace-id";
-    FlutterError *error;
-    IBGExecutionTrace *mTrace = [self mockTraceWithId:traceId];
-
-    [self.api endExecutionTraceId:traceId error:&error];
-
-    OCMVerify([mTrace end]);
-}
 
 - (void) testStartFlow {
     NSString* appFlowName = @"app-flow-name";
@@ -316,49 +249,40 @@
     OCMVerify([self.mAPM setScreenRenderingEnabled:NO]);
 }
 
-- (void)testDeviceRefreshRate {
+- (void)testGetDeviceRefreshRateAndTolerance {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
     
-    // Mock UIScreen for iOS 10.3+
-    id mockScreen = OCMClassMock([UIScreen class]);
-    OCMStub([mockScreen mainScreen]).andReturn(mockScreen);
-    OCMStub([mockScreen maximumFramesPerSecond]).andReturn(120.0);
+    // Mock values
+    double expectedTolerance = 5.0;
+    double expectedRefreshRate = 60.0;
     
-    [self.api deviceRefreshRateWithCompletion:^(NSNumber *refreshRate, FlutterError *error) {
+    // Mock the tolerance value
+    OCMStub([self.mAPM screenRenderingThreshold]).andReturn(expectedTolerance);
+    
+    // Mock UIScreen class methods
+    id mockUIScreen = OCMClassMock([UIScreen class]);
+    id mockMainScreen = OCMClassMock([UIScreen class]);
+    
+    // Stub the class method and instance property
+    OCMStub([mockUIScreen mainScreen]).andReturn(mockMainScreen);
+    OCMStub([mockMainScreen maximumFramesPerSecond]).andReturn(expectedRefreshRate);
+    
+    [self.api getDeviceRefreshRateAndToleranceWithCompletion:^(NSArray<NSNumber *> *result, FlutterError *error) {
         [expectation fulfill];
         
-        XCTAssertEqualObjects(refreshRate, @(120.0));
+        XCTAssertNotNil(result);
+        XCTAssertEqual(result.count, 2);
+        XCTAssertEqualObjects(result[0], @(expectedRefreshRate));
+        XCTAssertEqualObjects(result[1], @(expectedTolerance));
         XCTAssertNil(error);
     }];
-
+    
     [self waitForExpectations:@[expectation] timeout:5.0];
     
-    [mockScreen stopMocking];
+    [mockUIScreen stopMocking];
+    [mockMainScreen stopMocking];
 }
 
-- (void)testDeviceRefreshRateFallback {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
-    
-    // Note: Testing the fallback behavior for iOS < 10.3 is challenging in unit tests
-    // since we can't easily mock the iOS version check. In a real scenario, this would
-    // return 60.0 for older iOS versions. For now, we'll test the normal case.
-    
-    // Mock UIScreen to return 60.0 (typical fallback value)
-    id mockScreen = OCMClassMock([UIScreen class]);
-    OCMStub([mockScreen mainScreen]).andReturn(mockScreen);
-    OCMStub([mockScreen maximumFramesPerSecond]).andReturn(60.0);
-    
-    [self.api deviceRefreshRateWithCompletion:^(NSNumber *refreshRate, FlutterError *error) {
-        [expectation fulfill];
-        
-        XCTAssertEqualObjects(refreshRate, @(60.0));
-        XCTAssertNil(error);
-    }];
-
-    [self waitForExpectations:@[expectation] timeout:5.0];
-    
-    [mockScreen stopMocking];
-}
 
 - (void)testEndScreenRenderForAutoUiTrace {
     FlutterError *error;

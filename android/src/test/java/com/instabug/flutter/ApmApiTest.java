@@ -5,7 +5,6 @@ import static com.instabug.flutter.util.MockResult.makeResult;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
@@ -16,7 +15,7 @@ import com.instabug.apm.APM;
 import com.instabug.apm.InternalAPM;
 import com.instabug.apm.configuration.cp.APMFeature;
 import com.instabug.apm.configuration.cp.FeatureAvailabilityCallback;
-import com.instabug.apm.model.ExecutionTrace;
+import com.instabug.apm.configuration.cp.ToleranceValueCallback;
 import com.instabug.apm.networking.APMNetworkLogger;
 import com.instabug.flutter.generated.ApmPigeon;
 import com.instabug.flutter.modules.ApmApi;
@@ -25,20 +24,18 @@ import com.instabug.flutter.util.MockReflected;
 
 import org.json.JSONObject;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedConstruction;
 import org.mockito.MockedStatic;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import static com.instabug.flutter.util.GlobalMocks.reflected;
-import static com.instabug.flutter.util.MockResult.makeResult;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import io.flutter.plugin.common.BinaryMessenger;
 
@@ -68,16 +65,6 @@ public class ApmApiTest {
         GlobalMocks.close();
     }
 
-    private ExecutionTrace mockTrace(String id) {
-        String name = "trace-name";
-        ExecutionTrace mTrace = mock(ExecutionTrace.class);
-
-        mAPM.when(() -> APM.startExecutionTrace(name)).thenReturn(mTrace);
-
-        api.startExecutionTrace(id, name, makeResult());
-
-        return mTrace;
-    }
 
     @Test
     public void testInit() {
@@ -115,53 +102,7 @@ public class ApmApiTest {
         mAPM.verify(() -> APM.setAutoUITraceEnabled(isEnabled));
     }
 
-    @Test
-    public void testStartExecutionTraceWhenTraceNotNull() {
-        String expectedId = "trace-id";
-        String name = "trace-name";
-        ApmPigeon.Result<String> result = makeResult((String actualId) -> assertEquals(expectedId, actualId));
 
-        mAPM.when(() -> APM.startExecutionTrace(name)).thenReturn(new ExecutionTrace(name));
-
-        api.startExecutionTrace(expectedId, name, result);
-
-        mAPM.verify(() -> APM.startExecutionTrace(name));
-    }
-
-    @Test
-    public void testStartExecutionTraceWhenTraceIsNull() {
-        String id = "trace-id";
-        String name = "trace-name";
-        ApmPigeon.Result<String> result = makeResult(Assert::assertNull);
-
-        mAPM.when(() -> APM.startExecutionTrace(name)).thenReturn(null);
-
-        api.startExecutionTrace(id, name, result);
-
-        mAPM.verify(() -> APM.startExecutionTrace(name));
-    }
-
-    @Test
-    public void testSetExecutionTraceAttribute() {
-        String id = "trace-id";
-        String key = "is_premium";
-        String value = "true";
-        ExecutionTrace mTrace = mockTrace(id);
-
-        api.setExecutionTraceAttribute(id, key, value);
-
-        verify(mTrace).setAttribute(key, value);
-    }
-
-    @Test
-    public void testEndExecutionTrace() {
-        String id = "trace-id";
-        ExecutionTrace mTrace = mockTrace(id);
-
-        api.endExecutionTrace(id);
-
-        verify(mTrace).end();
-    }
 
     @Test
     public void testStartFlow() {
@@ -418,24 +359,10 @@ public class ApmApiTest {
         mAPM.verify(() -> APM.setScreenRenderingEnabled(isEnabled));
     }
 
-    @Test
-    public void testDeviceRefreshRate() throws Exception {
-        float expectedRefreshRate = 60.0f;
-        Double expectedResult = 60.0;
-        ApmPigeon.Result<Double> result = spy(makeResult((actual) -> assertEquals(expectedResult, actual)));
-        
-        // Mock the refresh rate provider to return the expected value
-        Callable<Float> mockRefreshRateProvider = () -> expectedRefreshRate;
-        ApmApi testApi = new ApmApi(mockRefreshRateProvider);
-
-        testApi.deviceRefreshRate(result);
-
-        verify(result).success(expectedResult);
-    }
 
     @Test
     public void testDeviceRefreshRateWithException() throws Exception {
-        ApmPigeon.Result<Double> result = spy(makeResult((actual) -> {}));
+        ApmPigeon.Result<List<Double>> result = spy(makeResult((actual) -> {}));
         
         // Mock the refresh rate provider to throw an exception
         Callable<Float> mockRefreshRateProvider = () -> {
@@ -443,11 +370,39 @@ public class ApmApiTest {
         };
         ApmApi testApi = new ApmApi(mockRefreshRateProvider);
 
-        testApi.deviceRefreshRate(result);
+        testApi.getDeviceRefreshRateAndTolerance(result);
 
         // Verify that the method doesn't crash when an exception occurs
         // The exception is caught and printed, but the result is not called
         verify(result, never()).success(any());
+    }
+
+    @Test
+    public void testGetDeviceRefreshRateAndTolerance() throws Exception {
+        // Arrange
+        double expectedRefreshRate = 60.0;
+        long expectedTolerance = 5L;
+        List<Double> expectedResult = Arrays.asList(expectedRefreshRate, (double) expectedTolerance);
+        ApmPigeon.Result<List<Double>> result = spy(makeResult((actual) -> assertEquals(expectedResult, actual)));
+        
+        // Mock the refresh rate provider
+        Callable<Float> mockRefreshRateProvider = () -> (float) expectedRefreshRate;
+        ApmApi testApi = new ApmApi(mockRefreshRateProvider);
+        
+        // Mock the tolerance callback
+        mInternalApmStatic.when(() -> InternalAPM._getToleranceValueForScreenRenderingCP(any(ToleranceValueCallback.class))).thenAnswer(invocation -> {
+            ToleranceValueCallback callback = invocation.getArgument(0);
+            callback.invoke(expectedTolerance);
+            return null;
+        });
+
+        // Act
+        testApi.getDeviceRefreshRateAndTolerance(result);
+
+        // Assert
+        verify(result).success(expectedResult);
+        mInternalApmStatic.verify(() -> InternalAPM._getToleranceValueForScreenRenderingCP(any(ToleranceValueCallback.class)));
+        mInternalApmStatic.verifyNoMoreInteractions();
     }
 
     @Test
