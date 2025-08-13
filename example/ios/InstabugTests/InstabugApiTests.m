@@ -38,15 +38,22 @@
 
 - (void)testInit {
     NSString *token = @"app-token";
+    NSString *appVariant = @"app-variant";
+
     NSArray<NSString *> *invocationEvents = @[@"InvocationEvent.floatingButton", @"InvocationEvent.screenshot"];
     NSString *logLevel = @"LogLevel.error";
     FlutterError *error;
     
-    [self.api initToken:token invocationEvents:invocationEvents debugLogsLevel:logLevel error:&error];
+    [self.api initToken:token invocationEvents:invocationEvents debugLogsLevel:logLevel appVariant:appVariant error:&error];
 
     OCMVerify([self.mInstabug setCurrentPlatform:IBGPlatformFlutter]);
+
     OCMVerify([self.mInstabug setSdkDebugLogsLevel:IBGSDKDebugLogsLevelError]);
+
     OCMVerify([self.mInstabug startWithToken:token invocationEvents:(IBGInvocationEventFloatingButton | IBGInvocationEventScreenshot)]);
+
+    XCTAssertEqual(Instabug.appVariant, appVariant);
+
 }
 
 - (void)testShow {
@@ -598,7 +605,7 @@
         @"secondaryFontPath": @"assets/fonts/CustomFont-Bold.ttf",
         @"ctaFontPath": @"assets/fonts/CustomFont-Italic.ttf"
     };
-    
+
     id mockTheme = OCMClassMock([IBGTheme class]);
     OCMStub([mockTheme primaryColor]).andReturn([UIColor redColor]);
     OCMStub([mockTheme backgroundColor]).andReturn([UIColor whiteColor]);
@@ -606,12 +613,22 @@
     OCMStub([mockTheme primaryTextColor]).andReturn([UIColor darkGrayColor]);
     OCMStub([mockTheme secondaryTextColor]).andReturn([UIColor grayColor]);
     OCMStub([mockTheme callToActionTextColor]).andReturn([UIColor redColor]);
-    
+
     FlutterError *error;
-    
+
     [self.api setThemeThemeConfig:themeConfig error:&error];
-    
+
     OCMVerify([self.mInstabug setTheme:[OCMArg isNotNil]]);
+}
+
+- (void)testSetFullscreen {
+    NSNumber *isEnabled = @1;
+    FlutterError *error;
+
+    [self.api setFullscreenIsEnabled:isEnabled error:&error];
+
+    // Since this is an empty implementation, we just verify the method can be called without error
+    XCTAssertNil(error);
 }
 
 @end
