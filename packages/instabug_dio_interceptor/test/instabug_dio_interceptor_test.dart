@@ -17,14 +17,18 @@ class MyInterceptor extends InstabugDioInterceptor {
 
   @override
   Future<void> onRequest(
-      RequestOptions options, RequestInterceptorHandler handler,) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     requestCount++;
     super.onRequest(options, handler);
   }
 
   @override
   void onResponse(
-      Response<dynamic> response, ResponseInterceptorHandler handler,) {
+    Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) {
     resposneCount++;
     super.onResponse(response, handler);
   }
@@ -53,12 +57,13 @@ void main() {
   setUpAll(() {
     Instabug.$setHostApi(mHost);
     NetworkLogger.$setHostApi(mHost);
-    when(mHost.isW3CFeatureFlagsEnabled())
-        .thenAnswer((_) => Future<Map<String, bool>>.value(<String, bool>{
-              'isW3cCaughtHeaderEnabled': true,
-              'isW3cExternalGeneratedHeaderEnabled': true,
-              'isW3cExternalTraceIDEnabled': true,
-            }),);
+    when(mHost.isW3CFeatureFlagsEnabled()).thenAnswer(
+      (_) => Future<Map<String, bool>>.value(<String, bool>{
+        'isW3cCaughtHeaderEnabled': true,
+        'isW3cExternalGeneratedHeaderEnabled': true,
+        'isW3cExternalTraceIDEnabled': true,
+      }),
+    );
   });
 
   setUp(() {

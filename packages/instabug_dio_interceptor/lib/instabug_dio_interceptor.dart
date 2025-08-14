@@ -7,29 +7,36 @@ class InstabugDioInterceptor extends Interceptor {
 
   @override
   Future<void> onRequest(
-      RequestOptions options, RequestInterceptorHandler handler,) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     final headers = options.headers;
     final startTime = DateTime.now();
     // ignore: invalid_use_of_internal_member
     final w3Header = await _networklogger.getW3CHeader(
-        headers, startTime.millisecondsSinceEpoch,);
+      headers,
+      startTime.millisecondsSinceEpoch,
+    );
     if (w3Header?.isW3cHeaderFound == false &&
         w3Header?.w3CGeneratedHeader != null) {
       headers['traceparent'] = w3Header?.w3CGeneratedHeader;
     }
     options.headers = headers;
     final data = NetworkData(
-        startTime: startTime,
-        url: options.uri.toString(),
-        w3cHeader: w3Header,
-        method: options.method,);
+      startTime: startTime,
+      url: options.uri.toString(),
+      w3cHeader: w3Header,
+      method: options.method,
+    );
     _requests[options.hashCode] = data;
     handler.next(options);
   }
 
   @override
   void onResponse(
-      Response<dynamic> response, ResponseInterceptorHandler handler,) {
+    Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) {
     final data = _map(response);
     _networklogger.networkLog(data);
     handler.next(response);

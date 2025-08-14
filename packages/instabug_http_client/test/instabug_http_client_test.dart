@@ -28,12 +28,13 @@ Future<void> main() async {
   setUpAll(() {
     Instabug.$setHostApi(mHost);
     NetworkLogger.$setHostApi(mHost);
-    when(mHost.isW3CFeatureFlagsEnabled())
-        .thenAnswer((_) => Future<Map<String, bool>>.value(<String, bool>{
-              'isW3cCaughtHeaderEnabled': true,
-              'isW3cExternalGeneratedHeaderEnabled': false,
-              'isW3cExternalTraceIDEnabled': true,
-            }),);
+    when(mHost.isW3CFeatureFlagsEnabled()).thenAnswer(
+      (_) => Future<Map<String, bool>>.value(<String, bool>{
+        'isW3cCaughtHeaderEnabled': true,
+        'isW3cExternalGeneratedHeaderEnabled': false,
+        'isW3cExternalTraceIDEnabled': true,
+      }),
+    );
   });
 
   const fakeResponse = <String, String>{
@@ -54,81 +55,87 @@ Future<void> main() async {
 
   test('expect instabug http client GET to return response', () async {
     when<dynamic>(
-            instabugHttpClient.client.get(url, headers: anyNamed('headers')),)
-        .thenAnswer((_) async => mockedResponse);
+      instabugHttpClient.client.get(url, headers: anyNamed('headers')),
+    ).thenAnswer((_) async => mockedResponse);
     final result = await instabugHttpClient.get(url);
     expect(result, isInstanceOf<http.Response>());
     expect(result, mockedResponse);
-    verify(instabugHttpClient.logger
-            .onLogger(mockedResponse, startTime: anyNamed('startTime')),)
-        .called(1);
+    verify(
+      instabugHttpClient.logger
+          .onLogger(mockedResponse, startTime: anyNamed('startTime')),
+    ).called(1);
   });
 
   test('expect instabug http client HEAD to return response', () async {
     when<dynamic>(
-            instabugHttpClient.client.head(url, headers: anyNamed('headers')),)
-        .thenAnswer((_) async => mockedResponse);
+      instabugHttpClient.client.head(url, headers: anyNamed('headers')),
+    ).thenAnswer((_) async => mockedResponse);
     final result = await instabugHttpClient.head(url);
     expect(result, isInstanceOf<http.Response>());
     expect(result, mockedResponse);
-    verify(instabugHttpClient.logger
-            .onLogger(mockedResponse, startTime: anyNamed('startTime')),)
-        .called(1);
+    verify(
+      instabugHttpClient.logger
+          .onLogger(mockedResponse, startTime: anyNamed('startTime')),
+    ).called(1);
   });
 
   test('expect instabug http client DELETE to return response', () async {
     when<dynamic>(
-            instabugHttpClient.client.delete(url, headers: anyNamed('headers')),)
-        .thenAnswer((_) async => mockedResponse);
+      instabugHttpClient.client.delete(url, headers: anyNamed('headers')),
+    ).thenAnswer((_) async => mockedResponse);
     final result = await instabugHttpClient.delete(url);
     expect(result, isInstanceOf<http.Response>());
     expect(result, mockedResponse);
-    verify(instabugHttpClient.logger
-            .onLogger(mockedResponse, startTime: anyNamed('startTime')),)
-        .called(1);
+    verify(
+      instabugHttpClient.logger
+          .onLogger(mockedResponse, startTime: anyNamed('startTime')),
+    ).called(1);
   });
 
   test('expect instabug http client PATCH to return response', () async {
     when<dynamic>(
-            instabugHttpClient.client.patch(url, headers: anyNamed('headers')),)
-        .thenAnswer((_) async => mockedResponse);
+      instabugHttpClient.client.patch(url, headers: anyNamed('headers')),
+    ).thenAnswer((_) async => mockedResponse);
     final result = await instabugHttpClient.patch(url);
     expect(result, isInstanceOf<http.Response>());
     expect(result, mockedResponse);
-    verify(instabugHttpClient.logger
-            .onLogger(mockedResponse, startTime: anyNamed('startTime')),)
-        .called(1);
+    verify(
+      instabugHttpClient.logger
+          .onLogger(mockedResponse, startTime: anyNamed('startTime')),
+    ).called(1);
   });
 
   test('expect instabug http client POST to return response', () async {
     when<dynamic>(
-            instabugHttpClient.client.post(url, headers: anyNamed('headers')),)
-        .thenAnswer((_) async => mockedResponse);
+      instabugHttpClient.client.post(url, headers: anyNamed('headers')),
+    ).thenAnswer((_) async => mockedResponse);
     final result = await instabugHttpClient.post(url);
     expect(result, isInstanceOf<http.Response>());
     expect(result, mockedResponse);
-    verify(instabugHttpClient.logger
-            .onLogger(mockedResponse, startTime: anyNamed('startTime')),)
-        .called(1);
+    verify(
+      instabugHttpClient.logger
+          .onLogger(mockedResponse, startTime: anyNamed('startTime')),
+    ).called(1);
   });
 
   test('expect instabug http client PUT to return response', () async {
     when<dynamic>(
-            instabugHttpClient.client.put(url, headers: anyNamed('headers')),)
-        .thenAnswer((_) async => mockedResponse);
+      instabugHttpClient.client.put(url, headers: anyNamed('headers')),
+    ).thenAnswer((_) async => mockedResponse);
     final result = await instabugHttpClient.put(url);
     expect(result, isInstanceOf<http.Response>());
     expect(result.body, mockedResponse.body);
-    verify(instabugHttpClient.logger
-            .onLogger(mockedResponse, startTime: anyNamed('startTime')),)
-        .called(1);
+    verify(
+      instabugHttpClient.logger
+          .onLogger(mockedResponse, startTime: anyNamed('startTime')),
+    ).called(1);
   });
 
   test('expect instabug http client READ to return response', () async {
     const response = 'Some response string';
     when<dynamic>(
-            instabugHttpClient.client.read(url, headers: anyNamed('headers')),)
-        .thenAnswer((_) async => response);
+      instabugHttpClient.client.read(url, headers: anyNamed('headers')),
+    ).thenAnswer((_) async => response);
 
     final result = await instabugHttpClient.read(url);
     expect(result, isInstanceOf<String>());
@@ -146,8 +153,11 @@ Future<void> main() async {
   });
 
   test('expect instabug http client SEND to return response', () async {
-    final response = http.StreamedResponse(const Stream<List<int>>.empty(), 200,
-        contentLength: 0,);
+    final response = http.StreamedResponse(
+      const Stream<List<int>>.empty(),
+      200,
+      contentLength: 0,
+    );
     final request = http.StreamedRequest('POST', url)
       ..headers[HttpHeaders.contentTypeHeader] =
           'application/json; charset=utf-8'
@@ -168,8 +178,10 @@ Future<void> main() async {
     expect(result.persistentConnection, response.persistentConnection);
     expect(result.reasonPhrase, response.reasonPhrase);
     expect(result.request, response.request);
-    expect(await result.stream.bytesToString(),
-        await response.stream.bytesToString(),);
+    expect(
+      await result.stream.bytesToString(),
+      await response.stream.bytesToString(),
+    );
     final logger = instabugHttpClient.logger as MockInstabugHttpLogger;
     verify(logger.onLogger(any, startTime: anyNamed('startTime'))).called(1);
   });
@@ -182,13 +194,14 @@ Future<void> main() async {
 
   test('stress test for GET method', () async {
     when<dynamic>(
-            instabugHttpClient.client.get(url, headers: anyNamed('headers')),)
-        .thenAnswer((_) async => mockedResponse);
+      instabugHttpClient.client.get(url, headers: anyNamed('headers')),
+    ).thenAnswer((_) async => mockedResponse);
     for (var i = 0; i < 10000; i++) {
       await instabugHttpClient.get(url);
     }
-    verify(instabugHttpClient.logger
-            .onLogger(mockedResponse, startTime: anyNamed('startTime')),)
-        .called(10000);
+    verify(
+      instabugHttpClient.logger
+          .onLogger(mockedResponse, startTime: anyNamed('startTime')),
+    ).called(10000);
   });
 }
