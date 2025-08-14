@@ -5,47 +5,47 @@ import 'package:instabug_flutter/instabug_flutter.dart';
 
 class InstabugHttpLogger {
   void onLogger(http.Response response,
-      {DateTime? startTime, W3CHeader? w3CHeader}) {
-    final NetworkLogger networkLogger = NetworkLogger();
+      {DateTime? startTime, W3CHeader? w3CHeader,}) {
+    final networkLogger = NetworkLogger();
 
-    final Map<String, dynamic> requestHeaders = <String, dynamic>{};
+    final requestHeaders = <String, dynamic>{};
     response.request?.headers.forEach((String header, dynamic value) {
       requestHeaders[header] = value;
     });
 
-    final http.BaseRequest? request = response.request;
+    final request = response.request;
 
     if (request == null) {
       return;
     }
-    final String requestBody = request is http.MultipartRequest
+    final requestBody = request is http.MultipartRequest
         ? json.encode(request.fields)
         : request is http.Request
             ? request.body
             : '';
 
-    final NetworkData requestData = NetworkData(
+    final requestData = NetworkData(
         startTime: startTime!,
         method: request.method,
         url: request.url.toString(),
         requestHeaders: requestHeaders,
         requestBody: requestBody,
-        w3cHeader: w3CHeader);
+        w3cHeader: w3CHeader,);
 
-    final DateTime endTime = DateTime.now();
+    final endTime = DateTime.now();
 
-    final Map<String, dynamic> responseHeaders = <String, dynamic>{};
+    final responseHeaders = <String, dynamic>{};
     response.headers.forEach((String header, dynamic value) {
       responseHeaders[header] = value;
     });
-    int requestBodySize = 0;
+    var requestBodySize = 0;
     if (requestHeaders.containsKey('content-length')) {
       requestBodySize = int.parse(responseHeaders['content-length'] ?? '0');
     } else {
       requestBodySize = requestBody.length;
     }
 
-    int responseBodySize = 0;
+    var responseBodySize = 0;
     if (responseHeaders.containsKey('content-length')) {
       responseBodySize = int.parse(responseHeaders['content-length'] ?? '0');
     } else {
@@ -65,6 +65,6 @@ class InstabugHttpLogger {
       requestContentType: request.headers.containsKey('content-type')
           ? request.headers['content-type']
           : '',
-    ));
+    ),);
   }
 }

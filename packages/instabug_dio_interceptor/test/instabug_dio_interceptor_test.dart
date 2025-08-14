@@ -17,14 +17,14 @@ class MyInterceptor extends InstabugDioInterceptor {
 
   @override
   Future<void> onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+      RequestOptions options, RequestInterceptorHandler handler,) async {
     requestCount++;
     super.onRequest(options, handler);
   }
 
   @override
   void onResponse(
-      Response<dynamic> response, ResponseInterceptorHandler handler) {
+      Response<dynamic> response, ResponseInterceptorHandler handler,) {
     resposneCount++;
     super.onResponse(response, handler);
   }
@@ -44,11 +44,11 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
 
-  final MockInstabugHostApi mHost = MockInstabugHostApi();
+  final mHost = MockInstabugHostApi();
 
   late Dio dio;
   late MyInterceptor instabugDioInterceptor;
-  const String appToken = '068ba9a8c3615035e163dc5f829c73be';
+  const appToken = '068ba9a8c3615035e163dc5f829c73be';
 
   setUpAll(() {
     Instabug.$setHostApi(mHost);
@@ -58,14 +58,14 @@ void main() {
               'isW3cCaughtHeaderEnabled': true,
               'isW3cExternalGeneratedHeaderEnabled': true,
               'isW3cExternalTraceIDEnabled': true,
-            }));
+            }),);
   });
 
   setUp(() {
     dio = Dio();
     dio.options.baseUrl = MockAdapter.mockBase;
     dio.httpClientAdapter = MockAdapter();
-    final List<InvocationEvent> events = <InvocationEvent>[];
+    final events = <InvocationEvent>[];
     instabugDioInterceptor = MyInterceptor();
     dio.interceptors.add(instabugDioInterceptor);
     Instabug.init(token: appToken, invocationEvents: events);
@@ -98,7 +98,7 @@ void main() {
   });
 
   test('Stress Test', () async {
-    for (int i = 0; i < 1000; i++) {
+    for (var i = 0; i < 1000; i++) {
       try {
         await dio.get<dynamic>('/test');
         // ignore: deprecated_member_use

@@ -11,3 +11,4 @@ linter:
     # Not necessary for our current APIs
     avoid_positional_boolean_parameters: false
     omit_local_variable_types: true
+    require_trailing_commas: true
