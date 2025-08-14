@@ -55,8 +55,6 @@ abstract class InstabugHostApi {
 
   void setWelcomeMessageMode(String mode);
 
-  void setPrimaryColor(int color);
-
   void setSessionProfilerEnabled(bool enabled);
 
   void setValueForStringWithKey(String value, String key);

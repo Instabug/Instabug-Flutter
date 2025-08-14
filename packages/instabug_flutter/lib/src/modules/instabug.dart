@@ -515,17 +515,6 @@ class Instabug {
     return _host.setTheme(themeConfig.toMap());
   }
 
-  /// Sets the fullscreen mode for Instabug UI.
-  ///
-  /// [isFullscreen] - Whether to enable fullscreen mode or not.
-  ///
-  /// Example:
-  /// ```dart
-  /// Instabug.setFullscreen(true);
-  /// ```
-  static Future<void> setFullscreen(bool isEnabled) async {
-    return _host.setFullscreen(isEnabled);
-  }
 
   /// Enables and disables user interaction steps.
   /// [boolean] isEnabled

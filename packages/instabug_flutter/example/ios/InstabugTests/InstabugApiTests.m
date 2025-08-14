@@ -137,14 +137,6 @@
     OCMVerify([self.mInstabug setWelcomeMessageMode:IBGWelcomeMessageModeBeta]);
 }
 
-- (void)testSetPrimaryColor {
-    NSNumber *color = @0xFF0000;
-    FlutterError *error;
-
-    [self.api setPrimaryColorColor:color error:&error];
-
-    OCMVerify([self.mInstabug setTintColor:[OCMArg isKindOfClass:[UIColor class]]]);
-}
 
 - (void)testSetSessionProfilerEnabled {
     NSNumber *isEnabled = @1;
