@@ -107,9 +107,6 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [Instabug setWelcomeMessageMode:resolvedMode];
 }
 
-- (void)setPrimaryColorColor:(NSNumber *)color error:(FlutterError *_Nullable *_Nonnull)error {
-    Instabug.tintColor = UIColorFromRGB([color longValue]);
-}
 
 - (void)setSessionProfilerEnabledEnabled:(NSNumber *)enabled error:(FlutterError *_Nullable *_Nonnull)error {
     [Instabug setSessionProfilerEnabled:[enabled boolValue]];
@@ -429,7 +426,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [Instabug setScreenshotMaskingHandler:maskingHandler];
 }
 
-- (void)setNetworkLogBodyEnabledIsEnabled:(NSNumber *)isEnabled 
+- (void)setNetworkLogBodyEnabledIsEnabled:(NSNumber *)isEnabled
                           error:(FlutterError *_Nullable *_Nonnull)error {
     IBGNetworkLogger.logBodyEnabled = [isEnabled boolValue];
 }
