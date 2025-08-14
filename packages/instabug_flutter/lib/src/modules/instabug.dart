@@ -515,7 +515,6 @@ class Instabug {
     return _host.setTheme(themeConfig.toMap());
   }
 
-
   /// Enables and disables user interaction steps.
   /// [boolean] isEnabled
   static Future<void> enableUserSteps(bool isEnabled) async {

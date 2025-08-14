@@ -24,7 +24,6 @@ abstract class InstabugHostApi {
     String? appVariant,
   );
 
-
   void enableAutoMasking(List<String> autoMasking);
 
   void show();
