@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import com.instabug.apm.networkinterception.cp.APMCPNetworkLog;
 import com.instabug.crash.models.IBGNonFatalException;
+import com.instabug.library.model.StepType;
 
 import org.json.JSONObject;
 

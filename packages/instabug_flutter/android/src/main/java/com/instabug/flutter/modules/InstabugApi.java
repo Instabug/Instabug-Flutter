@@ -247,9 +247,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         Instabug.setWelcomeMessageState(resolvedMode);
     }
 
-    @Override
-    public void setPrimaryColor(@NonNull Long color) {
-    }
 
     @Override
     public void setSessionProfilerEnabled(@NonNull Boolean enabled) {

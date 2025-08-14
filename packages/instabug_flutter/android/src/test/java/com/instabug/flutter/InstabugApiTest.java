@@ -50,6 +50,10 @@ import com.instabug.library.internal.crossplatform.CoreFeature;
 import com.instabug.library.internal.crossplatform.FeaturesStateListener;
 import com.instabug.library.internal.crossplatform.InternalCore;
 import com.instabug.library.featuresflags.model.IBGFeatureFlag;
+import com.instabug.library.internal.crossplatform.CoreFeature;
+import com.instabug.library.internal.crossplatform.FeaturesStateListener;
+import com.instabug.library.internal.crossplatform.InternalCore;
+import com.instabug.library.featuresflags.model.IBGFeatureFlag;
 import com.instabug.library.internal.crossplatform.InternalCore;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
@@ -78,6 +82,12 @@ import java.util.Random;
 import java.util.concurrent.Callable;
 
 import io.flutter.plugin.common.BinaryMessenger;
+import kotlin.jvm.functions.Function1;
+
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.mockito.verification.VerificationMode;
 
 import kotlin.jvm.functions.Function1;
 
@@ -85,7 +95,8 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.mockito.verification.VerificationMode;
-import org.mockito.verification.VerificationMode;
+
+import android.graphics.Typeface;
 
 import android.graphics.Typeface;
 

@@ -97,7 +97,7 @@ packages:
       path: "../../instabug_flutter"
       relative: true
     source: path
-    version: "15.0.2"
+    version: "16.0.0"
   instabug_flutter_modular:
     dependency: "direct main"
     description:
