@@ -244,7 +244,7 @@ void main() {
 
     test("[setScreenRenderEnabled] should call host method", () async {
       const isEnabled = false;
-      await APM.setScreenRenderEnabled(isEnabled);
+      await APM.setScreenRenderingEnabled(isEnabled);
       verify(mHost.setScreenRenderEnabled(isEnabled)).called(1);
     });
 
@@ -252,7 +252,7 @@ void main() {
         "[setScreenRenderEnabled] should call [init()] screen render collector, is the feature is enabled",
         () async {
       const isEnabled = true;
-      await APM.setScreenRenderEnabled(isEnabled);
+      await APM.setScreenRenderingEnabled(isEnabled);
       verify(mScreenRenderManager.init(any)).called(1);
       verifyNoMoreInteractions(mScreenRenderManager);
     });
@@ -261,7 +261,7 @@ void main() {
         "[setScreenRenderEnabled] should call [remove()] screen render collector, is the feature is enabled",
         () async {
       const isEnabled = false;
-      await APM.setScreenRenderEnabled(isEnabled);
+      await APM.setScreenRenderingEnabled(isEnabled);
       verify(mScreenRenderManager.dispose()).called(1);
       verifyNoMoreInteractions(mScreenRenderManager);
     });
