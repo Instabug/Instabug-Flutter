@@ -132,6 +132,7 @@ class _ScreenLoadingPageState extends State<ScreenLoadingPage> {
           label: 'Duration',
           controller: durationController,
           keyboardType: TextInputType.number,
+          symanticLabel: 'duration_input',
         ),
         Container(
             margin: const EdgeInsets.only(top: 12),
@@ -142,20 +143,24 @@ class _ScreenLoadingPageState extends State<ScreenLoadingPage> {
                 InstabugButton(
                   text: 'Extend Screen Loading (Testing)',
                   onPressed: _extendScreenLoadingTestingEnvironment,
+                  symanticLabel: 'extend_screen_loading_testing',
                 ),
                 InstabugButton(
                   text: 'Extend Screen Loading (Production)',
                   onPressed: _extendScreenLoading,
+                  symanticLabel: 'extend_screen_loading_production',
                 ),
               ],
             )),
         InstabugButton(
           text: 'Monitored Complex Page',
           onPressed: _navigateToComplexPage,
+          symanticLabel: 'monitored_complex_page',
         ),
         InstabugButton(
           text: 'Screen Capture Premature Extension Page',
           onPressed: _navigateToMonitoredScreenCapturePrematureExtensionPage,
+          symanticLabel: 'screen_capture_premature_extension_page',
         ),
         SectionTitle('Dynamic Screen Loading list'),
         SizedBox(

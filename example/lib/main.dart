@@ -2,13 +2,19 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:convert';
+import 'dart:math' as math;
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter_example/src/components/apm_switch.dart';
+import 'package:instabug_flutter_example/src/screens/callback/callback_handler_provider.dart';
+import 'package:instabug_flutter_example/src/screens/callback/callback_page.dart';
+import 'package:instabug_flutter_example/src/utils/widget_ext.dart';
 import 'package:instabug_http_client/instabug_http_client.dart';
 import 'package:instabug_flutter_example/src/app_routes.dart';
 import 'package:instabug_flutter_example/src/widget/nested_view.dart';
+import 'package:provider/provider.dart';
 
 import 'src/native/instabug_flutter_example_method_channel.dart';
 import 'src/widget/instabug_button.dart';
@@ -19,6 +25,10 @@ import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager
 import 'src/widget/section_title.dart';
 
 part 'src/screens/crashes_page.dart';
+
+part 'src/screens/bug_reporting.dart';
+
+part 'src/screens/session_replay_page.dart';
 
 part 'src/screens/complex_page.dart';
 
@@ -55,7 +65,12 @@ void main() {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
       };
 
-      runApp(const MyApp());
+      runApp(
+        ChangeNotifierProvider(
+          create: (_) => CallbackHandlersProvider(),
+          child: const MyApp(),
+        ),
+      );
     },
     CrashReporting.reportCrash,
   );

@@ -20,6 +20,9 @@ class _MyHomePageState extends State<MyHomePage> {
   final primaryColorController = TextEditingController();
   final screenNameController = TextEditingController();
   final featureFlagsController = TextEditingController();
+  final userAttributeKeyController = TextEditingController();
+
+  final userAttributeValueController = TextEditingController();
 
   @override
   void dispose() {
@@ -124,6 +127,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Instabug.setColorTheme(colorTheme);
   }
 
+  void _navigateToBugs() {
+    ///This way of navigation utilize screenLoading automatic approach [Navigator 1]
+    Navigator.pushNamed(context, BugReportingPage.screenName);
+  }
+
   void _navigateToCrashes() {
     ///This way of navigation utilize screenLoading automatic approach [Navigator 1]
     Navigator.pushNamed(context, CrashesPage.screenName);
@@ -161,6 +169,28 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _navigateToCallbackHandler() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CallbackScreen(),
+        settings: RouteSettings(name: CallbackScreen.screenName),
+      ),
+    );
+  }
+
+  void _navigateToSessionReplay() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SessionReplayPage(),
+        settings: const RouteSettings(name: SessionReplayPage.screenName),
+      ),
+    );
+  }
+
+  final _formUserAttributeKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Page(
@@ -177,15 +207,28 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugButton(
           onPressed: restartInstabug,
           text: 'Restart Instabug',
+          symanticLabel: 'restart_page',
+        ),
+        InstabugButton(
+          onPressed: _navigateToBugs,
+          text: 'Bug Reporting',
+          symanticLabel: 'open_bug_reporting',
+        ),
+        InstabugButton(
+          onPressed: _navigateToCallbackHandler,
+          text: 'Callback Page',
+          symanticLabel: 'open_callback_page',
         ),
         const SectionTitle('Primary Color'),
         InstabugTextField(
           controller: primaryColorController,
           label: 'Enter primary color',
+          symanticLabel: 'primary_color_input',
         ),
         InstabugButton(
           text: 'Change Primary Color',
           onPressed: changePrimaryColor,
+          symanticLabel: 'set_primary_color',
         ),
         const SectionTitle('Change Invocation Event'),
         ButtonBar(
@@ -196,17 +239,17 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () => setInvocationEvent(InvocationEvent.none),
               style: buttonStyle,
               child: const Text('None'),
-            ),
+            ).withSemanticsLabel('invocation_event_none'),
             ElevatedButton(
               onPressed: () => setInvocationEvent(InvocationEvent.shake),
               style: buttonStyle,
               child: const Text('Shake'),
-            ),
+            ).withSemanticsLabel('invocation_event_shake'),
             ElevatedButton(
               onPressed: () => setInvocationEvent(InvocationEvent.screenshot),
               style: buttonStyle,
               child: const Text('Screenshot'),
-            ),
+            ).withSemanticsLabel('invocation_event_screenshot'),
           ],
         ),
         ButtonBar(
@@ -218,13 +261,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   setInvocationEvent(InvocationEvent.floatingButton),
               style: buttonStyle,
               child: const Text('Floating Button'),
-            ),
+            ).withSemanticsLabel('invocation_event_floating_button'),
             ElevatedButton(
               onPressed: () =>
                   setInvocationEvent(InvocationEvent.twoFingersSwipeLeft),
               style: buttonStyle,
               child: const Text('Two Fingers Swipe Left'),
-            ),
+            ).withSemanticsLabel('invocation_event_two_fingers'),
           ],
         ),
         InstabugButton(
@@ -239,18 +282,22 @@ class _MyHomePageState extends State<MyHomePage> {
         InstabugTextField(
           controller: screenNameController,
           label: 'Enter screen name',
+          symanticLabel: 'screen_name_input',
         ),
         InstabugButton(
           text: 'Report Screen Change',
           onPressed: reportScreenChange,
+          symanticLabel: 'set_screen_name',
         ),
         InstabugButton(
           onPressed: sendBugReport,
           text: 'Send Bug Report',
+          symanticLabel: 'send_bug_report',
         ),
         InstabugButton(
           onPressed: showManualSurvey,
           text: 'Show Manual Survey',
+          symanticLabel: 'show_manual_survery',
         ),
         const SectionTitle('Change Report Types'),
         ButtonBar(
@@ -261,55 +308,69 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () => toggleReportType(ReportType.bug),
               style: buttonStyle,
               child: const Text('Bug'),
-            ),
+            ).withSemanticsLabel('bug_report_type_bug'),
             ElevatedButton(
               onPressed: () => toggleReportType(ReportType.feedback),
               style: buttonStyle,
               child: const Text('Feedback'),
-            ),
+            ).withSemanticsLabel('bug_report_type_feedback'),
             ElevatedButton(
               onPressed: () => toggleReportType(ReportType.question),
               style: buttonStyle,
               child: const Text('Question'),
-            ),
+            ).withSemanticsLabel('bug_report_type_question'),
           ],
         ),
         InstabugButton(
           onPressed: changeFloatingButtonEdge,
           text: 'Move Floating Button to Left',
+          symanticLabel: 'move_floating_button_to_left',
         ),
         InstabugButton(
           onPressed: sendFeedback,
           text: 'Send Feedback',
+          symanticLabel: 'sending_feedback',
         ),
         InstabugButton(
           onPressed: showNpsSurvey,
           text: 'Show NPS Survey',
+          symanticLabel: 'show_nps_survey',
         ),
         InstabugButton(
           onPressed: showManualSurvey,
           text: 'Show Multiple Questions Survey',
+          symanticLabel: 'show_multi_question_survey',
         ),
         InstabugButton(
           onPressed: showFeatureRequests,
           text: 'Show Feature Requests',
+          symanticLabel: 'show_feature_requests',
         ),
         InstabugButton(
           onPressed: _navigateToCrashes,
           text: 'Crashes',
+          symanticLabel: 'open_crash_page',
         ),
         InstabugButton(
           onPressed: _navigateToApm,
           text: 'APM',
+          symanticLabel: 'open_apm_page',
         ),
         InstabugButton(
           onPressed: _navigateToComplex,
           text: 'Complex',
+          symanticLabel: 'open_complex_page',
+        ),
+        InstabugButton(
+          onPressed: _navigateToSessionReplay,
+          text: 'Session Replay',
+          symanticLabel: 'open_session_replay_page',
         ),
         const SectionTitle('Sessions Replay'),
         InstabugButton(
           onPressed: getCurrentSessionReplaylink,
           text: 'Get current session replay link',
+          symanticLabel: 'get_current_session_replay_link',
         ),
         const SectionTitle('Color Theme'),
         ButtonBar(
@@ -319,37 +380,185 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: () => setColorTheme(ColorTheme.light),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                foregroundColor: MaterialStateProperty.all(Colors.lightBlue),
+                backgroundColor: WidgetStateProperty.all(Colors.white),
+                foregroundColor: WidgetStateProperty.all(Colors.lightBlue),
               ),
-              child: const Text('Light'),
-            ),
+              child: const Text('set_color_theme_light'),
+            ).withSemanticsLabel(''),
             ElevatedButton(
               onPressed: () => setColorTheme(ColorTheme.dark),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.black),
-                foregroundColor: MaterialStateProperty.all(Colors.white),
+                backgroundColor: WidgetStateProperty.all(Colors.black),
+                foregroundColor: WidgetStateProperty.all(Colors.white),
               ),
-              child: const Text('Dark'),
-            ),
+              child: const Text('set_color_theme_dark'),
+            ).withSemanticsLabel(''),
           ],
         ),
-        SectionTitle('FeatureFlags'),
+        const SectionTitle('FeatureFlags'),
         InstabugTextField(
           controller: featureFlagsController,
           label: 'Feature Flag name',
+          symanticLabel: 'feature_flag_name_input',
         ),
         InstabugButton(
           onPressed: () => setFeatureFlag(),
           text: 'SetFeatureFlag',
+          symanticLabel: 'set_feature_flag',
         ),
         InstabugButton(
           onPressed: () => removeFeatureFlag(),
           text: 'RemoveFeatureFlag',
+          symanticLabel: 'remove_feature_flag',
         ),
         InstabugButton(
           onPressed: () => removeAllFeatureFlags(),
           text: 'RemoveAllFeatureFlags',
+          symanticLabel: 'remove_all_feature_flags',
+        ),
+        const SectionTitle('Set User Attribute'),
+        Form(
+          key: _formUserAttributeKey,
+          child: Column(
+            children: [
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: InstabugTextField(
+                    label: "User Attribute key",
+                    symanticLabel: 'user_attribute_key_input',
+                    key: const Key("user_attribute_key_textfield"),
+                    controller: userAttributeKeyController,
+                    validator: (value) {
+                      if (value?.trim().isNotEmpty == true) return null;
+                      return 'this field is required';
+                    },
+                  )),
+                  Expanded(
+                      child: InstabugTextField(
+                    label: "User Attribute  Value",
+                    symanticLabel: 'user_attribute_value_input',
+                    key: const Key("user_attribute_value_textfield"),
+                    controller: userAttributeValueController,
+                    validator: (value) {
+                      if (value?.trim().isNotEmpty == true) return null;
+
+                      return 'this field is required';
+                    },
+                  )),
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              InstabugButton(
+                text: 'Set User attribute',
+                symanticLabel: 'set_user_attribute',
+                key: const Key('set_user_data_btn'),
+                onPressed: () {
+                  if (_formUserAttributeKey.currentState?.validate() == true) {
+                    Instabug.setUserAttribute(userAttributeKeyController.text,
+                        userAttributeValueController.text);
+                  }
+                },
+              ),
+              InstabugButton(
+                text: 'remove User attribute',
+                symanticLabel: 'remove_user_attribute',
+                key: const Key('remove_user_data_btn'),
+                onPressed: () {
+                  if (_formUserAttributeKey.currentState?.validate() == true) {
+                    Instabug.removeUserAttribute(
+                        userAttributeKeyController.text);
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const SectionTitle('Log'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: InstabugButton(
+                        symanticLabel: 'log_hello_debug',
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        key: const ValueKey('log_hello_debug_btn'),
+                        onPressed: () {
+                          InstabugLog.logDebug("hello Debug");
+                        },
+                        text: 'Log Hello Debug',
+                      ),
+                    ),
+                    Expanded(
+                      child: InstabugButton(
+                        symanticLabel: 'log_hello_error',
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        key: const ValueKey('log_hello_error_btn'),
+                        onPressed: () {
+                          InstabugLog.logError("hello Error");
+                        },
+                        text: 'Log Hello Error',
+                      ),
+                    ),
+                    Expanded(
+                      child: InstabugButton(
+                        symanticLabel: 'log_hello_warning',
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        key: const ValueKey('hello_warning_btn'),
+                        onPressed: () {
+                          InstabugLog.logWarn("hello Warning");
+                        },
+                        text: 'Log Hello Warn',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: InstabugButton(
+                        symanticLabel: 'log_hello_info_btn',
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        key: const ValueKey('log_hello_info_btn'),
+                        onPressed: () {
+                          InstabugLog.logInfo("hello Info");
+                        },
+                        text: 'Log Hello Info',
+                      ),
+                    ),
+                    Expanded(
+                      child: InstabugButton(
+                        symanticLabel: 'log_hello_verbose_btn',
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        key: const ValueKey('log_hello_verbose_btn'),
+                        onPressed: () {
+                          InstabugLog.logVerbose("hello Verbose");
+                        },
+                        text: 'Log Hello Verbose',
+                      ),
+                    ),
+                    Expanded(
+                      child: InstabugButton(
+                        symanticLabel: 'clear_logs',
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        key: const ValueKey('clear_logs_btn'),
+                        onPressed: () {
+                          InstabugLog.clearAllLogs();
+                        },
+                        text: 'Clear All logs',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

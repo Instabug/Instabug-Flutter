@@ -21,6 +21,7 @@ class _FlowsContentState extends State<FlowsContent> {
       children: [
         InstabugTextField(
           label: 'Flow name',
+          symanticLabel: 'flow_name_input',
           labelStyle: textTheme.labelMedium,
           controller: flowNameController,
         ),
@@ -33,6 +34,7 @@ class _FlowsContentState extends State<FlowsContent> {
               flex: 5,
               child: InstabugButton.smallFontSize(
                 text: 'Start Flow',
+                symanticLabel: 'start_flow',
                 onPressed: () => _startFlow(flowNameController.text),
                 margin: const EdgeInsetsDirectional.only(
                   start: 20.0,
@@ -44,6 +46,7 @@ class _FlowsContentState extends State<FlowsContent> {
               flex: 5,
               child: InstabugButton.smallFontSize(
                 text: 'Start flow With Delay',
+                symanticLabel: 'start_flow_with_delay',
                 onPressed: () => _startFlow(
                   flowNameController.text,
                   delayInMilliseconds: 5000,
@@ -62,6 +65,7 @@ class _FlowsContentState extends State<FlowsContent> {
               flex: 5,
               child: InstabugTextField(
                 label: 'Flow Key Attribute',
+                symanticLabel: 'flow_key_input',
                 controller: flowKeyAttributeController,
                 labelStyle: textTheme.labelMedium,
                 margin: const EdgeInsetsDirectional.only(
@@ -74,6 +78,7 @@ class _FlowsContentState extends State<FlowsContent> {
               flex: 5,
               child: InstabugTextField(
                 label: 'Flow Value Attribute',
+                symanticLabel: 'flow_value_input',
                 labelStyle: textTheme.labelMedium,
                 controller: flowValueAttributeController,
                 margin: const EdgeInsetsDirectional.only(
@@ -89,6 +94,7 @@ class _FlowsContentState extends State<FlowsContent> {
         ),
         InstabugButton(
           text: 'Set Flow Attribute',
+          symanticLabel: 'set_flow_attribute',
           onPressed: () => _setFlowAttribute(
             flowNameController.text,
             flowKeyAttribute: flowKeyAttributeController.text,
@@ -97,6 +103,7 @@ class _FlowsContentState extends State<FlowsContent> {
         ),
         InstabugButton(
           text: 'End Flow',
+          symanticLabel: 'end_flow',
           onPressed: () => _endFlow(flowNameController.text),
         ),
       ],

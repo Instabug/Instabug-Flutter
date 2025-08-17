@@ -32,6 +32,7 @@ class _ApmPageState extends State<ApmPage> {
         const APMSwitch(),
         InstabugButton(
           text: 'End App Launch',
+          symanticLabel: 'end_app_launch',
           onPressed: _endAppLaunch,
         ),
         const SectionTitle('Network'),
@@ -45,6 +46,7 @@ class _ApmPageState extends State<ApmPage> {
         InstabugButton(
           text: 'Screen Loading',
           onPressed: _navigateToScreenLoading,
+          symanticLabel: 'end_screen_loading',
         ),
         SizedBox.fromSize(
           size: const Size.fromHeight(12),

@@ -24,12 +24,12 @@ class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
             }
             SEND_NATIVE_FATAL_HANG -> {
                 Log.d(TAG, "Sending native fatal hang for 3000 ms")
-                sendANR()
+                sendFatalHang()
                 result.success(null)
             }
             SEND_ANR -> {
                 Log.d(TAG, "Sending android not responding 'ANR' hanging for 20000 ms")
-                sendFatalHang()
+                sendANR()
                 result.success(null)
             }
             SEND_OOM -> {
@@ -78,59 +78,42 @@ class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
     }
 
     private fun sendANR() {
+        android.os.Handler(Looper.getMainLooper()).post {
         try {
             Thread.sleep(20000)
         } catch (e: InterruptedException) {
             throw RuntimeException(e)
         }
+        }
     }
 
     private fun sendFatalHang() {
-        try {
-            Thread.sleep(3000)
-        } catch (e: InterruptedException) {
-            throw RuntimeException(e)
+        android.os.Handler(Looper.getMainLooper()).post {
+
+            try {
+                Thread.sleep(3000)
+            } catch (e: InterruptedException) {
+                throw RuntimeException(e)
+            }
         }
     }
 
     private fun sendOOM() {
+        android.os.Handler(Looper.getMainLooper()).post {
+
+
         oomCrash()
+        }
     }
 
     private fun oomCrash() {
-        Thread {
-            val stringList: MutableList<String> = ArrayList()
-            for (i in 0 until 1000000) {
-                stringList.add(getRandomString(10000))
-            }
-        }.start()
+        val list = ArrayList<ByteArray>()
+        while (true) {
+            list.add(ByteArray(10 * 1024 * 1024)) // Allocate 10MB chunks
+        }
     }
 
-    private fun getRandomString(length: Int): String {
-        val charset: MutableList<Char> = ArrayList()
-        var ch = 'a'
-        while (ch <= 'z') {
-            charset.add(ch)
-            ch++
-        }
-        ch = 'A'
-        while (ch <= 'Z') {
-            charset.add(ch)
-            ch++
-        }
-        ch = '0'
-        while (ch <= '9') {
-            charset.add(ch)
-            ch++
-        }
-        val randomString = StringBuilder()
-        val random = java.util.Random()
-        for (i in 0 until length) {
-            val randomChar = charset[random.nextInt(charset.size)]
-            randomString.append(randomChar)
-        }
-        return randomString.toString()
-    }
+
 
     private fun setFullscreen(enabled: Boolean) {
         try {
