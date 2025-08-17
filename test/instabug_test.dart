@@ -85,7 +85,7 @@ void main() {
     );
 
     //disable the feature flag for screen render feature in order to skip its checking.
-    when(mApmHost.isScreenRenderingEnabled()).thenAnswer((_) async => false);
+    when(mApmHost.isScreenRenderEnabled()).thenAnswer((_) async => false);
 
     await Instabug.init(
       token: token,
