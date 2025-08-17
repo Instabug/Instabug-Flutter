@@ -39,16 +39,16 @@ part 'src/screens/screen_render_page.dart';
 
 void main() {
   runZonedGuarded(
-    () {
+    () async {
       WidgetsFlutterBinding.ensureInitialized();
 
-      Instabug.init(
+      await Instabug.init(
         token: 'ed6f659591566da19b67857e1b9d40ab',
         invocationEvents: [InvocationEvent.floatingButton],
         debugLogsLevel: LogLevel.verbose,
-      ).then((_) {
-        APM.setScreenRenderingEnabled(true);
-      });
+      );
+
+      APM.setScreenRenderingEnabled(true);
 
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);

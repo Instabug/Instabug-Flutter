@@ -138,13 +138,16 @@ class APM {
   /// Returns:
   ///   The method is returning a `Future<void>`.
   static Future<void> startUITrace(String name) async {
+    final isScreenRenderingEnabled =
+        await FlagsConfig.screenRendering.isEnabled();
+    if (isScreenRenderingEnabled) {
+      InstabugScreenRenderManager.I
+          .endScreenRenderCollector(UiTraceType.custom);
+    }
     return _host.startUITrace(name).then(
-      (_) async {
+      (_) {
         // Start screen render collector for custom ui trace if enabled.
-        if (await FlagsConfig.screenRendering.isEnabled()) {
-          InstabugScreenRenderManager.I
-              .endScreenRenderCollector(UiTraceType.custom);
-
+        if (isScreenRenderingEnabled) {
           InstabugScreenRenderManager.I
               .startScreenRenderCollectorForTraceId(0, UiTraceType.custom);
         }
