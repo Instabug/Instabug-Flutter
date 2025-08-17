@@ -28,7 +28,7 @@ class _ScreenRenderSwitchState extends State<ScreenRenderSwitch> {
   }
 
   void onScreenRenderChanged(BuildContext context, bool value) {
-    APM.setScreenRenderEnabled(value);
+    APM.setScreenRenderingEnabled(value);
     showSnackBar(context, "Screen Render is ${value ? "enabled" : "disabled"}");
     setState(() => isEnabled = value);
   }
