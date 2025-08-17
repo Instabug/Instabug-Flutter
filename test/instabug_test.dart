@@ -85,7 +85,7 @@ void main() {
     );
 
     //disable the feature flag for screen render feature in order to skip its checking.
-    when(mApmHost.isScreenRenderEnabled()).thenAnswer((_) async => false);
+    when(mApmHost.isScreenRenderingEnabled()).thenAnswer((_) async => false);
 
     await Instabug.init(
       token: token,
@@ -93,7 +93,7 @@ void main() {
     );
 
     verify(
-      mHost.init(token, events.mapToString(), LogLevel.error.toString()),
+      mHost.init(token, events.mapToString(), LogLevel.error.toString(), null),
     ).called(1);
   });
 
@@ -440,6 +440,26 @@ void main() {
     //assert
     verify(
       mHost.willRedirectToStore(),
+    ).called(1);
+  });
+
+  test('[setFullscreen] should call host method', () async {
+    const isEnabled = true;
+
+    await Instabug.setFullscreen(isEnabled);
+
+    verify(
+      mHost.setFullscreen(isEnabled),
+    ).called(1);
+  });
+
+  test('[setFullscreen] should call host method with false', () async {
+    const isEnabled = false;
+
+    await Instabug.setFullscreen(isEnabled);
+
+    verify(
+      mHost.setFullscreen(isEnabled),
     ).called(1);
   });
 

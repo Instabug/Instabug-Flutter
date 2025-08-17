@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_classes_with_only_static_members
-// ignore_for_file: deprecated_member_use
 
 import 'dart:async';
 
@@ -23,7 +22,6 @@ import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
-import 'package:instabug_flutter/src/utils/screen_rendering/instabug_widget_binding_observer.dart';
 import 'package:meta/meta.dart';
 
 enum InvocationEvent {
@@ -182,20 +180,21 @@ class Instabug {
   /// The [token] that identifies the app, you can find it on your dashboard.
   /// The [invocationEvents] are the events that invoke the SDK's UI.
   /// The [debugLogsLevel] used to debug Instabug's SDK.
+  /// The [appVariant] used to set current App variant name.
   static Future<void> init({
     required String token,
     required List<InvocationEvent> invocationEvents,
     LogLevel debugLogsLevel = LogLevel.error,
+    String? appVariant,
   }) async {
     $setup();
     InstabugLogger.I.logLevel = debugLogsLevel;
-    checkForWidgetBinding();
     await _host.init(
       token,
       invocationEvents.mapToString(),
       debugLogsLevel.toString(),
+      appVariant,
     );
-
     return FeatureFlagsManager().registerW3CFlagsListener();
   }
 
@@ -468,6 +467,13 @@ class Instabug {
     return _host.willRedirectToStore();
   }
 
+  /// This property sets the `appVariant` string to be included in all network requests.
+  ///  It should be set before calling [init] method.
+  /// [appVariant] used to set current App variant name
+  static Future<void> setAppVariant(String appVariant) async {
+    return _host.setAppVariant(appVariant);
+  }
+
   /// Sets a custom theme for Instabug UI elements.
   ///
   /// @param theme - Configuration object containing theme properties
@@ -494,5 +500,17 @@ class Instabug {
   /// ```
   static Future<void> setTheme(ThemeConfig themeConfig) async {
     return _host.setTheme(themeConfig.toMap());
+  }
+
+  /// Sets the fullscreen mode for Instabug UI.
+  ///
+  /// [isFullscreen] - Whether to enable fullscreen mode or not.
+  ///
+  /// Example:
+  /// ```dart
+  /// Instabug.setFullscreen(true);
+  /// ```
+  static Future<void> setFullscreen(bool isEnabled) async {
+    return _host.setFullscreen(isEnabled);
   }
 }

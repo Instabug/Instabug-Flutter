@@ -31,7 +31,13 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     return @(Instabug.enabled);
 }
 
-- (void)initToken:(NSString *)token invocationEvents:(NSArray<NSString *> *)invocationEvents debugLogsLevel:(NSString *)debugLogsLevel error:(FlutterError *_Nullable *_Nonnull)error {
+- (void)initToken:(nonnull NSString *)token invocationEvents:(nonnull NSArray<NSString *> *)invocationEvents debugLogsLevel:(nonnull NSString *)debugLogsLevel appVariant:(nullable NSString *)appVariant error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+
+    if(appVariant != nil){
+        Instabug.appVariant = appVariant;
+    }
+
+
     SEL setPrivateApiSEL = NSSelectorFromString(@"setCurrentPlatform:");
     if ([[Instabug class] respondsToSelector:setPrivateApiSEL]) {
         NSInteger *platformID = IBGPlatformFlutter;
@@ -47,6 +53,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     [IBGNetworkLogger disableAutomaticCapturingOfNetworkLogs];
 
     IBGInvocationEvent resolvedEvents = 0;
+
 
     for (NSString *event in invocationEvents) {
         resolvedEvents |= (ArgsRegistry.invocationEvents[event]).integerValue;
@@ -389,10 +396,16 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 }
 
 
+- (void)setAppVariantAppVariant:(nonnull NSString *)appVariant error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+
+    Instabug.appVariant = appVariant;
+
+}
+
 
 - (void)setThemeThemeConfig:(NSDictionary<NSString *, id> *)themeConfig error:(FlutterError *_Nullable *_Nonnull)error {
     IBGTheme *theme = [[IBGTheme alloc] init];
-    
+
     NSDictionary *colorMapping = @{
         @"primaryColor": ^(UIColor *color) { theme.primaryColor = color; },
         @"backgroundColor": ^(UIColor *color) { theme.backgroundColor = color; },
@@ -407,7 +420,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
         @"selectedRowBackgroundColor": ^(UIColor *color) { theme.selectedRowBackgroundColor = color; },
         @"rowSeparatorColor": ^(UIColor *color) { theme.rowSeparatorColor = color; }
     };
-    
+
     for (NSString *key in colorMapping) {
         if (themeConfig[key]) {
             NSString *colorString = themeConfig[key];
@@ -418,11 +431,11 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
             }
         }
     }
-    
+
     [self setFontIfPresent:themeConfig[@"primaryFontPath"] ?: themeConfig[@"primaryFontAsset"] forTheme:theme type:@"primary"];
     [self setFontIfPresent:themeConfig[@"secondaryFontPath"] ?: themeConfig[@"secondaryFontAsset"] forTheme:theme type:@"secondary"];
     [self setFontIfPresent:themeConfig[@"ctaFontPath"] ?: themeConfig[@"ctaFontAsset"] forTheme:theme type:@"cta"];
-    
+
     Instabug.theme = theme;
 }
 
@@ -461,42 +474,42 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 - (UIFont *)loadFontFromPath:(NSString *)fontPath {
     NSString *fontFileName = [fontPath stringByDeletingPathExtension];
     NSArray *fontExtensions = @[@"ttf", @"otf", @"woff", @"woff2"];
-    
+
     // Find font file in bundle
     NSString *fontFilePath = nil;
     for (NSString *extension in fontExtensions) {
         fontFilePath = [[NSBundle mainBundle] pathForResource:fontFileName ofType:extension];
         if (fontFilePath) break;
     }
-    
+
     if (!fontFilePath) {
         return nil;
     }
-    
+
     // Load font data
     NSData *fontData = [NSData dataWithContentsOfFile:fontFilePath];
     if (!fontData) {
         return nil;
     }
-    
+
     // Create data provider
     CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)fontData);
     if (!provider) {
         return nil;
     }
-    
+
     // Create CG font
     CGFontRef cgFont = CGFontCreateWithDataProvider(provider);
     CGDataProviderRelease(provider);
-    
+
     if (!cgFont) {
         return nil;
     }
-    
+
     // Register font
     CFErrorRef error = NULL;
     BOOL registered = CTFontManagerRegisterGraphicsFont(cgFont, &error);
-    
+
     if (!registered) {
         if (error) {
             CFStringRef description = CFErrorCopyDescription(error);
@@ -506,21 +519,21 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
         CGFontRelease(cgFont);
         return nil;
     }
-    
+
     // Get PostScript name and create UIFont
     NSString *postScriptName = (__bridge_transfer NSString *)CGFontCopyPostScriptName(cgFont);
     CGFontRelease(cgFont);
-    
+
     if (!postScriptName) {
         return nil;
     }
-    
+
     return [UIFont fontWithName:postScriptName size:UIFont.systemFontSize];
 }
 
 - (void)setFont:(UIFont *)font forTheme:(IBGTheme *)theme type:(NSString *)type {
     if (!font || !theme || !type) return;
-    
+
     if ([type isEqualToString:@"primary"]) {
         theme.primaryTextFont = font;
     } else if ([type isEqualToString:@"secondary"]) {
@@ -532,12 +545,12 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 
 - (UIColor *)colorFromHexString:(NSString *)hexString {
     NSString *cleanString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
-    
+
     if (cleanString.length == 6) {
         unsigned int rgbValue = 0;
         NSScanner *scanner = [NSScanner scannerWithString:cleanString];
         [scanner scanHexInt:&rgbValue];
-        
+
         return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16) / 255.0
                                green:((rgbValue & 0xFF00) >> 8) / 255.0
                                 blue:(rgbValue & 0xFF) / 255.0
@@ -546,14 +559,18 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
         unsigned int rgbaValue = 0;
         NSScanner *scanner = [NSScanner scannerWithString:cleanString];
         [scanner scanHexInt:&rgbaValue];
-        
+
         return [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24) / 255.0
                                green:((rgbaValue & 0xFF0000) >> 16) / 255.0
                                 blue:((rgbaValue & 0xFF00) >> 8) / 255.0
                                alpha:(rgbaValue & 0xFF) / 255.0];
     }
-    
+
     return [UIColor blackColor];
+}
+
+- (void)setFullscreenIsEnabled:(NSNumber *)isEnabled error:(FlutterError *_Nullable *_Nonnull)error {
+    // Empty implementation as requested
 }
 
 @end

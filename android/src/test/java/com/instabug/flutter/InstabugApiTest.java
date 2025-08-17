@@ -134,6 +134,8 @@ public class InstabugApiTest {
     @Test
     public void testSdkInit() {
         String token = "app-token";
+        String appVariant = "app-variant";
+
         List<String> invocationEvents = Collections.singletonList("InvocationEvent.floatingButton");
         String logLevel = "LogLevel.error";
 
@@ -145,7 +147,7 @@ public class InstabugApiTest {
             when(mock.setSdkDebugLogsLevel(anyInt())).thenReturn(mock);
         });
 
-        api.init(token, invocationEvents, logLevel);
+        api.init(token, invocationEvents, logLevel,appVariant);
 
         Instabug.Builder builder = mInstabugBuilder.constructed().get(0);
 
@@ -157,6 +159,8 @@ public class InstabugApiTest {
         );
         verify(builder).setInvocationEvents(InstabugInvocationEvent.FLOATING_BUTTON);
         verify(builder).setSdkDebugLogsLevel(LogLevel.ERROR);
+        verify(builder).setAppVariant(appVariant);
+
         verify(builder).build();
 
         // Sets screenshot provider
@@ -626,6 +630,14 @@ public class InstabugApiTest {
     }
 
     @Test
+    public void testSetAppVariant() {
+        String appVariant = "app-variant";
+        api.setAppVariant(appVariant);
+
+        mInstabug.verify(() -> Instabug.setAppVariant(appVariant));
+    }
+
+    @Test
     public void testSetNetworkLogBodyDisabled() {
         api.setNetworkLogBodyEnabled(false);
 
@@ -647,7 +659,7 @@ public class InstabugApiTest {
         themeConfig.put("secondaryFontAsset", "assets/fonts/CustomFont-Bold.ttf");
         themeConfig.put("ctaFontAsset", "assets/fonts/CustomFont-Italic.ttf");
 
-        MockedConstruction<com.instabug.library.model.IBGTheme.Builder> mThemeBuilder = 
+        MockedConstruction<com.instabug.library.model.IBGTheme.Builder> mThemeBuilder =
             mockConstruction(com.instabug.library.model.IBGTheme.Builder.class, (mock, context) -> {
                 when(mock.setPrimaryColor(anyInt())).thenReturn(mock);
                 when(mock.setBackgroundColor(anyInt())).thenReturn(mock);
@@ -666,7 +678,7 @@ public class InstabugApiTest {
         api.setTheme(themeConfig);
 
         com.instabug.library.model.IBGTheme.Builder builder = mThemeBuilder.constructed().get(0);
-        
+
         verify(builder).setPrimaryColor(anyInt());
         verify(builder).setBackgroundColor(anyInt());
         verify(builder).setTitleTextColor(anyInt());
@@ -675,8 +687,26 @@ public class InstabugApiTest {
         verify(builder).setPrimaryTextStyle(Typeface.BOLD);
         verify(builder).setSecondaryTextStyle(Typeface.ITALIC);
         verify(builder).setCtaTextStyle(Typeface.BOLD_ITALIC);
-        
+
         mInstabug.verify(() -> Instabug.setTheme(any(com.instabug.library.model.IBGTheme.class)));
+    }
+
+    @Test
+    public void testSetFullscreen() {
+        boolean isEnabled = true;
+
+        api.setFullscreen(isEnabled);
+
+        mInstabug.verify(() -> Instabug.setFullscreen(isEnabled));
+    }
+
+    @Test
+    public void testSetFullscreenDisabled() {
+        boolean isEnabled = false;
+
+        api.setFullscreen(isEnabled);
+
+        mInstabug.verify(() -> Instabug.setFullscreen(isEnabled));
     }
 
 
