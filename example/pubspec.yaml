@@ -27,7 +27,7 @@ dependencies:
   instabug_flutter:
     path: ../
   instabug_http_client: ^2.4.0
-  file_picker:
+  file_picker: 8.1.7
   provider:
 
 dev_dependencies:
