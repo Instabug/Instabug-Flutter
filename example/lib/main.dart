@@ -22,6 +22,8 @@ part 'src/screens/crashes_page.dart';
 
 part 'src/screens/bug_reporting.dart';
 
+part 'src/screens/session_replay_page.dart';
+
 part 'src/screens/complex_page.dart';
 
 part 'src/screens/apm_page.dart';

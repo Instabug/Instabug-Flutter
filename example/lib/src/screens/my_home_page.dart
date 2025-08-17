@@ -169,6 +169,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _navigateToSessionReplay() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SessionReplayPage(),
+        settings: const RouteSettings(name: SessionReplayPage.screenName),
+      ),
+    );
+  }
+
   final _formUserAttributeKey = GlobalKey<FormState>();
 
   @override
@@ -320,6 +330,10 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: _navigateToComplex,
           text: 'Complex',
         ),
+        InstabugButton(
+          onPressed: _navigateToSessionReplay,
+          text: 'Session Replay',
+        ),
         const SectionTitle('Sessions Replay'),
         InstabugButton(
           onPressed: getCurrentSessionReplaylink,
@@ -365,9 +379,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () => removeAllFeatureFlags(),
           text: 'RemoveAllFeatureFlags',
         ),
-
         const SectionTitle('Set User Attribute'),
-
         Form(
           key: _formUserAttributeKey,
           child: Column(
@@ -397,7 +409,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   )),
                 ],
               ),
-              SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
               InstabugButton(
                 text: 'Set User attribute',
                 key: const Key('set_user_data_btn'),
@@ -413,12 +427,89 @@ class _MyHomePageState extends State<MyHomePage> {
                 key: const Key('remove_user_data_btn'),
                 onPressed: () {
                   if (_formUserAttributeKey.currentState?.validate() == true) {
-                    Instabug.removeUserAttribute(userAttributeKeyController.text);
+                    Instabug.removeUserAttribute(
+                        userAttributeKeyController.text);
                   }
                 },
               ),
-              SizedBox(height: 10,),
-
+              const SizedBox(
+                height: 10,
+              ),
+              const SectionTitle('Log'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: InstabugButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        key: const ValueKey('log_hello_debug_btn'),
+                        onPressed: () {
+                          InstabugLog.logDebug("hello Debug");
+                        },
+                        text: 'Log Hello Debug',
+                      ),
+                    ),
+                    Expanded(
+                      child: InstabugButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        key: const ValueKey('log_hello_error_btn'),
+                        onPressed: () {
+                          InstabugLog.logError("hello Error");
+                        },
+                        text: 'Log Hello Error',
+                      ),
+                    ),
+                    Expanded(
+                      child: InstabugButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        key: const ValueKey('hello_warning_btn'),
+                        onPressed: () {
+                          InstabugLog.logWarn("hello Warning");
+                        },
+                        text: 'Log Hello Warn',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: InstabugButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        key: const ValueKey('log_hello_info_btn'),
+                        onPressed: () {
+                          InstabugLog.logInfo("hello Info");
+                        },
+                        text: 'Log Hello Info',
+                      ),
+                    ),
+                    Expanded(
+                      child: InstabugButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        key: const ValueKey('log_hello_verbose_btn'),
+                        onPressed: () {
+                          InstabugLog.logVerbose("hello Verbose");
+                        },
+                        text: 'Log Hello Verbose',
+                      ),
+                    ),
+                    Expanded(
+                      child: InstabugButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        key: const ValueKey('clear_logs_btn'),
+                        onPressed: () {
+                          InstabugLog.clearAllLogs();
+                        },
+                        text: 'Clear All logs',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

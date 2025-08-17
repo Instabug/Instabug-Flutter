@@ -36,6 +36,42 @@ class _NetworkContentState extends State<NetworkContent> {
           text: 'Send Request  Without Custom traceparent header',
           onPressed: () => _sendRequestToUrl(endpointUrlController.text),
         ),
+        InstabugButton(
+          text: 'obfuscateLog',
+          onPressed: () {
+            NetworkLogger.obfuscateLog((networkData) async {
+              return networkData.copyWith(url: 'fake url');
+            });
+          },
+        ),
+        InstabugButton(
+          text: 'omitLog',
+          onPressed: () {
+            NetworkLogger.omitLog((networkData) async {
+              return networkData.url.contains('google.com');
+            });
+          },
+        ),
+        InstabugButton(
+          text: 'obfuscateLogWithException',
+          onPressed: () {
+            NetworkLogger.obfuscateLog((networkData) async {
+              throw Exception("obfuscateLogWithException");
+
+              return networkData.copyWith(url: 'fake url');
+            });
+          },
+        ),
+        InstabugButton(
+          text: 'omitLogWithException',
+          onPressed: () {
+            NetworkLogger.omitLog((networkData) async {
+              throw Exception("OmitLog with exception");
+
+              return networkData.url.contains('google.com');
+            });
+          },
+        ),
       ],
     );
   }

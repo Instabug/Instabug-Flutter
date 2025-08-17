@@ -55,28 +55,24 @@ class _NonFatalCrashesContentState extends State<NonFatalCrashesContent> {
         InstabugButton(
           text: 'Throw ArgumentError',
           key: const Key('non_fatal_argument_exception'),
-
           onPressed: () =>
               throwHandledException(ArgumentError('This is an ArgumentError.')),
         ),
         InstabugButton(
           text: 'Throw RangeError',
           key: const Key('non_fatal_range_exception'),
-
           onPressed: () => throwHandledException(
               RangeError.range(5, 0, 3, 'Index out of range')),
         ),
         InstabugButton(
           text: 'Throw FormatException',
           key: const Key('non_fatal_format_exception'),
-
           onPressed: () =>
               throwHandledException(UnsupportedError('Invalid format.')),
         ),
         InstabugButton(
           text: 'Throw NoSuchMethodError',
           key: const Key('non_fatal_no_such_method_exception'),
-
           onPressed: () {
             dynamic obj;
             throwHandledException(obj.methodThatDoesNotExist());
@@ -85,7 +81,6 @@ class _NonFatalCrashesContentState extends State<NonFatalCrashesContent> {
         const InstabugButton(
           text: 'Throw Handled Native Exception',
           key: Key('non_fatal_native_exception'),
-
           onPressed:
               InstabugFlutterExampleMethodChannel.sendNativeNonFatalCrash,
         ),
@@ -113,9 +108,8 @@ class _NonFatalCrashesContentState extends State<NonFatalCrashesContent> {
                   Expanded(
                       child: InstabugTextField(
                     label: "User Attribute  key",
-                        key: const Key("non_fatal_user_attribute_key_textfield"),
-
-                        controller: crashUserAttributeKeyController,
+                    key: const Key("non_fatal_user_attribute_key_textfield"),
+                    controller: crashUserAttributeKeyController,
                     validator: (value) {
                       if (crashUserAttributeValueController.text.isNotEmpty) {
                         if (value?.trim().isNotEmpty == true) return null;
@@ -128,9 +122,8 @@ class _NonFatalCrashesContentState extends State<NonFatalCrashesContent> {
                   Expanded(
                       child: InstabugTextField(
                     label: "User Attribute  Value",
-                        key: const Key("non_fatal_user_attribute_value_textfield"),
-
-                        controller: crashUserAttributeValueController,
+                    key: const Key("non_fatal_user_attribute_value_textfield"),
+                    controller: crashUserAttributeValueController,
                     validator: (value) {
                       if (crashUserAttributeKeyController.text.isNotEmpty) {
                         if (value?.trim().isNotEmpty == true) return null;
@@ -147,9 +140,9 @@ class _NonFatalCrashesContentState extends State<NonFatalCrashesContent> {
                   Expanded(
                       child: InstabugTextField(
                     label: "Fingerprint",
-                        key: const Key("non_fatal_user_attribute_fingerprint_textfield"),
-
-                        controller: crashfingerPrintController,
+                    key: const Key(
+                        "non_fatal_user_attribute_fingerprint_textfield"),
+                    controller: crashfingerPrintController,
                   )),
                 ],
               ),
@@ -161,7 +154,6 @@ class _NonFatalCrashesContentState extends State<NonFatalCrashesContent> {
                         flex: 5,
                         child: DropdownButtonHideUnderline(
                           key: const Key("non_fatal_crash_level_dropdown"),
-
                           child:
                               DropdownButtonFormField<NonFatalExceptionLevel>(
                             value: crashType,

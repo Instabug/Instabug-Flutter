@@ -84,9 +84,7 @@ class _BugReportingPageState extends State<BugReportingPage> {
     } else {
       reportTypes.add(reportType);
     }
-    setState(() {
-
-    });
+    setState(() {});
     BugReporting.setReportTypes(reportTypes);
   }
 
@@ -122,6 +120,34 @@ class _BugReportingPageState extends State<BugReportingPage> {
             title: const Text('On Dismiss'),
             content: Text(
               'onDismiss callback called with $dismissType and $reportType',
+            ),
+          );
+        },
+      );
+    });
+  }
+
+  void setOnDismissCallbackWithException() {
+    BugReporting.setOnDismissCallback((dismissType, reportType) {
+      throw Exception("Test crash from dismiss callback");
+    });
+  }
+
+  void setOnInvokeCallbackWithException() {
+    BugReporting.setOnInvokeCallback(() {
+      throw Exception("Test crash from invoke callback");
+    });
+  }
+
+  void setOnInvoiceCallback() {
+    BugReporting.setOnInvokeCallback(() {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            title: Text('On Invoke'),
+            content: Text(
+              'onInvoke callback called',
             ),
           );
         },
@@ -323,7 +349,6 @@ class _BugReportingPageState extends State<BugReportingPage> {
               title: const Text("Screenshot"),
               subtitle: const Text('Enable attachment for screenShot'),
               key: const Key('attachment_option_screenshot'),
-
             ),
             CheckboxListTile(
               value: attachmentsOptionsExtraScreenshot,
@@ -336,7 +361,6 @@ class _BugReportingPageState extends State<BugReportingPage> {
               title: const Text("Extra Screenshot"),
               subtitle: const Text('Enable attachment for extra screenShot'),
               key: const Key('attachment_option_extra_screenshot'),
-
             ),
             CheckboxListTile(
               value: attachmentsOptionsGalleryImage,
@@ -349,7 +373,6 @@ class _BugReportingPageState extends State<BugReportingPage> {
               title: const Text("Gallery"),
               subtitle: const Text('Enable attachment for gallery'),
               key: const Key('attachment_option_gallery'),
-
             ),
             CheckboxListTile(
               value: attachmentsOptionsScreenRecording,
@@ -362,11 +385,42 @@ class _BugReportingPageState extends State<BugReportingPage> {
               title: const Text("Screen Recording"),
               subtitle: const Text('Enable attachment for screen Recording'),
               key: const Key('attachment_option_screen_recording'),
-
             ),
           ],
         ),
         const SectionTitle('Bug reporting type'),
+        ButtonBar(
+          mainAxisSize: MainAxisSize.min,
+          alignment: MainAxisAlignment.start,
+          children: <Widget>[
+            ElevatedButton(
+              key: const Key('bug_report_type_bug'),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: reportTypes.contains(ReportType.bug)
+                      ? Colors.grey.shade400
+                      : null),
+              onPressed: () => toggleReportType(ReportType.bug),
+              child: const Text('Bug'),
+            ),
+            ElevatedButton(
+              key: const Key('bug_report_type_feedback'),
+              onPressed: () => toggleReportType(ReportType.feedback),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: reportTypes.contains(ReportType.feedback)
+                      ? Colors.grey.shade400
+                      : null),
+              child: const Text('Feedback'),
+            ),
+            ElevatedButton(
+              key: const Key('bug_report_type_question'),
+              onPressed: () => toggleReportType(ReportType.question),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: reportTypes.contains(ReportType.question)
+                      ? Colors.grey.shade400
+                      : null),
+              child: const Text('Question'),
+            ),
+          ],
 
         CheckboxListTile(
           value: reportTypes.contains(ReportType.bug),
@@ -403,7 +457,6 @@ class _BugReportingPageState extends State<BugReportingPage> {
           title: const Text("Question"),
           subtitle: const Text('Enable Question reporting type'),
           key: const Key('bug_report_type_question'),
-
         ),
         InstabugButton(
           onPressed: () =>
@@ -424,7 +477,6 @@ class _BugReportingPageState extends State<BugReportingPage> {
           onPressed: () => setDisclaimerText,
           child: const Text('set disclaimer text'),
         ),
-
         const SectionTitle('Extended Bug Reporting'),
         ButtonBar(
           mainAxisSize: MainAxisSize.min,
@@ -466,6 +518,17 @@ class _BugReportingPageState extends State<BugReportingPage> {
           onPressed: setOnDismissCallback,
           text: 'Set On Dismiss Callback',
         ),
+        InstabugButton(
+          onPressed: setOnInvoiceCallback,
+          text: 'Set On Invoice Callback',
+        ),
+        InstabugButton(
+          onPressed: setOnDismissCallbackWithException,
+          text: 'Set On Dismiss Callback with Exception',
+        ),
+        InstabugButton(
+          onPressed: setOnInvokeCallbackWithException,
+          text: 'Set On Invoice Callback with Exception',
         const SectionTitle('Attachments'),
         if(fileAttachment!=null)
           Text(fileAttachment!.path
