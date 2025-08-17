@@ -18,44 +18,52 @@ class _SessionReplayPageState extends State<SessionReplayPage> {
         key: const Key('instabug_sesssion_replay_disable'),
         onPressed: () => SessionReplay.setEnabled(false),
         text: "Disable Session Replay",
+        symanticLabel: 'instabug_sesssion_replay_disable',
       ),
       InstabugButton(
         key: const Key('instabug_sesssion_replay_enable'),
         onPressed: () => SessionReplay.setEnabled(true),
         text: "Enable Session Replay",
+        symanticLabel: 'instabug_sesssion_replay_enable',
       ),
       const SectionTitle('Enabling Session Replay Network'),
       InstabugButton(
         key: const Key('instabug_sesssion_replay_network_disable'),
         onPressed: () => SessionReplay.setNetworkLogsEnabled(false),
         text: "Disable Session Replay Network",
+        symanticLabel: 'instabug_sesssion_replay_network_disable',
       ),
       InstabugButton(
         key: const Key('instabug_sesssion_replay_network_enable'),
         onPressed: () => SessionReplay.setNetworkLogsEnabled(true),
         text: "Enable Session Replay Network",
+        symanticLabel: 'instabug_sesssion_replay_network_enable',
       ),
       const SectionTitle('Enabling Session Replay User Steps'),
       InstabugButton(
         key: const Key('instabug_sesssion_replay_user_steps_disable'),
         onPressed: () => SessionReplay.setUserStepsEnabled(false),
         text: "Disable Session Replay User Steps",
+        symanticLabel: 'instabug_sesssion_replay_user_steps_disable',
       ),
       InstabugButton(
         key: const Key('instabug_sesssion_replay_user_steps_enable'),
         onPressed: () => SessionReplay.setUserStepsEnabled(true),
         text: "Enable Session Replay User Steps",
+        symanticLabel: 'instabug_sesssion_replay_user_steps_enable',
       ),
       const SectionTitle('Enabling Session Replay Logs'),
       InstabugButton(
         key: const Key('instabug_sesssion_replay_logs_disable'),
         onPressed: () => SessionReplay.setInstabugLogsEnabled(false),
         text: "Disable Session Replay Logs",
+        symanticLabel: 'instabug_sesssion_replay_logs_disable',
       ),
       InstabugButton(
         key: const Key('instabug_sesssion_replay_logs_enable'),
         onPressed: () => SessionReplay.setInstabugLogsEnabled(true),
         text: "Enable Session Replay Logs",
+        symanticLabel: 'instabug_sesssion_replay_logs_enable',
       ),
       const SectionTitle('Enabling Session Replay Repro steps'),
       InstabugButton(
@@ -63,17 +71,20 @@ class _SessionReplayPageState extends State<SessionReplayPage> {
         onPressed: () => Instabug.setReproStepsConfig(
             sessionReplay: ReproStepsMode.disabled),
         text: "Disable Session Replay Repro steps",
+        symanticLabel: 'instabug_sesssion_replay_repro_steps_disable',
       ),
       InstabugButton(
         key: const Key('instabug_sesssion_replay_repro_steps_enable'),
         onPressed: () =>
             Instabug.setReproStepsConfig(sessionReplay: ReproStepsMode.enabled),
         text: "Enable Session Replay Repro steps",
+        symanticLabel: 'instabug_sesssion_replay_repro_steps_enable',
       ),
       InstabugButton(
         key: const Key('instabug_sesssion_replay_tab_screen'),
         onPressed: () => Navigator.of(context).pushNamed(TopTabBarScreen.route),
         text: 'Open Tab Screen',
+        symanticLabel: 'instabug_sesssion_replay_tab_screen',
       ),
     ]);
   }

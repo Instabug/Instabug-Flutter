@@ -75,11 +75,13 @@ class _ComplexPageState extends State<ComplexPage> {
         label: 'Depth (default: ${ComplexPage.initialDepth})',
         labelStyle: textTheme.labelMedium,
         controller: depthController,
+        symanticLabel: 'depth_input',
       ),
       InstabugTextField(
         label: 'Breadth (default: ${ComplexPage.initialBreadth})',
         labelStyle: textTheme.labelMedium,
         controller: breadthController,
+        symanticLabel: 'breadth_input',
       ),
       InstabugButton(
         onPressed: _handleRender,
@@ -93,22 +95,27 @@ class _ComplexPageState extends State<ComplexPage> {
       InstabugButton(
         onPressed: _enableScreenLoading,
         text: 'Enable Screen loading',
+        symanticLabel: 'enable_screen_loading',
       ),
       InstabugButton(
         onPressed: _disableScreenLoading,
         text: 'Disable Screen Loading',
+        symanticLabel: 'disable_screen_loading',
       ),
       InstabugButton(
         onPressed: _resetDidStartScreenLoading,
         text: 'Reset Did Start Screen Loading',
+        symanticLabel: 'reset_start_screen_loading',
       ),
       InstabugButton(
         onPressed: _resetDidReportScreenLoading,
         text: 'Reset Did Report Screen Loading',
+        symanticLabel: 'reset_report_screen_loading',
       ),
       InstabugButton(
         onPressed: _resetDidExtendScreenLoading,
         text: 'Reset Did Extend Screen Loading',
+        symanticLabel: 'reset_extend_screen_loading',
       ),
       SingleChildScrollView(
         scrollDirection: Axis.horizontal,

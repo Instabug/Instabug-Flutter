@@ -25,6 +25,7 @@ class _TracesContentState extends State<TracesContent> {
           label: 'Trace name',
           labelStyle: textTheme.labelMedium,
           controller: traceNameController,
+          symanticLabel: 'trace_name_input',
         ),
         SizedBox.fromSize(
           size: const Size.fromHeight(10.0),
@@ -35,6 +36,7 @@ class _TracesContentState extends State<TracesContent> {
               flex: 5,
               child: InstabugButton.smallFontSize(
                 text: 'Start Trace',
+                symanticLabel: 'start_trace',
                 onPressed: () => _startTrace(traceNameController.text),
                 margin: const EdgeInsetsDirectional.only(
                   start: 20.0,
@@ -46,6 +48,7 @@ class _TracesContentState extends State<TracesContent> {
               flex: 5,
               child: InstabugButton.smallFontSize(
                 text: 'Start Trace With Delay',
+                symanticLabel: 'start_trace_with_delay',
                 onPressed: () => _startTrace(
                   traceNameController.text,
                   delayInMilliseconds: 5000,
@@ -64,6 +67,7 @@ class _TracesContentState extends State<TracesContent> {
               flex: 5,
               child: InstabugTextField(
                 label: 'Trace Key Attribute',
+                symanticLabel: 'trace_key_attribute_input',
                 controller: traceKeyAttributeController,
                 labelStyle: textTheme.labelMedium,
                 margin: const EdgeInsetsDirectional.only(
@@ -76,6 +80,7 @@ class _TracesContentState extends State<TracesContent> {
               flex: 5,
               child: InstabugTextField(
                 label: 'Trace Value Attribute',
+                symanticLabel: 'trace_value_attribute_input',
                 labelStyle: textTheme.labelMedium,
                 controller: traceValueAttributeController,
                 margin: const EdgeInsetsDirectional.only(
@@ -91,6 +96,7 @@ class _TracesContentState extends State<TracesContent> {
         ),
         InstabugButton(
           text: 'Set Trace Attribute',
+          symanticLabel: 'set_trace_attribute',
           onPressed: () => _setTraceAttribute(
             trace,
             traceKeyAttribute: traceKeyAttributeController.text,
@@ -99,6 +105,7 @@ class _TracesContentState extends State<TracesContent> {
         ),
         InstabugButton(
           text: 'End Trace',
+          symanticLabel: 'end_trace',
           onPressed: () => _endTrace(),
         ),
       ],
