@@ -192,7 +192,7 @@ public class BugReportingApiTest {
 
         api.setCommentMinimumCharacterCount(limit, reportTypes);
 
-        mBugReporting.verify(() -> BugReporting.setCommentMinimumCharacterCount(limit.intValue(), BugReporting.ReportType.BUG, BugReporting.ReportType.QUESTION));
+        mBugReporting.verify(() -> BugReporting.setCommentMinimumCharacterCountForBugReportType(limit.intValue(), BugReporting.ReportType.BUG, BugReporting.ReportType.QUESTION));
     }
 
     @Test

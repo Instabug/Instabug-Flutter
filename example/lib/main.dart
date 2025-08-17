@@ -48,8 +48,6 @@ part 'src/components/network_content.dart';
 
 part 'src/components/page.dart';
 
-part 'src/components/traces_content.dart';
-
 part 'src/components/flows_content.dart';
 
 void main() {
@@ -58,10 +56,10 @@ void main() {
       WidgetsFlutterBinding.ensureInitialized();
 
       Instabug.init(
-        token: 'ed6f659591566da19b67857e1b9d40ab',
-        invocationEvents: [InvocationEvent.floatingButton],
-        debugLogsLevel: LogLevel.verbose,
-      );
+          token: 'ed6f659591566da19b67857e1b9d40ab',
+          invocationEvents: [InvocationEvent.floatingButton],
+          debugLogsLevel: LogLevel.verbose,
+          appVariant: 'variant 1');
 
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);

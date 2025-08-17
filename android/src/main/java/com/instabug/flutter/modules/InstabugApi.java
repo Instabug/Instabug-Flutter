@@ -5,10 +5,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.graphics.Typeface;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+
 import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.util.ArgsRegistry;
 import com.instabug.flutter.util.Reflection;
@@ -30,9 +33,11 @@ import com.instabug.library.internal.module.InstabugLocale;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.instabug.library.model.NetworkLog;
 import com.instabug.library.ui.onboarding.WelcomeMessage;
+
 import io.flutter.FlutterInjector;
 import io.flutter.embedding.engine.loader.FlutterLoader;
 import io.flutter.plugin.common.BinaryMessenger;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
@@ -102,10 +107,12 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @NotNull
     @Override
-    public Boolean isBuilt() { return Instabug.isBuilt(); }
+    public Boolean isBuilt() {
+        return Instabug.isBuilt();
+    }
 
     @Override
-    public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel) {
+    public void init(@NonNull String token, @NonNull List<String> invocationEvents, @NonNull String debugLogsLevel, @Nullable String appVariant) {
         setCurrentPlatform();
 
         InstabugInvocationEvent[] invocationEventsArray = new InstabugInvocationEvent[invocationEvents.size()];
@@ -116,11 +123,14 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
         final Application application = (Application) context;
         final int parsedLogLevel = ArgsRegistry.sdkLogLevels.get(debugLogsLevel);
-
-        new Instabug.Builder(application, token)
+        Instabug.Builder builder = new Instabug.Builder(application, token)
                 .setInvocationEvents(invocationEventsArray)
-                .setSdkDebugLogsLevel(parsedLogLevel)
-                .build();
+                .setSdkDebugLogsLevel(parsedLogLevel);
+        if (appVariant != null) {
+            builder.setAppVariant(appVariant);
+        }
+
+        builder.build();
 
         Instabug.setScreenshotProvider(screenshotProvider);
     }
@@ -144,6 +154,17 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
     @Override
     public void setUserData(@NonNull String data) {
         Instabug.setUserData(data);
+    }
+
+    @Override
+    public void setAppVariant(@NonNull String appVariant) {
+        try {
+            Instabug.setAppVariant(appVariant);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -176,7 +197,6 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
 
     @Override
     public void setPrimaryColor(@NonNull Long color) {
-        Instabug.setPrimaryColor(color.intValue());
     }
 
     @Override
@@ -228,20 +248,7 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         );
     }
 
-    @Override
-    public void addExperiments(@NonNull List<String> experiments) {
-        Instabug.addExperiments(experiments);
-    }
 
-    @Override
-    public void removeExperiments(@NonNull List<String> experiments) {
-        Instabug.removeExperiments(experiments);
-    }
-
-    @Override
-    public void clearAllExperiments() {
-        Instabug.clearAllExperiments();
-    }
 
     @Override
     public void addFeatureFlags(@NonNull Map<String, String> featureFlags) {
@@ -500,13 +507,177 @@ public class InstabugApi implements InstabugPigeon.InstabugHostApi {
         Instabug.willRedirectToStore();
     }
 
-    
+
     @Override
     public void setNetworkLogBodyEnabled(@NonNull Boolean isEnabled) {
-                try {
-                    Instabug.setNetworkLogBodyEnabled(isEnabled);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        try {
+            Instabug.setNetworkLogBodyEnabled(isEnabled);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    @Override
+    public void setTheme(@NonNull Map<String, Object> themeConfig) {
+        try {
+            Log.d(TAG, "setTheme called with config: " + themeConfig.toString());
+
+            com.instabug.library.model.IBGTheme.Builder builder = new com.instabug.library.model.IBGTheme.Builder();
+
+            if (themeConfig.containsKey("primaryColor")) {
+                builder.setPrimaryColor(getColor(themeConfig, "primaryColor"));
+            }
+            if (themeConfig.containsKey("secondaryTextColor")) {
+                builder.setSecondaryTextColor(getColor(themeConfig, "secondaryTextColor"));
+            }
+            if (themeConfig.containsKey("primaryTextColor")) {
+                builder.setPrimaryTextColor(getColor(themeConfig, "primaryTextColor"));
+            }
+            if (themeConfig.containsKey("titleTextColor")) {
+                builder.setTitleTextColor(getColor(themeConfig, "titleTextColor"));
+            }
+            if (themeConfig.containsKey("backgroundColor")) {
+                builder.setBackgroundColor(getColor(themeConfig, "backgroundColor"));
+            }
+
+            if (themeConfig.containsKey("primaryTextStyle")) {
+                builder.setPrimaryTextStyle(getTextStyle(themeConfig, "primaryTextStyle"));
+            }
+            if (themeConfig.containsKey("secondaryTextStyle")) {
+                builder.setSecondaryTextStyle(getTextStyle(themeConfig, "secondaryTextStyle"));
+            }
+            if (themeConfig.containsKey("ctaTextStyle")) {
+                builder.setCtaTextStyle(getTextStyle(themeConfig, "ctaTextStyle"));
+            }
+
+            setFontIfPresent(themeConfig, builder, "primaryFontPath", "primaryFontAsset", "primary");
+            setFontIfPresent(themeConfig, builder, "secondaryFontPath", "secondaryFontAsset", "secondary");
+            setFontIfPresent(themeConfig, builder, "ctaFontPath", "ctaFontAsset", "CTA");
+
+            com.instabug.library.model.IBGTheme theme = builder.build();
+            Instabug.setTheme(theme);
+            Log.d(TAG, "Theme applied successfully");
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error in setTheme: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /**
+     * Retrieves a color value from the Map.
+     *
+     * @param map The Map object.
+     * @param key The key to look for.
+     * @return The parsed color as an integer, or black if missing or invalid.
+     */
+    private int getColor(Map<String, Object> map, String key) {
+        try {
+            if (map != null && map.containsKey(key) && map.get(key) != null) {
+                String colorString = (String) map.get(key);
+                return android.graphics.Color.parseColor(colorString);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return android.graphics.Color.BLACK;
+    }
+
+    /**
+     * Retrieves a text style from the Map.
+     *
+     * @param map The Map object.
+     * @param key The key to look for.
+     * @return The corresponding Typeface style, or Typeface.NORMAL if missing or invalid.
+     */
+    private int getTextStyle(Map<String, Object> map, String key) {
+        try {
+            if (map != null && map.containsKey(key) && map.get(key) != null) {
+                String style = (String) map.get(key);
+                switch (style.toLowerCase()) {
+                    case "bold":
+                        return Typeface.BOLD;
+                    case "italic":
+                        return Typeface.ITALIC;
+                    case "bold_italic":
+                        return Typeface.BOLD_ITALIC;
+                    case "normal":
+                    default:
+                        return Typeface.NORMAL;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Typeface.NORMAL;
+    }
+
+    /**
+     * Sets a font on the theme builder if the font configuration is present in the theme config.
+     *
+     * @param themeConfig The theme configuration map
+     * @param builder The theme builder
+     * @param fileKey The key for font file path
+     * @param assetKey The key for font asset path
+     * @param fontType The type of font (for logging purposes)
+     */
+    private void setFontIfPresent(Map<String, Object> themeConfig, com.instabug.library.model.IBGTheme.Builder builder,
+                                 String fileKey, String assetKey, String fontType) {
+        if (themeConfig.containsKey(fileKey) || themeConfig.containsKey(assetKey)) {
+            Typeface typeface = getTypeface(themeConfig, fileKey, assetKey);
+            if (typeface != null) {
+                switch (fontType) {
+                    case "primary":
+                        builder.setPrimaryTextFont(typeface);
+                        break;
+                    case "secondary":
+                        builder.setSecondaryTextFont(typeface);
+                        break;
+                    case "CTA":
+                        builder.setCtaTextFont(typeface);
+                        break;
+                }
+            }
+        }
+    }
+
+    private Typeface getTypeface(Map<String, Object> map, String fileKey, String assetKey) {
+        String fontName = null;
+
+        if (assetKey != null && map.containsKey(assetKey) && map.get(assetKey) != null) {
+            fontName = (String) map.get(assetKey);
+        } else if (fileKey != null && map.containsKey(fileKey) && map.get(fileKey) != null) {
+            fontName = (String) map.get(fileKey);
+        }
+
+        if (fontName == null) {
+            return Typeface.DEFAULT;
+        }
+
+        try {
+            String assetPath = "fonts/" + fontName;
+            return Typeface.createFromAsset(context.getAssets(), assetPath);
+        } catch (Exception e) {
+            try {
+                return Typeface.create(fontName, Typeface.NORMAL);
+            } catch (Exception e2) {
+                return Typeface.DEFAULT;
+            }
+        }
+    }
+    /**
+     * Enables or disables displaying in full-screen mode, hiding the status and navigation bars.
+     * @param isEnabled A boolean to enable/disable setFullscreen.
+     */
+    @Override
+    public void setFullscreen(@NonNull final Boolean isEnabled) {
+        try {
+            Instabug.setFullscreen(isEnabled);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

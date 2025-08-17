@@ -37,6 +37,12 @@ class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
                 sendOOM()
                 result.success(null)
             }
+            SET_FULLSCREEN -> {
+                val isEnabled = call.arguments as? Map<*, *>
+                val enabled = isEnabled?.get("isEnabled") as? Boolean ?: false
+                setFullscreen(enabled)
+                result.success(null)
+            }
             else -> {
                 Log.e(TAG, "onMethodCall for ${call.method} is not implemented")
                 result.notImplemented()
@@ -55,6 +61,7 @@ class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
         const val SEND_NATIVE_FATAL_HANG = "sendNativeFatalHang"
         const val SEND_ANR = "sendAnr"
         const val SEND_OOM = "sendOom"
+        const val SET_FULLSCREEN = "setFullscreen"
     }
 
     private fun sendNativeNonFatal(exceptionObject: String?) {
@@ -107,5 +114,26 @@ class InstabugExampleMethodCallHandler : MethodChannel.MethodCallHandler {
     }
 
 
+
+    private fun setFullscreen(enabled: Boolean) {
+        try {
+            
+            try {
+                val instabugClass = Class.forName("com.instabug.library.Instabug")
+                val setFullscreenMethod = instabugClass.getMethod("setFullscreen", Boolean::class.java)
+                setFullscreenMethod.invoke(null, enabled)
+            } catch (e: ClassNotFoundException) {
+                throw e
+            } catch (e: NoSuchMethodException) {
+                throw e
+            } catch (e: Exception) {
+                throw e
+            }
+            
+        } catch (e: Exception) {
+            e.printStackTrace()
+            
+        }
+    }
 
 }

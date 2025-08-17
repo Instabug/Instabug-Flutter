@@ -11,6 +11,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unused_import
 import 'package:flutter/services.dart';
@@ -179,10 +180,12 @@ class Instabug {
   /// The [token] that identifies the app, you can find it on your dashboard.
   /// The [invocationEvents] are the events that invoke the SDK's UI.
   /// The [debugLogsLevel] used to debug Instabug's SDK.
+  /// The [appVariant] used to set current App variant name.
   static Future<void> init({
     required String token,
     required List<InvocationEvent> invocationEvents,
     LogLevel debugLogsLevel = LogLevel.error,
+    String? appVariant,
   }) async {
     $setup();
     InstabugLogger.I.logLevel = debugLogsLevel;
@@ -190,6 +193,7 @@ class Instabug {
       token,
       invocationEvents.mapToString(),
       debugLogsLevel.toString(),
+      appVariant,
     );
     return FeatureFlagsManager().registerW3CFlagsListener();
   }
@@ -256,31 +260,6 @@ class Instabug {
   static Future<List<String>?> getTags() async {
     final tags = await _host.getTags();
     return tags?.cast<String>();
-  }
-
-  /// Adds experiments to the next report.
-  @Deprecated(
-    'Please migrate to the new feature flags APIs: Instabug.addFeatureFlags.',
-  )
-  static Future<void> addExperiments(List<String> experiments) async {
-    return _host.addExperiments(experiments);
-  }
-
-  /// Removes certain experiments from the next report.
-  @Deprecated(
-    'Please migrate to the new feature flags APIs: Instabug.removeFeatureFlags.',
-  )
-  static Future<void> removeExperiments(List<String> experiments) async {
-    return _host.removeExperiments(experiments);
-  }
-
-  /// Clears all experiments from the next report.
-
-  @Deprecated(
-    'Please migrate to the new feature flags APIs: Instabug.clearAllFeatureFlags.',
-  )
-  static Future<void> clearAllExperiments() async {
-    return _host.clearAllExperiments();
   }
 
   /// Adds feature flags to the next report.
@@ -358,8 +337,13 @@ class Instabug {
   /// Sets the primary color of the SDK's UI.
   /// Sets the color of UI elements indicating interactivity or call to action.
   /// [color] primaryColor A color to set the UI elements of the SDK to.
+  ///
+  /// Note: This API is deprecated. Please use `Instabug.setTheme` instead.
+  @Deprecated(
+    'This API is deprecated. Please use Instabug.setTheme instead.',
+  )
   static Future<void> setPrimaryColor(Color color) async {
-    return _host.setPrimaryColor(color.value);
+    await setTheme(ThemeConfig(primaryColor: color.toString()));
   }
 
   /// Adds specific user data that you need to be added to the reports
@@ -481,5 +465,52 @@ class Instabug {
   /// Helps track session data for insights on user interactions during review submission.
   static Future<void> willRedirectToStore() async {
     return _host.willRedirectToStore();
+  }
+
+  /// This property sets the `appVariant` string to be included in all network requests.
+  ///  It should be set before calling [init] method.
+  /// [appVariant] used to set current App variant name
+  static Future<void> setAppVariant(String appVariant) async {
+    return _host.setAppVariant(appVariant);
+  }
+
+  /// Sets a custom theme for Instabug UI elements.
+  ///
+  /// @param theme - Configuration object containing theme properties
+  ///
+  /// Example:
+  /// ```dart
+  ///
+  /// Instabug.setTheme(ThemeConfig(
+  ///   primaryColor: '#FF6B6B',
+  ///   secondaryTextColor: '#666666',
+  ///   primaryTextColor: '#333333',
+  ///   titleTextColor: '#000000',
+  ///   backgroundColor: '#FFFFFF',
+  ///   primaryTextStyle: 'bold',
+  ///   secondaryTextStyle: 'normal',
+  ///   titleTextStyle: 'bold',
+  ///   ctaTextStyle: 'bold',
+  ///   primaryFontPath: '/data/user/0/com.yourapp/files/fonts/YourFont.ttf',
+  ///   secondaryFontPath: '/data/user/0/com.yourapp/files/fonts/YourFont.ttf',
+  ///   ctaFontPath: '/data/user/0/com.yourapp/files/fonts/YourFont.ttf',
+  ///   primaryFontAsset: 'fonts/YourFont.ttf',
+  ///   secondaryFontAsset: 'fonts/YourFont.ttf'
+  /// ));
+  /// ```
+  static Future<void> setTheme(ThemeConfig themeConfig) async {
+    return _host.setTheme(themeConfig.toMap());
+  }
+
+  /// Sets the fullscreen mode for Instabug UI.
+  ///
+  /// [isFullscreen] - Whether to enable fullscreen mode or not.
+  ///
+  /// Example:
+  /// ```dart
+  /// Instabug.setFullscreen(true);
+  /// ```
+  static Future<void> setFullscreen(bool isEnabled) async {
+    return _host.setFullscreen(isEnabled);
   }
 }
