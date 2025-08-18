@@ -148,6 +148,9 @@ class ScreenLoadingManager {
     try {
       resetDidStartScreenLoading();
 
+      final isSDKBuilt =
+      await _checkInstabugSDKBuilt("APM.InstabugCaptureScreenLoading");
+      if (!isSDKBuilt) return null;
       // TODO: On Android, FlagsConfig.apm.isEnabled isn't implemented correctly
       // so we skip the isApmEnabled check on Android and only check on iOS.
       // This is a temporary fix until we implement the isEnabled check correctly.
