@@ -149,14 +149,13 @@ class ScreenLoadingManager {
       resetDidStartScreenLoading();
 
       final isSDKBuilt =
-      await _checkInstabugSDKBuilt("APM.InstabugCaptureScreenLoading");
+          await _checkInstabugSDKBuilt("APM.InstabugCaptureScreenLoading");
+
       if (!isSDKBuilt) return null;
-      // TODO: On Android, FlagsConfig.apm.isEnabled isn't implemented correctly
-      // so we skip the isApmEnabled check on Android and only check on iOS.
-      // This is a temporary fix until we implement the isEnabled check correctly.
-      // We need to fix this in the future.
-      final isApmEnabled = await FlagsConfig.apm.isEnabled();
-      if (!isApmEnabled && IBGBuildInfo.I.isIOS) {
+
+      final isAutoUiTraceEnabled = await FlagsConfig.uiTrace.isEnabled();
+
+      if (!isAutoUiTraceEnabled) {
         InstabugLogger.I.e(
           'APM is disabled, skipping starting the UI trace for screen: $screenName.\n'
           'Please refer to the documentation for how to enable APM on your app: '

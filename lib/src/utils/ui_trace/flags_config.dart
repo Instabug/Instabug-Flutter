@@ -13,6 +13,8 @@ extension FeatureExtensions on FlagsConfig {
     switch (this) {
       case FlagsConfig.apm:
         return APM.isEnabled();
+      case FlagsConfig.uiTrace:
+        return APM.isAutoUiTraceEnabled();
       case FlagsConfig.screenLoading:
         return APM.isScreenLoadingEnabled();
       case FlagsConfig.endScreenLoading:

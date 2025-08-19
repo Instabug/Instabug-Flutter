@@ -329,6 +329,28 @@ public class ApmApiTest {
     }
 
     @Test
+    public void testIsAutoUiTraceEnabled() {
+
+        boolean expected = true;
+        ApmPigeon.Result<Boolean> result = spy(makeResult((actual) -> assertEquals(expected, actual)));
+
+        mInternalApmStatic.when(() -> InternalAPM._isFeatureEnabledCP(any(), any(), any())).thenAnswer(
+                invocation -> {
+                    FeatureAvailabilityCallback callback = (FeatureAvailabilityCallback) invocation.getArguments()[2];
+                    callback.invoke(expected);
+                    return null;
+                });
+
+
+        api.isScreenRenderEnabled(result);
+
+        mInternalApmStatic.verify(() -> InternalAPM._isFeatureEnabledCP(any(), any(), any()));
+        mInternalApmStatic.verifyNoMoreInteractions();
+
+        verify(result).success(expected);
+    }
+
+    @Test
     public void testIsScreenRenderEnabled() {
 
         boolean expected = true;

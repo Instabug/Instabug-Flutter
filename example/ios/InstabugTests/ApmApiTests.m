@@ -199,6 +199,22 @@
     OCMVerify([self.mAPM endScreenLoadingCPWithEndTimestampMUS:endScreenLoadingCPWithEndTimestampMUS]);
 }
 
+- (void)testIsAutoUiTraceEnabled {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
+
+    BOOL isAutoUiTraceEnabled = YES;
+    OCMStub([self.mAPM autoUITraceEnabled]).andReturn(isAutoUiTraceEnabled);
+
+    [self.api isAutoUiTraceEnabledWithCompletion:^(NSNumber *isEnabledNumber, FlutterError *error) {
+        [expectation fulfill];
+        
+        XCTAssertEqualObjects(isEnabledNumber, @(isAutoUiTraceEnabled));
+        XCTAssertNil(error);
+    }];
+
+    [self waitForExpectations:@[expectation] timeout:5.0];
+}
+
 - (void)testIsScreenRenderEnabled {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
 

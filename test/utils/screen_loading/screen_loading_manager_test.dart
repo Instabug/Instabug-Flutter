@@ -171,8 +171,7 @@ void main() {
     test('[startUiTrace] with APM disabled on iOS Platform should Log error',
         () async {
       mScreenLoadingManager.currentUiTrace = uiTrace;
-      when(FlagsConfig.apm.isEnabled()).thenAnswer((_) async => false);
-      when(IBGBuildInfo.I.isIOS).thenReturn(true);
+      when(FlagsConfig.uiTrace.isEnabled()).thenAnswer((_) async => false);
 
       await ScreenLoadingManager.I.startUiTrace(screenName);
 
@@ -192,8 +191,7 @@ void main() {
     test(
         '[startUiTrace] with APM enabled on android Platform should call `APM.startCpUiTrace and set UiTrace',
         () async {
-      when(FlagsConfig.apm.isEnabled()).thenAnswer((_) async => true);
-      when(IBGBuildInfo.I.isIOS).thenReturn(false);
+      when(FlagsConfig.uiTrace.isEnabled()).thenAnswer((_) async => true);
 
       await ScreenLoadingManager.I.startUiTrace(screenName);
 
@@ -217,8 +215,7 @@ void main() {
     test(
         '[startUiTrace] with APM enabled should create a UI trace with the matching screen name',
         () async {
-      when(FlagsConfig.apm.isEnabled()).thenAnswer((_) async => true);
-      when(IBGBuildInfo.I.isIOS).thenReturn(false);
+      when(FlagsConfig.uiTrace.isEnabled()).thenAnswer((_) async => true);
       when(
         RouteMatcher.I.match(
           routePath: anyNamed('routePath'),
