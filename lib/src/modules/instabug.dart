@@ -137,7 +137,7 @@ enum CustomTextPlaceHolderKey {
 
 enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 
-/// Disposal manager for handling Android onDestroy lifecycle events
+/// Disposal manager for handling Android lifecycle events
 class _InstabugDisposalManager implements InstabugFlutterApi {
   _InstabugDisposalManager._();
 
@@ -148,10 +148,8 @@ class _InstabugDisposalManager implements InstabugFlutterApi {
 
   @override
   void dispose() {
-    // Call the InstabugWidgetsBindingObserver dispose method when Android onDestroy is triggered
-    InstabugLogger.I.d(
-        'Android onDestroy called - disposing screen render resources',
-        tag: 'InstabugDisposal');
+    // Call the InstabugWidgetsBindingObserver dispose method when Android onPause is triggered
+    // to overcome calling onActivityDestroy() from android side before sending the data to it.
     InstabugWidgetsBindingObserver.dispose();
   }
 }

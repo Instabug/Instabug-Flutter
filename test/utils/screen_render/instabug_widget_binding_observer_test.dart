@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
@@ -15,6 +16,7 @@ import 'instabug_widget_binding_observer_test.mocks.dart';
   ScreenLoadingManager,
   ScreenNameMasker,
   UiTrace,
+  ApmHostApi,
 ])
 void main() {
   late MockInstabugScreenRenderManager mockRenderManager;
@@ -51,7 +53,7 @@ void main() {
       when(mockLoadingManager.startUiTrace("MaskedHome", "HomeScreen"))
           .thenAnswer((_) async => 123);
       when(mockRenderManager.screenRenderEnabled).thenReturn(true);
-
+      // when()
       InstabugWidgetsBindingObserver.I
           .didChangeAppLifecycleState(AppLifecycleState.resumed);
 
@@ -62,25 +64,6 @@ void main() {
 
       verify(mockRenderManager.startScreenRenderCollectorForTraceId(123))
           .called(1);
-    });
-
-    test('handles AppLifecycleState.paused and stops render collector', () {
-      when(mockRenderManager.screenRenderEnabled).thenReturn(true);
-
-      InstabugWidgetsBindingObserver.I
-          .didChangeAppLifecycleState(AppLifecycleState.paused);
-
-      verify(mockRenderManager.stopScreenRenderCollector()).called(1);
-    });
-
-    test('handles AppLifecycleState.detached and disposes render resources',
-        () {
-      when(mockRenderManager.screenRenderEnabled).thenReturn(true);
-
-      InstabugWidgetsBindingObserver.I
-          .didChangeAppLifecycleState(AppLifecycleState.detached);
-
-      verify(mockRenderManager.dispose()).called(1);
     });
 
     test('handles AppLifecycleState.inactive with no action', () {

@@ -1,5 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/widgets.dart';
-import 'package:instabug_flutter/src/utils/instabug_logger.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
@@ -22,25 +24,12 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
   static const tag = "InstabugWidgetsBindingObserver";
 
   /// Disposes all screen render resources.
-  /// This method is safe to call multiple times and from external sources
-  /// such as Android onDestroy lifecycle events.
   static void dispose() {
-    try {
-      //Save the screen rendering data for the active traces Auto|Custom.
-      InstabugScreenRenderManager.I.stopScreenRenderCollector();
+    //Save the screen rendering data for the active traces Auto|Custom.
+    InstabugScreenRenderManager.I.stopScreenRenderCollector();
 
-      // Always call dispose to ensure proper cleanup with tracking flags
-      // The dispose method is safe to call multiple times due to state tracking
-      InstabugScreenRenderManager.I.dispose();
-
-      InstabugLogger.I
-          .d('Screen render resources disposed successfully', tag: tag);
-    } catch (error, stackTrace) {
-      InstabugLogger.I.e(
-        'Error during screen render disposal: $error\nStackTrace: $stackTrace',
-        tag: tag,
-      );
-    }
+    // The dispose method is safe to call multiple times due to state tracking
+    InstabugScreenRenderManager.I.dispose();
   }
 
   void _handleResumedState() {
@@ -72,18 +61,27 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
     });
   }
 
-  // void _handlePausedState() {
-  //   if (InstabugScreenRenderManager.I.screenRenderEnabled) {
-  //     InstabugScreenRenderManager.I.stopScreenRenderCollector();
-  //   }
-  // }
-  //
-  // Future<void> _handleDetachedState() async {
-  //   if (InstabugScreenRenderManager.I.screenRenderEnabled) {
-  //     dispose();
-  //   }
-  // }
-  //
+  void _handlePausedState() {
+    // Only handles iOS platform because in android we use pigeon @FlutterApi().
+    // To overcome the onActivityDestroy() before sending the data to the android side.
+    if (InstabugScreenRenderManager.I.screenRenderEnabled &&
+        IBGBuildInfo.I.isIOS) {
+      log("_handlePausedState" , name: "andrew");
+      InstabugScreenRenderManager.I.stopScreenRenderCollector();
+    }
+  }
+
+  Future<void> _handleDetachedState() async {
+    // Only handles iOS platform because in android we use pigeon @FlutterApi().
+    // To overcome the onActivityDestroy() before sending the data to the android side.
+    if (InstabugScreenRenderManager.I.screenRenderEnabled &&
+        IBGBuildInfo.I.isIOS) {
+      log("_handleDetachedState" , name: "andrew");
+
+      dispose();
+    }
+  }
+
   void _handleDefaultState() {
     // Added for lint warnings
   }
@@ -94,9 +92,12 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
       case AppLifecycleState.resumed:
         _handleResumedState();
         break;
-      // case AppLifecycleState.paused:
-      //   _handlePausedState();
-      //   break;
+      case AppLifecycleState.paused:
+        _handlePausedState();
+        break;
+      case AppLifecycleState.detached:
+        _handleDetachedState();
+        break;
       default:
         _handleDefaultState();
     }
