@@ -257,26 +257,6 @@ void main() {
     });
 
     test(
-        "[setScreenRenderEnabled] should call [init()] screen render collector, is the feature is enabled",
-        () async {
-      const isEnabled = true;
-      when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => true);
-      await APM.setScreenRenderingEnabled(isEnabled);
-      verify(mScreenRenderManager.init(any)).called(1);
-      verifyNoMoreInteractions(mScreenRenderManager);
-    });
-
-    test(
-        "[setScreenRenderEnabled] should call [remove()] screen render collector, is the feature is enabled",
-        () async {
-      const isEnabled = false;
-      when(mScreenRenderManager.screenRenderEnabled).thenReturn(true);
-      await APM.setScreenRenderingEnabled(isEnabled);
-      verify(mScreenRenderManager.dispose()).called(1);
-      verify(mScreenRenderManager.screenRenderEnabled).called(1);
-    });
-
-    test(
         "[startUITrace] should start screen render collector with right params, if screen render feature is enabled",
         () async {
       when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => true);

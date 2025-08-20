@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:ui' show TimingsCallback, FrameTiming, FramePhase;
 
 import 'package:flutter/widgets.dart';
@@ -319,10 +318,6 @@ class InstabugScreenRenderManager {
 
   /// Save Slow/Frozen Frames data
   void _onDelayedFrameDetected(int startTime, int durationInMicroseconds) {
-    log(
-      "${durationInMicroseconds >= 700000 ? "🚨Frozen" : "⚠️Slow"} Frame Detected (startTime: $startTime, duration: $durationInMicroseconds  µs)",
-      name: tag,
-    );
     _delayedFrames.add(
       InstabugFrameData(
         startTime,
@@ -339,10 +334,6 @@ class InstabugScreenRenderManager {
   ) async {
     try {
       screenRenderData.saveEndTime();
-      log(
-        "reportScreenRenderForCustomUiTrace $screenRenderData",
-        name: tag,
-      );
       await APM.endScreenRenderForCustomUiTrace(screenRenderData);
       return true;
     } catch (error, stackTrace) {
@@ -360,10 +351,6 @@ class InstabugScreenRenderManager {
     try {
       // Save the end time for the running ui trace, it's only needed in Android SDK.
       screenRenderData.saveEndTime();
-      log(
-        "reportScreenRenderForAutoUiTrace $screenRenderData",
-        name: tag,
-      );
       await APM.endScreenRenderForAutoUiTrace(screenRenderData);
 
       return true;
