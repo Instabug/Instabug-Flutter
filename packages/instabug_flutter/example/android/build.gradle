@@ -1,0 +1,21 @@
+rootProject.buildDir = '../build'
+
+//android {
+//    namespace 'com.instabug.flutter.example'
+//}
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+    tasks.withType(Test) {
+        // Prevent tests in moduleA from running
+        if (project.name == 'video_player_android') {
+            exclude '**/*'
+        }
+    }
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
