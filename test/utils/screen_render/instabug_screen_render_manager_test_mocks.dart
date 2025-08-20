@@ -2,20 +2,20 @@
 // in instabug_flutter/example/ios/.symlinks/plugins/instabug_flutter/test/utils/screen_render/instabug_screen_render_manager_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i8;
-import 'dart:developer' as _i12;
+import 'dart:async' as _i9;
+import 'dart:developer' as _i13;
 import 'dart:ui' as _i4;
 
-import 'package:flutter/foundation.dart' as _i11;
+import 'package:flutter/foundation.dart' as _i3;
 import 'package:flutter/gestures.dart' as _i6;
-import 'package:flutter/rendering.dart' as _i3;
-import 'package:flutter/scheduler.dart' as _i9;
+import 'package:flutter/rendering.dart' as _i7;
+import 'package:flutter/scheduler.dart' as _i11;
 import 'package:flutter/services.dart' as _i5;
-import 'package:flutter/src/widgets/binding.dart' as _i7;
+import 'package:flutter/src/widgets/binding.dart' as _i10;
 import 'package:flutter/src/widgets/focus_manager.dart' as _i2;
-import 'package:flutter/src/widgets/framework.dart' as _i10;
+import 'package:flutter/src/widgets/framework.dart' as _i12;
 import 'package:instabug_flutter/instabug_flutter.dart' as _i16;
-import 'package:instabug_flutter/src/generated/apm.api.g.dart' as _i13;
+import 'package:instabug_flutter/src/generated/apm.api.g.dart' as _i8;
 import 'package:instabug_flutter/src/generated/crash_reporting.api.g.dart'
     as _i14;
 import 'package:instabug_flutter/src/utils/instabug_logger.dart' as _i15;
@@ -65,11 +65,11 @@ class _FakeGestureArenaManager_10 extends _i1.Fake
 class _FakePointerSignalResolver_11 extends _i1.Fake
     implements _i6.PointerSignalResolver {}
 
-class _FakeMouseTracker_12 extends _i1.Fake implements _i3.MouseTracker {}
+class _FakeMouseTracker_12 extends _i1.Fake implements _i7.MouseTracker {}
 
-class _FakePipelineOwner_13 extends _i1.Fake implements _i3.PipelineOwner {}
+class _FakePipelineOwner_13 extends _i1.Fake implements _i7.PipelineOwner {}
 
-class _FakeRenderView_14 extends _i1.Fake implements _i3.RenderView {
+class _FakeRenderView_14 extends _i1.Fake implements _i7.RenderView {
   @override
   String toString({_i3.DiagnosticLevel? minLevel = _i3.DiagnosticLevel.info}) =>
       super.toString();
@@ -79,15 +79,153 @@ class _FakeAccessibilityFeatures_15 extends _i1.Fake
     implements _i4.AccessibilityFeatures {}
 
 class _FakeViewConfiguration_16 extends _i1.Fake
-    implements _i3.ViewConfiguration {}
+    implements _i7.ViewConfiguration {}
 
 class _FakeSemanticsUpdateBuilder_17 extends _i1.Fake
     implements _i4.SemanticsUpdateBuilder {}
 
+/// A class which mocks [ApmHostApi].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockApmHostApi extends _i1.Mock implements _i8.ApmHostApi {
+  MockApmHostApi() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i9.Future<void> setEnabled(bool? arg_isEnabled) =>
+      (super.noSuchMethod(Invocation.method(#setEnabled, [arg_isEnabled]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<bool> isEnabled() =>
+      (super.noSuchMethod(Invocation.method(#isEnabled, []),
+          returnValue: Future<bool>.value(false)) as _i9.Future<bool>);
+  @override
+  _i9.Future<void> setScreenLoadingEnabled(bool? arg_isEnabled) =>
+      (super.noSuchMethod(
+          Invocation.method(#setScreenLoadingEnabled, [arg_isEnabled]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<bool> isScreenLoadingEnabled() =>
+      (super.noSuchMethod(Invocation.method(#isScreenLoadingEnabled, []),
+          returnValue: Future<bool>.value(false)) as _i9.Future<bool>);
+  @override
+  _i9.Future<void> setColdAppLaunchEnabled(bool? arg_isEnabled) =>
+      (super.noSuchMethod(
+          Invocation.method(#setColdAppLaunchEnabled, [arg_isEnabled]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> setAutoUITraceEnabled(bool? arg_isEnabled) => (super
+      .noSuchMethod(Invocation.method(#setAutoUITraceEnabled, [arg_isEnabled]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> startFlow(String? arg_name) =>
+      (super.noSuchMethod(Invocation.method(#startFlow, [arg_name]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> setFlowAttribute(
+          String? arg_name, String? arg_key, String? arg_value) =>
+      (super.noSuchMethod(
+          Invocation.method(#setFlowAttribute, [arg_name, arg_key, arg_value]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> endFlow(String? arg_name) =>
+      (super.noSuchMethod(Invocation.method(#endFlow, [arg_name]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> startUITrace(String? arg_name) =>
+      (super.noSuchMethod(Invocation.method(#startUITrace, [arg_name]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> endUITrace() =>
+      (super.noSuchMethod(Invocation.method(#endUITrace, []),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> endAppLaunch() =>
+      (super.noSuchMethod(Invocation.method(#endAppLaunch, []),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> networkLogAndroid(Map<String?, Object?>? arg_data) =>
+      (super.noSuchMethod(Invocation.method(#networkLogAndroid, [arg_data]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> startCpUiTrace(
+          String? arg_screenName, int? arg_microTimeStamp, int? arg_traceId) =>
+      (super.noSuchMethod(
+          Invocation.method(#startCpUiTrace,
+              [arg_screenName, arg_microTimeStamp, arg_traceId]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> reportScreenLoadingCP(int? arg_startTimeStampMicro,
+          int? arg_durationMicro, int? arg_uiTraceId) =>
+      (super.noSuchMethod(
+          Invocation.method(#reportScreenLoadingCP,
+              [arg_startTimeStampMicro, arg_durationMicro, arg_uiTraceId]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> endScreenLoadingCP(
+          int? arg_timeStampMicro, int? arg_uiTraceId) =>
+      (super.noSuchMethod(
+          Invocation.method(
+              #endScreenLoadingCP, [arg_timeStampMicro, arg_uiTraceId]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<bool> isEndScreenLoadingEnabled() =>
+      (super.noSuchMethod(Invocation.method(#isEndScreenLoadingEnabled, []),
+          returnValue: Future<bool>.value(false)) as _i9.Future<bool>);
+  @override
+  _i9.Future<bool> isAutoUiTraceEnabled() =>
+      (super.noSuchMethod(Invocation.method(#isAutoUiTraceEnabled, []),
+          returnValue: Future<bool>.value(false)) as _i9.Future<bool>);
+  @override
+  _i9.Future<bool> isScreenRenderEnabled() =>
+      (super.noSuchMethod(Invocation.method(#isScreenRenderEnabled, []),
+          returnValue: Future<bool>.value(false)) as _i9.Future<bool>);
+  @override
+  _i9.Future<List<double?>> getDeviceRefreshRateAndTolerance() =>
+      (super.noSuchMethod(
+              Invocation.method(#getDeviceRefreshRateAndTolerance, []),
+              returnValue: Future<List<double?>>.value(<double?>[]))
+          as _i9.Future<List<double?>>);
+  @override
+  _i9.Future<void> setScreenRenderEnabled(bool? arg_isEnabled) => (super
+      .noSuchMethod(Invocation.method(#setScreenRenderEnabled, [arg_isEnabled]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> endScreenRenderForAutoUiTrace(
+          Map<String?, Object?>? arg_data) =>
+      (super.noSuchMethod(
+          Invocation.method(#endScreenRenderForAutoUiTrace, [arg_data]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> endScreenRenderForCustomUiTrace(
+          Map<String?, Object?>? arg_data) =>
+      (super.noSuchMethod(
+          Invocation.method(#endScreenRenderForCustomUiTrace, [arg_data]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+}
+
 /// A class which mocks [WidgetsBinding].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
+class MockWidgetsBinding extends _i1.Mock implements _i10.WidgetsBinding {
   MockWidgetsBinding() {
     _i1.throwOnMissingStub(this);
   }
@@ -111,9 +249,9 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
       (super.noSuchMethod(Invocation.getter(#firstFrameRasterized),
           returnValue: false) as bool);
   @override
-  _i8.Future<void> get waitUntilFirstFrameRasterized =>
+  _i9.Future<void> get waitUntilFirstFrameRasterized =>
       (super.noSuchMethod(Invocation.getter(#waitUntilFirstFrameRasterized),
-          returnValue: Future<void>.value()) as _i8.Future<void>);
+          returnValue: Future<void>.value()) as _i9.Future<void>);
   @override
   bool get debugDidSendFirstFrameEvent =>
       (super.noSuchMethod(Invocation.getter(#debugDidSendFirstFrameEvent),
@@ -160,12 +298,12 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
       (super.noSuchMethod(Invocation.getter(#restorationManager),
           returnValue: _FakeRestorationManager_7()) as _i5.RestorationManager);
   @override
-  _i9.SchedulingStrategy get schedulingStrategy =>
+  _i11.SchedulingStrategy get schedulingStrategy =>
       (super.noSuchMethod(Invocation.getter(#schedulingStrategy),
-          returnValue: ({int? priority, _i9.SchedulerBinding? scheduler}) =>
-              false) as _i9.SchedulingStrategy);
+          returnValue: ({int? priority, _i11.SchedulerBinding? scheduler}) =>
+              false) as _i11.SchedulingStrategy);
   @override
-  set schedulingStrategy(_i9.SchedulingStrategy? _schedulingStrategy) => super
+  set schedulingStrategy(_i11.SchedulingStrategy? _schedulingStrategy) => super
       .noSuchMethod(Invocation.setter(#schedulingStrategy, _schedulingStrategy),
           returnValueForMissingStub: null);
   @override
@@ -173,17 +311,17 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
       (super.noSuchMethod(Invocation.getter(#transientCallbackCount),
           returnValue: 0) as int);
   @override
-  _i8.Future<void> get endOfFrame =>
+  _i9.Future<void> get endOfFrame =>
       (super.noSuchMethod(Invocation.getter(#endOfFrame),
-          returnValue: Future<void>.value()) as _i8.Future<void>);
+          returnValue: Future<void>.value()) as _i9.Future<void>);
   @override
   bool get hasScheduledFrame =>
       (super.noSuchMethod(Invocation.getter(#hasScheduledFrame),
           returnValue: false) as bool);
   @override
-  _i9.SchedulerPhase get schedulerPhase =>
+  _i11.SchedulerPhase get schedulerPhase =>
       (super.noSuchMethod(Invocation.getter(#schedulerPhase),
-          returnValue: _i9.SchedulerPhase.idle) as _i9.SchedulerPhase);
+          returnValue: _i11.SchedulerPhase.idle) as _i11.SchedulerPhase);
   @override
   Duration get currentFrameTimeStamp =>
       (super.noSuchMethod(Invocation.getter(#currentFrameTimeStamp),
@@ -222,19 +360,19 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
       super.noSuchMethod(Invocation.setter(#samplingOffset, _samplingOffset),
           returnValueForMissingStub: null);
   @override
-  _i3.MouseTracker get mouseTracker =>
+  _i7.MouseTracker get mouseTracker =>
       (super.noSuchMethod(Invocation.getter(#mouseTracker),
-          returnValue: _FakeMouseTracker_12()) as _i3.MouseTracker);
+          returnValue: _FakeMouseTracker_12()) as _i7.MouseTracker);
   @override
-  _i3.PipelineOwner get pipelineOwner =>
+  _i7.PipelineOwner get pipelineOwner =>
       (super.noSuchMethod(Invocation.getter(#pipelineOwner),
-          returnValue: _FakePipelineOwner_13()) as _i3.PipelineOwner);
+          returnValue: _FakePipelineOwner_13()) as _i7.PipelineOwner);
   @override
-  _i3.RenderView get renderView =>
+  _i7.RenderView get renderView =>
       (super.noSuchMethod(Invocation.getter(#renderView),
-          returnValue: _FakeRenderView_14()) as _i3.RenderView);
+          returnValue: _FakeRenderView_14()) as _i7.RenderView);
   @override
-  set renderView(_i3.RenderView? value) =>
+  set renderView(_i7.RenderView? value) =>
       super.noSuchMethod(Invocation.setter(#renderView, value),
           returnValueForMissingStub: null);
   @override
@@ -259,11 +397,11 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
       super.noSuchMethod(Invocation.method(#initServiceExtensions, []),
           returnValueForMissingStub: null);
   @override
-  void addObserver(_i7.WidgetsBindingObserver? observer) =>
+  void addObserver(_i10.WidgetsBindingObserver? observer) =>
       super.noSuchMethod(Invocation.method(#addObserver, [observer]),
           returnValueForMissingStub: null);
   @override
-  bool removeObserver(_i7.WidgetsBindingObserver? observer) =>
+  bool removeObserver(_i10.WidgetsBindingObserver? observer) =>
       (super.noSuchMethod(Invocation.method(#removeObserver, [observer]),
           returnValue: false) as bool);
   @override
@@ -295,15 +433,15 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
       Invocation.method(#dispatchAccessibilityFeaturesChanged, []),
       returnValueForMissingStub: null);
   @override
-  _i8.Future<void> handlePopRoute() =>
+  _i9.Future<void> handlePopRoute() =>
       (super.noSuchMethod(Invocation.method(#handlePopRoute, []),
           returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
   @override
-  _i8.Future<void> handlePushRoute(String? route) =>
+  _i9.Future<void> handlePushRoute(String? route) =>
       (super.noSuchMethod(Invocation.method(#handlePushRoute, [route]),
           returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
   @override
   void handleAppLifecycleStateChanged(_i4.AppLifecycleState? state) => super
       .noSuchMethod(Invocation.method(#handleAppLifecycleStateChanged, [state]),
@@ -316,39 +454,39 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
   void drawFrame() => super.noSuchMethod(Invocation.method(#drawFrame, []),
       returnValueForMissingStub: null);
   @override
-  void scheduleAttachRootWidget(_i10.Widget? rootWidget) => super.noSuchMethod(
+  void scheduleAttachRootWidget(_i12.Widget? rootWidget) => super.noSuchMethod(
       Invocation.method(#scheduleAttachRootWidget, [rootWidget]),
       returnValueForMissingStub: null);
   @override
-  void attachRootWidget(_i10.Widget? rootWidget) =>
+  void attachRootWidget(_i12.Widget? rootWidget) =>
       super.noSuchMethod(Invocation.method(#attachRootWidget, [rootWidget]),
           returnValueForMissingStub: null);
   @override
-  _i8.Future<void> performReassemble() =>
+  _i9.Future<void> performReassemble() =>
       (super.noSuchMethod(Invocation.method(#performReassemble, []),
           returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
   @override
   _i4.Locale? computePlatformResolvedLocale(
           List<_i4.Locale>? supportedLocales) =>
       (super.noSuchMethod(Invocation.method(
           #computePlatformResolvedLocale, [supportedLocales])) as _i4.Locale?);
   @override
-  _i8.Future<void> lockEvents(_i8.Future<void> Function()? callback) =>
+  _i9.Future<void> lockEvents(_i9.Future<void> Function()? callback) =>
       (super.noSuchMethod(Invocation.method(#lockEvents, [callback]),
           returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
   @override
   void unlocked() => super.noSuchMethod(Invocation.method(#unlocked, []),
       returnValueForMissingStub: null);
   @override
-  _i8.Future<void> reassembleApplication() =>
+  _i9.Future<void> reassembleApplication() =>
       (super.noSuchMethod(Invocation.method(#reassembleApplication, []),
           returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
   @override
   void registerSignalServiceExtension(
-          {String? name, _i11.AsyncCallback? callback}) =>
+          {String? name, _i3.AsyncCallback? callback}) =>
       super.noSuchMethod(
           Invocation.method(#registerSignalServiceExtension, [],
               {#name: name, #callback: callback}),
@@ -356,8 +494,8 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
   @override
   void registerBoolServiceExtension(
           {String? name,
-          _i11.AsyncValueGetter<bool>? getter,
-          _i11.AsyncValueSetter<bool>? setter}) =>
+          _i3.AsyncValueGetter<bool>? getter,
+          _i3.AsyncValueSetter<bool>? setter}) =>
       super.noSuchMethod(
           Invocation.method(#registerBoolServiceExtension, [],
               {#name: name, #getter: getter, #setter: setter}),
@@ -365,8 +503,8 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
   @override
   void registerNumericServiceExtension(
           {String? name,
-          _i11.AsyncValueGetter<double>? getter,
-          _i11.AsyncValueSetter<double>? setter}) =>
+          _i3.AsyncValueGetter<double>? getter,
+          _i3.AsyncValueSetter<double>? setter}) =>
       super.noSuchMethod(
           Invocation.method(#registerNumericServiceExtension, [],
               {#name: name, #getter: getter, #setter: setter}),
@@ -378,15 +516,15 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
   @override
   void registerStringServiceExtension(
           {String? name,
-          _i11.AsyncValueGetter<String>? getter,
-          _i11.AsyncValueSetter<String>? setter}) =>
+          _i3.AsyncValueGetter<String>? getter,
+          _i3.AsyncValueSetter<String>? setter}) =>
       super.noSuchMethod(
           Invocation.method(#registerStringServiceExtension, [],
               {#name: name, #getter: getter, #setter: setter}),
           returnValueForMissingStub: null);
   @override
   void registerServiceExtension(
-          {String? name, _i11.ServiceExtensionCallback? callback}) =>
+          {String? name, _i3.ServiceExtensionCallback? callback}) =>
       super.noSuchMethod(
           Invocation.method(#registerServiceExtension, [],
               {#name: name, #callback: callback}),
@@ -396,10 +534,10 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
       (super.noSuchMethod(Invocation.method(#createBinaryMessenger, []),
           returnValue: _FakeBinaryMessenger_5()) as _i5.BinaryMessenger);
   @override
-  _i8.Future<void> handleSystemMessage(Object? systemMessage) => (super
+  _i9.Future<void> handleSystemMessage(Object? systemMessage) => (super
       .noSuchMethod(Invocation.method(#handleSystemMessage, [systemMessage]),
           returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
   @override
   void initLicenses() =>
       super.noSuchMethod(Invocation.method(#initLicenses, []),
@@ -429,19 +567,19 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
       super.noSuchMethod(Invocation.method(#removeTimingsCallback, [callback]),
           returnValueForMissingStub: null);
   @override
-  _i8.Future<T> scheduleTask<T>(
-          _i9.TaskCallback<T>? task, _i9.Priority? priority,
-          {String? debugLabel, _i12.Flow? flow}) =>
+  _i9.Future<T> scheduleTask<T>(
+          _i11.TaskCallback<T>? task, _i11.Priority? priority,
+          {String? debugLabel, _i13.Flow? flow}) =>
       (super.noSuchMethod(
           Invocation.method(#scheduleTask, [task, priority],
               {#debugLabel: debugLabel, #flow: flow}),
-          returnValue: Future<T>.value(null)) as _i8.Future<T>);
+          returnValue: Future<T>.value(null)) as _i9.Future<T>);
   @override
   bool handleEventLoopCallback() =>
       (super.noSuchMethod(Invocation.method(#handleEventLoopCallback, []),
           returnValue: false) as bool);
   @override
-  int scheduleFrameCallback(_i9.FrameCallback? callback,
+  int scheduleFrameCallback(_i11.FrameCallback? callback,
           {bool? rescheduling = false}) =>
       (super.noSuchMethod(
           Invocation.method(#scheduleFrameCallback, [callback],
@@ -456,11 +594,11 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
       Invocation.method(#debugAssertNoTransientCallbacks, [reason]),
       returnValue: false) as bool);
   @override
-  void addPersistentFrameCallback(_i9.FrameCallback? callback) => super
+  void addPersistentFrameCallback(_i11.FrameCallback? callback) => super
       .noSuchMethod(Invocation.method(#addPersistentFrameCallback, [callback]),
           returnValueForMissingStub: null);
   @override
-  void addPostFrameCallback(_i9.FrameCallback? callback) =>
+  void addPostFrameCallback(_i11.FrameCallback? callback) =>
       super.noSuchMethod(Invocation.method(#addPostFrameCallback, [callback]),
           returnValueForMissingStub: null);
   @override
@@ -499,21 +637,21 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
       super.noSuchMethod(Invocation.method(#cancelPointer, [pointer]),
           returnValueForMissingStub: null);
   @override
-  void handlePointerEvent(_i3.PointerEvent? event) =>
+  void handlePointerEvent(_i6.PointerEvent? event) =>
       super.noSuchMethod(Invocation.method(#handlePointerEvent, [event]),
           returnValueForMissingStub: null);
   @override
-  void hitTest(_i3.HitTestResult? result, _i4.Offset? position) =>
+  void hitTest(_i6.HitTestResult? result, _i4.Offset? position) =>
       super.noSuchMethod(Invocation.method(#hitTest, [result, position]),
           returnValueForMissingStub: null);
   @override
   void dispatchEvent(
-          _i3.PointerEvent? event, _i3.HitTestResult? hitTestResult) =>
+          _i6.PointerEvent? event, _i6.HitTestResult? hitTestResult) =>
       super.noSuchMethod(
           Invocation.method(#dispatchEvent, [event, hitTestResult]),
           returnValueForMissingStub: null);
   @override
-  void handleEvent(_i3.PointerEvent? event, _i3.HitTestEntry? entry) =>
+  void handleEvent(_i6.PointerEvent? event, _i6.HitTestEntry? entry) =>
       super.noSuchMethod(Invocation.method(#handleEvent, [event, entry]),
           returnValueForMissingStub: null);
   @override
@@ -525,11 +663,11 @@ class MockWidgetsBinding extends _i1.Mock implements _i7.WidgetsBinding {
       super.noSuchMethod(Invocation.method(#initRenderView, []),
           returnValueForMissingStub: null);
   @override
-  _i3.ViewConfiguration createViewConfiguration() =>
+  _i7.ViewConfiguration createViewConfiguration() =>
       (super.noSuchMethod(Invocation.method(#createViewConfiguration, []),
-          returnValue: _FakeViewConfiguration_16()) as _i3.ViewConfiguration);
+          returnValue: _FakeViewConfiguration_16()) as _i7.ViewConfiguration);
   @override
-  void initMouseTracker([_i3.MouseTracker? tracker]) =>
+  void initMouseTracker([_i7.MouseTracker? tracker]) =>
       super.noSuchMethod(Invocation.method(#initMouseTracker, [tracker]),
           returnValueForMissingStub: null);
   @override
@@ -612,140 +750,6 @@ class MockFrameTiming extends _i1.Mock implements _i4.FrameTiming {
           returnValue: 0) as int);
 }
 
-/// A class which mocks [ApmHostApi].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockApmHostApi extends _i1.Mock implements _i13.ApmHostApi {
-  MockApmHostApi() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i8.Future<void> setEnabled(bool? arg_isEnabled) =>
-      (super.noSuchMethod(Invocation.method(#setEnabled, [arg_isEnabled]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<bool> isEnabled() =>
-      (super.noSuchMethod(Invocation.method(#isEnabled, []),
-          returnValue: Future<bool>.value(false)) as _i8.Future<bool>);
-  @override
-  _i8.Future<void> setScreenLoadingEnabled(bool? arg_isEnabled) =>
-      (super.noSuchMethod(
-          Invocation.method(#setScreenLoadingEnabled, [arg_isEnabled]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<bool> isScreenLoadingEnabled() =>
-      (super.noSuchMethod(Invocation.method(#isScreenLoadingEnabled, []),
-          returnValue: Future<bool>.value(false)) as _i8.Future<bool>);
-  @override
-  _i8.Future<void> setColdAppLaunchEnabled(bool? arg_isEnabled) =>
-      (super.noSuchMethod(
-          Invocation.method(#setColdAppLaunchEnabled, [arg_isEnabled]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> setAutoUITraceEnabled(bool? arg_isEnabled) => (super
-      .noSuchMethod(Invocation.method(#setAutoUITraceEnabled, [arg_isEnabled]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> startFlow(String? arg_name) =>
-      (super.noSuchMethod(Invocation.method(#startFlow, [arg_name]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> setFlowAttribute(
-          String? arg_name, String? arg_key, String? arg_value) =>
-      (super.noSuchMethod(
-          Invocation.method(#setFlowAttribute, [arg_name, arg_key, arg_value]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> endFlow(String? arg_name) =>
-      (super.noSuchMethod(Invocation.method(#endFlow, [arg_name]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> startUITrace(String? arg_name) =>
-      (super.noSuchMethod(Invocation.method(#startUITrace, [arg_name]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> endUITrace() =>
-      (super.noSuchMethod(Invocation.method(#endUITrace, []),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> endAppLaunch() =>
-      (super.noSuchMethod(Invocation.method(#endAppLaunch, []),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> networkLogAndroid(Map<String?, Object?>? arg_data) =>
-      (super.noSuchMethod(Invocation.method(#networkLogAndroid, [arg_data]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> startCpUiTrace(
-          String? arg_screenName, int? arg_microTimeStamp, int? arg_traceId) =>
-      (super.noSuchMethod(
-          Invocation.method(#startCpUiTrace,
-              [arg_screenName, arg_microTimeStamp, arg_traceId]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> reportScreenLoadingCP(int? arg_startTimeStampMicro,
-          int? arg_durationMicro, int? arg_uiTraceId) =>
-      (super.noSuchMethod(
-          Invocation.method(#reportScreenLoadingCP,
-              [arg_startTimeStampMicro, arg_durationMicro, arg_uiTraceId]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> endScreenLoadingCP(
-          int? arg_timeStampMicro, int? arg_uiTraceId) =>
-      (super.noSuchMethod(
-          Invocation.method(
-              #endScreenLoadingCP, [arg_timeStampMicro, arg_uiTraceId]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<bool> isEndScreenLoadingEnabled() =>
-      (super.noSuchMethod(Invocation.method(#isEndScreenLoadingEnabled, []),
-          returnValue: Future<bool>.value(false)) as _i8.Future<bool>);
-  @override
-  _i8.Future<bool> isScreenRenderEnabled() =>
-      (super.noSuchMethod(Invocation.method(#isScreenRenderEnabled, []),
-          returnValue: Future<bool>.value(false)) as _i8.Future<bool>);
-  @override
-  _i8.Future<List<double?>> getDeviceRefreshRateAndTolerance() =>
-      (super.noSuchMethod(
-              Invocation.method(#getDeviceRefreshRateAndTolerance, []),
-              returnValue: Future<List<double?>>.value(<double?>[]))
-          as _i8.Future<List<double?>>);
-  @override
-  _i8.Future<void> setScreenRenderEnabled(bool? arg_isEnabled) => (super
-      .noSuchMethod(Invocation.method(#setScreenRenderEnabled, [arg_isEnabled]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> endScreenRenderForAutoUiTrace(
-          Map<String?, Object?>? arg_data) =>
-      (super.noSuchMethod(
-          Invocation.method(#endScreenRenderForAutoUiTrace, [arg_data]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-  @override
-  _i8.Future<void> endScreenRenderForCustomUiTrace(
-          Map<String?, Object?>? arg_data) =>
-      (super.noSuchMethod(
-          Invocation.method(#endScreenRenderForCustomUiTrace, [arg_data]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
-}
-
 /// A class which mocks [CrashReportingHostApi].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -756,17 +760,17 @@ class MockCrashReportingHostApi extends _i1.Mock
   }
 
   @override
-  _i8.Future<void> setEnabled(bool? arg_isEnabled) =>
+  _i9.Future<void> setEnabled(bool? arg_isEnabled) =>
       (super.noSuchMethod(Invocation.method(#setEnabled, [arg_isEnabled]),
           returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
   @override
-  _i8.Future<void> send(String? arg_jsonCrash, bool? arg_isHandled) => (super
+  _i9.Future<void> send(String? arg_jsonCrash, bool? arg_isHandled) => (super
       .noSuchMethod(Invocation.method(#send, [arg_jsonCrash, arg_isHandled]),
           returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
   @override
-  _i8.Future<void> sendNonFatalError(
+  _i9.Future<void> sendNonFatalError(
           String? arg_jsonCrash,
           Map<String?, String?>? arg_userAttributes,
           String? arg_fingerprint,
@@ -779,7 +783,7 @@ class MockCrashReportingHostApi extends _i1.Mock
             arg_nonFatalExceptionLevel
           ]),
           returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i8.Future<void>);
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
 }
 
 /// A class which mocks [InstabugLogger].

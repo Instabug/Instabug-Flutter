@@ -36,7 +36,10 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
         .then((uiTraceId) {
       if (uiTraceId != null &&
           InstabugScreenRenderManager.I.screenRenderEnabled) {
+        //End any active ScreenRenderCollector before starting a new one (Safe garde condition).
         InstabugScreenRenderManager.I.endScreenRenderCollector();
+
+        //Start new ScreenRenderCollector.
         InstabugScreenRenderManager.I
             .startScreenRenderCollectorForTraceId(uiTraceId);
       }
@@ -49,11 +52,10 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
     }
   }
 
-  void _handleDetachedState() {
+  Future<void> _handleDetachedState() async {
     if (InstabugScreenRenderManager.I.screenRenderEnabled) {
-      InstabugScreenRenderManager.I.stopScreenRenderCollector();
+      dispose();
     }
-    dispose();
   }
 
   void _handleDefaultState() {

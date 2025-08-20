@@ -1,8 +1,9 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
+import 'dart:developer';
 
-import 'package:flutter/widgets.dart' show WidgetBuilder, WidgetsBinding;
+import 'package:flutter/widgets.dart' show WidgetBuilder;
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
@@ -140,6 +141,11 @@ class APM {
   static Future<void> startUITrace(String name) async {
     final isScreenRenderingEnabled =
         await FlagsConfig.screenRendering.isEnabled();
+    log("startUITrace: isScreenRenderEnabled: $isScreenRenderingEnabled");
+    await InstabugScreenRenderManager.I
+        .checkForScreenRenderInitialization(isScreenRenderingEnabled);
+
+    // Ends the active custom ui trace before starting new one.
     if (isScreenRenderingEnabled) {
       InstabugScreenRenderManager.I
           .endScreenRenderCollector(UiTraceType.custom);
@@ -162,8 +168,15 @@ class APM {
   static Future<void> endUITrace() async {
     // End screen render collector for custom ui trace if enabled.
     if (InstabugScreenRenderManager.I.screenRenderEnabled) {
-      return InstabugScreenRenderManager.I
+      InstabugScreenRenderManager.I
           .endScreenRenderCollector(UiTraceType.custom);
+
+      final isAutoUiTraceEnabled = await FlagsConfig.uiTrace.isEnabled();
+
+      // dispose the InstabugScreenRenderManager if AutoUiTrace is disabled.
+      if (!isAutoUiTraceEnabled) InstabugScreenRenderManager.I.dispose();
+
+      return;
     }
 
     return _host.endUITrace();
@@ -316,6 +329,16 @@ class APM {
     return ScreenLoadingManager.wrapRoutes(routes, exclude: exclude);
   }
 
+  /// Returns a Future<bool> indicating whether the auto
+  /// ui trace is enabled.
+  ///
+  /// Returns:
+  ///   A Future<bool> is being returned.
+  @internal
+  static Future<bool> isAutoUiTraceEnabled() async {
+    return _host.isAutoUiTraceEnabled();
+  }
+
   /// Returns a Future<bool> indicating whether the screen
   /// render is enabled.
   ///
@@ -349,13 +372,7 @@ class APM {
   /// Returns:
   ///   A Future<void> is being returned.
   static Future<void> setScreenRenderingEnabled(bool isEnabled) async {
-    return _host.setScreenRenderEnabled(isEnabled).then((_) async {
-      if (isEnabled) {
-        await InstabugScreenRenderManager.I.init(WidgetsBinding.instance);
-      } else {
-        InstabugScreenRenderManager.I.dispose();
-      }
-    });
+    return _host.setScreenRenderEnabled(isEnabled);
   }
 
   /// Ends screen rendering for

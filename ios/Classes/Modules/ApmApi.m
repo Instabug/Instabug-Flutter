@@ -218,6 +218,13 @@ NSMutableDictionary *traces;
     }
 }
 
+- (void)isAutoUiTraceEnabledWithCompletion:(nonnull void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion {
+    BOOL isAutoUiTraceIsEnabled = IBGAPM.autoUITraceEnabled && IBGAPM.enabled;
+    NSNumber *isEnabledNumber = @(isAutoUiTraceIsEnabled);
+    completion(isEnabledNumber, nil);
+}
+
+
 
 
 

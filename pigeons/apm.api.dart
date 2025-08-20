@@ -33,6 +33,9 @@ abstract class ApmHostApi {
   bool isEndScreenLoadingEnabled();
 
   @async
+  bool isAutoUiTraceEnabled();
+
+  @async
   bool isScreenRenderEnabled();
 
   @async

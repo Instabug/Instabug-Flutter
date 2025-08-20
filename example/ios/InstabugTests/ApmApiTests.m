@@ -199,6 +199,7 @@
     OCMVerify([self.mAPM endScreenLoadingCPWithEndTimestampMUS:endScreenLoadingCPWithEndTimestampMUS]);
 }
 
+
 - (void)testIsScreenRenderEnabled {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Call completion handler"];
 

@@ -122,7 +122,7 @@ class InstabugScreenRenderManager {
     UiTraceType type = UiTraceType.auto,
   ]) {
     // Return if frameTimingListener not attached
-    if (frameCollectorIsNotActive) return;
+    if (_frameCollectorIsNotActive) return;
 
     if (type == UiTraceType.custom) {
       _screenRenderForCustomUiTrace.traceId = traceId;
@@ -138,7 +138,7 @@ class InstabugScreenRenderManager {
     UiTraceType type = UiTraceType.auto,
   ]) {
     // Return if frameTimingListener not attached
-    if (frameCollectorIsNotActive) return;
+    if (_frameCollectorIsNotActive) return;
 
     //Save the memory cached data to be sent to native side
     if (_delayedFrames.isNotEmpty) {
@@ -163,7 +163,7 @@ class InstabugScreenRenderManager {
   @internal
   void stopScreenRenderCollector() {
     // Return if frameTimingListener not attached
-    if (frameCollectorIsNotActive) return;
+    if (_frameCollectorIsNotActive) return;
 
     if (_delayedFrames.isNotEmpty) {
       _saveCollectedData();
@@ -183,10 +183,23 @@ class InstabugScreenRenderManager {
     }
   }
 
-  bool get frameCollectorIsNotActive =>
-      !screenRenderEnabled || !_isTimingsListenerAttached;
+  @internal
+  Future<void> checkForScreenRenderInitialization(
+    bool isScreenRenderEnabledFromBackend,
+  ) async {
+    if (isScreenRenderEnabledFromBackend) {
+      if (!screenRenderEnabled) {
+        await init(WidgetsBinding.instance);
+      }
+    } else {
+      if (screenRenderEnabled) {
+        dispose();
+      }
+    }
+  }
 
   /// Dispose InstabugScreenRenderManager by removing timings callback and cashed data.
+  @internal
   void dispose() {
     try {
       _resetCachedFrameData();
@@ -194,6 +207,7 @@ class InstabugScreenRenderManager {
       _removeWidgetBindingObserver();
       _widgetsBinding = null;
       screenRenderEnabled = false;
+      _epochOffset = null;
     } catch (error, stackTrace) {
       _logExceptionErrorAndStackTrace(error, stackTrace);
     }
@@ -210,6 +224,9 @@ class InstabugScreenRenderManager {
       _rasterTimeMs < _frozenFrameThresholdMs;
 
   bool get _isTotalTimeLarge => _totalTimeMs >= _frozenFrameThresholdMs;
+
+  bool get _frameCollectorIsNotActive =>
+      !screenRenderEnabled || !_isTimingsListenerAttached;
 
   /// Calculate the target time for the frame to be drawn in milliseconds based on the device refresh rate.
   double _targetMsPerFrame(double displayRefreshRate) =>

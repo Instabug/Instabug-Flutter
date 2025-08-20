@@ -89,6 +89,12 @@ void main() {
     ).called(1);
   });
 
+  test("[isAutoUiTraceEnabled] should call host method", () async {
+    when(mHost.isAutoUiTraceEnabled()).thenAnswer((_) async => true);
+    await APM.isAutoUiTraceEnabled();
+    verify(mHost.isAutoUiTraceEnabled());
+  });
+
   test('[startFlow] should call host method', () async {
     const flowName = "flow-name";
     await APM.startFlow(flowName);
@@ -226,6 +232,7 @@ void main() {
     });
     tearDown(() {
       reset(mScreenRenderManager);
+      reset(mHost);
     });
     test("[isScreenRenderEnabled] should call host method", () async {
       when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => true);
@@ -242,28 +249,11 @@ void main() {
       verify(mHost.getDeviceRefreshRateAndTolerance()).called(1);
     });
 
-    test("[setScreenRenderEnabled] should call host method", () async {
+    test("[setScreenRenderingEnabled] should call host method", () async {
       const isEnabled = false;
+      when(mScreenRenderManager.screenRenderEnabled).thenReturn(false);
       await APM.setScreenRenderingEnabled(isEnabled);
       verify(mHost.setScreenRenderEnabled(isEnabled)).called(1);
-    });
-
-    test(
-        "[setScreenRenderEnabled] should call [init()] screen render collector, is the feature is enabled",
-        () async {
-      const isEnabled = true;
-      await APM.setScreenRenderingEnabled(isEnabled);
-      verify(mScreenRenderManager.init(any)).called(1);
-      verifyNoMoreInteractions(mScreenRenderManager);
-    });
-
-    test(
-        "[setScreenRenderEnabled] should call [remove()] screen render collector, is the feature is enabled",
-        () async {
-      const isEnabled = false;
-      await APM.setScreenRenderingEnabled(isEnabled);
-      verify(mScreenRenderManager.dispose()).called(1);
-      verifyNoMoreInteractions(mScreenRenderManager);
     });
 
     test(
@@ -306,6 +296,7 @@ void main() {
         "[endUITrace] should stop screen render collector with, if screen render feature is enabled",
         () async {
       when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => true);
+      when(mHost.isAutoUiTraceEnabled()).thenAnswer((_) async => true);
       when(mScreenRenderManager.screenRenderEnabled).thenReturn(true);
       await APM.endUITrace();
 
