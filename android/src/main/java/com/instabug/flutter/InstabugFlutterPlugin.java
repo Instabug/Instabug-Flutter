@@ -36,7 +36,7 @@ import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import io.flutter.plugin.common.BinaryMessenger;
 
 public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware, LifecycleEventObserver {
-    private static final String TAG = "Andrew";
+    private static final String TAG = InstabugFlutterPlugin.class.getName();
 
     @SuppressLint("StaticFieldLeak")
     private static Activity activity;
