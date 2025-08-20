@@ -16,9 +16,9 @@
 
 - **BREAKING** Remove deprecated APIs ([#614](https://github.com/Instabug/Instabug-Flutter/pull/614)). See migration guide for more details.
 
-- Bump Instabug iOS SDK to v15.1.1 ([#620](https://github.com/Instabug/Instabug-Flutter/pull/620)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/16.0.1).
+- Bump Instabug iOS SDK to v16.0.2 ([#620](https://github.com/Instabug/Instabug-Flutter/pull/620)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/16.0.1).
 
-- Bump Instabug Android SDK to v15.0.2 ([#620](https://github.com/Instabug/Instabug-Flutter/pull/620)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v16.0.0).
+- Bump Instabug Android SDK to v16.0.0 ([#620](https://github.com/Instabug/Instabug-Flutter/pull/620)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v16.0.0).
 
 
 ## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.2)  (Jul 7, 2025)

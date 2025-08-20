@@ -17,6 +17,6 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig   = { 'OTHER_LDFLAGS' => '-framework "Flutter" -framework "InstabugSDK"'}
 
   s.dependency 'Flutter'
-  s.dependency 'Instabug', '16.0.1'
+  s.dependency 'Instabug', '16.0.2'
 end
 

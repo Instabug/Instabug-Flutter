@@ -1,9 +1,9 @@
 PODS:
   - Flutter (1.0.0)
-  - Instabug (16.0.1)
+  - Instabug (16.0.2)
   - instabug_flutter (16.0.0):
     - Flutter
-    - Instabug (= 16.0.1)
+    - Instabug (= 16.0.2)
   - OCMock (3.6)
   - video_player_avfoundation (0.0.1):
     - Flutter
@@ -30,8 +30,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  Instabug: f31a27e70cb6580aef656d1abf8c57a5bb5633d0
-  instabug_flutter: 30131c9ec54d3a7a44ff74ac7ad51e3562813374
+  Instabug: 125f729dea4e4a43e815ae06f9db0332e2a5fd60
+  instabug_flutter: 156a51054e7e5dc9378fac1a8f6867b26968bfee
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
   video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
 
