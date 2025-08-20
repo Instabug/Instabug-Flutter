@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/widgets.dart' show WidgetBuilder;
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
@@ -141,7 +140,6 @@ class APM {
   static Future<void> startUITrace(String name) async {
     final isScreenRenderingEnabled =
         await FlagsConfig.screenRendering.isEnabled();
-    log("startUITrace: isScreenRenderEnabled: $isScreenRenderingEnabled");
     await InstabugScreenRenderManager.I
         .checkForScreenRenderInitialization(isScreenRenderingEnabled);
 

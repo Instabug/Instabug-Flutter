@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/widgets.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
@@ -66,7 +64,6 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
     // To overcome the onActivityDestroy() before sending the data to the android side.
     if (InstabugScreenRenderManager.I.screenRenderEnabled &&
         IBGBuildInfo.I.isIOS) {
-      log("_handlePausedState" , name: "andrew");
       InstabugScreenRenderManager.I.stopScreenRenderCollector();
     }
   }
@@ -76,8 +73,6 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
     // To overcome the onActivityDestroy() before sending the data to the android side.
     if (InstabugScreenRenderManager.I.screenRenderEnabled &&
         IBGBuildInfo.I.isIOS) {
-      log("_handleDetachedState" , name: "andrew");
-
       dispose();
     }
   }

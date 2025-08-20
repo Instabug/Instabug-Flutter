@@ -58,7 +58,6 @@ class InstabugScreenRenderManager {
   @internal
   Future<void> init(WidgetsBinding? widgetBinding) async {
     try {
-      log("init" , name: tag);
       // passing WidgetsBinding? (nullable) for flutter versions prior than 3.x
       if (!screenRenderEnabled && widgetBinding != null) {
         _widgetsBinding = widgetBinding;
@@ -122,7 +121,6 @@ class InstabugScreenRenderManager {
     int traceId, [
     UiTraceType type = UiTraceType.auto,
   ]) {
-    log("startScreenRenderCollectorForTraceId" , name: tag);
     // Return if frameTimingListener not attached
     if (_frameCollectorIsNotActive) return;
 
@@ -139,7 +137,6 @@ class InstabugScreenRenderManager {
   void endScreenRenderCollector([
     UiTraceType type = UiTraceType.auto,
   ]) {
-    log("endScreenRenderCollector" , name: tag);
     // Return if frameTimingListener not attached
     if (_frameCollectorIsNotActive) return;
 
@@ -205,7 +202,6 @@ class InstabugScreenRenderManager {
   @internal
   void dispose() {
     try {
-      log("dispose" , name: tag);
       _resetCachedFrameData();
       _removeFrameTimings();
       _removeWidgetBindingObserver();

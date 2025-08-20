@@ -479,12 +479,15 @@ void main() {
         () {
       // Test that the FlutterApi setup and dispose functionality works
       // This verifies that when Android calls dispose(), it properly cleans up resources
-      expect(() {
-        // Get the InstabugFlutterApi setup that was configured in Instabug.$setup()
-        // The actual dispose call will be tested in integration tests
-        // Here we just verify the setup doesn't crash
-        Instabug.$setup();
-      }, returnsNormally);
+      expect(
+        () {
+          // Get the InstabugFlutterApi setup that was configured in Instabug.$setup()
+          // The actual dispose call will be tested in integration tests
+          // Here we just verify the setup doesn't crash
+          Instabug.$setup();
+        },
+        returnsNormally,
+      );
     });
   });
 }

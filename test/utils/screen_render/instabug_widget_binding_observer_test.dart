@@ -1,5 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:instabug_flutter/instabug_flutter.dart' show APM;
+import 'package:instabug_flutter/src/generated/apm.api.g.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
@@ -15,6 +18,8 @@ import 'instabug_widget_binding_observer_test.mocks.dart';
   ScreenLoadingManager,
   ScreenNameMasker,
   UiTrace,
+  ApmHostApi,
+  IBGBuildInfo,
 ])
 void main() {
   late MockInstabugScreenRenderManager mockRenderManager;
@@ -37,6 +42,13 @@ void main() {
   });
 
   group('InstabugWidgetsBindingObserver', () {
+    final mApmHost = MockApmHostApi();
+    final mIBGBuildInfo = MockIBGBuildInfo();
+    setUp(() {
+      APM.$setHostApi(mApmHost);
+      IBGBuildInfo.setInstance(mIBGBuildInfo);
+    });
+
     test('returns the singleton instance', () {
       final instance = InstabugWidgetsBindingObserver.instance;
       final shorthand = InstabugWidgetsBindingObserver.I;
@@ -52,6 +64,8 @@ void main() {
           .thenAnswer((_) async => 123);
       when(mockRenderManager.screenRenderEnabled).thenReturn(true);
 
+      when(mApmHost.isScreenRenderEnabled()).thenAnswer((_) async => true);
+
       InstabugWidgetsBindingObserver.I
           .didChangeAppLifecycleState(AppLifecycleState.resumed);
 
@@ -64,8 +78,11 @@ void main() {
           .called(1);
     });
 
-    test('handles AppLifecycleState.paused and stops render collector', () {
+    test(
+        'handles AppLifecycleState.paused and stops render collector for iOS platform',
+        () {
       when(mockRenderManager.screenRenderEnabled).thenReturn(true);
+      when(mIBGBuildInfo.isIOS).thenReturn(true);
 
       InstabugWidgetsBindingObserver.I
           .didChangeAppLifecycleState(AppLifecycleState.paused);
