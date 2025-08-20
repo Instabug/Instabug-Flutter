@@ -256,24 +256,18 @@ void main() {
       verify(mHost.setScreenRenderEnabled(isEnabled)).called(1);
     });
 
-    test(
-        "[setScreenRenderEnabled] should call [init()] screen render collector, is the feature is enabled",
+    test("[setScreenRenderEnabled] should call host method when enabled",
         () async {
       const isEnabled = true;
-      when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => true);
       await APM.setScreenRenderingEnabled(isEnabled);
-      verify(mScreenRenderManager.init(any)).called(1);
-      verifyNoMoreInteractions(mScreenRenderManager);
+      verify(mHost.setScreenRenderEnabled(isEnabled)).called(1);
     });
 
-    test(
-        "[setScreenRenderEnabled] should call [remove()] screen render collector, is the feature is enabled",
+    test("[setScreenRenderEnabled] should call host method when disabled",
         () async {
       const isEnabled = false;
-      when(mScreenRenderManager.screenRenderEnabled).thenReturn(true);
       await APM.setScreenRenderingEnabled(isEnabled);
-      verify(mScreenRenderManager.dispose()).called(1);
-      verify(mScreenRenderManager.screenRenderEnabled).called(1);
+      verify(mHost.setScreenRenderEnabled(isEnabled)).called(1);
     });
 
     test(

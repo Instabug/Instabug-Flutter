@@ -23,23 +23,35 @@ import com.instabug.flutter.modules.SessionReplayApi;
 import com.instabug.flutter.modules.SurveysApi;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import io.flutter.embedding.engine.plugins.lifecycle.HiddenLifecycleReference;
 import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import io.flutter.plugin.common.BinaryMessenger;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleOwner;
+import com.instabug.flutter.generated.InstabugPigeon;
 
-public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
-    private static final String TAG = InstabugFlutterPlugin.class.getName();
+public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware, LifecycleEventObserver {
+    private static final String TAG = "Andrew";
 
     @SuppressLint("StaticFieldLeak")
     private static Activity activity;
+    
+    private InstabugPigeon.InstabugFlutterApi instabugFlutterApi;
+    private Lifecycle lifecycle;
+    final CountDownLatch latch = new CountDownLatch(1);
 
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
         register(binding.getApplicationContext(), binding.getBinaryMessenger(), (FlutterRenderer) binding.getTextureRegistry());
+        instabugFlutterApi = new InstabugPigeon.InstabugFlutterApi(binding.getBinaryMessenger());
     }
 
     @Override
@@ -50,21 +62,71 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
+        
+        // Register lifecycle observer if available
+        if (binding.getLifecycle() instanceof HiddenLifecycleReference) {
+            lifecycle = ((HiddenLifecycleReference) binding.getLifecycle()).getLifecycle();
+            lifecycle.addObserver(this);
+        }
     }
 
     @Override
     public void onDetachedFromActivityForConfigChanges() {
+        Log.d(TAG, "onDetachedFromActivityForConfigChanges");
+
+        if (lifecycle != null) {
+            lifecycle.removeObserver(this);
+        }
         activity = null;
     }
 
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
+        
+        // Re-register lifecycle observer if available
+        if (binding.getLifecycle() instanceof HiddenLifecycleReference) {
+            lifecycle = ((HiddenLifecycleReference) binding.getLifecycle()).getLifecycle();
+            lifecycle.addObserver(this);
+        }
     }
 
     @Override
     public void onDetachedFromActivity() {
+        Log.d(TAG, "onDetachedFromActivity");
+        if (lifecycle != null) {
+            lifecycle.removeObserver(this);
+            lifecycle = null;
+        }
         activity = null;
+    }
+
+    @Override
+    public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
+        if (event == Lifecycle.Event.ON_PAUSE) {
+            Log.d(TAG, "ON_PAUSE");
+            handleOnDestroy();
+        }
+    }
+    
+    private void handleOnDestroy() {
+        Log.d(TAG, "handleOnDestroy");
+
+        if (instabugFlutterApi != null) {
+            instabugFlutterApi.dispose(new InstabugPigeon.InstabugFlutterApi.Reply<Void>() {
+                @Override
+                public void reply(Void reply) {
+                    Log.d(TAG, "Screen render cleanup dispose called successfully");
+                    latch.countDown();
+                }
+            });
+        }
+        try {
+            // Wait up to 2 seconds to avoid ANR
+            latch.await(2, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void register(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {

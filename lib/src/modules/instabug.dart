@@ -22,6 +22,7 @@ import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
+import 'package:instabug_flutter/src/utils/screen_rendering/instabug_widget_binding_observer.dart';
 import 'package:meta/meta.dart';
 
 enum InvocationEvent {
@@ -136,6 +137,25 @@ enum CustomTextPlaceHolderKey {
 
 enum ReproStepsMode { enabled, disabled, enabledWithNoScreenshots }
 
+/// Disposal manager for handling Android onDestroy lifecycle events
+class _InstabugDisposalManager implements InstabugFlutterApi {
+  _InstabugDisposalManager._();
+
+  static final _InstabugDisposalManager _instance =
+      _InstabugDisposalManager._();
+
+  static _InstabugDisposalManager get instance => _instance;
+
+  @override
+  void dispose() {
+    // Call the InstabugWidgetsBindingObserver dispose method when Android onDestroy is triggered
+    InstabugLogger.I.d(
+        'Android onDestroy called - disposing screen render resources',
+        tag: 'InstabugDisposal');
+    InstabugWidgetsBindingObserver.dispose();
+  }
+}
+
 class Instabug {
   static var _host = InstabugHostApi();
 
@@ -154,6 +174,8 @@ class Instabug {
     BugReporting.$setup();
     Replies.$setup();
     Surveys.$setup();
+    // Set up InstabugFlutterApi for Android onDestroy disposal
+    InstabugFlutterApi.setup(_InstabugDisposalManager.instance);
   }
 
   /// @nodoc

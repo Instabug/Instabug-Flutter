@@ -1,7 +1,9 @@
 import 'package:flutter/widgets.dart';
+import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
+import 'package:instabug_flutter/src/utils/ui_trace/flags_config.dart';
 import 'package:meta/meta.dart';
 
 class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
@@ -19,45 +21,69 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
   /// Logging tag for debugging purposes.
   static const tag = "InstabugWidgetsBindingObserver";
 
+  /// Disposes all screen render resources.
+  /// This method is safe to call multiple times and from external sources
+  /// such as Android onDestroy lifecycle events.
   static void dispose() {
-    // Always call dispose to ensure proper cleanup with tracking flags
-    // The dispose method is safe to call multiple times due to state tracking
-    InstabugScreenRenderManager.I.dispose();
+    try {
+      //Save the screen rendering data for the active traces Auto|Custom.
+      InstabugScreenRenderManager.I.stopScreenRenderCollector();
+
+      // Always call dispose to ensure proper cleanup with tracking flags
+      // The dispose method is safe to call multiple times due to state tracking
+      InstabugScreenRenderManager.I.dispose();
+
+      InstabugLogger.I
+          .d('Screen render resources disposed successfully', tag: tag);
+    } catch (error, stackTrace) {
+      InstabugLogger.I.e(
+        'Error during screen render disposal: $error\nStackTrace: $stackTrace',
+        tag: tag,
+      );
+    }
   }
 
   void _handleResumedState() {
     final lastUiTrace = ScreenLoadingManager.I.currentUiTrace;
-    if (lastUiTrace == null) {
-      return;
-    }
+
+    if (lastUiTrace == null) return;
+
     final maskedScreenName = ScreenNameMasker.I.mask(lastUiTrace.screenName);
+
     ScreenLoadingManager.I
         .startUiTrace(maskedScreenName, lastUiTrace.screenName)
-        .then((uiTraceId) {
-      if (uiTraceId != null &&
-          InstabugScreenRenderManager.I.screenRenderEnabled) {
-        //End any active ScreenRenderCollector before starting a new one (Safe garde condition).
-        InstabugScreenRenderManager.I.endScreenRenderCollector();
+        .then((uiTraceId) async {
+      if (uiTraceId == null) return;
 
-        //Start new ScreenRenderCollector.
-        InstabugScreenRenderManager.I
-            .startScreenRenderCollectorForTraceId(uiTraceId);
-      }
+      final isScreenRenderEnabled =
+          await FlagsConfig.screenRendering.isEnabled();
+
+      if (!isScreenRenderEnabled) return;
+
+      await InstabugScreenRenderManager.I
+          .checkForScreenRenderInitialization(isScreenRenderEnabled);
+
+      //End any active ScreenRenderCollector before starting a new one (Safe garde condition).
+      InstabugScreenRenderManager.I.endScreenRenderCollector();
+
+      //Start new ScreenRenderCollector.
+      InstabugScreenRenderManager.I
+          .startScreenRenderCollectorForTraceId(uiTraceId);
     });
   }
 
-  void _handlePausedState() {
-    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
-      InstabugScreenRenderManager.I.stopScreenRenderCollector();
-    }
-  }
-
-  Future<void> _handleDetachedState() async {
-    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
-      dispose();
-    }
-  }
-
+  // void _handlePausedState() {
+  //   if (InstabugScreenRenderManager.I.screenRenderEnabled) {
+  //     InstabugScreenRenderManager.I.stopScreenRenderCollector();
+  //   }
+  // }
+  //
+  // Future<void> _handleDetachedState() async {
+  //   if (InstabugScreenRenderManager.I.screenRenderEnabled) {
+  //     dispose();
+  //   }
+  // }
+  //
   void _handleDefaultState() {
     // Added for lint warnings
   }
@@ -68,12 +94,9 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
       case AppLifecycleState.resumed:
         _handleResumedState();
         break;
-      case AppLifecycleState.paused:
-        _handlePausedState();
-        break;
-      case AppLifecycleState.detached:
-        _handleDetachedState();
-        break;
+      // case AppLifecycleState.paused:
+      //   _handlePausedState();
+      //   break;
       default:
         _handleDefaultState();
     }

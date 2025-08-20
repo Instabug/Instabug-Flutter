@@ -9,6 +9,11 @@ abstract class FeatureFlagsFlutterApi {
   );
 }
 
+@FlutterApi()
+abstract class InstabugFlutterApi {
+  void dispose();
+}
+
 @HostApi()
 abstract class InstabugHostApi {
   void setEnabled(bool isEnabled);

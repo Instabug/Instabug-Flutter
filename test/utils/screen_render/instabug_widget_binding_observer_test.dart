@@ -73,13 +73,14 @@ void main() {
       verify(mockRenderManager.stopScreenRenderCollector()).called(1);
     });
 
-    test('handles AppLifecycleState.detached and stops render collector', () {
+    test('handles AppLifecycleState.detached and disposes render resources',
+        () {
       when(mockRenderManager.screenRenderEnabled).thenReturn(true);
 
       InstabugWidgetsBindingObserver.I
           .didChangeAppLifecycleState(AppLifecycleState.detached);
 
-      verify(mockRenderManager.stopScreenRenderCollector()).called(1);
+      verify(mockRenderManager.dispose()).called(1);
     });
 
     test('handles AppLifecycleState.inactive with no action', () {
