@@ -256,6 +256,20 @@ void main() {
       verify(mHost.setScreenRenderEnabled(isEnabled)).called(1);
     });
 
+    test("[setScreenRenderEnabled] should call host method when enabled",
+        () async {
+      const isEnabled = true;
+      await APM.setScreenRenderingEnabled(isEnabled);
+      verify(mHost.setScreenRenderEnabled(isEnabled)).called(1);
+    });
+
+    test("[setScreenRenderEnabled] should call host method when disabled",
+        () async {
+      const isEnabled = false;
+      await APM.setScreenRenderingEnabled(isEnabled);
+      verify(mHost.setScreenRenderEnabled(isEnabled)).called(1);
+    });
+
     test(
         "[startUITrace] should start screen render collector with right params, if screen render feature is enabled",
         () async {

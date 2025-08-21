@@ -11,7 +11,11 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleOwner;
 
+import com.instabug.flutter.generated.InstabugPigeon;
 import com.instabug.flutter.modules.ApmApi;
 import com.instabug.flutter.modules.BugReportingApi;
 import com.instabug.flutter.modules.CrashReportingApi;
@@ -27,19 +31,23 @@ import java.util.concurrent.Callable;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import io.flutter.embedding.engine.plugins.lifecycle.HiddenLifecycleReference;
 import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import io.flutter.plugin.common.BinaryMessenger;
 
-public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
+public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware, LifecycleEventObserver {
     private static final String TAG = InstabugFlutterPlugin.class.getName();
 
     @SuppressLint("StaticFieldLeak")
     private static Activity activity;
 
+    private InstabugPigeon.InstabugFlutterApi instabugFlutterApi;
+    private Lifecycle lifecycle;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
         register(binding.getApplicationContext(), binding.getBinaryMessenger(), (FlutterRenderer) binding.getTextureRegistry());
+        instabugFlutterApi = new InstabugPigeon.InstabugFlutterApi(binding.getBinaryMessenger());
     }
 
     @Override
@@ -50,21 +58,58 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
+
+        // Register lifecycle observer if available
+        if (binding.getLifecycle() instanceof HiddenLifecycleReference) {
+            lifecycle = ((HiddenLifecycleReference) binding.getLifecycle()).getLifecycle();
+            lifecycle.addObserver(this);
+        }
     }
 
     @Override
     public void onDetachedFromActivityForConfigChanges() {
+        if (lifecycle != null) {
+            lifecycle.removeObserver(this);
+        }
         activity = null;
     }
 
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
+
+        // Re-register lifecycle observer if available
+        if (binding.getLifecycle() instanceof HiddenLifecycleReference) {
+            lifecycle = ((HiddenLifecycleReference) binding.getLifecycle()).getLifecycle();
+            lifecycle.addObserver(this);
+        }
     }
 
     @Override
     public void onDetachedFromActivity() {
+        if (lifecycle != null) {
+            lifecycle.removeObserver(this);
+            lifecycle = null;
+        }
         activity = null;
+    }
+
+    @Override
+    public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
+        if (event == Lifecycle.Event.ON_PAUSE) {
+            handleOnPause();
+        }
+    }
+
+    private void handleOnPause() {
+        if (instabugFlutterApi != null) {
+            instabugFlutterApi.dispose(new InstabugPigeon.InstabugFlutterApi.Reply<Void>() {
+                @Override
+                public void reply(Void reply) {
+                    Log.d(TAG, "Screen render cleanup dispose called successfully");
+                }
+            });
+        }
     }
 
     private static void register(Context context, BinaryMessenger messenger, FlutterRenderer renderer) {
@@ -77,7 +122,7 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware {
 
         Callable<Float> refreshRateProvider = new Callable<Float>() {
             @Override
-            public Float call(){
+            public Float call() {
                 return getRefreshRate();
             }
         };

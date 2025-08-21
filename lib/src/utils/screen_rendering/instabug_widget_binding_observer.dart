@@ -1,7 +1,9 @@
 import 'package:flutter/widgets.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
+import 'package:instabug_flutter/src/utils/ui_trace/flags_config.dart';
 import 'package:meta/meta.dart';
 
 class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
@@ -19,41 +21,58 @@ class InstabugWidgetsBindingObserver extends WidgetsBindingObserver {
   /// Logging tag for debugging purposes.
   static const tag = "InstabugWidgetsBindingObserver";
 
+  /// Disposes all screen render resources.
   static void dispose() {
-    // Always call dispose to ensure proper cleanup with tracking flags
+    //Save the screen rendering data for the active traces Auto|Custom.
+    InstabugScreenRenderManager.I.stopScreenRenderCollector();
+
     // The dispose method is safe to call multiple times due to state tracking
     InstabugScreenRenderManager.I.dispose();
   }
 
   void _handleResumedState() {
     final lastUiTrace = ScreenLoadingManager.I.currentUiTrace;
-    if (lastUiTrace == null) {
-      return;
-    }
+
+    if (lastUiTrace == null) return;
+
     final maskedScreenName = ScreenNameMasker.I.mask(lastUiTrace.screenName);
+
     ScreenLoadingManager.I
         .startUiTrace(maskedScreenName, lastUiTrace.screenName)
-        .then((uiTraceId) {
-      if (uiTraceId != null &&
-          InstabugScreenRenderManager.I.screenRenderEnabled) {
-        //End any active ScreenRenderCollector before starting a new one (Safe garde condition).
-        InstabugScreenRenderManager.I.endScreenRenderCollector();
+        .then((uiTraceId) async {
+      if (uiTraceId == null) return;
 
-        //Start new ScreenRenderCollector.
-        InstabugScreenRenderManager.I
-            .startScreenRenderCollectorForTraceId(uiTraceId);
-      }
+      final isScreenRenderEnabled =
+          await FlagsConfig.screenRendering.isEnabled();
+
+      if (!isScreenRenderEnabled) return;
+
+      await InstabugScreenRenderManager.I
+          .checkForScreenRenderInitialization(isScreenRenderEnabled);
+
+      //End any active ScreenRenderCollector before starting a new one (Safe garde condition).
+      InstabugScreenRenderManager.I.endScreenRenderCollector();
+
+      //Start new ScreenRenderCollector.
+      InstabugScreenRenderManager.I
+          .startScreenRenderCollectorForTraceId(uiTraceId);
     });
   }
 
   void _handlePausedState() {
-    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
+    // Only handles iOS platform because in android we use pigeon @FlutterApi().
+    // To overcome the onActivityDestroy() before sending the data to the android side.
+    if (InstabugScreenRenderManager.I.screenRenderEnabled &&
+        IBGBuildInfo.I.isIOS) {
       InstabugScreenRenderManager.I.stopScreenRenderCollector();
     }
   }
 
   Future<void> _handleDetachedState() async {
-    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
+    // Only handles iOS platform because in android we use pigeon @FlutterApi().
+    // To overcome the onActivityDestroy() before sending the data to the android side.
+    if (InstabugScreenRenderManager.I.screenRenderEnabled &&
+        IBGBuildInfo.I.isIOS) {
       dispose();
     }
   }

@@ -47,7 +47,7 @@ void main() {
         appVariant: 'variant 1',
       );
       APM.setScreenRenderingEnabled(true);
-      APM.setAutoUITraceEnabled(false);
+      // APM.setAutoUITraceEnabled(false);
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
       };
