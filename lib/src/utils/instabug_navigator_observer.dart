@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/models/instabug_route.dart';
@@ -6,6 +8,8 @@ import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/repro_steps_constants.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
 import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
+import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
+import 'package:instabug_flutter/src/utils/ui_trace/flags_config.dart';
 
 class InstabugNavigatorObserver extends NavigatorObserver {
   final List<InstabugRoute> _steps = [];
@@ -23,8 +27,11 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         name: maskedScreenName,
       );
 
-      // Starts a the new UI trace which is exclusive to screen loading
-      ScreenLoadingManager.I.startUiTrace(maskedScreenName, screenName);
+      InstabugScreenRenderManager.I.endScreenRenderCollector();
+      ScreenLoadingManager.I
+          .startUiTrace(maskedScreenName, screenName)
+          .then(_startScreenRenderCollector);
+
       // If there is a step that hasn't been pushed yet
       if (_steps.isNotEmpty) {
         // Report the last step and remove it from the list
@@ -57,5 +64,17 @@ class InstabugNavigatorObserver extends NavigatorObserver {
   @override
   void didPush(Route route, Route? previousRoute) {
     screenChanged(route);
+  }
+
+  FutureOr<void> _startScreenRenderCollector(int? uiTraceId) async {
+    if (uiTraceId == null) return;
+    final isScreenRenderEnabled = await FlagsConfig.screenRendering.isEnabled();
+
+    await InstabugScreenRenderManager.I
+        .checkForScreenRenderInitialization(isScreenRenderEnabled);
+    if (isScreenRenderEnabled) {
+      InstabugScreenRenderManager.I
+          .startScreenRenderCollectorForTraceId(uiTraceId);
+    }
   }
 }

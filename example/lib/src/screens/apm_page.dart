@@ -38,6 +38,8 @@ class _ApmPageState extends State<ApmPage> {
         const NetworkContent(),
         const SectionTitle('Flows'),
         const FlowsContent(),
+        const SectionTitle('Custom UI Traces'),
+        const UITracesContent(),
         const SectionTitle('Screen Loading'),
         SizedBox.fromSize(
           size: const Size.fromHeight(12),
@@ -49,6 +51,7 @@ class _ApmPageState extends State<ApmPage> {
         SizedBox.fromSize(
           size: const Size.fromHeight(12),
         ),
+        const ScreenRender(),
       ],
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
-import 'package:instabug_flutter/src/utils/screen_loading/ui_trace.dart';
+import 'package:instabug_flutter/src/utils/ui_trace/ui_trace.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 

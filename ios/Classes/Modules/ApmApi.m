@@ -92,13 +92,13 @@ NSMutableDictionary *traces;
     [IBGAPM endFlowWithName:name];
 }
 
-// This method is responsible for starting a UI trace with the given `name`. 
+// This method is responsible for starting a UI trace with the given `name`.
 // Which initiates the tracking of user interface interactions for monitoring the performance of the application.
 - (void)startUITraceName:(NSString *)name error:(FlutterError *_Nullable *_Nonnull)error {
     [IBGAPM startUITraceWithName:name];
 }
 
-// The method is responsible for ending the currently active UI trace. 
+// The method is responsible for ending the currently active UI trace.
 // Which signifies the completion of tracking user interface interactions.
 - (void)endUITraceWithError:(FlutterError *_Nullable *_Nonnull)error {
     [IBGAPM endUITrace];
@@ -158,6 +158,74 @@ NSMutableDictionary *traces;
     NSNumber *isEnabledNumber = @(isEndScreenLoadingEnabled);
     completion(isEnabledNumber, nil);
 }
+
+- (void)isScreenRenderEnabledWithCompletion:(void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion{
+    BOOL isScreenRenderEnabled = IBGAPM.isScreenRenderingOperational;
+    NSNumber *isEnabledNumber = @(isScreenRenderEnabled);
+    completion(isEnabledNumber, nil);
+}
+
+- (void)setScreenRenderEnabledIsEnabled:(nonnull NSNumber *)isEnabled error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    [IBGAPM setScreenRenderingEnabled:[isEnabled boolValue]];
+
+}
+
+
+- (void)endScreenRenderForAutoUiTraceData:(nonnull NSDictionary<NSString *,id> *)data error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    NSArray<NSArray<NSNumber *> *> *rawFrames = data[@"frameData"];
+    NSMutableArray<IBGFrameInfo *> *frameInfos = [[NSMutableArray alloc] init];
+
+    if (rawFrames && [rawFrames isKindOfClass:[NSArray class]]) {
+        for (NSArray<NSNumber *> *frameValues in rawFrames) {
+            if ([frameValues count] == 2) {
+                IBGFrameInfo *frameInfo = [[IBGFrameInfo alloc] init];
+                frameInfo.startTimestampInMicroseconds = [frameValues[0] doubleValue];
+                frameInfo.durationInMicroseconds = [frameValues[1] doubleValue];
+                [frameInfos addObject:frameInfo];
+            }
+        }
+    }
+    [IBGAPM endAutoUITraceCPWithFrames:frameInfos];
+}
+
+
+- (void)endScreenRenderForCustomUiTraceData:(nonnull NSDictionary<NSString *,id> *)data error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    NSArray<NSArray<NSNumber *> *> *rawFrames = data[@"frameData"];
+    NSMutableArray<IBGFrameInfo *> *frameInfos = [[NSMutableArray alloc] init];
+
+    if (rawFrames && [rawFrames isKindOfClass:[NSArray class]]) {
+        for (NSArray<NSNumber *> *frameValues in rawFrames) {
+            if ([frameValues count] == 2) {
+                IBGFrameInfo *frameInfo = [[IBGFrameInfo alloc] init];
+                frameInfo.startTimestampInMicroseconds = [frameValues[0] doubleValue];
+                frameInfo.durationInMicroseconds = [frameValues[1] doubleValue];
+                [frameInfos addObject:frameInfo];
+            }
+        }
+    }
+
+    [IBGAPM endCustomUITraceCPWithFrames:frameInfos];
+}
+
+- (void)getDeviceRefreshRateAndToleranceWithCompletion:(nonnull void (^)(NSArray<NSNumber *> * _Nullable, FlutterError * _Nullable))completion {
+    double tolerance = IBGAPM.screenRenderingThreshold;
+    if (@available(iOS 10.3, *)) {
+        double refreshRate = [UIScreen mainScreen].maximumFramesPerSecond;
+        completion(@[@(refreshRate), @(tolerance)] ,nil);
+    } else {
+        // Fallback for very old iOS versions.
+        completion(@[@(60.0), @(tolerance)] , nil);
+    }
+}
+
+- (void)isAutoUiTraceEnabledWithCompletion:(nonnull void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion {
+    BOOL isAutoUiTraceIsEnabled = IBGAPM.autoUITraceEnabled && IBGAPM.enabled;
+    NSNumber *isEnabledNumber = @(isAutoUiTraceIsEnabled);
+    completion(isEnabledNumber, nil);
+}
+
+
+
 
 
 @end

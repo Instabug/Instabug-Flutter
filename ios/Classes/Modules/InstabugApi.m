@@ -106,7 +106,7 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
 }
 
 - (void)setPrimaryColorColor:(NSNumber *)color error:(FlutterError *_Nullable *_Nonnull)error {
-    Instabug.tintColor = UIColorFromRGB([color longValue]);
+//    Instabug.tintColor = UIColorFromRGB([color longValue]);
 }
 
 - (void)setSessionProfilerEnabledEnabled:(NSNumber *)enabled error:(FlutterError *_Nullable *_Nonnull)error {

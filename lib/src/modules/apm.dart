@@ -4,10 +4,13 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart' show WidgetBuilder;
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
+import 'package:instabug_flutter/src/models/instabug_screen_render_data.dart';
 import 'package:instabug_flutter/src/models/network_data.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 import 'package:instabug_flutter/src/utils/screen_loading/screen_loading_manager.dart';
+import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
+import 'package:instabug_flutter/src/utils/ui_trace/flags_config.dart';
 import 'package:meta/meta.dart';
 
 class APM {
@@ -135,7 +138,25 @@ class APM {
   /// Returns:
   ///   The method is returning a `Future<void>`.
   static Future<void> startUITrace(String name) async {
-    return _host.startUITrace(name);
+    final isScreenRenderingEnabled =
+        await FlagsConfig.screenRendering.isEnabled();
+    await InstabugScreenRenderManager.I
+        .checkForScreenRenderInitialization(isScreenRenderingEnabled);
+
+    // Ends the active custom ui trace before starting new one.
+    if (isScreenRenderingEnabled) {
+      InstabugScreenRenderManager.I
+          .endScreenRenderCollector(UiTraceType.custom);
+    }
+    return _host.startUITrace(name).then(
+      (_) {
+        // Start screen render collector for custom ui trace if enabled.
+        if (isScreenRenderingEnabled) {
+          InstabugScreenRenderManager.I
+              .startScreenRenderCollectorForTraceId(0, UiTraceType.custom);
+        }
+      },
+    );
   }
 
   /// The [endUITrace] function ends a UI trace.
@@ -143,6 +164,19 @@ class APM {
   /// Returns:
   ///   The method is returning a `Future<void>`.
   static Future<void> endUITrace() async {
+    // End screen render collector for custom ui trace if enabled.
+    if (InstabugScreenRenderManager.I.screenRenderEnabled) {
+      InstabugScreenRenderManager.I
+          .endScreenRenderCollector(UiTraceType.custom);
+
+      final isAutoUiTraceEnabled = await FlagsConfig.uiTrace.isEnabled();
+
+      // dispose the InstabugScreenRenderManager if AutoUiTrace is disabled.
+      if (!isAutoUiTraceEnabled) InstabugScreenRenderManager.I.dispose();
+
+      return;
+    }
+
     return _host.endUITrace();
   }
 
@@ -291,5 +325,85 @@ class APM {
     List<String> exclude = const [],
   }) {
     return ScreenLoadingManager.wrapRoutes(routes, exclude: exclude);
+  }
+
+  /// Returns a Future<bool> indicating whether the auto
+  /// ui trace is enabled.
+  ///
+  /// Returns:
+  ///   A Future<bool> is being returned.
+  @internal
+  static Future<bool> isAutoUiTraceEnabled() async {
+    return _host.isAutoUiTraceEnabled();
+  }
+
+  /// Returns a Future<bool> indicating whether the screen
+  /// render is enabled.
+  ///
+  /// Returns:
+  ///   A Future<bool> is being returned.
+  @internal
+  static Future<bool> isScreenRenderEnabled() async {
+    return _host.isScreenRenderEnabled();
+  }
+
+  /// Retrieve the device refresh rate from native side .
+  ///
+  /// Returns:
+  ///   A Future<double> that represent the refresh rate.
+  /// Retrieve the device refresh rate and tolerance value from native side.
+  ///
+  /// Returns:
+  ///   A Future<List<double>> where the first element is the refresh rate and the second is the tolerance value.
+  @internal
+  static Future<List<double?>> getDeviceRefreshRateAndTolerance() {
+    return _host.getDeviceRefreshRateAndTolerance();
+  }
+
+  /// Sets the screen Render state based on the provided boolean value.
+  ///
+  /// Args:
+  ///   isEnabled (bool): The [isEnabled] parameter is a boolean value that determines whether screen
+  /// Render is enabled or disabled. If [isEnabled] is `true`, screen render will be enabled; if
+  /// [isEnabled] is `false`, screen render will be disabled.
+  ///
+  /// Returns:
+  ///   A Future<void> is being returned.
+  static Future<void> setScreenRenderingEnabled(bool isEnabled) async {
+    return _host.setScreenRenderEnabled(isEnabled);
+  }
+
+  /// Ends screen rendering for
+  /// automatic UI tracing using data provided in `InstabugScreenRenderData` object.
+  ///
+  /// Args:
+  ///   data (InstabugScreenRenderData): The `data` parameter in the `endScreenRenderForAutoUiTrace`
+  /// function is of type `InstabugScreenRenderData`. It contains information related to screen
+  /// rendering.
+  ///
+  /// Returns:
+  ///   A `Future<void>` is being returned.
+  @internal
+  static Future<void> endScreenRenderForAutoUiTrace(
+    InstabugScreenRenderData data,
+  ) {
+    return _host.endScreenRenderForAutoUiTrace(data.toMap());
+  }
+
+  /// Ends the screen render for a custom
+  /// UI trace using data provided in `InstabugScreenRenderData`.
+  ///
+  /// Args:
+  ///   data (InstabugScreenRenderData): The `data` parameter in the `endScreenRenderForCustomUiTrace`
+  /// function is of type `InstabugScreenRenderData`, which contains information related to the
+  /// rendering of a screen in the Instabug custom UI.
+  ///
+  /// Returns:
+  ///   A `Future<void>` is being returned.
+  @internal
+  static Future<void> endScreenRenderForCustomUiTrace(
+    InstabugScreenRenderData data,
+  ) {
+    return _host.endScreenRenderForCustomUiTrace(data.toMap());
   }
 }

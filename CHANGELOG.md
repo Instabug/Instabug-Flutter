@@ -5,8 +5,10 @@
 ### Added
 
 - Add support for Advanced UI customization with comprehensive theming capabilities ([#599](https://github.com/Instabug/Instabug-Flutter/pull/599))
-- 
+
 - Add support for App variant. ([#585](https://github.com/Instabug/Instabug-Flutter/pull/585))
+
+- Add screen rendering monitoring functionality within the APM product. ([#605](https://github.com/Instabug/Instabug-Flutter/pull/605))
 
 ### Changed
 
@@ -16,7 +18,6 @@
 ## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.2)  (Jul 7, 2025)
 
 ### Added
-
 
 - Add support for xCode 16. ([#574](https://github.com/Instabug/Instabug-Flutter/pull/574))
 

@@ -31,4 +31,19 @@ abstract class ApmHostApi {
 
   @async
   bool isEndScreenLoadingEnabled();
+
+  @async
+  bool isAutoUiTraceEnabled();
+
+  @async
+  bool isScreenRenderEnabled();
+
+  @async
+  List<double> getDeviceRefreshRateAndTolerance();
+
+  void setScreenRenderEnabled(bool isEnabled);
+
+  void endScreenRenderForAutoUiTrace(Map<String, Object> data);
+
+  void endScreenRenderForCustomUiTrace(Map<String, Object> data);
 }

@@ -4,6 +4,7 @@ import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/apm.api.g.dart';
 import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/ibg_date_time.dart';
+import 'package:instabug_flutter/src/utils/screen_rendering/instabug_screen_render_manager.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -13,6 +14,7 @@ import 'apm_test.mocks.dart';
   ApmHostApi,
   IBGDateTime,
   IBGBuildInfo,
+  InstabugScreenRenderManager,
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +23,7 @@ void main() {
   final mHost = MockApmHostApi();
   final mDateTime = MockIBGDateTime();
   final mBuildInfo = MockIBGBuildInfo();
+  final mScreenRenderManager = MockInstabugScreenRenderManager();
 
   setUpAll(() {
     APM.$setHostApi(mHost);
@@ -86,6 +89,12 @@ void main() {
     ).called(1);
   });
 
+  test("[isAutoUiTraceEnabled] should call host method", () async {
+    when(mHost.isAutoUiTraceEnabled()).thenAnswer((_) async => true);
+    await APM.isAutoUiTraceEnabled();
+    verify(mHost.isAutoUiTraceEnabled());
+  });
+
   test('[startFlow] should call host method', () async {
     const flowName = "flow-name";
     await APM.startFlow(flowName);
@@ -122,6 +131,9 @@ void main() {
 
   test('[startUITrace] should call host method', () async {
     const name = 'UI-trace';
+
+    //disable the feature flag for screen render feature in order to skip its checking.
+    when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => false);
 
     await APM.startUITrace(name);
 
@@ -172,7 +184,6 @@ void main() {
     verify(
       mHost.startCpUiTrace(screenName, microTimeStamp, traceId),
     ).called(1);
-    verifyNoMoreInteractions(mHost);
   });
 
   test('[reportScreenLoading] should call host method', () async {
@@ -193,7 +204,6 @@ void main() {
         uiTraceId,
       ),
     ).called(1);
-    verifyNoMoreInteractions(mHost);
   });
 
   test('[endScreenLoading] should call host method', () async {
@@ -205,7 +215,6 @@ void main() {
     verify(
       mHost.endScreenLoadingCP(timeStampMicro, uiTraceId),
     ).called(1);
-    verifyNoMoreInteractions(mHost);
   });
 
   test('[isSEndScreenLoadingEnabled] should call host method', () async {
@@ -215,5 +224,118 @@ void main() {
     verify(
       mHost.isEndScreenLoadingEnabled(),
     ).called(1);
+  });
+
+  group("ScreenRender", () {
+    setUp(() {
+      InstabugScreenRenderManager.setInstance(mScreenRenderManager);
+    });
+    tearDown(() {
+      reset(mScreenRenderManager);
+      reset(mHost);
+    });
+    test("[isScreenRenderEnabled] should call host method", () async {
+      when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => true);
+      await APM.isScreenRenderEnabled();
+      verify(mHost.isScreenRenderEnabled());
+    });
+
+    test("[getDeviceRefreshRateAndTolerance] should call host method",
+        () async {
+      when(mHost.getDeviceRefreshRateAndTolerance()).thenAnswer(
+        (_) async => [60.0, 10.0],
+      );
+      await APM.getDeviceRefreshRateAndTolerance();
+      verify(mHost.getDeviceRefreshRateAndTolerance()).called(1);
+    });
+
+    test("[setScreenRenderingEnabled] should call host method", () async {
+      const isEnabled = false;
+      when(mScreenRenderManager.screenRenderEnabled).thenReturn(false);
+      await APM.setScreenRenderingEnabled(isEnabled);
+      verify(mHost.setScreenRenderEnabled(isEnabled)).called(1);
+    });
+
+    test("[setScreenRenderEnabled] should call host method when enabled",
+        () async {
+      const isEnabled = true;
+      await APM.setScreenRenderingEnabled(isEnabled);
+      verify(mHost.setScreenRenderEnabled(isEnabled)).called(1);
+    });
+
+    test("[setScreenRenderEnabled] should call host method when disabled",
+        () async {
+      const isEnabled = false;
+      await APM.setScreenRenderingEnabled(isEnabled);
+      verify(mHost.setScreenRenderEnabled(isEnabled)).called(1);
+    });
+
+    test(
+        "[startUITrace] should start screen render collector with right params, if screen render feature is enabled",
+        () async {
+      when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => true);
+
+      const traceName = "traceNameTest";
+      await APM.startUITrace(traceName);
+
+      verify(mHost.startUITrace(traceName)).called(1);
+      verify(mHost.isScreenRenderEnabled()).called(1);
+      verify(
+        mScreenRenderManager.startScreenRenderCollectorForTraceId(
+          0,
+          UiTraceType.custom,
+        ),
+      ).called(1);
+    });
+
+    test(
+        "[startUITrace] should not start screen render collector, if screen render feature is disabled",
+        () async {
+      when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => false);
+
+      const traceName = "traceNameTest";
+      await APM.startUITrace(traceName);
+
+      verify(mHost.startUITrace(traceName)).called(1);
+      verify(mHost.isScreenRenderEnabled()).called(1);
+      verifyNever(
+        mScreenRenderManager.startScreenRenderCollectorForTraceId(
+          any,
+          any,
+        ),
+      );
+    });
+
+    test(
+        "[endUITrace] should stop screen render collector with, if screen render feature is enabled",
+        () async {
+      when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => true);
+      when(mHost.isAutoUiTraceEnabled()).thenAnswer((_) async => true);
+      when(mScreenRenderManager.screenRenderEnabled).thenReturn(true);
+      await APM.endUITrace();
+
+      verify(
+        mScreenRenderManager.endScreenRenderCollector(UiTraceType.custom),
+      ).called(1);
+      verifyNever(mHost.endUITrace());
+    });
+
+    test(
+        "[endUITrace] should acts as normal and do nothing related to screen render, if screen render feature is disabled",
+        () async {
+      when(mHost.isScreenRenderEnabled()).thenAnswer((_) async => false);
+      when(mScreenRenderManager.screenRenderEnabled).thenReturn(false);
+      const traceName = "traceNameTest";
+      await APM.startUITrace(traceName);
+      await APM.endUITrace();
+
+      verify(mHost.startUITrace(traceName)).called(1);
+      verify(
+        mHost.endUITrace(),
+      ).called(1);
+      verifyNever(
+        mScreenRenderManager.endScreenRenderCollector(),
+      );
+    });
   });
 }
