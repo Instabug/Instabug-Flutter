@@ -38,7 +38,7 @@ commands:
     steps:
       - run:
           name: Install Appium
-          command: npm install -g appium
+          command: npm install -g appium@2.19.0
       - when:
           condition:
             equal:
