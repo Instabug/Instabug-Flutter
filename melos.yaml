@@ -1,0 +1,82 @@
+name: instabug_flutter_mono
+
+packages:
+  - packages/*
+  - packages/*/**
+scripts:
+  dart_bootstrap:
+    run: dart pub get
+  analyze:
+    run: dart analyze .
+  format:
+    run: dart format . --set-exit-if-changed
+    exec:
+      concurrency: 1
+      failFast: true
+      orderDependents: true
+  pigeon:
+    run: sh scripts/pigeon.sh
+    exec:
+      concurrency: 1
+      failFast: true
+      orderDependents: true
+    packageFilters:
+      fileExists: 'scripts/pigeon.sh'
+  generate:
+    run: dart run build_runner build -d
+    description: Build all generated files for Dart & Flutter packages in this project.t
+    exec:
+      concurrency: 1
+      failFast: true
+      orderDependents: true
+    packageFilters:
+      dependsOn: build_runner
+  test:
+    run: flutter test
+    description: Tests all packages.
+    exec:
+      concurrency: 1
+      failFast: true
+      orderDependents: true
+    packageFilters:
+      dependsOn: flutter_test
+  test-coverage:
+    run: flutter test --coverage && cd coverage && lcov --ignore-errors unused --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info && sh ../../../scripts/move_coverage_files.sh
+    description: Tests all packages.
+    exec:
+      concurrency: 1
+      failFast: true
+      orderDependents: true
+    select-package:
+      dir-exists:
+        - test
+    packageFilters:
+      dependsOn: flutter_test
+      dirExists: test
+  dryPublish:
+    run: flutter pub publish --dry-run
+    description: Tests publishing (dry run).
+    exec:
+      concurrency: 1
+      orderDependents: true
+    packageFilters:
+      flutter: true
+      dependsOn: pana
+      private: false
+  pods:
+    run: cd ios && pod install --repo-update
+    description: running pod install
+    exec:
+      concurrency: 1
+      orderDependents: true
+    packageFilters:
+      fileExists: 'ios/PodFile'
+  score:
+    run: dart run pana --no-warning --exit-code-threshold 0
+    exec:
+      concurrency: 1
+      orderDependents: true
+    packageFilters:
+      dependsOn: pana
+      private: false
+
