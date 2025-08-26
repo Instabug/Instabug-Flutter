@@ -196,7 +196,7 @@ class Instabug {
       debugLogsLevel.toString(),
       appVariant,
     );
-    return FeatureFlagsManager().registerW3CFlagsListener();
+    return FeatureFlagsManager().registerFeatureFlagsListener();
   }
 
   /// Sets a [callback] to be called wehenever a screen name is captured to mask

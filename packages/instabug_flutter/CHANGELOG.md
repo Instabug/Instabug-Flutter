@@ -11,6 +11,8 @@
 - Add support for user steps  ([#519](https://github.com/Instabug/Instabug-Flutter/pull/519))
 
 - Add support for App variant. ([#585](https://github.com/Instabug/Instabug-Flutter/pull/585))
+- 
+- Add support for respecting backend network body size limits. ([#593](https://github.com/Instabug/Instabug-Flutter/pull/593))
 
 ### Changed
 
@@ -24,7 +26,6 @@
 ## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.2)  (Jul 7, 2025)
 
 ### Added
-
 
 - Add support for xCode 16. ([#574](https://github.com/Instabug/Instabug-Flutter/pull/574))
 

@@ -64,6 +64,9 @@ void main() {
         'isW3cExternalTraceIDEnabled': true,
       }),
     );
+    when(mHost.getNetworkBodyMaxSize()).thenAnswer(
+          (_) => Future.value(10240),
+    );
   });
 
   setUp(() {
@@ -78,6 +81,7 @@ void main() {
 
   test('onResponse Test', () async {
     try {
+
       await dio.get<dynamic>('/test');
       // ignore: deprecated_member_use
     } on DioError {

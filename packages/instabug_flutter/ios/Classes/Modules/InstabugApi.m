@@ -609,4 +609,9 @@ extern void InitInstabugApi(id<FlutterBinaryMessenger> messenger) {
     // Empty implementation as requested
 }
 
+- (void)getNetworkBodyMaxSizeWithCompletion:(nonnull void (^)(NSNumber * _Nullable, FlutterError * _Nullable))completion {
+    completion(@(IBGNetworkLogger.getNetworkBodyMaxSize), nil);
+}
+
+
 @end

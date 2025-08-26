@@ -54,7 +54,10 @@ void main() {
         "isW3cCaughtHeaderEnabled": true,
       }),
     );
-    await FeatureFlagsManager().registerW3CFlagsListener();
+    when(mInstabugHost.getNetworkBodyMaxSize()).thenAnswer(
+      (_) => Future.value(10240),
+    );
+    await FeatureFlagsManager().registerFeatureFlagsListener();
 
     final isW3CExternalTraceID =
         await FeatureFlagsManager().getW3CFeatureFlagsHeader();
@@ -74,8 +77,11 @@ void main() {
         "isW3cCaughtHeaderEnabled": true,
       }),
     );
+    when(mInstabugHost.getNetworkBodyMaxSize()).thenAnswer(
+      (_) => Future.value(10240),
+    );
 
-    await FeatureFlagsManager().registerW3CFlagsListener();
+    await FeatureFlagsManager().registerFeatureFlagsListener();
 
     verify(
       mInstabugHost.registerFeatureFlagChangeListener(),
