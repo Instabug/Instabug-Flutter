@@ -1,6 +1,5 @@
 # Changelog
-
-## [Unreleased](https://github.com/Instabug/Instabug-Flutter/compare/v15.0.2...dev)
+## [16.0.0](https://github.com/Instabug/Instabug-Flutter/compare/v15.0.3...dev) (Aug 29, 2025)
 
 ### Added
 
@@ -11,7 +10,7 @@
 - Add support for user steps  ([#519](https://github.com/Instabug/Instabug-Flutter/pull/519))
 
 - Add support for App variant. ([#585](https://github.com/Instabug/Instabug-Flutter/pull/585))
-- 
+-
 - Add support for respecting backend network body size limits. ([#593](https://github.com/Instabug/Instabug-Flutter/pull/593))
 
 ### Changed
@@ -22,6 +21,9 @@
 
 - Bump Instabug Android SDK to v16.0.0 ([#620](https://github.com/Instabug/Instabug-Flutter/pull/620)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v16.0.0).
 
+## [15.0.3](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.2)  (Aug 22, 2025)
+
+- Bump Instabug iOS SDK to v15.1.2 ([#628](https://github.com/Instabug/Instabug-Flutter/pull/628)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/15.1.2).
 
 ## [15.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...15.0.2)  (Jul 7, 2025)
 
@@ -35,7 +37,7 @@
 
 - Bump Instabug iOS SDK to v15.1.1 ([#581](https://github.com/Instabug/Instabug-Flutter/pull/581)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/15.1.1).
 
-- Bump Instabug Android SDK to v15.0.2 ([#581](https://github.com/Instabug/Instabug-Flutter/pull/581)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v15.0.2).
+- Bump Instabug Android SDK to v15.0.1 ([#581](https://github.com/Instabug/Instabug-Flutter/pull/581)). [See release notes](https://github.com/Instabug/Instabug-Android/releases/tag/v15.0.1).
 
 ## [14.3.1](https://github.com/Instabug/Instabug-Flutter/compare/v14.3.0...14.3.1) (May 20, 2025)
 
