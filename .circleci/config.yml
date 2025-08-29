@@ -2,18 +2,36 @@ version: 2.1
 
 orbs:
   android: circleci/android@2.5.0
-  flutter: circleci/flutter@2.0.2
+  flutter: circleci/flutter@2.0.4
   node: circleci/node@5.2.0
   advanced-checkout: vsco/advanced-checkout@1.1.0
 
+executors:
+  flutter-executor:
+    docker:
+      - image: cimg/base:stable
+
+
 commands:
   setup_flutter:
+    parameters:
+      version:
+        type: string
+        default: 3.24.3
+      use_melos:
+        type: boolean
+        default: true
+      working_dir:
+        type: string
+        default: "~/project"
     steps:
       - flutter/install_sdk_and_pub:
-          version: 3.24.0
-      - run:
-          name: Generate Pigeons
-          command: sh ./scripts/pigeon.sh
+          version: <<parameters.version>>
+          app-dir: <<parameters.working_dir>>
+      - install_flutter_and_dart_packages:
+          generate_pigeons: true
+          use_melos: <<parameters.use_melos>>
+          working_dir: <<parameters.working_dir>>
   setup_ios:
     steps:
       # Flutter doesn't support Apple Silicon yet, so we need to install Rosetta use Flutter on M1 machines.
@@ -26,7 +44,7 @@ commands:
           command: sudo gem install cocoapods
       - run:
           name: Install Pods
-          working_directory: example/ios
+          working_directory: packages/instabug_flutter/example/ios
           command: pod install --repo-update
   setup_captain:
     parameters:
@@ -38,7 +56,7 @@ commands:
     steps:
       - run:
           name: Install Appium
-          command: npm install -g appium
+          command: npm install -g appium@2.19.0
       - when:
           condition:
             equal:
@@ -77,32 +95,71 @@ commands:
           name: Configure Captain Platform
           command: echo 'export CAPTAIN_PLATFORM=<<parameters.platform>>' >> $BASH_ENV
   # This runs `flutter pub get` and `dart pub get` if we pass parameter `generate_pigeons` to the job it also runs the following:
-  #   - `sh ./scripts/pigeon.sh`
-  #   - `dart run build_runner build --delete-conflicting-outputs`
+  #   - `melos pigeon`
+  #   - `melos generate`
   install_flutter_and_dart_packages:
     parameters:
       generate_pigeons:
         type: boolean
+      use_melos:
+        type: boolean
+        default: true
+      working_dir:
+        type: string
     steps:
-      - run:
-          name: Install Flutter Packages
-          command: flutter pub get
-      - run:
-          name: Install Dart Packages
-          command: dart pub get
-          description: Install Dart Packages (for dart explicit packages)
       - when:
           condition:
             equal:
-              - <<parameters.generate_pigeons>>
+              - <<parameters.use_melos>>
               - true
           steps:
             - run:
-                name: Generate Pigeons
-                command: sh ./scripts/pigeon.sh
+                name: Install melos
+                command: dart pub global activate melos &&  echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> $BASH_ENV
             - run:
-                name: Build Pigeons
-                command: dart run build_runner build --delete-conflicting-outputs
+                name: Install Flutter Packages
+                command: melos bootstrap
+            - run:
+                name: Install Dart Packages
+                command: melos dart_bootstrap
+                description: Install Dart Packages (for dart explicit packages)
+            - when:
+                condition:
+                  equal:
+                    - <<parameters.generate_pigeons>>
+                    - true
+                steps:
+                  - run:
+                      name: Generate Pigeons
+                      command: melos pigeon --no-select
+                  - run:
+                      name: Build Pigeons
+                      command: melos generate --no-select
+      - when:
+          condition:
+            equal:
+              - <<parameters.use_melos>>
+              - false
+          steps:
+            - run:
+                name: Install Flutter Packages
+                command: flutter pub get
+            - run:
+                name: Install Dart Packages
+                command: dart pub get
+                description: Install Dart Packages (for dart explicit packages)
+            - when:
+                condition:
+                  equal:
+                    - <<parameters.generate_pigeons>>
+                    - true
+                steps:
+                  - run:
+                      name: Generate Pigeons
+                      command: sh scripts/pigeon.sh
+                  - run:
+                      name: Build Pigeons
+                      command: dart run build_runner build --delete-conflicting-outputs
 
 jobs:
   danger:
@@ -114,7 +171,7 @@ jobs:
           pkg-manager: yarn
           override-ci-command: yarn install --frozen-lockfile --network-concurrency 1
       - attach_workspace:
-          at: coverage
+          at: ~/project
       - run:
           name: Run Danger
           command: yarn danger ci
@@ -123,20 +180,38 @@ jobs:
     parameters:
       version:
         type: string
-    docker:
-      - image: cirrusci/flutter:<<parameters.version>>
+        default: "3.24.3"
+    executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
-      - install_flutter_and_dart_packages:
-          generate_pigeons: true
-      - run: flutter test --coverage
-      - run:
-          working_directory: coverage
-          command: lcov --remove lcov.info '*.g.dart' '*.mocks.dart' -o lcov.info
+      - run: sudo apt-get update&& sudo apt-get -y install lcov
+      - setup_flutter:
+          version: <<parameters.version>>
+          use_melos: true
+      - run: melos test-coverage --no-select
       - persist_to_workspace:
-          root: coverage
+          root: ~/project
           paths:
-            - lcov.info
+            - coverage
+
+
+  test_flutter_without_melos:
+    parameters:
+      version:
+        type: string
+        default: "2.10.0"
+      app-dir:
+        type: string
+    executor: flutter-executor
+    working_directory: <<parameters.app-dir>>
+    steps:
+      - advanced-checkout/shallow-checkout:
+          path: ~/project
+      - setup_flutter:
+          version: <<parameters.version>>
+          use_melos: false
+          working_dir: <<parameters.app-dir>>
+      - run: flutter test
 
   test_android:
     executor:
@@ -147,7 +222,7 @@ jobs:
       - advanced-checkout/shallow-checkout
       - setup_flutter
       - android/run-tests:
-          working-directory: example/android
+          working-directory: packages/instabug_flutter/example/android
           test-command: ./gradlew test
 
   e2e_android_captain:
@@ -162,9 +237,9 @@ jobs:
       - setup_flutter
       - android/start-emulator-and-run-tests:
           run-tests-working-directory: e2e
-          additional-avd-args: --device 3
+          additional-avd-args: --device 25
           system-image: system-images;android-33;default;x86_64
-          post-emulator-launch-assemble-command: cd example && flutter build apk --debug
+          post-emulator-launch-assemble-command: cd packages/instabug_flutter/example && flutter build apk --debug
           test-command: dotnet test
 
   test_ios:
@@ -178,7 +253,7 @@ jobs:
       - setup_ios
       - run:
           name: Build and run tests
-          working_directory:  ~/project/example/ios
+          working_directory: ~/project/packages/instabug_flutter/example/ios
           command: |
             xcodebuild -allowProvisioningUpdates \
                 -workspace Runner.xcworkspace \
@@ -199,53 +274,72 @@ jobs:
       - setup_ios
       - run:
           name: Build Example App
-          working_directory: example
+          working_directory: packages/instabug_flutter/example
           command: flutter build ios --simulator
       - run:
           name: Run E2E Tests
-          no_output_timeout: 30m
+          no_output_timeout: 20m
           working_directory: e2e
           command: dotnet test
 
   format_flutter:
-    docker:
-      - image: cirrusci/flutter
+    executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
-      - install_flutter_and_dart_packages:
-          generate_pigeons: false
+      - setup_flutter
       - run:
           name: Check Format
-          command: dart format . --set-exit-if-changed
+          command: melos format
 
   lint_flutter:
-    docker:
-      - image: cirrusci/flutter
+    executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
-      - install_flutter_and_dart_packages:
-          generate_pigeons: true
+      - setup_flutter
       - run:
           name: Perform Static Analysis
-          command: flutter analyze
+          command: melos analyze
 
   verify_pub:
-    docker:
-      - image: cirrusci/flutter
+    executor: flutter-executor
     steps:
       - advanced-checkout/shallow-checkout
-      - install_flutter_and_dart_packages:
-          generate_pigeons: true
+      - setup_flutter
       - run:
           name: Check Package Score
-          command: dart run pana --no-warning --exit-code-threshold 0
-      - run: flutter pub publish --dry-run
+          command: melos score --no-select
+      - run: melos dryPublish --no-select
 
-  release:
+  release_dio_plugin:
+    executor: flutter-executor
+    steps:
+      - advanced-checkout/shallow-checkout
+      - setup_flutter
+      - run: chmod +x packages/Instabug-Dio-Interceptor/release.sh
+      - run: ./packages/Instabug-Dio-Interceptor/release.sh
+
+  release_http_adapter_plugin:
+    executor: flutter-executor
+    steps:
+      - advanced-checkout/shallow-checkout
+      - setup_flutter
+      - run: chmod +x packages/Instabug-Dart-http-Adapter/release.sh
+      - run: ./packages/Instabug-Dart-http-Adapter/release.sh
+
+  release_modular_plugin:
+    executor: flutter-executor
+    steps:
+      - advanced-checkout/shallow-checkout
+      - setup_flutter
+      - run: chmod +x packages/instabug_flutter_modular/release.sh
+      - run: ./packages/instabug_flutter_modular/release.sh
+
+
+  release_instabug_flutter:
     macos:
       xcode: 15.2.0
     resource_class: macos.m1.medium.gen1
-    working_directory: "~"
+    working_directory: "~/project"
     steps:
       - advanced-checkout/shallow-checkout:
           path: ~/project
@@ -254,7 +348,7 @@ jobs:
           name: Install Rosetta
           command: softwareupdate --install-rosetta --agree-to-license
       - flutter/install_sdk_and_pub:
-          version: 3.3.6
+          version: 3.10.5
           app-dir: project
       - run:
           name: Install pub packages
@@ -263,7 +357,7 @@ jobs:
       - run:
           name: Generate Pigeons
           working_directory: project
-          command: sh ./scripts/pigeon.sh
+          command: melos pigeon --no-select
       - run:
           name: Clone Escape
           command: git clone git@github.com:Instabug/Escape.git
@@ -288,10 +382,10 @@ workflows:
             - test_flutter-stable
       - test_flutter:
           name: test_flutter-stable
-          version: stable
-      - test_flutter:
+      - test_flutter_without_melos:
           name: test_flutter-2.10.5
           version: 2.10.5
+          app-dir: "~/project/packages/instabug_flutter/"
       - e2e_android_captain
       - test_ios
       - e2e_ios_captain
@@ -302,7 +396,7 @@ workflows:
       - verify_pub:
           requires:
             - lint_flutter
-      - hold_release:
+      - hold_release_instabug_flutter:
           type: approval
           requires:
             - danger
@@ -319,9 +413,51 @@ workflows:
           filters:
             branches:
               only: master
-      - release:
+      - hold_release_dio_plugin:
+          type: approval
           requires:
-            - hold_release
+            - test_flutter-stable
+          filters:
+            branches:
+              only: master
+      - release_dio_plugin:
+          requires:
+            - hold_release_dio_plugin
+            - verify_pub
+          filters:
+            branches:
+              only: master
+      - hold_release_http_adapter_plugin:
+          type: approval
+          requires:
+            - test_flutter-stable
+          filters:
+            branches:
+              only: master
+      - release_http_adapter_plugin:
+          requires:
+            - hold_release_http_adapter_plugin
+            - verify_pub
+          filters:
+            branches:
+              only: master
+      - hold_release_modular_plugin:
+          type: approval
+          requires:
+            - test_flutter-stable
+          filters:
+            branches:
+              only: master
+      - release_modular_plugin:
+          requires:
+            - hold_release_modular_plugin
+            - verify_pub
+          filters:
+            branches:
+              only: master
+      - release_instabug_flutter:
+          requires:
+            - hold_release_instabug_flutter
           filters:
             branches:
               only: master
