@@ -79,4 +79,5 @@ scripts:
     packageFilters:
       dependsOn: pana
       private: false
+      scope: instabug_flutter
 

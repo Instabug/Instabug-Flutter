@@ -2,7 +2,7 @@ name: instabug_http_client
 description:
   This package is an add on to instabug_flutter. It intercepts any requests performed
   with http Package and sends them to the report that will be sent to the dashboard.
-version: 2.6.0
+version: 2.7.0
 homepage: https://github.com/Instabug/Instabug-Flutter#readme
 documentation: https://docs.instabug.com/docs/flutter-overview
 repository: https://github.com/Instabug/Instabug-Flutter/tree/refactor/monorepo/packages/instabug_http_client
@@ -14,7 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ">=0.13.0 <2.0.0"
-  instabug_flutter: ">=14.0.0 <15.0.0"
+  instabug_flutter: ">=14.0.0 <17.0.0"
   meta: ^1.3.0
 
 dev_dependencies:
