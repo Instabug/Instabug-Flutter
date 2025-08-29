@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.6.0] (2025-08-29)
+
+### Added
+
+- supports Instabug SDK above 16.0.0 ([#624](https://github.com/Instabug/Instabug-Flutter/pull/624))
+
 ## [2.5.0] (2025-07-17)
 
 ### Added
