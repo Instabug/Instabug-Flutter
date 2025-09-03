@@ -4,8 +4,12 @@ if [ ! "${VERSION}" ] || [ -z "${VERSION}" ];then
     echo "Instabug: err: Version Number not found."
     exit 1
 else 
-    mkdir -p .pub-cache
-    cat <<EOF > $HOME/.pub-cache/credentials.json
+    # Remove pubspec_overrides.yaml files before publishing to avoid warnings
+    echo "Removing pubspec_overrides.yaml files before publishing..."
+    find . -name "pubspec_overrides.yaml" -delete
+    
+    mkdir -p "$HOME/Library/Application Support/dart"
+    cat <<EOF > "$HOME/Library/Application Support/dart/pub-credentials.json"
     ${PUB_CREDENTIALS}
 
 EOF

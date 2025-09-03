@@ -1,4 +1,12 @@
 # Changelog
+
+## [16.0.1](https://github.com/Instabug/Instabug-Flutter/compare/v15.0.3...dev) (Sep 3, 2025)
+
+### Fixed
+
+- Fixed Missing Generated Files ([#634](https://github.com/Instabug/Instabug-Flutter/pull/634)).
+
+
 ## [16.0.0](https://github.com/Instabug/Instabug-Flutter/compare/v15.0.3...dev) (Aug 29, 2025)
 
 ### Added
