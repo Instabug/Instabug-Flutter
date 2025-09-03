@@ -5,7 +5,7 @@ description:
 version: 2.7.0
 homepage: https://github.com/Instabug/Instabug-Flutter#readme
 documentation: https://docs.instabug.com/docs/flutter-overview
-repository: https://github.com/Instabug/Instabug-Flutter/tree/refactor/monorepo/packages/instabug_http_client
+repository: https://github.com/Instabug/Instabug-Flutter/tree/master/packages/instabug_http_client
 
 environment:
   sdk: '>=2.12.0 <4.0.0'
