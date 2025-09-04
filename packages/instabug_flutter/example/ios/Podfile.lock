@@ -11,18 +11,20 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - Instabug (from `https://ios-releases.instabug.com/custom/rebase-bdr-therma/16.0.2/Instabug.podspec`)
   - instabug_flutter (from `.symlinks/plugins/instabug_flutter/ios`)
   - OCMock (= 3.6)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
 
 SPEC REPOS:
   trunk:
-    - Instabug
     - OCMock
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  Instabug:
+    :podspec: https://ios-releases.instabug.com/custom/rebase-bdr-therma/16.0.2/Instabug.podspec
   instabug_flutter:
     :path: ".symlinks/plugins/instabug_flutter/ios"
   video_player_avfoundation:
@@ -30,11 +32,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  Instabug: 125f729dea4e4a43e815ae06f9db0332e2a5fd60
+  Instabug: 7c0aa035384cd0296579cebf034789a3a854c6c1
   instabug_flutter: e87492cda79a41198037cea0685c8a5dafc172f4
   OCMock: 5ea90566be239f179ba766fd9fbae5885040b992
   video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
 
-PODFILE CHECKSUM: 986d650b5bc8e230d8a9612663af4b3b1a9d6236
+PODFILE CHECKSUM: 3e195a19ff97ce36e8fd363115abc67a83be3dfe
 
 COCOAPODS: 1.16.2
