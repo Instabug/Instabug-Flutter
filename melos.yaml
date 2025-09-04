@@ -63,6 +63,7 @@ scripts:
       flutter: true
       dependsOn: pana
       private: false
+      scope: instabug_flutter
   pods:
     run: cd ios && pod install --repo-update
     description: running pod install
