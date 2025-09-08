@@ -112,7 +112,7 @@ packages:
       path: "../../instabug_flutter"
       relative: true
     source: path
-    version: "16.0.0"
+    version: "16.0.2"
   leak_tracker:
     dependency: transitive
     description:

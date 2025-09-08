@@ -1,6 +1,13 @@
 # Changelog
 
-## [16.0.1](https://github.com/Instabug/Instabug-Flutter/compare/v15.0.3...dev) (Sep 3, 2025)
+## [16.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v16.0.2...dev) (Sep 8, 2025)
+
+### Changed
+
+- Bump Instabug iOS SDK to v16.0.3 ([#635](https://github.com/Instabug/Instabug-Flutter/pull/635)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/16.0.3).
+
+
+## [16.0.1](https://github.com/Instabug/Instabug-Flutter/compare/v16.0.1...dev) (Sep 3, 2025)
 
 ### Fixed
 
