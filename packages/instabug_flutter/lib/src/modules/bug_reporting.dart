@@ -159,13 +159,12 @@ class BugReporting implements BugReportingFlutterApi {
   /// Sets what type of reports, bug or feedback, should be invoked.
   /// [reportTypes] - List of reportTypes
   static Future<void> setReportTypes(List<ReportType>? reportTypes) async {
-    if(reportTypes!=null) {
+    if (reportTypes != null) {
       final types = List.of(reportTypes);
       types.remove(ReportType.other); //removed from report types
       return _host.setReportTypes(types.mapToString());
     }
     return _host.setReportTypes(reportTypes.mapToString());
-
   }
 
   /// Sets whether the extended bug report mode should be disabled, enabled with
