@@ -28,6 +28,7 @@ dependencies:
     path: ../
   instabug_dio_interceptor:
     path: ../../instabug_dio_interceptor
+  instabug_http_client: ^2.4.0
 
   video_player:
   dio:
