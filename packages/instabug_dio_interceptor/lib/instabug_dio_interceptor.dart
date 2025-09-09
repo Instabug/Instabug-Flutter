@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 
 class InstabugDioInterceptor extends Interceptor {
@@ -57,8 +58,18 @@ class InstabugDioInterceptor extends Interceptor {
   }
 
   static NetworkData _getRequestData(int requestHashCode) {
-    final data = _requests[requestHashCode]!;
-    _requests.remove(requestHashCode);
+    final data = _requests[requestHashCode];
+    if(data==null){
+      if (kDebugMode) {
+        print("IBG: No request Data for this Response");
+      }
+      return  NetworkData(
+        startTime: DateTime.now(),
+        url: "No request Data",
+        method: "No Request Data",
+      );
+    }
+    // _requests.remove(requestHashCode);
     return data;
   }
 
