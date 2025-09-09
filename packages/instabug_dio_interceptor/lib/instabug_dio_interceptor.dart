@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 
 class InstabugDioInterceptor extends Interceptor {
@@ -61,48 +62,58 @@ class InstabugDioInterceptor extends Interceptor {
   }
 
   NetworkData _map(Response<dynamic> response) {
-    final data = _getRequestData(response.requestOptions.hashCode);
-    final responseHeaders = <String, dynamic>{};
-    final endTime = DateTime.now();
+    try {
+      final data = _getRequestData(response.requestOptions.hashCode);
+      final responseHeaders = <String, dynamic>{};
+      final endTime = DateTime.now();
 
-    response.headers
-        .forEach((String name, dynamic value) => responseHeaders[name] = value);
+      response.headers.forEach(
+        (String name, dynamic value) => responseHeaders[name] = value,
+      );
 
-    var responseContentType = '';
-    if (responseHeaders.containsKey('content-type')) {
-      responseContentType = responseHeaders['content-type'].toString();
+      var responseContentType = '';
+      if (responseHeaders.containsKey('content-type')) {
+        responseContentType = responseHeaders['content-type'].toString();
+      }
+
+      var requestBodySize = 0;
+      if (response.requestOptions.headers.containsKey('content-length')) {
+        requestBodySize =
+            int.parse(response.requestOptions.headers['content-length'] ?? '0');
+      } else if (response.requestOptions.data != null) {
+        requestBodySize = response.requestOptions.data.toString().length;
+      }
+
+      var responseBodySize = 0;
+      if (responseHeaders.containsKey('content-length')) {
+        // ignore: avoid_dynamic_calls
+        responseBodySize =
+            int.parse(responseHeaders['content-length'][0] ?? '0');
+      } else if (response.data != null) {
+        responseBodySize = response.data.toString().length;
+      }
+
+      return data.copyWith(
+        endTime: endTime,
+        duration: endTime.difference(data.startTime).inMicroseconds,
+        url: response.requestOptions.uri.toString(),
+        method: response.requestOptions.method,
+        requestBody: response.requestOptions.data.toString(),
+        requestHeaders: response.requestOptions.headers,
+        requestContentType: response.requestOptions.contentType,
+        requestBodySize: requestBodySize,
+        status: response.statusCode,
+        responseBody: response.data.toString(),
+        responseHeaders: responseHeaders,
+        responseContentType: responseContentType,
+        responseBodySize: responseBodySize,
+      );
+    } catch (e, stacktrace) {
+      print("Error in dio interceptor");
+      debugPrintStack(
+        stackTrace: stacktrace,
+      );
+      return  _getRequestData(response.requestOptions.hashCode);
     }
-
-    var requestBodySize = 0;
-    if (response.requestOptions.headers.containsKey('content-length')) {
-      requestBodySize =
-          int.parse(response.requestOptions.headers['content-length'] ?? '0');
-    } else if (response.requestOptions.data != null) {
-      requestBodySize = response.requestOptions.data.toString().length;
-    }
-
-    var responseBodySize = 0;
-    if (responseHeaders.containsKey('content-length')) {
-      // ignore: avoid_dynamic_calls
-      responseBodySize = int.parse(responseHeaders['content-length'][0] ?? '0');
-    } else if (response.data != null) {
-      responseBodySize = response.data.toString().length;
-    }
-
-    return data.copyWith(
-      endTime: endTime,
-      duration: endTime.difference(data.startTime).inMicroseconds,
-      url: response.requestOptions.uri.toString(),
-      method: response.requestOptions.method,
-      requestBody: response.requestOptions.data.toString(),
-      requestHeaders: response.requestOptions.headers,
-      requestContentType: response.requestOptions.contentType,
-      requestBodySize: requestBodySize,
-      status: response.statusCode,
-      responseBody: response.data.toString(),
-      responseHeaders: responseHeaders,
-      responseContentType: responseContentType,
-      responseBodySize: responseBodySize,
-    );
   }
 }
