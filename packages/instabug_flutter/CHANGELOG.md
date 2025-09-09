@@ -4,7 +4,7 @@
 
 ### Fixed
 
-- Fixed other type argument in Reprosteps ([#635](https://github.com/Instabug/Instabug-Flutter/pull/635))
+- Fixed other type argument in Reprosteps ([#636](https://github.com/Instabug/Instabug-Flutter/pull/636))
 
 ## [16.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v16.0.2...dev) (Sep 8, 2025)
 
