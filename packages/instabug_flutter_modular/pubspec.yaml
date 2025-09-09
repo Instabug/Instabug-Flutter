@@ -24,4 +24,3 @@ dev_dependencies:
   mockito: '>=5.2.0 <=5.4.4'
   # A specific version isn't specified as we want to use the version used in flutter_modular
   modular_core:
-  pana: ^0.21.0
