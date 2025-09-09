@@ -1,8 +1,8 @@
 # Generated files
 *.mocks.dart
-*.g.dart
-android/**/generated/
-ios/**/Generated/
+
+# E2E tests
+e2e/
 
 # Miscellaneous
 *.class
@@ -34,12 +34,9 @@ ios/**/Generated/
 .packages
 .pub-cache/
 .pub/
-/pubspec.lock
+pubspec.lock
 build/
 coverage/
-
-# Node related
-node_modules
 
 # Android related
 **/android/**/gradle-wrapper.jar

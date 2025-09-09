@@ -152,13 +152,6 @@ packages:
       relative: true
     source: path
     version: "16.0.3"
-  instabug_http_client:
-    dependency: "direct overridden"
-    description:
-      path: "../../instabug_http_client"
-      relative: true
-    source: path
-    version: "2.7.1"
   leak_tracker:
     dependency: transitive
     description:
