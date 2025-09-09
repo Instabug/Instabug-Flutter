@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 
@@ -78,7 +80,8 @@ class InstabugDioInterceptor extends Interceptor {
       requestBodySize =
           int.parse(response.requestOptions.headers['content-length'] ?? '0');
     } else if (response.requestOptions.data != null) {
-      requestBodySize = response.requestOptions.data.toString().length;
+      // Calculate actual byte size for more accurate size estimation
+      requestBodySize = _calculateBodySize(response.requestOptions.data);
     }
 
     var responseBodySize = 0;
@@ -86,7 +89,8 @@ class InstabugDioInterceptor extends Interceptor {
       // ignore: avoid_dynamic_calls
       responseBodySize = int.parse(responseHeaders['content-length'][0] ?? '0');
     } else if (response.data != null) {
-      responseBodySize = response.data.toString().length;
+      // Calculate actual byte size for more accurate size estimation
+      responseBodySize = _calculateBodySize(response.data);
     }
 
     return data.copyWith(
@@ -94,15 +98,42 @@ class InstabugDioInterceptor extends Interceptor {
       duration: endTime.difference(data.startTime).inMicroseconds,
       url: response.requestOptions.uri.toString(),
       method: response.requestOptions.method,
-      requestBody: response.requestOptions.data.toString(),
+      requestBody: parseBody(response.requestOptions.data),
       requestHeaders: response.requestOptions.headers,
       requestContentType: response.requestOptions.contentType,
       requestBodySize: requestBodySize,
       status: response.statusCode,
-      responseBody: response.data.toString(),
+      responseBody: parseBody(response.data),
       responseHeaders: responseHeaders,
       responseContentType: responseContentType,
       responseBodySize: responseBodySize,
     );
+  }
+
+  String parseBody(dynamic data) {
+    try {
+      return jsonEncode(data);
+    } catch (e) {
+      return data.toString();
+    }
+  }
+
+  /// Calculates the actual byte size of the body data
+  int _calculateBodySize(dynamic data) {
+    if (data == null) return 0;
+
+    try {
+      // For string data, get UTF-8 byte length
+      if (data is String) {
+        return data.codeUnits.length;
+      }
+
+      // For other types, try to encode as JSON and get byte length
+      final jsonString = jsonEncode(data);
+      return jsonString.codeUnits.length;
+    } catch (e) {
+      // Fallback to string conversion if JSON encoding fails
+      return data.toString().codeUnits.length;
+    }
   }
 }

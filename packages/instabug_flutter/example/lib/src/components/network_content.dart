@@ -10,7 +10,13 @@ class NetworkContent extends StatefulWidget {
 }
 
 class _NetworkContentState extends State<NetworkContent> {
-  final http = InstabugHttpClient();
+  final dio = Dio();
+
+  @override
+  void initState() {
+    dio.interceptors.add(InstabugDioInterceptor());
+    super.initState();
+  }
 
   final endpointUrlController = TextEditingController();
 
@@ -38,6 +44,11 @@ class _NetworkContentState extends State<NetworkContent> {
           text: 'Send Request  Without Custom traceparent header',
           onPressed: () => _sendRequestToUrl(endpointUrlController.text),
         ),
+        InstabugButton(
+          text: 'Send Request  WithBody',
+          onPressed: () =>
+              _sendRequestToUrlWithBody(endpointUrlController.text),
+        ),
       ],
     );
   }
@@ -45,11 +56,32 @@ class _NetworkContentState extends State<NetworkContent> {
   void _sendRequestToUrl(String text, {Map<String, String>? headers}) async {
     try {
       String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
-      final response = await http.get(Uri.parse(url), headers: headers);
+      final response = await dio.get(url, options: Options(headers: headers));
 
       // Handle the response here
       if (response.statusCode == 200) {
-        final jsonData = json.decode(response.body);
+        final jsonData = json.decode(response.data);
+        log(jsonEncode(jsonData));
+      } else {
+        log('Request failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      log('Error sending request: $e');
+    }
+  }
+
+  void _sendRequestToUrlWithBody(String text,
+      {Map<String, String>? headers}) async {
+    try {
+      String url = text.trim().isEmpty ? widget.defaultRequestUrl : text;
+
+      final response = await dio.post(url,
+          data: <String, dynamic>{"Password": "1222", "name": "ahmed"},
+          options: Options(headers: headers));
+
+      // Handle the response here
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.data);
         log(jsonEncode(jsonData));
       } else {
         log('Request failed with status: ${response.statusCode}');

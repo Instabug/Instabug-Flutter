@@ -65,7 +65,7 @@ void main() {
       }),
     );
     when(mHost.getNetworkBodyMaxSize()).thenAnswer(
-          (_) => Future.value(10240),
+      (_) => Future.value(10240),
     );
   });
 
@@ -81,7 +81,6 @@ void main() {
 
   test('onResponse Test', () async {
     try {
-
       await dio.get<dynamic>('/test');
       // ignore: deprecated_member_use
     } on DioError {
