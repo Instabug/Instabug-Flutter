@@ -1,9 +1,0 @@
-{
-  "name": "Instabug-Flutter",
-  "version": "0.0.0",
-  "devDependencies": {
-    "@instabug/danger-plugin-coverage": "Instabug/danger-plugin-coverage",
-    "danger": "^11.2.5",
-    "typescript": "^5.0.4"
-  }
-}
