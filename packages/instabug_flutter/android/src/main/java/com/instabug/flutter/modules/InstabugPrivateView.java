@@ -20,7 +20,6 @@ public class InstabugPrivateView implements InstabugPrivateViewPigeon.InstabugPr
     public InstabugPrivateView(BinaryMessenger messenger, PrivateViewManager privateViewManager) {
         this.privateViewManager = privateViewManager;
         InstabugPrivateViewPigeon.InstabugPrivateViewHostApi.setup(messenger, this);
-        init();
     }
 
     static long time = System.currentTimeMillis();

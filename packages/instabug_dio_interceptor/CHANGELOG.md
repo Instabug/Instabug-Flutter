@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.6.1] (2025-09-09)
+
+### Fixed
+
+- Obfuscation of network body encoding issue ([#636](https://github.com/Instabug/Instabug-Flutter/pull/636))
+
 ## [2.6.0] (2025-08-29)
 
 ### Added

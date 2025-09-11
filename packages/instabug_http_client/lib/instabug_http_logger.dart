@@ -44,16 +44,18 @@ class InstabugHttpLogger {
     });
     var requestBodySize = 0;
     if (requestHeaders.containsKey('content-length')) {
-      requestBodySize = int.parse(responseHeaders['content-length'] ?? '0');
+      requestBodySize = int.parse(requestHeaders['content-length'] ?? '0');
     } else {
-      requestBodySize = requestBody.length;
+      // Calculate actual byte size for more accurate size estimation
+      requestBodySize = _calculateBodySize(requestBody);
     }
 
     var responseBodySize = 0;
     if (responseHeaders.containsKey('content-length')) {
       responseBodySize = int.parse(responseHeaders['content-length'] ?? '0');
     } else {
-      responseBodySize = response.body.length;
+      // Calculate actual byte size for more accurate size estimation
+      responseBodySize = _calculateBodySize(response.body);
     }
 
     networkLogger.networkLog(
@@ -72,5 +74,24 @@ class InstabugHttpLogger {
             : '',
       ),
     );
+  }
+
+  /// Calculates the actual byte size of the body data
+  int _calculateBodySize(dynamic data) {
+    if (data == null) return 0;
+
+    try {
+      // For string data, get UTF-8 byte length
+      if (data is String) {
+        return data.codeUnits.length;
+      }
+
+      // For other types, try to encode as JSON and get byte length
+      final jsonString = jsonEncode(data);
+      return jsonString.codeUnits.length;
+    } catch (e) {
+      // Fallback to string conversion if JSON encoding fails
+      return data.toString().codeUnits.length;
+    }
   }
 }

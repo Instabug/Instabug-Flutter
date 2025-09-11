@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:instabug_dio_interceptor/instabug_dio_interceptor.dart';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter_example/src/components/apm_switch.dart';
 import 'package:instabug_flutter_example/src/components/apm_switch.dart';
@@ -57,6 +59,29 @@ void main() {
       FlutterError.onError = (FlutterErrorDetails details) {
         Zone.current.handleUncaughtError(details.exception, details.stack!);
       };
+
+      NetworkLogger.obfuscateLog((networkData) {
+        try {
+          final decoded = jsonDecode(networkData.requestBody);
+
+          if (decoded is Map<String, dynamic>) {
+            // Clone to avoid modifying original
+            final result = Map<String, dynamic>.from(decoded);
+            if (result.containsKey('password')) {
+              result['password'] = '';
+              return networkData.copyWith(requestBody: jsonEncode(result));
+            }
+          } else {
+            print("Not Map");
+            // Not a JSON object
+          }
+        } catch (e, stactrace) {
+          debugPrintStack(stackTrace: stactrace);
+          // Invalid JSON
+        }
+
+        return networkData;
+      });
 
       runApp(
         const InstabugWidget(automasking: [

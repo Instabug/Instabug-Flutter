@@ -1,4 +1,24 @@
 # Changelog
+
+## [16.0.3](https://github.com/Instabug/Instabug-Flutter/compare/v16.0.2...dev) (Sep 9, 2025)
+
+### Fixed
+
+- Fixed other type argument in Reprosteps ([#636](https://github.com/Instabug/Instabug-Flutter/pull/636))
+
+## [16.0.2](https://github.com/Instabug/Instabug-Flutter/compare/v16.0.2...dev) (Sep 8, 2025)
+
+### Changed
+
+- Bump Instabug iOS SDK to v16.0.3 ([#635](https://github.com/Instabug/Instabug-Flutter/pull/635)). [See release notes](https://github.com/Instabug/Instabug-iOS/releases/tag/16.0.3).
+
+## [16.0.1](https://github.com/Instabug/Instabug-Flutter/compare/v16.0.1...dev) (Sep 3, 2025)
+
+### Fixed
+
+- Fixed Missing Generated Files ([#634](https://github.com/Instabug/Instabug-Flutter/pull/634)).
+
+
 ## [16.0.0](https://github.com/Instabug/Instabug-Flutter/compare/v15.0.3...dev) (Aug 29, 2025)
 
 ### Added

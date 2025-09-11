@@ -1,9 +1,9 @@
 # Generated files
-**/pubspec_overrides.yaml
-!**/example/pubspec_overrides.yaml
+*.mocks.dart
 
 # Miscellaneous
 *.class
+*.lock
 *.log
 *.pyc
 *.swp
@@ -19,32 +19,25 @@
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# Visual Studio Code related
+.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
 .flutter-plugins
-.flutter-plugins-dependencies
 .packages
+.flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/pubspec.lock
 build/
-coverage/
-
-# Node related
-node_modules
 
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
 **/android/captures/
-android/gradlew
-android/gradlew.bat
+**/android/gradlew
+**/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 
@@ -61,25 +54,18 @@ android/gradlew.bat
 **/ios/**/DerivedData/
 **/ios/**/Icon?
 **/ios/**/Pods/
-**/ios/**/Pods/
-
 **/ios/**/.symlinks/
 **/ios/**/profile
 **/ios/**/xcuserdata
 **/ios/.generated/
 **/ios/Flutter/App.framework
 **/ios/Flutter/Flutter.framework
-**/ios/Flutter/Flutter.podspec
 **/ios/Flutter/Generated.xcconfig
 **/ios/Flutter/app.flx
 **/ios/Flutter/app.zip
 **/ios/Flutter/flutter_assets/
-**/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
-
-# Project specific
-/PRDs/
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3

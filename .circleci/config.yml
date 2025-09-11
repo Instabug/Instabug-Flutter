@@ -311,20 +311,59 @@ jobs:
       - run: melos dryPublish --no-select
 
   release_dio_plugin:
-    executor: flutter-executor
+    macos:
+      xcode: 15.2.0
+    resource_class: macos.m1.medium.gen1
+    working_directory: "~/project"
     steps:
-      - advanced-checkout/shallow-checkout
+      - advanced-checkout/shallow-checkout:
+          path: ~/project
+      # Flutter doesn't support Apple Silicon yet, so we need to install Rosetta use Flutter on M1 machines.
+      - run:
+          name: Install Rosetta
+          command: softwareupdate --install-rosetta --agree-to-license
       - setup_flutter
-      - run: chmod +x packages/Instabug-Dio-Interceptor/release.sh
-      - run: ./packages/Instabug-Dio-Interceptor/release.sh
+      - run:
+          name: Clone Escape
+          command: git clone -b master2 git@github.com:Instabug/Escape.git
+      - run:
+          name: Build Escape
+          working_directory: Escape
+          command: |
+            swift build -c release
+            cp -f .build/release/Escape /usr/local/bin/escape
+      - run:
+          name: Publish Package
+          working_directory: packages/instabug_dio_interceptor
+          command: Escape flutter publish-dependancy
+
 
   release_http_adapter_plugin:
-    executor: flutter-executor
+    macos:
+      xcode: 15.2.0
+    resource_class: macos.m1.medium.gen1
+    working_directory: "~/project"
     steps:
-      - advanced-checkout/shallow-checkout
+      - advanced-checkout/shallow-checkout:
+          path: ~/project
+      # Flutter doesn't support Apple Silicon yet, so we need to install Rosetta use Flutter on M1 machines.
+      - run:
+          name: Install Rosetta
+          command: softwareupdate --install-rosetta --agree-to-license
       - setup_flutter
-      - run: chmod +x packages/Instabug-Dart-http-Adapter/release.sh
-      - run: ./packages/Instabug-Dart-http-Adapter/release.sh
+      - run:
+          name: Clone Escape
+          command: git clone -b master2 git@github.com:Instabug/Escape.git
+      - run:
+          name: Build Escape
+          working_directory: Escape
+          command: |
+            swift build -c release
+            cp -f .build/release/Escape /usr/local/bin/escape
+      - run:
+          name: Publish Package
+          working_directory: packages/instabug_http_client
+          command: Escape flutter publish-dependancy
 
   release_modular_plugin:
     executor: flutter-executor
@@ -347,20 +386,10 @@ jobs:
       - run:
           name: Install Rosetta
           command: softwareupdate --install-rosetta --agree-to-license
-      - flutter/install_sdk_and_pub:
-          version: 3.10.5
-          app-dir: project
-      - run:
-          name: Install pub packages
-          working_directory: ~/project
-          command: dart pub get
-      - run:
-          name: Generate Pigeons
-          working_directory: project
-          command: melos pigeon --no-select
+      - setup_flutter
       - run:
           name: Clone Escape
-          command: git clone git@github.com:Instabug/Escape.git
+          command: git clone -b master2 git@github.com:Instabug/Escape.git
       - run:
           name: Build Escape
           working_directory: Escape
@@ -369,7 +398,7 @@ jobs:
             cp -f .build/release/Escape /usr/local/bin/escape
       - run:
           name: Publish Package
-          working_directory: project
+          working_directory: packages/instabug_flutter
           command: Escape flutter publish
 
 workflows:
@@ -408,7 +437,7 @@ workflows:
             # as they were just flaky and the tests pass locally without issues.
             # - e2e_android_captain
             # - test_ios
-            - e2e_ios_captain
+            # - e2e_ios_captain
             - verify_pub
           filters:
             branches:

@@ -1,6 +1,8 @@
 # Generated files
-**/pubspec_overrides.yaml
-!**/example/pubspec_overrides.yaml
+*.mocks.dart
+
+# E2E tests
+e2e/
 
 # Miscellaneous
 *.class
@@ -32,12 +34,9 @@
 .packages
 .pub-cache/
 .pub/
-/pubspec.lock
+pubspec.lock
 build/
 coverage/
-
-# Node related
-node_modules
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -61,8 +60,6 @@ android/gradlew.bat
 **/ios/**/DerivedData/
 **/ios/**/Icon?
 **/ios/**/Pods/
-**/ios/**/Pods/
-
 **/ios/**/.symlinks/
 **/ios/**/profile
 **/ios/**/xcuserdata
@@ -77,9 +74,6 @@ android/gradlew.bat
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
-
-# Project specific
-/PRDs/
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
