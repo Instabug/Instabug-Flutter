@@ -81,23 +81,6 @@ public class ApmApi implements ApmPigeon.ApmHostApi {
         }
     }
 
-  /**
-   * Starts an execution trace and handles the result
-   * using callbacks.
-   * 
-   * @param id The `id` parameter is a non-null String that represents the identifier of the execution
-   * trace.
-   * @param name The `name` parameter in the `startExecutionTrace` method represents the name of the
-   * execution trace that will be started. It is used as a reference to identify the trace during
-   * execution monitoring.
-   * @param result The `result` parameter in the `startExecutionTrace` method is an instance of
-   * `ApmPigeon.Result<String>`. This parameter is used to provide the result of the execution trace
-   * operation back to the caller. The `success` method of the `result` object is called with the
-   * 
-   * @deprecated see {@link #startFlow}
-   */
-
-
     /**
      * Starts an AppFlow with the specified name.
      * <br/>
