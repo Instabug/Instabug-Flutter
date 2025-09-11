@@ -28,6 +28,8 @@ part 'src/screens/crashes_page.dart';
 
 part 'src/screens/bug_reporting.dart';
 
+part 'src/screens/core_page.dart';
+
 part 'src/screens/session_replay_page.dart';
 
 part 'src/screens/complex_page.dart';
@@ -56,7 +58,7 @@ void main() {
       WidgetsFlutterBinding.ensureInitialized();
 
       Instabug.init(
-          token: 'ed6f659591566da19b67857e1b9d40ab',
+          token: '613e9a314098444e954c3ef216fc2128',
           invocationEvents: [InvocationEvent.floatingButton],
           debugLogsLevel: LogLevel.verbose,
           appVariant: 'variant 1');
