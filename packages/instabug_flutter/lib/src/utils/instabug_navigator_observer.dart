@@ -39,9 +39,12 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         // Add the new step to the list
         _steps.add(route);
 
-        // If this route is in the array, report it and remove it from the list
+        // If this route is in the array, report it
         if (_steps.contains(route)) {
           await reportScreenChange(route.name);
+        }
+        // Check again if this route is still in the array after async operation, remove it from the list
+        if (_steps.contains(route)) {
           _steps.remove(route);
         }
       });
