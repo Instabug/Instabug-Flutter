@@ -90,3 +90,10 @@ android/gradlew.bat
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 /packages/**/lib/src/generated/
+
+# FVM Version Cache
+.fvm/
+.fvmrc
+
+#vscode settings
+.vscode/
