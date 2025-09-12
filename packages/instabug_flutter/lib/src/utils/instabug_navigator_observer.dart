@@ -29,6 +29,9 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         // If there is a step that hasn't been pushed yet
         if (_steps.isNotEmpty) {
           await reportScreenChange(_steps.last.name);
+        }
+        // Check again if there is a step that hasn't been pushed yet after the async operation above.
+        if (_steps.isNotEmpty) {
           // Report the last step and remove it from the list
           _steps.removeLast();
         }
@@ -36,9 +39,12 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         // Add the new step to the list
         _steps.add(route);
 
-        // If this route is in the array, report it and remove it from the list
+        // If this route is in the array, report it
         if (_steps.contains(route)) {
           await reportScreenChange(route.name);
+        }
+        // Check again if this route is still in the list after async operation, remove it from the list
+        if (_steps.contains(route)) {
           _steps.remove(route);
         }
       });
