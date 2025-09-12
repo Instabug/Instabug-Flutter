@@ -29,6 +29,8 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         // If there is a step that hasn't been pushed yet
         if (_steps.isNotEmpty) {
           await reportScreenChange(_steps.last.name);
+        }
+        if (_steps.isNotEmpty) {
           // Report the last step and remove it from the list
           _steps.removeLast();
         }
