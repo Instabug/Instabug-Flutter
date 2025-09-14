@@ -271,48 +271,72 @@ class _CorePageState extends State<CorePage> {
           label: 'Enter log message',
           symanticLabel: 'log_message_input',
         ),
-        Row(
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
           children: [
-            Expanded(
-              child: InstabugButton(
-                text: 'Debug',
-                symanticLabel: 'log_debug_btn',
-                onPressed: addLogDebug,
-              ),
+            InstabugButton(
+              text: 'Debug',
+              symanticLabel: 'log_debug_btn',
+              onPressed: addLogDebug,
             ),
-            Expanded(
-              child: InstabugButton(
-                text: 'Error',
-                symanticLabel: 'log_error_btn',
-                onPressed: addLogError,
-              ),
+            InstabugButton(
+              text: 'Error',
+              symanticLabel: 'log_error_btn',
+              onPressed: addLogError,
             ),
-            Expanded(
-              child: InstabugButton(
-                text: 'Info',
-                symanticLabel: 'log_info_btn',
-                onPressed: addLogInfo,
-              ),
+            InstabugButton(
+              text: 'Info',
+              symanticLabel: 'log_info_btn',
+              onPressed: addLogInfo,
             ),
-            Expanded(
-              child: InstabugButton(
-                text: 'Verbose',
-                symanticLabel: 'log_verbose_btn',
-                onPressed: addLogVerbose,
-              ),
+            InstabugButton(
+              text: 'Verbose',
+              symanticLabel: 'log_verbose_btn',
+              onPressed: addLogVerbose,
             ),
-            Expanded(
-              child: InstabugButton(
-                text: 'Warn',
-                symanticLabel: 'log_warn_btn',
-                onPressed: addLogWarn,
-              ),
+            InstabugButton(
+              text: 'Warn',
+              symanticLabel: 'log_warn_btn',
+              onPressed: addLogWarn,
             ),
           ],
         ),
 
-        const SizedBox(height: 20),
 
+        const SizedBox(height: 20),
+        InstabugButton(
+          text: 'Enable session profiler',
+          symanticLabel: 'enable_session_profiler',
+          key: const Key('enable_session_profiler_btn'),
+          onPressed: () {
+            Instabug.setSessionProfilerEnabled(true);
+          },
+        ),
+        InstabugButton(
+          text: 'Disable session profiler',
+          symanticLabel: 'disable_session_profiler',
+          key: const Key('disable_session_profiler_btn'),
+          onPressed: () {
+            Instabug.setSessionProfilerEnabled(false);
+          },
+        ),
+        InstabugButton(
+          text: 'Welcome Message LIVE',
+          symanticLabel: 'welcome_message_live',
+          key: const Key('welcome_msg_live_btn'),
+          onPressed: () {
+            Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.live);
+          },
+        ),
+        InstabugButton(
+          text: 'Welcome Message BETA',
+          symanticLabel: 'welcome_message_beta',
+          key: const Key('welcome_msg_beta_btn'),
+          onPressed: () {
+            Instabug.showWelcomeMessageWithMode(WelcomeMessageMode.beta);
+                },
+        ),
         const SectionTitle('Invocation Events'),
         ButtonBar(
           alignment: MainAxisAlignment.start,
