@@ -131,6 +131,11 @@ class _MyHomePageState extends State<MyHomePage> {
     ///This way of navigation utilize screenLoading automatic approach [Navigator 1]
     Navigator.pushNamed(context, BugReportingPage.screenName);
   }
+  void _navigateToCore() {
+    ///This way of navigation utilize screenLoading automatic approach [Navigator 1]
+    Navigator.pushNamed(context, CorePage.screenName);
+  }
+
 
   void _navigateToCrashes() {
     ///This way of navigation utilize screenLoading automatic approach [Navigator 1]
@@ -169,15 +174,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _navigateToCallbackHandler() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const CallbackScreen(),
-        settings: RouteSettings(name: CallbackScreen.screenName),
-      ),
-    );
-  }
 
   void _navigateToSessionReplay() {
     Navigator.push(
@@ -215,9 +211,9 @@ class _MyHomePageState extends State<MyHomePage> {
           symanticLabel: 'open_bug_reporting',
         ),
         InstabugButton(
-          onPressed: _navigateToCallbackHandler,
-          text: 'Callback Page',
-          symanticLabel: 'open_callback_page',
+          onPressed: _navigateToCore,
+          text: 'Core',
+          symanticLabel: 'open_core',
         ),
         const SectionTitle('Primary Color'),
         InstabugTextField(
@@ -416,150 +412,7 @@ class _MyHomePageState extends State<MyHomePage> {
           text: 'RemoveAllFeatureFlags',
           symanticLabel: 'remove_all_feature_flags',
         ),
-        const SectionTitle('Set User Attribute'),
-        Form(
-          key: _formUserAttributeKey,
-          child: Column(
-            children: [
-              Row(
-                children: <Widget>[
-                  Expanded(
-                      child: InstabugTextField(
-                    label: "User Attribute key",
-                    symanticLabel: 'user_attribute_key_input',
-                    key: const Key("user_attribute_key_textfield"),
-                    controller: userAttributeKeyController,
-                    validator: (value) {
-                      if (value?.trim().isNotEmpty == true) return null;
-                      return 'this field is required';
-                    },
-                  )),
-                  Expanded(
-                      child: InstabugTextField(
-                    label: "User Attribute  Value",
-                    symanticLabel: 'user_attribute_value_input',
-                    key: const Key("user_attribute_value_textfield"),
-                    controller: userAttributeValueController,
-                    validator: (value) {
-                      if (value?.trim().isNotEmpty == true) return null;
 
-                      return 'this field is required';
-                    },
-                  )),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              InstabugButton(
-                text: 'Set User attribute',
-                symanticLabel: 'set_user_attribute',
-                key: const Key('set_user_data_btn'),
-                onPressed: () {
-                  if (_formUserAttributeKey.currentState?.validate() == true) {
-                    Instabug.setUserAttribute(userAttributeKeyController.text,
-                        userAttributeValueController.text);
-                  }
-                },
-              ),
-              InstabugButton(
-                text: 'remove User attribute',
-                symanticLabel: 'remove_user_attribute',
-                key: const Key('remove_user_data_btn'),
-                onPressed: () {
-                  if (_formUserAttributeKey.currentState?.validate() == true) {
-                    Instabug.removeUserAttribute(
-                        userAttributeKeyController.text);
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const SectionTitle('Log'),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: InstabugButton(
-                        symanticLabel: 'log_hello_debug',
-                        margin: const EdgeInsets.symmetric(horizontal: 2),
-                        key: const ValueKey('log_hello_debug_btn'),
-                        onPressed: () {
-                          InstabugLog.logDebug("hello Debug");
-                        },
-                        text: 'Log Hello Debug',
-                      ),
-                    ),
-                    Expanded(
-                      child: InstabugButton(
-                        symanticLabel: 'log_hello_error',
-                        margin: const EdgeInsets.symmetric(horizontal: 2),
-                        key: const ValueKey('log_hello_error_btn'),
-                        onPressed: () {
-                          InstabugLog.logError("hello Error");
-                        },
-                        text: 'Log Hello Error',
-                      ),
-                    ),
-                    Expanded(
-                      child: InstabugButton(
-                        symanticLabel: 'log_hello_warning',
-                        margin: const EdgeInsets.symmetric(horizontal: 2),
-                        key: const ValueKey('hello_warning_btn'),
-                        onPressed: () {
-                          InstabugLog.logWarn("hello Warning");
-                        },
-                        text: 'Log Hello Warn',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: InstabugButton(
-                        symanticLabel: 'log_hello_info_btn',
-                        margin: const EdgeInsets.symmetric(horizontal: 2),
-                        key: const ValueKey('log_hello_info_btn'),
-                        onPressed: () {
-                          InstabugLog.logInfo("hello Info");
-                        },
-                        text: 'Log Hello Info',
-                      ),
-                    ),
-                    Expanded(
-                      child: InstabugButton(
-                        symanticLabel: 'log_hello_verbose_btn',
-                        margin: const EdgeInsets.symmetric(horizontal: 2),
-                        key: const ValueKey('log_hello_verbose_btn'),
-                        onPressed: () {
-                          InstabugLog.logVerbose("hello Verbose");
-                        },
-                        text: 'Log Hello Verbose',
-                      ),
-                    ),
-                    Expanded(
-                      child: InstabugButton(
-                        symanticLabel: 'clear_logs',
-                        margin: const EdgeInsets.symmetric(horizontal: 2),
-                        key: const ValueKey('clear_logs_btn'),
-                        onPressed: () {
-                          InstabugLog.clearAllLogs();
-                        },
-                        text: 'Clear All logs',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
       ],
     );
   }

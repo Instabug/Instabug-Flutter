@@ -35,6 +35,15 @@ class _BugReportingPageState extends State<BugReportingPage> {
   void setInvocationEvent(InvocationEvent invocationEvent) {
     BugReporting.setInvocationEvents([invocationEvent]);
   }
+  void _navigateToCallbackHandler() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CallbackScreen(),
+        settings: RouteSettings(name: CallbackScreen.screenName),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -491,20 +500,18 @@ class _BugReportingPageState extends State<BugReportingPage> {
                   'On Dismiss Handler',
                   Item(id: 'event - ${math.Random().nextInt(99999)}', fields: [
                     KeyValuePair(
-                        key: 'Date', value: DateTime.now().toIso8601String())
+                        key: 'Date', value: DateTime.now().toIso8601String()),
+                    KeyValuePair(
+                        key:'status value', value:'triggered'
+                    ),
+                    KeyValuePair(
+                        key:'issue type', value: dismissType.toString()
+                    ),
+                    KeyValuePair(
+                        key:'report type', value: reportType.toString()
+                    )
                   ]));
 
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text('On Dismiss'),
-                    content: Text(
-                      'onDismiss callback called with $dismissType and $reportType',
-                    ),
-                  );
-                },
-              );
             });
           },
           text: 'Enable Set On Dismiss Callback',
@@ -539,20 +546,12 @@ class _BugReportingPageState extends State<BugReportingPage> {
                   'Invoke Handler',
                   Item(id: 'event - ${math.Random().nextInt(99999)}', fields: [
                     KeyValuePair(
-                        key: 'Date', value: DateTime.now().toIso8601String())
+                        key: 'Date', value: DateTime.now().toIso8601String()),
+                    KeyValuePair(
+                        key:'status value', value:'triggered'
+                    )
                   ]));
 
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return const AlertDialog(
-                    title: Text('On Invoice Callback'),
-                    content: Text(
-                      'setOnInvoice callback called',
-                    ),
-                  );
-                },
-              );
             });
           },
           text: 'Set On Invoice Callback',
@@ -580,6 +579,11 @@ class _BugReportingPageState extends State<BugReportingPage> {
               });
             },
             text: 'Set On Invoice Callback with Exception'),
+        InstabugButton(
+          onPressed: _navigateToCallbackHandler,
+          text: 'Callback Page',
+          symanticLabel: 'open_callback_page',
+        ),
         const SectionTitle('Attachments'),
         if (fileAttachment != null)
           Text(fileAttachment!.path.split('/').last.substring(0) + " Attached"),

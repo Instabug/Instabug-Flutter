@@ -28,11 +28,11 @@ class CallbackScreen extends StatelessWidget {
         body: TabBarView(
           children: titles.isEmpty
               ? [
-                  const Center(child: Text("No callback handlers yet")),
-                ]
+            const Center(child: Text("No callback handlers yet")),
+          ]
               : titles.map((title) {
-                  return CallBackTabScreen(title: title);
-                }).toList(),
+            return CallBackTabScreen(title: title);
+          }).toList(),
         ),
       ),
     );
@@ -70,38 +70,58 @@ class CallBackTabScreen extends StatelessWidget {
             child: items.isEmpty
                 ? const Center(child: Text("No items"))
                 : ListView.builder(
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      final item = items[index];
-                      return Card(
-                        margin: const EdgeInsets.only(bottom: 8),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: item.fields.map((field) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 2),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(field.key,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                    Text(field.value,
-                                        style: const TextStyle(
-                                            color: Colors.grey)),
-                                  ],
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final item = items[index];
+                return Card(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: item.fields.map((field) {
+                        return Padding(
+                          padding:
+                          const EdgeInsets.symmetric(vertical: 2),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Force separate semantics for key
+                              Semantics(
+                                container: true,
+                                label: "field-key-${field.key}",
+                                child: ExcludeSemantics(
+                                  child: Text(
+                                    field.key,
+                                    key: ValueKey("fieldKey_${field.key}"),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              );
-                            }).toList(),
+                              ),
+                              // Force separate semantics for value
+                              Semantics(
+                                container: true,
+                                label: "field-value-${field.key}",
+                                child: ExcludeSemantics(
+                                  child: Text(
+                                    field.value,
+                                    key: ValueKey("fieldValue_${field.key}"),
+                                    style:
+                                    const TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      }).toList(),
+                    ),
                   ),
+                );
+              },
+            ),
           ),
         ],
       ),
