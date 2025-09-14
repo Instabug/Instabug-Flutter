@@ -88,6 +88,15 @@ class _CorePageState extends State<CorePage> {
   void setInvocationEvent(InvocationEvent invocationEvent) {
     BugReporting.setInvocationEvents([invocationEvent]);
   }
+  void _navigateToCallbackHandler() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CallbackScreen(),
+        settings: RouteSettings(name: CallbackScreen.screenName),
+      ),
+    );
+  }
 
   @override
   void dispose() {
@@ -247,6 +256,11 @@ class _CorePageState extends State<CorePage> {
           onPressed: () {
             Instabug.logOut();
           },
+        ),
+        InstabugButton(
+          onPressed: _navigateToCallbackHandler,
+          text: 'Callback Page',
+          symanticLabel: 'open_callback_page',
         ),
 
         const SizedBox(height: 20),

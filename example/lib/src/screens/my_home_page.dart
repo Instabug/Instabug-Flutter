@@ -174,15 +174,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _navigateToCallbackHandler() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const CallbackScreen(),
-        settings: RouteSettings(name: CallbackScreen.screenName),
-      ),
-    );
-  }
 
   void _navigateToSessionReplay() {
     Navigator.push(
@@ -223,11 +214,6 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: _navigateToCore,
           text: 'Core',
           symanticLabel: 'open_core',
-        ),
-        InstabugButton(
-          onPressed: _navigateToCallbackHandler,
-          text: 'Callback Page',
-          symanticLabel: 'open_callback_page',
         ),
         const SectionTitle('Primary Color'),
         InstabugTextField(
