@@ -1,5 +1,5 @@
 group 'com.instabug.flutter'
-version '16.0.1'
+version '16.0.3'
 
 buildscript {
     repositories {

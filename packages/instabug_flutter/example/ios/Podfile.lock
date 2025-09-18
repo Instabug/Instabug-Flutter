@@ -1,7 +1,7 @@
 PODS:
   - Flutter (1.0.0)
   - Instabug (16.0.2)
-  - instabug_flutter (16.0.1):
+  - instabug_flutter (16.0.3):
     - Flutter
     - Instabug (= 16.0.2)
   - OCMock (3.6)
