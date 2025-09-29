@@ -1,8 +1,6 @@
 # Generated files
-*.mocks.dart
-*.g.dart
-android/**/generated/
-ios/**/Generated/
+**/pubspec_overrides.yaml
+!**/example/pubspec_overrides.yaml
 
 # Miscellaneous
 *.class
@@ -63,6 +61,8 @@ android/gradlew.bat
 **/ios/**/DerivedData/
 **/ios/**/Icon?
 **/ios/**/Pods/
+**/ios/**/Pods/
+
 **/ios/**/.symlinks/
 **/ios/**/profile
 **/ios/**/xcuserdata
@@ -77,6 +77,9 @@ android/gradlew.bat
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+
+# Project specific
+/PRDs/
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
