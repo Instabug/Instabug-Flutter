@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:instabug_flutter/instabug_flutter.dart';
 import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_flutter/src/utils/feature_flags_manager.dart';
+import 'package:instabug_flutter/src/utils/ibg_build_info.dart';
 import 'package:instabug_flutter/src/utils/instabug_constants.dart';
 import 'package:instabug_flutter/src/utils/instabug_logger.dart';
 
@@ -115,7 +116,7 @@ class NetworkManager {
 
   /// Gets the network body max size from native SDK, with caching
   Future<int?> _getNetworkBodyMaxSize() async {
-    if (_cachedNetworkBodyMaxSize != null) {
+    if (_cachedNetworkBodyMaxSize != null && IBGBuildInfo.I.isAndroid) {
       return _cachedNetworkBodyMaxSize;
     }
 
