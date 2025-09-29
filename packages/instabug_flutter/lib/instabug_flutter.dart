@@ -26,3 +26,5 @@ export 'src/utils/screen_loading/instabug_capture_screen_loading.dart';
 export 'src/utils/screen_name_masker.dart' show ScreenNameMaskingCallback;
 export 'src/utils/ui_trace/route_matcher.dart';
 export 'src/utils/user_steps/instabug_user_steps.dart';
+export 'src/utils/screen_loading/screen_loading_manager.dart'
+    show ScreenLoadingManager;

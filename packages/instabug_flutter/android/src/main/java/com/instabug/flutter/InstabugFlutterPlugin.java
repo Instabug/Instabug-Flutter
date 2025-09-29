@@ -142,7 +142,6 @@ public class InstabugFlutterPlugin implements FlutterPlugin, ActivityAware, Life
         privateViewManager = new PrivateViewManager(new InstabugPrivateViewPigeon.InstabugPrivateViewFlutterApi(messenger), new PixelCopyCaptureManager(), new BoundryCaptureManager(renderer));
         InstabugPrivateView.init(messenger, privateViewManager);
 
-        ApmApi.init(messenger);
         Callable<Float> refreshRateProvider = new Callable<Float>() {
             @Override
             public Float call() {

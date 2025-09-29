@@ -14,7 +14,7 @@ import 'package:instabug_flutter/src/utils/ui_trace/flags_config.dart';
 class InstabugNavigatorObserver extends NavigatorObserver {
   final List<InstabugRoute> _steps = [];
 
-  void screenChanged(Route newRoute) {
+  Future<void> screenChanged(Route newRoute) async {
     try {
       final rawScreenName = newRoute.settings.name.toString().trim();
       final screenName = rawScreenName.isEmpty
@@ -39,15 +39,14 @@ class InstabugNavigatorObserver extends NavigatorObserver {
         _steps.removeLast();
       }
 
-        // Add the new step to the list
-        _steps.add(route);
+      // Add the new step to the list
+      _steps.add(route);
 
-        // If this route is in the array, report it and remove it from the list
-        if (_steps.contains(route)) {
-          await reportScreenChange(route.name);
-          _steps.remove(route);
-        }
-      });
+      // If this route is in the array, report it and remove it from the list
+      if (_steps.contains(route)) {
+        await reportScreenChange(route.name);
+        _steps.remove(route);
+      }
     } catch (e) {
       InstabugLogger.I.e('Reporting screen change failed:', tag: Instabug.tag);
       InstabugLogger.I.e(e.toString(), tag: Instabug.tag);

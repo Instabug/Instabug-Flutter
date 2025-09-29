@@ -1,6 +1,11 @@
 import 'package:pigeon/pigeon.dart';
 
 @FlutterApi()
+abstract class InstabugFlutterApi {
+  void dispose();
+}
+
+@FlutterApi()
 abstract class FeatureFlagsFlutterApi {
   void onW3CFeatureFlagChange(
     bool isW3cExternalTraceIDEnabled,
