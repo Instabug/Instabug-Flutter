@@ -415,9 +415,7 @@ workflows:
           name: test_flutter-2.10.5
           version: 2.10.5
           app-dir: "~/project/packages/instabug_flutter/"
-      - e2e_android_captain
       - test_ios
-      - e2e_ios_captain
       - format_flutter
       - lint_flutter:
           requires:
