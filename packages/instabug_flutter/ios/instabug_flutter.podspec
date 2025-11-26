@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name              = 'instabug_flutter'
-  s.version           = '16.0.2'
+  s.version           = '16.0.4'
   s.summary           = 'Flutter plugin for integrating the Instabug SDK.'
   s.author            = 'Instabug'
   s.homepage          = 'https://www.instabug.com/platforms/flutter'

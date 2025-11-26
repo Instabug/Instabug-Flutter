@@ -1,5 +1,11 @@
 # Changelog
 
+## [16.0.4](https://github.com/Instabug/Instabug-Flutter/compare/v16.0.2...dev) (Nov 16, 2025)
+
+### Fixed
+
+- Guard LuciqNavigatorObserver pending-step removal to eliminate the race that could crash apps or produce incorrect screenshots during rapid route transitions. ([#637](https://github.com/Instabug/Instabug-Flutter/pull/637))
+
 ## [16.0.3](https://github.com/Instabug/Instabug-Flutter/compare/v16.0.2...dev) (Sep 9, 2025)
 
 ### Fixed
