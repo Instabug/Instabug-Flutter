@@ -10,7 +10,7 @@ import 'package:instabug_flutter/src/utils/screen_name_masker.dart';
 class InstabugNavigatorObserver extends NavigatorObserver {
   InstabugNavigatorObserver({Duration? screenReportDelay})
       : _screenReportDelay =
-      screenReportDelay ?? const Duration(milliseconds: 100);
+            screenReportDelay ?? const Duration(milliseconds: 100);
 
   final Duration _screenReportDelay;
   final List<InstabugRoute> _steps = [];
@@ -49,7 +49,8 @@ class InstabugNavigatorObserver extends NavigatorObserver {
             _steps.remove(route);
           }
         } catch (e) {
-          InstabugLogger.I.e('Reporting screen change failed:', tag: Instabug.tag);
+          InstabugLogger.I
+              .e('Reporting screen change failed:', tag: Instabug.tag);
           InstabugLogger.I.e(e.toString(), tag: Instabug.tag);
         }
       });
